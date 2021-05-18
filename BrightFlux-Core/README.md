@@ -13,3 +13,7 @@ and store this reformatted data partitioned. So this code contains the data proc
 
 I won't claim this to be the most performant code... and i don't care enough for raw
 It will probably not host the code for viewing the data, as this is secondary for me at the moment.
+
+
+* Maybe use an existing DataFrame library so far, until we have reason to use our own?
+** https://github.com/nRo/DataFrame
