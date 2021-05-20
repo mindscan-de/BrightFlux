@@ -26,10 +26,68 @@
 package de.mindscan.brightflux.dataframes;
 
 /**
- * 
+ * TODO: use some example code for a dataframe, e.g. write them as a unit test
+ *       and then develop from there. Use pandas examples for reading some files
+ *       and access some of the data - and then develop from here to a java specific 
+ *       syntax.
  */
 public class DataFrame {
 
+    /**
+     * 
+     */
+    public class DTypes {
+
+    }
+
+    /**
+     * 
+     */
+    public class DataFrameIndex {
+
+    }
+
+    /**
+     * 
+     */
+    public class DataColumn {
+
+    }
+
+    public DataFrame( DataColumn... columns ) {
+    }
+
+    /**
+     * return the column labels of the dataframe
+     * @return
+     */
+    public DataFrameIndex getColumns() {
+        return null;
+    }
+
+    /**
+     * return the types of the columns of the dataframe
+     * @return
+     */
+    public DTypes getDTypes() {
+        return null;
+    }
+
+    public void head() {
+
+    }
+
+    public void tail() {
+
+    }
+
+    public void to_csv() {
+        // to_excel
+        // to_clipboard
+        // to dict
+        // ....
+        // to 
+    }
     // column-names
     // columns
     // rows
