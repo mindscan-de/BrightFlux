@@ -26,9 +26,9 @@ must correlate a particular log item from a external code base (or second grade 
 Therefore reading multiple and different logs and correlate them (according to time and internal state) is an 
 important part of the whole log analysis system.
 
-Most of these analysis jobs are a one time scenario or will only be repeated until the underlying issue 
-is resolved -- this might also be the reason why such tools probably aren't developed. Every time there 
-will be a good enough solution, which gets the job somehow done. No need for a tool here. So everybody 
+Most of these analysis jobs are a one time scenario or will only be repeated until the underlying issue
+is resolved -- this might also be the reason why such tools probably aren't developed. Every time there
+will be a good enough solution, which gets the job somehow done. No need for a tool here. So everybody
 develops similar solutions and all the things are reinvented -- all the time and built into other tools
 as well. Text based logs have one important shortcomming -- they can be shown in a text editor. Editors
 are good for editing - but they often aren't the best thing if you work basically readonly on the files.
