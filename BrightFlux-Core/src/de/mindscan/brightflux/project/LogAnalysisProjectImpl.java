@@ -53,12 +53,21 @@ import de.mindscan.brightflux.project.parts.LogAnalysisIngestConfiguration;
  */
 public class LogAnalysisProjectImpl implements LogAnalysisProject {
 
+    private LogAnalysisIngestConfiguration ingestConfiguration;
+
+    /**
+     * simple ctor, may not survive? 
+     */
+    public LogAnalysisProjectImpl() {
+        this.ingestConfiguration = new LogAnalysisIngestConfiguration();
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public LogAnalysisIngestConfiguration getIngestConfiguration() {
-        return null;
+        return ingestConfiguration;
     }
 
 }
