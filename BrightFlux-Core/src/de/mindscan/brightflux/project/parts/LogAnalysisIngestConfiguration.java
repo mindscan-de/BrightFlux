@@ -23,42 +23,11 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.project;
-
-import de.mindscan.brightflux.project.parts.LogAnalysisIngestConfiguration;
+package de.mindscan.brightflux.project.parts;
 
 /**
- * This class implements a Log-Analysis-Project. This describes the Log-Analysis-Project, 
- * so it can be loaded using the original files and recreate all the  
  * 
- * * Configuration 
- *   * what file(s) gets loaded
- *   * what ingestion was used for which file
- *   
- * * Is there an index stored?
- *  
- * * Global Dataframe configuration
- * * Local Dataframe configuration
- * * Swim lanes configuration
- * * Graph-data-base
- *   * Annotations
- *   * relations between Dataframes
- *   * video book marks
- *   
- * * Json file / ZIP-File structure of different JSON files, which are essentially a
- *   database for the loganalysis project
- *   
- * * have multiple configurations, so the same analysis can be presented in different 
- *   ways, e.g think of multiple diagrams presenting different aspects. 
  */
-public class LogAnalysisProjectImpl implements LogAnalysisProject {
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public LogAnalysisIngestConfiguration getIngestConfiguration() {
-        return null;
-    }
+public class LogAnalysisIngestConfiguration {
 
 }

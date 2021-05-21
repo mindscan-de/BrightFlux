@@ -25,9 +25,12 @@
  */
 package de.mindscan.brightflux.project;
 
+import de.mindscan.brightflux.project.parts.LogAnalysisIngestConfiguration;
+
 /**
  * 
  */
 public interface LogAnalysisProject {
 
+    LogAnalysisIngestConfiguration getIngestConfiguration();
 }
