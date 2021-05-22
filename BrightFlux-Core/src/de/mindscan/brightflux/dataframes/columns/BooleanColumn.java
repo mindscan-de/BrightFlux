@@ -25,9 +25,11 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
+
 /**
  * 
  */
-public class BooleanColumn {
+public class BooleanColumn extends DataFrameColumn {
 
 }
