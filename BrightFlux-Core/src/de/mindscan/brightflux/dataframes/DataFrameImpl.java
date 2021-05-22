@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -37,6 +39,12 @@ public class DataFrameImpl {
 
     private String nameOfDataFrame;
     private UUID uuidOfDataFrame;
+
+    // we will come from a line / stream dataset to a dataframe with columns. 
+    // each column has its own type and own content. Problem is, that 
+    // problem is reallocation in case of appending the columns with new values instead of adding columns
+    private Map<String, DataFrameColumn> columnsMap = new LinkedHashMap<>();
+    private DataFrameColumn[] columns = null;
 
     public DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
@@ -61,6 +69,9 @@ public class DataFrameImpl {
     public String getName() {
         return nameOfDataFrame;
     }
+
+    // add dataframe column
+    // remove dataframe column
 
 //    /**
 //     * 

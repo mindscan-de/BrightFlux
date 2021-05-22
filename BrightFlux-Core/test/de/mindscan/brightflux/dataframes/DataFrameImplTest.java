@@ -61,7 +61,7 @@ public class DataFrameImplTest {
     public void testGetName_CtorWithNameAndUUIDSetRandomUUID_expectSameUUID() throws Exception {
         // arrange
         UUID expectedUUID = UUID.randomUUID();
-        DataFrameImpl dataFrameImpl = new DataFrameImpl( "SecondName", expectedUUID );
+        DataFrameImpl dataFrameImpl = new DataFrameImpl( "AnyName", expectedUUID );
 
         // act
         UUID result = dataFrameImpl.getUuid();
