@@ -94,7 +94,7 @@ public class StringColumnTest {
     }
 
     @Test
-    public void testIsEmpty_ConstructorWithNonEmpyArray_ExpectFalse() {
+    public void testIsEmpty_ConstructorWithNonEmptyArray_ExpectFalse() {
         // Arrange
         StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
 
