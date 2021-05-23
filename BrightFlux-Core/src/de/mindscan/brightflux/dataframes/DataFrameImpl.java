@@ -84,35 +84,29 @@ public class DataFrameImpl {
         return Collections.emptyList();
     }
 
-    // add dataframe column
+    // add single data frame column
     public void addColumn( DataFrameColumn column ) {
 
     }
 
+    // add multiple data frame columns
     public void addColumns( DataFrameColumn... allcolumns ) {
-
+        for (DataFrameColumn dataFrameColumn : allcolumns) {
+            addColumn( dataFrameColumn );
+        }
     }
 
+    // add multiple data frame columns
     public void addColumns( Collection<DataFrameColumn> allcolumns ) {
-
+        for (DataFrameColumn dataFrameColumn : allcolumns) {
+            addColumn( dataFrameColumn );
+        }
     }
 
-    // TODO? is that needed? remove/delete dataframe column
+    // TODO? is that needed? remove/delete data frame column
+    // TODO? is that needed? rename data frame column
+    // TODO? is that needed? replace data frame column
 
-//    /**
-//     * 
-//     */
-//    public class DataFrameIndex {
-//
-//    }
-//    /**
-//     * return the column labels of the dataframe
-//     * @return
-//     */
-//    public DataFrameIndex getColumns() {
-//        return null;
-//    }
-//
 //    public void head() {
 //
 //    }
