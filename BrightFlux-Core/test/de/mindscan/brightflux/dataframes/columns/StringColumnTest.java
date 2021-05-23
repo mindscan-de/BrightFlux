@@ -69,6 +69,30 @@ public class StringColumnTest {
         assertThat( resuilt, equalTo( "EmptyNames" ) );
     }
 
+    @Test
+    public void testIsEmpty_DefaultCTor_ExpectTrue() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn();
+
+        // Act
+        boolean result = stringColumn.isEmpty();
+
+        // Assert
+        assertThat( result, equalTo( true ) );
+    }
+
+    @Test
+    public void testIsEmpty_ConstructorWithEmptyArray_ExpectTrue() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[0] );
+
+        // Act
+        boolean result = stringColumn.isEmpty();
+
+        // Assert
+        assertThat( result, equalTo( true ) );
+    }
+
 // tpxu_method
 
 }

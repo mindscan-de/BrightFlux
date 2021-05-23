@@ -44,4 +44,8 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
         setColumnName( columnname );
     }
 
+    public boolean isEmpty() {
+        return true;
+    }
+
 }
