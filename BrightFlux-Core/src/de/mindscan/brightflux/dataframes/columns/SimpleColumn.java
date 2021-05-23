@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import java.lang.reflect.Array;
+
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
 /**
@@ -40,6 +42,8 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
 
     public SimpleColumn( String columnName, Class<T> clzz ) {
         setColumnName( columnName );
+
+        this.columnValues = (T[]) Array.newInstance( clzz, 0 );
     }
 
     public SimpleColumn( String columnname, T[] columnValues ) {
@@ -48,10 +52,6 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
     }
 
     public boolean isEmpty() {
-        if (columnValues == null) {
-            return true;
-        }
-
         return columnValues.length == 0;
     }
 
