@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -70,43 +72,40 @@ public class DataFrameImpl {
         return nameOfDataFrame;
     }
 
-    // add dataframe column
-    // remove dataframe column
+    /**
+     * This will return all columns for this data frame
+     * @return
+     */
+    public Collection<DataFrameColumn> getColumns() {
+        return Collections.emptyList();
+    }
 
-//    /**
-//     * 
-//     */
-//    public class DTypes {
-//
-//    }
-//
+    // add dataframe column
+    public void addColumn( DataFrameColumn column ) {
+
+    }
+
+    public void addColumns( DataFrameColumn... allcolumns ) {
+
+    }
+
+    public void addColumns( Collection<DataFrameColumn> allcolumns ) {
+
+    }
+
+    // TODO? is that needed? remove/delete dataframe column
+
 //    /**
 //     * 
 //     */
 //    public class DataFrameIndex {
 //
 //    }
-//
-//    /**
-//     * 
-//     */
-//    public class DataColumn {
-//
-//    }
-//
 //    /**
 //     * return the column labels of the dataframe
 //     * @return
 //     */
 //    public DataFrameIndex getColumns() {
-//        return null;
-//    }
-//
-//    /**
-//     * return the types of the columns of the dataframe
-//     * @return
-//     */
-//    public DTypes getDTypes() {
 //        return null;
 //    }
 //

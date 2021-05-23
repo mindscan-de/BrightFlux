@@ -2,7 +2,9 @@ package de.mindscan.brightflux.dataframes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 
+import java.util.Collection;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -68,6 +70,18 @@ public class DataFrameImplTest {
 
         // assert
         assertThat( result, equalTo( expectedUUID ) );
+    }
+
+    @Test
+    public void testGetColumns_DefaultCTor_ColumnsListIsEmpty() throws Exception {
+        // arrange
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+
+        // act
+        Collection<DataFrameColumn> result = dataFrame.getColumns();
+
+        // assert
+        assertThat( result, empty() );
     }
 
 }
