@@ -84,4 +84,16 @@ public class DataFrameImplTest {
         assertThat( result, empty() );
     }
 
+    @Test
+    public void testGetColumnNames_DefaultCTor_ColumnsListIsEmpty() throws Exception {
+        // arrange
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+
+        // act
+        Collection<String> result = dataFrame.getColumnNames();
+
+        // assert
+        assertThat( result, empty() );
+    }
+
 }

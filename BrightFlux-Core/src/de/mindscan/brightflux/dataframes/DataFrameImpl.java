@@ -72,6 +72,10 @@ public class DataFrameImpl {
         return nameOfDataFrame;
     }
 
+    public Collection<String> getColumnNames() {
+        return Collections.emptyList();
+    }
+
     /**
      * This will return all columns for this data frame
      * @return
