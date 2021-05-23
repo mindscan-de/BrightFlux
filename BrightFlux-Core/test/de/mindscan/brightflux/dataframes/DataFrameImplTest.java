@@ -2,12 +2,15 @@ package de.mindscan.brightflux.dataframes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 
 import java.util.Collection;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+
+import de.mindscan.brightflux.dataframes.columns.BooleanColumn;
 
 public class DataFrameImplTest {
 
@@ -94,6 +97,32 @@ public class DataFrameImplTest {
 
         // assert
         assertThat( result, empty() );
+    }
+
+    @Test
+    public void testAddColumn_DefaultCTorThenAddOneColumn_ColumnsListNotEmpty() throws Exception {
+        // arrange
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+
+        // act
+        dataFrame.addColumn( new BooleanColumn( "Column1" ) );
+
+        // assert
+        Collection<DataFrameColumn> result = dataFrame.getColumns();
+        assertThat( result, not( empty() ) );
+    }
+
+    @Test
+    public void testAddColumn_DefaultCTorThenAddOneColumn_ColumnNamesListNotEmpty() throws Exception {
+        // arrange
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+
+        // act
+        dataFrame.addColumn( new BooleanColumn( "Column1" ) );
+
+        // assert
+        Collection<String> result = dataFrame.getColumnNames();
+        assertThat( result, not( empty() ) );
     }
 
 }
