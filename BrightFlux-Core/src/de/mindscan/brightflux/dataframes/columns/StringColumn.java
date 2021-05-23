@@ -41,4 +41,7 @@ public class StringColumn extends SimpleColumn<String> {
         super( columnname, String.class );
     }
 
+    public StringColumn( String columnname, String[] columnValues) {
+        super( columnname, columnValues );
+    }
 }

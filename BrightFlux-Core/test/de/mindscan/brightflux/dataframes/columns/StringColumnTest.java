@@ -57,4 +57,18 @@ public class StringColumnTest {
         assertThat( result, equalTo( "Name1" ) );
     }
 
+    @Test
+    public void testStringColumnStringStringArray_SetNameEmptyNamesEmptyStringArray_expextNameIsEmptyNames() throws Exception {
+        // arrange
+        StringColumn stringColumn = new StringColumn( "EmptyNames", new String[0] );
+
+        // act
+        String resuilt = stringColumn.getColumnName();
+
+        // assert
+        assertThat( resuilt, equalTo( "EmptyNames" ) );
+    }
+
+// tpxu_method
+
 }

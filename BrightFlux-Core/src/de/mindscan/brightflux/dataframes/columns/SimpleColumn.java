@@ -40,4 +40,8 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
         setColumnName( columnName );
     }
 
+    public SimpleColumn( String columnname, T[] columnValues ) {
+        setColumnName( columnname );
+    }
+
 }
