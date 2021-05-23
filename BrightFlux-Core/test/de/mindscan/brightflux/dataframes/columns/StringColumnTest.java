@@ -93,6 +93,18 @@ public class StringColumnTest {
         assertThat( result, equalTo( true ) );
     }
 
+    @Test
+    public void testIsEmpty_ConstructorWithNonEmpyArray_ExpectFalse() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
+
+        // Act
+        boolean result = stringColumn.isEmpty();
+
+        // Assert
+        assertThat( result, equalTo( false ) );
+    }
+
 // tpxu_method
 
 }
