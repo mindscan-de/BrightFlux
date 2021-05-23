@@ -86,7 +86,7 @@ public class DataFrameImpl {
 
     // add single data frame column
     public void addColumn( DataFrameColumn column ) {
-
+        // TODO: implement the add operation for a data frame columns
     }
 
     // add multiple data frame columns
