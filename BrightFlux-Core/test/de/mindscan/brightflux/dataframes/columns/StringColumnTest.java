@@ -118,6 +118,18 @@ public class StringColumnTest {
     }
 
     @Test
+    public void testAt_ConstructorWithNonEmptyArrayContainingTwoValues_ExpectValue1At0() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1", "Value2" } );
+
+        // Act
+        String result = stringColumn.at( 0 );
+
+        // Assert
+        assertThat( result, equalTo( "Value1" ) );
+    }
+
+    @Test
     public void testAt_ConstructorWithNonEmptyArrayContainingValue2At1_ExpectValue2() {
         // Arrange
         StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1", "Value2" } );
