@@ -105,6 +105,30 @@ public class StringColumnTest {
         assertThat( result, equalTo( false ) );
     }
 
+    @Test
+    public void testAt_ConstructorWithNonEmptyArrayContainingValue1At0_ExpectValue1() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
+
+        // Act
+        String result = stringColumn.at( 0 );
+
+        // Assert
+        assertThat( result, equalTo( "Value1" ) );
+    }
+
+    @Test
+    public void testAt_ConstructorWithNonEmptyArrayContainingValue2At1_ExpectValue2() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1", "Value2" } );
+
+        // Act
+        String result = stringColumn.at( 1 );
+
+        // Assert
+        assertThat( result, equalTo( "Value2" ) );
+    }
+
 // tpxu_method
 
 }

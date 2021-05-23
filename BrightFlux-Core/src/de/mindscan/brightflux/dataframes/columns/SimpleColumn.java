@@ -42,7 +42,6 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
 
     public SimpleColumn( String columnName, Class<T> clzz ) {
         setColumnName( columnName );
-
         this.columnValues = (T[]) Array.newInstance( clzz, 0 );
     }
 
@@ -55,4 +54,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
         return columnValues.length == 0;
     }
 
+    public T at( int index ) {
+        return columnValues[index];
+    }
 }
