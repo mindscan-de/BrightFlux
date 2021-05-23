@@ -23,20 +23,21 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes;
+package de.mindscan.brightflux.dataframes.columns;
+
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
 /**
  * 
  */
-public abstract class DataFrameColumn {
+public abstract class SimpleColumn<T> extends DataFrameColumn {
 
-    private String columnName;
-
-    public void setColumnName( String columnName ) {
-        this.columnName = columnName;
+    public SimpleColumn( Class<T> clzz ) {
+        this( null, clzz );
     }
 
-    public String getColumnName() {
-        return columnName;
+    public SimpleColumn( String columnName, Class<T> clzz ) {
+        setColumnName( columnName );
     }
+
 }
