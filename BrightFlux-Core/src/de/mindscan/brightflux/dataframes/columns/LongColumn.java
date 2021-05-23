@@ -25,11 +25,13 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
-import de.mindscan.brightflux.dataframes.DataFrameColumn;
-
 /**
  * 
  */
-public class LongColumn extends DataFrameColumn {
+public class LongColumn extends SimpleNumberColumn<Long> {
+
+    public LongColumn() {
+        super( Long.class );
+    }
 
 }
