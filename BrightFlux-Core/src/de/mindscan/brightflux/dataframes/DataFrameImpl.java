@@ -25,8 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -73,7 +73,7 @@ public class DataFrameImpl {
     }
 
     public Collection<String> getColumnNames() {
-        return Collections.emptyList();
+        return new ArrayList<>( columnsMap.keySet() );
     }
 
     /**
@@ -81,12 +81,22 @@ public class DataFrameImpl {
      * @return
      */
     public Collection<DataFrameColumn> getColumns() {
-        return Collections.emptyList();
+        return new ArrayList<>( columnsMap.values() );
     }
 
     // add single data frame column
     public void addColumn( DataFrameColumn column ) {
+        if (column == null) {
+            throw new IllegalArgumentException( "column must not be null." );
+        }
+        // 
         // TODO: implement the add operation for a data frame columns
+
+        // addColumnInternal( column );
+        // addHeaderAndTypeInfoInternal( column );
+
+        // TODO: ensure that this column has a name, or something similar (e.g. number in case it is anonymous.)
+        columnsMap.put( column.getColumnName(), column );
     }
 
     // add multiple data frame columns
