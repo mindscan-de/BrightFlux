@@ -148,6 +148,24 @@ public class DataFrameImplTest {
     }
 
     @Test
+    public void testGetColumns_DefaultCTorThenAddThreeColumnOneDuplicate_ColumnsListContainsTwoBooleanColumns() throws Exception {
+        // arrange
+        BooleanColumn booleanColumn1 = new BooleanColumn( "Column1" );
+        BooleanColumn booleanColumn2 = new BooleanColumn( "Column2" );
+
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        dataFrame.addColumn( booleanColumn1 );
+        dataFrame.addColumn( booleanColumn2 );
+        dataFrame.addColumn( booleanColumn1 );
+
+        // act
+        Collection<DataFrameColumn> result = dataFrame.getColumns();
+
+        // assert
+        assertThat( result, contains( booleanColumn1, booleanColumn2 ) );
+    }
+
+    @Test
     public void testAddColumn_DefaultCTorThenAddOneColumn_ColumnNamesListNotEmpty() throws Exception {
         // arrange
         DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );

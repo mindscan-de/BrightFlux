@@ -89,6 +89,12 @@ public class DataFrameImpl {
         if (column == null) {
             throw new IllegalArgumentException( "column must not be null." );
         }
+
+        // ensure we don't have the same name twice.
+        if (columnsMap.containsValue( column )) {
+            return;
+        }
+
         // 
         // TODO: implement the add operation for a data frame columns
 
