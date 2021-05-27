@@ -229,6 +229,30 @@ public class StringColumnTest {
         assertThat( result, equalTo( 2 ) );
     }
 
+    @Test
+    public void testGet_DefaultConstructorWithTwoValuesGetAtIndexZero_expectValue1() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1", "Value2" } );
+
+        // Act
+        String result = stringColumn.get( 0 );
+
+        // Assert
+        assertThat( result, equalTo( "Value1" ) );
+    }
+
+    @Test
+    public void testGet_DefaultConstructorWithTwoValuesGetAtIndexOne_expectValue2() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1", "Value2" } );
+
+        // Act
+        String result = stringColumn.get( 1 );
+
+        // Assert
+        assertThat( result, equalTo( "Value2" ) );
+    }
+
     // tpxu_method
 
 }
