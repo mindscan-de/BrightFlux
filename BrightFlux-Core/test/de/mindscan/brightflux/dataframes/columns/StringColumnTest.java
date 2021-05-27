@@ -189,6 +189,19 @@ public class StringColumnTest {
         assertThat( result, equalTo( 2 ) );
     }
 
+    @Test
+    public void testGetSize_DefaultConstructorWithEmptyArrayAndAppendOneValue_expectOne() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[0] );
+        stringColumn.append( "Value1" );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 1 ) );
+    }
+
     // tpxu_method
 
 }
