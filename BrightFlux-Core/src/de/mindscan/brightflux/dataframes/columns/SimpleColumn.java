@@ -62,11 +62,23 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
         return columnValues[index];
     }
 
+    @Override
     public void append( T element ) {
         this.size++;
     }
 
+    @Override
     public int getSize() {
         return size;
     }
+
+    @Override
+    public T get( int index ) {
+        return at( index );
+    }
+
+    @Override
+    public void set( int index, T element ) {
+    }
+
 }
