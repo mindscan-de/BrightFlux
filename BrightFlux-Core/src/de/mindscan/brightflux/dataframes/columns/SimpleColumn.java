@@ -35,6 +35,7 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
 
     private T[] columnValues;
+    private int size;
 
     public SimpleColumn( Class<T> clzz ) {
         this( null, clzz );
@@ -43,11 +44,13 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     public SimpleColumn( String columnName, Class<T> clzz ) {
         setColumnName( columnName );
         this.columnValues = (T[]) Array.newInstance( clzz, 0 );
+        this.size = 0;
     }
 
     public SimpleColumn( String columnname, T[] columnValues ) {
         setColumnName( columnname );
         this.columnValues = columnValues;
+        this.size = columnValues.length;
     }
 
     public boolean isEmpty() {
@@ -62,6 +65,6 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     }
 
     public int getSize() {
-        return 0;
+        return size;
     }
 }

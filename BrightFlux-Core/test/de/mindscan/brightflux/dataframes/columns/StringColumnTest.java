@@ -142,7 +142,7 @@ public class StringColumnTest {
     }
 
     @Test
-    public void testGetSize_DefaultConstructorButEmpty_expectTrue() {
+    public void testGetSize_DefaultConstructorOnly_expectZero() {
         // Arrange
         StringColumn stringColumn = new StringColumn( "AnyName" );
 
@@ -151,6 +151,42 @@ public class StringColumnTest {
 
         // Assert
         assertThat( result, equalTo( 0 ) );
+    }
+
+    @Test
+    public void testGetSize_DefaultConstructorWithEmptyArray_expectZero() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[0] );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 0 ) );
+    }
+
+    @Test
+    public void testGetSize_DefaultConstructorWithArrayLengthOne_expectOne() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 1 ) );
+    }
+
+    @Test
+    public void testGetSize_DefaultConstructorWithArrayLengthTwo_expectTwo() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1", "Value2" } );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 2 ) );
     }
 
     // tpxu_method
