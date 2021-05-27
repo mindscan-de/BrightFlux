@@ -202,6 +202,33 @@ public class StringColumnTest {
         assertThat( result, equalTo( 1 ) );
     }
 
+    @Test
+    public void testGetSize_DefaultConstructorWithArraySizeOneAndAppendOneValue_expectTwo() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
+        stringColumn.append( "Value2" );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 2 ) );
+    }
+
+    @Test
+    public void testGetSize_DefaultConstructorWithEmptyArrayAndAppendTwoValues_expectTwo() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName" );
+        stringColumn.append( "Value1" );
+        stringColumn.append( "Value2" );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 2 ) );
+    }
+
     // tpxu_method
 
 }
