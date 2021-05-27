@@ -32,7 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 /**
  * 
  */
-public abstract class SimpleColumn<T> extends DataFrameColumn {
+public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
 
     private T[] columnValues;
 
@@ -56,5 +56,8 @@ public abstract class SimpleColumn<T> extends DataFrameColumn {
 
     public T at( int index ) {
         return columnValues[index];
+    }
+
+    public void append( T element ) {
     }
 }

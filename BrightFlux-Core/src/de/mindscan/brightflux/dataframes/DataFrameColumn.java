@@ -28,7 +28,7 @@ package de.mindscan.brightflux.dataframes;
 /**
  * 
  */
-public abstract class DataFrameColumn {
+public abstract class DataFrameColumn<T> {
 
     private String columnName;
 
@@ -39,4 +39,6 @@ public abstract class DataFrameColumn {
     public String getColumnName() {
         return columnName;
     }
+
+    public abstract void append( T element );
 }
