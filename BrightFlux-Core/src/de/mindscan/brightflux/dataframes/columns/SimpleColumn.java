@@ -61,7 +61,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     public void append( T element ) {
     }
 
-    public int size() {
+    public int getSize() {
         return 0;
     }
 }

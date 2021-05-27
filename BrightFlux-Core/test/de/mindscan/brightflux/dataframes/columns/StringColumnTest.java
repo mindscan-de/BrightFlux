@@ -141,6 +141,18 @@ public class StringColumnTest {
         assertThat( result, equalTo( "Value2" ) );
     }
 
-// tpxu_method
+    @Test
+    public void testGetSize_DefaultConstructorButEmpty_expectTrue() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName" );
+
+        // Act
+        int result = stringColumn.getSize();
+
+        // Assert
+        assertThat( result, equalTo( 0 ) );
+    }
+
+    // tpxu_method
 
 }
