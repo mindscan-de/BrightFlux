@@ -41,6 +41,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
         this( null, clzz );
     }
 
+    @SuppressWarnings( "unchecked" )
     public SimpleColumn( String columnName, Class<T> clzz ) {
         setColumnName( columnName );
         this.columnValues = (T[]) Array.newInstance( clzz, 0 );
