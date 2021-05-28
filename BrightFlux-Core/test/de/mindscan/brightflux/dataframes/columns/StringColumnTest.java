@@ -266,6 +266,60 @@ public class StringColumnTest {
         assertThat( result, equalTo( "Value1" ) );
     }
 
+    @Test
+    public void testAppend_DefaultConstructorAppendTwoValuesAndGetecond_expectValue2() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName" );
+
+        // Act
+        stringColumn.append( "Value1" );
+        stringColumn.append( "Value2" );
+
+        // Assert
+        String result = stringColumn.get( 1 );
+        assertThat( result, equalTo( "Value2" ) );
+    }
+
+    @Test
+    public void testAppend_DefaultConstructorWithEmptyArrayAppendTwoValuesAndGetSecond_expectValue2() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[0] );
+
+        // Act
+        stringColumn.append( "Value1" );
+        stringColumn.append( "Value2" );
+
+        // Assert
+        String result = stringColumn.get( 1 );
+        assertThat( result, equalTo( "Value2" ) );
+    }
+
+    @Test
+    public void testAppend_DefaultConstructorWithArrayLengthOneAppendOneValueAndGetSecond_expectValue2() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
+
+        // Act
+        stringColumn.append( "Value2" );
+
+        // Assert
+        String result = stringColumn.get( 1 );
+        assertThat( result, equalTo( "Value2" ) );
+    }
+
+    @Test
+    public void testAppend_DefaultConstructorWithArrayLengthOneAppendOneValueAndGetFirst_expectValue1() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName", new String[] { "Value1" } );
+
+        // Act
+        stringColumn.append( "Value2" );
+
+        // Assert
+        String result = stringColumn.get( 0 );
+        assertThat( result, equalTo( "Value1" ) );
+    }
+
     // tpxu_method
 
 }

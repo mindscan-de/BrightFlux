@@ -68,6 +68,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     @Override
     public void append( T element ) {
         if (this.columnValues.length <= this.size) {
+            // linear growth right now 
             this.columnValues = Arrays.copyOf( this.columnValues, this.columnValues.length + INITIAL_SIZE );
         }
         this.columnValues[this.size] = element;
