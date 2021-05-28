@@ -253,6 +253,19 @@ public class StringColumnTest {
         assertThat( result, equalTo( "Value2" ) );
     }
 
+    @Test
+    public void testAppend_DefaultConstructorAppenValue1AndGetFirst_expectValue1() {
+        // Arrange
+        StringColumn stringColumn = new StringColumn( "AnyName" );
+
+        // Act
+        stringColumn.append( "Value1" );
+
+        // Assert
+        String result = stringColumn.get( 0 );
+        assertThat( result, equalTo( "Value1" ) );
+    }
+
     // tpxu_method
 
 }

@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.columns;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
@@ -33,6 +34,8 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
  * 
  */
 public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
+
+    private final int INITIAL_SIZE = 128;
 
     private T[] columnValues;
     private int size;
@@ -44,7 +47,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     @SuppressWarnings( "unchecked" )
     public SimpleColumn( String columnName, Class<T> clzz ) {
         setColumnName( columnName );
-        this.columnValues = (T[]) Array.newInstance( clzz, 0 );
+        this.columnValues = (T[]) Array.newInstance( clzz, INITIAL_SIZE );
         this.size = 0;
     }
 
@@ -55,7 +58,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     }
 
     public boolean isEmpty() {
-        return columnValues.length == 0;
+        return this.getSize() == 0;
     }
 
     public T at( int index ) {
@@ -64,6 +67,10 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
 
     @Override
     public void append( T element ) {
+        if (this.columnValues.length <= this.size) {
+            this.columnValues = Arrays.copyOf( this.columnValues, this.columnValues.length + INITIAL_SIZE );
+        }
+        this.columnValues[this.size] = element;
         this.size++;
     }
 
@@ -79,6 +86,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
 
     @Override
     public void set( int index, T element ) {
+
     }
 
 }
