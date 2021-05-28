@@ -51,6 +51,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
         this.size = 0;
     }
 
+    // TODO: What if we want to accept over-provisioned arrays?
     public SimpleColumn( String columnname, T[] columnValues ) {
         setColumnName( columnname );
         this.columnValues = columnValues;
