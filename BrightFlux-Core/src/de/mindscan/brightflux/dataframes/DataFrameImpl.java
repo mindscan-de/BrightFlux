@@ -45,8 +45,8 @@ public class DataFrameImpl {
     // we will come from a line / stream dataset to a dataframe with columns. 
     // each column has its own type and own content. Problem is, that 
     // problem is reallocation in case of appending the columns with new values instead of adding columns
-    private Map<String, DataFrameColumn> columnsMap = new LinkedHashMap<>();
-    private DataFrameColumn[] columns = null;
+    private Map<String, DataFrameColumn<?>> columnsMap = new LinkedHashMap<>();
+    private DataFrameColumn<?>[] columns = null;
 
     public DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
@@ -80,12 +80,12 @@ public class DataFrameImpl {
      * This will return all columns for this data frame
      * @return
      */
-    public Collection<DataFrameColumn> getColumns() {
+    public Collection<DataFrameColumn<?>> getColumns() {
         return new ArrayList<>( columnsMap.values() );
     }
 
     // add single data frame column
-    public void addColumn( DataFrameColumn column ) {
+    public void addColumn( DataFrameColumn<?> column ) {
         if (column == null) {
             throw new IllegalArgumentException( "column must not be null." );
         }
@@ -106,15 +106,15 @@ public class DataFrameImpl {
     }
 
     // add multiple data frame columns
-    public void addColumns( DataFrameColumn... allcolumns ) {
-        for (DataFrameColumn dataFrameColumn : allcolumns) {
+    public void addColumns( DataFrameColumn<?>... allcolumns ) {
+        for (DataFrameColumn<?> dataFrameColumn : allcolumns) {
             addColumn( dataFrameColumn );
         }
     }
 
     // add multiple data frame columns
-    public void addColumns( Collection<DataFrameColumn> allcolumns ) {
-        for (DataFrameColumn dataFrameColumn : allcolumns) {
+    public void addColumns( Collection<DataFrameColumn<?>> allcolumns ) {
+        for (DataFrameColumn<?> dataFrameColumn : allcolumns) {
             addColumn( dataFrameColumn );
         }
     }

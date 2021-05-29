@@ -82,7 +82,7 @@ public class DataFrameImplTest {
         DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
 
         // act
-        Collection<DataFrameColumn> result = dataFrame.getColumns();
+        Collection<DataFrameColumn<?>> result = dataFrame.getColumns();
 
         // assert
         assertThat( result, empty() );
@@ -109,7 +109,7 @@ public class DataFrameImplTest {
         dataFrame.addColumn( new BooleanColumn( "Column1" ) );
 
         // assert
-        Collection<DataFrameColumn> result = dataFrame.getColumns();
+        Collection<DataFrameColumn<?>> result = dataFrame.getColumns();
         assertThat( result, not( empty() ) );
     }
 
@@ -122,7 +122,7 @@ public class DataFrameImplTest {
         dataFrame.addColumn( booleanColumn1 );
 
         // act
-        Collection<DataFrameColumn> result = dataFrame.getColumns();
+        Collection<DataFrameColumn<?>> result = dataFrame.getColumns();
 
         // assert
         assertThat( result, contains( booleanColumn1 ) );
@@ -141,7 +141,7 @@ public class DataFrameImplTest {
         dataFrame.addColumn( booleanColumn3 );
 
         // act
-        Collection<DataFrameColumn> result = dataFrame.getColumns();
+        Collection<DataFrameColumn<?>> result = dataFrame.getColumns();
 
         // assert
         assertThat( result, contains( booleanColumn1, booleanColumn2, booleanColumn3 ) );
@@ -159,7 +159,7 @@ public class DataFrameImplTest {
         dataFrame.addColumn( booleanColumn1 );
 
         // act
-        Collection<DataFrameColumn> result = dataFrame.getColumns();
+        Collection<DataFrameColumn<?>> result = dataFrame.getColumns();
 
         // assert
         assertThat( result, contains( booleanColumn1, booleanColumn2 ) );

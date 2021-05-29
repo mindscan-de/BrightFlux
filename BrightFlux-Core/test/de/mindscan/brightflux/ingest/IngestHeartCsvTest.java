@@ -26,9 +26,8 @@ public class IngestHeartCsvTest {
         DataFrameImpl frame = heartCsv.loadCsvAsDataFrame( path );
 
         // assert
-        Collection<DataFrameColumn> result = frame.getColumns();
+        Collection<DataFrameColumn<?>> result = frame.getColumns();
         assertThat( result, hasSize( 14 ) );
-
     }
 
 }
