@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.ingest;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.columns.FloatColumn;
@@ -36,8 +35,7 @@ import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
  * 
  */
 public class IngestHeartCsv {
-    public DataFrameImpl loadCsvAsDataFrame() {
-        Path path = Paths.get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
+    public DataFrameImpl loadCsvAsDataFrame( Path path ) {
 
         DataFrameImpl dataframe = new DataFrameImpl( path.getFileName().toString() );
 
