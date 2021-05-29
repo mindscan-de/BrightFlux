@@ -34,4 +34,8 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
         super( Integer.class );
     }
 
+    public IntegerColumn( String columnName ) {
+        super( columnName, Integer.class );
+    }
+
 }
