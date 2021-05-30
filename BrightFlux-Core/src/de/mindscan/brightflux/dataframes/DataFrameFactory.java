@@ -31,24 +31,15 @@ package de.mindscan.brightflux.dataframes;
 public class DataFrameFactory {
 
     public static DataFrameImpl create( String name, String[] columnnames, String[] formats ) {
-        if (columnnames == null || columnnames.length == 0) {
-            return new DataFrameImpl( "unknown" );
-        }
-
-        if (formats == null || formats.length == 0) {
-            throw new IllegalArgumentException( "formats must not be null or empty" );
-        }
-
-        if (columnnames.length != formats.length) {
-            throw new IllegalArgumentException(
-                            "columnnames(length: " + columnnames.length + ") and formats(length: " + formats.length + ") have different length" );
-        }
-
         DataFrameBuilder builder = new DataFrameBuilder();
 
+        // TODO: probably this is a bad idea, since i want to handle the columns as immutable as
+        //       soon as they are added to the dataframe
         for (int i = 0; i < columnnames.length; i++) {
             builder.addColumn( columnnames[i], formats[i] );
         }
+
+        // Here goes the parser code.... callback to the data parser
 
         return builder.build();
     }
