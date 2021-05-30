@@ -51,6 +51,24 @@ public class IngestHeartCsv {
                         new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
+        // basically we have a line parser
+        // basically we have a columnparser (will go to next column)
+        // basically we have a data parser (dependent on the current column)
+
+        // How to identfy the column-separator
+        // read some lines of the dataset
+        // calculate the histogram of each line
+        // build new histogram from min of the line histogram
+        // then find the character with the maximum to the min-histogram.
+        // that is the column separator for csv, hopefully either ',' or ';', or "\t"
+        // that value will also determine, how many columns we have per line + 1 (so last element per line collects complex texts?
+
+        // then we init the dataparser with the stop symbol until we see a columnseparator
+        // then we init the columndataparser with the columnseparator,
+        // then we init the columndataparser with the lineseparator as a stop symbol
+        // then we init the last columndataparser with the stopymbol for the line
+        // then we init the line separator with either "\n\r", "\r\n", "\n"
+
 //        int intElement = 0;
 //        float floatElement = 0;
 
