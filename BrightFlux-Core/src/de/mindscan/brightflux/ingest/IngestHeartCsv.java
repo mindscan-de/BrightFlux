@@ -27,66 +27,45 @@ package de.mindscan.brightflux.ingest;
 
 import java.nio.file.Path;
 
+import de.mindscan.brightflux.dataframes.DataFrameFactory;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
-import de.mindscan.brightflux.dataframes.columns.FloatColumn;
-import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 
 /**
  * 
  */
 public class IngestHeartCsv {
+
     public DataFrameImpl loadCsvAsDataFrame( Path path ) {
 
-        DataFrameImpl dataframe = new DataFrameImpl( path.getFileName().toString() );
-
 //        // age, sex, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak (float), slp, caa, thall, output
-//        DataFrameImpl builder = DataFrameFactory.create( path.getFileName().toString(),
-//                        new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
-//                        new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
+        DataFrameImpl dataframe = DataFrameFactory.create( path.getFileName().toString(),
+                        new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
+                        // TODO: input format (currently 'int' and 'float' only)
+                        // we want to say something like int32b (int 32 binary) , int32t (int 32 text)
+                        // column format should be negotiable (currently 'int' and 'float' only)
+                        new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
-        IntegerColumn ageColumn = new IntegerColumn( "age" );
-        IntegerColumn sexColumn = new IntegerColumn( "sex" );
-        IntegerColumn cpColumn = new IntegerColumn( "cp" );
-        IntegerColumn trtbpsColumn = new IntegerColumn( "trtbps" );
-        IntegerColumn cholColumn = new IntegerColumn( "chol" );
-        IntegerColumn fbsColumn = new IntegerColumn( "fbs" );
-        IntegerColumn restecgColumn = new IntegerColumn( "restecg" );
-        IntegerColumn thalachhColumn = new IntegerColumn( "thalachh" );
-        IntegerColumn exngColumn = new IntegerColumn( "exng" );
-        FloatColumn oldpeakColumn = new FloatColumn( "oldpeak" );
-        IntegerColumn slpColumn = new IntegerColumn( "slp" );
-        IntegerColumn caaColumn = new IntegerColumn( "cas" );
-        IntegerColumn thallColumn = new IntegerColumn( "thall" );
-        IntegerColumn outputColumn = new IntegerColumn( "output" );
-
-        int intElement = 0;
-        float floatElement = 0;
+//        int intElement = 0;
+//        float floatElement = 0;
 
         // add values to the columns
         {
 
-            ageColumn.append( intElement );
-            sexColumn.append( intElement );
-            cpColumn.append( intElement );
-            trtbpsColumn.append( intElement );
-            cholColumn.append( intElement );
-            fbsColumn.append( intElement );
-            restecgColumn.append( intElement );
-            thalachhColumn.append( intElement );
-            exngColumn.append( intElement );
-            oldpeakColumn.append( floatElement );
-            slpColumn.append( intElement );
-            caaColumn.append( intElement );
-            thallColumn.append( intElement );
-            outputColumn.append( intElement );
+//            ageColumn.append( intElement );
+//            sexColumn.append( intElement );
+//            cpColumn.append( intElement );
+//            trtbpsColumn.append( intElement );
+//            cholColumn.append( intElement );
+//            fbsColumn.append( intElement );
+//            restecgColumn.append( intElement );
+//            thalachhColumn.append( intElement );
+//            exngColumn.append( intElement );
+//            oldpeakColumn.append( floatElement );
+//            slpColumn.append( intElement );
+//            caaColumn.append( intElement );
+//            thallColumn.append( intElement );
+//            outputColumn.append( intElement );
         }
-
-        // input columns
-        dataframe.addColumns( ageColumn, sexColumn, cpColumn, trtbpsColumn, cholColumn, fbsColumn, restecgColumn );
-        dataframe.addColumns( thalachhColumn, exngColumn, oldpeakColumn, slpColumn, caaColumn, thallColumn );
-
-        // output columns
-        dataframe.addColumn( outputColumn );
 
         return dataframe;
     }
