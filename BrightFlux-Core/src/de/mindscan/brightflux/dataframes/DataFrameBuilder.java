@@ -47,7 +47,9 @@ public class DataFrameBuilder {
     }
 
     public DataFrameImpl build() {
+        // this will finalize the building of the dataframe
         df.addColumns( columns );
+        // return the final dataframe
         return df;
     }
 
