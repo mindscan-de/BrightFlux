@@ -77,4 +77,25 @@ public class DataFrameBuilder {
         return this;
     }
 
+    public DataFrameBuilder addColumns( String[] columnNames, String[] columnTypes ) {
+        if (columnNames == null || columnNames.length == 0) {
+            return this;
+        }
+
+        if (columnTypes == null || columnTypes.length == 0) {
+            throw new IllegalArgumentException( "formats must not be null or empty" );
+        }
+
+        if (columnNames.length != columnTypes.length) {
+            throw new IllegalArgumentException(
+                            "columnNames(length: " + columnNames.length + ") and columnTypes(length: " + columnTypes.length + ") have different length" );
+        }
+
+        for (int i = 0; i < columnNames.length; i++) {
+            this.addColumn( columnNames[i], columnTypes[i] );
+        }
+
+        return this;
+    }
+
 }
