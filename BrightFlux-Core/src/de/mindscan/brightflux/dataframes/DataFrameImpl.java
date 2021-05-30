@@ -46,7 +46,7 @@ public class DataFrameImpl {
     // each column has its own type and own content. Problem is, that 
     // problem is reallocation in case of appending the columns with new values instead of adding columns
     private Map<String, DataFrameColumn<?>> columnsMap = new LinkedHashMap<>();
-    private DataFrameColumn<?>[] columns = null;
+    // private DataFrameColumn<?>[] columns = null;
 
     public DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
