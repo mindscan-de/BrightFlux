@@ -39,7 +39,10 @@ public class IngestHeartCsv {
 
         DataFrameImpl dataframe = new DataFrameImpl( path.getFileName().toString() );
 
-        // age, sex, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak (float), slp, caa, thall, output
+//        // age, sex, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak (float), slp, caa, thall, output
+//        DataFrameImpl builder = DataFrameFactory.create( path.getFileName().toString(),
+//                        new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
+//                        new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
         IntegerColumn ageColumn = new IntegerColumn( "age" );
         IntegerColumn sexColumn = new IntegerColumn( "sex" );
@@ -61,6 +64,7 @@ public class IngestHeartCsv {
 
         // add values to the columns
         {
+
             ageColumn.append( intElement );
             sexColumn.append( intElement );
             cpColumn.append( intElement );

@@ -2,6 +2,7 @@ package de.mindscan.brightflux.ingest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,6 +29,21 @@ public class IngestHeartCsvTest {
         // assert
         Collection<DataFrameColumn<?>> result = frame.getColumns();
         assertThat( result, hasSize( 14 ) );
+    }
+
+    @Test
+    public void testLoadCsvAsDataFrame_loadDataSet_has14ColumnNamesInOrder() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrame( path );
+
+        // assert
+        Collection<String> result = frame.getColumnNames();
+        assertThat( result,
+                        contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" ) );
+
     }
 
 }
