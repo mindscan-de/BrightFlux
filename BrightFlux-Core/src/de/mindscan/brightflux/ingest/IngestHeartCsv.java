@@ -27,7 +27,7 @@ package de.mindscan.brightflux.ingest;
 
 import java.nio.file.Path;
 
-import de.mindscan.brightflux.dataframes.DataFrameFactory;
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 
 /**
@@ -38,11 +38,13 @@ public class IngestHeartCsv {
     public DataFrameImpl loadCsvAsDataFrame( Path path ) {
 
 //        // age, sex, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak (float), slp, caa, thall, output
-        DataFrameImpl dataframe = DataFrameFactory.create( path.getFileName().toString(),
+        DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
+
+        // TODO: input format (currently 'int' and 'float' only)
+        // we want to say something like int32b (int 32 binary) , int32t (int 32 text)
+        // column format should be negotiable (currently 'int' and 'float' only)
+        dfBuilder.addColumns(
                         new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
-                        // TODO: input format (currently 'int' and 'float' only)
-                        // we want to say something like int32b (int 32 binary) , int32t (int 32 text)
-                        // column format should be negotiable (currently 'int' and 'float' only)
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
 //        int intElement = 0;
@@ -67,6 +69,6 @@ public class IngestHeartCsv {
 //            outputColumn.append( intElement );
         }
 
-        return dataframe;
+        return dfBuilder.build();
     }
 }
