@@ -31,7 +31,10 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 
 /**
+ * Use one of these datasets, your column names may vary...
  * 
+ * https://www.kaggle.com/ronitf/heart-disease-uci
+ * https://www.kaggle.com/zhaoyingzhu/heartcsv
  */
 public class IngestHeartCsv {
 
@@ -41,8 +44,9 @@ public class IngestHeartCsv {
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
 
         // TODO: input format (currently 'int' and 'float' only)
-        // we want to say something like int32b (int 32 binary) , int32t (int 32 text)
-        // column format should be negotiable (currently 'int' and 'float' only)
+        // * we want to say something like int32b (int 32 binary) , int32t (int 32 text)
+        // * column format should be negotiable (currently 'int' and 'float' only)
+        // * we want to describe the input format and the input format parsing.
         dfBuilder.addColumns(
                         new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
