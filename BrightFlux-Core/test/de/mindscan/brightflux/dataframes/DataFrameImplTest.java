@@ -206,4 +206,17 @@ public class DataFrameImplTest {
         assertThat( result, contains( "Column1", "Column2", "Column3" ) );
     }
 
+    @Test
+    public void testSetName_CTorWithName1ThenSetName2_expectSetName2() throws Exception {
+        // arrange
+        DataFrameImpl dataFrame = new DataFrameImpl( "Name1" );
+
+        // act
+        dataFrame.setName( "Name2" );
+
+        // assert
+        String result = dataFrame.getName();
+        assertThat( result, equalTo( "Name2" ) );
+    }
+
 }

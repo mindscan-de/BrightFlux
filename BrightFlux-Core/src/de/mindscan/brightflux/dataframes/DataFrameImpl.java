@@ -72,6 +72,10 @@ public class DataFrameImpl {
         return nameOfDataFrame;
     }
 
+    public void setName( String dfName ) {
+        this.nameOfDataFrame = dfName;
+    }
+
     public Collection<String> getColumnNames() {
         return new ArrayList<>( columnsMap.keySet() );
     }
