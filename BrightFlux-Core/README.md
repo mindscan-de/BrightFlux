@@ -17,3 +17,8 @@ It will probably not host the code for viewing the data, as this is secondary fo
 
 * Maybe use an existing DataFrame library so far, until we have reason to use our own?
 ** https://github.com/nRo/DataFrame
+
+* Maybe use the HDF5 format to load and store the column data of the dataframe
+* Idea is to reuse all the alredy developed features and also a high performance reader and writer is appreciated
+* The idea is also to be able to load this data (my dataframes) into python or some other tool for future quantitative analysis and machine learning
+** https://github.com/HDFGroup/hdf5
