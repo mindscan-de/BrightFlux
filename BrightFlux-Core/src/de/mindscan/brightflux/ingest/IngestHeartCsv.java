@@ -55,12 +55,11 @@ public class IngestHeartCsv {
         // basically we have a columnparser (will go to next column)
         // basically we have a data parser (dependent on the current column)
 
-        // How to identfy the column-separator
+        String head[] = { "age,sex,cp,trtbps,chol,fbs,restecg,thalachh,exng,oldpeak,slp,caa,thall,output", //
+                        "63,1,3,145,233,1,0,150,0,2.3,0,0,1,1", "37,1,2,130,250,0,1,187,0,3.5,0,0,2,1" };
         // read some lines of the dataset
-        // calculate the histogram of each line
-        // build new histogram from min of the line histogram
-        // then find the character with the maximum to the min-histogram.
-        // that is the column separator for csv, hopefully either ',' or ';', or "\t"
+        String columnSeparator = IngestUtils.calculateColumnSeparator( head );
+
         // that value will also determine, how many columns we have per line + 1 (so last element per line collects complex texts?
 
         // then we init the dataparser with the stop symbol until we see a columnseparator
