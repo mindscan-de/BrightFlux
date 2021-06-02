@@ -25,6 +25,12 @@
  */
 package de.mindscan.brightflux.ingest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 /**
  * 
  */
@@ -33,11 +39,32 @@ public class IngestUtils {
     public static String calculateColumnSeparator( String[] headLines ) {
         // How to identfy the column-separator
         // read some lines of the dataset
+
+        // convert each line into a hashset of characters
+        List<Set<Character>> allLinesAsSet = new ArrayList<>();
+        for (String line : headLines) {
+            if (!line.isBlank()) {
+                allLinesAsSet.add( line.chars().mapToObj( e -> (char) e ).collect( Collectors.toSet() ) );
+            }
+        }
+
+        if (allLinesAsSet.size() == 0) {
+            return null;
+        }
+
+        // calculate the union of the characters
+        Set<Character> union = allLinesAsSet.get( 0 );
+        for (Set<Character> set : allLinesAsSet) {
+            union.retainAll( set );
+        }
+
+        System.out.println( Arrays.deepToString( union.toArray() ) );
         // calculate the histogram of each line
+
         // build new histogram from min of the line histogram
         // then find the character with the maximum to the min-histogram.
         // that is the column separator for csv, hopefully either ',' or ';', or "\t"
 
-        return ",";
+        return union.toArray()[0].toString();
     }
 }
