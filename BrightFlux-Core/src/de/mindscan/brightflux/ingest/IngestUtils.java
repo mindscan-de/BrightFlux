@@ -67,4 +67,20 @@ public class IngestUtils {
 
         return union.toArray()[0].toString();
     }
+
+    public static int calculateNumberOfColumns( String[] headLines, char columnSeparator ) {
+
+        List<Integer> allLinesColumnCount = new ArrayList<>();
+        for (String line : headLines) {
+            if (!line.isBlank()) {
+                allLinesColumnCount.add( (int) line.chars().filter( ch -> ch == columnSeparator ).count() );
+            }
+        }
+
+        int columns = 1 + allLinesColumnCount.stream().min( Integer::compare ).get();
+
+        System.out.println( columns );
+
+        return columns;
+    }
 }
