@@ -43,14 +43,6 @@ public class IngestHeartCsv {
 //        // age, sex, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak (float), slp, caa, thall, output
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
 
-        // TODO: input format (currently 'int' and 'float' only)
-        // * we want to say something like int32b (int 32 binary) , int32t (int 32 text)
-        // * column format should be negotiable (currently 'int' and 'float' only)
-        // * we want to describe the input format and the input format parsing.
-        dfBuilder.addColumns(
-                        new String[] { "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" },
-                        new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
-
         // basically we have a line parser
         // basically we have a columnparser (will go to next column)
         // basically we have a data parser (dependent on the current column)
@@ -61,6 +53,17 @@ public class IngestHeartCsv {
         String columnSeparator = IngestUtils.calculateColumnSeparator( head );
 
         // that value will also determine, how many columns we have per line + 1 (so last element per line collects complex texts?
+        int numberOfColumns = IngestUtils.calculateNumberOfColumns( head, columnSeparator.charAt( 0 ) );
+
+        // calculate the column names.
+        String[] columnNames = head[0].split( columnSeparator, numberOfColumns );
+
+        // TODO: input format (currently 'int' and 'float' only)
+        // * we want to say something like int32b (int 32 binary) , int32t (int 32 text)
+        // * column format should be negotiable (currently 'int' and 'float' only)
+        // * we want to describe the input format and the input format parsing.
+        dfBuilder.addColumns( columnNames,
+                        new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
         // then we init the dataparser with the stop symbol until we see a columnseparator
         // then we init the columndataparser with the columnseparator,

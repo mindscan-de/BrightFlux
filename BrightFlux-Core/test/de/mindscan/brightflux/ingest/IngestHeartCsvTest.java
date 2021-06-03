@@ -42,7 +42,7 @@ public class IngestHeartCsvTest {
         // assert
         Collection<String> result = frame.getColumnNames();
         assertThat( result,
-                        contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "cas", "thall", "output" ) );
+                        contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "caa", "thall", "output" ) );
 
     }
 
