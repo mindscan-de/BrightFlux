@@ -25,6 +25,11 @@
  */
 package de.mindscan.brightflux.ingest.tokenizers;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import de.mindscan.brightflux.ingest.DataToken;
+
 /**
  * 
  */
@@ -44,7 +49,7 @@ public class CSVTokenizer {
         // TODO Auto-generated method stub
     }
 
-    public void tokenize() {
+    public Collection<DataToken> tokenize() {
         // Actually we want a producer - consumer - producer model in a pipe like architecture
         //  
 
@@ -53,5 +58,8 @@ public class CSVTokenizer {
         // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
         // can be processed more generically.
 
+        ArrayList<DataToken> tokens = new ArrayList<DataToken>();
+
+        return tokens;
     }
 }
