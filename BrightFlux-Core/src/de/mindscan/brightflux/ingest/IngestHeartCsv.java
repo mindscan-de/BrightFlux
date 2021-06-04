@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizer;
 
 /**
  * Use one of these datasets, your column names may vary...
@@ -56,6 +57,7 @@ public class IngestHeartCsv {
         int numberOfColumns = IngestUtils.calculateNumberOfColumns( head, columnSeparator.charAt( 0 ) );
 
         // calculate the column names.
+        // This is not the best way to handle this, because we can have string values containing the separator
         String[] columnNames = head[0].split( columnSeparator, numberOfColumns );
 
         // TODO: input format (currently 'int' and 'float' only)
@@ -63,7 +65,15 @@ public class IngestHeartCsv {
         // * column format should be negotiable (currently 'int' and 'float' only)
         // * we want to describe the input format and the input format parsing.
         dfBuilder.addColumns( columnNames,
+                        // I currently have no idea how to determine this in a fast way
+                        // I will let that sink in for a while
+                        // that is the target type of the column - but we also need the input type of the columns as well
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
+
+        CSVTokenizer tokenizer = new CSVTokenizer();
+        tokenizer.setColumnSeparator( columnSeparator );
+        tokenizer.setLineSeparator( "\n" );
+        tokenizer.tokenize();
 
         // then we init the dataparser with the stop symbol until we see a columnseparator
         // then we init the columndataparser with the columnseparator,
