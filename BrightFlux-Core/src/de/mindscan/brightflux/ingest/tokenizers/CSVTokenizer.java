@@ -52,5 +52,6 @@ public class CSVTokenizer {
         // At start we create a collection of tokens, which are much more easy to parse.
         // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
         // can be processed more generically.
+
     }
 }
