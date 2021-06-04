@@ -49,16 +49,18 @@ public class CSVTokenizer {
         // TODO Auto-generated method stub
     }
 
+    // TODO:  Actually we want a producer - consumer - producer model in a pipe like architecture
+
     public Collection<DataToken> tokenize() {
-        // Actually we want a producer - consumer - producer model in a pipe like architecture
-        //  
+        // this is good enough for now.
+        ArrayList<DataToken> tokens = new ArrayList<DataToken>();
+
+        // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
 
         // we convert the input into a intermediate representation
         // At start we create a collection of tokens, which are much more easy to parse.
         // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
-        // can be processed more generically.
-
-        ArrayList<DataToken> tokens = new ArrayList<DataToken>();
+        // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
 
         return tokens;
     }
