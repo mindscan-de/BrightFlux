@@ -23,13 +23,11 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.ingest.token;
-
-import de.mindscan.brightflux.ingest.DataToken;
+package de.mindscan.brightflux.ingest;
 
 /**
  * 
  */
-public class TextToken implements DataToken {
+public interface DataToken {
 
 }

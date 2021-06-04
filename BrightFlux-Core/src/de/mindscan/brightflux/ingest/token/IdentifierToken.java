@@ -25,9 +25,11 @@
  */
 package de.mindscan.brightflux.ingest.token;
 
+import de.mindscan.brightflux.ingest.DataToken;
+
 /**
  * 
  */
-public class IdentifierToken {
+public class IdentifierToken implements DataToken {
 
 }

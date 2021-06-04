@@ -25,9 +25,11 @@
  */
 package de.mindscan.brightflux.ingest.token;
 
+import de.mindscan.brightflux.ingest.DataToken;
+
 /**
  * 
  */
-public class ColumnSeparatorToken {
+public class ColumnSeparatorToken implements DataToken {
 
 }
