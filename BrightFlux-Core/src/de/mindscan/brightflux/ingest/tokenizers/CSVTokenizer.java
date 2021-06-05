@@ -90,7 +90,6 @@ public class CSVTokenizer {
 //
             if (isStartOfNumber( currentChar )) {
                 currentTokenType = consumeNumber();
-                tokens.add( new NumberToken() );
             }
 //
 //            if (isStartOfIdentifier( currentChar )) {
@@ -101,8 +100,8 @@ public class CSVTokenizer {
 //
 //            }
 //
-//            tokens.add( createToken( currentTokenType, inputString, tokenStart, tokenEnd ) );
-//
+            tokens.add( createToken( currentTokenType, inputString, tokenStart, tokenEnd ) );
+
             tokenStart = tokenEnd;
         }
 //
@@ -116,9 +115,15 @@ public class CSVTokenizer {
         return tokens;
     }
 
-//    private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int tokenStart2, int tokenEnd2 ) {
-//        return null;
-//    }
+    private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
+
+        if (currentTokenType == NumberToken.class) {
+            String value = inputString.substring( startIndex, endIndex );
+            return new NumberToken();
+        }
+
+        throw new IllegalArgumentException();
+    }
 
     private Class<NumberToken> consumeNumber() {
         int i = tokenStart;
