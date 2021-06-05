@@ -29,15 +29,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
  * 
  */
 public class CSVTokenizer {
 
-    private String columnSeparator;
+    private String columnSeparator = ",";
     private int maxColumnCount;
     private String lineSeparator;
+
+    /**
+     * 
+     */
+    private int tokenStart;
+    private int tokenEnd;
 
     /**
      * @param columnSeparator
@@ -59,19 +66,19 @@ public class CSVTokenizer {
         this.lineSeparator = lineSeparator;
     }
 
-    // TODO:  Actually we want a producer - consumer - producer model in a pipe like architecture
+    // TODO:  Actually I want a producer - consumer - producer model in a pipe like architecture
 
     public Collection<DataToken> tokenize( String inputString ) {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-//        int tokenstart = 0;
-//        int tokenend = 0;
-//
-//        {
-//            char currentChar = inputString.charAt( tokenstart );
-//
-//            Class<? extends DataToken> currentTokenType = null;
+        tokenStart = 0;
+        tokenEnd = 0;
+
+        while (tokenStart < inputString.length()) {
+            char currentChar = inputString.charAt( tokenStart );
+
+            Class<? extends DataToken> currentTokenType = null;
 //
 //            if (isColumnSeparator( currentChar )) {
 //                currentTokenType = ColumnSeparatorToken.class;
@@ -81,9 +88,10 @@ public class CSVTokenizer {
 //                currentTokenTypwe = consumeString();
 //            }
 //
-//            if (isStartOfNumber()) {
-//                currentTokenType = consumeNumber();
-//            }
+            if (isStartOfNumber( currentChar )) {
+                currentTokenType = consumeNumber();
+                tokens.add( new NumberToken() );
+            }
 //
 //            if (isStartOfIdentifier( currentChar )) {
 //                currentTokenType = consumeIdentifier();
@@ -93,10 +101,10 @@ public class CSVTokenizer {
 //
 //            }
 //
-//            tokens.add( createToken( currentTokenType, tokenstart, tokenend ) );
+//            tokens.add( createToken( currentTokenType, inputString, tokenStart, tokenEnd ) );
 //
-//            tokenstart = tokenend;
-//        }
+            tokenStart = tokenEnd;
+        }
 //
 //        // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
 //
@@ -107,4 +115,23 @@ public class CSVTokenizer {
 
         return tokens;
     }
+
+//    private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int tokenStart2, int tokenEnd2 ) {
+//        return null;
+//    }
+
+    private Class<NumberToken> consumeNumber() {
+        int i = tokenStart;
+
+        i = i + 1;
+
+        this.tokenEnd = i;
+
+        return NumberToken.class;
+    }
+
+    private boolean isStartOfNumber( char currentChar ) {
+        return "0123456789".contains( Character.toString( currentChar ) );
+    }
+
 }
