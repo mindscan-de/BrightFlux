@@ -85,4 +85,17 @@ public class CSVTokenizerTest {
         assertThat( result, hasSize( 1 ) );
     }
 
+    @Test
+    public void testTokenize_SetColumnSeparatorSemicolonStringContainingSingleColumnSeparator_returnsTokenListOfLengthOne() throws Exception {
+        // arrange
+        CSVTokenizer tokenizer = new CSVTokenizer();
+        tokenizer.setColumnSeparator( ";" );
+
+        // act
+        Collection<DataToken> result = tokenizer.tokenize( ";" );
+
+        // assert
+        assertThat( result, hasSize( 1 ) );
+    }
+
 }
