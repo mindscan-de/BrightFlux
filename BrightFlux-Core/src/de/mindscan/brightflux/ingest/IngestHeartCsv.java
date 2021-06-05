@@ -73,7 +73,7 @@ public class IngestHeartCsv {
         CSVTokenizer tokenizer = new CSVTokenizer();
         tokenizer.setColumnSeparator( columnSeparator );
         tokenizer.setLineSeparator( "\n" );
-        tokenizer.tokenize();
+        tokenizer.tokenize( "" );
 
         // then we init the dataparser with the stop symbol until we see a columnseparator
         // then we init the columndataparser with the columnseparator,
