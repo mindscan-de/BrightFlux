@@ -32,4 +32,9 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class EmptyToken implements DataToken {
 
+    @Override
+    public String getValue() {
+        return null;
+    }
+
 }

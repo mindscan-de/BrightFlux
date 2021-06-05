@@ -32,7 +32,18 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class NumberToken implements DataToken {
 
+    private String value;
+
+    NumberToken( String value ) {
+        this.value = value;
+    }
+
     public static NumberToken create( String value ) {
-        return new NumberToken();
+        return new NumberToken( value );
+    }
+
+    @Override
+    public String getValue() {
+        return value;
     }
 }

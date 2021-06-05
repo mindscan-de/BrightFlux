@@ -39,4 +39,10 @@ public class ColumnSeparatorToken implements DataToken {
     public static ColumnSeparatorToken create() {
         return Holder.instance;
     }
+
+    @Override
+    public String getValue() {
+        return null;
+    }
+
 }

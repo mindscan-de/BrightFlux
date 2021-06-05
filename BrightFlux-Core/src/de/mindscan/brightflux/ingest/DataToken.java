@@ -30,4 +30,5 @@ package de.mindscan.brightflux.ingest;
  */
 public interface DataToken {
 
+    String getValue();
 }

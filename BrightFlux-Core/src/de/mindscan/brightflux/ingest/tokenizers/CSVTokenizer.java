@@ -38,8 +38,9 @@ import de.mindscan.brightflux.ingest.token.NumberToken;
 public class CSVTokenizer {
 
     private String columnSeparator = ",";
+    private String lineSeparator = "\n";
+
     private int maxColumnCount;
-    private String lineSeparator;
 
     /**
      * 
@@ -84,7 +85,6 @@ public class CSVTokenizer {
             Class<? extends DataToken> currentTokenType = null;
 
             if (isColumnSeparator( currentChar )) {
-
                 currentTokenType = ColumnSeparatorToken.class;
             }
             else
