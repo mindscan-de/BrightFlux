@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
@@ -76,18 +77,21 @@ public class CSVTokenizer {
         tokenEnd = 0;
 
         while (tokenStart < inputString.length()) {
+            tokenEnd = tokenStart + 1;
+
             char currentChar = inputString.charAt( tokenStart );
 
             Class<? extends DataToken> currentTokenType = null;
-//
-//            if (isColumnSeparator( currentChar )) {
-//                currentTokenType = ColumnSeparatorToken.class;
-//            }
-//
+
+            if (isColumnSeparator( currentChar )) {
+
+                currentTokenType = ColumnSeparatorToken.class;
+            }
+            else
 //            if (isStartOfQuote( currentTokenType )) {
 //                currentTokenTypwe = consumeString();
 //            }
-//
+//            else
             if (isDigit( currentChar )) {
                 currentTokenType = consumeNumber( inputString );
             }
@@ -115,11 +119,22 @@ public class CSVTokenizer {
         return tokens;
     }
 
+    /**
+     * @param currentChar
+     * @return
+     */
+    private boolean isColumnSeparator( char currentChar ) {
+        return this.columnSeparator.equals( Character.toString( currentChar ) );
+    }
+
     private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
 
-        if (currentTokenType == NumberToken.class) {
+        if (NumberToken.class.equals( currentTokenType )) {
             String value = inputString.substring( startIndex, endIndex );
             return new NumberToken();
+        }
+        else if (ColumnSeparatorToken.class.equals( currentTokenType )) {
+            return new ColumnSeparatorToken();
         }
 
         throw new IllegalArgumentException();
