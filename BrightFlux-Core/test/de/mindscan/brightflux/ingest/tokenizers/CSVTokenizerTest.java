@@ -38,12 +38,36 @@ public class CSVTokenizerTest {
     }
 
     @Test
-    public void testTokenize_StringContainingSingleNumber_returnsTokenListOfLengthOne() throws Exception {
+    public void testTokenize_StringContainingSingleDigitNumber_returnsTokenListOfLengthOne() throws Exception {
         // arrange
         CSVTokenizer tokenizer = new CSVTokenizer();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "1" );
+
+        // assert
+        assertThat( result, hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_StringContainingDoubleDigitNumber_returnsTokenListOfLengthOne() throws Exception {
+        // arrange
+        CSVTokenizer tokenizer = new CSVTokenizer();
+
+        // act
+        Collection<DataToken> result = tokenizer.tokenize( "12" );
+
+        // assert
+        assertThat( result, hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_StringContainingTripleDigitNumber_returnsTokenListOfLengthOne() throws Exception {
+        // arrange
+        CSVTokenizer tokenizer = new CSVTokenizer();
+
+        // act
+        Collection<DataToken> result = tokenizer.tokenize( "123" );
 
         // assert
         assertThat( result, hasSize( 1 ) );

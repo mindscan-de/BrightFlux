@@ -88,8 +88,8 @@ public class CSVTokenizer {
 //                currentTokenTypwe = consumeString();
 //            }
 //
-            if (isStartOfNumber( currentChar )) {
-                currentTokenType = consumeNumber();
+            if (isDigit( currentChar )) {
+                currentTokenType = consumeNumber( inputString );
             }
 //
 //            if (isStartOfIdentifier( currentChar )) {
@@ -125,17 +125,19 @@ public class CSVTokenizer {
         throw new IllegalArgumentException();
     }
 
-    private Class<NumberToken> consumeNumber() {
+    private Class<NumberToken> consumeNumber( String inputString ) {
         int i = tokenStart;
 
-        i = i + 1;
+        while (i < inputString.length() && isDigit( inputString.charAt( i ) )) {
+            i = i + 1;
+        }
 
         this.tokenEnd = i;
 
         return NumberToken.class;
     }
 
-    private boolean isStartOfNumber( char currentChar ) {
+    private static boolean isDigit( char currentChar ) {
         return "0123456789".contains( Character.toString( currentChar ) );
     }
 
