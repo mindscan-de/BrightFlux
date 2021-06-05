@@ -35,32 +35,75 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class CSVTokenizer {
 
+    private String columnSeparator;
+    private int maxColumnCount;
+    private String lineSeparator;
+
     /**
      * @param columnSeparator
      */
     public void setColumnSeparator( String columnSeparator ) {
-        // TODO Auto-generated method stub
+        this.columnSeparator = columnSeparator;
+
+    }
+
+    public void setMaxColumnCount( int maxColumnCount ) {
+        this.maxColumnCount = maxColumnCount;
+
     }
 
     /**
      * @param string
      */
-    public void setLineSeparator( String string ) {
-        // TODO Auto-generated method stub
+    public void setLineSeparator( String lineSeparator ) {
+        this.lineSeparator = lineSeparator;
     }
 
     // TODO:  Actually we want a producer - consumer - producer model in a pipe like architecture
 
-    public Collection<DataToken> tokenize() {
+    public Collection<DataToken> tokenize( String inputString ) {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
-
-        // we convert the input into a intermediate representation
-        // At start we create a collection of tokens, which are much more easy to parse.
-        // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
-        // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
+//        int tokenstart = 0;
+//        int tokenend = 0;
+//
+//        {
+//            char currentChar = inputString.charAt( tokenstart );
+//
+//            Class<? extends DataToken> currentTokenType = null;
+//
+//            if (isColumnSeparator( currentChar )) {
+//                currentTokenType = ColumnSeparatorToken.class;
+//            }
+//
+//            if (isStartOfQuote( currentTokenType )) {
+//                currentTokenTypwe = consumeString();
+//            }
+//
+//            if (isStartOfNumber()) {
+//                currentTokenType = consumeNumber();
+//            }
+//
+//            if (isStartOfIdentifier( currentChar )) {
+//                currentTokenType = consumeIdentifier();
+//            }
+//
+//            if (currentTokenType == null) {
+//
+//            }
+//
+//            tokens.add( createToken( currentTokenType, tokenstart, tokenend ) );
+//
+//            tokenstart = tokenend;
+//        }
+//
+//        // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
+//
+//        // we convert the input into a intermediate representation
+//        // At start we create a collection of tokens, which are much more easy to parse.
+//        // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
+//        // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
 
         return tokens;
     }
