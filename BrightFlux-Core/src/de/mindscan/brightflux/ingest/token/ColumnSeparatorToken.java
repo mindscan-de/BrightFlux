@@ -32,4 +32,11 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class ColumnSeparatorToken implements DataToken {
 
+    public static class Holder {
+        private final static ColumnSeparatorToken instance = new ColumnSeparatorToken();
+    }
+
+    public static ColumnSeparatorToken create() {
+        return Holder.instance;
+    }
 }

@@ -130,11 +130,10 @@ public class CSVTokenizer {
     private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
 
         if (NumberToken.class.equals( currentTokenType )) {
-            String value = inputString.substring( startIndex, endIndex );
-            return new NumberToken();
+            return NumberToken.create( inputString.substring( startIndex, endIndex ) );
         }
         else if (ColumnSeparatorToken.class.equals( currentTokenType )) {
-            return new ColumnSeparatorToken();
+            return ColumnSeparatorToken.create();
         }
 
         throw new IllegalArgumentException();
