@@ -51,6 +51,16 @@ Some of the planned features are:
 * have multiple views / diagram options for the same logs to understand particular system behavior
 * Export the analysis result in short form
 * Help with writing up the analysis, eg. using templates
+* Export datarames as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
+* Using receipts for reproducing some analysis with a second log
+  * using labelling techniques to mark suspicious occurences and make them available for machine learning training
+  * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threashold
+  * NER for logmessages
+* some dictionary or knowledge base articles for certain messages to provide context
+* add links and options to use a code search engine and log search engine for the messages
+  * did we see that message more often, but we never thought about it before
+  * since what version of the system we see that message
+  * where does this message come from in the code and annotate this message with a software component / swimlane
 
 * Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
 * identify same events for different log sources (e.g. in case they are connected) and correlate logs to each other using very different log formats.
