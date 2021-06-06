@@ -61,18 +61,29 @@ Some of the planned features are:
   * did we see that message more often, but we never thought about it before
   * since what version of the system we see that message
   * where does this message come from in the code and annotate this message with a software component / swimlane
+* transform logs from one system (source) to the other - e.g. recovery mode if one of the systemes stopped logging but the other system was receiving the logs as well and logged them
+  * reconstruct logs
+  
 
 * Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
 * identify same events for different log sources (e.g. in case they are connected) and correlate logs to each other using very different log formats.
 * provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
+* sync logmessage with video, e.g. select a logentry and then show the content of the video at axactly this timestamp
+
 
 * indexing dataframes columnwise for future search operations
 * Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
+
 
 * Ingest text files into table oriented dataframes
   * use json file based - format and parser description 
 * ingest binary files into table oriented dataframes
   * use json file based - format and parser description 
 * ingest inner encodings of data in certain columns of the database in case, using selectors (SQL-Like) and then a format/parser description
+
   
-* use a client server approach for the dataframe processing vs presentation
+* use a client server approach for the dataframe processing vs presentation and for performance
+
+
+* combine that system with the CheapLithium system (decision gag/decisiontree) for automated decisions based on the content of log files for automated log file analysis
+* combine that system with the FuriousIron code search system
