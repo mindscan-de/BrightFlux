@@ -26,7 +26,7 @@
 package de.mindscan.brightflux.ingest.tokenizers;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
@@ -70,7 +70,7 @@ public class CSVTokenizer {
 
     // TODO:  Actually I want a producer - consumer - producer model in a pipe like architecture
 
-    public Collection<DataToken> tokenize( String inputString ) {
+    public List<DataToken> tokenize( String inputString ) {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
