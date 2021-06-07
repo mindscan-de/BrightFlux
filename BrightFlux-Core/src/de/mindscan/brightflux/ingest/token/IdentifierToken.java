@@ -41,4 +41,13 @@ public class IdentifierToken implements DataToken {
         return null;
     }
 
+    /**
+     * @param substring
+     * @return
+     */
+    public static DataToken create( String substring ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

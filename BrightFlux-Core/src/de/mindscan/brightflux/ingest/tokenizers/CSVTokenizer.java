@@ -30,6 +30,7 @@ import java.util.List;
 
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
+import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
@@ -95,10 +96,9 @@ public class CSVTokenizer {
             if (isDigit( currentChar )) {
                 currentTokenType = consumeNumber( inputString );
             }
-//
-//            if (isStartOfIdentifier( currentChar )) {
-//                currentTokenType = consumeIdentifier();
-//            }
+            else if (isStartOfIdentifier( currentChar )) {
+                currentTokenType = consumeIdentifier( inputString );
+            }
 //
 //            if (currentTokenType == null) {
 //
@@ -120,9 +120,29 @@ public class CSVTokenizer {
     }
 
     /**
-     * @param currentChar
+     * @param inputString
      * @return
      */
+    private Class<? extends DataToken> consumeIdentifier( String inputString ) {
+        int i = this.tokenStart;
+        char currentChar = inputString.charAt( i );
+        if (isStartOfIdentifier( currentChar )) {
+            i++;
+            while (i < inputString.length() && Character.isJavaIdentifierPart( inputString.charAt( i ) )) {
+                i++;
+            }
+        }
+        this.tokenEnd = i;
+
+        // check the content of the string, and check if we missed something ...
+
+        return IdentifierToken.class;
+    }
+
+    private boolean isStartOfIdentifier( char currentChar ) {
+        return Character.isJavaIdentifierStart( currentChar );
+    }
+
     private boolean isColumnSeparator( char currentChar ) {
         return this.columnSeparator.equals( Character.toString( currentChar ) );
     }
@@ -135,8 +155,11 @@ public class CSVTokenizer {
         else if (ColumnSeparatorToken.class.equals( currentTokenType )) {
             return ColumnSeparatorToken.create();
         }
+        else if (IdentifierToken.class.equals( currentTokenType )) {
+            return IdentifierToken.create( inputString.substring( startIndex, endIndex ) );
+        }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
     }
 
     private Class<NumberToken> consumeNumber( String inputString ) {

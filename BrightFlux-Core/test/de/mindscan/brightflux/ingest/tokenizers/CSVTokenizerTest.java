@@ -176,4 +176,19 @@ public class CSVTokenizerTest {
         assertThat( result.get( 2 ), instanceOf( NumberToken.class ) );
     }
 
+    @Test
+    public void testTokenize_StringContainingHeadlineOfHeartCsv_Expect27Tokens() throws Exception {
+        // arrange
+        CSVTokenizer tokenizer = new CSVTokenizer();
+
+        // act
+        List<DataToken> result = tokenizer.tokenize( "age,sex,cp,trtbps,chol,fbs,restecg,thalachh,exng,oldpeak,slp,caa,thall,output" );
+
+        // assert
+        int __14_COLUMNS_IDENTIFIER = 14;
+        int __13_COLUMN_SEPARATORS = 13;
+
+        assertThat( result, hasSize( __14_COLUMNS_IDENTIFIER + __13_COLUMN_SEPARATORS ) );
+    }
+
 }
