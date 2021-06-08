@@ -41,7 +41,6 @@ public class LineSeparatorToken implements DataToken {
      */
     @Override
     public String getValue() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -49,8 +48,7 @@ public class LineSeparatorToken implements DataToken {
      * @return
      */
     public static DataToken create() {
-        // TODO Auto-generated method stub
-        return null;
+        return Holder.instance;
     }
 
 }
