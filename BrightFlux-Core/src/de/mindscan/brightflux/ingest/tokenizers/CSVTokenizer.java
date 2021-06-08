@@ -31,6 +31,7 @@ import java.util.List;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
+import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
@@ -88,7 +89,9 @@ public class CSVTokenizer {
             if (isColumnSeparator( currentChar )) {
                 currentTokenType = ColumnSeparatorToken.class;
             }
-            else
+            else if (isStartOfLineSeparator( currentChar )) {
+                currentTokenType = consumeLineSeparator( inputString );
+            }
 //            if (isStartOfQuote( currentTokenType )) {
 //                currentTokenTypwe = consumeString();
 //            }
@@ -158,6 +161,10 @@ public class CSVTokenizer {
         else if (IdentifierToken.class.equals( currentTokenType )) {
             return IdentifierToken.create( inputString.substring( startIndex, endIndex ) );
         }
+        else if (LineSeparatorToken.class.equals( currentTokenType )) {
+            // TODO: maybe count the lines...?
+            return LineSeparatorToken.create();
+        }
 
         throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
     }
@@ -176,6 +183,18 @@ public class CSVTokenizer {
 
     private static boolean isDigit( char currentChar ) {
         return "0123456789".contains( Character.toString( currentChar ) );
+    }
+
+    private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
+        // good enough for now
+        tokenEnd = tokenStart + 1;
+
+        return LineSeparatorToken.class;
+    }
+
+    private boolean isStartOfLineSeparator( char currentChar ) {
+        // TODO: Firstmenge of this.lineSeparator
+        return currentChar == '\n' || currentChar == '\r';
     }
 
 }

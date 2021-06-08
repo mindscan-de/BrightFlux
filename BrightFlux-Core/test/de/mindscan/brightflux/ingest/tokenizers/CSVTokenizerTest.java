@@ -191,4 +191,21 @@ public class CSVTokenizerTest {
         assertThat( result, hasSize( __14_COLUMNS_IDENTIFIER + __13_COLUMN_SEPARATORS ) );
     }
 
+    @Test
+    public void testTokenize_StringContainingHeadlineAnd3DataLines_Expect15Tokens() throws Exception {
+        // arrange
+        CSVTokenizer tokenizer = new CSVTokenizer();
+
+        // act
+        List<DataToken> result = tokenizer.tokenize( "col1,col2\n1,2\n3,4\n5,6" );
+
+        // assert
+        int __2_COLUMNS_IDENTIFIER = 2;
+        int __4_COLUMN_SEPARATORS = 4;
+        int __3_LINE_SEPARATORS = 3;
+        int __6_NUMBERS = 6;
+
+        assertThat( result, hasSize( __2_COLUMNS_IDENTIFIER + __4_COLUMN_SEPARATORS + __3_LINE_SEPARATORS + __6_NUMBERS ) );
+    }
+
 }

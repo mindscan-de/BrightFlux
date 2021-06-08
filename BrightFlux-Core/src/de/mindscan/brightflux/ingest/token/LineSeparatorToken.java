@@ -32,11 +32,23 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class LineSeparatorToken implements DataToken {
 
+    public static class Holder {
+        private final static LineSeparatorToken instance = new LineSeparatorToken();
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public String getValue() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    public static DataToken create() {
         // TODO Auto-generated method stub
         return null;
     }
