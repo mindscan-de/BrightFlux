@@ -25,9 +25,14 @@
  */
 package de.mindscan.brightflux.ingest.parser;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
+import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 
 /**
  * A DataFrame parser will get a Stream/Collection of Tokens and will emit a data frame from it. 
@@ -36,7 +41,21 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class DataFrameParser {
 
-    public void parse( Collection<DataToken> tokenStream ) {
+    public List<DataFrameColumn<?>> parse( Collection<DataToken> tokenStream ) {
+
+        List<DataFrameColumn<?>> parseResult = new ArrayList<>();
+        // always start with an empty column
+        prepareNewColumn( parseResult );
+
+        for (DataToken dataToken : tokenStream) {
+            if (dataToken instanceof LineSeparatorToken) {
+                break;
+            }
+            if (dataToken instanceof ColumnSeparatorToken) {
+                prepareNewColumn( parseResult );
+            }
+
+        }
 
         // if LineSeparatorToken -> start over with first column
         // if ColumnSeparatorToken -> select next DataColumn as Target
@@ -48,6 +67,16 @@ public class DataFrameParser {
 
         // return a dataframe containing DataFrameColumns of DataTokens
         // return a collection of DataFramecolumns of DataTokens?
+
+        return parseResult;
+    }
+
+    /**
+     * @param parseResult
+     */
+    private void prepareNewColumn( List<DataFrameColumn<?>> parseResult ) {
+        DataTokenColumn dataTokenColumn = new DataTokenColumn();
+        parseResult.add( dataTokenColumn );
     }
 
 }

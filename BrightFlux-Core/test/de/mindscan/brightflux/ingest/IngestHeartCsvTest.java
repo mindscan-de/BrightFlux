@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
@@ -44,6 +45,18 @@ public class IngestHeartCsvTest {
         assertThat( result,
                         contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "caa", "thall", "output" ) );
 
+    }
+
+    @Test
+    public void testLoadCsvAsDataFrameV2() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        Collection<DataFrameColumn<?>> result = frame.getColumns();
+        assertThat( result, hasSize( 14 ) );
     }
 
 }
