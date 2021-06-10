@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.columns.FloatColumn;
@@ -73,6 +74,13 @@ public class DataFrameBuilder {
 
             default:
                 throw new IllegalArgumentException( "unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
+        }
+        return this;
+    }
+
+    public DataFrameBuilder addColumns( Collection<DataFrameColumn<?>> newColumns ) {
+        for (DataFrameColumn<?> newColumn : newColumns) {
+            this.columns.add( newColumn );
         }
         return this;
     }
