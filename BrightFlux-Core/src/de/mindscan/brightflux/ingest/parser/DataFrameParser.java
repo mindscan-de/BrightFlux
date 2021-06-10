@@ -75,7 +75,10 @@ public class DataFrameParser {
      * @param parseResult
      */
     private void prepareNewColumn( List<DataFrameColumn<?>> parseResult ) {
+        int size = parseResult.size();
+
         DataTokenColumn dataTokenColumn = new DataTokenColumn();
+        dataTokenColumn.setColumnName( Integer.toString( size ) );
         parseResult.add( dataTokenColumn );
     }
 
