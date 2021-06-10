@@ -152,14 +152,17 @@ public class CSVTokenizer {
 
     private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
 
+        String substring = inputString.substring( startIndex, endIndex );
+        System.out.println( substring );
+
         if (NumberToken.class.equals( currentTokenType )) {
-            return NumberToken.create( inputString.substring( startIndex, endIndex ) );
+            return NumberToken.create( substring );
         }
         else if (ColumnSeparatorToken.class.equals( currentTokenType )) {
             return ColumnSeparatorToken.create();
         }
         else if (IdentifierToken.class.equals( currentTokenType )) {
-            return IdentifierToken.create( inputString.substring( startIndex, endIndex ) );
+            return IdentifierToken.create( substring );
         }
         else if (LineSeparatorToken.class.equals( currentTokenType )) {
             // TODO: maybe count the lines...?
@@ -172,13 +175,17 @@ public class CSVTokenizer {
     private Class<NumberToken> consumeNumber( String inputString ) {
         int i = tokenStart;
 
-        while (i < inputString.length() && isDigit( inputString.charAt( i ) )) {
+        while (i < inputString.length() && (isDigit( inputString.charAt( i ) ) || isFraction( inputString.charAt( i ) ))) {
             i = i + 1;
         }
 
         this.tokenEnd = i;
 
         return NumberToken.class;
+    }
+
+    private boolean isFraction( char currentChar ) {
+        return currentChar == '.';
     }
 
     private static boolean isDigit( char currentChar ) {
