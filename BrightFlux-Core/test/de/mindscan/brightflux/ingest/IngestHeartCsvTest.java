@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
@@ -44,7 +43,6 @@ public class IngestHeartCsvTest {
         Collection<String> result = frame.getColumnNames();
         assertThat( result,
                         contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "caa", "thall", "output" ) );
-
     }
 
     @Test
@@ -57,6 +55,21 @@ public class IngestHeartCsvTest {
 
         Collection<DataFrameColumn<?>> result = frame.getColumns();
         assertThat( result, hasSize( 14 ) );
+    }
+
+    @Test
+    public void testLoadCsvAsDataFrameV2_loadDataSet_has14ColumnNamesInOrder() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        // assert
+        Collection<String> result = frame.getColumnNames();
+        assertThat( result,
+                        contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "caa", "thall", "output" ) );
+
     }
 
 }
