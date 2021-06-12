@@ -121,10 +121,13 @@ public class IngestHeartCsv {
             String inputString = String.join( "\n", allLines );
             List<DataToken> tokens = tokenizer.tokenize( inputString );
 
-            // now we want to parse that ...
+            // now we want to parse that list of tokens
             DataFrameParser dfParser = new DataFrameParser();
             parsedDataFrameColumns = dfParser.parse( tokens );
 
+            // actually we also need that to be compiled into the type safe 
+            // DataFrameCompiler dfCompiler = new DataFrameCompiler();
+            // dfCompiler.compileDataFrame( parsedDataFrameColumns );
         }
         catch (IOException e) {
             e.printStackTrace();
