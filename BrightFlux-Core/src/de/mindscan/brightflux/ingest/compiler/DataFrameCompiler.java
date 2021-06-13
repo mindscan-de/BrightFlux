@@ -25,10 +25,13 @@
  */
 package de.mindscan.brightflux.ingest.compiler;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
+import de.mindscan.brightflux.ingest.DataToken;
 
 /**
  * 
@@ -36,9 +39,38 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 public class DataFrameCompiler {
 
     public List<DataFrameColumn<?>> compileDataFrame( Collection<DataFrameColumn<?>> dataframeColumns ) {
+        List<DataFrameColumn<?>> compiledDataFrameColumns = new ArrayList<>();
+
+        // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.
+        boolean hasColumnTitles = calcHasColumnTitles( dataframeColumns );
+
+        for (DataFrameColumn<?> column : dataframeColumns) {
+            DataFrameColumn<?> compiledColumn = compileDataFrameColumn( hasColumnTitles, column );
+            compiledDataFrameColumns.add( compiledColumn );
+        }
+
         // this will build a dataframe with typed and named columns, each column is compiled of its own 
         // from left to right? Bad datavalues are logged and these rows removed?
-        return null;
+        return compiledDataFrameColumns;
     }
 
+    private boolean calcHasColumnTitles( Collection<DataFrameColumn<?>> dataframeColumns ) {
+        // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.
+        return true;
+    }
+
+    private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<?> column ) {
+
+        // TODO: infer the type and use the proper Compiler 
+
+        // 
+        DataFrameColumn<?> newColumn = new IntegerColumn();
+        if (hasColumnTitles) {
+            Object x = column.get( 0 );
+            DataToken token = (DataToken) x;
+            newColumn.setColumnName( token.getValue() );
+        }
+
+        return newColumn;
+    }
 }
