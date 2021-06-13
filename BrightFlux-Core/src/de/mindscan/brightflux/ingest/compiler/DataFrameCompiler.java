@@ -60,41 +60,48 @@ public class DataFrameCompiler {
         return true;
     }
 
-    private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<DataToken> column ) {
+    private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn ) {
 
         // TODO: infer the type and use the proper Compiler 
-        DataToken token = column.get( 0 );
+        DataToken token = sourceColumn.get( 0 );
         String value = token.getValue();
 
-        DataFrameColumn<?> newColumn;
+        DataFrameColumn<?> destinationColumn;
         if (value.equals( "oldpeak" )) {
-            newColumn = new DoubleColumn();
+            destinationColumn = new DoubleColumn();
         }
         else {
-            newColumn = new IntegerColumn();
+            destinationColumn = new IntegerColumn();
         }
 
         // 
         if (hasColumnTitles) {
-            newColumn.setColumnName( value );
+            destinationColumn.setColumnName( value );
         }
 
-        // todo transfer and convert columndata to target format
+        transferAndTransformColumnData( hasColumnTitles, sourceColumn, destinationColumn );
 
-        for (int row = hasColumnTitles ? 1 : 0; row < column.getSize(); row++) {
-            String rowValue = column.get( row ).getValue();
+        return destinationColumn;
+    }
+
+    private void transferAndTransformColumnData( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn, DataFrameColumn<?> destinationColumn ) {
+        for (int row = calculateStartRow( hasColumnTitles ); row < sourceColumn.getSize(); row++) {
+            String rowValue = sourceColumn.get( row ).getValue();
             // TODO: depending on what type we have, we have to convert the source string based "value" into the target type of the column.
             // TODO: change this approach, but at the moment i don't like that...
-            if (newColumn instanceof IntegerColumn) {
-                IntegerColumn intColumn = (IntegerColumn) newColumn;
+            // also don't do that for every row...
+            if (destinationColumn instanceof IntegerColumn) {
+                IntegerColumn intColumn = (IntegerColumn) destinationColumn;
                 intColumn.append( Integer.parseInt( rowValue ) );
             }
-            if (newColumn instanceof DoubleColumn) {
-                DoubleColumn intColumn = (DoubleColumn) newColumn;
+            if (destinationColumn instanceof DoubleColumn) {
+                DoubleColumn intColumn = (DoubleColumn) destinationColumn;
                 intColumn.append( Double.parseDouble( rowValue ) );
             }
         }
+    }
 
-        return newColumn;
+    private int calculateStartRow( boolean hasColumnTitles ) {
+        return hasColumnTitles ? 1 : 0;
     }
 }
