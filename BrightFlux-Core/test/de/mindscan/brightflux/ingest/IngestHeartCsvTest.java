@@ -7,11 +7,14 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
+import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 
 public class IngestHeartCsvTest {
 
@@ -46,7 +49,7 @@ public class IngestHeartCsvTest {
     }
 
     @Test
-    public void testLoadCsvAsDataFrameV2() throws Exception {
+    public void testLoadCsvAsDataFrameV2_loadDaataset_has14Columns() throws Exception {
         // arrange
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
@@ -69,7 +72,36 @@ public class IngestHeartCsvTest {
         Collection<String> result = frame.getColumnNames();
         assertThat( result,
                         contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "caa", "thall", "output" ) );
+    }
 
+    @Test
+    public void testLoadCsvAsDataFrameV2_loadDataSet_has13IntColumns() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        // assert
+        Collection<String> result = frame.getColumns().stream().filter( c -> IntegerColumn.class.isInstance( c ) ).map( c -> c.getColumnName() )
+                        .collect( Collectors.toList() );
+
+        assertThat( result, contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "slp", "caa", "thall", "output" ) );
+    }
+
+    @Test
+    public void testLoadCsvAsDataFrameV2_loadDataSet_has1DoubleColumns() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        // assert
+        Collection<String> result = frame.getColumns().stream().filter( c -> DoubleColumn.class.isInstance( c ) ).map( c -> c.getColumnName() )
+                        .collect( Collectors.toList() );
+
+        assertThat( result, contains( "oldpeak" ) );
     }
 
 }

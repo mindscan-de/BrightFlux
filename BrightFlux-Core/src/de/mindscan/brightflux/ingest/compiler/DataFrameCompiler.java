@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 
@@ -62,12 +63,20 @@ public class DataFrameCompiler {
     private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<DataToken> column ) {
 
         // TODO: infer the type and use the proper Compiler 
+        DataToken token = column.get( 0 );
+        String value = token.getValue();
+
+        DataFrameColumn<?> newColumn;
+        if (value.equals( "oldpeak" )) {
+            newColumn = new DoubleColumn();
+        }
+        else {
+            newColumn = new IntegerColumn();
+        }
 
         // 
-        DataFrameColumn<?> newColumn = new IntegerColumn();
         if (hasColumnTitles) {
-            DataToken token = column.get( 0 );
-            newColumn.setColumnName( token.getValue() );
+            newColumn.setColumnName( value );
         }
 
         return newColumn;
