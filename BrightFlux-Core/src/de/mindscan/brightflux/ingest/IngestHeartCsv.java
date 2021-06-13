@@ -33,6 +33,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizer;
 
@@ -115,6 +116,7 @@ public class IngestHeartCsv {
         CSVTokenizer tokenizer = new CSVTokenizer();
 
         List<DataFrameColumn<?>> parsedDataFrameColumns = null;
+        List<DataFrameColumn<?>> compiledDataFrameColumns = null;
         List<String> allLines;
         try {
             allLines = Files.readAllLines( path );
@@ -125,9 +127,9 @@ public class IngestHeartCsv {
             DataFrameParser dfParser = new DataFrameParser();
             parsedDataFrameColumns = dfParser.parse( tokens );
 
-            // actually we also need that to be compiled into the type safe 
-            // DataFrameCompiler dfCompiler = new DataFrameCompiler();
-            // dfCompiler.compileDataFrame( parsedDataFrameColumns );
+            // actually we also need that to be compiled into the type safe
+            DataFrameCompiler dfCompiler = new DataFrameCompiler();
+            compiledDataFrameColumns = dfCompiler.compileDataFrame( parsedDataFrameColumns );
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -135,7 +137,10 @@ public class IngestHeartCsv {
 
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
 
-        if (parsedDataFrameColumns != null) {
+        if (compiledDataFrameColumns != null) {
+            dfBuilder.addColumns( compiledDataFrameColumns );
+        }
+        else if (parsedDataFrameColumns != null) {
             dfBuilder.addColumns( parsedDataFrameColumns );
         }
 

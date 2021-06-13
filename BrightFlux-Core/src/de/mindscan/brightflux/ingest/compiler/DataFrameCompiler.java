@@ -26,18 +26,19 @@
 package de.mindscan.brightflux.ingest.compiler;
 
 import java.util.Collection;
+import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
-import de.mindscan.brightflux.ingest.DataToken;
 
 /**
  * 
  */
 public class DataFrameCompiler {
 
-    public void compileDataFrame( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
+    public List<DataFrameColumn<?>> compileDataFrame( Collection<DataFrameColumn<?>> dataframeColumns ) {
         // this will build a dataframe with typed and named columns, each column is compiled of its own 
         // from left to right? Bad datavalues are logged and these rows removed?
+        return null;
     }
 
 }
