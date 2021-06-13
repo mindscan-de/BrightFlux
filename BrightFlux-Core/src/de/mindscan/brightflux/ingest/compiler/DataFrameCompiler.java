@@ -79,6 +79,22 @@ public class DataFrameCompiler {
             newColumn.setColumnName( value );
         }
 
+        // todo transfer and convert columndata to target format
+
+        for (int row = hasColumnTitles ? 1 : 0; row < column.getSize(); row++) {
+            String rowValue = column.get( row ).getValue();
+            // TODO: depending on what type we have, we have to convert the source string based "value" into the target type of the column.
+            // TODO: change this approach, but at the moment i don't like that...
+            if (newColumn instanceof IntegerColumn) {
+                IntegerColumn intColumn = (IntegerColumn) newColumn;
+                intColumn.append( Integer.parseInt( rowValue ) );
+            }
+            if (newColumn instanceof DoubleColumn) {
+                DoubleColumn intColumn = (DoubleColumn) newColumn;
+                intColumn.append( Double.parseDouble( rowValue ) );
+            }
+        }
+
         return newColumn;
     }
 }

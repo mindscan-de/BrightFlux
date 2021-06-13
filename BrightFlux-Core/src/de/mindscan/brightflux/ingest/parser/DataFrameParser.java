@@ -35,6 +35,7 @@ import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
+import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
  * A DataFrame parser will get a Stream/Collection of Tokens and will emit a data frame from it. 
@@ -53,16 +54,19 @@ public class DataFrameParser {
         Iterator<DataFrameColumn<DataToken>> columnIterator = null;
 
         for (DataToken dataToken : tokenStream) {
+            // I don't like the instanceof thing for the tokens / i would prefer an enum, but also keep it extensible.
             if (dataToken instanceof LineSeparatorToken) {
-                if (currentRow == 2) {
-                    break;
-                }
+                // TODO: for test purposes limit that to 2 lines 
+//                if (currentRow == 2) {
+//                    break;
+//                }
                 currentRow++;
 
                 // also reset the current row...
                 columnIterator = parseResult.iterator();
                 currentColumn = columnIterator.next();
             }
+            // I don't like the instanceof thing for the tokens / i would prefer an enum, but also keep it extensible.
             if (dataToken instanceof ColumnSeparatorToken) {
                 if (currentRow == 0) {
                     currentColumn = prepareNewColumn( parseResult );
@@ -74,6 +78,9 @@ public class DataFrameParser {
             }
 
             if (dataToken instanceof IdentifierToken) {
+                currentColumn.append( dataToken );
+            }
+            if (dataToken instanceof NumberToken) {
                 currentColumn.append( dataToken );
             }
         }
