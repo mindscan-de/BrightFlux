@@ -27,6 +27,7 @@ package de.mindscan.brightflux.ingest.parser;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
@@ -46,18 +47,21 @@ public class DataFrameParser {
 
         List<DataFrameColumn<DataToken>> parseResult = new ArrayList<>();
         // always start with an empty column
-        DataTokenColumn currentColumn = prepareNewColumn( parseResult );
+        DataFrameColumn<DataToken> currentColumn = prepareNewColumn( parseResult );
 
         int currentRow = 0;
+        Iterator<DataFrameColumn<DataToken>> columnIterator = null;
 
         for (DataToken dataToken : tokenStream) {
             if (dataToken instanceof LineSeparatorToken) {
-                if (currentRow == 0) {
+                if (currentRow == 2) {
                     break;
                 }
                 currentRow++;
 
                 // also reset the current row...
+                columnIterator = parseResult.iterator();
+                currentColumn = columnIterator.next();
             }
             if (dataToken instanceof ColumnSeparatorToken) {
                 if (currentRow == 0) {
@@ -65,6 +69,7 @@ public class DataFrameParser {
                 }
                 else {
                     // select the current row
+                    currentColumn = columnIterator.next();
                 }
             }
 
