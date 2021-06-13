@@ -32,22 +32,22 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class IdentifierToken implements DataToken {
 
+    private String value;
+
+    IdentifierToken( String value ) {
+        this.value = value;
+    }
+
+    public static DataToken create( String value ) {
+        return new IdentifierToken( value );
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public String getValue() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
-     * @param substring
-     * @return
-     */
-    public static DataToken create( String substring ) {
-        // TODO Auto-generated method stub
-        return null;
+        return value;
     }
 
 }
