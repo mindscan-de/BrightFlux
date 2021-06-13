@@ -1,6 +1,7 @@
 package de.mindscan.brightflux.ingest;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
@@ -9,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
@@ -102,6 +104,35 @@ public class IngestHeartCsvTest {
                         .collect( Collectors.toList() );
 
         assertThat( result, contains( "oldpeak" ) );
+    }
+    
+    @Test
+    public void testLoadCsvAsDataFrameV2_loadDataSet_FirstColumnIsNotEmpty() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        // assert
+        DataFrameColumn<?> result = frame.getColumns().iterator().next();
+
+        assertThat( result.getSize(), Matchers.greaterThan( 0 ) );
+    }
+    
+
+    @Test
+    public void testLoadCsvAsDataFrameV2_loadDataSet_FirstColumnHas303Elements() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        // assert
+        DataFrameColumn<?> result = frame.getColumns().iterator().next();
+
+        assertThat( result.getSize(), equalTo( 303 ) );
     }
 
 }
