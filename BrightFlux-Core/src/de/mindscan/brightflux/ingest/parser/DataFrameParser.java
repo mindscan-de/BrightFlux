@@ -48,12 +48,24 @@ public class DataFrameParser {
         // always start with an empty column
         DataTokenColumn currentColumn = prepareNewColumn( parseResult );
 
+        int currentRow = 0;
+
         for (DataToken dataToken : tokenStream) {
             if (dataToken instanceof LineSeparatorToken) {
-                break;
+                if (currentRow == 0) {
+                    break;
+                }
+                currentRow++;
+
+                // also reset the current row...
             }
             if (dataToken instanceof ColumnSeparatorToken) {
-                currentColumn = prepareNewColumn( parseResult );
+                if (currentRow == 0) {
+                    currentColumn = prepareNewColumn( parseResult );
+                }
+                else {
+                    // select the current row
+                }
             }
 
             if (dataToken instanceof IdentifierToken) {
