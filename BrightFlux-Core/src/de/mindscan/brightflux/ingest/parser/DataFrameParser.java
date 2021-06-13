@@ -32,6 +32,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
+import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 
 /**
@@ -45,16 +46,19 @@ public class DataFrameParser {
 
         List<DataFrameColumn<?>> parseResult = new ArrayList<>();
         // always start with an empty column
-        prepareNewColumn( parseResult );
+        DataTokenColumn currentColumn = prepareNewColumn( parseResult );
 
         for (DataToken dataToken : tokenStream) {
             if (dataToken instanceof LineSeparatorToken) {
                 break;
             }
             if (dataToken instanceof ColumnSeparatorToken) {
-                prepareNewColumn( parseResult );
+                currentColumn = prepareNewColumn( parseResult );
             }
 
+            if (dataToken instanceof IdentifierToken) {
+                currentColumn.append( dataToken );
+            }
         }
 
         // if LineSeparatorToken -> start over with first column
@@ -73,13 +77,15 @@ public class DataFrameParser {
 
     /**
      * @param parseResult
+     * @return 
      */
-    private void prepareNewColumn( List<DataFrameColumn<?>> parseResult ) {
+    private DataTokenColumn prepareNewColumn( List<DataFrameColumn<?>> parseResult ) {
         int size = parseResult.size();
 
         DataTokenColumn dataTokenColumn = new DataTokenColumn();
         dataTokenColumn.setColumnName( Integer.toString( size ) );
         parseResult.add( dataTokenColumn );
+        return dataTokenColumn;
     }
 
 }
