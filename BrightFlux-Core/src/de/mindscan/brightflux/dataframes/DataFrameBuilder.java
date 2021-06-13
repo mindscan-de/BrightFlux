@@ -59,10 +59,6 @@ public class DataFrameBuilder {
         return this;
     }
 
-    /**
-     * @param string
-     * @param string2
-     */
     public DataFrameBuilder addColumn( String columnName, String columnType ) {
         switch (columnType) {
             case "int":
@@ -75,6 +71,11 @@ public class DataFrameBuilder {
             default:
                 throw new IllegalArgumentException( "unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
         }
+        return this;
+    }
+
+    public DataFrameBuilder addColumn( DataFrameColumn<?> newColumn ) {
+        this.columns.add( newColumn );
         return this;
     }
 
