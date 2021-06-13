@@ -33,6 +33,14 @@ develops similar solutions and all the things are reinvented -- all the time and
 as well. Text based logs have one important shortcomming -- they can be shown in a text editor. Editors
 are good for editing - but they often aren't the best thing if you work basically readonly on the files.
 
+## Not fit for anything (YET)
+
+I'm currently in the process figuring out, what can be implemented as fast as posible for some kind of
+MVP. I think a very simple working pipeline from a simple csv file to an annotated log analysis project 
+file, would be nice to have.
+
+Currently you would underwhelmed by forking this project.
+
 ## Planned Features
 
 Some of the planned features are: 
