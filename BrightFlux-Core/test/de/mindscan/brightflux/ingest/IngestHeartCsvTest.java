@@ -8,6 +8,7 @@ import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.hamcrest.Matchers;
@@ -105,7 +106,7 @@ public class IngestHeartCsvTest {
 
         assertThat( result, contains( "oldpeak" ) );
     }
-    
+
     @Test
     public void testLoadCsvAsDataFrameV2_loadDataSet_FirstColumnIsNotEmpty() throws Exception {
         // arrange
@@ -119,7 +120,6 @@ public class IngestHeartCsvTest {
 
         assertThat( result.getSize(), Matchers.greaterThan( 0 ) );
     }
-    
 
     @Test
     public void testLoadCsvAsDataFrameV2_loadDataSet_FirstColumnHas303Elements() throws Exception {
@@ -133,6 +133,20 @@ public class IngestHeartCsvTest {
         DataFrameColumn<?> result = frame.getColumns().iterator().next();
 
         assertThat( result.getSize(), equalTo( 303 ) );
+    }
+
+    @Test
+    public void testLoadCsvAsDataFrameV2_loadDataSet_All14ColumnHas303Elements() throws Exception {
+        // arrange
+        IngestHeartCsv heartCsv = new IngestHeartCsv();
+
+        // act
+        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+
+        // assert
+        List<Integer> result = frame.getColumns().stream().map( c -> c.getSize() ).collect( Collectors.toList() );
+
+        assertThat( result, contains( 303, 303, 303, 303, 303, 303, 303, 303, 303, 303, 303, 303, 303, 303 ) );
     }
 
 }
