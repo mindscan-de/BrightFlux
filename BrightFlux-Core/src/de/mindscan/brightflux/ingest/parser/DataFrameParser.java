@@ -42,9 +42,9 @@ import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
  */
 public class DataFrameParser {
 
-    public List<DataFrameColumn<?>> parse( Collection<DataToken> tokenStream ) {
+    public List<DataFrameColumn<DataToken>> parse( Collection<DataToken> tokenStream ) {
 
-        List<DataFrameColumn<?>> parseResult = new ArrayList<>();
+        List<DataFrameColumn<DataToken>> parseResult = new ArrayList<>();
         // always start with an empty column
         DataTokenColumn currentColumn = prepareNewColumn( parseResult );
 
@@ -79,7 +79,7 @@ public class DataFrameParser {
      * @param parseResult
      * @return 
      */
-    private DataTokenColumn prepareNewColumn( List<DataFrameColumn<?>> parseResult ) {
+    private DataTokenColumn prepareNewColumn( List<DataFrameColumn<DataToken>> parseResult ) {
         int size = parseResult.size();
 
         DataTokenColumn dataTokenColumn = new DataTokenColumn();

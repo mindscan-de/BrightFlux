@@ -38,13 +38,13 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class DataFrameCompiler {
 
-    public List<DataFrameColumn<?>> compileDataFrame( Collection<DataFrameColumn<?>> dataframeColumns ) {
+    public List<DataFrameColumn<?>> compileDataFrame( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         List<DataFrameColumn<?>> compiledDataFrameColumns = new ArrayList<>();
 
         // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.
         boolean hasColumnTitles = calcHasColumnTitles( dataframeColumns );
 
-        for (DataFrameColumn<?> column : dataframeColumns) {
+        for (DataFrameColumn<DataToken> column : dataframeColumns) {
             DataFrameColumn<?> compiledColumn = compileDataFrameColumn( hasColumnTitles, column );
             compiledDataFrameColumns.add( compiledColumn );
         }
@@ -54,20 +54,19 @@ public class DataFrameCompiler {
         return compiledDataFrameColumns;
     }
 
-    private boolean calcHasColumnTitles( Collection<DataFrameColumn<?>> dataframeColumns ) {
+    private boolean calcHasColumnTitles( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.
         return true;
     }
 
-    private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<?> column ) {
+    private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<DataToken> column ) {
 
         // TODO: infer the type and use the proper Compiler 
 
         // 
         DataFrameColumn<?> newColumn = new IntegerColumn();
         if (hasColumnTitles) {
-            Object x = column.get( 0 );
-            DataToken token = (DataToken) x;
+            DataToken token = column.get( 0 );
             newColumn.setColumnName( token.getValue() );
         }
 

@@ -115,7 +115,7 @@ public class IngestHeartCsv {
     public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
         CSVTokenizer tokenizer = new CSVTokenizer();
 
-        List<DataFrameColumn<?>> parsedDataFrameColumns = null;
+        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
         List<String> allLines;
         try {
@@ -141,7 +141,9 @@ public class IngestHeartCsv {
             dfBuilder.addColumns( compiledDataFrameColumns );
         }
         else if (parsedDataFrameColumns != null) {
-            dfBuilder.addColumns( parsedDataFrameColumns );
+            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
+                dfBuilder.addColumn( dataFrameColumn );
+            }
         }
 
         return dfBuilder.build();
