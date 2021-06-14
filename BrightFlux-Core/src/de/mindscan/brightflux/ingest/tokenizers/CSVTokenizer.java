@@ -152,17 +152,17 @@ public class CSVTokenizer {
 
     private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
 
-        String substring = inputString.substring( startIndex, endIndex );
-        System.out.println( substring );
+        String valueString = inputString.substring( startIndex, endIndex );
+        System.out.println( valueString );
 
         if (NumberToken.class.equals( currentTokenType )) {
-            return NumberToken.create( substring );
+            return NumberToken.create( valueString );
         }
         else if (ColumnSeparatorToken.class.equals( currentTokenType )) {
             return ColumnSeparatorToken.create();
         }
         else if (IdentifierToken.class.equals( currentTokenType )) {
-            return IdentifierToken.create( substring );
+            return IdentifierToken.create( valueString );
         }
         else if (LineSeparatorToken.class.equals( currentTokenType )) {
             // TODO: maybe count the lines...?
