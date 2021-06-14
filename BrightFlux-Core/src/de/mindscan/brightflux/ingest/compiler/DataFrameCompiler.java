@@ -67,6 +67,9 @@ public class DataFrameCompiler {
         String value = token.getValue();
 
         DataFrameColumn<?> destinationColumn;
+
+        // TODO: This is a hard-coded column name of the heart.csv
+        // TODO: This calculation must be replaced by something smarter 
         if (value.equals( "oldpeak" )) {
             destinationColumn = new DoubleColumn();
         }
