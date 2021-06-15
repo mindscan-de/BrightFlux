@@ -37,6 +37,7 @@ import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
+import de.mindscan.brightflux.ingest.pipeline.IngestPipelineConfiguration;
 import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizerImpl;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
@@ -103,29 +104,38 @@ public class IngestHeartCsv {
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
 
+        // path and such should be part of the Ingest pipeline configuration
         String inputString = readAllLinesFromFile( path );
 
-        DataTokenizer tokenizer = DataTokenizerFactory.getInstance().buildTokenizerInstance( "CSVTokenizer" );
+        // building the configuration for the data to ingest
+        IngestPipelineConfiguration data = new IngestPipelineConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
+                        DataFrameCompilerFactory.getIntance() );
+        data.setTokenizerConfiguration( "CSVTokenizer" );
+
+        // prepare pipeline
+        DataTokenizer tokenizer = data.tokenizerFactoryInstance.buildTokenizerInstance( data.getTokenizerConfiguration() );
+        DataFrameParser dfParser = data.parserFactoryInstance.buildDataFrameParserInstance();
+        DataFrameCompiler dfCompiler = data.compilerFactoryInstance.buildDataFrameCompilerInstance();
+
+        // run pipeline
         List<DataToken> tokens = tokenizer.tokenize( inputString );
-
-        // now we want to parse that list of tokens
-        DataFrameParser dfParser = DataFrameParserFactory.getInstance().buildDataFrameParserInstance();
         parsedDataFrameColumns = dfParser.parse( tokens );
-
-        // actually we also need that to be compiled into the type safe data frames.
-        DataFrameCompiler dfCompiler = DataFrameCompilerFactory.getIntance().buildDataFrameCompilerInstance();
         compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
+        // build dataframe
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
 
+        // compiled dataframe columns
         if (compiledDataFrameColumns != null) {
             dfBuilder.addColumns( compiledDataFrameColumns );
         }
-        else if (parsedDataFrameColumns != null) {
-            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
-                dfBuilder.addColumn( dataFrameColumn );
-            }
-        }
+
+        // abstract dataframe columns
+//        else if (parsedDataFrameColumns != null) {
+//            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
+//                dfBuilder.addColumn( dataFrameColumn );
+//            }
+//        }
 
         return dfBuilder.build();
     }
