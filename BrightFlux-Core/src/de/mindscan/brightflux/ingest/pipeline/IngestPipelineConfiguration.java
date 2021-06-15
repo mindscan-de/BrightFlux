@@ -25,11 +25,19 @@
  */
 package de.mindscan.brightflux.ingest.pipeline;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 
 /**
+ * 
+
+ * Ingest Input: can be path, but should also be possible to define more input.
+        // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
+        // should be part of the pipeline configuration and be plugable
+ * 
  */
 public class IngestPipelineConfiguration {
     /**
@@ -45,6 +53,8 @@ public class IngestPipelineConfiguration {
      */
     public DataFrameCompilerFactory compilerFactoryInstance;
     private String tokenizerConfiguration;
+    private String dataFrameName;
+    private Path ingestInputPath;
 
     /**
      * 
@@ -68,6 +78,34 @@ public class IngestPipelineConfiguration {
      */
     public String getTokenizerConfiguration() {
         return tokenizerConfiguration;
+    }
+
+    /**
+     * @param string
+     */
+    public void setDataFrameName( String dataFrameName ) {
+        this.dataFrameName = dataFrameName;
+    }
+
+    /**
+     * @return the dataFrameName
+     */
+    public String getDataFrameName() {
+        return dataFrameName;
+    }
+
+    /**
+     * @param path
+     */
+    public void setIngestInputFilePath( Path ingestInputPath ) {
+        this.ingestInputPath = ingestInputPath;
+    }
+
+    /**
+     * @return the ingestInputPath
+     */
+    public Path getIngestInputPath() {
+        return ingestInputPath;
     }
 
 }

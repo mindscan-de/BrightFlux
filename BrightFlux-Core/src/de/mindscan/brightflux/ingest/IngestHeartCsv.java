@@ -93,9 +93,6 @@ public class IngestHeartCsv {
         // then we init the last columndataparser with the stopymbol for the line
         // then we init the line separator with either "\n\r", "\r\n", "\n"
 
-//        int intElement = 0;
-//        float floatElement = 0;
-
         return dfBuilder.build();
     }
 
@@ -104,18 +101,21 @@ public class IngestHeartCsv {
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
 
-        // path and such should be part of the Ingest pipeline configuration
-        String inputString = readAllLinesFromFile( path );
-
         // building the configuration for the data to ingest
-        IngestPipelineConfiguration data = new IngestPipelineConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
+        IngestPipelineConfiguration config = new IngestPipelineConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
                         DataFrameCompilerFactory.getIntance() );
-        data.setTokenizerConfiguration( "CSVTokenizer" );
+        config.setTokenizerConfiguration( "CSVTokenizer" );
+        config.setDataFrameName( path.getFileName().toString() );
+        config.setIngestInputFilePath( path );
 
         // prepare pipeline
-        DataTokenizer tokenizer = data.tokenizerFactoryInstance.buildTokenizerInstance( data.getTokenizerConfiguration() );
-        DataFrameParser dfParser = data.parserFactoryInstance.buildDataFrameParserInstance();
-        DataFrameCompiler dfCompiler = data.compilerFactoryInstance.buildDataFrameCompilerInstance();
+        DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
+        DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
+        DataFrameCompiler dfCompiler = config.compilerFactoryInstance.buildDataFrameCompilerInstance();
+
+        // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
+        // should be part of the pipeline configuration and be plugable
+        String inputString = readAllLinesFromFile( config.getIngestInputPath() );
 
         // run pipeline
         List<DataToken> tokens = tokenizer.tokenize( inputString );
@@ -123,7 +123,7 @@ public class IngestHeartCsv {
         compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         // build dataframe
-        DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
+        DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( config.getDataFrameName() );
 
         // compiled dataframe columns
         if (compiledDataFrameColumns != null) {
