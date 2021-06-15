@@ -46,18 +46,12 @@ import de.mindscan.brightflux.ingest.token.NumberToken;
  * The DataFrameColumns will contain a list of DataTokens, which may or may not be annotated.
  * 
  */
-public class DataFrameParserImpl {
+public class DataFrameParserImpl implements DataFrameParser {
 
-    /**
-     * The parser will receive a stream or collection of Tokens and will emit a list of data frame
-     * columns containing DataTokens. The most of the token are still in place for the DataFrameCompiler
-     * but processed tokens are .
-     * 
-     * Also instead of a lot of columns, we might consider to return dataFrames or course. 
-     *  
-     * @param tokenStream the tokens which to compile to a data frame or a list of data frames.
-     * @return A list of pre arranged columns. / data frames
+    /** 
+     * {@inheritDoc}
      */
+    @Override
     public List<DataFrameColumn<DataToken>> parse( Collection<DataToken> tokenStream ) {
 
         List<DataFrameColumn<DataToken>> parseResult = new ArrayList<>();
