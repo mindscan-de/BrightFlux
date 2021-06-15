@@ -37,7 +37,7 @@ import de.mindscan.brightflux.ingest.DataToken;
 /**
  * 
  */
-public class DataFrameCompiler {
+public class DataFrameCompilerImpl {
 
     public List<DataFrameColumn<?>> compileDataFrame( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         List<DataFrameColumn<?>> compiledDataFrameColumns = new ArrayList<>();
