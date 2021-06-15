@@ -113,7 +113,7 @@ public class IngestHeartCsv {
         parsedDataFrameColumns = dfParser.parse( tokens );
 
         // actually we also need that to be compiled into the type safe data frames.
-        DataFrameCompiler dfCompiler = DataFrameCompilerFactory.create();
+        DataFrameCompiler dfCompiler = DataFrameCompilerFactory.getIntance().buildDataFrameCompilerInstance();
         compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );

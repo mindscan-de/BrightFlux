@@ -42,9 +42,6 @@ public class DataTokenizerFactory {
         return Holder.factoryInstance;
     }
 
-    public DataTokenizerFactory() {
-    }
-
     public DataTokenizer buildTokenizerInstance( String tokenizerType ) {
         if ("CSVTokenizer".equals( tokenizerType )) {
             return new CSVTokenizerImpl();

@@ -30,7 +30,19 @@ package de.mindscan.brightflux.ingest.compiler;
  */
 public class DataFrameCompilerFactory {
 
+    static class Holder {
+        static DataFrameCompilerFactory factoryInstance = new DataFrameCompilerFactory();
+    }
+
     public static DataFrameCompiler create() {
+        return getIntance().buildDataFrameCompilerInstance();
+    }
+
+    public static DataFrameCompilerFactory getIntance() {
+        return Holder.factoryInstance;
+    }
+
+    public DataFrameCompiler buildDataFrameCompilerInstance() {
         return new DataFrameCompilerImpl();
     }
 }
