@@ -29,7 +29,15 @@ import de.mindscan.brightflux.dataframes.columns.SimpleColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 
 /**
+ * This column type helps to implement the concept of an abstract data frame, which 
+ * can can untyped column until the final compile step. There is an implicit typing
+ * due to the DataToken in the column and due to the values of the DataToken in the 
+ * column.
  * 
+ * The major drawback right now is the fact that we can't add multiple tokens per row
+ * unless we have a DataToken implementing a list of DataToken. (We might change that)
+ * This would be intersting if we want support annotation on column, e.g. type, names,
+ * visibility, default values, and such. 
  */
 public class DataTokenColumn extends SimpleColumn<DataToken> {
 
@@ -42,7 +50,6 @@ public class DataTokenColumn extends SimpleColumn<DataToken> {
 
     public DataTokenColumn( String columnName ) {
         super( columnName, DataToken.class );
-
     }
 
 }
