@@ -35,7 +35,11 @@ public class DataTokenizerFactory {
     }
 
     public static DataTokenizer create( String tokenizerType ) {
-        return Holder.factoryInstance.buildTokenizerInstance( tokenizerType );
+        return getInstance().buildTokenizerInstance( tokenizerType );
+    }
+
+    public static DataTokenizerFactory getInstance() {
+        return Holder.factoryInstance;
     }
 
     public DataTokenizerFactory() {

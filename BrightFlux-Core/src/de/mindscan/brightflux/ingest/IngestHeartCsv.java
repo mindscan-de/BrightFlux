@@ -99,13 +99,13 @@ public class IngestHeartCsv {
     }
 
     public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
-        DataTokenizer tokenizer = DataTokenizerFactory.create( "CSVTokenizer" );
 
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
 
         String inputString = readAllLinesFromFile( path );
 
+        DataTokenizer tokenizer = DataTokenizerFactory.getInstance().buildTokenizerInstance( "CSVTokenizer" );
         List<DataToken> tokens = tokenizer.tokenize( inputString );
 
         // now we want to parse that list of tokens
