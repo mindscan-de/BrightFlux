@@ -109,7 +109,7 @@ public class IngestHeartCsv {
         List<DataToken> tokens = tokenizer.tokenize( inputString );
 
         // now we want to parse that list of tokens
-        DataFrameParser dfParser = DataFrameParserFactory.create();
+        DataFrameParser dfParser = DataFrameParserFactory.getInstance().buildDataFrameParserInstance();
         parsedDataFrameColumns = dfParser.parse( tokens );
 
         // actually we also need that to be compiled into the type safe data frames.

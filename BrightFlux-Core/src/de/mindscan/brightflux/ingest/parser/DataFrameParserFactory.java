@@ -30,7 +30,19 @@ package de.mindscan.brightflux.ingest.parser;
  */
 public class DataFrameParserFactory {
 
+    static class Holder {
+        static DataFrameParserFactory factoryInstance = new DataFrameParserFactory();
+    }
+
+    public static DataFrameParserFactory getInstance() {
+        return Holder.factoryInstance;
+    }
+
     public static DataFrameParser create() {
+        return getInstance().buildDataFrameParserInstance();
+    }
+
+    public DataFrameParser buildDataFrameParserInstance() {
         return new DataFrameParserImpl();
     }
 }
