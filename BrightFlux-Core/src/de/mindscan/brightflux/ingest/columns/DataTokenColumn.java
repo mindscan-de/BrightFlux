@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.ingest.parser;
+package de.mindscan.brightflux.ingest.columns;
 
 import de.mindscan.brightflux.dataframes.columns.SimpleColumn;
 import de.mindscan.brightflux.ingest.DataToken;

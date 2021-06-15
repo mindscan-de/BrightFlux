@@ -32,6 +32,7 @@ import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.columns.DataTokenColumn;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
