@@ -16,12 +16,12 @@ import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
-public class CSVTokenizerTest {
+public class CSVTokenizerImplTest {
 
     @Test
     public void testTokenize_emptyString_returnsEmptyTokenList() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "" );
@@ -33,7 +33,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingNumber_returnsNonEmptyTokenList() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "1" );
@@ -45,7 +45,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingSingleDigitNumber_returnsTokenListOfLengthOne() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "1" );
@@ -57,7 +57,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingDoubleDigitNumber_returnsTokenListOfLengthOne() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "12" );
@@ -69,7 +69,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingTripleDigitNumber_returnsTokenListOfLengthOne() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "123" );
@@ -81,7 +81,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingSingleColumnSeparator_returnsTokenListOfLengthOne() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         Collection<DataToken> result = tokenizer.tokenize( "," );
@@ -93,7 +93,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_SetColumnSeparatorSemicolonStringContainingSingleColumnSeparator_returnsTokenListOfLengthOne() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
         tokenizer.setColumnSeparator( ";" );
 
         // act
@@ -106,7 +106,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_SetColumnSeparatorSemicolonStringContainingSingleColumnSeparator_returnsFirstTokenIsColumnSeparator() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
         tokenizer.setColumnSeparator( ";" );
 
         // act
@@ -119,7 +119,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingSingleColumnSeparator_returnsFirstTokenIsColumnSeparator() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "," );
@@ -131,7 +131,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingNumberSeparatorNumber_HasSizeThree() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "123,321" );
@@ -143,7 +143,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingNumberSeparatorNumber_FirstElementIsNumberToken() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "123,321" );
@@ -155,7 +155,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingNumberSeparatorNumber_SecondElementIsColumnSeparatorToken() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "123,321" );
@@ -167,7 +167,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingNumberSeparatorNumber_ThirdElementIsNumberToken() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "123,321" );
@@ -179,7 +179,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingHeadlineOfHeartCsv_Expect27Tokens() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "age,sex,cp,trtbps,chol,fbs,restecg,thalachh,exng,oldpeak,slp,caa,thall,output" );
@@ -194,7 +194,7 @@ public class CSVTokenizerTest {
     @Test
     public void testTokenize_StringContainingHeadlineAnd3DataLines_Expect15Tokens() throws Exception {
         // arrange
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
         List<DataToken> result = tokenizer.tokenize( "col1,col2\n1,2\n3,4\n5,6" );

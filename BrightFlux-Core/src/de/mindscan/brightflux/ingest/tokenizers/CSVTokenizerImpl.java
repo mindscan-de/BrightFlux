@@ -37,7 +37,7 @@ import de.mindscan.brightflux.ingest.token.NumberToken;
 /**
  * 
  */
-public class CSVTokenizer implements DataTokenizer {
+public class CSVTokenizerImpl implements DataTokenizer {
 
     private String columnSeparator = ",";
     private String lineSeparator = "\n";

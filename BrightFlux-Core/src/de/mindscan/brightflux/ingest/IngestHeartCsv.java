@@ -37,7 +37,7 @@ import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerImpl;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserImpl;
-import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizer;
+import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizerImpl;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
 
 /**
@@ -79,7 +79,7 @@ public class IngestHeartCsv {
                         // that is the target type of the column - but we also need the input type of the columns as well
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
         tokenizer.setColumnSeparator( columnSeparator );
         tokenizer.setLineSeparator( "\n" );
         tokenizer.tokenize( "" );
@@ -116,7 +116,7 @@ public class IngestHeartCsv {
     }
 
     public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
-        DataTokenizer tokenizer = new CSVTokenizer();
+        DataTokenizer tokenizer = new CSVTokenizerImpl();
 
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
