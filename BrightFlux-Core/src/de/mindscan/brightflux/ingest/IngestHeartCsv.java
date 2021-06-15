@@ -93,25 +93,6 @@ public class IngestHeartCsv {
 //        int intElement = 0;
 //        float floatElement = 0;
 
-        // add values to the columns
-        {
-
-//            ageColumn.append( intElement );
-//            sexColumn.append( intElement );
-//            cpColumn.append( intElement );
-//            trtbpsColumn.append( intElement );
-//            cholColumn.append( intElement );
-//            fbsColumn.append( intElement );
-//            restecgColumn.append( intElement );
-//            thalachhColumn.append( intElement );
-//            exngColumn.append( intElement );
-//            oldpeakColumn.append( floatElement );
-//            slpColumn.append( intElement );
-//            caaColumn.append( intElement );
-//            thallColumn.append( intElement );
-//            outputColumn.append( intElement );
-        }
-
         return dfBuilder.build();
     }
 
