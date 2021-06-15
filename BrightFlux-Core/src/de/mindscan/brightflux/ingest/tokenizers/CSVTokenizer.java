@@ -37,7 +37,7 @@ import de.mindscan.brightflux.ingest.token.NumberToken;
 /**
  * 
  */
-public class CSVTokenizer {
+public class CSVTokenizer implements DataTokenizer {
 
     private String columnSeparator = ",";
     private String lineSeparator = "\n";
@@ -72,6 +72,10 @@ public class CSVTokenizer {
 
     // TODO:  Actually I want a producer - consumer - producer model in a pipe like architecture
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public List<DataToken> tokenize( String inputString ) {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();

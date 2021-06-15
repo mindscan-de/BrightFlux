@@ -38,6 +38,7 @@ import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerImpl;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserImpl;
 import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizer;
+import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
 
 /**
  * Use one of these datasets, your column names may vary...
@@ -115,7 +116,7 @@ public class IngestHeartCsv {
     }
 
     public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
-        CSVTokenizer tokenizer = new CSVTokenizer();
+        DataTokenizer tokenizer = new CSVTokenizer();
 
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
