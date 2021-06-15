@@ -34,7 +34,7 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
-import de.mindscan.brightflux.ingest.parser.DataFrameParser;
+import de.mindscan.brightflux.ingest.parser.DataFrameParserImpl;
 import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizer;
 
 /**
@@ -124,7 +124,7 @@ public class IngestHeartCsv {
             List<DataToken> tokens = tokenizer.tokenize( inputString );
 
             // now we want to parse that list of tokens
-            DataFrameParser dfParser = new DataFrameParser();
+            DataFrameParserImpl dfParser = new DataFrameParserImpl();
             parsedDataFrameColumns = dfParser.parse( tokens );
 
             // actually we also need that to be compiled into the type safe
