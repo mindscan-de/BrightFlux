@@ -34,11 +34,12 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerImpl;
+import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizerImpl;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
+import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 
 /**
  * Use one of these datasets, your column names may vary...
@@ -97,7 +98,7 @@ public class IngestHeartCsv {
     }
 
     public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
-        DataTokenizer tokenizer = new CSVTokenizerImpl();
+        DataTokenizer tokenizer = DataTokenizerFactory.create( "CSVTokenizer" );
 
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
@@ -112,7 +113,7 @@ public class IngestHeartCsv {
             parsedDataFrameColumns = dfParser.parse( tokens );
 
             // actually we also need that to be compiled into the type safe
-            DataFrameCompiler dfCompiler = new DataFrameCompilerImpl();
+            DataFrameCompiler dfCompiler = DataFrameCompilerFactory.create();
             compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
         }
         catch (IOException e) {
