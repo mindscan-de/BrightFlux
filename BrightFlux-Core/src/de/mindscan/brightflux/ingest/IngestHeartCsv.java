@@ -80,6 +80,7 @@ public class IngestHeartCsv {
                         // that is the target type of the column - but we also need the input type of the columns as well
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
 
+        // This is part of the Ingest configuration.
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
         tokenizer.setColumnSeparator( columnSeparator );
         tokenizer.setLineSeparator( "\n" );
@@ -102,23 +103,18 @@ public class IngestHeartCsv {
 
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
         List<DataFrameColumn<?>> compiledDataFrameColumns = null;
-        List<String> allLines;
-        try {
-            allLines = Files.readAllLines( path );
-            String inputString = String.join( "\n", allLines );
-            List<DataToken> tokens = tokenizer.tokenize( inputString );
 
-            // now we want to parse that list of tokens
-            DataFrameParser dfParser = DataFrameParserFactory.create();
-            parsedDataFrameColumns = dfParser.parse( tokens );
+        String inputString = readAllLinesFromFile( path );
 
-            // actually we also need that to be compiled into the type safe
-            DataFrameCompiler dfCompiler = DataFrameCompilerFactory.create();
-            compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        List<DataToken> tokens = tokenizer.tokenize( inputString );
+
+        // now we want to parse that list of tokens
+        DataFrameParser dfParser = DataFrameParserFactory.create();
+        parsedDataFrameColumns = dfParser.parse( tokens );
+
+        // actually we also need that to be compiled into the type safe data frames.
+        DataFrameCompiler dfCompiler = DataFrameCompilerFactory.create();
+        compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
 
@@ -132,6 +128,18 @@ public class IngestHeartCsv {
         }
 
         return dfBuilder.build();
+    }
+
+    private String readAllLinesFromFile( Path path ) {
+        try {
+            List<String> allLines = Files.readAllLines( path );
+            return String.join( "\n", allLines );
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
     }
 
 }
