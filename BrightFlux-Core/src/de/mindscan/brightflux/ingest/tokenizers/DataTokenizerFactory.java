@@ -30,11 +30,23 @@ package de.mindscan.brightflux.ingest.tokenizers;
  */
 public class DataTokenizerFactory {
 
+    static class Holder {
+        static DataTokenizerFactory factoryInstance = new DataTokenizerFactory();
+    }
+
     public static DataTokenizer create( String tokenizerType ) {
+        return Holder.factoryInstance.buildTokenizerInstance( tokenizerType );
+    }
+
+    public DataTokenizerFactory() {
+    }
+
+    public DataTokenizer buildTokenizerInstance( String tokenizerType ) {
         if ("CSVTokenizer".equals( tokenizerType )) {
             return new CSVTokenizerImpl();
         }
 
         throw new IllegalArgumentException();
     }
+
 }
