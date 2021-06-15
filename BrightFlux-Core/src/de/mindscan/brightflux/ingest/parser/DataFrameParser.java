@@ -39,12 +39,25 @@ import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
- * A DataFrame parser will get a Stream/Collection of Tokens and will emit a data frame from it. 
- * - It may also provide an unoptimized dataframe, with still the tokens in place, but in column 
- *   order, so that the tokens can be checked for validity.
+ * The DataFrame Parser will create a list of DataFrameColumn (in future probably a DataFrame),
+ * which reensemble an abstract data frame, which is not yet translated into effective primitive
+ * data types.
+ * 
+ * The DataFrameColumns will contain a list of DataTokens, which may or may not be annotated.
+ * 
  */
 public class DataFrameParser {
 
+    /**
+     * The parser will receive a stream or collection of Tokens and will emit a list of data frame
+     * columns containing DataTokens. The most of the token are still in place for the DataFrameCompiler
+     * but processed tokens are .
+     * 
+     * Also instead of a lot of columns, we might consider to return dataFrames or course. 
+     *  
+     * @param tokenStream the tokens which to compile to a data frame or a list of data frames.
+     * @return A list of pre arranged columns. / data frames
+     */
     public List<DataFrameColumn<DataToken>> parse( Collection<DataToken> tokenStream ) {
 
         List<DataFrameColumn<DataToken>> parseResult = new ArrayList<>();
