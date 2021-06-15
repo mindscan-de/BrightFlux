@@ -33,6 +33,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerImpl;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserImpl;
@@ -129,7 +130,7 @@ public class IngestHeartCsv {
             parsedDataFrameColumns = dfParser.parse( tokens );
 
             // actually we also need that to be compiled into the type safe
-            DataFrameCompilerImpl dfCompiler = new DataFrameCompilerImpl();
+            DataFrameCompiler dfCompiler = new DataFrameCompilerImpl();
             compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
         }
         catch (IOException e) {
