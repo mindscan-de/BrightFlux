@@ -39,7 +39,7 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class DataFrameCompilerImpl {
 
-    public List<DataFrameColumn<?>> compileDataFrame( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
+    public List<DataFrameColumn<?>> compileDataFrameColumns( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         List<DataFrameColumn<?>> compiledDataFrameColumns = new ArrayList<>();
 
         // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.

@@ -130,7 +130,7 @@ public class IngestHeartCsv {
 
             // actually we also need that to be compiled into the type safe
             DataFrameCompilerImpl dfCompiler = new DataFrameCompilerImpl();
-            compiledDataFrameColumns = dfCompiler.compileDataFrame( parsedDataFrameColumns );
+            compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
         }
         catch (IOException e) {
             e.printStackTrace();
