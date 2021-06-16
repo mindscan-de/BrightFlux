@@ -97,10 +97,6 @@ public class IngestHeartCsv {
     }
 
     public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
-
-        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = null;
-        List<DataFrameColumn<?>> compiledDataFrameColumns = null;
-
         // building the configuration for the data to ingest
         IngestPipelineConfiguration config = new IngestPipelineConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
                         DataFrameCompilerFactory.getIntance() );
@@ -108,6 +104,13 @@ public class IngestHeartCsv {
         config.setDataFrameName( path.getFileName().toString() );
         config.setIngestInputFilePath( path );
 
+        return ingestAndCompile( config );
+    }
+
+    // extract this to proper class.
+    private DataFrameImpl ingestAndCompile( IngestPipelineConfiguration config ) {
+        List<DataFrameColumn<DataToken>> parsedDataFrameColumns;
+        List<DataFrameColumn<?>> compiledDataFrameColumns;
         // prepare pipeline
         DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
         DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
