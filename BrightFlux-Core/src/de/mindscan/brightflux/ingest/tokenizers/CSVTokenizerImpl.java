@@ -36,6 +36,14 @@ import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
  *
+ * TODO:
+ * - add auto configuration mode, for the calculation of "Column-Separators" or user any other defined ColumnSeparators
+ *   - String columnSeparator = IngestUtils.calculateColumnSeparator( head );
+ * - add auto configuration mode, for detecting the number of columns
+ *   - int numberOfColumns = IngestUtils.calculateNumberOfColumns( head, columnSeparator.charAt( 0 ) );
+ * - add auto configuration mode, for the newline separators, which will determine newlines.
+ * 
+ * 
  */
 public class CSVTokenizerImpl implements DataTokenizer {
 
@@ -193,5 +201,19 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // TODO: Firstmenge of this.lineSeparator
         return currentChar == '\n' || currentChar == '\r';
     }
+
+    // Idea Area: 
+
+    // This is part of the Ingest configuration.
+    // CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
+    // tokenizer.setColumnSeparator( columnSeparator );
+    // tokenizer.setLineSeparator( "\n" );
+    // tokenizer.tokenize( "" );
+
+    // then we init the dataparser with the stop symbol until we see a columnseparator
+    // then we init the columndataparser with the columnseparator,
+    // then we init the columndataparser with the lineseparator as a stop symbol
+    // then we init the last columndataparser with the stopymbol for the line
+    // then we init the line separator with either "\n\r", "\r\n", "\n"
 
 }

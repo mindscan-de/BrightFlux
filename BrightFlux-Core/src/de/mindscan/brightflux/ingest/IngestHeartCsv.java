@@ -32,7 +32,6 @@ import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
-import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizerImpl;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 
 /**
@@ -87,18 +86,6 @@ public class IngestHeartCsv {
                         // I will let that sink in for a while
                         // that is the target type of the column - but we also need the input type of the columns as well
                         new String[] { "int", "int", "int", "int", "int", "int", "int", "int", "int", "float", "int", "int", "int", "int" } );
-
-        // This is part of the Ingest configuration.
-        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
-        tokenizer.setColumnSeparator( columnSeparator );
-        tokenizer.setLineSeparator( "\n" );
-        tokenizer.tokenize( "" );
-
-        // then we init the dataparser with the stop symbol until we see a columnseparator
-        // then we init the columndataparser with the columnseparator,
-        // then we init the columndataparser with the lineseparator as a stop symbol
-        // then we init the last columndataparser with the stopymbol for the line
-        // then we init the line separator with either "\n\r", "\r\n", "\n"
 
         return dfBuilder.build();
     }
