@@ -43,7 +43,21 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
  */
 public class IngestHeartCsv {
 
-    public DataFrameImpl loadCsvAsDataFrame( Path path ) {
+    public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
+        // building the configuration for the data to ingest
+        JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
+                        DataFrameCompilerFactory.getIntance() );
+        config.setTokenizerConfiguration( "CSVTokenizer" );
+        config.setDataFrameName( path.getFileName().toString() );
+        config.setIngestInputFilePath( path );
+
+        return IngestEngine.execute( config );
+    }
+
+    // This was basically the starting point of the Dataframe compilation process, 
+    // but some ideas are still there, which i want to keep and to move them into an appropriate place
+    // actually this is deprecated code, but for now i will keep it until the ideas are moved to their new place
+    DataFrameImpl loadCsvAsDataFrame( Path path ) {
 
 //        // age, sex, cp, trtbps, chol, fbs, restecg, thalachh, exng, oldpeak (float), slp, caa, thall, output
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( path.getFileName().toString() );
@@ -87,17 +101,6 @@ public class IngestHeartCsv {
         // then we init the line separator with either "\n\r", "\r\n", "\n"
 
         return dfBuilder.build();
-    }
-
-    public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
-        // building the configuration for the data to ingest
-        JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
-                        DataFrameCompilerFactory.getIntance() );
-        config.setTokenizerConfiguration( "CSVTokenizer" );
-        config.setDataFrameName( path.getFileName().toString() );
-        config.setIngestInputFilePath( path );
-
-        return IngestEngine.execute( config );
     }
 
 }
