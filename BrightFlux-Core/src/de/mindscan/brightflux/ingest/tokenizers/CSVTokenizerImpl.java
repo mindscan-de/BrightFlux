@@ -210,6 +210,10 @@ public class CSVTokenizerImpl implements DataTokenizer {
     // tokenizer.setLineSeparator( "\n" );
     // tokenizer.tokenize( "" );
 
+    // basically we have a line parser
+    // basically we have a columnparser (will go to next column)
+    // basically we have a data parser (dependent on the current column)
+
     // then we init the dataparser with the stop symbol until we see a columnseparator
     // then we init the columndataparser with the columnseparator,
     // then we init the columndataparser with the lineseparator as a stop symbol
