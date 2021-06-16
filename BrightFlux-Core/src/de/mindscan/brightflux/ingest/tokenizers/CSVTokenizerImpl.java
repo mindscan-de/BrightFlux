@@ -35,7 +35,7 @@ import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
- * 
+ *
  */
 public class CSVTokenizerImpl implements DataTokenizer {
 
@@ -159,21 +159,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         String valueString = inputString.substring( startIndex, endIndex );
         System.out.println( valueString );
 
-        if (NumberToken.class.equals( currentTokenType )) {
-            return NumberToken.create( valueString );
-        }
-        else if (ColumnSeparatorToken.class.equals( currentTokenType )) {
-            return ColumnSeparatorToken.create();
-        }
-        else if (IdentifierToken.class.equals( currentTokenType )) {
-            return IdentifierToken.create( valueString );
-        }
-        else if (LineSeparatorToken.class.equals( currentTokenType )) {
-            // TODO: maybe count the lines...?
-            return LineSeparatorToken.create();
-        }
-
-        throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
+        return TokenUtils.createToken( currentTokenType, valueString );
     }
 
     private Class<NumberToken> consumeNumber( String inputString ) {
