@@ -25,33 +25,6 @@ public class IngestHeartCsvTest {
                     .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
 
     @Test
-    public void testLoadCsvAsDataFrame_loadDataSet_has14Columns() throws Exception {
-        // arrange
-        IngestHeartCsv heartCsv = new IngestHeartCsv();
-
-        // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrame( path );
-
-        // assert
-        Collection<DataFrameColumn<?>> result = frame.getColumns();
-        assertThat( result, hasSize( 14 ) );
-    }
-
-    @Test
-    public void testLoadCsvAsDataFrame_loadDataSet_has14ColumnNamesInOrder() throws Exception {
-        // arrange
-        IngestHeartCsv heartCsv = new IngestHeartCsv();
-
-        // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrame( path );
-
-        // assert
-        Collection<String> result = frame.getColumnNames();
-        assertThat( result,
-                        contains( "age", "sex", "cp", "trtbps", "chol", "fbs", "restecg", "thalachh", "exng", "oldpeak", "slp", "caa", "thall", "output" ) );
-    }
-
-    @Test
     public void testLoadCsvAsDataFrameV2_loadDaataset_has14Columns() throws Exception {
         // arrange
         IngestHeartCsv heartCsv = new IngestHeartCsv();
