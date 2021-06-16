@@ -97,7 +97,7 @@ public class IngestHeartCsv {
         config.setDataFrameName( path.getFileName().toString() );
         config.setIngestInputFilePath( path );
 
-        return IngestEngine.ingestAndCompile( config );
+        return IngestEngine.execute( config );
     }
 
 }

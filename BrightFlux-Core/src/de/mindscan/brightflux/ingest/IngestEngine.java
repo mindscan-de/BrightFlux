@@ -39,9 +39,55 @@ import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
 
 /**
- * 
+ * The first step for the ingest engine is, that it executes one ingest job at a time. Later it can be extended 
+ * with a Job Queue, Worker threads, Futures and Promises, a scheduler, A Job Management, Plugin Handling and so 
+ * forth. 
  */
 public class IngestEngine {
+
+    /**
+     * This method will execute a Ingest-JobConfiguration and return a data frame from it.
+     * @param config
+     * @return
+     */
+    public static DataFrameImpl execute( JobConfiguration config ) {
+        // prepare pipeline
+        DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
+        DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
+        DataFrameCompiler dfCompiler = config.compilerFactoryInstance.buildDataFrameCompilerInstance();
+
+        // TODO: The reader and the tokenizer should be re-thought. Not Yet
+
+        // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
+        // should be part of the pipeline configuration and be plugable
+        String inputString = readAllLinesFromFile( config.getIngestInputPath() );
+
+        // run pipeline
+        List<DataToken> tokens = tokenizer.tokenize( inputString );
+        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
+        List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
+
+        return buildCompiledDataFrame( config, compiledDataFrameColumns );
+    }
+
+    private static DataFrameImpl buildCompiledDataFrame( JobConfiguration config, List<DataFrameColumn<?>> compiledDataFrameColumns ) {
+        // build dataframe
+        DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( config.getDataFrameName() );
+
+        // compiled dataframe columns
+        if (compiledDataFrameColumns != null) {
+            dfBuilder.addColumns( compiledDataFrameColumns );
+        }
+
+        // abstract dataframe columns
+        //        else if (parsedDataFrameColumns != null) {
+        //            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
+        //                dfBuilder.addColumn( dataFrameColumn );
+        //            }
+        //        }
+
+        return dfBuilder.build();
+    }
 
     static String readAllLinesFromFile( Path path ) {
         try {
@@ -51,44 +97,8 @@ public class IngestEngine {
         catch (IOException e) {
             e.printStackTrace();
         }
-    
+
         return "";
     }
-
-    // extract this to proper class.
-        static DataFrameImpl ingestAndCompile( JobConfiguration config ) {
-            List<DataFrameColumn<DataToken>> parsedDataFrameColumns;
-            List<DataFrameColumn<?>> compiledDataFrameColumns;
-            // prepare pipeline
-            DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
-            DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
-            DataFrameCompiler dfCompiler = config.compilerFactoryInstance.buildDataFrameCompilerInstance();
-    
-            // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
-            // should be part of the pipeline configuration and be plugable
-            String inputString = readAllLinesFromFile( config.getIngestInputPath() );
-    
-            // run pipeline
-            List<DataToken> tokens = tokenizer.tokenize( inputString );
-            parsedDataFrameColumns = dfParser.parse( tokens );
-            compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
-    
-            // build dataframe
-            DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( config.getDataFrameName() );
-    
-            // compiled dataframe columns
-            if (compiledDataFrameColumns != null) {
-                dfBuilder.addColumns( compiledDataFrameColumns );
-            }
-    
-            // abstract dataframe columns
-    //        else if (parsedDataFrameColumns != null) {
-    //            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
-    //                dfBuilder.addColumn( dataFrameColumn );
-    //            }
-    //        }
-    
-            return dfBuilder.build();
-        }
 
 }
