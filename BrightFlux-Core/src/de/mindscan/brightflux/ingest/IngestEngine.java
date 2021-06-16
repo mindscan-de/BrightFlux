@@ -34,8 +34,8 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
+import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
-import de.mindscan.brightflux.ingest.pipeline.IngestPipelineConfiguration;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
 
 /**
@@ -56,7 +56,7 @@ public class IngestEngine {
     }
 
     // extract this to proper class.
-        static DataFrameImpl ingestAndCompile( IngestPipelineConfiguration config ) {
+        static DataFrameImpl ingestAndCompile( JobConfiguration config ) {
             List<DataFrameColumn<DataToken>> parsedDataFrameColumns;
             List<DataFrameColumn<?>> compiledDataFrameColumns;
             // prepare pipeline

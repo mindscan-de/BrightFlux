@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.ingest.pipeline;
+package de.mindscan.brightflux.ingest.engine;
 
 import java.nio.file.Path;
 
@@ -39,7 +39,7 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
         // should be part of the pipeline configuration and be plugable
  * 
  */
-public class IngestPipelineConfiguration {
+public class JobConfiguration {
     /**
      * 
      */
@@ -59,7 +59,7 @@ public class IngestPipelineConfiguration {
     /**
      * 
      */
-    public IngestPipelineConfiguration( DataTokenizerFactory tokenizerFactoryInstance, DataFrameParserFactory parserFactoryInstance,
+    public JobConfiguration( DataTokenizerFactory tokenizerFactoryInstance, DataFrameParserFactory parserFactoryInstance,
                     DataFrameCompilerFactory compilerFactoryInstance ) {
         this.tokenizerFactoryInstance = tokenizerFactoryInstance;
         this.parserFactoryInstance = parserFactoryInstance;
