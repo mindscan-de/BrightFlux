@@ -25,21 +25,14 @@
  */
 package de.mindscan.brightflux.ingest;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
-import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
-import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.pipeline.IngestPipelineConfiguration;
 import de.mindscan.brightflux.ingest.tokenizers.CSVTokenizerImpl;
-import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 
 /**
@@ -104,55 +97,7 @@ public class IngestHeartCsv {
         config.setDataFrameName( path.getFileName().toString() );
         config.setIngestInputFilePath( path );
 
-        return ingestAndCompile( config );
-    }
-
-    // extract this to proper class.
-    private DataFrameImpl ingestAndCompile( IngestPipelineConfiguration config ) {
-        List<DataFrameColumn<DataToken>> parsedDataFrameColumns;
-        List<DataFrameColumn<?>> compiledDataFrameColumns;
-        // prepare pipeline
-        DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
-        DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
-        DataFrameCompiler dfCompiler = config.compilerFactoryInstance.buildDataFrameCompilerInstance();
-
-        // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
-        // should be part of the pipeline configuration and be plugable
-        String inputString = readAllLinesFromFile( config.getIngestInputPath() );
-
-        // run pipeline
-        List<DataToken> tokens = tokenizer.tokenize( inputString );
-        parsedDataFrameColumns = dfParser.parse( tokens );
-        compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
-
-        // build dataframe
-        DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( config.getDataFrameName() );
-
-        // compiled dataframe columns
-        if (compiledDataFrameColumns != null) {
-            dfBuilder.addColumns( compiledDataFrameColumns );
-        }
-
-        // abstract dataframe columns
-//        else if (parsedDataFrameColumns != null) {
-//            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
-//                dfBuilder.addColumn( dataFrameColumn );
-//            }
-//        }
-
-        return dfBuilder.build();
-    }
-
-    private String readAllLinesFromFile( Path path ) {
-        try {
-            List<String> allLines = Files.readAllLines( path );
-            return String.join( "\n", allLines );
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "";
+        return IngestEngine.ingestAndCompile( config );
     }
 
 }

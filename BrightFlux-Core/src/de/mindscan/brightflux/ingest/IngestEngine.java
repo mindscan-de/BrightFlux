@@ -1,0 +1,94 @@
+/**
+ * 
+ * MIT License
+ *
+ * Copyright (c) 2021 Maxim Gansert, Mindscan
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+package de.mindscan.brightflux.ingest;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
+import de.mindscan.brightflux.ingest.parser.DataFrameParser;
+import de.mindscan.brightflux.ingest.pipeline.IngestPipelineConfiguration;
+import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
+
+/**
+ * 
+ */
+public class IngestEngine {
+
+    static String readAllLinesFromFile( Path path ) {
+        try {
+            List<String> allLines = Files.readAllLines( path );
+            return String.join( "\n", allLines );
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        return "";
+    }
+
+    // extract this to proper class.
+        static DataFrameImpl ingestAndCompile( IngestPipelineConfiguration config ) {
+            List<DataFrameColumn<DataToken>> parsedDataFrameColumns;
+            List<DataFrameColumn<?>> compiledDataFrameColumns;
+            // prepare pipeline
+            DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
+            DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
+            DataFrameCompiler dfCompiler = config.compilerFactoryInstance.buildDataFrameCompilerInstance();
+    
+            // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
+            // should be part of the pipeline configuration and be plugable
+            String inputString = readAllLinesFromFile( config.getIngestInputPath() );
+    
+            // run pipeline
+            List<DataToken> tokens = tokenizer.tokenize( inputString );
+            parsedDataFrameColumns = dfParser.parse( tokens );
+            compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
+    
+            // build dataframe
+            DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( config.getDataFrameName() );
+    
+            // compiled dataframe columns
+            if (compiledDataFrameColumns != null) {
+                dfBuilder.addColumns( compiledDataFrameColumns );
+            }
+    
+            // abstract dataframe columns
+    //        else if (parsedDataFrameColumns != null) {
+    //            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
+    //                dfBuilder.addColumn( dataFrameColumn );
+    //            }
+    //        }
+    
+            return dfBuilder.build();
+        }
+
+}
