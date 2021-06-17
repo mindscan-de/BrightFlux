@@ -88,6 +88,11 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     }
 
     @Override
+    public boolean isPresent( int index ) {
+        return at( index ) != null;
+    }
+
+    @Override
     public T get( int index ) {
         return at( index );
     }

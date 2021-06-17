@@ -50,5 +50,8 @@ public abstract class DataFrameColumn<T> {
 
     public abstract T get( int index );
 
+    public abstract boolean isPresent( int index );
+
     public abstract void set( int index, T element );
+
 }
