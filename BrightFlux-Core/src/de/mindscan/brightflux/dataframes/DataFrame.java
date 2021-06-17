@@ -30,4 +30,5 @@ package de.mindscan.brightflux.dataframes;
  */
 public interface DataFrame {
 
+    int getSize();
 }

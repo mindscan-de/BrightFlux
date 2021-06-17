@@ -123,6 +123,13 @@ public class DataFrameImpl implements DataFrame {
         }
     }
 
+    /**
+     * @return
+     */
+    public int getSize() {
+        return 0;
+    }
+
     // TODO? is that needed? remove/delete data frame column
     // TODO? is that needed? rename data frame column
     // TODO? is that needed? replace data frame column
