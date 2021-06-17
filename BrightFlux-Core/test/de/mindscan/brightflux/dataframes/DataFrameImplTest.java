@@ -219,4 +219,169 @@ public class DataFrameImplTest {
         assertThat( result, equalTo( "Name2" ) );
     }
 
+    @Test
+    public void testAddColumn_addFirstColumnEmpty_expectThrowsNoException() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+
+        // act
+        dataFrame.addColumn( new BooleanColumn( "Column1" ) );
+
+        // assert (no exception is thrown)
+    }
+
+    @Test
+    public void testAddColumn_addFirstColumnLength1_expectThrowsNoException() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        column.append( true );
+
+        // act
+        dataFrame.addColumn( column );
+
+        // assert (no exception is thrown)
+    }
+
+    @Test
+    public void testGetSize_CTorOnly_expectSizeIsZero() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+
+        // act
+        int result = dataFrame.getSize();
+
+        // assert
+        assertThat( result, equalTo( 0 ) );
+    }
+
+    @Test
+    public void testGetSize_addFirstColumnEmpty_expectSizeIsZero() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        dataFrame.addColumn( column );
+
+        // act
+        int result = dataFrame.getSize();
+
+        // assert
+        assertThat( result, equalTo( 0 ) );
+    }
+
+    @Test
+    public void testGetSize_addFirstColumnLength1_expectSizeIsOne() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        column.append( true );
+        dataFrame.addColumn( column );
+
+        // act
+        int result = dataFrame.getSize();
+
+        // assert (no exception is thrown)
+        assertThat( result, equalTo( 1 ) );
+    }
+
+    @Test
+    public void testGetSize_addFirstColumnLengthTwo_expectSizeIsTwo() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+
+        column.append( true );
+        column.append( true );
+
+        dataFrame.addColumn( column );
+
+        // act
+        int result = dataFrame.getSize();
+
+        // assert (no exception is thrown)
+        assertThat( result, equalTo( 2 ) );
+    }
+
+    @Test
+    public void testGetSize_addFirstColumnLengthIsOneSecondIsEmpty_expectSizeIsOne() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        column.append( true );
+
+        BooleanColumn emptyColumn = new BooleanColumn( "Column2" );
+
+        dataFrame.addColumn( column );
+        dataFrame.addColumn( emptyColumn );
+
+        // act
+        int result = dataFrame.getSize();
+
+        // assert 
+        assertThat( result, equalTo( 1 ) );
+    }
+
+    @Test
+    public void testGetSize_addFirstColumnLengthIsTwoSecondIsEmpty_expectSizeIsOne() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        column.append( true );
+        column.append( false );
+
+        BooleanColumn emptyColumn = new BooleanColumn( "Column2" );
+
+        dataFrame.addColumn( column );
+        dataFrame.addColumn( emptyColumn );
+
+        // act
+        int result = dataFrame.getSize();
+
+        // assert 
+        assertThat( result, equalTo( 1 ) );
+    }
+
+    @Test
+    public void testAddColumn_addFirstColumnLengthOneAndSecondOneEmpty_expectSecondColumnToHaveSizeOne() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        column.append( true );
+        BooleanColumn secondColumn = new BooleanColumn( "Column2" );
+
+        // act
+        dataFrame.addColumn( column );
+        dataFrame.addColumn( secondColumn );
+
+        // assert 
+        assertThat( secondColumn.getSize(), equalTo( 1 ) );
+    }
+
+    @Test
+    public void testAddColumn_addFirstColumnLengthTwoAndSecondOneEmpty_expectSecondColumnToHaveSizeTwo() throws Exception {
+
+        // arrange 
+        DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
+        BooleanColumn column = new BooleanColumn( "Column1" );
+        column.append( true );
+        column.append( false );
+        BooleanColumn secondColumn = new BooleanColumn( "Column2" );
+
+        // act
+        dataFrame.addColumn( column );
+        dataFrame.addColumn( secondColumn );
+
+        // assert 
+        assertThat( secondColumn.getSize(), equalTo( 2 ) );
+    }
+
 }
