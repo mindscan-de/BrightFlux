@@ -329,7 +329,7 @@ public class DataFrameImplTest {
     }
 
     @Test
-    public void testGetSize_addFirstColumnLengthIsTwoSecondIsEmpty_expectSizeIsOne() throws Exception {
+    public void testGetSize_addFirstColumnLengthIsTwoSecondIsEmpty_expectSizeIsTwo() throws Exception {
 
         // arrange 
         DataFrameImpl dataFrame = new DataFrameImpl( "MyDataFrame" );
@@ -346,7 +346,7 @@ public class DataFrameImplTest {
         int result = dataFrame.getSize();
 
         // assert 
-        assertThat( result, equalTo( 1 ) );
+        assertThat( result, equalTo( 2 ) );
     }
 
     @Test

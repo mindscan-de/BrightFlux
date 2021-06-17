@@ -48,6 +48,8 @@ public class DataFrameImpl implements DataFrame {
     private Map<String, DataFrameColumn<?>> columnsMap = new LinkedHashMap<>();
     // private DataFrameColumn<?>[] columns = null;
 
+    private int size = 0;
+
     public DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.randomUUID();
@@ -107,6 +109,11 @@ public class DataFrameImpl implements DataFrame {
 
         // TODO: ensure that this column has a name, or something similar (e.g. number in case it is anonymous.)
         columnsMap.put( column.getColumnName(), column );
+
+        if (columnsMap.size() == 1) {
+            this.size = column.getSize();
+        }
+
     }
 
     // add multiple data frame columns
@@ -127,7 +134,7 @@ public class DataFrameImpl implements DataFrame {
      * @return
      */
     public int getSize() {
-        return 0;
+        return size;
     }
 
     // TODO? is that needed? remove/delete data frame column
