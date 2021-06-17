@@ -37,7 +37,7 @@ import java.util.UUID;
  *       and access some of the data - and then develop from here to a java specific 
  *       syntax.
  */
-public class DataFrameImpl {
+public class DataFrameImpl implements DataFrame {
 
     private String nameOfDataFrame;
     private UUID uuidOfDataFrame;
