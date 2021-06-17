@@ -42,6 +42,8 @@ public abstract class DataFrameColumn<T> {
 
     public abstract void append( T element );
 
+    public abstract void appendNA();
+
     public abstract int getSize();
 
     public abstract T get( int index );

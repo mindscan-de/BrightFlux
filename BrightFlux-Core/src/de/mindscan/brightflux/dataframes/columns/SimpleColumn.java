@@ -77,6 +77,11 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
     }
 
     @Override
+    public void appendNA() {
+        this.append( null );
+    }
+
+    @Override
     public int getSize() {
         return size;
     }
