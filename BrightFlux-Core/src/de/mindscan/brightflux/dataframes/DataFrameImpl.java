@@ -101,6 +101,14 @@ public class DataFrameImpl implements DataFrame {
             return;
         }
 
+        // pump the size of an empty column to the size of the data frame.
+        // so that an access in the data frame won't cause out of index issues on empty columns
+        if (column.getSize() == 0 && this.size > 0) {
+            for (int i = 0; i < this.size; i++) {
+                column.appendNA();
+            }
+        }
+
         // 
         // TODO: implement the add operation for a data frame columns
 
