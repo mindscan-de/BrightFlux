@@ -40,17 +40,29 @@ public abstract class DataFrameColumn<T> {
         return columnName;
     }
 
+    // -----------------------------------------
+    // Extend the column 
+    // -----------------------------------------
+
     public abstract void append( T element );
 
     public abstract void appendNA();
+
+    // -----------------------------------------
+    // Column wise functions
+    // -----------------------------------------
 
     public abstract int getSize();
 
     public abstract boolean isEmpty();
 
-    public abstract T get( int index );
+    // -----------------------------------------
+    // Element wise access get / set / isPresent
+    // -----------------------------------------    
 
     public abstract boolean isPresent( int index );
+
+    public abstract T get( int index );
 
     public abstract void set( int index, T element );
 
