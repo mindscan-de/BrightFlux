@@ -28,12 +28,12 @@ package de.mindscan.brightflux.dataframes.columns;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.DataFrameColumnBase;
 
 /**
  * 
  */
-public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
+public abstract class SimpleColumn<T> extends DataFrameColumnBase<T> {
 
     private final int INITIAL_SIZE = 128;
 

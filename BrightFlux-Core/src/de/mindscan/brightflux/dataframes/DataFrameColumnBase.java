@@ -28,36 +28,16 @@ package de.mindscan.brightflux.dataframes;
 /**
  * 
  */
-public interface DataFrameColumn<T> {
+public abstract class DataFrameColumnBase<T> implements DataFrameColumn<T> {
 
-    // -----------------------------------------
-    // Extend the column 
-    // -----------------------------------------
+    private String columnName;
 
-    public abstract void append( T element );
+    public void setColumnName( String columnName ) {
+        this.columnName = columnName;
+    }
 
-    public abstract void appendNA();
-
-    // -----------------------------------------
-    // Column wise functions
-    // -----------------------------------------
-
-    public abstract int getSize();
-
-    public abstract boolean isEmpty();
-
-    public abstract void setColumnName( String columnName );
-
-    public abstract String getColumnName();
-
-    // -----------------------------------------
-    // Element wise access get / set / isPresent
-    // -----------------------------------------    
-
-    public abstract boolean isPresent( int index );
-
-    public abstract T get( int index );
-
-    public abstract void set( int index, T element );
+    public String getColumnName() {
+        return columnName;
+    }
 
 }
