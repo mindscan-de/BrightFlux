@@ -58,6 +58,7 @@ public abstract class SimpleColumn<T> extends DataFrameColumn<T> {
         this.size = columnValues.length;
     }
 
+    @Override
     public boolean isEmpty() {
         return this.getSize() == 0;
     }

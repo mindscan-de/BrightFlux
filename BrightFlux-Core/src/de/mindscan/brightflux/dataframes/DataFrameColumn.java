@@ -46,6 +46,8 @@ public abstract class DataFrameColumn<T> {
 
     public abstract int getSize();
 
+    public abstract boolean isEmpty();
+
     public abstract T get( int index );
 
     public abstract void set( int index, T element );
