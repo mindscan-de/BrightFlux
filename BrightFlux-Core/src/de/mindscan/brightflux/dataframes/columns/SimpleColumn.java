@@ -28,8 +28,6 @@ package de.mindscan.brightflux.dataframes.columns;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-import de.mindscan.brightflux.dataframes.DataFrameColumnBase;
-
 /**
  * 
  */

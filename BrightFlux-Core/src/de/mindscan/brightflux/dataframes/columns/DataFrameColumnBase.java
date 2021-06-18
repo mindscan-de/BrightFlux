@@ -23,7 +23,9 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes;
+package de.mindscan.brightflux.dataframes.columns;
+
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
 /**
  * 
