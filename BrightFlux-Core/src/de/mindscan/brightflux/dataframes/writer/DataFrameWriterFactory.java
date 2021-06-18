@@ -32,7 +32,9 @@ public class DataFrameWriterFactory {
     public static DataFrameWriter create( String writerType ) {
         switch (writerType) {
             case "CSV":
+            case "csv":
                 return new DataFrameWriterCSVImpl();
+            case "H5":
             case "h5":
                 return new DataFrameWriterH5Impl();
             default:
