@@ -11,9 +11,9 @@ and store this reformatted data partitioned. So this code contains the data proc
 
 ## What this project is not right now.
 
-I won't claim this to be the most performant code... and i don't care enough for raw
-It will probably not host the code for viewing the data, as this is secondary for me at the moment.
-
+I won't claim this to be the most performant code... and i don't care enough for raw performance right
+now. This particular project will probably not host the code for viewing the data, as this is secondary 
+for me at the moment.
 
 * Maybe use an existing DataFrame library so far, until we have reason to use our own?
 ** https://github.com/nRo/DataFrame
@@ -55,3 +55,24 @@ These steps can be implemented independently and can be tested on each edge of e
 
 An option is to have different Parsers, which create an abstract data frame, with different capabilities. But in 
 the next step we might have a single compiler which compiles the abstract data frame to a fully typed dataframe. 
+
+## Data Frames
+
+The ability to successful perform log analysis lies in the ability to select and filter log data e.g. by a DSL.
+
+We will start with an internal DSL to select and filter and compose the data frames.
+
+## Data Frames - I/O
+
+We should be able to export the selected and filtered data, and put it into files which can be used by other
+simple programs and decision-tree-programs. Since we have simplified the data input, we may now be able to 
+formulate some simple rules for each analysis case.
+
+## Stored Data-Frames Queries
+
+The idea is, that if we have hundreds of Data Frame Queries, is that we can apply them all and evaluate the 
+outcome and point to the best hypothesis.
+
+## Machine Learning and/or Decision Trees
+
+The filtered text should be process-able by a ML-transformer architecture, for analysis we can train 
