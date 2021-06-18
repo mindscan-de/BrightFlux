@@ -50,6 +50,12 @@ public class CSVTokenizerImpl implements DataTokenizer {
     private String columnSeparator = ",";
     private String lineSeparator = "\n";
 
+    // TODO: implement a way to declare tokens which are treated as N/A tokens 
+
+    // declare the empty tokens, or not available tokens (e.g. eurostat)
+    // http://appsso.eurostat.ec.europa.eu/nui/show.do?dataset=urb_cpop1&lang=en
+    private String[] emptyTokens = { "", ":" };
+
     private int maxColumnCount;
 
     /**
