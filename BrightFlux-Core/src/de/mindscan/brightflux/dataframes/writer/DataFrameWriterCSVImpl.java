@@ -51,6 +51,11 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
                 writer.write( "\n" );
 
                 // TODO: write data....
+
+                // TODO Iterate all rows / hasnext row
+                // TODO Iterate each row, but return String or Object?
+                // TODO each column should have a serializer, 
+                // or should the serializer be part of the writer (which makes more sense)
             }
         }
         catch (IOException e) {
