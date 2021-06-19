@@ -146,6 +146,15 @@ public class DataFrameImpl implements DataFrame {
         return size;
     }
 
+//    public void toCsv( Path path ) {
+//        DataFrameWriterFactory.create( "csv" ).writeToFile( this, path );
+//    }
+//
+//    public void toH5( Path path ) {
+//        DataFrameWriterFactory.create( "h5" ).writeToFile( this, path );
+//    }
+    
+    
     // TODO? is that needed? remove/delete data frame column
     // TODO? is that needed? rename data frame column
     // TODO? is that needed? replace data frame column
