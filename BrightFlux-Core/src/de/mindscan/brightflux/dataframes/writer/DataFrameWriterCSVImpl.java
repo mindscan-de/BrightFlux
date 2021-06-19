@@ -31,7 +31,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -65,8 +64,7 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
 
     private String calculateColumnNameLine( DataFrame df ) {
         Collection<DataFrameColumn<?>> columns = df.getColumns();
-        List<String> columnNames = columns.stream().map( c -> c.getColumnName() ).collect( Collectors.toList() );
-        return String.join( ",", columnNames );
+        return columns.stream().map( c -> c.getColumnName() ).collect( Collectors.joining( "," ) );
     }
 
 }
