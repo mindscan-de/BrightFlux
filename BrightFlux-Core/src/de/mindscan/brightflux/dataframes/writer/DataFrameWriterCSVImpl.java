@@ -30,8 +30,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Iterator;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
  * 
@@ -48,15 +50,24 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
             writer.write( calculateColumnNameLine( df ) );
 
             if (!df.isEmpty()) {
-                writer.write( "\n" );
+                Iterator<DataFrameRow> iter = df.rowIterator();
 
-                // TODO: write data....
+                // Iterate all rows / has next row
+                while (iter.hasNext()) {
+                    // write newline for each new row.
+                    writer.write( "\n" );
 
-                // TODO Iterate all rows / hasnext row
-                // TODO Iterate each row, but return String or Object?
-                // TODO each column should have a serializer, 
-                // or should the serializer be part of the writer (which makes more sense)
+                    // read row data
+                    DataFrameRow rowcontent = iter.next();
+
+                    writer.write( "test" );
+                    // TODO: write data....
+                    // TODO Iterate each row, but return String or Object?
+                    // TODO each column should have a serializer, 
+                    // or should the serializer be part of the writer (which makes more sense)
+                }
             }
+            writer.write( "\n" );
         }
         catch (IOException e) {
             e.printStackTrace();

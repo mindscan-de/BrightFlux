@@ -27,8 +27,10 @@ package de.mindscan.brightflux.dataframes;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
@@ -80,6 +82,31 @@ public class DataFrameImpl implements DataFrame {
 
     public Collection<String> getColumnNames() {
         return new ArrayList<>( columnsMap.keySet() );
+    }
+
+    public Iterator<DataFrameRow> rowIterator() {
+        return new Iterator<DataFrameRow>() {
+            private int currentIndexPosition = 0;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndexPosition < DataFrameImpl.this.getSize();
+            }
+
+            @Override
+            public DataFrameRow next() {
+                // check for validity of position
+                if (currentIndexPosition >= DataFrameImpl.this.getSize()) {
+                    throw new NoSuchElementException();
+                }
+
+                DataFrameRow currentRow = null;
+                currentIndexPosition++;
+
+                return currentRow;
+            }
+
+        };
     }
 
     /**

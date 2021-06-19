@@ -25,21 +25,9 @@
  */
 package de.mindscan.brightflux.dataframes;
 
-import java.util.Collection;
-import java.util.Iterator;
-
 /**
  * 
  */
-public interface DataFrame {
+public class DataFrameRow {
 
-    int getSize();
-
-    boolean isEmpty();
-
-    Collection<DataFrameColumn<?>> getColumns();
-
-    Collection<String> getColumnNames();
-
-    Iterator<DataFrameRow> rowIterator();
 }
