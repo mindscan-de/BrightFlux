@@ -37,4 +37,6 @@ public interface DataFrame {
     boolean isEmpty();
 
     Collection<DataFrameColumn<?>> getColumns();
+
+    Collection<String> getColumnNames();
 }
