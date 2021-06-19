@@ -25,9 +25,14 @@
  */
 package de.mindscan.brightflux.dataframes.writer;
 
+import java.nio.file.Path;
+
+import de.mindscan.brightflux.dataframes.DataFrame;
+
 /**
  * 
  */
 public interface DataFrameWriter {
 
+    void writeToFile( DataFrame df, Path outputPath );
 }

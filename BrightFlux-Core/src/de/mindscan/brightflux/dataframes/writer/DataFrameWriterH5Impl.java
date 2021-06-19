@@ -25,9 +25,22 @@
  */
 package de.mindscan.brightflux.dataframes.writer;
 
+import java.nio.file.Path;
+
+import de.mindscan.brightflux.dataframes.DataFrame;
+
 /**
  * 
  */
 public class DataFrameWriterH5Impl implements DataFrameWriter {
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeToFile( DataFrame df, Path outputPath ) {
+        // TODO Auto-generated method stub
+
+    }
 
 }
