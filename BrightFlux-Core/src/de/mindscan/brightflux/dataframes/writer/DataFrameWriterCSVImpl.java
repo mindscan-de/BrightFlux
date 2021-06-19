@@ -25,9 +25,17 @@
  */
 package de.mindscan.brightflux.dataframes.writer;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
 /**
  * 
@@ -39,8 +47,26 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
      */
     @Override
     public void writeToFile( DataFrame df, Path outputPath ) {
-        // TODO Auto-generated method stub
+        try (BufferedWriter writer = Files.newBufferedWriter( outputPath, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE )) {
+            // write header
+            writer.write( calculateColumnNameLine( df ) );
 
+            if (!df.isEmpty()) {
+                writer.write( "\n" );
+
+                // TODO: write data....
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String calculateColumnNameLine( DataFrame df ) {
+        Collection<DataFrameColumn<?>> columns = df.getColumns();
+        List<String> columnNames = columns.stream().map( c -> c.getColumnName() ).collect( Collectors.toList() );
+        return String.join( ",", columnNames );
     }
 
 }
