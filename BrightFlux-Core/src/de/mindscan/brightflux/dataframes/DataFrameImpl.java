@@ -139,6 +139,10 @@ public class DataFrameImpl implements DataFrame {
         }
     }
 
+    public boolean isEmpty() {
+        return this.getSize() == 0;
+    }
+
     /**
      * @return
      */
@@ -153,8 +157,7 @@ public class DataFrameImpl implements DataFrame {
 //    public void toH5( Path path ) {
 //        DataFrameWriterFactory.create( "h5" ).writeToFile( this, path );
 //    }
-    
-    
+
     // TODO? is that needed? remove/delete data frame column
     // TODO? is that needed? rename data frame column
     // TODO? is that needed? replace data frame column

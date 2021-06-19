@@ -25,10 +25,16 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.Collection;
+
 /**
  * 
  */
 public interface DataFrame {
 
     int getSize();
+
+    boolean isEmpty();
+
+    Collection<DataFrameColumn<?>> getColumns();
 }
