@@ -22,8 +22,6 @@ public class DataFrameWriterFactoryTest {
     @Test
     public void testCreate_CSV_returnsInstanceOfDataFrameWriter() throws Exception {
         // arrange
-        IngestHeartCsv heartCsv = new IngestHeartCsv();
-        DataFrameImpl df = heartCsv.loadCsvAsDataFrameV2( inputPath );
 
         // act
         DataFrameWriter result = DataFrameWriterFactory.create( "CSV" );
