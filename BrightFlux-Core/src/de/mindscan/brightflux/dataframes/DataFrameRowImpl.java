@@ -28,6 +28,6 @@ package de.mindscan.brightflux.dataframes;
 /**
  * 
  */
-public interface DataFrameRow {
+public class DataFrameRowImpl implements DataFrameRow {
 
 }
