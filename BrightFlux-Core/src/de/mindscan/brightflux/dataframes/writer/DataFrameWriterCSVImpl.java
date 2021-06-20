@@ -63,14 +63,11 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
                     // read row data
                     DataFrameRow rowContent = iter.next();
 
-                    Object[] rowValues = rowContent.getAll();
-
-                    // TODO each column should have a serializer? 
+                    // TODO each column should have a serializer?
                     // or should the serializer be part of the writer (which makes more sense)
-                    String rowvaluesString = String.join( ",", foo( rowValues ) );
 
                     // write data....
-                    writer.write( rowvaluesString );
+                    writer.write( calculateDataLine( rowContent.getAll() ) );
                 }
             }
             writer.write( "\n" );
@@ -79,6 +76,10 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
             e.printStackTrace();
         }
 
+    }
+
+    private String calculateDataLine( Object[] rowValues ) {
+        return String.join( ",", foo( rowValues ) );
     }
 
     private String calculateColumnNameLine( DataFrame df ) {
