@@ -48,7 +48,7 @@ public class DataFrameImpl implements DataFrame {
     // each column has its own type and own content. Problem is, that 
     // problem is reallocation in case of appending the columns with new values instead of adding columns
     private Map<String, DataFrameColumn<?>> columnsMap = new LinkedHashMap<>();
-    // private DataFrameColumn<?>[] columns = null;
+    private DataFrameColumn<?>[] columns = null;
 
     private int size = 0;
 
@@ -150,6 +150,16 @@ public class DataFrameImpl implements DataFrame {
             this.size = column.getSize();
         }
 
+        // update the indexable Array:
+        updateColumns( columnsMap );
+    }
+
+    /**
+     * @param columnsMap2
+     */
+    private void updateColumns( Map<String, DataFrameColumn<?>> columnsMap2 ) {
+        Collection<DataFrameColumn<?>> values = columnsMap.values();
+        columns = (DataFrameColumn<?>[]) values.toArray( new DataFrameColumn<?>[values.size()] );
     }
 
     // add multiple data frame columns
@@ -178,7 +188,8 @@ public class DataFrameImpl implements DataFrame {
     }
 
     public Object getAt( int columnIndex, int rowIndex ) {
-        return null;
+        DataFrameColumn<?> column = columns[columnIndex];
+        return column.get( rowIndex );
     }
 
 //    public void toCsv( Path path ) {
