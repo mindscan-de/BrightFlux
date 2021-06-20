@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -40,6 +41,7 @@ public class DataFrameWriterFactoryTest {
         DataFrameWriter writer = DataFrameWriterFactory.create( "CSV" );
 
         // assert -  we should compare the content of the input file to the output file
+        Files.deleteIfExists( outputPath );
         writer.writeToFile( df, outputPath );
     }
 

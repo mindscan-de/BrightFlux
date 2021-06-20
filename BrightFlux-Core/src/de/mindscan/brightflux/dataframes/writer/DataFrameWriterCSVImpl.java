@@ -48,7 +48,7 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
      */
     @Override
     public void writeToFile( DataFrame df, Path outputPath ) {
-        try (BufferedWriter writer = Files.newBufferedWriter( outputPath, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE )) {
+        try (BufferedWriter writer = Files.newBufferedWriter( outputPath, StandardOpenOption.CREATE_NEW, StandardOpenOption.TRUNCATE_EXISTING )) {
             // write header
             writer.write( calculateColumnNameLine( df ) );
 
