@@ -39,11 +39,13 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
- * This class implements a serializer for dataframes which will be expressed as a csv file. We might be inclined to
- * provide a reasonable configuration for the serialized file.
+ * This class implements a serializer for dataframes which will be expressed as a csv file. We might be 
+ * inclined to provide a reasonable configuration for the serialized file. This configuration should be 
+ * part of the project configuration.
  * 
- * For the current implementation there is no possibility to configure the output. But this possibility to configure 
- * the output, must be implemented over time. But for now, we ain't gonna need it right now.
+ * For the current implementation there is no possibility to configure the output. But this possibility 
+ * to configure the output, must be implemented over time. But for now, we ain't need it right now. E.g. 
+ * we want to configure the presentation of boolean values either as true, false or 1,0 or x / empty...
  */
 public class DataFrameWriterCSVImpl implements DataFrameWriter {
 
