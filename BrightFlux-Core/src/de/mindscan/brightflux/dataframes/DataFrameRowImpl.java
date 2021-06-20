@@ -30,4 +30,22 @@ package de.mindscan.brightflux.dataframes;
  */
 public class DataFrameRowImpl implements DataFrameRow {
 
+    private DataFrame df;
+    private int rowIndex;
+
+    /**
+     * 
+     */
+    public DataFrameRowImpl( DataFrame df, int rowIndex ) {
+        this.df = df;
+        this.rowIndex = rowIndex;
+    }
+
+    public Object get( int columnIndex ) {
+        return df.getAt( columnIndex, this.rowIndex );
+    }
+
+    public int getSize() {
+        return 0;
+    }
 }

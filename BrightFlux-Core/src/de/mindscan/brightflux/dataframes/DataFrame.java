@@ -37,9 +37,11 @@ public interface DataFrame {
 
     boolean isEmpty();
 
-    Collection<DataFrameColumn<?>> getColumns();
+    // Collection<DataFrameColumn<?>> getColumns();
 
     Collection<String> getColumnNames();
 
     Iterator<DataFrameRow> rowIterator();
+
+    public Object getAt( int columnIndex, int rowIndex );
 }

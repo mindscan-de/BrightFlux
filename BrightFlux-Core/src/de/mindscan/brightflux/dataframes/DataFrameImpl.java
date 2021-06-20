@@ -177,6 +177,10 @@ public class DataFrameImpl implements DataFrame {
         return size;
     }
 
+    public Object getAt( int columnIndex, int rowIndex ) {
+        return null;
+    }
+
 //    public void toCsv( Path path ) {
 //        DataFrameWriterFactory.create( "csv" ).writeToFile( this, path );
 //    }
