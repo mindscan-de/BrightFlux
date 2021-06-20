@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -58,13 +59,16 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
                     writer.write( "\n" );
 
                     // read row data
-                    DataFrameRow rowcontent = iter.next();
+                    DataFrameRow rowContent = iter.next();
 
-                    writer.write( "test" );
-                    // TODO: write data....
-                    // TODO Iterate each row, but return String or Object?
-                    // TODO each column should have a serializer, 
+                    Object[] rowValues = rowContent.getAll();
+
+                    // TODO each column should have a serializer? 
                     // or should the serializer be part of the writer (which makes more sense)
+                    String rowvaluesString = Arrays.toString( rowValues );
+
+                    // write data....
+                    writer.write( rowvaluesString );
                 }
             }
             writer.write( "\n" );

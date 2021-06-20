@@ -100,7 +100,7 @@ public class DataFrameImpl implements DataFrame {
                     throw new NoSuchElementException();
                 }
 
-                DataFrameRow currentRow = null;
+                DataFrameRow currentRow = new DataFrameRowImpl( DataFrameImpl.this, currentIndexPosition );
                 currentIndexPosition++;
 
                 return currentRow;

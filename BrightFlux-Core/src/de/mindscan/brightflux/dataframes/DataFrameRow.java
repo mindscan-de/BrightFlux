@@ -30,4 +30,9 @@ package de.mindscan.brightflux.dataframes;
  */
 public interface DataFrameRow {
 
+    public Object get( int columnIndex );
+
+    public Object[] getAll();
+
+    public int getSize();
 }

@@ -32,6 +32,7 @@ public class DataFrameRowImpl implements DataFrameRow {
 
     private DataFrame df;
     private int rowIndex;
+    private int maxCols;
 
     /**
      * 
@@ -39,6 +40,8 @@ public class DataFrameRowImpl implements DataFrameRow {
     public DataFrameRowImpl( DataFrame df, int rowIndex ) {
         this.df = df;
         this.rowIndex = rowIndex;
+
+        this.maxCols = df.getColumnNames().size();
     }
 
     public Object get( int columnIndex ) {
@@ -46,6 +49,20 @@ public class DataFrameRowImpl implements DataFrameRow {
     }
 
     public int getSize() {
-        return 0;
+        return maxCols;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Object[] getAll() {
+        Object[] values = new Object[maxCols];
+
+        for (int i = 0; i < maxCols; i++) {
+            values[i] = df.getAt( i, this.rowIndex );
+        }
+
+        return values;
     }
 }
