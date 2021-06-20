@@ -39,7 +39,11 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
+ * This class implements a serializer for dataframes which will be expressed as a csv file. We might be inclined to
+ * provide a reasonable configuration for the serialized file.
  * 
+ * For the current implementation there is no possibility to configure the output. But this possibility to configure 
+ * the output, must be implemented over time. But for now, we ain't gonna need it right now.
  */
 public class DataFrameWriterCSVImpl implements DataFrameWriter {
 
@@ -66,6 +70,9 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
                     // TODO each column should have a serializer?
                     // or should the serializer be part of the writer (which makes more sense)
 
+                    // Actually there are two dimensions, to this, the type of the data, and how we want to
+                    // present the same data, we might want to have different presentation for different columns
+
                     // write data....
                     writer.write( calculateDataLine( rowContent.getAll() ) );
                 }
@@ -79,23 +86,25 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
     }
 
     private String calculateDataLine( Object[] rowValues ) {
-        return String.join( ",", foo( rowValues ) );
+        return String.join( ",", convertAllElementsToString( rowValues ) );
     }
 
     private String calculateColumnNameLine( DataFrame df ) {
         return String.join( ",", df.getColumnNames() );
     }
 
-    private Collection<String> foo( Object[] rowValues ) {
-        return Arrays.stream( rowValues ).map( r -> foo( r ) ).collect( Collectors.toList() );
+    private Collection<String> convertAllElementsToString( Object[] rowValues ) {
+        return Arrays.stream( rowValues ).map( r -> convertElement( r ) ).collect( Collectors.toList() );
     }
 
-    private String foo( Object o ) {
+    private String convertElement( Object o ) {
         if (o == null) {
             return "";
         }
 
-        // depending  on the type the correct serializer should be chosen.
+        // depending on the type the correct serializer should be chosen.
+        // depending on the column presentation the correct serializer should be chosen.
+
         return o.toString();
     }
 
