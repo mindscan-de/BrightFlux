@@ -31,7 +31,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
@@ -65,7 +67,7 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
 
                     // TODO each column should have a serializer? 
                     // or should the serializer be part of the writer (which makes more sense)
-                    String rowvaluesString = Arrays.toString( rowValues );
+                    String rowvaluesString = String.join( ",", foo( rowValues ) );
 
                     // write data....
                     writer.write( rowvaluesString );
@@ -81,6 +83,19 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
 
     private String calculateColumnNameLine( DataFrame df ) {
         return String.join( ",", df.getColumnNames() );
+    }
+
+    private Collection<String> foo( Object[] rowValues ) {
+        return Arrays.stream( rowValues ).map( r -> foo( r ) ).collect( Collectors.toList() );
+    }
+
+    private String foo( Object o ) {
+        if (o == null) {
+            return "";
+        }
+
+        // depending  on the type the correct serializer should be chosen.
+        return o.toString();
     }
 
 }
