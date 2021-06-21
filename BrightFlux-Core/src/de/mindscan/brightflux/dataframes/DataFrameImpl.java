@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -192,6 +193,45 @@ public class DataFrameImpl implements DataFrame {
         return column.get( rowIndex );
     }
 
+    // TODO? is that needed? remove/delete data frame column
+    // TODO? is that needed? rename data frame column
+    // TODO? is that needed? replace data frame column
+
+    public DataFrame head() {
+        DataFrameImpl result = new DataFrameImpl( this.getName() );
+        result.applyRows( getRows( 0, Math.min( 5, this.getSize() - 1 ) ), columns );
+        return result;
+    }
+
+    public DataFrame tail() {
+        DataFrameImpl result = new DataFrameImpl( this.getName() );
+        result.applyRows( getRows( Math.max( 0, this.getSize() - 5 ), this.getSize() - 1 ), columns );
+        return result;
+    }
+
+    private Collection<DataFrameRow> getRows( int fromIndex, int toIndex ) {
+        List<DataFrameRow> result = new ArrayList<>();
+
+        return result;
+    }
+
+    private void applyRows( Collection<DataFrameRow> rows, DataFrameColumn<?>[] columns2 ) {
+
+    }
+
+//    // column-names
+//    // columns
+//    // rows
+//
+//    // how about calculated columns (eg. uncorrected time, synced time?)
+//    // each dataframe has an implicit or explicit id-column (which can serve as a primary key)
+//    // they can be numbered, but they can also be sparse integers (e.g. position of a start of a line in a file)
+
+    // #####################################################################################################
+    // Do the write operations here as a service of this API or let the consumer of this data frame find out 
+    // about the other API on his own?
+    // #####################################################################################################
+
 //    public void toCsv( Path path ) {
 //        DataFrameWriterFactory.create( "csv" ).writeToFile( this, path );
 //    }
@@ -200,30 +240,4 @@ public class DataFrameImpl implements DataFrame {
 //        DataFrameWriterFactory.create( "h5" ).writeToFile( this, path );
 //    }
 
-    // TODO? is that needed? remove/delete data frame column
-    // TODO? is that needed? rename data frame column
-    // TODO? is that needed? replace data frame column
-
-//    public void head() {
-//
-//    }
-//
-//    public void tail() {
-//
-//    }
-//
-//    public void to_csv() {
-//        // to_excel
-//        // to_clipboard
-//        // to dict
-//        // ....
-//        // to 
-//    }
-//    // column-names
-//    // columns
-//    // rows
-//
-//    // how about calculated columns (eg. uncorrected time, synced time?)
-//    // each dataframe has an implicit or explicit id-column (which can serve as a primary key)
-//    // they can be numbered, but they can also be sparse integers (e.g. position of a start of a line in a file)
 }
