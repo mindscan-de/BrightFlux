@@ -232,7 +232,6 @@ public class DataFrameImpl implements DataFrame {
 
         result.applyRows( getRows( from, this.getSize() ), columns );
         return result;
-
     }
 
     /**
@@ -242,6 +241,9 @@ public class DataFrameImpl implements DataFrame {
 
         if (fromIndex < toIndex) {
             // collect that stuff...
+            for (int index = fromIndex; index < toIndex; index++) {
+                result.add( new DataFrameRowImpl( this, index ) );
+            }
         }
 
         return result;
