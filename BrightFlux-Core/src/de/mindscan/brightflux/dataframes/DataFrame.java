@@ -43,5 +43,9 @@ public interface DataFrame {
 
     Iterator<DataFrameRow> rowIterator();
 
-    public Object getAt( int columnIndex, int rowIndex );
+    Object getAt( int columnIndex, int rowIndex );
+
+    DataFrame head();
+
+    DataFrame tail();
 }

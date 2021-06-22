@@ -6,12 +6,15 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.columns.BooleanColumn;
+import de.mindscan.brightflux.ingest.IngestHeartCsv;
 
 public class DataFrameImplTest {
 
@@ -382,6 +385,37 @@ public class DataFrameImplTest {
 
         // assert 
         assertThat( secondColumn.getSize(), equalTo( 2 ) );
+    }
+
+    private final static Path path = Paths
+                    .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
+
+    @Test
+    public void testHead_IngestHeartCsv_expect7Rows() throws Exception {
+        // arrange
+        IngestHeartCsv csvReader = new IngestHeartCsv();
+        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+
+        // act
+        DataFrame dfResult = df.head();
+
+        // assert
+        int resultSize = dfResult.getSize();
+        assertThat( resultSize, equalTo( DataFrameImpl.DEFAULT_HEAD_ROW_COUNT ) );
+    }
+
+    @Test
+    public void testTail_IngestHeartCsv_expect7Rows() throws Exception {
+        // arrange
+        IngestHeartCsv csvReader = new IngestHeartCsv();
+        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+
+        // act
+        DataFrame dfResult = df.tail();
+
+        // assert
+        int resultSize = dfResult.getSize();
+        assertThat( resultSize, equalTo( DataFrameImpl.DEFAULT_TAIL_ROW_COUNT ) );
     }
 
 }

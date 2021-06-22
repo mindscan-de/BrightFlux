@@ -42,6 +42,9 @@ import java.util.UUID;
  */
 public class DataFrameImpl implements DataFrame {
 
+    public static final int DEFAULT_HEAD_ROW_COUNT = 7;
+    public static final int DEFAULT_TAIL_ROW_COUNT = 7;
+
     private String nameOfDataFrame;
     private UUID uuidOfDataFrame;
 
@@ -198,19 +201,48 @@ public class DataFrameImpl implements DataFrame {
     // TODO? is that needed? replace data frame column
 
     public DataFrame head() {
-        DataFrameImpl result = new DataFrameImpl( this.getName() );
-        result.applyRows( getRows( 0, Math.min( 5, this.getSize() - 1 ) ), columns );
-        return result;
+        return head( DEFAULT_HEAD_ROW_COUNT );
     }
 
     public DataFrame tail() {
+        return tail( DEFAULT_TAIL_ROW_COUNT );
+    }
+
+    public DataFrame head( int headCount ) {
+        if (headCount < 0) {
+            headCount = 0;
+        }
+
         DataFrameImpl result = new DataFrameImpl( this.getName() );
-        result.applyRows( getRows( Math.max( 0, this.getSize() - 5 ), this.getSize() - 1 ), columns );
+
+        int to = Math.min( headCount, this.getSize() );
+
+        result.applyRows( getRows( 0, to ), columns );
         return result;
     }
 
+    public DataFrame tail( int tailCount ) {
+        if (tailCount < 0) {
+            tailCount = 0;
+        }
+
+        DataFrameImpl result = new DataFrameImpl( this.getName() );
+
+        int from = Math.max( 0, this.getSize() - tailCount );
+
+        result.applyRows( getRows( from, this.getSize() ), columns );
+        return result;
+
+    }
+
+    /**
+     */
     private Collection<DataFrameRow> getRows( int fromIndex, int toIndex ) {
         List<DataFrameRow> result = new ArrayList<>();
+
+        if (fromIndex < toIndex) {
+            // collect that stuff...
+        }
 
         return result;
     }
