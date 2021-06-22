@@ -217,7 +217,7 @@ public class DataFrameImpl implements DataFrame {
 
         int to = Math.min( headCount, this.getSize() );
 
-        result.applyRows( getRows( 0, to ), columns );
+        result.initRows( getRows( 0, to ), columns );
         return result;
     }
 
@@ -230,7 +230,7 @@ public class DataFrameImpl implements DataFrame {
 
         int from = Math.max( 0, this.getSize() - tailCount );
 
-        result.applyRows( getRows( from, this.getSize() ), columns );
+        result.initRows( getRows( from, this.getSize() ), columns );
         return result;
     }
 
@@ -249,8 +249,21 @@ public class DataFrameImpl implements DataFrame {
         return result;
     }
 
-    private void applyRows( Collection<DataFrameRow> rows, DataFrameColumn<?>[] columns2 ) {
+    private void initRows( Collection<DataFrameRow> otherDFRows, DataFrameColumn<?>[] otherDFColumns ) {
+        // TODO: make sure the dataframe is empty
 
+        // so first we need to create clones of the DataFrameColumns without the values.
+        for (DataFrameColumn<?> otherColumn : otherDFColumns) {
+            // we also want a correctly typed copy of the column including the columnname
+        }
+
+        // then we need to append each column with each row value
+        for (DataFrameRow otherRow : otherDFRows) {
+            // TODO copy each value from the column
+            // TODO copy the values... somehow work on the correct types without too much casting
+        }
+
+        // TODO: it would be far more effective to prepare columns and then init columnwise... 
     }
 
 //    // column-names
