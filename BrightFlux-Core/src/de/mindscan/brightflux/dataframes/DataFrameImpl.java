@@ -260,17 +260,21 @@ public class DataFrameImpl implements DataFrame {
         // so first we need to create clones of the DataFrameColumns without the values.
         for (DataFrameColumn<?> otherColumn : otherDFColumns) {
             // we also want a correctly typed copy of the column including the columnname
-            DataFrameColumn<?> newColumn = otherColumn.cloneColumnEmpty();
-            this.addColumn( newColumn );
+            this.addColumn( otherColumn.cloneColumnEmpty() );
         }
 
         // then we need to append each column with each row value
         for (DataFrameRow otherRow : otherDFRows) {
-            // TODO copy each value from the column
-            // TODO copy the values... somehow work on the correct types without too much casting
+            this.appendRow( otherRow );
         }
 
         // TODO: it would be far more effective to prepare columns and then init columnwise... 
+    }
+
+    // TODO: lets implement that tomorrow?
+    private void appendRow( DataFrameRow otherRow ) {
+        // TODO copy each value from the column
+        // TODO copy the values... somehow work on the correct types without too much casting
     }
 
 //    // column-names
