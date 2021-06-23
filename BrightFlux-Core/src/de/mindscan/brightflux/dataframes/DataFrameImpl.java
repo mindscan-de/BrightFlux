@@ -39,6 +39,11 @@ import java.util.UUID;
  *       and then develop from there. Use pandas examples for reading some files
  *       and access some of the data - and then develop from here to a java specific 
  *       syntax.
+ *       
+ * I will probably rewrite this completely and maybe only keep the tests and then 
+ * redevelop it once i figured out, what I really need as a minimum viable product.
+ * 
+ * This whole code is garbage right now. But at least it should work for a prototype.
  */
 public class DataFrameImpl implements DataFrame {
 
@@ -255,6 +260,8 @@ public class DataFrameImpl implements DataFrame {
         // so first we need to create clones of the DataFrameColumns without the values.
         for (DataFrameColumn<?> otherColumn : otherDFColumns) {
             // we also want a correctly typed copy of the column including the columnname
+            DataFrameColumn<?> newColumn = otherColumn.cloneColumnEmpty();
+            this.addColumn( newColumn );
         }
 
         // then we need to append each column with each row value
