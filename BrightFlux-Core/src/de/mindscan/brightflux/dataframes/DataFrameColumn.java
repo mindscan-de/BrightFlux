@@ -60,4 +60,6 @@ public interface DataFrameColumn<T> {
 
     public abstract void set( int index, T element );
 
+    public abstract DataFrameColumn<T> cloneColumnEmpty();
+
 }

@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.ingest.columns;
 
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.SimpleColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 
@@ -50,6 +51,12 @@ public class DataTokenColumn extends SimpleColumn<DataToken> {
 
     public DataTokenColumn( String columnName ) {
         super( columnName, DataToken.class );
+    }
+
+    @Override
+    public DataFrameColumn<DataToken> cloneColumnEmpty() {
+        DataTokenColumn newColumn = new DataTokenColumn( getColumnName() );
+        return newColumn;
     }
 
 }

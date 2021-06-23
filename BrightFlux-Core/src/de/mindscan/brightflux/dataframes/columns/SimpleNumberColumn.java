@@ -28,7 +28,7 @@ package de.mindscan.brightflux.dataframes.columns;
 /**
  * 
  */
-public class SimpleNumberColumn<T extends Number> extends SimpleColumn<T> {
+public abstract class SimpleNumberColumn<T extends Number> extends SimpleColumn<T> {
 
     public SimpleNumberColumn( Class<T> clazz ) {
         super( clazz );

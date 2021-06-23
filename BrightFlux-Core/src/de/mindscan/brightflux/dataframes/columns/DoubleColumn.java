@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
+
 /**
  * 
  */
@@ -36,5 +38,10 @@ public class DoubleColumn extends SimpleColumn<Double> {
 
     public DoubleColumn( String columnName ) {
         super( columnName, Double.class );
+    }
+
+    @Override
+    public DataFrameColumn<Double> cloneColumnEmpty() {
+        return new DoubleColumn( getColumnName() );
     }
 }

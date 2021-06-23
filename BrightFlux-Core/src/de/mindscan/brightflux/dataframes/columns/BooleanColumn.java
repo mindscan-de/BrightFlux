@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
+
 /**
  * 
  */
@@ -36,6 +38,11 @@ public class BooleanColumn extends SimpleColumn<Boolean> {
 
     public BooleanColumn( String columnName ) {
         super( columnName, Boolean.class );
+    }
+
+    @Override
+    public DataFrameColumn<Boolean> cloneColumnEmpty() {
+        return new BooleanColumn( getColumnName() );
     }
 
 }
