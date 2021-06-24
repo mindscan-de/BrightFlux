@@ -390,6 +390,12 @@ public class DataFrameImplTest {
     private final static Path path = Paths
                     .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
 
+    private final static Path path_head = Paths
+                    .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart_head.csv" );
+
+    private final static Path path_tail = Paths
+                    .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart_tail.csv" );
+
     @Test
     public void testHead_IngestHeartCsv_expect7Rows() throws Exception {
         // arrange
@@ -405,6 +411,20 @@ public class DataFrameImplTest {
     }
 
     @Test
+    public void testHead_IngestHeartCsvThenSaveCSV_content() throws Exception {
+        // arrange
+        IngestHeartCsv csvReader = new IngestHeartCsv();
+        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+
+        // act
+        DataFrame dfResult = df.head();
+
+        // assert
+        // TODO: acceptance test
+        // DataFrameWriterFactory.create( "csv" ).writeToFile( dfResult, path_head );
+    }
+
+    @Test
     public void testTail_IngestHeartCsv_expect7Rows() throws Exception {
         // arrange
         IngestHeartCsv csvReader = new IngestHeartCsv();
@@ -416,6 +436,20 @@ public class DataFrameImplTest {
         // assert
         int resultSize = dfResult.getSize();
         assertThat( resultSize, equalTo( DataFrameImpl.DEFAULT_TAIL_ROW_COUNT ) );
+    }
+
+    @Test
+    public void testTail_IngestHeartCsvThenSaveCSV_content() throws Exception {
+        // arrange
+        IngestHeartCsv csvReader = new IngestHeartCsv();
+        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+
+        // act
+        DataFrame dfResult = df.tail();
+
+        // assert
+        // TODO: acceptance test
+        // DataFrameWriterFactory.create( "csv" ).writeToFile( dfResult, path_tail );
     }
 
 }
