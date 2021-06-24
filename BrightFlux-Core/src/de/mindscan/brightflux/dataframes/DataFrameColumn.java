@@ -36,6 +36,8 @@ public interface DataFrameColumn<T> {
 
     public abstract void append( T element );
 
+    public abstract void appendRaw( Object element );
+
     public abstract void appendNA();
 
     // -----------------------------------------

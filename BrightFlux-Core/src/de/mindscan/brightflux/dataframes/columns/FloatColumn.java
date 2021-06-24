@@ -40,12 +40,26 @@ public class FloatColumn extends SimpleColumn<Float> {
         super( columnName, Float.class );
     }
 
-    /** 
-     * {@inheritDoc}
-     */
     @Override
     public DataFrameColumn<Float> cloneColumnEmpty() {
         FloatColumn newColumn = new FloatColumn( getColumnName() );
         return newColumn;
     }
+
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof Float) {
+            append( (Float) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting Float or null, but got " + element.getClass().getName() );
+            }
+        }
+
+    }
+
 }

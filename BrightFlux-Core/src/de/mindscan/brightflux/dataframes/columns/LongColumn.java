@@ -36,20 +36,30 @@ public class LongColumn extends SimpleNumberColumn<Long> {
         super( Long.class );
     }
 
-    /**
-     * @param columnName
-     */
     public LongColumn( String columnName ) {
         super( columnName, Long.class );
     }
 
-    /** 
-     * {@inheritDoc}
-     */
     @Override
     public DataFrameColumn<Long> cloneColumnEmpty() {
         LongColumn newColumn = new LongColumn( getColumnName() );
         return newColumn;
+    }
+
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof Long) {
+            append( (Long) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting Long or null, but got " + element.getClass().getName() );
+            }
+        }
+
     }
 
 }

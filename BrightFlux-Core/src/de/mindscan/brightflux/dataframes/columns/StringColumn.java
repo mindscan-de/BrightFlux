@@ -32,9 +32,6 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
  */
 public class StringColumn extends SimpleColumn<String> {
 
-    /**
-     * 
-     */
     public StringColumn() {
         super( String.class );
     }
@@ -51,6 +48,22 @@ public class StringColumn extends SimpleColumn<String> {
     public DataFrameColumn<String> cloneColumnEmpty() {
         StringColumn newColumn = new StringColumn( getColumnName() );
         return newColumn;
+    }
+
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof String) {
+            append( (String) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting String or null, but got " + element.getClass().getName() );
+            }
+        }
+
     }
 
 }

@@ -59,4 +59,19 @@ public class DataTokenColumn extends SimpleColumn<DataToken> {
         return newColumn;
     }
 
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof DataToken) {
+            append( (DataToken) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting DataToken or null, but got " + element.getClass().getName() );
+            }
+        }
+    }
+
 }

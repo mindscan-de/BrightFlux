@@ -45,4 +45,20 @@ public class BooleanColumn extends SimpleColumn<Boolean> {
         return new BooleanColumn( getColumnName() );
     }
 
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof Boolean) {
+            append( (Boolean) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting Boolean or null, but got " + element.getClass().getName() );
+            }
+        }
+
+    }
+
 }

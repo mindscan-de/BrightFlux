@@ -44,4 +44,21 @@ public class DoubleColumn extends SimpleColumn<Double> {
     public DataFrameColumn<Double> cloneColumnEmpty() {
         return new DoubleColumn( getColumnName() );
     }
+
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof Double) {
+            append( (Double) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting Double or null, but got " + element.getClass().getName() );
+            }
+        }
+
+    }
+
 }

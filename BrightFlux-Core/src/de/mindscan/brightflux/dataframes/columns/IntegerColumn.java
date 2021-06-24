@@ -46,4 +46,20 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
         return newColumn;
     }
 
+    @Override
+    public void appendRaw( Object element ) {
+        if (element instanceof Integer) {
+            append( (Integer) element );
+        }
+        else {
+            if (element == null) {
+                append( null );
+            }
+            else {
+                throw new IllegalArgumentException( "Expecting Integer or null, but got " + element.getClass().getName() );
+            }
+        }
+
+    }
+
 }
