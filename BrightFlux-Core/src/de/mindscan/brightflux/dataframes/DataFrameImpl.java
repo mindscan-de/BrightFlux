@@ -273,8 +273,12 @@ public class DataFrameImpl implements DataFrame {
 
     // TODO: lets implement that tomorrow?
     private void appendRow( DataFrameRow otherRow ) {
-        // TODO copy each value from the column
-        // TODO copy the values... somehow work on the correct types without too much casting
+        int numOfColumns = otherRow.getSize();
+        Object[] elements = otherRow.getAll();
+        for (int i = 0; i < numOfColumns; i++) {
+            columns[i].appendRaw( elements[i] );
+        }
+        this.size++;
     }
 
 //    // column-names
