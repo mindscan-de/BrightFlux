@@ -271,7 +271,6 @@ public class DataFrameImpl implements DataFrame {
         // TODO: it would be far more effective to prepare columns and then init columnwise... 
     }
 
-    // TODO: lets implement that tomorrow?
     private void appendRow( DataFrameRow otherRow ) {
         int numOfColumns = otherRow.getSize();
         Object[] elements = otherRow.getAll();
