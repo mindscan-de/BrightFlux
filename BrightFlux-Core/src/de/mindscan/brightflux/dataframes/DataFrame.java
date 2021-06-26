@@ -48,4 +48,8 @@ public interface DataFrame {
     DataFrame head();
 
     DataFrame tail();
+
+    DataFrame selectRows( int from, int to );
+
+    Collection<DataFrameRow> getRows( int from, int to );
 }

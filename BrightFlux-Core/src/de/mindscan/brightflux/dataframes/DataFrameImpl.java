@@ -239,9 +239,23 @@ public class DataFrameImpl implements DataFrame {
         return result;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
      */
-    private Collection<DataFrameRow> getRows( int fromIndex, int toIndex ) {
+    @Override
+    public DataFrame selectRows( int from, int to ) {
+        DataFrameImpl result = new DataFrameImpl( this.getName() );
+
+        result.initRows( getRows( from, to ), columns );
+
+        return result;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<DataFrameRow> getRows( int fromIndex, int toIndex ) {
         List<DataFrameRow> result = new ArrayList<>();
 
         if (fromIndex < toIndex) {
