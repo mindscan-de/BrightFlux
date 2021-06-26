@@ -60,7 +60,22 @@ the next step we might have a single compiler which compiles the abstract data f
 
 The ability to successful perform log analysis lies in the ability to select and filter log data e.g. by a DSL.
 
+### Dataframe internal DSL / external DSL
+ 
 We will start with an internal DSL to select and filter and compose the data frames.
+
+We want to use something like this, what we know from operations on data (like SQL-Queries / QD (DataQuery))
+* "select * from df;" 
+  - create a new dataframe from dataframe 'df' but keep all  rows
+* "select 'col1', 'col2' from df;" 
+  - create a new dataframe with a subselection of columns 'col1' and 'col2' from dataframe 'df' but keep all rows
+* "select 'col1' from df where df.col2>1;" 
+  - create a new dataframe with a subseelction of columns  'col1' from dataframe 'df' but keep all rows, where the value of the column 'col2' is greater than 1;
+ 
+In the implementation as an internal DSL it could look like this:
+* df.select(ColumnSelector/ColumnPredicate).where(RowSelector/RowPredicate);
+* in reality the row selection comes first and after the rowseelction we select according to the columns, so each "where"-operation triggers the column selection and create a new dataframe
+
 
 ## Data Frames - I/O
 
