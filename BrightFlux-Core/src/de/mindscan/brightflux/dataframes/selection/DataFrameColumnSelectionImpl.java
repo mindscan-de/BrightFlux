@@ -23,37 +23,42 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes;
+package de.mindscan.brightflux.dataframes.selection;
 
 import java.util.Collection;
-import java.util.Iterator;
 
-import de.mindscan.brightflux.dataframes.selection.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
  * 
  */
-public interface DataFrame {
+public class DataFrameColumnSelectionImpl {
 
-    int getSize();
+    private DataFrame df;
+    private DataFrameColumn<?> selectedColumns;
 
-    boolean isEmpty();
+    /**
+     * 
+     */
+    public DataFrameColumnSelectionImpl( DataFrame df, DataFrameColumn<?> selectedColumns ) {
+        this.df = df;
+        this.selectedColumns = selectedColumns;
+    }
 
-    // Collection<DataFrameColumn<?>> getColumns();
+    public DataFrame where( DataFrameRowFilterPredicate predicate ) {
+        Collection<DataFrameRow> selectedRows = df.selectRowsByPredicate( predicate );
+        return buildNewDataFrame( selectedRows );
+    }
 
-    Collection<String> getColumnNames();
+    private DataFrame buildNewDataFrame( Collection<DataFrameRow> selectedRows ) {
+        DataFrameImpl newDataFrame = new DataFrameImpl( "" );
 
-    Iterator<DataFrameRow> rowIterator();
+        // TODO: add the fewer / selected columns
+        // TODO: append the selected rows, but only using the selected columns
 
-    Object getAt( int columnIndex, int rowIndex );
-
-    DataFrame head();
-
-    DataFrame tail();
-
-    DataFrame selectRows( int from, int to );
-
-    Collection<DataFrameRow> getRows( int from, int to );
-
-    Collection<DataFrameRow> selectRowsByPredicate( DataFrameRowFilterPredicate predicate );
+        return newDataFrame;
+    }
 }

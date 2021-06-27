@@ -23,37 +23,11 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes;
-
-import java.util.Collection;
-import java.util.Iterator;
-
-import de.mindscan.brightflux.dataframes.selection.DataFrameRowFilterPredicate;
+package de.mindscan.brightflux.dataframes.selection;
 
 /**
  * 
  */
-public interface DataFrame {
+public interface DataFrameRowFilterPredicate {
 
-    int getSize();
-
-    boolean isEmpty();
-
-    // Collection<DataFrameColumn<?>> getColumns();
-
-    Collection<String> getColumnNames();
-
-    Iterator<DataFrameRow> rowIterator();
-
-    Object getAt( int columnIndex, int rowIndex );
-
-    DataFrame head();
-
-    DataFrame tail();
-
-    DataFrame selectRows( int from, int to );
-
-    Collection<DataFrameRow> getRows( int from, int to );
-
-    Collection<DataFrameRow> selectRowsByPredicate( DataFrameRowFilterPredicate predicate );
 }

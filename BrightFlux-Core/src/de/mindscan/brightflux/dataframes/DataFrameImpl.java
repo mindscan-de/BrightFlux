@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import de.mindscan.brightflux.dataframes.selection.DataFrameRowFilterPredicate;
+
 /**
  * TODO: use some example code for a dataframe, e.g. write them as a unit test
  *       and then develop from there. Use pandas examples for reading some files
@@ -266,6 +268,26 @@ public class DataFrameImpl implements DataFrame {
         }
 
         return result;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<DataFrameRow> selectRowsByPredicate( DataFrameRowFilterPredicate predicate ) {
+        List<DataFrameRow> selectedResultRows = new ArrayList<>();
+
+        // get all rows from this dataframe, having a positive outcome if the predicate
+        Iterator<DataFrameRow> rowIterator = this.rowIterator();
+        while (rowIterator.hasNext()) {
+            DataFrameRow row = (DataFrameRow) rowIterator.next();
+
+//            if (predicate.isSatisfied( row )) {
+//                selectedResultRows.add( row );
+//            }
+        }
+
+        return selectedResultRows;
     }
 
     private void initRows( Collection<DataFrameRow> otherDFRows, DataFrameColumn<?>[] otherDFColumns ) {
