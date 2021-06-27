@@ -30,6 +30,6 @@ package de.mindscan.brightflux.dataframes;
  */
 public interface DataFrameRowFilterPredicate {
 
-    boolean isSatisfied( DataFrameRow row );
+    boolean test( DataFrameRow row );
 
 }

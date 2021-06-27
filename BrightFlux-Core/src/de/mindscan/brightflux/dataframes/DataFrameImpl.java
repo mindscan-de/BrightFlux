@@ -282,7 +282,7 @@ public class DataFrameImpl implements DataFrame {
 
             // TODO: the predicate contains the info where are you looking what for.
             // e.g 'age' >= 50 - how to do that ?
-            if (predicate.isSatisfied( row )) {
+            if (predicate.test( row )) {
                 selectedResultRows.add( row );
             }
         }
