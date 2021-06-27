@@ -59,7 +59,7 @@ public class DataFrameImplFilterTest {
     }
 
     @Test
-    public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIs50_expect5Rows() throws Exception {
+    public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIs50_expect7Rows() throws Exception {
         // arrange
         IngestHeartCsv csvReader = new IngestHeartCsv();
         DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
@@ -68,7 +68,20 @@ public class DataFrameImplFilterTest {
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.eq( "age", 50 ) );
 
         // assert
-        assertThat( result, hasSize( 5 ) );
+        assertThat( result, hasSize( 7 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIs0_expectZeroRows() throws Exception {
+        // arrange
+        IngestHeartCsv csvReader = new IngestHeartCsv();
+        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.eq( "age", 0 ) );
+
+        // assert
+        assertThat( result, hasSize( 0 ) );
     }
 
 }

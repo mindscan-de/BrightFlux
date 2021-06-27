@@ -45,6 +45,8 @@ public interface DataFrame {
 
     Object getAt( int columnIndex, int rowIndex );
 
+    Object getAt( String columnName, int rowIndex );
+
     DataFrame head();
 
     DataFrame tail();
@@ -54,4 +56,5 @@ public interface DataFrame {
     Collection<DataFrameRow> getRows( int from, int to );
 
     Collection<DataFrameRow> getRowsByPredicate( DataFrameRowFilterPredicate predicate );
+
 }

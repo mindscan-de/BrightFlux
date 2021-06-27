@@ -201,6 +201,15 @@ public class DataFrameImpl implements DataFrame {
         return column.get( rowIndex );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getAt( String columnName, int rowIndex ) {
+        DataFrameColumn<?> column = columnsMap.get( columnName );
+        return column.get( rowIndex );
+    }
+
     // TODO? is that needed? remove/delete data frame column
     // TODO? is that needed? rename data frame column
     // TODO? is that needed? replace data frame column

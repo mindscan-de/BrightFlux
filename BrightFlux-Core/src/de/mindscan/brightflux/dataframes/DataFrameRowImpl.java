@@ -49,8 +49,7 @@ public class DataFrameRowImpl implements DataFrameRow {
     }
 
     public Object get( String columnName ) {
-        // return df.getAt( columnName, this.rowIndex );
-        return 0;
+        return df.getAt( columnName, this.rowIndex );
     }
 
     public int getSize() {
