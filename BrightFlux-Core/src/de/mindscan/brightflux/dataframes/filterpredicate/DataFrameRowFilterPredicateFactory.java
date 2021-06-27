@@ -46,19 +46,19 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
-//    public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
-//        return new DataFrameRowFilterPredicate() {
-//
-//            @Override
-//            public boolean test( DataFrameRow row ) {
-//                Object rowValue = row.get( columnName );
-//                if (rowValue == null) {
-//                    return otherValue == null;
-//                }
-//
-//                return rowValue.equals( otherValue );
-//            }
-//        };
-//    }
+    public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
+        return new DataFrameRowFilterPredicate() {
+
+            @Override
+            public boolean test( DataFrameRow row ) {
+                Object rowValue = row.get( columnName );
+                if (rowValue == null) {
+                    return otherValue == null;
+                }
+
+                return rowValue.equals( otherValue );
+            }
+        };
+    }
 
 }

@@ -48,6 +48,11 @@ public class DataFrameRowImpl implements DataFrameRow {
         return df.getAt( columnIndex, this.rowIndex );
     }
 
+    public Object get( String columnName ) {
+        // return df.getAt( columnName, this.rowIndex );
+        return 0;
+    }
+
     public int getSize() {
         return maxCols;
     }

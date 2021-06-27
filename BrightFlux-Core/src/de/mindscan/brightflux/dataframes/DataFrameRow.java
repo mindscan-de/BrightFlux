@@ -32,7 +32,10 @@ public interface DataFrameRow {
 
     public Object get( int columnIndex );
 
+    public Object get( String columnName );
+
     public Object[] getAll();
 
     public int getSize();
+
 }
