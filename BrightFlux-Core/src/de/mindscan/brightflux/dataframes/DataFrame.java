@@ -53,5 +53,5 @@ public interface DataFrame {
 
     Collection<DataFrameRow> getRows( int from, int to );
 
-    Collection<DataFrameRow> selectRowsByPredicate( DataFrameRowFilterPredicate predicate );
+    Collection<DataFrameRow> getRowsByPredicate( DataFrameRowFilterPredicate predicate );
 }

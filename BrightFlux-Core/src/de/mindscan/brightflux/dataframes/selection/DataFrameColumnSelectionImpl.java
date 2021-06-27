@@ -50,7 +50,7 @@ public class DataFrameColumnSelectionImpl {
     }
 
     public DataFrame where( DataFrameRowFilterPredicate predicate ) {
-        Collection<DataFrameRow> selectedRows = df.selectRowsByPredicate( predicate );
+        Collection<DataFrameRow> selectedRows = df.getRowsByPredicate( predicate );
         return buildNewDataFrame( selectedRows );
     }
 

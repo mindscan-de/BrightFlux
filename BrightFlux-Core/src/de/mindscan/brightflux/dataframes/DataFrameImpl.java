@@ -272,7 +272,7 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataFrameRow> selectRowsByPredicate( DataFrameRowFilterPredicate predicate ) {
+    public Collection<DataFrameRow> getRowsByPredicate( DataFrameRowFilterPredicate predicate ) {
         List<DataFrameRow> selectedResultRows = new ArrayList<>();
 
         // get all rows from this dataframe, having a positive outcome if the predicate
