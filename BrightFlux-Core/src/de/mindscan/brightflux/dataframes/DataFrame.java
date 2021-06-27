@@ -28,8 +28,6 @@ package de.mindscan.brightflux.dataframes;
 import java.util.Collection;
 import java.util.Iterator;
 
-import de.mindscan.brightflux.dataframes.selection.DataFrameRowFilterPredicate;
-
 /**
  * 
  */

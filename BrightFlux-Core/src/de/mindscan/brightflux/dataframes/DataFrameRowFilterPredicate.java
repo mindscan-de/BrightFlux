@@ -23,9 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes.selection;
-
-import de.mindscan.brightflux.dataframes.DataFrameRow;
+package de.mindscan.brightflux.dataframes;
 
 /**
  * 

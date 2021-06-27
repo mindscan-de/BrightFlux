@@ -34,8 +34,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
-import de.mindscan.brightflux.dataframes.selection.DataFrameRowFilterPredicate;
-
 /**
  * TODO: use some example code for a dataframe, e.g. write them as a unit test
  *       and then develop from there. Use pandas examples for reading some files
