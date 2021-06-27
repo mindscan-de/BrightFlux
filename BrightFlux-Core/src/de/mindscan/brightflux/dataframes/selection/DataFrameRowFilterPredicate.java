@@ -25,9 +25,13 @@
  */
 package de.mindscan.brightflux.dataframes.selection;
 
+import de.mindscan.brightflux.dataframes.DataFrameRow;
+
 /**
  * 
  */
 public interface DataFrameRowFilterPredicate {
+
+    boolean isSatisfied( DataFrameRow row );
 
 }

@@ -282,9 +282,11 @@ public class DataFrameImpl implements DataFrame {
         while (rowIterator.hasNext()) {
             DataFrameRow row = (DataFrameRow) rowIterator.next();
 
-//            if (predicate.isSatisfied( row )) {
-//                selectedResultRows.add( row );
-//            }
+            // TODO: the predicate contains the info where are you looking what for.
+            // e.g 'age' >= 50 - how to do that ?
+            if (predicate.isSatisfied( row )) {
+                selectedResultRows.add( row );
+            }
         }
 
         return selectedResultRows;
