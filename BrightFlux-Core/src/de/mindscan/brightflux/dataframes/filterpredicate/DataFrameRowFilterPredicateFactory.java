@@ -76,4 +76,58 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
+    // ################################################################################
+    // Comparisons raw data / greater than, greater or equal, less than, less or equal
+    // ################################################################################    
+    // TODO : find some interesting and performant idea
+    // TODO Later? must support number types / Strings? / dates? 
+
+    public static DataFrameRowFilterPredicate gt( String columnName, Object otherValue ) {
+        return new DataFrameRowFilterPredicate() {
+
+            @Override
+            public boolean test( DataFrameRow row ) {
+                Object rowValue = row.get( columnName );
+                // TODO: implement something
+                return false;
+            }
+        };
+    }
+
+    public static DataFrameRowFilterPredicate ge( String columnName, Object otherValue ) {
+        return new DataFrameRowFilterPredicate() {
+
+            @Override
+            public boolean test( DataFrameRow row ) {
+                Object rowValue = row.get( columnName );
+                // TODO: implement something
+                return false;
+            }
+        };
+    }
+
+    public static DataFrameRowFilterPredicate lt( String columnName, Object otherValue ) {
+        return new DataFrameRowFilterPredicate() {
+
+            @Override
+            public boolean test( DataFrameRow row ) {
+                Object rowValue = row.get( columnName );
+                // TODO: implement something
+                return false;
+            }
+        };
+    }
+
+    public static DataFrameRowFilterPredicate le( String columnName, Object otherValue ) {
+        return new DataFrameRowFilterPredicate() {
+
+            @Override
+            public boolean test( DataFrameRow row ) {
+                Object rowValue = row.get( columnName );
+                // TODO: implement something
+                return false;
+            }
+        };
+    }
+
 }
