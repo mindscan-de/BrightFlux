@@ -4,7 +4,7 @@ This is project will host the code for data ingestion, data processing, data ann
 
 ## Idea
 
-Provide some performant? access to the logdata to analyze, using filters and pipes. Since This is meant 
+Provide some performant? access to the logdata to analyze, using filters and pipes. Since this is meant 
 to be working in readonly mode on the data I might want to at least support some kind of project file, 
 which helps to access the data in a desired way. I also want to create an index, and reformat the data 
 and store this reformatted data partitioned. So this code contains the data process 
@@ -12,14 +12,17 @@ and store this reformatted data partitioned. So this code contains the data proc
 ## What this project is not right now.
 
 I won't claim this to be the most performant code... and i don't care enough for raw performance right
-now. This particular project will probably not host the code for viewing the data, as this is secondary 
-for me at the moment.
+now. This particular project will probably not host the code for viewing the data, because presenting 
+data is secondary for me at the moment.
 
-* Maybe use an existing DataFrame library so far, until we have reason to use our own?
-** https://github.com/nRo/DataFrame
+I will implement a limited DataFrame library for this project. I definitely shouldn't do it but anyway 
+it's interesting to do such things. This DataFrame library can either evolve into a relational database
+or maybe will extended in such a way to work with very large logs, such as logs which are Gigabytes in
+size. But as for now speaking, this is tightly coupled and part of the log analysis project. Maybe it 
+will be rewritten with a higher performance in mind.    
 
-* Maybe use the HDF5 format to load and store the column data of the dataframe
-* Idea is to reuse all the alredy developed features and also a high performance reader and writer is appreciated
+* Maybe use the HDF5 format to load and store the column data of the dataframe (Problem full HDF5 stack is completely out of reach. Probably I can implement some very simple write routines. But the documentation and the HDF5 feature set is quite large. I will keep that out of scope for now. 
+* Idea is to reuse all the already developed features and also a high performance reader and writer is appreciated
 * The idea is also to be able to load this data (my dataframes) into python or some other tool for future quantitative analysis and machine learning
 ** https://github.com/HDFGroup/hdf5
 
@@ -68,9 +71,9 @@ We want to use something like this, what we know from operations on data (like S
 * "select * from df;" 
   - create a new dataframe from dataframe 'df' but keep all  rows
 * "select 'col1', 'col2' from df;" 
-  - create a new dataframe with a subselection of columns 'col1' and 'col2' from dataframe 'df' but keep all rows
+  - create a new dataframe with a sub-selection of columns 'col1' and 'col2' from dataframe 'df' but keep all rows
 * "select 'col1' from df where df.col2>1;" 
-  - create a new dataframe with a subseelction of columns  'col1' from dataframe 'df' but keep all rows, where the value of the column 'col2' is greater than 1;
+  - create a new dataframe with a sub-selection of columns  'col1' from dataframe 'df' but keep all rows, where the value of the column 'col2' is greater than 1;
  
 In the implementation as an internal DSL it could look like this:
 * df.select(ColumnSelector/ColumnPredicate).where(RowSelector/RowPredicate);
@@ -88,7 +91,9 @@ In the implementation as an internal DSL it could look like this:
 * TODO:
   - logical operations between two row filter predicates
   - and, or, nand, nor, eq, neq("xor"),
-  - unary logical operation (not)   
+  - unary logical operation (not)
+  
+* In case of exactly one Predicate a column wise approach would be much more efficient.  
 
 
 ## Data Frames - I/O
