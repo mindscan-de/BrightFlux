@@ -53,16 +53,16 @@ public class DataFrameRowFilterPredicateFactory {
         switch (op) {
             case EQ:
                 return compareResult == 0;
-//            case NEQ:
-//                return compareResult != 0;
-//            case GE:
-//                return compareResult >= 0;
-//            case GT:
-//                return compareResult > 0;
-//            case LE:
-//                return compareResult <= 0;
-//            case LT:
-//                return compareResult > 0;
+            case NEQ:
+                return compareResult != 0;
+            case GE:
+                return compareResult >= 0;
+            case GT:
+                return compareResult > 0;
+            case LE:
+                return compareResult <= 0;
+            case LT:
+                return compareResult < 0;
             default:
                 throw new IllegalArgumentException();
         }
@@ -99,7 +99,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return compareToResult != 0;
+                return testCompareResult( compareToResult, DataFrameColumnCompareOperation.NEQ );
             }
         };
     }
@@ -120,7 +120,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return compareToResult > 0;
+                return testCompareResult( compareToResult, DataFrameColumnCompareOperation.GT );
             }
         };
     }
@@ -135,7 +135,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return compareToResult >= 0;
+                return testCompareResult( compareToResult, DataFrameColumnCompareOperation.GE );
             }
         };
     }
@@ -150,7 +150,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return compareToResult < 0;
+                return testCompareResult( compareToResult, DataFrameColumnCompareOperation.LT );
             }
         };
     }
@@ -165,7 +165,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return compareToResult <= 0;
+                return testCompareResult( compareToResult, DataFrameColumnCompareOperation.LE );
             }
         };
     }
