@@ -56,7 +56,9 @@ public class DataFrameRowFilterPredicateFactory {
                     return otherValue == null;
                 }
 
-                return rowValue.equals( otherValue );
+                int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
+
+                return compareToResult == 0;
             }
         };
     }
@@ -71,7 +73,9 @@ public class DataFrameRowFilterPredicateFactory {
                     return otherValue != null;
                 }
 
-                return !rowValue.equals( otherValue );
+                int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
+
+                return compareToResult != 0;
             }
         };
     }
@@ -90,7 +94,9 @@ public class DataFrameRowFilterPredicateFactory {
                 Object rowValue = row.get( columnName );
 
                 // Something like this
-                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) > 0;
+                int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
+
+                return compareToResult > 0;
             }
         };
     }
@@ -103,7 +109,9 @@ public class DataFrameRowFilterPredicateFactory {
                 Object rowValue = row.get( columnName );
 
                 // Something like this
-                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) >= 0;
+                int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
+
+                return compareToResult >= 0;
             }
         };
     }
@@ -116,7 +124,9 @@ public class DataFrameRowFilterPredicateFactory {
                 Object rowValue = row.get( columnName );
 
                 // Something like this
-                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) < 0;
+                int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
+
+                return compareToResult < 0;
             }
         };
     }
@@ -129,7 +139,9 @@ public class DataFrameRowFilterPredicateFactory {
                 Object rowValue = row.get( columnName );
 
                 // Something like this / the type of the column 
-                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) <= 0;
+                int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
+
+                return compareToResult <= 0;
             }
         };
     }
