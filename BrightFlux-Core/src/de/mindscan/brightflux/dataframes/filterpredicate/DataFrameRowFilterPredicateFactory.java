@@ -30,6 +30,9 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
  * This currently works only on Integers because of the integer cast. (I don't like it right now)
+ * 
+ * TODO: This could be interesting... for the SimpleNumberColumn
+ * - <T extends Number & Comparable<T>> int compareTo(T otherValue)
  */
 public class DataFrameRowFilterPredicateFactory {
 
@@ -46,6 +49,25 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
+    public static boolean testCompareResult( int compareResult, DataFrameColumnCompareOperation op ) {
+        switch (op) {
+            case EQ:
+                return compareResult == 0;
+//            case NEQ:
+//                return compareResult != 0;
+//            case GE:
+//                return compareResult >= 0;
+//            case GT:
+//                return compareResult > 0;
+//            case LE:
+//                return compareResult <= 0;
+//            case LT:
+//                return compareResult > 0;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
+
     public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
 
@@ -59,7 +81,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return compareToResult == 0;
+                return testCompareResult( compareToResult, DataFrameColumnCompareOperation.EQ );
             }
         };
     }
