@@ -79,8 +79,10 @@ In the implementation as an internal DSL it could look like this:
 * df.select(ColumnSelector/ColumnPredicate).where(RowSelector/RowPredicate);
 * in reality the row selection comes first and after the row selection we select according to the columns, so each "where"-operation triggers the column selection and create a new dataframe
 
+According to the Java-Comparator contract we can implement gt, ge, lt, le, neq, eq by comparisons with the zero 
+value and abstract from here.
+
 * TODO:
-  - numeric comparision gt, ge, lt, le
   - between
   - in
   - compare values of two columns
