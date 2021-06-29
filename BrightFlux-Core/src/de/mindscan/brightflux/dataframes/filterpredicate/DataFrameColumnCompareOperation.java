@@ -29,5 +29,24 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
  * 
  */
 public enum DataFrameColumnCompareOperation {
-    EQ, NEQ, GT, GE, LT, LE
+    EQ, NEQ, GT, GE, LT, LE;
+
+    public static boolean testCompareResult( int compareResult, DataFrameColumnCompareOperation op ) {
+        switch (op) {
+            case EQ:
+                return compareResult == 0;
+            case NEQ:
+                return compareResult != 0;
+            case GE:
+                return compareResult >= 0;
+            case GT:
+                return compareResult > 0;
+            case LE:
+                return compareResult <= 0;
+            case LT:
+                return compareResult < 0;
+            default:
+                throw new IllegalArgumentException();
+        }
+    }
 }
