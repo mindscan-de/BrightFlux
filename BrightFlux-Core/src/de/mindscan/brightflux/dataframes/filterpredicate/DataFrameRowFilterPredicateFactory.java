@@ -88,8 +88,9 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
-                // TODO: implement something
-                return false;
+
+                // Something like this
+                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) > 0;
             }
         };
     }
@@ -100,8 +101,9 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
-                // TODO: implement something
-                return false;
+
+                // Something like this
+                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) >= 0;
             }
         };
     }
@@ -112,8 +114,9 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
-                // TODO: implement something
-                return false;
+
+                // Something like this
+                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) < 0;
             }
         };
     }
@@ -124,8 +127,9 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
-                // TODO: implement something
-                return false;
+
+                // Something like this / the type of the column 
+                return ((Integer) rowValue).compareTo( ((Integer) otherValue) ) <= 0;
             }
         };
     }
