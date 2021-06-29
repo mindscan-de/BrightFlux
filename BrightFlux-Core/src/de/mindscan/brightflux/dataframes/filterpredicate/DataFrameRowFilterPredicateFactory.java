@@ -29,7 +29,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
- * 
+ * This currently works only on Integers because of the integer cast. (I don't like it right now)
  */
 public class DataFrameRowFilterPredicateFactory {
 
@@ -56,6 +56,7 @@ public class DataFrameRowFilterPredicateFactory {
                     return otherValue == null;
                 }
 
+                // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
                 return compareToResult == 0;
@@ -73,6 +74,7 @@ public class DataFrameRowFilterPredicateFactory {
                     return otherValue != null;
                 }
 
+                // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
                 return compareToResult != 0;
@@ -93,7 +95,7 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
 
-                // Something like this
+                // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
                 return compareToResult > 0;
@@ -108,7 +110,7 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
 
-                // Something like this
+                // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
                 return compareToResult >= 0;
@@ -123,7 +125,7 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
 
-                // Something like this
+                // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
                 return compareToResult < 0;
@@ -138,7 +140,7 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
 
-                // Something like this / the type of the column 
+                // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
                 return compareToResult <= 0;
