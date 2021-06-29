@@ -52,6 +52,8 @@ public class DataFrameRowFilterPredicateFactory {
     public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
 
+            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.EQ;
+
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
@@ -62,13 +64,15 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return DataFrameColumnCompareOperation.testResult( DataFrameColumnCompareOperation.EQ, compareToResult );
+                return DataFrameColumnCompareOperation.testResult( operation, compareToResult );
             }
         };
     }
 
     public static DataFrameRowFilterPredicate neq( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
+
+            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.NEQ;
 
             @Override
             public boolean test( DataFrameRow row ) {
@@ -80,7 +84,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return DataFrameColumnCompareOperation.testResult( DataFrameColumnCompareOperation.NEQ, compareToResult );
+                return DataFrameColumnCompareOperation.testResult( operation, compareToResult );
             }
         };
     }
@@ -94,6 +98,8 @@ public class DataFrameRowFilterPredicateFactory {
     public static DataFrameRowFilterPredicate gt( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
 
+            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.GT;
+
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
@@ -101,7 +107,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return DataFrameColumnCompareOperation.testResult( DataFrameColumnCompareOperation.GT, compareToResult );
+                return DataFrameColumnCompareOperation.testResult( operation, compareToResult );
             }
         };
     }
@@ -109,6 +115,8 @@ public class DataFrameRowFilterPredicateFactory {
     public static DataFrameRowFilterPredicate ge( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
 
+            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.GE;
+
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
@@ -116,7 +124,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return DataFrameColumnCompareOperation.testResult( DataFrameColumnCompareOperation.GE, compareToResult );
+                return DataFrameColumnCompareOperation.testResult( operation, compareToResult );
             }
         };
     }
@@ -124,6 +132,8 @@ public class DataFrameRowFilterPredicateFactory {
     public static DataFrameRowFilterPredicate lt( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
 
+            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.LT;
+
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
@@ -131,7 +141,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return DataFrameColumnCompareOperation.testResult( DataFrameColumnCompareOperation.LT, compareToResult );
+                return DataFrameColumnCompareOperation.testResult( operation, compareToResult );
             }
         };
     }
@@ -139,6 +149,8 @@ public class DataFrameRowFilterPredicateFactory {
     public static DataFrameRowFilterPredicate le( String columnName, Object otherValue ) {
         return new DataFrameRowFilterPredicate() {
 
+            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.LE;
+
             @Override
             public boolean test( DataFrameRow row ) {
                 Object rowValue = row.get( columnName );
@@ -146,7 +158,7 @@ public class DataFrameRowFilterPredicateFactory {
                 // TODO: should be part of the ColumnType. in the DataframeRow?
                 int compareToResult = ((Integer) rowValue).compareTo( ((Integer) otherValue) );
 
-                return DataFrameColumnCompareOperation.testResult( DataFrameColumnCompareOperation.LE, compareToResult );
+                return DataFrameColumnCompareOperation.testResult( operation, compareToResult );
             }
         };
     }
