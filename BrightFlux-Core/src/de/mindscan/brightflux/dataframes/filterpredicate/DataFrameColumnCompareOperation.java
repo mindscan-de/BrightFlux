@@ -31,7 +31,7 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
 public enum DataFrameColumnCompareOperation {
     EQ, NEQ, GT, GE, LT, LE;
 
-    public static boolean testCompareResult( int compareResult, DataFrameColumnCompareOperation op ) {
+    public static boolean testResult( DataFrameColumnCompareOperation op, int compareResult ) {
         switch (op) {
             case EQ:
                 return compareResult == 0;
