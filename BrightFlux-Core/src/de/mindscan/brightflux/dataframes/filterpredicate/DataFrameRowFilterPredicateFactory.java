@@ -50,9 +50,12 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
+
+        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.EQ;
+
         return new DataFrameRowFilterPredicate() {
 
-            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.EQ;
+            private DataFrameColumnCompareOperation operation = compareOperation;
 
             @Override
             public boolean test( DataFrameRow row ) {
@@ -70,9 +73,12 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate neq( String columnName, Object otherValue ) {
+
+        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.NEQ;
+
         return new DataFrameRowFilterPredicate() {
 
-            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.NEQ;
+            private DataFrameColumnCompareOperation operation = compareOperation;
 
             @Override
             public boolean test( DataFrameRow row ) {
@@ -96,9 +102,12 @@ public class DataFrameRowFilterPredicateFactory {
     // TODO Later? must support number types / Strings? / dates? 
 
     public static DataFrameRowFilterPredicate gt( String columnName, Object otherValue ) {
+
+        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.GT;
+
         return new DataFrameRowFilterPredicate() {
 
-            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.GT;
+            private DataFrameColumnCompareOperation operation = compareOperation;
 
             @Override
             public boolean test( DataFrameRow row ) {
@@ -113,9 +122,12 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate ge( String columnName, Object otherValue ) {
+
+        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.GE;
+
         return new DataFrameRowFilterPredicate() {
 
-            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.GE;
+            private DataFrameColumnCompareOperation operation = compareOperation;
 
             @Override
             public boolean test( DataFrameRow row ) {
@@ -130,9 +142,12 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate lt( String columnName, Object otherValue ) {
+
+        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.LT;
+
         return new DataFrameRowFilterPredicate() {
 
-            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.LT;
+            private DataFrameColumnCompareOperation operation = compareOperation;
 
             @Override
             public boolean test( DataFrameRow row ) {
@@ -147,9 +162,12 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate le( String columnName, Object otherValue ) {
+
+        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.LE;
+
         return new DataFrameRowFilterPredicate() {
 
-            private DataFrameColumnCompareOperation operation = DataFrameColumnCompareOperation.LE;
+            private DataFrameColumnCompareOperation operation = compareOperation;
 
             @Override
             public boolean test( DataFrameRow row ) {
