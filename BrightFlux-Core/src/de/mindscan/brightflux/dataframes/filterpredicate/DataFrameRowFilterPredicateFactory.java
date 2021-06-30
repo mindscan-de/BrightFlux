@@ -50,11 +50,11 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
-        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.EQ, otherValue );
+        return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.EQ, otherValue );
     }
 
     public static DataFrameRowFilterPredicate neq( String columnName, Object otherValue ) {
-        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.NEQ, otherValue );
+        return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.NEQ, otherValue );
     }
 
     // ################################################################################
@@ -64,19 +64,19 @@ public class DataFrameRowFilterPredicateFactory {
     // TODO Later? must support number types / Strings? / dates? 
 
     public static DataFrameRowFilterPredicate gt( String columnName, Object otherValue ) {
-        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.GT, otherValue );
+        return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.GT, otherValue );
     }
 
     public static DataFrameRowFilterPredicate ge( String columnName, Object otherValue ) {
-        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.GE, otherValue );
+        return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.GE, otherValue );
     }
 
     public static DataFrameRowFilterPredicate lt( String columnName, Object otherValue ) {
-        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.LT, otherValue );
+        return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.LT, otherValue );
     }
 
     public static DataFrameRowFilterPredicate le( String columnName, Object otherValue ) {
-        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.LE, otherValue );
+        return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.LE, otherValue );
     }
 
 }
