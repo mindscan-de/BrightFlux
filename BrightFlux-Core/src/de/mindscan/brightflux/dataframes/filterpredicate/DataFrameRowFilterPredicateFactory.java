@@ -50,17 +50,11 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
-
-        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.EQ;
-
-        return new ComparingRowFilterPredicate( columnName, compareOperation, otherValue );
+        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.EQ, otherValue );
     }
 
     public static DataFrameRowFilterPredicate neq( String columnName, Object otherValue ) {
-
-        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.NEQ;
-
-        return new ComparingRowFilterPredicate( columnName, compareOperation, otherValue );
+        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.NEQ, otherValue );
     }
 
     // ################################################################################
@@ -70,31 +64,19 @@ public class DataFrameRowFilterPredicateFactory {
     // TODO Later? must support number types / Strings? / dates? 
 
     public static DataFrameRowFilterPredicate gt( String columnName, Object otherValue ) {
-
-        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.GT;
-
-        return new ComparingRowFilterPredicate( columnName, compareOperation, otherValue );
+        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.GT, otherValue );
     }
 
     public static DataFrameRowFilterPredicate ge( String columnName, Object otherValue ) {
-
-        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.GE;
-
-        return new ComparingRowFilterPredicate( columnName, compareOperation, otherValue );
+        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.GE, otherValue );
     }
 
     public static DataFrameRowFilterPredicate lt( String columnName, Object otherValue ) {
-
-        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.LT;
-
-        return new ComparingRowFilterPredicate( columnName, compareOperation, otherValue );
+        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.LT, otherValue );
     }
 
     public static DataFrameRowFilterPredicate le( String columnName, Object otherValue ) {
-
-        final DataFrameColumnCompareOperation compareOperation = DataFrameColumnCompareOperation.LE;
-
-        return new ComparingRowFilterPredicate( columnName, compareOperation, otherValue );
+        return new ComparingRowFilterPredicate( columnName, DataFrameColumnCompareOperation.LE, otherValue );
     }
 
 }
