@@ -34,13 +34,13 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 public final class ComparingRowFilterPredicate implements DataFrameRowFilterPredicate {
 
     private final String columnName;
-    private final Object compareWith;
+    private final Object predicateValue;
     private CompareOperation operation;
 
-    public ComparingRowFilterPredicate( String columnName, CompareOperation compareOperation, Object compareWith ) {
+    public ComparingRowFilterPredicate( String columnName, CompareOperation compareOperation, Object predicateValue ) {
         this.columnName = columnName;
         this.operation = compareOperation;
-        this.compareWith = compareWith;
+        this.predicateValue = predicateValue;
     }
 
     @Override
@@ -52,7 +52,7 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
         Object rowValue = row.get( columnName );
         if (rowValue == null) {
-            return compareWith == null;
+            return predicateValue == null;
         }
 
         // TODO: should be part of the ColumnType. in the DataframeRow?
@@ -61,7 +61,7 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
         // But actually we have to convert it into something which is assignable...
         // And we should optimize this kind of conversion if needed, (bt for now it is YAGNI - you ain't gonna need it)
 
-        int compareToResult = ((Integer) rowValue).compareTo( ((Integer) compareWith) );
+        int compareToResult = ((Integer) rowValue).compareTo( ((Integer) predicateValue) );
 
         return CompareOperation.testResult( operation, compareToResult );
     }
