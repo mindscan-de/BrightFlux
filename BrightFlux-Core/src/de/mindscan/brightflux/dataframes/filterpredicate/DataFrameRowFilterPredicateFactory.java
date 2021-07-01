@@ -33,6 +33,10 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
  * 
  * TODO: This could be interesting... for the SimpleNumberColumn
  * - <T extends Number & Comparable<T>> int compareTo(T otherValue)
+ * 
+ * TODO : find some interesting and performant idea
+ * TODO Later? must support number types / Strings? / dates? 
+ * 
  */
 public class DataFrameRowFilterPredicateFactory {
 
@@ -49,6 +53,10 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
+    // ################################################################################
+    // Comparisons raw data / equal to, not equal to - this was general with "equals"
+    // ################################################################################    
+
     public static DataFrameRowFilterPredicate eq( String columnName, Object otherValue ) {
         return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.EQ, otherValue );
     }
@@ -60,8 +68,6 @@ public class DataFrameRowFilterPredicateFactory {
     // ################################################################################
     // Comparisons raw data / greater than, greater or equal, less than, less or equal
     // ################################################################################    
-    // TODO : find some interesting and performant idea
-    // TODO Later? must support number types / Strings? / dates? 
 
     public static DataFrameRowFilterPredicate gt( String columnName, Object otherValue ) {
         return new ComparingRowFilterPredicate( columnName, FilterCompareOperation.GT, otherValue );
