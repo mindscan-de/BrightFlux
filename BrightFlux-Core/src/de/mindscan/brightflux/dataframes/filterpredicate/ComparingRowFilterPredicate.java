@@ -46,7 +46,8 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
     @Override
     public boolean test( DataFrameRow row ) {
         // TODO: get the type of the row, so we know which Type we should convert the value of the Predicate to, so it
-        //       is comparable by the Column
+        //       is comparable by the Column, so - can we convert the predicate value to the target type?
+        // TODO: we should write a test that fails for our toy dataset.
 
         Object columType = row.getType( columnName );
 
@@ -59,7 +60,9 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
         // We currently only support Integers in a non clean way... 
         // But actually we have to convert it into something which is assignable...
-        // And we should optimize this kind of conversion if needed, (bt for now it is YAGNI - you ain't gonna need it)
+
+        // Optimization is YAGNI.. 
+        // And we should optimize this kind of conversion if needed, (but for now it is YAGNI - you ain't gonna need it)
 
         int compareToResult = ((Integer) rowValue).compareTo( ((Integer) predicateValue) );
 
