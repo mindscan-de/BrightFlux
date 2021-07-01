@@ -29,7 +29,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
- * 
+ *  
  */
 public final class ComparingRowFilterPredicate implements DataFrameRowFilterPredicate {
 
@@ -45,12 +45,22 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
     @Override
     public boolean test( DataFrameRow row ) {
+        // TODO: get the type of the row, so we know which Type we should convert the value of the Predicate to, so it
+        //       is comparable by the Column
+
+        Object columType = row.getType( columnName );
+
         Object rowValue = row.get( columnName );
         if (rowValue == null) {
             return compareWith == null;
         }
 
         // TODO: should be part of the ColumnType. in the DataframeRow?
+
+        // We currently only support Integers in a non clean way... 
+        // But actually we have to convert it into something which is assignable...
+        // And we should optimize this kind of conversion if needed, (bt for now it is YAGNI - you ain't gonna need it)
+
         int compareToResult = ((Integer) rowValue).compareTo( ((Integer) compareWith) );
 
         return CompareOperation.testResult( operation, compareToResult );

@@ -38,4 +38,13 @@ public interface DataFrameRow {
 
     public int getSize();
 
+    /**
+     * This method returns the type of the column referenced by the given columnName. This type is needed to provide
+     * the correct conversion and comparison method.
+     *  
+     * @param columnName Name of the column
+     * @return the type of the column
+     */
+    public Object getType( String columnName );
+
 }

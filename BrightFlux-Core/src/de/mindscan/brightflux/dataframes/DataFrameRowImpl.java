@@ -69,4 +69,12 @@ public class DataFrameRowImpl implements DataFrameRow {
 
         return values;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getType( String columnName ) {
+        return null;
+    }
 }
