@@ -75,6 +75,6 @@ public class DataFrameRowImpl implements DataFrameRow {
      */
     @Override
     public Object getType( String columnName ) {
-        return null;
+        return Integer.class;
     }
 }

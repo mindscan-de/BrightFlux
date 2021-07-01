@@ -48,7 +48,9 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
         // TODO: get the type of the row, so we know which Type we should convert the value of the Predicate to, so it
         //       is comparable by the Column, so - can we convert the predicate value to the target type?
         // TODO: we should write a test that fails for our toy dataset.
-
+        // TODO: actually we need two things a conversion
+        // TODO: then we need a comparator instance which can do the comparison Job.
+        // TODO: we need to convert/cast the rowValue into a comparable, and then give it the converted predicateValue 
         Object columType = row.getType( columnName );
 
         Object rowValue = row.get( columnName );
@@ -64,7 +66,7 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
         // Optimization is YAGNI.. 
         // And we should optimize this kind of conversion if needed, (but for now it is YAGNI - you ain't gonna need it)
 
-        int compareToResult = ((Integer) rowValue).compareTo( ((Integer) predicateValue) );
+        int compareToResult = ((Comparable<Integer>) rowValue).compareTo( ((Integer) predicateValue) );
 
         return CompareOperation.testResult( operation, compareToResult );
     }
