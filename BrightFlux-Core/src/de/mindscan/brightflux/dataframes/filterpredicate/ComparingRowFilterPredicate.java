@@ -35,9 +35,9 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
     private final String columnName;
     private final Object compareWith;
-    private FilterCompareOperation operation;
+    private CompareOperation operation;
 
-    public ComparingRowFilterPredicate( String columnName, FilterCompareOperation compareOperation, Object compareWith ) {
+    public ComparingRowFilterPredicate( String columnName, CompareOperation compareOperation, Object compareWith ) {
         this.columnName = columnName;
         this.operation = compareOperation;
         this.compareWith = compareWith;
@@ -53,6 +53,6 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
         // TODO: should be part of the ColumnType. in the DataframeRow?
         int compareToResult = ((Integer) rowValue).compareTo( ((Integer) compareWith) );
 
-        return FilterCompareOperation.testResult( operation, compareToResult );
+        return CompareOperation.testResult( operation, compareToResult );
     }
 }

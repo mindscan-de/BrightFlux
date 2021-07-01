@@ -28,10 +28,10 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
 /**
  * 
  */
-public enum FilterCompareOperation {
+public enum CompareOperation {
     EQ, NEQ, GT, GE, LT, LE;
 
-    public static boolean testResult( FilterCompareOperation op, int compareResult ) {
+    public static boolean testResult( CompareOperation op, int compareResult ) {
         switch (op) {
             case EQ:
                 return compareResult == 0;
