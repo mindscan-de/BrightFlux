@@ -47,4 +47,12 @@ public interface DataFrameRow {
      */
     public Object getType( String columnName );
 
+    /**
+     * This method will invoke the correct compareToRaw-operation of the columnName 
+     * @param columnName identify the column 
+     * @param convertedPredicateValue a value which is assignable to the type of the column identified by the columnname
+     * @return 0 if rowValue is equal to convertedPredicateValue, 1 if convertedPredicateValue is bigger than rowvalue
+     */
+    public int compareToRaw( String columnName, Object convertedPredicateValue );
+
 }

@@ -77,4 +77,18 @@ public class DataFrameRowImpl implements DataFrameRow {
     public Object getType( String columnName ) {
         return Integer.class;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int compareToRaw( String columnName, Object convertedPredicateValue ) {
+        Object rowValue = get( columnName );
+        if (rowValue instanceof Integer) {
+            return ((Integer) rowValue).compareTo( (Integer) convertedPredicateValue );
+        }
+
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }

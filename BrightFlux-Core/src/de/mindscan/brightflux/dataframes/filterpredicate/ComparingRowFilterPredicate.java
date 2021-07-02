@@ -51,12 +51,14 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
         // TODO: actually we need two things a conversion
         // TODO: then we need a comparator instance which can do the comparison Job.
         // TODO: we need to convert/cast the rowValue into a comparable, and then give it the converted predicateValue 
-        Object columType = row.getType( columnName );
+        // Object columnType = row.getType( columnName );
 
         Object rowValue = row.get( columnName );
         if (rowValue == null) {
             return predicateValue == null;
         }
+
+        // check some rowValues
 
         // TODO: should be part of the ColumnType. in the DataframeRow?
 
@@ -66,7 +68,10 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
         // Optimization is YAGNI.. 
         // And we should optimize this kind of conversion if needed, (but for now it is YAGNI - you ain't gonna need it)
 
-        int compareToResult = ((Comparable<Integer>) rowValue).compareTo( ((Integer) predicateValue) );
+        Object convertedPredicateValue = predicateValue;
+
+        // int compareToResult = ((Comparable<Integer>) rowValue).compareTo( ((Integer) predicateValue) );
+        int compareToResult = row.compareToRaw( columnName, convertedPredicateValue );
 
         return CompareOperation.testResult( operation, compareToResult );
     }
