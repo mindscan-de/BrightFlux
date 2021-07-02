@@ -88,6 +88,14 @@ public class DataFrameRowImpl implements DataFrameRow {
             return ((Integer) rowValue).compareTo( (Integer) convertedPredicateValue );
         }
 
+        if (rowValue instanceof Float) {
+            return ((Float) rowValue).compareTo( (Float) convertedPredicateValue );
+        }
+
+        if (rowValue instanceof Double) {
+            return ((Double) rowValue).compareTo( (Double) convertedPredicateValue );
+        }
+
         // TODO Auto-generated method stub
         return 0;
     }
