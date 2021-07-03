@@ -35,9 +35,9 @@ import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 
 /**
- * The puspose of this class is to provide a compiler which translates all the elements of the abstract
- * data frame into a fully typed data frame with primitive data types. provided by the dataframes columns
- * of the dataframes component.
+ * The purpose of this class is to provide a compiler which translates all the elements of the abstract
+ * data frame into a fully typed data frame with primitive data types provided by the data frames columns
+ * of the data frames component.
  */
 public class DataFrameCompilerImpl implements DataFrameCompiler {
 

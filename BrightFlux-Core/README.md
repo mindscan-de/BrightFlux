@@ -63,7 +63,7 @@ the next step we might have a single compiler which compiles the abstract data f
 
 The ability to successful perform log analysis lies in the ability to select and filter log data e.g. by a DSL.
 
-### Dataframe internal DSL / external DSL
+### DataFrames internal DSL vs. external DSL
  
 We will start with an internal DSL to select and filter and compose the data frames.
 
@@ -86,7 +86,7 @@ value and abstract from here.
   - between
   - in
   - compare values of two columns
-  - string implememtation contains, startswith, endswith, matches
+  - string implementation (contains, startswith, endswith, matches, ignorecase)
   - string also needs (eq, neq)
   - string may need (gt, ge, lt, le) ?
 
