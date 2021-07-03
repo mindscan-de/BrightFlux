@@ -83,20 +83,25 @@ public class DataFrameRowImpl implements DataFrameRow {
      */
     @Override
     public int compareToRaw( String columnName, Object convertedPredicateValue ) {
+        // TODO: this is highly inefficient, it would be better to ask for the right comparator and the right converter
+        //       too many instanceof operations ... The casts are already expensive enough.
+        //       it should be somehow a switch case statement / or a function method map to have a O(1) decision
+
         Object rowValue = get( columnName );
+
         if (rowValue instanceof Integer) {
             return ((Integer) rowValue).compareTo( (Integer) convertedPredicateValue );
-        }
-
-        if (rowValue instanceof Float) {
-            return ((Float) rowValue).compareTo( (Float) convertedPredicateValue );
         }
 
         if (rowValue instanceof Double) {
             return ((Double) rowValue).compareTo( (Double) convertedPredicateValue );
         }
 
-        // TODO Auto-generated method stub
+        if (rowValue instanceof Float) {
+            return ((Float) rowValue).compareTo( (Float) convertedPredicateValue );
+        }
+
+        // TODO: all the other comparisons and conversions 
         return 0;
     }
 }
