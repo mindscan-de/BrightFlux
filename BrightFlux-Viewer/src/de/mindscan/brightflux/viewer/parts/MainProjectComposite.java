@@ -47,10 +47,15 @@ public class MainProjectComposite extends Composite {
      */
     public MainProjectComposite( Composite parent, int style ) {
         super( parent, style );
+        buildLayout();
+    }
+
+    private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         TabFolder tabFolder = new TabFolder( this, SWT.NONE );
 
+        // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it. - e.g. a contentprovider.... 
         TabItem tbtmNewItem = new TabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setText( "NameOfDataFrame" );
 
@@ -62,6 +67,7 @@ public class MainProjectComposite extends Composite {
         table = tableViewer.getTable();
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
+        // [/Desired TabItem]
 
     }
 
