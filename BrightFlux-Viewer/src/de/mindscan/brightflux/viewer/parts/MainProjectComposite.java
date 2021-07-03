@@ -47,6 +47,11 @@ public class MainProjectComposite extends Composite {
      */
     public MainProjectComposite( Composite parent, int style ) {
         super( parent, style );
+
+        // TODO: * register for projectconfiguration updates/changes, and provide a listener, so that we can add and remove the content for data frames to show in the tab folder.
+        //       * we should also be able to update the project configuration by closing a dataframe and such.
+
+        // build layout - basically the tabFolder.
         buildLayout();
     }
 
