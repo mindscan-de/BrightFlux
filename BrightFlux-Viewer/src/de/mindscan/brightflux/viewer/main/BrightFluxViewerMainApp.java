@@ -28,10 +28,14 @@ package de.mindscan.brightflux.viewer.main;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
+
+import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 
 /**
  * 
@@ -76,6 +80,7 @@ public class BrightFluxViewerMainApp {
         shlBrightfluxviewerm = new Shell();
         shlBrightfluxviewerm.setSize( 450, 300 );
         shlBrightfluxviewerm.setText( "BrightFlux-Viewer 0.0.0.M1" );
+        shlBrightfluxviewerm.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Menu menu = new Menu( shlBrightfluxviewerm, SWT.BAR );
         shlBrightfluxviewerm.setMenuBar( menu );
@@ -99,6 +104,9 @@ public class BrightFluxViewerMainApp {
             }
         } );
         mntmExit.setText( "Exit" );
+
+        Composite mainProjectComposite = new MainProjectComposite( shlBrightfluxviewerm, SWT.NONE );
+        mainProjectComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
     }
 
