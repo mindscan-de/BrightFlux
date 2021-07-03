@@ -11,5 +11,11 @@ the content of the data frames and I don't want to stick to writing them to text
 I decided to start with the simplest application possible.
 
 I will possibly even delete it and restart start from scratch if I'm not satisfied with the 
-outcome, but for now I prefer the end-to-end experience over usability. 
- 
+outcome, but for now I prefer the end-to-end experience over usability.
+
+Also I'm not a GUI-guy, so do not expect me to do something fancy right now. Maybe later.
+
+## MVP
+
+That all said, this "Viewer" should be able to load, ingest and present exactly one file 
+"heart.csv".
