@@ -30,6 +30,12 @@ package de.mindscan.brightflux.dataframes;
  */
 public interface DataFrameRowFilterPredicate {
 
+    /**
+     * This method executes the predicate test on a data frame row.
+     *  
+     * @param row The row to be tested against the predicate.
+     * @return <code>true</code>, if the row matches the predicate, <code>false</code> otherwise. 
+     */
     boolean test( DataFrameRow row );
 
 }
