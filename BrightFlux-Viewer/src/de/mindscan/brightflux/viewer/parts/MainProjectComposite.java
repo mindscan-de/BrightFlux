@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.parts;
 
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -72,8 +73,13 @@ public class MainProjectComposite extends Composite {
         table = tableViewer.getTable();
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
+
         // TODO: we have to set the ContentProvider on the tableViewer - 
-        //       The contentprovider should be initialized with a dataframe and be a DataFrameContentProvider or something like this
+        tableViewer.setContentProvider( ArrayContentProvider.getInstance() );
+        // The contentprovider should be initialized with a dataframe and be a DataFrameContentProvider instead of an ArrayContentProvider
+        tableViewer.setInput( new Integer[] { 1, 2, 3, 4, 5, 5, 6, 7 } );
+        // TODO: https://www.vogella.com/tutorials/EclipseJFaceTable/article.html
+
         // [/Desired TabItem]
 
     }
