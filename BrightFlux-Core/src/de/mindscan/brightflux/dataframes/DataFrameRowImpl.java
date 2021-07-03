@@ -101,7 +101,7 @@ public class DataFrameRowImpl implements DataFrameRow {
             return ((Float) rowValue).compareTo( (Float) convertedPredicateValue );
         }
 
-        // TODO: all the other comparisons and conversions 
+        // TODO: all the other comparisons and conversions / casts
         return 0;
     }
 }
