@@ -77,7 +77,7 @@ public class MainProjectComposite extends Composite {
 
         TabFolder tabFolder = new TabFolder( this, SWT.NONE );
 
-        // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it. - e.g. a contentprovider.... 
+        // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
         TabItem tbtmNewItem = new TabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setText( "NameOfDataFrame" );
 
