@@ -30,15 +30,20 @@ import java.nio.file.Paths;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
 
 /**
@@ -78,7 +83,8 @@ public class MainProjectComposite extends Composite {
 
         Composite composite = new Composite( tabFolder, SWT.NONE );
         tbtmNewItem.setControl( composite );
-        composite.setLayout( new TableColumnLayout() );
+        TableColumnLayout tcl_composite = new TableColumnLayout();
+        composite.setLayout( tcl_composite );
 
         TableViewer tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
         table = tableViewer.getTable();
@@ -87,12 +93,25 @@ public class MainProjectComposite extends Composite {
 
         // XXX: This is an awful quick hack to move towards the goal to present some data, 
         //      we then will refactor to patterns if it works good enough.
+
+        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+        for (final String columname : ingestedDF.getColumnNames()) {
+            TableViewerColumn tableViewerAgeColumn = new TableViewerColumn( tableViewer, SWT.NONE );
+            TableColumn tblclmnNewColumn = tableViewerAgeColumn.getColumn();
+            tcl_composite.setColumnData( tblclmnNewColumn, new ColumnPixelData( 70, true, true ) );
+            tblclmnNewColumn.setText( columname );
+            tableViewerAgeColumn.setLabelProvider( new ColumnLabelProvider() {
+                public String getText( Object element ) {
+                    DataFrameRow row = (DataFrameRow) element;
+                    return row.get( columname ).toString();
+                };
+            } );
+        }
+
         // TODO: we have to set the ContentProvider on the tableViewer - 
         tableViewer.setContentProvider( ArrayContentProvider.getInstance() );
         // TODO: The contentprovider should be initialized with a dataframe and be a DataFrameContentProvider instead of an ArrayContentProvider
-        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
         tableViewer.setInput( ingestedDF.getRows().toArray() );
-        // TODO: https://www.vogella.com/tutorials/EclipseJFaceTable/article.html
 
         // [/Desired TabItem]
 
