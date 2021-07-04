@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.parts;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnPixelData;
@@ -90,7 +91,7 @@ public class MainProjectComposite extends Composite {
 
         DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
 
-        buildDataFrameColumns( ingestedDF, tableViewer, composite );
+        appenddDataFrameColumns( ingestedDF, tableViewer, composite );
 
         tableViewer.setContentProvider( new DataFrameContentProvider() );
         tableViewer.setInput( ingestedDF );
@@ -99,20 +100,30 @@ public class MainProjectComposite extends Composite {
 
     }
 
-    private void buildDataFrameColumns( DataFrame ingestedDF, TableViewer tableViewer, Composite composite ) {
+    // XXX: This is an awful quick hack to move towards the goal to present some data, 
+    //      we then will refactor to patterns if it works good enough.
 
-        // XXX: This is an awful quick hack to move towards the goal to present some data, 
-        //      we then will refactor to patterns if it works good enough.
+    private void appenddDataFrameColumns( DataFrame ingestedDF, TableViewer tableViewer, Composite composite ) {
+        Collection<String> columnNames = ingestedDF.getColumnNames();
 
         TableColumnLayout tcl_composite = new TableColumnLayout();
         composite.setLayout( tcl_composite );
-        for (final String columname : ingestedDF.getColumnNames()) {
-            TableViewerColumn tableViewerAgeColumn = new TableViewerColumn( tableViewer, SWT.NONE );
-            TableColumn tblclmnNewColumn = tableViewerAgeColumn.getColumn();
-            tcl_composite.setColumnData( tblclmnNewColumn, new ColumnPixelData( 70, true, true ) );
-            tblclmnNewColumn.setText( columname );
-            tableViewerAgeColumn.setLabelProvider( new DataFrameColumnLabelProvider( columname ) );
+
+        for (final String columname : columnNames) {
+            TableViewerColumn tableViewerColumn = new TableViewerColumn( tableViewer, SWT.NONE );
+            TableColumn tableColumn = tableViewerColumn.getColumn();
+
+            // TODO: take the width from the configuration? 
+            // Settings or width of presentation?
+            tcl_composite.setColumnData( tableColumn, new ColumnPixelData( 70, true, true ) );
+            tableColumn.setText( columname );
+
+            // TODO: the labelprovider should depend on the columnype
+            // TODO: the labelprovider should depend also on a configuration for presentation,
+            //       e.g. present long-value as timstamp.
+            tableViewerColumn.setLabelProvider( new DataFrameColumnLabelProvider( columname ) );
         }
+
     }
 
     @Override
