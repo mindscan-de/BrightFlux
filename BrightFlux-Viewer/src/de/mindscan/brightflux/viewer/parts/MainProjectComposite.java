@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
 
 /**
  * 
@@ -82,18 +83,30 @@ public class MainProjectComposite extends Composite {
 
         Composite composite = new Composite( tabFolder, SWT.NONE );
         tbtmNewItem.setControl( composite );
-        TableColumnLayout tcl_composite = new TableColumnLayout();
-        composite.setLayout( tcl_composite );
 
         TableViewer tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
         table = tableViewer.getTable();
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
 
+        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+
+        buildDataFrameColumns( ingestedDF, tableViewer, composite );
+
+        tableViewer.setContentProvider( DataFrameContentProvider.getInstance() );
+        tableViewer.setInput( ingestedDF );
+
+        // [/Desired TabItem]
+
+    }
+
+    private void buildDataFrameColumns( DataFrame ingestedDF, TableViewer tableViewer, Composite composite ) {
+
         // XXX: This is an awful quick hack to move towards the goal to present some data, 
         //      we then will refactor to patterns if it works good enough.
 
-        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+        TableColumnLayout tcl_composite = new TableColumnLayout();
+        composite.setLayout( tcl_composite );
         for (final String columname : ingestedDF.getColumnNames()) {
             TableViewerColumn tableViewerAgeColumn = new TableViewerColumn( tableViewer, SWT.NONE );
             TableColumn tblclmnNewColumn = tableViewerAgeColumn.getColumn();
@@ -106,12 +119,6 @@ public class MainProjectComposite extends Composite {
                 };
             } );
         }
-
-        tableViewer.setContentProvider( DataFrameContentProvider.getInstance() );
-        tableViewer.setInput( ingestedDF );
-
-        // [/Desired TabItem]
-
     }
 
     @Override
