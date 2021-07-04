@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -35,11 +38,19 @@ import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.ingest.IngestHeartCsv;
+
 /**
  * 
  */
 public class MainProjectComposite extends Composite {
     private Table table;
+
+    // XXX: Awful hack right now.
+    private final static Path path = Paths
+                    .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
+    IngestHeartCsv ingest = new IngestHeartCsv();
 
     /**
      * Create the composite.
@@ -74,10 +85,13 @@ public class MainProjectComposite extends Composite {
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
 
+        // XXX: This is an awful quick hack to move towards the goal to present some data, 
+        //      we then will refactor to patterns if it works good enough.
         // TODO: we have to set the ContentProvider on the tableViewer - 
         tableViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        // The contentprovider should be initialized with a dataframe and be a DataFrameContentProvider instead of an ArrayContentProvider
-        tableViewer.setInput( new Integer[] { 1, 2, 3, 4, 5, 5, 6, 7 } );
+        // TODO: The contentprovider should be initialized with a dataframe and be a DataFrameContentProvider instead of an ArrayContentProvider
+        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+        tableViewer.setInput( ingestedDF.getRows().toArray() );
         // TODO: https://www.vogella.com/tutorials/EclipseJFaceTable/article.html
 
         // [/Desired TabItem]
