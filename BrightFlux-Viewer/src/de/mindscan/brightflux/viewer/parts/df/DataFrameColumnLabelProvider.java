@@ -38,19 +38,25 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
  * TODO: maybe a factory should take care of it.
  */
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
-    /**
-     * 
-     */
+
     private final String columname;
 
     /**
-     * @param columname
+     * @param columname The column name of the column determines, what column is shown from the data frame rows.
      */
     public DataFrameColumnLabelProvider( String columname ) {
         this.columname = columname;
     }
 
+    /**
+     * 
+     * {@inheritDoc}
+     */
     public String getText( Object element ) {
+        if (element == null) {
+            return null;
+        }
+
         DataFrameRow row = (DataFrameRow) element;
         return row.get( columname ).toString();
     }
