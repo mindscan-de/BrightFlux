@@ -27,7 +27,7 @@ package de.mindscan.brightflux.ingest;
 
 import java.nio.file.Path;
 
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
@@ -41,7 +41,7 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
  */
 public class IngestHeartCsv {
 
-    public DataFrameImpl loadCsvAsDataFrameV2( Path path ) {
+    public DataFrame loadCsvAsDataFrameV2( Path path ) {
         // building the configuration for the data to ingest
         JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
                         DataFrameCompilerFactory.getIntance() );
