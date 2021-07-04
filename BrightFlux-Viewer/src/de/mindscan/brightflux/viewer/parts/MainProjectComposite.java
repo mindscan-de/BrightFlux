@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
@@ -42,36 +41,14 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
 
 /**
  * 
  */
 public class MainProjectComposite extends Composite {
-    /**
-     * 
-     */
-    public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
-        /**
-         * 
-         */
-        private final String columname;
-
-        /**
-         * @param columname
-         */
-        private DataFrameColumnLabelProvider( String columname ) {
-            this.columname = columname;
-        }
-
-        public String getText( Object element ) {
-            DataFrameRow row = (DataFrameRow) element;
-            return row.get( columname ).toString();
-        }
-    }
-
     private Table table;
 
     // XXX: Awful hack right now.
