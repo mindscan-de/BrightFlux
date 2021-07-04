@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 
@@ -30,7 +30,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         Collection<DataFrameColumn<?>> result = frame.getColumns();
         assertThat( result, hasSize( 14 ) );
@@ -42,7 +42,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         // assert
         Collection<String> result = frame.getColumnNames();
@@ -56,7 +56,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         // assert
         Collection<String> result = frame.getColumns().stream().filter( c -> IntegerColumn.class.isInstance( c ) ).map( c -> c.getColumnName() )
@@ -71,7 +71,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         // assert
         Collection<String> result = frame.getColumns().stream().filter( c -> DoubleColumn.class.isInstance( c ) ).map( c -> c.getColumnName() )
@@ -86,7 +86,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         // assert
         DataFrameColumn<?> result = frame.getColumns().iterator().next();
@@ -100,7 +100,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         // assert
         DataFrameColumn<?> result = frame.getColumns().iterator().next();
@@ -114,7 +114,7 @@ public class IngestHeartCsvTest {
         IngestHeartCsv heartCsv = new IngestHeartCsv();
 
         // act
-        DataFrameImpl frame = heartCsv.loadCsvAsDataFrameV2( path );
+        DataFrame frame = heartCsv.loadCsvAsDataFrameV2( path );
 
         // assert
         List<Integer> result = frame.getColumns().stream().map( c -> c.getSize() ).collect( Collectors.toList() );
