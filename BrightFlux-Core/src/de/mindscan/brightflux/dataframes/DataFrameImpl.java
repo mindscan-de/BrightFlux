@@ -264,6 +264,14 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
+    public Collection<DataFrameRow> getRows() {
+        return getRows( 0, size );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public Collection<DataFrameRow> getRows( int fromIndex, int toIndex ) {
         List<DataFrameRow> result = new ArrayList<>();
 

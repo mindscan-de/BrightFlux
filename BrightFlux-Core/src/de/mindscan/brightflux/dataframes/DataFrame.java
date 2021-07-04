@@ -53,6 +53,8 @@ public interface DataFrame {
 
     DataFrame selectRows( int from, int to );
 
+    Collection<DataFrameRow> getRows();
+
     Collection<DataFrameRow> getRows( int from, int to );
 
     Collection<DataFrameRow> getRowsByPredicate( DataFrameRowFilterPredicate predicate );
