@@ -33,6 +33,12 @@ import java.util.Iterator;
  */
 public interface DataFrame {
 
+    // Short name
+    public String getName();
+
+    // TODO: full name?
+    // public String getFullName();
+
     int getSize();
 
     boolean isEmpty();

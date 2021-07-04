@@ -77,9 +77,12 @@ public class MainProjectComposite extends Composite {
 
         TabFolder tabFolder = new TabFolder( this, SWT.NONE );
 
+        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+        String ingestedDFName = ingestedDF.getName();
+
         // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
         TabItem tbtmNewItem = new TabItem( tabFolder, SWT.NONE );
-        tbtmNewItem.setText( "NameOfDataFrame" );
+        tbtmNewItem.setText( ingestedDFName );
 
         Composite composite = new Composite( tabFolder, SWT.NONE );
         tbtmNewItem.setControl( composite );
@@ -88,8 +91,6 @@ public class MainProjectComposite extends Composite {
         table = tableViewer.getTable();
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
-
-        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
 
         appenddDataFrameColumns( ingestedDF, tableViewer, composite );
 
