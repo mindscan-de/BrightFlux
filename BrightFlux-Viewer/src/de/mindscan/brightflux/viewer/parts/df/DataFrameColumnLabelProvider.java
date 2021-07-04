@@ -30,7 +30,12 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
- * 
+ * TODO: the Label provider should be dependent of either configuration
+ *       of presentation and the internal column type.
+ * TODO: we only use toString as the provider for the content, but this 
+ *       is not sufficient, e.g. Values which are null / not available /
+ *       or should be displayed in a different way. 
+ * TODO: maybe a factory should take care of it.
  */
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
     /**
