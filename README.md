@@ -6,6 +6,11 @@ at this moment in time, I just want to see it work. The solution can be reworked
 I'm not trying to recreate one of the many monitoring tools (e.g ELK-Stacks) -- if you are looking
 for this, this is not the right place for you.
 
+Also keep in mind, that this is a spare time side project for me, where I challenge myself to build
+tools from scratch. I like to work on green field projects and figure stuff out. Also the progress
+will be on a need-by-need basis. I won't develop it if I don't need it. I also won't fix things that
+ain't broken.
+
 ## Motivation
 
 I'm sick of all the f..king log file viewers out there, because they lack the features and the usability from
@@ -21,25 +26,32 @@ of thousands of software modules.
 Logs for post mortem analysis are usually very large, because the issue might be so rare and hard to reproduce,
 that all available logs and traces are written and even then, you might understand the issue only when you see
 the other interfaces, because you couldn't log this particular thing in your part of the software, instead you
-must correlate a particular log item from a external code base (or second grade log) to your own code as well.
+must correlate a particular log item from an external code base (or second grade log) to your own code as well.
 
 Therefore reading multiple and different logs and correlate them (according to time and internal state) is an 
 important part of the whole log analysis system.
 
-Most of these analysis jobs are a one time scenario or will only be repeated until the underlying issue
+Most of these analysis jobs are one time scenarios or will only be repeated until the underlying issue
 is resolved -- this might also be the reason why such tools probably aren't developed. Every time there
 will be a good enough solution, which gets the job somehow done. No need for a tool here. So everybody
 develops similar solutions and all the things are reinvented -- all the time and built into other tools
 as well. Text based logs have one important shortcomming -- they can be shown in a text editor. Editors
-are good for editing - but they often aren't the best thing if you work basically readonly on the files.
+are good for editing - but they often aren't the best thing if you work basically readonly on the files
+and you want to take notes. 
 
 ## Not fit for anything (YET)
 
-I'm currently in the process figuring out, what can be implemented as fast as posible for some kind of
+I'm currently in the process figuring out, what can be implemented as soon as possible for some kind of
 MVP. I think a very simple working pipeline from a simple csv file to an annotated log analysis project 
 file, would be nice to have.
 
-Currently you would underwhelmed by forking this project.
+Currently you would be totally underwhelmed by forking this project. There will also be no stable APIs
+and anything and everything is subject to changes. The first solution will be a simple API to support
+the ingestion and processing of log data, with the most simple viewer for this data. A desired solution
+would be to have this as a client-server solution, where the heavy lifting of data processing is done
+on some kind of server and a "thin" client to request dataprocessing. But as for now the local machine
+will do the data processing and also the presentation. What might put a hard limit on how much log data
+can be viewed at a time.
 
 ## Planned Features
 
