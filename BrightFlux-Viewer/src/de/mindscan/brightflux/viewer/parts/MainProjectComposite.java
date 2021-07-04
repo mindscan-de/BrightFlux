@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
@@ -108,10 +107,8 @@ public class MainProjectComposite extends Composite {
             } );
         }
 
-        // TODO: we have to set the ContentProvider on the tableViewer - 
-        tableViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        // TODO: The contentprovider should be initialized with a dataframe and be a DataFrameContentProvider instead of an ArrayContentProvider
-        tableViewer.setInput( ingestedDF.getRows().toArray() );
+        tableViewer.setContentProvider( DataFrameContentProvider.getInstance() );
+        tableViewer.setInput( ingestedDF );
 
         // [/Desired TabItem]
 
