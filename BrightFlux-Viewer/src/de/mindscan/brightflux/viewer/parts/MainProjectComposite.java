@@ -93,7 +93,7 @@ public class MainProjectComposite extends Composite {
 
         buildDataFrameColumns( ingestedDF, tableViewer, composite );
 
-        tableViewer.setContentProvider( DataFrameContentProvider.getInstance() );
+        tableViewer.setContentProvider( new DataFrameContentProvider() );
         tableViewer.setInput( ingestedDF );
 
         // [/Desired TabItem]
