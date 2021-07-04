@@ -50,6 +50,28 @@ import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
  * 
  */
 public class MainProjectComposite extends Composite {
+    /**
+     * 
+     */
+    private static final class DataFrameColumnLabelProvider extends ColumnLabelProvider {
+        /**
+         * 
+         */
+        private final String columname;
+
+        /**
+         * @param columname
+         */
+        private DataFrameColumnLabelProvider( String columname ) {
+            this.columname = columname;
+        }
+
+        public String getText( Object element ) {
+            DataFrameRow row = (DataFrameRow) element;
+            return row.get( columname ).toString();
+        }
+    }
+
     private Table table;
 
     // XXX: Awful hack right now.
@@ -112,12 +134,7 @@ public class MainProjectComposite extends Composite {
             TableColumn tblclmnNewColumn = tableViewerAgeColumn.getColumn();
             tcl_composite.setColumnData( tblclmnNewColumn, new ColumnPixelData( 70, true, true ) );
             tblclmnNewColumn.setText( columname );
-            tableViewerAgeColumn.setLabelProvider( new ColumnLabelProvider() {
-                public String getText( Object element ) {
-                    DataFrameRow row = (DataFrameRow) element;
-                    return row.get( columname ).toString();
-                };
-            } );
+            tableViewerAgeColumn.setLabelProvider( new DataFrameColumnLabelProvider( columname ) );
         }
     }
 
