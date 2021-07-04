@@ -53,7 +53,7 @@ public class MainProjectComposite extends Composite {
     /**
      * 
      */
-    private static final class DataFrameColumnLabelProvider extends ColumnLabelProvider {
+    public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
         /**
          * 
          */
