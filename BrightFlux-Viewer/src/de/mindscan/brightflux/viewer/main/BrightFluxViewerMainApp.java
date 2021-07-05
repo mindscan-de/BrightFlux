@@ -42,7 +42,7 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 public class BrightFluxViewerMainApp {
 
     protected Shell shlBFViewerMainApp;
-    // TODO: lower that to composite in future again, if project regsitry is done.
+    // TODO: lower that to composite in future again, if project registry is done.
     private MainProjectComposite mainProjectComposite;
 
     /**
@@ -98,9 +98,15 @@ public class BrightFluxViewerMainApp {
         mntmLoadFile.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: open file dialog
-                // TODO: then load the Frame
+                // TODO: open file dialog -> get Path
 
+                // TODO: we should now inform the project registry, that we open a new data frame
+                // maybe we should have an event queue where each component can register to and will be informed...
+                // this model can lead to an asynchronous system / background task system, where you can interact with this app, while other work is done until
+                // we are informed, that the result is ready and we want to display it.
+                // So we just add a load command to queue, and the load command then tells, that it finished the job.
+                // use the command pattern.
+                // TODO: then load the Frame in the file open command
                 mainProjectComposite.addDataFrameTab( null );
             }
         } );
