@@ -79,7 +79,10 @@ public class MainProjectComposite extends Composite {
 
         DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
         addTabItem( mainTabFolder, ingestedDF );
+    }
 
+    public void addDataFrameTab( DataFrame newDataFrame ) {
+        addTabItem( mainTabFolder, newDataFrame );
     }
 
     private void addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
