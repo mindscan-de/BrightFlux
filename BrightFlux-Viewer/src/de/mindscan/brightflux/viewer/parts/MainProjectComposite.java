@@ -50,7 +50,7 @@ import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
  * 
  */
 public class MainProjectComposite extends Composite {
-    private Table table;
+    private TabFolder mainTabFolder;
 
     // XXX: Awful hack right now.
     private final static Path path = Paths
@@ -75,9 +75,14 @@ public class MainProjectComposite extends Composite {
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        TabFolder tabFolder = new TabFolder( this, SWT.NONE );
+        mainTabFolder = new TabFolder( this, SWT.NONE );
 
         DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+        addTabItem( mainTabFolder, ingestedDF );
+
+    }
+
+    private void addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
         String ingestedDFName = ingestedDF.getName();
 
         // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
@@ -88,7 +93,7 @@ public class MainProjectComposite extends Composite {
         tbtmNewItem.setControl( composite );
 
         TableViewer tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
-        table = tableViewer.getTable();
+        Table table = tableViewer.getTable();
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
 
