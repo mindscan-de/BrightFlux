@@ -82,7 +82,8 @@ public class MainProjectComposite extends Composite {
     }
 
     public void addDataFrameTab( DataFrame newDataFrame ) {
-        addTabItem( mainTabFolder, newDataFrame );
+        DataFrame newDataFrame1 = ingest.loadCsvAsDataFrameV2( path );
+        addTabItem( mainTabFolder, newDataFrame1 );
     }
 
     private void addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
