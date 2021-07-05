@@ -37,9 +37,17 @@ public class SimpleCommandDispatcher {
      */
     public synchronized void dispatchCommand( BFCommand command ) {
         // TODO: an multi threaded system would now just queue this command into a deque
-        // but I'm kind of lazy right now, and just want to excute one command at a time.
+        // but I'm kind of lazy right now, and just want to execute one command at a time.
+        try {
+            command.execute();
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
 
-        command.execute();
+            // TODO: 
+            // dispatch an Exception event to the event dispatcher, so that we can see it in the UI, 
+            // and log that to the log-files.
+        }
     }
 
 }
