@@ -51,6 +51,8 @@ public class BrightFluxViewerMainApp {
      */
     public static void main( String[] args ) {
         try {
+            // TODO: load some configuration from file
+            // TODO: set the current configuration (e.g. the window size) 
             BrightFluxViewerMainApp window = new BrightFluxViewerMainApp();
             window.open();
         }
