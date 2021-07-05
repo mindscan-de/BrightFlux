@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -34,6 +37,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
+import de.mindscan.brightflux.viewer.commands.IngestCommand;
+import de.mindscan.brightflux.viewer.dispatcher.SimpleCommandDispatcher;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 
 /**
@@ -100,6 +105,13 @@ public class BrightFluxViewerMainApp {
             public void widgetSelected( SelectionEvent e ) {
                 // TODO: open file dialog -> get Path
 
+                // Build a command
+                // TODO: give that to a factory later on.
+                Path fileToIngest = Paths.get(
+                                "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
+
+                IngestCommand ingestCommand = new IngestCommand( fileToIngest );
+
                 // TODO: we should now inform the project registry, that we open a new data frame
                 // maybe we should have an event queue where each component can register to and will be informed...
                 // this model can lead to an asynchronous system / background task system, where you can interact with this app, while other work is done until
@@ -107,6 +119,8 @@ public class BrightFluxViewerMainApp {
                 // So we just add a load command to queue, and the load command then tells, that it finished the job.
                 // use the command pattern.
                 // TODO: then load the Frame in the file open command
+                new SimpleCommandDispatcher().dispatchCommand( ingestCommand );
+
                 mainProjectComposite.addDataFrameTab( null );
             }
         } );
