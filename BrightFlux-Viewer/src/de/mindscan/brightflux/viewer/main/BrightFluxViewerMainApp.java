@@ -29,7 +29,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -43,6 +42,8 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 public class BrightFluxViewerMainApp {
 
     protected Shell shlBrightfluxviewerm;
+    // TODO: lower that to composite in future again, if project regsitry is done.
+    private MainProjectComposite mainProjectComposite;
 
     /**
      * Launch the application.
@@ -92,6 +93,15 @@ public class BrightFluxViewerMainApp {
         mntmFile.setMenu( menu_1 );
 
         MenuItem mntmLoadFile = new MenuItem( menu_1, SWT.NONE );
+        mntmLoadFile.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: open file dialog
+                // TODO: then load the Frame
+
+                mainProjectComposite.addDataFrameTab( null );
+            }
+        } );
         mntmLoadFile.setText( "Load File" );
 
         new MenuItem( menu_1, SWT.SEPARATOR );
@@ -105,7 +115,9 @@ public class BrightFluxViewerMainApp {
         } );
         mntmExit.setText( "Exit" );
 
-        Composite mainProjectComposite = new MainProjectComposite( shlBrightfluxviewerm, SWT.NONE );
+        // TODO: this must be something else in future, adding a new dataframe, must be announced via the project registry.
+        // we don't want to interact with the MainProjectComposite top down.
+        mainProjectComposite = new MainProjectComposite( shlBrightfluxviewerm, SWT.NONE );
         mainProjectComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
     }
