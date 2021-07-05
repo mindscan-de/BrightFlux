@@ -41,7 +41,7 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
  */
 public class BrightFluxViewerMainApp {
 
-    protected Shell shlBrightfluxviewerm;
+    protected Shell shlBFViewerMainApp;
     // TODO: lower that to composite in future again, if project regsitry is done.
     private MainProjectComposite mainProjectComposite;
 
@@ -65,9 +65,9 @@ public class BrightFluxViewerMainApp {
     public void open() {
         Display display = Display.getDefault();
         createContents();
-        shlBrightfluxviewerm.open();
-        shlBrightfluxviewerm.layout();
-        while (!shlBrightfluxviewerm.isDisposed()) {
+        shlBFViewerMainApp.open();
+        shlBFViewerMainApp.layout();
+        while (!shlBFViewerMainApp.isDisposed()) {
             if (!display.readAndDispatch()) {
                 display.sleep();
             }
@@ -78,13 +78,13 @@ public class BrightFluxViewerMainApp {
      * Create contents of the window.
      */
     protected void createContents() {
-        shlBrightfluxviewerm = new Shell();
-        shlBrightfluxviewerm.setSize( 450, 300 );
-        shlBrightfluxviewerm.setText( "BrightFlux-Viewer 0.0.0.M1" );
-        shlBrightfluxviewerm.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+        shlBFViewerMainApp = new Shell();
+        shlBFViewerMainApp.setSize( 450, 300 );
+        shlBFViewerMainApp.setText( "BrightFlux-Viewer 0.0.0.M1" );
+        shlBFViewerMainApp.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Menu menu = new Menu( shlBrightfluxviewerm, SWT.BAR );
-        shlBrightfluxviewerm.setMenuBar( menu );
+        Menu menu = new Menu( shlBFViewerMainApp, SWT.BAR );
+        shlBFViewerMainApp.setMenuBar( menu );
 
         MenuItem mntmFile = new MenuItem( menu, SWT.CASCADE );
         mntmFile.setText( "File" );
@@ -110,14 +110,14 @@ public class BrightFluxViewerMainApp {
         mntmExit.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                shlBrightfluxviewerm.close();
+                shlBFViewerMainApp.close();
             }
         } );
         mntmExit.setText( "Exit" );
 
         // TODO: this must be something else in future, adding a new dataframe, must be announced via the project registry.
         // we don't want to interact with the MainProjectComposite top down.
-        mainProjectComposite = new MainProjectComposite( shlBrightfluxviewerm, SWT.NONE );
+        mainProjectComposite = new MainProjectComposite( shlBFViewerMainApp, SWT.NONE );
         mainProjectComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
     }
