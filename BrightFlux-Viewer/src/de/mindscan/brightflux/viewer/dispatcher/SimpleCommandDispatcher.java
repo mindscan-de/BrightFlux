@@ -29,32 +29,48 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.viewer.commands.BFCommand;
 import de.mindscan.brightflux.viewer.events.BFEvent;
+import de.mindscan.brightflux.viewer.events.CommandExecutionExceptionEvent;
+import de.mindscan.brightflux.viewer.events.CommandExecutionFinishedEvent;
+import de.mindscan.brightflux.viewer.events.CommandExecutionStartedEvent;
 
 /**
  * 
  */
 public class SimpleCommandDispatcher implements CommandDispatcher {
 
-    private SimpleEventDispatcher eventDispatcher = new SimpleEventDispatcher();
+    private final EventDispatcher eventDispatcher;
+
+    public SimpleCommandDispatcher() {
+        this.eventDispatcher = new SimpleEventDispatcher();
+    }
+
+    public SimpleCommandDispatcher( EventDispatcher eventDispatcher ) {
+        this.eventDispatcher = eventDispatcher;
+    }
 
     /** 
      * {@inheritDoc}
      */
     @Override
     public synchronized void dispatchCommand( BFCommand command ) {
+        Consumer<BFEvent> eventConsumer = eventDispatcher::dispatchEvent;
+
         // TODO: an multi threaded system would now just queue this command into a deque
         // but I'm kind of lazy right now, and just want to execute one command at a time.
-        try {
 
-            Consumer<BFEvent> eventDispatcher2 = eventDispatcher::dispatchEvent;
-            command.execute( eventDispatcher2 );
+        // (this execution should be part of the future worker threads, not of the dispatcher thread)
+        try {
+            // a logger or multiple loggers can consume these events 
+            eventConsumer.accept( new CommandExecutionStartedEvent( command ) );
+            // execute the event
+            command.execute( eventConsumer );
+            // a logger or multiple loggers can consume these events
+            eventConsumer.accept( new CommandExecutionFinishedEvent( command ) );
         }
         catch (Exception ex) {
             ex.printStackTrace();
-
-            // TODO: 
-            // dispatch an Exception event to the event dispatcher, so that we can see it in the UI, 
-            // and log that to the log-files.
+            // a logger or multiple loggers should consume these events
+            eventConsumer.accept( new CommandExecutionExceptionEvent( command, ex ) );
         }
     }
 
