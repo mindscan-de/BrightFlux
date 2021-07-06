@@ -55,16 +55,29 @@ public class SimpleCommandDispatcher implements CommandDispatcher {
     public synchronized void dispatchCommand( BFCommand command ) {
         Consumer<BFEvent> eventConsumer = eventDispatcher::dispatchEvent;
 
-        // TODO: an multi threaded system would now just queue this command into a deque
-        // but I'm kind of lazy right now, and just want to execute one command at a time.
+        /*
+         * TODO: Attention:
+         * 
+         * In a multi-threaded system this would now just queue this command into a deque 
+         * or something less/non blocking. 
+         * 
+         * But I'm kind of lazy right now, and just want to execute each command at the 
+         * time dispatched. A different Dispatcher can be implemented on a need-by-need
+         * basis.
+         */
 
         // (this execution should be part of the future worker threads, not of the dispatcher thread)
+        // (but good enough for now)
         try {
             // a logger or multiple loggers can consume these events 
+            // also other instances can subscribe to these events, like progress monitors and such
             eventConsumer.accept( new CommandExecutionStartedEvent( command ) );
+
             // execute the event
             command.execute( eventConsumer );
+
             // a logger or multiple loggers can consume these events
+            // also other instances can subscribe to these events, like progress monitors and such
             eventConsumer.accept( new CommandExecutionFinishedEvent( command ) );
         }
         catch (Exception ex) {
