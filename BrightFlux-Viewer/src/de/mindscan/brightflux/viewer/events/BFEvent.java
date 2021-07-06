@@ -29,5 +29,5 @@ package de.mindscan.brightflux.viewer.events;
  * 
  */
 public interface BFEvent {
-
+    void foo();
 }

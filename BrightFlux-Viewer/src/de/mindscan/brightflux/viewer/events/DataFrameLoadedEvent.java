@@ -47,4 +47,13 @@ public class DataFrameLoadedEvent implements BFEvent {
     public DataFrame getLoadedDataFrame() {
         return loadedDataFrame;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void foo() {
+        // TODO Auto-generated method stub
+
+    }
 }
