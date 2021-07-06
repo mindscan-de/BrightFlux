@@ -32,6 +32,8 @@ import de.mindscan.brightflux.viewer.commands.BFCommand;
  */
 public class SimpleCommandDispatcher implements CommandDispatcher {
 
+    private EventDispatcher eventDispatcher;
+
     /** 
      * {@inheritDoc}
      */
@@ -40,7 +42,7 @@ public class SimpleCommandDispatcher implements CommandDispatcher {
         // TODO: an multi threaded system would now just queue this command into a deque
         // but I'm kind of lazy right now, and just want to execute one command at a time.
         try {
-            command.execute();
+            command.execute( eventDispatcher );
         }
         catch (Exception ex) {
             ex.printStackTrace();

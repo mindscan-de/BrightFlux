@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.viewer.dispatcher.EventDispatcher;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class IngestCommand implements BFCommand {
     /**
      * {@inheritDoc}
      */
-    public void execute() {
+    public void execute( EventDispatcher eventDispatcher ) {
         // decide because of file which ingestion to perform, but we decide for a CSV right now.
         // But this might be totally complex... But this encapsulation here should to the trick.
 
@@ -57,7 +58,7 @@ public class IngestCommand implements BFCommand {
         // DataframeLoaded Event, where components
 
         // can subscribe to... e.g.
-        // EventDispatcher.dispatchEvent( new DataFrameLoadedEvent( newDataFrame ) );
+        // eventDispatcher.dispatchEvent( new DataFrameLoadedEvent( newDataFrame ) );
     }
 
 }

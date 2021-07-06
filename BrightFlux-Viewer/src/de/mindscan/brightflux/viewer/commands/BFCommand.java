@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.commands;
 
+import de.mindscan.brightflux.viewer.dispatcher.EventDispatcher;
+
 /**
  * 
  */
@@ -35,7 +37,8 @@ public interface BFCommand {
      * as a result of the command.
      * 
      * Other resources / components will then subscribe to the evens and react to the events accordingly.
+     * @param eventDispatcher 
      */
-    void execute();
+    void execute( EventDispatcher eventDispatcher );
 
 }
