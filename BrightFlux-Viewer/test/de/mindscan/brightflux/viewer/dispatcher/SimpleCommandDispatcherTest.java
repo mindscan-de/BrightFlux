@@ -22,4 +22,23 @@ public class SimpleCommandDispatcherTest {
         Mockito.verify( command, times( 1 ) ).execute( org.mockito.Matchers.any() );
     }
 
+    @Test
+    public void testDispatchCommand_SimpleCommandExecution_TwoEventsDispatched() throws Exception {
+        // arrange
+        EventDispatcher eventDispatcher = Mockito.mock( EventDispatcher.class, "eventDispatcher" );
+        SimpleCommandDispatcher dispatcher = new SimpleCommandDispatcher( eventDispatcher );
+        BFCommand command = Mockito.mock( BFCommand.class, "command" );
+
+        // act
+        dispatcher.dispatchCommand( command );
+
+        // assert
+        Mockito.verify( eventDispatcher, times( 2 ) ).dispatchEvent( Mockito.any() );
+    }
+
+    // TODO: test, that tests, that a CommandStartEventIsDispatched
+    // TODO: test, that tests, that a CommandFinishedEventIsDispatched
+    // TODO: test, that tests, that a CommandStartEventIsDispatched - if command throws exceptions
+    // TODO: test, that tests, that a CommandExceptionEventIsDispatched - if command throws exceptions
+
 }
