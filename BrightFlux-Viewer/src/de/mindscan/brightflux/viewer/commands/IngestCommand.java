@@ -26,10 +26,11 @@
 package de.mindscan.brightflux.viewer.commands;
 
 import java.nio.file.Path;
+import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
-import de.mindscan.brightflux.viewer.dispatcher.EventDispatcher;
+import de.mindscan.brightflux.viewer.events.BFEvent;
 import de.mindscan.brightflux.viewer.events.DataFrameLoadedEvent;
 
 /**
@@ -45,10 +46,13 @@ public class IngestCommand implements BFCommand {
 
     // This might be executed in some worker thread, or in the same thread as everything else.
     // This depends on the implemenation of the CommandDispatcher.
+
+    // instead of passing an event dispatcher, we will pass an event consumer, there is no need 
+    // that the command needs to know the event dispatcher.
     /**
      * {@inheritDoc}
      */
-    public void execute( EventDispatcher eventDispatcher ) {
+    public void execute( Consumer<BFEvent> eventConsumer ) {
         // decide because of file which ingestion to perform, but we decide for a CSV right now.
         // But this might be totally complex... But this encapsulation here should to the trick.
 
@@ -59,7 +63,7 @@ public class IngestCommand implements BFCommand {
         // DataframeLoaded Event, where components
 
         // can subscribe to... e.g.
-        eventDispatcher.dispatchEvent( new DataFrameLoadedEvent( newDataFrame1 ) );
+        eventConsumer.accept( new DataFrameLoadedEvent( newDataFrame1 ) );
     }
 
 }

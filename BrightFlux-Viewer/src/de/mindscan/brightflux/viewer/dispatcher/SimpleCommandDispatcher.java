@@ -25,14 +25,17 @@
  */
 package de.mindscan.brightflux.viewer.dispatcher;
 
+import java.util.function.Consumer;
+
 import de.mindscan.brightflux.viewer.commands.BFCommand;
+import de.mindscan.brightflux.viewer.events.BFEvent;
 
 /**
  * 
  */
 public class SimpleCommandDispatcher implements CommandDispatcher {
 
-    private EventDispatcher eventDispatcher;
+    private SimpleEventDispatcher eventDispatcher = new SimpleEventDispatcher();
 
     /** 
      * {@inheritDoc}
@@ -42,7 +45,9 @@ public class SimpleCommandDispatcher implements CommandDispatcher {
         // TODO: an multi threaded system would now just queue this command into a deque
         // but I'm kind of lazy right now, and just want to execute one command at a time.
         try {
-            command.execute( eventDispatcher );
+
+            Consumer<BFEvent> eventDispatcher2 = eventDispatcher::dispatchEvent;
+            command.execute( eventDispatcher2 );
         }
         catch (Exception ex) {
             ex.printStackTrace();
