@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
 import de.mindscan.brightflux.viewer.dispatcher.EventDispatcher;
+import de.mindscan.brightflux.viewer.events.DataFrameLoadedEvent;
 
 /**
  * 
@@ -58,7 +59,7 @@ public class IngestCommand implements BFCommand {
         // DataframeLoaded Event, where components
 
         // can subscribe to... e.g.
-        // eventDispatcher.dispatchEvent( new DataFrameLoadedEvent( newDataFrame ) );
+        eventDispatcher.dispatchEvent( new DataFrameLoadedEvent( newDataFrame1 ) );
     }
 
 }

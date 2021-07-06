@@ -25,9 +25,26 @@
  */
 package de.mindscan.brightflux.viewer.events;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+
 /**
  * 
  */
 public class DataFrameLoadedEvent implements BFEvent {
+    private DataFrame loadedDataFrame;
 
+    /**
+     * @param loadedDataFrame 
+     * 
+     */
+    public DataFrameLoadedEvent( DataFrame loadedDataFrame ) {
+        this.loadedDataFrame = loadedDataFrame;
+    }
+
+    /**
+     * @return the loadedDataFrame
+     */
+    public DataFrame getLoadedDataFrame() {
+        return loadedDataFrame;
+    }
 }
