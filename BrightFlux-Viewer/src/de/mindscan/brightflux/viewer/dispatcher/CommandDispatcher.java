@@ -30,25 +30,11 @@ import de.mindscan.brightflux.viewer.commands.BFCommand;
 /**
  * 
  */
-public class SimpleCommandDispatcher implements CommandDispatcher {
+public interface CommandDispatcher {
 
-    /** 
-     * {@inheritDoc}
+    /**
+     * @param ingestCommand
      */
-    @Override
-    public synchronized void dispatchCommand( BFCommand command ) {
-        // TODO: an multi threaded system would now just queue this command into a deque
-        // but I'm kind of lazy right now, and just want to execute one command at a time.
-        try {
-            command.execute();
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-
-            // TODO: 
-            // dispatch an Exception event to the event dispatcher, so that we can see it in the UI, 
-            // and log that to the log-files.
-        }
-    }
+    void dispatchCommand( BFCommand command );
 
 }
