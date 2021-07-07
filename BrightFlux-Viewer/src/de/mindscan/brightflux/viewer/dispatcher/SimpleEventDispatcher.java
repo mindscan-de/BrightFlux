@@ -61,6 +61,10 @@ public class SimpleEventDispatcher implements EventDispatcher {
      */
     @Override
     public synchronized void dispatchEvent( BFEvent event ) {
+        if (event == null) {
+            return;
+        }
+
         // TODO: get the event type
         Class<? extends BFEvent> eventClass = event.getClass();
 
