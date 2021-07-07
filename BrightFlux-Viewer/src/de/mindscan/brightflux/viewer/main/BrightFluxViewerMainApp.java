@@ -38,8 +38,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.viewer.commands.IngestCommand;
-import de.mindscan.brightflux.viewer.dispatcher.SimpleCommandDispatcher;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
+import de.mindscan.brightflux.viewer.project.ProjectRegistry;
 
 /**
  * 
@@ -49,6 +49,7 @@ public class BrightFluxViewerMainApp {
     protected Shell shlBFViewerMainApp;
     // TODO: lower that to composite in future again, if project registry is done.
     private MainProjectComposite mainProjectComposite;
+    private ProjectRegistry projectRegistry = new ProjectRegistry();
 
     /**
      * Launch the application.
@@ -119,9 +120,7 @@ public class BrightFluxViewerMainApp {
                 // So we just add a load command to queue, and the load command then tells, that it finished the job.
                 // use the command pattern.
                 // TODO: then load the Frame in the file open command
-                new SimpleCommandDispatcher().dispatchCommand( ingestCommand );
-
-                mainProjectComposite.addDataFrameTab( null );
+                projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
             }
         } );
         mntmLoadFile.setText( "Load File" );
@@ -142,6 +141,7 @@ public class BrightFluxViewerMainApp {
         mainProjectComposite = new MainProjectComposite( shlBFViewerMainApp, SWT.NONE );
         mainProjectComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
+        mainProjectComposite.setProjectRegistry( projectRegistry );
     }
 
 }
