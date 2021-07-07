@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.dispatcher;
 
 import de.mindscan.brightflux.viewer.events.BFEvent;
+import de.mindscan.brightflux.viewer.events.BFEventListener;
 
 /**
  * 
@@ -33,5 +34,7 @@ import de.mindscan.brightflux.viewer.events.BFEvent;
 public interface EventDispatcher {
 
     void dispatchEvent( BFEvent event );
+
+    void registerEventListener( Class<?> eventType, BFEventListener listener );
 
 }

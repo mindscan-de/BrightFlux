@@ -51,6 +51,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     // TODO: register handler for certain EventType -> TODO: introduce event types for the Events, e.g multiple event types for one event?
     // TODO: register handler for EventClass.class itself
     // TODO: allow list of listeners / handlers, to allow multiple consume
+    @Override
     public void registerEventListener( Class<?> eventType, BFEventListener listener ) {
         if (eventType == null || listener == null) {
             return;

@@ -15,7 +15,7 @@ public class SimpleEventDispatcherTest {
     @Test
     public void testDispatchEvent_dispatchNullEvent_expectNoException() throws Exception {
         // arrange
-        SimpleEventDispatcher dispatcher = new SimpleEventDispatcher();
+        EventDispatcher dispatcher = new SimpleEventDispatcher();
 
         // act + assert
         dispatcher.dispatchEvent( null );
@@ -24,7 +24,7 @@ public class SimpleEventDispatcherTest {
     @Test
     public void testDispatchEvent_dispatchNonRegisteredClass_expectNoException() throws Exception {
         // arrange
-        SimpleEventDispatcher dispatcher = new SimpleEventDispatcher();
+        EventDispatcher dispatcher = new SimpleEventDispatcher();
         BFEvent unregisterdEventType = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
 
         // act + assert
@@ -34,7 +34,7 @@ public class SimpleEventDispatcherTest {
     @Test
     public void testDispatchEvent_dispatchRegisteredEventClass_invokedHandleEventOnListener() throws Exception {
         // arrange
-        SimpleEventDispatcher dispatcher = new SimpleEventDispatcher();
+        EventDispatcher dispatcher = new SimpleEventDispatcher();
         BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
         BFEventListener listener = Mockito.mock( BFEventListener.class, "listener" );
 
@@ -50,7 +50,7 @@ public class SimpleEventDispatcherTest {
     @Test
     public void testDispatchEvent_RegisterDifferentEventClassButDispatchUnregistered_handlerNotInvoked() throws Exception {
         // arrange
-        SimpleEventDispatcher dispatcher = new SimpleEventDispatcher();
+        EventDispatcher dispatcher = new SimpleEventDispatcher();
         BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
         BFEvent unRegisterdEvent = Mockito.mock( CommandExecutionFinishedEvent.class, "unregisterdEventType" );
         BFEventListener listener = Mockito.mock( BFEventListener.class, "listener" );
