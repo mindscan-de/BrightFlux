@@ -25,18 +25,36 @@
  */
 package de.mindscan.brightflux.viewer.dispatcher;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.mindscan.brightflux.viewer.events.BFEvent;
+import de.mindscan.brightflux.viewer.events.BFEventListener;
 
 /**
  * 
  */
 public class SimpleEventDispatcher implements EventDispatcher {
 
-    // TODO: add handlers map
+    // TODO: add handlers map, for simplicity we have one listener per event...
+    private Map<Class<?>, BFEventListener> listenerMap = new HashMap<>();
+
+    /**
+     * 
+     */
+    public SimpleEventDispatcher() {
+        listenerMap = new HashMap<>();
+    }
 
     // TODO: register handler for certain EventType -> TODO: introduce event types for the Events, e.g multiple event types for one event?
     // TODO: register handler for EventClass.class itself
-    // allow list of handlers, to allow multiple consume
+    // TODO: allow list of listeners / handlers, to allow multiple consume
+    public void registerEventListener( Class<?> eventType, BFEventListener listener ) {
+        if (eventType == null || listener == null) {
+            return;
+        }
+        listenerMap.put( eventType, listener );
+    }
 
     /** 
      * {@inheritDoc}
@@ -44,8 +62,15 @@ public class SimpleEventDispatcher implements EventDispatcher {
     @Override
     public synchronized void dispatchEvent( BFEvent event ) {
         // TODO: get the event type
+        Class<? extends BFEvent> eventClass = event.getClass();
+
         // find event type / event class in map
-        // then call all the event handlers.
+        BFEventListener bfEventListener = listenerMap.get( eventClass );
+
+        if (bfEventListener != null) {
+            // then call all the event handlers.
+            bfEventListener.handleEvent( event );
+        }
     }
 
 }
