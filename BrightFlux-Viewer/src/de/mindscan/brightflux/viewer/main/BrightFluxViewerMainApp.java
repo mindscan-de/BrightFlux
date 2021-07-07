@@ -139,6 +139,9 @@ public class BrightFluxViewerMainApp {
         mainProjectComposite = new MainProjectComposite( shlBFViewerMainApp, SWT.NONE );
         mainProjectComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
+        // This is still not nice, but good enough for now
+        // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
+        // basically also a ProjectRegistryParticipant and should not provide the truth to everyone else top down.
         if (mainProjectComposite instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
         }
