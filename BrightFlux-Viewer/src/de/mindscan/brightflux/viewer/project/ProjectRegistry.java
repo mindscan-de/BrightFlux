@@ -25,10 +25,17 @@
  */
 package de.mindscan.brightflux.viewer.project;
 
+import de.mindscan.brightflux.viewer.dispatcher.EventDispatcher;
+import de.mindscan.brightflux.viewer.dispatcher.SimpleCommandDispatcher;
+import de.mindscan.brightflux.viewer.dispatcher.SimpleEventDispatcher;
+
 /**
- * 
+ * TODO: maybe ProjectRegistry is the wrong name...
  */
 public class ProjectRegistry {
+
+    private EventDispatcher eventDispatcher;
+    private SimpleCommandDispatcher commandDispatcher;
 
     static class Holder {
         static ProjectRegistry instance = new ProjectRegistry();
@@ -39,7 +46,16 @@ public class ProjectRegistry {
     }
 
     public ProjectRegistry() {
-        // 
+        eventDispatcher = new SimpleEventDispatcher();
+        commandDispatcher = new SimpleCommandDispatcher( eventDispatcher );
+    }
+
+    public SimpleCommandDispatcher getCommandDispatcher() {
+        return commandDispatcher;
+    }
+
+    public EventDispatcher getEventDispatcher() {
+        return eventDispatcher;
     }
 
     // TODO: work on a mechanism that if the loaded files change, then we want to react on that....
