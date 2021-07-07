@@ -43,13 +43,18 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.viewer.events.BFEvent;
+import de.mindscan.brightflux.viewer.events.BFEventListener;
+import de.mindscan.brightflux.viewer.events.DataFrameLoadedEvent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
+import de.mindscan.brightflux.viewer.project.ProjectRegistry;
+import de.mindscan.brightflux.viewer.project.ProjectRegistryParticipant;
 
 /**
  * 
  */
-public class MainProjectComposite extends Composite {
+public class MainProjectComposite extends Composite implements ProjectRegistryParticipant {
     private TabFolder mainTabFolder;
 
     // XXX: Awful hack right now.
@@ -72,6 +77,20 @@ public class MainProjectComposite extends Composite {
         buildLayout();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameLoadedEvent.class, new BFEventListener() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                DataFrameLoadedEvent loaded = (DataFrameLoadedEvent) event;
+                addDataFrameTab( loaded.getLoadedDataFrame() );
+            }
+        } );
+    }
+
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
@@ -81,9 +100,8 @@ public class MainProjectComposite extends Composite {
         addTabItem( mainTabFolder, ingestedDF );
     }
 
-    public void addDataFrameTab( DataFrame newDataFrame ) {
-        DataFrame newDataFrame1 = ingest.loadCsvAsDataFrameV2( path );
-        addTabItem( mainTabFolder, newDataFrame1 );
+    private void addDataFrameTab( DataFrame newDataFrame ) {
+        addTabItem( mainTabFolder, newDataFrame );
     }
 
     private void addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
