@@ -75,7 +75,15 @@ public class SimpleEventDispatcher implements EventDispatcher {
 
         if (bfEventListener != null) {
             // then call all the event handlers.
-            bfEventListener.handleEvent( event );
+            try {
+                bfEventListener.handleEvent( event );
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
+
+                // We should maybe dispatch some info, that there was an error while dispatching an event...
+                // Maybe we should have a failsafe-event dispatcher, which will never fail and consume errors into a log file.
+            }
         }
     }
 
