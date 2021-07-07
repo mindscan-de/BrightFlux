@@ -36,6 +36,8 @@ import de.mindscan.brightflux.viewer.events.BFEventListener;
  */
 public class SimpleEventDispatcher implements EventDispatcher {
 
+    // Refactor this whole listenerMap thing and the registration and deregistration
+    // to some kind of Registry
     // TODO: add handlers map, for simplicity we have one listener per event...
     private Map<Class<?>, BFEventListener> listenerMap = new HashMap<>();
 
@@ -65,7 +67,6 @@ public class SimpleEventDispatcher implements EventDispatcher {
             return;
         }
 
-        // TODO: get the event type
         Class<? extends BFEvent> eventClass = event.getClass();
 
         // find event type / event class in map
