@@ -32,12 +32,20 @@ import de.mindscan.brightflux.viewer.events.BFEvent;
  */
 public class SimpleEventDispatcher implements EventDispatcher {
 
+    // TODO: add handlers map
+
+    // TODO: register handler for certain EventType -> TODO: introduce event types for the Events, e.g multiple event types for one event?
+    // TODO: register handler for EventClass.class itself
+    // allow list of handlers, to allow multiple consume
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public synchronized void dispatchEvent( BFEvent event ) {
-
+        // TODO: get the event type
+        // find event type / event class in map
+        // then call all the event handlers.
     }
 
 }
