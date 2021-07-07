@@ -32,6 +32,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -40,6 +41,7 @@ import org.eclipse.swt.widgets.Shell;
 import de.mindscan.brightflux.viewer.commands.IngestCommand;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.project.ProjectRegistry;
+import de.mindscan.brightflux.viewer.project.ProjectRegistryParticipant;
 
 /**
  * 
@@ -47,8 +49,7 @@ import de.mindscan.brightflux.viewer.project.ProjectRegistry;
 public class BrightFluxViewerMainApp {
 
     protected Shell shlBFViewerMainApp;
-    // TODO: lower that to composite in future again, if project registry is done.
-    private MainProjectComposite mainProjectComposite;
+    private Composite mainProjectComposite;
     private ProjectRegistry projectRegistry = new ProjectRegistry();
 
     /**
@@ -105,12 +106,11 @@ public class BrightFluxViewerMainApp {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 // TODO: open file dialog -> get Path
-
-                // Build a command
-                // TODO: give that to a factory later on.
                 Path fileToIngest = Paths.get(
                                 "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
 
+                // Build a command
+                // TODO: give that to a factory later on.
                 IngestCommand ingestCommand = new IngestCommand( fileToIngest );
 
                 // TODO: we should now inform the project registry, that we open a new data frame
@@ -136,12 +136,12 @@ public class BrightFluxViewerMainApp {
         } );
         mntmExit.setText( "Exit" );
 
-        // TODO: this must be something else in future, adding a new dataframe, must be announced via the project registry.
-        // we don't want to interact with the MainProjectComposite top down.
         mainProjectComposite = new MainProjectComposite( shlBFViewerMainApp, SWT.NONE );
         mainProjectComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        mainProjectComposite.setProjectRegistry( projectRegistry );
+        if (mainProjectComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
+        }
     }
 
 }
