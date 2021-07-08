@@ -64,8 +64,15 @@ public class SimpleCommandDispatcher implements CommandDispatcher {
          * But I'm kind of lazy right now, and just want to execute each command at the 
          * time dispatched. A different Dispatcher can be implemented on a need-by-need
          * basis.
+         * 
+         * Also a dispatcher is not an executor...
          */
 
+        executeCommand( command, eventConsumer );
+    }
+
+    // TODO: This code will be extracted in future to an execution thread
+    private void executeCommand( BFCommand command, Consumer<BFEvent> eventConsumer ) {
         // (this execution should be part of the future worker threads, not of the dispatcher thread)
         // (but good enough for now)
         try {
@@ -73,7 +80,11 @@ public class SimpleCommandDispatcher implements CommandDispatcher {
             // also other instances can subscribe to these events, like progress monitors and such
             eventConsumer.accept( new CommandExecutionStartedEvent( command ) );
 
-            // execute the event
+            // execute the command
+            // the command is executed on an aggregate (e.g. the parameters given at the creation of the command)
+            // and this generates events
+            // these events can then trigger a listener, 
+            // which presents something to the user or invokes another command
             command.execute( eventConsumer );
 
             // a logger or multiple loggers can consume these events
