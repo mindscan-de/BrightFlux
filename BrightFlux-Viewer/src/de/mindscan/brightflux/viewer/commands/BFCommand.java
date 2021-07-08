@@ -35,12 +35,15 @@ import de.mindscan.brightflux.viewer.events.BFEvent;
 public interface BFCommand {
 
     /**
-     * An executed command will always lead to the result, that one or multiple Events are dispatched, 
-     * as a result of the command.
+     * The execute method can dispatch results of its operation through the given eventConsumer, by
+     * invoking <code>eventConsumer.accept( result )</code>. The command is not limited to dispatch 
+     * one event, but can dispatch multiple events.
      * 
-     * Other resources / components will then subscribe to the evens and react to the events accordingly.
-     * @param eventDispatcher2 
+     * Other participants can register to the events and get informed if a event of the right type
+     * is dispatched.
+     *  
+     * @param eventConsumer provides ability to dispatch events / results
      */
-    void execute( Consumer<BFEvent> eventDispatcher2 );
+    void execute( Consumer<BFEvent> eventConsumer );
 
 }
