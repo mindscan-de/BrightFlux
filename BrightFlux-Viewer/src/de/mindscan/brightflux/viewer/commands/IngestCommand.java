@@ -47,8 +47,6 @@ public class IngestCommand implements BFCommand {
     // This might be executed in some worker thread, or in the same thread as everything else.
     // This depends on the implemenation of the CommandDispatcher.
 
-    // instead of passing an event dispatcher, we will pass an event consumer, there is no need 
-    // that the command needs to know the event dispatcher.
     /**
      * {@inheritDoc}
      */
