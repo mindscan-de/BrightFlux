@@ -34,7 +34,10 @@ import de.mindscan.brightflux.viewer.events.BFEvent;
 import de.mindscan.brightflux.viewer.events.DataFrameLoadedEvent;
 
 /**
+ * The IngestCommand implements the load and convert operation for a given file path to a 
+ * DataFrame.
  * 
+ * @resultevent {@link DataFrameLoadedEvent}
  */
 public class IngestCommand implements BFCommand {
 
@@ -44,24 +47,18 @@ public class IngestCommand implements BFCommand {
         this.fileToIngest = fileToIngest;
     }
 
-    // This might be executed in some worker thread, or in the same thread as everything else.
-    // This depends on the implemenation of the CommandDispatcher.
-
     /**
      * {@inheritDoc}
      */
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // decide because of file which ingestion to perform, but we decide for a CSV right now.
+        // TODO: auto-detect the type of file ?
+        // decide because of file which ingest-operation to perform, but we hard decide for a CSV right now.
         // But this might be totally complex... But this encapsulation here should to the trick.
 
         IngestHeartCsv ingest = new IngestHeartCsv();
-        DataFrame newDataFrame1 = ingest.loadCsvAsDataFrameV2( this.fileToIngest );
+        DataFrame resultDataFrame = ingest.loadCsvAsDataFrameV2( this.fileToIngest );
 
-        // Now tell the Eventdisplatcher, that we have a new DataFrame as a result of our work, issue a 
-        // DataframeLoaded Event, where components
-
-        // can subscribe to... e.g.
-        eventConsumer.accept( new DataFrameLoadedEvent( newDataFrame1 ) );
+        eventConsumer.accept( new DataFrameLoadedEvent( resultDataFrame ) );
     }
 
 }
