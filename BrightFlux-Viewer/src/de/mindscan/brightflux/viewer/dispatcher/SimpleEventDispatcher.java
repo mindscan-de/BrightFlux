@@ -74,7 +74,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
         BFEventListener bfEventListener = listenerMap.get( eventClass );
 
         if (bfEventListener != null) {
-            // then call all the event handlers.
+            // then call (all) the event handler(s).
             try {
                 bfEventListener.handleEvent( event );
             }
