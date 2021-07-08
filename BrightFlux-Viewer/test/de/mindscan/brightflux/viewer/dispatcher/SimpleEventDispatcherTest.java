@@ -64,4 +64,40 @@ public class SimpleEventDispatcherTest {
         Mockito.verify( listener, Mockito.never() ).handleEvent( unRegisterdEvent );
     }
 
+    @Test
+    public void testDispatchEvent_dispatchRegisteredEventClassToTwoListeners_invokedHandleEventOnListenerOne() throws Exception {
+        // arrange
+        EventDispatcher dispatcher = new SimpleEventDispatcher();
+        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
+        BFEventListener listener1 = Mockito.mock( BFEventListener.class, "listener1" );
+        BFEventListener listener2 = Mockito.mock( BFEventListener.class, "listener2" );
+
+        dispatcher.registerEventListener( registerdEvent.getClass(), listener1 );
+        dispatcher.registerEventListener( registerdEvent.getClass(), listener2 );
+
+        // act
+        dispatcher.dispatchEvent( registerdEvent );
+
+        // assert
+        Mockito.verify( listener1, times( 1 ) ).handleEvent( registerdEvent );
+    }
+
+    @Test
+    public void testDispatchEvent_dispatchRegisteredEventClassToTwoListeners_invokedHandleEventOnListenerTwo() throws Exception {
+        // arrange
+        EventDispatcher dispatcher = new SimpleEventDispatcher();
+        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
+        BFEventListener listener1 = Mockito.mock( BFEventListener.class, "listener1" );
+        BFEventListener listener2 = Mockito.mock( BFEventListener.class, "listener2" );
+
+        dispatcher.registerEventListener( registerdEvent.getClass(), listener1 );
+        dispatcher.registerEventListener( registerdEvent.getClass(), listener2 );
+
+        // act
+        dispatcher.dispatchEvent( registerdEvent );
+
+        // assert
+        Mockito.verify( listener2, times( 1 ) ).handleEvent( registerdEvent );
+    }
+
 }

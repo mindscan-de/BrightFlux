@@ -25,8 +25,11 @@
  */
 package de.mindscan.brightflux.viewer.dispatcher;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import de.mindscan.brightflux.viewer.events.BFEvent;
 import de.mindscan.brightflux.viewer.events.BFEventListener;
@@ -39,7 +42,7 @@ public class SimpleEventDispatcher implements EventDispatcher {
     // Refactor this whole listenerMap thing and the registration and deregistration
     // to some kind of Registry
     // TODO: add handlers map, for simplicity we have one listener per event...
-    private Map<Class<?>, BFEventListener> listenerMap = new HashMap<>();
+    private Map<Class<?>, Set<BFEventListener>> listenerMap = new HashMap<>();
 
     /**
      * 
@@ -56,7 +59,8 @@ public class SimpleEventDispatcher implements EventDispatcher {
         if (eventType == null || listener == null) {
             return;
         }
-        listenerMap.put( eventType, listener );
+
+        listenerMap.computeIfAbsent( eventType, k -> new HashSet<>() ).add( listener );
     }
 
     /** 
@@ -71,18 +75,20 @@ public class SimpleEventDispatcher implements EventDispatcher {
         Class<? extends BFEvent> eventClass = event.getClass();
 
         // find event type / event class in map
-        BFEventListener bfEventListener = listenerMap.get( eventClass );
+        Collection<BFEventListener> bfEventListeners = listenerMap.get( eventClass );
 
-        if (bfEventListener != null) {
-            // then call (all) the event handler(s).
-            try {
-                bfEventListener.handleEvent( event );
-            }
-            catch (Exception ex) {
-                ex.printStackTrace();
+        if (bfEventListeners != null) {
+            for (BFEventListener bfEventListener : bfEventListeners) {
+                // then call (all) the event handler(s).
+                try {
+                    bfEventListener.handleEvent( event );
+                }
+                catch (Exception ex) {
+                    ex.printStackTrace();
 
-                // We should maybe dispatch some info, that there was an error while dispatching an event...
-                // Maybe we should have a failsafe-event dispatcher, which will never fail and consume errors into a log file.
+                    // We should maybe dispatch some info, that there was an error while dispatching an event...
+                    // Maybe we should have a failsafe-event dispatcher, which will never fail and consume errors into a log file.
+                }
             }
         }
     }
