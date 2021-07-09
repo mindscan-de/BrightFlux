@@ -101,10 +101,11 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     }
 
     private void addDataFrameTab( DataFrame newDataFrame ) {
-        addTabItem( mainTabFolder, newDataFrame );
+        TabItem item = addTabItem( mainTabFolder, newDataFrame );
+        mainTabFolder.setSelection( item );
     }
 
-    private void addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
+    private TabItem addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
         String ingestedDFName = ingestedDF.getName();
 
         // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
@@ -125,6 +126,8 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         tableViewer.setInput( ingestedDF );
 
         // [/Desired TabItem]
+
+        return tbtmNewItem;
 
     }
 
