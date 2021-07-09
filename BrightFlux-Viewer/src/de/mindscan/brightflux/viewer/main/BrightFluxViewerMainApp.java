@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -34,6 +36,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -105,22 +108,23 @@ public class BrightFluxViewerMainApp {
         mntmLoadFile.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: open file dialog -> get Path
-                Path fileToIngest = Paths.get(
-                                "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
+                // TODO: remove this hard coded value... and get it from the history or settings 
+                Path dirPath = Paths
+                                .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\" );
 
-                // Build a command
-                // TODO: give that to a factory later on.
-                IngestCommand ingestCommand = new IngestCommand( fileToIngest );
+                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp );
+                fileDlg.setText( "Select file" );
+                fileDlg.setFilterExtensions( new String[] { "*.csv" } );
+                fileDlg.setFilterNames( new String[] { "Comma Separated files (*.csv)" } );
+                fileDlg.setFilterPath( dirPath.toString() );
+                String fileToOPen = fileDlg.open();
 
-                // TODO: we should now inform the project registry, that we open a new data frame
-                // maybe we should have an event queue where each component can register to and will be informed...
-                // this model can lead to an asynchronous system / background task system, where you can interact with this app, while other work is done until
-                // we are informed, that the result is ready and we want to display it.
-                // So we just add a load command to queue, and the load command then tells, that it finished the job.
-                // use the command pattern.
-                // TODO: then load the Frame in the file open command
-                projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                Path path = Paths.get( fileToOPen );
+                if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
+                    // TODO: give that to a factory later on.
+                    IngestCommand ingestCommand = new IngestCommand( path );
+                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                }
             }
         } );
         mntmLoadFile.setText( "Load File" );
