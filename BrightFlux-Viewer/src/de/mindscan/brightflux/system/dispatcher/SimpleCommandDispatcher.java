@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.dispatcher;
+package de.mindscan.brightflux.system.dispatcher;
 
 import java.util.function.Consumer;
 

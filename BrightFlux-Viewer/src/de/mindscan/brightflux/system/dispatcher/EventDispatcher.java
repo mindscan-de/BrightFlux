@@ -23,18 +23,18 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.dispatcher;
+package de.mindscan.brightflux.system.dispatcher;
 
-import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.BFEventListener;
 
 /**
  * 
  */
-public interface CommandDispatcher {
+public interface EventDispatcher {
 
-    /**
-     * @param ingestCommand
-     */
-    void dispatchCommand( BFCommand command );
+    void dispatchEvent( BFEvent event );
+
+    void registerEventListener( Class<?> eventType, BFEventListener listener );
 
 }

@@ -25,9 +25,9 @@
  */
 package de.mindscan.brightflux.viewer.project;
 
-import de.mindscan.brightflux.viewer.dispatcher.EventDispatcher;
-import de.mindscan.brightflux.viewer.dispatcher.SimpleCommandDispatcher;
-import de.mindscan.brightflux.viewer.dispatcher.SimpleEventDispatcher;
+import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
+import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
+import de.mindscan.brightflux.system.dispatcher.SimpleEventDispatcher;
 
 /**
  * TODO: maybe ProjectRegistry is the wrong name...
