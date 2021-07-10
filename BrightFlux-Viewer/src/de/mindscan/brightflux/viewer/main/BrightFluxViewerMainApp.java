@@ -41,7 +41,7 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
-import de.mindscan.brightflux.viewer.commands.IngestCommand;
+import de.mindscan.brightflux.system.commands.IngestCommand;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.project.ProjectRegistry;
 import de.mindscan.brightflux.viewer.project.ProjectRegistryParticipant;
@@ -91,7 +91,7 @@ public class BrightFluxViewerMainApp {
      */
     protected void createContents() {
         shlBFViewerMainApp = new Shell();
-        shlBFViewerMainApp.setSize( 450, 300 );
+        shlBFViewerMainApp.setSize( 707, 563 );
         shlBFViewerMainApp.setText( "BrightFlux-Viewer 0.0.0.M1" );
         shlBFViewerMainApp.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
@@ -117,9 +117,9 @@ public class BrightFluxViewerMainApp {
                 fileDlg.setFilterExtensions( new String[] { "*.csv" } );
                 fileDlg.setFilterNames( new String[] { "Comma Separated files (*.csv)" } );
                 fileDlg.setFilterPath( dirPath.toString() );
-                String fileToOPen = fileDlg.open();
+                String filePathToOpen = fileDlg.open();
 
-                Path path = Paths.get( fileToOPen );
+                Path path = Paths.get( filePathToOpen );
                 if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
                     // TODO: give that to a factory later on.
                     IngestCommand ingestCommand = new IngestCommand( path );

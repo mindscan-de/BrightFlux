@@ -5,7 +5,7 @@ import static org.mockito.Mockito.times;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import de.mindscan.brightflux.viewer.commands.BFCommand;
+import de.mindscan.brightflux.system.commands.BFCommand;
 
 public class SimpleCommandDispatcherTest {
 

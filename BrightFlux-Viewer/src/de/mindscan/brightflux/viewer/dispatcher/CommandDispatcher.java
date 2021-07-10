@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.dispatcher;
 
-import de.mindscan.brightflux.viewer.commands.BFCommand;
+import de.mindscan.brightflux.system.commands.BFCommand;
 
 /**
  * 
