@@ -127,6 +127,12 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
             if (currentTokenType == null) {
                 System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
+                for (int i = tokenStart; i < tokenEnd; i++) {
+                    System.out.println( "0x" + Integer.toString( i, 16 ) );
+                }
+                // Ignore that sh*t if it starts with some unknown stuff....
+                tokenStart = tokenEnd;
+                continue;
             }
 
             tokens.add( createToken( currentTokenType, inputString, tokenStart, tokenEnd ) );
