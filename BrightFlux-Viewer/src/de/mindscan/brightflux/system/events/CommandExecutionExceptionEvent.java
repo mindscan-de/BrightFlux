@@ -23,16 +23,30 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.events;
+package de.mindscan.brightflux.system.events;
+
+import de.mindscan.brightflux.system.commands.BFCommand;
 
 /**
  * 
  */
-public interface BFEventListener {
+public class CommandExecutionExceptionEvent implements BFEvent {
 
     /**
-     * @param event
+     * @param command
+     * @param ex
      */
-    void handleEvent( BFEvent event );
+    public CommandExecutionExceptionEvent( BFCommand command, Exception ex ) {
+        // TODO Auto-generated constructor stub
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void foo() {
+        // TODO Auto-generated method stub
+
+    }
 
 }

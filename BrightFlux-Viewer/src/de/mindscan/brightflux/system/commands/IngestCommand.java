@@ -30,8 +30,8 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
-import de.mindscan.brightflux.viewer.events.BFEvent;
-import de.mindscan.brightflux.viewer.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
 /**
  * The IngestCommand implements the load and convert operation for a given file path to a 

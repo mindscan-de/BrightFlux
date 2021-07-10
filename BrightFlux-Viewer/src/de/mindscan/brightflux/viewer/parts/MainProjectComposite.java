@@ -43,9 +43,9 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
-import de.mindscan.brightflux.viewer.events.BFEvent;
-import de.mindscan.brightflux.viewer.events.BFEventListener;
-import de.mindscan.brightflux.viewer.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.BFEventListener;
+import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
 import de.mindscan.brightflux.viewer.project.ProjectRegistry;

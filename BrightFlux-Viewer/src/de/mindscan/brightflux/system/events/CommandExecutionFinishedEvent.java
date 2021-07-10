@@ -23,11 +23,29 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.events;
+package de.mindscan.brightflux.system.events;
+
+import de.mindscan.brightflux.system.commands.BFCommand;
 
 /**
  * 
  */
-public interface BFEvent {
-    void foo();
+public class CommandExecutionFinishedEvent implements BFEvent {
+
+    /**
+     * @param command
+     */
+    public CommandExecutionFinishedEvent( BFCommand command ) {
+        // TODO Auto-generated constructor stub
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void foo() {
+        // TODO Auto-generated method stub
+
+    }
+
 }

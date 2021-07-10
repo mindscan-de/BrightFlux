@@ -5,10 +5,10 @@ import static org.mockito.Mockito.times;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import de.mindscan.brightflux.viewer.events.BFEvent;
-import de.mindscan.brightflux.viewer.events.BFEventListener;
-import de.mindscan.brightflux.viewer.events.CommandExecutionFinishedEvent;
-import de.mindscan.brightflux.viewer.events.CommandExecutionStartedEvent;
+import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.BFEventListener;
+import de.mindscan.brightflux.system.events.CommandExecutionFinishedEvent;
+import de.mindscan.brightflux.system.events.CommandExecutionStartedEvent;
 
 public class SimpleEventDispatcherTest {
 

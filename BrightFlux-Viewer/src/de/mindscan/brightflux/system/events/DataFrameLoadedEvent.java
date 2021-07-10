@@ -23,20 +23,29 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.events;
+package de.mindscan.brightflux.system.events;
 
-import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.dataframes.DataFrame;
 
 /**
  * 
  */
-public class CommandExecutionStartedEvent implements BFEvent {
+public class DataFrameLoadedEvent implements BFEvent {
+    private DataFrame loadedDataFrame;
 
     /**
-     * @param command
+     * @param loadedDataFrame 
+     * 
      */
-    public CommandExecutionStartedEvent( BFCommand command ) {
-        // TODO Auto-generated constructor stub
+    public DataFrameLoadedEvent( DataFrame loadedDataFrame ) {
+        this.loadedDataFrame = loadedDataFrame;
+    }
+
+    /**
+     * @return the loadedDataFrame
+     */
+    public DataFrame getLoadedDataFrame() {
+        return loadedDataFrame;
     }
 
     /** 
@@ -47,5 +56,4 @@ public class CommandExecutionStartedEvent implements BFEvent {
         // TODO Auto-generated method stub
 
     }
-
 }
