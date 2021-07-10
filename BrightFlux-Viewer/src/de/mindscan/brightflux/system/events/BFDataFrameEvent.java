@@ -28,42 +28,20 @@ package de.mindscan.brightflux.system.events;
 import de.mindscan.brightflux.dataframes.DataFrame;
 
 /**
- * This event class represents the event that a data frame was loaded.
  * 
- * TODO: this could also be the implementation of a base class for BFDataFrameEvent, it looks quite generic to me now.
  */
-public class DataFrameLoadedEvent implements BFDataFrameEvent {
-    private DataFrame dataFrame;
+public interface BFDataFrameEvent extends BFEvent {
 
     /**
-     * @param dataFrame 
-     * 
+     * Get the associated data frame to this event.
+     * @return the data frame.
      */
-    public DataFrameLoadedEvent( DataFrame dataFrame ) {
-        this.dataFrame = dataFrame;
-    }
+    DataFrame getDataFrame();
 
-    /** 
-     * {@inheritDoc}
+    /**
+     * Set the associated data frame to this event.
+     * @param dataframe the data frame
      */
-    @Override
-    public DataFrame getDataFrame() {
-        return dataFrame;
-    }
+    void setDataFrame( DataFrame dataframe );
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDataFrame( DataFrame dataframe ) {
-        this.dataFrame = dataframe;
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void foo() {
-        // TODO Auto-generated method stub
-    }
 }

@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
@@ -82,11 +83,14 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        // TODO: implement an anti corruption layer, for the specific events, instead of referencing specific classes in
+        //       other packages, which may change over time. So that not every refactoring and move operation will lead 
+        //       to a change in hundreds of files.
         projectRegistry.getEventDispatcher().registerEventListener( DataFrameLoadedEvent.class, new BFEventListener() {
             @Override
             public void handleEvent( BFEvent event ) {
-                DataFrameLoadedEvent loaded = (DataFrameLoadedEvent) event;
-                addDataFrameTab( loaded.getLoadedDataFrame() );
+                BFDataFrameEvent loaded = (BFDataFrameEvent) event;
+                addDataFrameTab( loaded.getDataFrame() );
             }
         } );
     }
