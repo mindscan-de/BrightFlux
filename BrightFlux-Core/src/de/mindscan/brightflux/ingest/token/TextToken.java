@@ -32,13 +32,21 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class TextToken implements DataToken {
 
+    private String value;
+
+    public TextToken( String value ) {
+        this.value = value;
+    }
+
+    public static DataToken create( String value ) {
+        return new TextToken( value );
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public String getValue() {
-        // TODO Auto-generated method stub
-        return null;
+        return value;
     }
-
 }

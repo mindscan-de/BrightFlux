@@ -30,6 +30,7 @@ import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
+import de.mindscan.brightflux.ingest.token.TextToken;
 
 /**
  * 
@@ -50,7 +51,10 @@ public class TokenUtils {
             // TODO: maybe count the lines...?
             return LineSeparatorToken.create();
         }
-    
+        else if (TextToken.class.equals( currentTokenType )) {
+            return TextToken.create( valueString );
+        }
+
         throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
     }
 

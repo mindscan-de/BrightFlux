@@ -33,6 +33,7 @@ import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
+import de.mindscan.brightflux.ingest.token.TextToken;
 
 /**
  *
@@ -117,18 +118,17 @@ public class CSVTokenizerImpl implements DataTokenizer {
 //            if (isStartOfQuote( currentTokenType )) {
 //                currentTokenTypwe = consumeString();
 //            }
-//            else
-            if (isDigit( currentChar )) {
+            else if (isDigit( currentChar )) {
                 currentTokenType = consumeNumber( inputString );
             }
             else if (isStartOfIdentifier( currentChar )) {
                 currentTokenType = consumeIdentifier( inputString );
             }
-//
-//            if (currentTokenType == null) {
-//
-//            }
-//
+
+            if (currentTokenType == null) {
+                System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
+            }
+
             tokens.add( createToken( currentTokenType, inputString, tokenStart, tokenEnd ) );
 
             tokenStart = tokenEnd;
@@ -157,11 +157,27 @@ public class CSVTokenizerImpl implements DataTokenizer {
                 i++;
             }
         }
+
+        // End of input reached, we declare this an identifier
+        if (i >= inputString.length()) {
+            this.tokenEnd = i;
+            return IdentifierToken.class;
+        }
+
+        char nextChar = inputString.charAt( i );
+        if (isStartOfLineSeparator( nextChar ) || isColumnSeparator( nextChar )) {
+            this.tokenEnd = i;
+            return IdentifierToken.class;
+        }
+
+        // if the end token is not a column separator or a line separator we have a string without announcing it by double quotes:
+        while (i < inputString.length() && !(isStartOfLineSeparator( inputString.charAt( i ) ) || isColumnSeparator( inputString.charAt( i ) ))) {
+            i++;
+        }
+
         this.tokenEnd = i;
+        return TextToken.class;
 
-        // check the content of the string, and check if we missed something ...
-
-        return IdentifierToken.class;
     }
 
     private boolean isStartOfIdentifier( char currentChar ) {

@@ -208,4 +208,16 @@ public class CSVTokenizerImplTest {
         assertThat( result, hasSize( __2_COLUMNS_IDENTIFIER + __4_COLUMN_SEPARATORS + __3_LINE_SEPARATORS + __6_NUMBERS ) );
     }
 
+    @Test
+    public void testTokenize_AspargusDataFormat_() throws Exception {
+        // arrange
+        CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
+
+        // act
+        List<DataToken> result = tokenizer.tokenize( "Argentina,Area harvested,Asparagus,1961,ha,450" );
+
+        // assert
+        assertThat( result, hasSize( 11 ) );
+    }
+
 }
