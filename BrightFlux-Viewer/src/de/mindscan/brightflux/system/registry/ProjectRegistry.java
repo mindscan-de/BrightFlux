@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.project;
+package de.mindscan.brightflux.system.registry;
 
 import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
 import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;

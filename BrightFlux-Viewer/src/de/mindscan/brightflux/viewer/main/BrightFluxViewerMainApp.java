@@ -42,9 +42,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.system.commands.IngestCommand;
+import de.mindscan.brightflux.system.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
-import de.mindscan.brightflux.viewer.project.ProjectRegistry;
-import de.mindscan.brightflux.viewer.project.ProjectRegistryParticipant;
 
 /**
  * 

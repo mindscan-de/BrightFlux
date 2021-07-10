@@ -46,10 +46,10 @@ import de.mindscan.brightflux.ingest.IngestHeartCsv;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
-import de.mindscan.brightflux.viewer.project.ProjectRegistry;
-import de.mindscan.brightflux.viewer.project.ProjectRegistryParticipant;
 
 /**
  * 
