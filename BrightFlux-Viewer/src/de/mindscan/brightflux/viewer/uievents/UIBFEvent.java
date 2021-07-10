@@ -30,6 +30,10 @@ import de.mindscan.brightflux.system.events.BFEvent;
 /**
  * This extends the BFEvent for the UI and acts as an anti corruption layer for 
  * future UI-Events, which should not be in the system command selection.
+ * 
+ * TODO: this supports a future transition to an ui-event dispatcher thread,
+ *       which works with any event, but will dispatch system events using the
+ *       system dispatcher and dispatch the ui events into a different queue.
  */
 public interface UIBFEvent extends BFEvent {
 

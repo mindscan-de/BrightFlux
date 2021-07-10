@@ -30,6 +30,10 @@ import de.mindscan.brightflux.system.commands.BFCommand;
 /**
  * This extends the BFCommand for the UI and acts as an anti corruption layer for 
  * future UI-Commands, which should not be in the system command selection.
+ * 
+ * TODO: this supports a future transition to an ui-command dispatcher thread, 
+ *       which works with any command, but will dispatch system commands using the
+ *       system dispatcher and dispatch the ui commands into a different queue.  
  */
 public interface UIBFCommand extends BFCommand {
 
