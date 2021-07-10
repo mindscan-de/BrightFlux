@@ -61,25 +61,32 @@ public class DataFrameParserImpl implements DataFrameParser {
         int currentRow = 0;
         Iterator<DataFrameColumn<DataToken>> columnIterator = null;
 
+        DataToken lastToken = null;
         for (DataToken dataToken : tokenStream) {
             // I don't like the instanceof thing for the tokens / i would prefer an enum, but also keep it extensible.
             if (dataToken instanceof LineSeparatorToken) {
-                // TODO: for test purposes limit that to 2 lines 
-//                if (currentRow == 2) {
-//                    break;
-//                }
                 currentRow++;
+
+                // if something is ColumnSeparatorToken LineSeparatorToken, then append an NA token
+                if (lastToken instanceof ColumnSeparatorToken) {
+                    currentColumn.appendNA();
+                }
 
                 // also reset the current row...
                 columnIterator = parseResult.iterator();
                 currentColumn = columnIterator.next();
             }
+
             // I don't like the instanceof thing for the tokens / i would prefer an enum, but also keep it extensible.
             if (dataToken instanceof ColumnSeparatorToken) {
                 if (currentRow == 0) {
                     currentColumn = prepareNewColumn( parseResult );
                 }
                 else {
+                    if (lastToken instanceof ColumnSeparatorToken || lastToken instanceof LineSeparatorToken) {
+                        currentColumn.appendNA();
+                    }
+
                     // select the current row
                     currentColumn = columnIterator.next();
                 }
@@ -91,6 +98,10 @@ public class DataFrameParserImpl implements DataFrameParser {
             if (dataToken instanceof NumberToken) {
                 currentColumn.append( dataToken );
             }
+
+            lastToken = dataToken;
+
+            // System.out.println( "tokentype: " + lastToken.getClass().toString() + " value: " + lastToken.getValue() );
         }
 
         // if LineSeparatorToken -> start over with first column
