@@ -10,8 +10,8 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
+import de.mindscan.brightflux.DataFrameTestUtils;
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.ingest.IngestCsv;
 
 public class DataFrameWriterFactoryTest {
 
@@ -34,8 +34,7 @@ public class DataFrameWriterFactoryTest {
     @Test
     public void testCreate_() throws Exception {
         // arrange
-        IngestCsv heartCsv = new IngestCsv();
-        DataFrame df = heartCsv.loadAsDataFrame( inputPath );
+        DataFrame df = DataFrameTestUtils.loadCSV( inputPath );
 
         // act
         DataFrameWriter writer = DataFrameWriterFactory.create( "CSV" );

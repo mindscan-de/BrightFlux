@@ -34,22 +34,21 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
+import de.mindscan.brightflux.DataFrameTestUtils;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
-import de.mindscan.brightflux.ingest.IngestCsv;
 
 /**
  * 
  */
 public class DataFrameImplFilterTest {
 
-    private final static Path path = Paths
-                    .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
+    private final static Path heartCSV = Paths.get(
+                    "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart_original.csv" );
 
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAnyElement_expect303Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.any() );
@@ -61,8 +60,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIs0_expectZeroRows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.eq( "age", 0 ) );
@@ -74,8 +72,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIs50_expect7Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.eq( "age", 50 ) );
@@ -87,8 +84,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterOldpeakIsOneDotTwo_expect17Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.eq( "oldpeak", 1.2d ) );
@@ -100,8 +96,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIsNot50_expect296Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.neq( "age", 50 ) );
@@ -113,8 +108,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterOldpeakIsNotOneDotTwo_expect286Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.neq( "oldpeak", 1.2d ) );
@@ -126,8 +120,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIsOver50_expect208Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.gt( "age", 50 ) );
@@ -139,8 +132,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterOldpeakIsGreaterThanOneDotTwo_expect104Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.gt( "oldpeak", 1.2d ) );
@@ -152,8 +144,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIsOver50OrEqual_expect215Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.ge( "age", 50 ) );
@@ -165,8 +156,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterOldpeakIsGreaterOrEqualToOneDotTwo_expect121Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.ge( "oldpeak", 1.2d ) );
@@ -178,8 +168,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIsUnder50_expect88Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.lt( "age", 50 ) );
@@ -191,8 +180,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterOldpeakIsLessThanOneDotTwo_expect182Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.lt( "oldpeak", 1.2d ) );
@@ -204,8 +192,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAgeIsUnder50OrEqual_expect95Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.le( "age", 50 ) );
@@ -217,8 +204,7 @@ public class DataFrameImplFilterTest {
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterOldpeakIsLessThanOrEqualOneDotTwo_expect199Rows() throws Exception {
         // arrange
-        IngestCsv csvReader = new IngestCsv();
-        DataFrame df = csvReader.loadAsDataFrame( path );
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
         // act
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.le( "oldpeak", 1.2d ) );
