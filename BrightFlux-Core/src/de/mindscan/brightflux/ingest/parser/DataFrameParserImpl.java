@@ -65,9 +65,13 @@ public class DataFrameParserImpl implements DataFrameParser {
         for (DataToken dataToken : tokenStream) {
             // I don't like the instanceof thing for the tokens / i would prefer an enum, but also keep it extensible.
             if (dataToken instanceof LineSeparatorToken) {
+                // TODO: test if this is the last column, otherwise we must fill the remaining columns with N/A values
+
                 currentRow++;
 
                 // if something is ColumnSeparatorToken LineSeparatorToken, then append an NA token
+                // this will fill the last selected column right before the Lineseparator was found,
+                // but this might not be the last column expected.
                 if (lastToken instanceof ColumnSeparatorToken) {
                     currentColumn.appendNA();
                 }
