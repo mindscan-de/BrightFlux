@@ -39,9 +39,9 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
  * https://www.kaggle.com/ronitf/heart-disease-uci
  * https://www.kaggle.com/zhaoyingzhu/heartcsv
  */
-public class IngestHeartCsv {
+public class IngestCsv {
 
-    public DataFrame loadCsvAsDataFrameV2( Path path ) {
+    public DataFrame loadAsDataFrame( Path path ) {
         // building the configuration for the data to ingest
         JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
                         DataFrameCompilerFactory.getIntance() );

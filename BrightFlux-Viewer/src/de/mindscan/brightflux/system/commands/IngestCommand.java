@@ -29,7 +29,7 @@ import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.ingest.IngestCsv;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
@@ -55,8 +55,8 @@ public class IngestCommand implements BFCommand {
         // decide because of file which ingest-operation to perform, but we hard decide for a CSV right now.
         // But this might be totally complex... But this encapsulation here should to the trick.
 
-        IngestHeartCsv ingest = new IngestHeartCsv();
-        DataFrame resultDataFrame = ingest.loadCsvAsDataFrameV2( this.fileToIngest );
+        IngestCsv ingest = new IngestCsv();
+        DataFrame resultDataFrame = ingest.loadAsDataFrame( this.fileToIngest );
 
         eventConsumer.accept( new DataFrameLoadedEvent( resultDataFrame ) );
     }

@@ -14,7 +14,7 @@ import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.columns.BooleanColumn;
-import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.ingest.IngestCsv;
 
 public class DataFrameImplTest {
 
@@ -399,8 +399,8 @@ public class DataFrameImplTest {
     @Test
     public void testHead_IngestHeartCsv_expect7Rows() throws Exception {
         // arrange
-        IngestHeartCsv csvReader = new IngestHeartCsv();
-        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+        IngestCsv csvReader = new IngestCsv();
+        DataFrame df = csvReader.loadAsDataFrame( path );
 
         // act
         DataFrame dfResult = df.head();
@@ -413,8 +413,8 @@ public class DataFrameImplTest {
     @Test
     public void testHead_IngestHeartCsvThenSaveCSV_content() throws Exception {
         // arrange
-        IngestHeartCsv csvReader = new IngestHeartCsv();
-        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+        IngestCsv csvReader = new IngestCsv();
+        DataFrame df = csvReader.loadAsDataFrame( path );
 
         // act
         DataFrame dfResult = df.head();
@@ -427,8 +427,8 @@ public class DataFrameImplTest {
     @Test
     public void testTail_IngestHeartCsv_expect7Rows() throws Exception {
         // arrange
-        IngestHeartCsv csvReader = new IngestHeartCsv();
-        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+        IngestCsv csvReader = new IngestCsv();
+        DataFrame df = csvReader.loadAsDataFrame( path );
 
         // act
         DataFrame dfResult = df.tail();
@@ -441,8 +441,8 @@ public class DataFrameImplTest {
     @Test
     public void testTail_IngestHeartCsvThenSaveCSV_content() throws Exception {
         // arrange
-        IngestHeartCsv csvReader = new IngestHeartCsv();
-        DataFrame df = csvReader.loadCsvAsDataFrameV2( path );
+        IngestCsv csvReader = new IngestCsv();
+        DataFrame df = csvReader.loadAsDataFrame( path );
 
         // act
         DataFrame dfResult = df.tail();

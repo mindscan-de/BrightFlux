@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.ingest.IngestHeartCsv;
+import de.mindscan.brightflux.ingest.IngestCsv;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
@@ -61,7 +61,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     // XXX: Awful hack right now.
     private final static Path path = Paths
                     .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
-    IngestHeartCsv ingest = new IngestHeartCsv();
+    IngestCsv ingest = new IngestCsv();
 
     /**
      * Create the composite.
@@ -100,7 +100,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
         mainTabFolder = new TabFolder( this, SWT.NONE );
 
-        DataFrame ingestedDF = ingest.loadCsvAsDataFrameV2( path );
+        DataFrame ingestedDF = ingest.loadAsDataFrame( path );
         addTabItem( mainTabFolder, ingestedDF );
     }
 
