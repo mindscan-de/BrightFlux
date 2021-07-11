@@ -42,7 +42,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.system.commands.BFCommand;
-import de.mindscan.brightflux.system.commands.IngestCommandFactory;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
@@ -122,7 +122,7 @@ public class BrightFluxViewerMainApp {
 
                 Path path = Paths.get( filePathToOpen );
                 if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
-                    BFCommand ingestCommand = IngestCommandFactory.ingestFile( path );
+                    BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
                     projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
                 }
             }

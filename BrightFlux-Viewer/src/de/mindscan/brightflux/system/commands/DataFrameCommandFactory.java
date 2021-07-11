@@ -28,11 +28,16 @@ package de.mindscan.brightflux.system.commands;
 import java.nio.file.Path;
 
 /**
- * 
+ * This class provides commands around DataFrames 
  */
-public class IngestCommandFactory {
+public class DataFrameCommandFactory {
 
-    public static BFCommand ingestFile( Path fileToIngest ) {
-        return new IngestCommand( fileToIngest );
+    /**
+     * This method will create an {@link IngestCommand} which when executed will provide a DataFrame.
+     * @param filePath The path to the file containing the data to ingest.
+     * @return a command
+     */
+    public static BFCommand ingestFile( Path filePath ) {
+        return new IngestCommand( filePath );
     }
 }
