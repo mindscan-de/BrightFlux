@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import de.mindscan.brightflux.system.commands.BFCommand;
-import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
-import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
 
 public class SimpleCommandDispatcherTest {
 
