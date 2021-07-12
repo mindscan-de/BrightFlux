@@ -36,6 +36,7 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.token.ColumnHeaderToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.TextToken;
 
@@ -49,6 +50,7 @@ import de.mindscan.brightflux.ingest.token.TextToken;
  * Therefore the data frame compiler has to do actually two steps, determine the correct "column primitive"
  * and then transfer and convert the raw DataTokens into the "column primitive" representation. 
  *
+ * TODO: support columns with type hints... Using the "ColumnHeaderToken".
  */
 public class DataFrameCompilerImpl implements DataFrameCompiler {
 
@@ -73,6 +75,11 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
 
     private boolean calcHasColumnTitles( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         Set<Class<? extends DataToken>> firstLineClasses = dataframeColumns.stream().map( col -> col.get( 0 ).getClass() ).collect( Collectors.toSet() );
+
+        // the ColumnHeaderToken is a strong indicator, that we have columnHeaders.
+        if (firstLineClasses.contains( ColumnHeaderToken.class )) {
+            return true;
+        }
 
         HashSet<Class<? extends DataToken>> temp = new HashSet<>( firstLineClasses );
         temp.remove( IdentifierToken.class );
