@@ -96,6 +96,10 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
         dataLineClasses.addAll( thirdLineClasses );
         dataLineClasses.addAll( fourthLineClasses );
 
+        // TODO: 
+        // * there is also one expensive way decide by column, 
+        // * but if one column deviate that means, that at least one column has a header.
+
         return false;
     }
 
