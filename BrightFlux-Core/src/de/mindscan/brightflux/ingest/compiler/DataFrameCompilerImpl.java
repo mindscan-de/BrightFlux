@@ -28,6 +28,7 @@ package de.mindscan.brightflux.ingest.compiler;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
@@ -35,9 +36,15 @@ import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 
 /**
- * The purpose of this class is to provide a compiler which translates all the elements of the abstract
- * data frame into a fully typed data frame with primitive data types provided by the data frames columns
- * of the data frames component.
+ * 
+ * The purpose of the data frame compiler is to compile a collection of abstract DataFrameColumns into 
+ * DataFrameColumns of the more specific type. An Abstract DataFrameColumn is a Column, which contains
+ * DataTokens and only has the type hints provided by the Tokenizer. The parser just read the sequence
+ * of tokens (DataToken) and rearranged them into a group of columns and also filled the blanks.
+ * 
+ * Therefore the data frame compiler has to do actually two steps, determine the correct "column primitive"
+ * and then transfer and convert the raw DataTokens into the "column primitive" representation. 
+ *
  */
 public class DataFrameCompilerImpl implements DataFrameCompiler {
 
@@ -48,7 +55,7 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
     public List<DataFrameColumn<?>> compileDataFrameColumns( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         List<DataFrameColumn<?>> compiledDataFrameColumns = new ArrayList<>();
 
-        // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.
+        // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first column types.
         boolean hasColumnTitles = calcHasColumnTitles( dataframeColumns );
 
         for (DataFrameColumn<DataToken> column : dataframeColumns) {
