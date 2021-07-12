@@ -112,24 +112,33 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
 
     private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn ) {
 
-        // TODO: infer the type and use the proper Compiler 
-        DataToken token = sourceColumn.get( 0 );
-        String value = token.getValue();
-
         DataFrameColumn<?> destinationColumn;
 
-        // TODO: This is a hard-coded column name of the heart.csv
-        // TODO: This calculation must be replaced by something smarter 
-        if (value.equals( "oldpeak" )) {
-            destinationColumn = new DoubleColumn();
+        if (sourceColumn.get( 0 ) instanceof ColumnHeaderToken) {
+            // TODO: we for sure have a column name
+            // In case we also have a type, this part is easy and we can generate a column of the correct type and name
+            // otherwise we must guess the type.
+            destinationColumn = null;
         }
         else {
-            destinationColumn = new IntegerColumn();
-        }
 
-        // 
-        if (hasColumnTitles) {
-            destinationColumn.setColumnName( value );
+            // TODO: infer the type and use the proper Compiler 
+            DataToken token = sourceColumn.get( 0 );
+            String value = token.getValue();
+
+            // TODO: This is a hard-coded column name of the heart.csv
+            // TODO: This calculation must be replaced by something smarter 
+            if (value.equals( "oldpeak" )) {
+                destinationColumn = new DoubleColumn();
+            }
+            else {
+                destinationColumn = new IntegerColumn();
+            }
+
+            // 
+            if (hasColumnTitles) {
+                destinationColumn.setColumnName( value );
+            }
         }
 
         transferAndTransformColumnData( hasColumnTitles, sourceColumn, destinationColumn );
@@ -139,6 +148,8 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
 
     private void transferAndTransformColumnData( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn, DataFrameColumn<?> destinationColumn ) {
         for (int row = calculateStartRow( hasColumnTitles ); row < sourceColumn.getSize(); row++) {
+            // TODO: check if the row is a N/A value, then we do have to transfer a n/a value...
+
             String rowValue = sourceColumn.get( row ).getValue();
             // TODO: depending on what type we have, we have to convert the source string based "value" into the target type of the column.
             // TODO: change this approach, but at the moment i don't like that...
