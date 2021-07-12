@@ -27,13 +27,17 @@ package de.mindscan.brightflux.ingest.compiler;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.token.IdentifierToken;
+import de.mindscan.brightflux.ingest.token.TextToken;
 
 /**
  * 
@@ -55,7 +59,6 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
     public List<DataFrameColumn<?>> compileDataFrameColumns( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
         List<DataFrameColumn<?>> compiledDataFrameColumns = new ArrayList<>();
 
-        // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first column types.
         boolean hasColumnTitles = calcHasColumnTitles( dataframeColumns );
 
         for (DataFrameColumn<DataToken> column : dataframeColumns) {
@@ -69,8 +72,31 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
     }
 
     private boolean calcHasColumnTitles( Collection<DataFrameColumn<DataToken>> dataframeColumns ) {
-        // TODO: check whether the first line contains only identifiers or Texts, and check if the second column has elements different to the first colum types.
-        return true;
+        Set<Class<? extends DataToken>> firstLineClasses = dataframeColumns.stream().map( col -> col.get( 0 ).getClass() ).collect( Collectors.toSet() );
+
+        HashSet<Class<? extends DataToken>> temp = new HashSet<>( firstLineClasses );
+        temp.remove( IdentifierToken.class );
+        if (temp.size() == 0) {
+            // first line only contained identifier tokens. -> Headings of one word (string indicator)
+            return true;
+        }
+
+        temp.remove( TextToken.class );
+        if (temp.size() == 0) {
+            // first line only contained either identifiers or Text -> Headings contain at least one text (somehow weak indicator)
+            return true;
+        }
+
+        // TODO: implement other useful constraints
+        // e.g by comparing dataLineClasses to FirstLineClasses
+        Set<Class<? extends DataToken>> dataLineClasses = dataframeColumns.stream().map( col -> col.get( 1 ).getClass() ).collect( Collectors.toSet() );
+        Set<Class<? extends DataToken>> thirdLineClasses = dataframeColumns.stream().map( col -> col.get( 2 ).getClass() ).collect( Collectors.toSet() );
+        Set<Class<? extends DataToken>> fourthLineClasses = dataframeColumns.stream().map( col -> col.get( 3 ).getClass() ).collect( Collectors.toSet() );
+
+        dataLineClasses.addAll( thirdLineClasses );
+        dataLineClasses.addAll( fourthLineClasses );
+
+        return false;
     }
 
     private DataFrameColumn<?> compileDataFrameColumn( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn ) {
