@@ -68,8 +68,8 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
             compiledDataFrameColumns.add( compiledColumn );
         }
 
-        // this will build a dataframe with typed and named columns, each column is compiled of its own 
-        // from left to right? Bad datavalues are logged and these rows removed?
+        // this will build a data frame with typed and named columns, each column is compiled of its own 
+        // from left to right? Bad data values are logged and these rows removed?
         return compiledDataFrameColumns;
     }
 
@@ -114,17 +114,23 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
 
         DataFrameColumn<?> destinationColumn;
 
-        if (sourceColumn.get( 0 ) instanceof ColumnHeaderToken) {
+        DataToken firstRowToken = sourceColumn.get( 0 );
+
+        if (firstRowToken instanceof ColumnHeaderToken) {
+            ColumnHeaderToken columnHeader = (ColumnHeaderToken) firstRowToken;
+            if (columnHeader.hasTypeHint()) {
+                // In case we also have a type, this part is easy and we can generate a column of the correct type and name
+            }
+            else {
+                // otherwise we must guess the type. / type interference.
+            }
             // TODO: we for sure have a column name
-            // In case we also have a type, this part is easy and we can generate a column of the correct type and name
-            // otherwise we must guess the type.
             destinationColumn = null;
         }
         else {
 
             // TODO: infer the type and use the proper Compiler 
-            DataToken token = sourceColumn.get( 0 );
-            String value = token.getValue();
+            String value = firstRowToken.getValue();
 
             // TODO: This is a hard-coded column name of the heart.csv
             // TODO: This calculation must be replaced by something smarter 

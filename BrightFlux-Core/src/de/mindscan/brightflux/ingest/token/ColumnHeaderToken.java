@@ -77,4 +77,8 @@ public class ColumnHeaderToken implements DataToken {
     public String getTypeHint() {
         return typeHint;
     }
+
+    public boolean hasTypeHint() {
+        return this.typeHint != null;
+    }
 }
