@@ -38,9 +38,11 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
+import de.mindscan.brightflux.dataframes.columns.StringColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnHeaderToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
+import de.mindscan.brightflux.ingest.token.NumberToken;
 import de.mindscan.brightflux.ingest.token.TextToken;
 
 /**
@@ -126,16 +128,8 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
                 destinationColumn = DataFrameColumnFactory.getColumnForType( columnHeader.getTypeHint() );
             }
             else {
-                // otherwise we must guess the type. / type interference.
-                // TODO: calculate via type interference
-                String interferenceType = "string";
-
-                // We take a sample of values from the column
-                List<DataToken> x = getRandomDataTokenSample( 5, sourceColumn );
-                // we now calculate the type based on the sample
-                // we repeat this 4 times
-
-                // TODO: collect a sample of values and then decide what type it is - e.g. using static rules
+                // TODO: we repeat this 4 times
+                String interferenceType = inferType( getRandomDataTokenSample( 7, sourceColumn ) );
 
                 destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
             }
@@ -146,19 +140,8 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
 
             String columnHeaderName = hasColumnTitles ? firstRowToken.getValue() : sourceColumn.toString();
 
-            // TODO: calculate via type interference
-            String interferenceType = "int";
-
-            // We take a sample of values from the column            
-            List<DataToken> x = getRandomDataTokenSample( 5, sourceColumn );
-            // we now calculate the type based on the sample
-            // we repeat this 4 times
-
-            // TODO: This is a hard-coded column name of the heart.csv
-            // TODO: This calculation must be replaced by something smarter 
-            if (columnHeaderName.equals( "oldpeak" )) {
-                interferenceType = "double";
-            }
+            // TODO: we repeat this 4 times
+            String interferenceType = inferType( getRandomDataTokenSample( 7, sourceColumn ) );
 
             destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
             destinationColumn.setColumnName( columnHeaderName );
@@ -169,6 +152,37 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
         return destinationColumn;
     }
 
+    /**
+     * @param x
+     * @return
+     */
+    private String inferType( List<DataToken> x ) {
+        // TODO very basic implementation of the type interference 
+        // we should compare two converted values and then do inference on their type on a pair by pair basis
+
+        String returntype = "int";
+        for (DataToken dataToken : x) {
+            if (dataToken instanceof IdentifierToken) {
+                return "string";
+            }
+            if (dataToken instanceof TextToken) {
+                return "string";
+            }
+            if (dataToken instanceof NumberToken) {
+                // not so easy, because it can be different locale etc.
+                if (dataToken.getValue().contains( "." )) {
+                    return "double";
+                }
+
+                if (dataToken.getValue().length() > 9) {
+                    return "long";
+                }
+            }
+        }
+
+        return returntype;
+    }
+
     private List<DataToken> getRandomDataTokenSample( int max, DataFrameColumn<DataToken> sourceColumn ) {
         Random rnd = new Random();
         int size = sourceColumn.getSize();
@@ -177,17 +191,30 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
     }
 
     private int generateRandomIndex( Random rnd, int size ) {
+        if (size <= 2) {
+            return 0;
+        }
+
         return Math.max( 0, 1 + rnd.nextInt( size - 2 ) );
     }
 
     private void transferAndTransformColumnData( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn, DataFrameColumn<?> destinationColumn ) {
-        for (int row = calculateStartRow( hasColumnTitles ); row < sourceColumn.getSize(); row++) {
-            // TODO: check if the row is a N/A value, then we do have to transfer a n/a value...
 
-            String rowValue = sourceColumn.get( row ).getValue();
+        for (int row = calculateStartRow( hasColumnTitles ); row < sourceColumn.getSize(); row++) {
+            if (!sourceColumn.isPresent( row )) {
+                destinationColumn.appendNA();
+                continue;
+            }
+
+            DataToken dataToken = sourceColumn.get( row );
+            String rowValue = dataToken.getValue();
+
+            // TODO: do this more generic....
+
             // TODO: depending on what type we have, we have to convert the source string based "value" into the target type of the column.
             // TODO: change this approach, but at the moment i don't like that...
             // also don't do that for every row...
+
             if (destinationColumn instanceof IntegerColumn) {
                 IntegerColumn intColumn = (IntegerColumn) destinationColumn;
                 intColumn.append( Integer.parseInt( rowValue ) );
@@ -196,6 +223,11 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
                 DoubleColumn intColumn = (DoubleColumn) destinationColumn;
                 intColumn.append( Double.parseDouble( rowValue ) );
             }
+            if (destinationColumn instanceof StringColumn) {
+                StringColumn stringColumn = (StringColumn) destinationColumn;
+                stringColumn.append( rowValue );
+            }
+
         }
     }
 
