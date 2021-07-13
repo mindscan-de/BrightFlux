@@ -29,8 +29,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
@@ -128,6 +130,13 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
                 // TODO: calculate via type interference
                 String interferenceType = "string";
 
+                // We take a sample of values from the column
+                List<DataToken> x = getRandomDataTokenSample( 5, sourceColumn );
+                // we now calculate the type based on the sample
+                // we repeat this 4 times
+
+                // TODO: collect a sample of values and then decide what type it is - e.g. using static rules
+
                 destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
             }
 
@@ -139,6 +148,11 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
 
             // TODO: calculate via type interference
             String interferenceType = "int";
+
+            // We take a sample of values from the column            
+            List<DataToken> x = getRandomDataTokenSample( 5, sourceColumn );
+            // we now calculate the type based on the sample
+            // we repeat this 4 times
 
             // TODO: This is a hard-coded column name of the heart.csv
             // TODO: This calculation must be replaced by something smarter 
@@ -153,6 +167,17 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
         transferAndTransformColumnData( hasColumnTitles, sourceColumn, destinationColumn );
 
         return destinationColumn;
+    }
+
+    private List<DataToken> getRandomDataTokenSample( int max, DataFrameColumn<DataToken> sourceColumn ) {
+        Random rnd = new Random();
+        int size = sourceColumn.getSize();
+        return Stream.generate( () -> generateRandomIndex( rnd, size ) ).limit( max )//
+                        .map( index -> sourceColumn.get( index ) ).collect( Collectors.toList() );
+    }
+
+    private int generateRandomIndex( Random rnd, int size ) {
+        return Math.max( 0, 1 + rnd.nextInt( size - 2 ) );
     }
 
     private void transferAndTransformColumnData( boolean hasColumnTitles, DataFrameColumn<DataToken> sourceColumn, DataFrameColumn<?> destinationColumn ) {
