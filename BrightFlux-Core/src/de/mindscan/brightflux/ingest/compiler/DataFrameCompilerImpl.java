@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.ingest.DataToken;
@@ -120,31 +121,33 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
             ColumnHeaderToken columnHeader = (ColumnHeaderToken) firstRowToken;
             if (columnHeader.hasTypeHint()) {
                 // In case we also have a type, this part is easy and we can generate a column of the correct type and name
+                destinationColumn = DataFrameColumnFactory.getColumnForType( columnHeader.getTypeHint() );
             }
             else {
                 // otherwise we must guess the type. / type interference.
+                // TODO: calculate via type interference
+                String interferenceType = "string";
+
+                destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
             }
-            // TODO: we for sure have a column name
-            destinationColumn = null;
+
+            destinationColumn.setColumnName( columnHeader.getColumnHeaderName() );
         }
         else {
 
-            // TODO: infer the type and use the proper Compiler 
-            String value = firstRowToken.getValue();
+            String columnHeaderName = hasColumnTitles ? firstRowToken.getValue() : sourceColumn.toString();
+
+            // TODO: calculate via type interference
+            String interferenceType = "int";
 
             // TODO: This is a hard-coded column name of the heart.csv
             // TODO: This calculation must be replaced by something smarter 
-            if (value.equals( "oldpeak" )) {
-                destinationColumn = new DoubleColumn();
-            }
-            else {
-                destinationColumn = new IntegerColumn();
+            if (columnHeaderName.equals( "oldpeak" )) {
+                interferenceType = "double";
             }
 
-            // 
-            if (hasColumnTitles) {
-                destinationColumn.setColumnName( value );
-            }
+            destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
+            destinationColumn.setColumnName( columnHeaderName );
         }
 
         transferAndTransformColumnData( hasColumnTitles, sourceColumn, destinationColumn );
