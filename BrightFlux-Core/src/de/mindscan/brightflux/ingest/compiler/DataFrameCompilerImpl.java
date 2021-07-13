@@ -37,7 +37,9 @@ import java.util.stream.Stream;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
 import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
+import de.mindscan.brightflux.dataframes.columns.FloatColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
+import de.mindscan.brightflux.dataframes.columns.LongColumn;
 import de.mindscan.brightflux.dataframes.columns.StringColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnHeaderToken;
@@ -219,15 +221,22 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
                 IntegerColumn intColumn = (IntegerColumn) destinationColumn;
                 intColumn.append( Integer.parseInt( rowValue ) );
             }
-            if (destinationColumn instanceof DoubleColumn) {
+            else if (destinationColumn instanceof LongColumn) {
+                LongColumn longColumn = (LongColumn) destinationColumn;
+                longColumn.append( Long.parseLong( rowValue ) );
+            }
+            else if (destinationColumn instanceof DoubleColumn) {
                 DoubleColumn intColumn = (DoubleColumn) destinationColumn;
                 intColumn.append( Double.parseDouble( rowValue ) );
             }
-            if (destinationColumn instanceof StringColumn) {
+            else if (destinationColumn instanceof FloatColumn) {
+                FloatColumn floatColumn = (FloatColumn) destinationColumn;
+                floatColumn.append( Float.parseFloat( rowValue ) );
+            }
+            else if (destinationColumn instanceof StringColumn) {
                 StringColumn stringColumn = (StringColumn) destinationColumn;
                 stringColumn.append( rowValue );
             }
-
         }
     }
 
