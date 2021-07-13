@@ -54,10 +54,16 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
      */
     public String getText( Object element ) {
         if (element == null) {
-            return null;
+            return "";
         }
 
         DataFrameRow row = (DataFrameRow) element;
-        return row.get( columname ).toString();
+
+        Object object = row.get( columname );
+        if (object == null) {
+            return "";
+        }
+
+        return object.toString();
     }
 }
