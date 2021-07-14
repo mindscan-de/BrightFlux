@@ -37,6 +37,7 @@ import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
+import de.mindscan.brightflux.ingest.token.TextToken;
 
 /**
  * The DataFrame Parser will create a list of DataFrameColumn (in future probably a DataFrame),
@@ -111,6 +112,11 @@ public class DataFrameParserImpl implements DataFrameParser {
             if (dataToken instanceof IdentifierToken) {
                 currentColumn.append( dataToken );
             }
+
+            if (dataToken instanceof TextToken) {
+                currentColumn.append( dataToken );
+            }
+
             if (dataToken instanceof NumberToken) {
                 currentColumn.append( dataToken );
             }
