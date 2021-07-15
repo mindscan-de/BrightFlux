@@ -126,17 +126,6 @@ public class DataFrameParserImpl implements DataFrameParser {
             // System.out.println( "tokentype: " + lastToken.getClass().toString() + " value: " + lastToken.getValue() );
         }
 
-        // if LineSeparatorToken -> start over with first column
-        // if ColumnSeparatorToken -> select next DataColumn as Target
-
-        // until first line separator also create new DataFrameColumn
-
-        // if emptyToken -> addNA to the currentDataColumn
-        // if IdentifierToken -> (if in first line -> make it a columnname or add String to column
-
-        // return a dataframe containing DataFrameColumns of DataTokens
-        // return a collection of DataFramecolumns of DataTokens?
-
         return parseResult;
     }
 
