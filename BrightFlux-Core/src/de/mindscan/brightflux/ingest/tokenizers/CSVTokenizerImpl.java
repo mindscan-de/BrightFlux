@@ -163,12 +163,16 @@ public class CSVTokenizerImpl implements DataTokenizer {
         String valueString = inputString.substring( startIndex, endIndex );
 
         if (currentTokenType.equals( QuotedTextToken.class )) {
-            if (inputString.startsWith( "'" ) && inputString.endsWith( "'" )) {
+
+            char startsWith = inputString.charAt( startIndex );
+            char endsWith = inputString.charAt( endIndex - 1 );
+
+            if (startsWith == endsWith) {
                 valueString = inputString.substring( startIndex + 1, endIndex - 1 );
             }
-            else if (inputString.startsWith( "\"" ) && inputString.endsWith( "\"" )) {
-                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
-            }
+
+            System.out.println( valueString );
+
             return TokenUtils.createToken( TextToken.class, valueString );
         }
 
@@ -196,7 +200,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             return QuotedTextToken.class;
         }
 
-        this.tokenEnd = i;
+        this.tokenEnd = i + 1;
         return QuotedTextToken.class;
     }
 
