@@ -46,7 +46,6 @@ import de.mindscan.brightflux.ingest.token.TextToken;
  * - add auto configuration mode, for the newline separators, which will determine newlines.
  * - add support for NA (not available) tokens
  * - add support for max column count, so that the last column can be 
- * - add support for Texts starting and ending with either '"' or "'".
  * - add support for json objects formats starting with '[' or '{'
  * 
  * - using a producer / stream model / for the parser / like the python yield construction
