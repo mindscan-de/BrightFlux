@@ -116,9 +116,9 @@ public class CSVTokenizerImpl implements DataTokenizer {
             else if (isStartOfLineSeparator( currentChar )) {
                 currentTokenType = consumeLineSeparator( inputString );
             }
-//            if (isStartOfQuote( currentTokenType )) {
-//                currentTokenType = consumeString();
-//            }
+            if (isStartOfQuote( currentChar )) {
+                currentTokenType = consumeQuotedText( inputString );
+            }
             else if (isDigit( currentChar )) {
                 currentTokenType = consumeNumber( inputString );
             }
@@ -158,10 +158,48 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return tokens;
     }
 
-    /**
-     * @param inputString
-     * @return
-     */
+    private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
+
+        String valueString = inputString.substring( startIndex, endIndex );
+
+        if (currentTokenType.equals( QuotedTextToken.class )) {
+            if (inputString.startsWith( "'" ) && inputString.endsWith( "'" )) {
+                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
+            }
+            else if (inputString.startsWith( "\"" ) && inputString.endsWith( "\"" )) {
+                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
+            }
+            return TokenUtils.createToken( TextToken.class, valueString );
+        }
+
+        System.out.println( valueString );
+
+        return TokenUtils.createToken( currentTokenType, valueString );
+    }
+
+    private Class<? extends DataToken> consumeQuotedText( String inputString ) {
+
+        int i = this.tokenStart;
+
+        char firstChar = inputString.charAt( i );
+
+        if (isStartOfQuote( firstChar )) {
+            i++;
+            // This will ignore or miss line endings... for now.
+            while (i < inputString.length() && inputString.charAt( i ) != firstChar) {
+                i++;
+            }
+        }
+
+        if (i >= inputString.length()) {
+            this.tokenEnd = i;
+            return QuotedTextToken.class;
+        }
+
+        this.tokenEnd = i;
+        return QuotedTextToken.class;
+    }
+
     private Class<? extends DataToken> consumeIdentifier( String inputString ) {
         int i = this.tokenStart;
         char currentChar = inputString.charAt( i );
@@ -194,33 +232,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
     }
 
-    private boolean isStartOfIdentifier( char currentChar ) {
-        return Character.isJavaIdentifierStart( currentChar );
-    }
-
-    private boolean isColumnSeparator( char currentChar ) {
-        return this.columnSeparator.equals( Character.toString( currentChar ) );
-    }
-
-    private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
-
-        String valueString = inputString.substring( startIndex, endIndex );
-
-        if (currentTokenType.equals( QuotedTextToken.class )) {
-            if (inputString.startsWith( "'" ) && inputString.endsWith( "'" )) {
-                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
-            }
-            else if (inputString.startsWith( "\"" ) && inputString.endsWith( "\"" )) {
-                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
-            }
-            return TokenUtils.createToken( TextToken.class, valueString );
-        }
-
-        System.out.println( valueString );
-
-        return TokenUtils.createToken( currentTokenType, valueString );
-    }
-
     private Class<NumberToken> consumeNumber( String inputString ) {
         int i = tokenStart;
 
@@ -233,6 +244,21 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return NumberToken.class;
     }
 
+    private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
+        // good enough for now
+        tokenEnd = tokenStart + 1;
+
+        return LineSeparatorToken.class;
+    }
+
+    private boolean isStartOfIdentifier( char currentChar ) {
+        return Character.isJavaIdentifierStart( currentChar );
+    }
+
+    private boolean isColumnSeparator( char currentChar ) {
+        return this.columnSeparator.equals( Character.toString( currentChar ) );
+    }
+
     private boolean isFraction( char currentChar ) {
         return currentChar == '.';
     }
@@ -241,16 +267,13 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return "0123456789".contains( Character.toString( currentChar ) );
     }
 
-    private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
-        // good enough for now
-        tokenEnd = tokenStart + 1;
-
-        return LineSeparatorToken.class;
-    }
-
     private boolean isStartOfLineSeparator( char currentChar ) {
         // TODO: Firstmenge of this.lineSeparator
         return currentChar == '\n' || currentChar == '\r';
+    }
+
+    private boolean isStartOfQuote( char currentChar ) {
+        return currentChar == '\'' || currentChar == '"';
     }
 
     // Idea Area: 
