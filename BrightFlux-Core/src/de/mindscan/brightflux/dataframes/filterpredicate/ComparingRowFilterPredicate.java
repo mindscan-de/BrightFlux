@@ -69,6 +69,11 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
         int compareToResult = row.compareToRaw( columnName, convertedPredicateValue );
 
-        return CompareOperation.testResult( operation, compareToResult );
+        // TODO: evaluate which is faster 
+        // CompareOperation.testResult( operation, compareResult ); 
+        // vs.
+        // operation.testResult(compareToResult)
+
+        return operation.testResult( compareToResult );
     }
 }

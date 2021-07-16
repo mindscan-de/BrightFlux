@@ -29,8 +29,52 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
  * 
  */
 public enum CompareOperation {
-    EQ, NEQ, GT, GE, LT, LE;
+    EQ {
+        @Override
+        public boolean testResult( int compareResult ) {
+            return compareResult == 0;
+        }
+    },
 
+    NEQ {
+        @Override
+        public boolean testResult( int compareResult ) {
+            return compareResult != 0;
+        }
+    },
+    GT {
+        @Override
+        public boolean testResult( int compareResult ) {
+            return compareResult > 0;
+        }
+    },
+    GE {
+        @Override
+        public boolean testResult( int compareResult ) {
+            return compareResult >= 0;
+        }
+    },
+    LT {
+        @Override
+        public boolean testResult( int compareResult ) {
+            return compareResult < 0;
+        }
+    },
+    LE {
+        @Override
+        public boolean testResult( int compareResult ) {
+            return compareResult <= 0;
+        }
+    };
+
+    /**
+     * 
+     * @param compareResult
+     * @return
+     */
+    public abstract boolean testResult( int compareResult );
+
+    // Which approach is faster?
     public static boolean testResult( CompareOperation op, int compareResult ) {
         switch (op) {
             case EQ:
