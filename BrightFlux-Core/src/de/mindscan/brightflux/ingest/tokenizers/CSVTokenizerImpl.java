@@ -33,6 +33,7 @@ import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
+import de.mindscan.brightflux.ingest.token.QuotedTextToken;
 import de.mindscan.brightflux.ingest.token.TextToken;
 
 /**
@@ -116,7 +117,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
                 currentTokenType = consumeLineSeparator( inputString );
             }
 //            if (isStartOfQuote( currentTokenType )) {
-//                currentTokenTypwe = consumeString();
+//                currentTokenType = consumeString();
 //            }
             else if (isDigit( currentChar )) {
                 currentTokenType = consumeNumber( inputString );
@@ -204,6 +205,17 @@ public class CSVTokenizerImpl implements DataTokenizer {
     private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
 
         String valueString = inputString.substring( startIndex, endIndex );
+
+        if (currentTokenType.equals( QuotedTextToken.class )) {
+            if (inputString.startsWith( "'" ) && inputString.endsWith( "'" )) {
+                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
+            }
+            else if (inputString.startsWith( "\"" ) && inputString.endsWith( "\"" )) {
+                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
+            }
+            return TokenUtils.createToken( TextToken.class, valueString );
+        }
+
         System.out.println( valueString );
 
         return TokenUtils.createToken( currentTokenType, valueString );
