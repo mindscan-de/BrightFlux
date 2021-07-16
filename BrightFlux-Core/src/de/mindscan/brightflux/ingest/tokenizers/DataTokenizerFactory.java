@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.ingest.tokenizers;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+
 /**
  * 
  */
@@ -45,6 +48,22 @@ public class DataTokenizerFactory {
     public DataTokenizer buildTokenizerInstance( String tokenizerType ) {
         if ("CSVTokenizer".equals( tokenizerType )) {
             return new CSVTokenizerImpl();
+        }
+
+        try {
+            // use classloader and check if it implements DataTokenizer, for DataTokenizers in Classpath... 
+            ClassLoader classLoader = this.getClass().getClassLoader();
+            Class<?> loadedClass = classLoader.loadClass( tokenizerType );
+            Class<?>[] interfaces = loadedClass.getInterfaces();
+
+            if (Arrays.asList( interfaces ).contains( DataTokenizer.class )) {
+                return (DataTokenizer) loadedClass.getDeclaredConstructor().newInstance();
+            }
+        }
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+                        | NoSuchMethodException | SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
         throw new IllegalArgumentException();
