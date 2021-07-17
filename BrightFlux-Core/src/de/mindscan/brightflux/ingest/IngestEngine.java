@@ -66,7 +66,8 @@ public class IngestEngine {
         // run "pipeline"
         // TODO: tokenizer should not work on a fully processed string, and it should return a token iterator
         // TODO: maybe it should be configurable whether we work on a fully processed text input, or binary
-        //       this is at least an interesting option
+        //       this is at least an interesting option, and actually depends on the tokenizer..., what the 
+        //       tokenizer prefers.
         Iterator<DataToken> tokens = tokenizer.tokenize( inputString );
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
