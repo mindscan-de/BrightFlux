@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.ingest.parser;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -54,8 +53,7 @@ public class DataFrameParserImpl implements DataFrameParser {
      * {@inheritDoc}
      */
     @Override
-    public List<DataFrameColumn<DataToken>> parse( Collection<DataToken> tokenStream ) {
-
+    public List<DataFrameColumn<DataToken>> parse( Iterator<DataToken> tokenStream ) {
         List<DataFrameColumn<DataToken>> parseResult = new ArrayList<>();
         // always start with an empty column
         DataFrameColumn<DataToken> currentColumn = prepareNewColumn( parseResult );
@@ -64,7 +62,8 @@ public class DataFrameParserImpl implements DataFrameParser {
         Iterator<DataFrameColumn<DataToken>> columnIterator = null;
 
         DataToken lastToken = null;
-        for (DataToken dataToken : tokenStream) {
+        while (tokenStream.hasNext()) {
+            DataToken dataToken = tokenStream.next();
             // I don't like the instanceof thing for the tokens / i would prefer an enum, but also keep it extensible.
             if (dataToken instanceof LineSeparatorToken) {
                 // TODO: test if this is the last column, otherwise we must fill the remaining columns with N/A values

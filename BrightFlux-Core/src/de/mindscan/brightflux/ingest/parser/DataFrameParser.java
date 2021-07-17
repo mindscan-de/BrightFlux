@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.ingest.parser;
 
-import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
@@ -43,9 +43,9 @@ public interface DataFrameParser {
      * 
      * Also instead of a lot of columns, we might consider to return dataFrames or course. 
      *  
-     * @param tokenStream the tokens which to compile to a data frame or a list of data frames.
+     * @param iterator the tokens which to compile to a data frame or a list of data frames.
      * @return A list of pre arranged columns. / data frames
      */
-    List<DataFrameColumn<DataToken>> parse( Collection<DataToken> tokenStream );
+    List<DataFrameColumn<DataToken>> parse( Iterator<DataToken> iterator );
 
 }

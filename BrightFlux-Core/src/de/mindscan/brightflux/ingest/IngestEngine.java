@@ -65,8 +65,7 @@ public class IngestEngine {
         // run "pipeline"
         // TODO: tokenizer should not work on a fully processed string
         List<DataToken> tokens = tokenizer.tokenize( inputString );
-        // TODO: parser should not work on a fully processed list of tokens
-        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
+        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens.iterator() );
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         return buildCompiledDataFrame( config, compiledDataFrameColumns );
