@@ -94,7 +94,30 @@ public class CSVTokenizerImpl implements DataTokenizer {
         this.lineSeparator = lineSeparator;
     }
 
-    // TODO:  Actually I want a producer - consumer - producer model in a pipe like architecture
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isStringBased() {
+        return true;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isBinaryBased() {
+        return false;
+    }
+
+    // TODO: Actually I want a producer - consumer - producer model in a pipe like architecture
+    // TODO: something like yield.... Anyways the iterator is the correct interface, which allows any of these implementations.
+
+    //  // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
+
+    // Or a different reader type for binary input for binary files.
+    //  // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
+    //  // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
 
     /** 
      * {@inheritDoc}
@@ -151,12 +174,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
             tokenStart = tokenEnd;
         }
-//
-//        // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
-//
-//        // we convert the input into a intermediate representation
-//        // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
-//        // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
 
         return tokens.iterator();
     }

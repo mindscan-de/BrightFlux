@@ -41,4 +41,7 @@ public interface DataTokenizer {
     // needed. We also might introduce a prepared Source,  
     Iterator<DataToken> tokenize( String inputString );
 
+    boolean isStringBased();
+
+    boolean isBinaryBased();
 }
