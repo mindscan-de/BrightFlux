@@ -30,9 +30,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
@@ -50,7 +50,7 @@ public class IngestEngine {
      * @param config
      * @return
      */
-    public static DataFrameImpl execute( JobConfiguration config ) {
+    public static DataFrame execute( JobConfiguration config ) {
         // prepare pipeline
         DataTokenizer tokenizer = config.tokenizerFactoryInstance.buildTokenizerInstance( config.getTokenizerConfiguration() );
         DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
@@ -62,33 +62,27 @@ public class IngestEngine {
         // should be part of the pipeline configuration and be plugable
         String inputString = readAllLinesFromFile( config.getIngestInputPath() );
 
-        // run pipeline
+        // run "pipeline"
+        // TODO: tokenizer should not work on a fully processed string
         List<DataToken> tokens = tokenizer.tokenize( inputString );
+        // TODO: parser should not work on a fully processed list of tokens
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         return buildCompiledDataFrame( config, compiledDataFrameColumns );
     }
 
-    private static DataFrameImpl buildCompiledDataFrame( JobConfiguration config, List<DataFrameColumn<?>> compiledDataFrameColumns ) {
-        // build dataframe
+    private static DataFrame buildCompiledDataFrame( JobConfiguration config, List<DataFrameColumn<?>> compiledDataFrameColumns ) {
         DataFrameBuilder dfBuilder = new DataFrameBuilder().addName( config.getDataFrameName() );
 
-        // compiled dataframe columns
         if (compiledDataFrameColumns != null) {
             dfBuilder.addColumns( compiledDataFrameColumns );
         }
 
-        // abstract dataframe columns
-        //        else if (parsedDataFrameColumns != null) {
-        //            for (DataFrameColumn<?> dataFrameColumn : parsedDataFrameColumns) {
-        //                dfBuilder.addColumn( dataFrameColumn );
-        //            }
-        //        }
-
         return dfBuilder.build();
     }
 
+    // TODO: rework this...
     static String readAllLinesFromFile( Path path ) {
         try {
             List<String> allLines = Files.readAllLines( path );
