@@ -34,6 +34,11 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public interface DataTokenizer {
 
+    // TODO: rework the string idea, because it won't work well on binary datafiles or big files, with different UTF encodings.
+
+    // This is just a simple interface, where we rely on a fully loaded string content which we intent to tokenize.
+    // But actually we should have some kind of stream or generator, wich provides only as much logfilecontent as 
+    // needed. We also might introduce a prepared Source,  
     List<DataToken> tokenize( String inputString );
 
 }
