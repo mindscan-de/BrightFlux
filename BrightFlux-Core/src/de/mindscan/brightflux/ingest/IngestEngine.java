@@ -28,6 +28,7 @@ package de.mindscan.brightflux.ingest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -63,9 +64,11 @@ public class IngestEngine {
         String inputString = readAllLinesFromFile( config.getIngestInputPath() );
 
         // run "pipeline"
-        // TODO: tokenizer should not work on a fully processed string
-        List<DataToken> tokens = tokenizer.tokenize( inputString );
-        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens.iterator() );
+        // TODO: tokenizer should not work on a fully processed string, and it should return a token iterator
+        // TODO: maybe it should be configurable whether we work on a fully processed text input, or binary
+        //       this is at least an interesting option
+        Iterator<DataToken> tokens = tokenizer.tokenize( inputString );
+        List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         return buildCompiledDataFrame( config, compiledDataFrameColumns );

@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.ingest.tokenizers;
 
-import java.util.List;
+import java.util.Iterator;
 
 import de.mindscan.brightflux.ingest.DataToken;
 
@@ -39,6 +39,6 @@ public interface DataTokenizer {
     // This is just a simple interface, where we rely on a fully loaded string content which we intent to tokenize.
     // But actually we should have some kind of stream or generator, wich provides only as much logfilecontent as 
     // needed. We also might introduce a prepared Source,  
-    List<DataToken> tokenize( String inputString );
+    Iterator<DataToken> tokenize( String inputString );
 
 }

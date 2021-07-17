@@ -26,7 +26,7 @@
 package de.mindscan.brightflux.ingest.tokenizers;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
@@ -53,14 +53,19 @@ import de.mindscan.brightflux.ingest.token.TextToken;
 public class CSVTokenizerImpl implements DataTokenizer {
 
     private String columnSeparator = ",";
+
+    // TODO: we will address the configurable lineseparator later
+    @SuppressWarnings( "unused" )
     private String lineSeparator = "\n";
 
     // TODO: implement a way to declare tokens which are treated as N/A tokens 
 
     // declare the empty tokens, or not available tokens (e.g. eurostat)
     // http://appsso.eurostat.ec.europa.eu/nui/show.do?dataset=urb_cpop1&lang=en
-    private String[] emptyTokens = { "", ":" };
+    // private String[] emptyTokens = { "", ":" };
 
+    // TODO: we will use that thing later, e.g. make the input a text or so until the lineseparator for the last column
+    @SuppressWarnings( "unused" )
     private int maxColumnCount;
 
     /**
@@ -95,7 +100,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
      * {@inheritDoc}
      */
     @Override
-    public List<DataToken> tokenize( String inputString ) {
+    public Iterator<DataToken> tokenize( String inputString ) {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
@@ -150,11 +155,10 @@ public class CSVTokenizerImpl implements DataTokenizer {
 //        // TODO: we define the input (BufferedInputStream, some other kind of InputStream?)
 //
 //        // we convert the input into a intermediate representation
-//        // At start we create a collection of tokens, which are much more easy to parse.
 //        // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
 //        // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
 
-        return tokens;
+        return tokens.iterator();
     }
 
     private DataToken createToken( Class<? extends DataToken> currentTokenType, String inputString, int startIndex, int endIndex ) {
