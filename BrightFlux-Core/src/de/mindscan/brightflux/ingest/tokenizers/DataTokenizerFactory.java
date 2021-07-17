@@ -50,19 +50,21 @@ public class DataTokenizerFactory {
             return new CSVTokenizerImpl();
         }
 
+        // TODO: prepare for DataTokenizer plugins infrastructure 
         try {
-            // use classloader and check if it implements DataTokenizer, for DataTokenizers in Classpath... 
+            // use classloader  and search for named class in class path...
             ClassLoader classLoader = this.getClass().getClassLoader();
             Class<?> loadedClass = classLoader.loadClass( tokenizerType );
-            Class<?>[] interfaces = loadedClass.getInterfaces();
 
+            // and check if it implements DataTokenizer
+            Class<?>[] interfaces = loadedClass.getInterfaces();
             if (Arrays.asList( interfaces ).contains( DataTokenizer.class )) {
+                // create the class using the unparametereized the constructor. 
                 return (DataTokenizer) loadedClass.getDeclaredConstructor().newInstance();
             }
         }
         catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
                         | NoSuchMethodException | SecurityException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
