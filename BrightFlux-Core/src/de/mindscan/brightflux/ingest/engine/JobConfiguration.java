@@ -40,18 +40,10 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
  * 
  */
 public class JobConfiguration {
-    /**
-     * 
-     */
     public DataTokenizerFactory tokenizerFactoryInstance;
-    /**
-     * 
-     */
     public DataFrameParserFactory parserFactoryInstance;
-    /**
-     * 
-     */
     public DataFrameCompilerFactory compilerFactoryInstance;
+
     private String tokenizerConfiguration;
     private String dataFrameName;
     private Path ingestInputPath;
