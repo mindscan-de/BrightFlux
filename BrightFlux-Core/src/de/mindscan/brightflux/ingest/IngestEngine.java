@@ -28,6 +28,7 @@ package de.mindscan.brightflux.ingest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -57,22 +58,35 @@ public class IngestEngine {
         DataFrameParser dfParser = config.parserFactoryInstance.buildDataFrameParserInstance();
         DataFrameCompiler dfCompiler = config.compilerFactoryInstance.buildDataFrameCompilerInstance();
 
-        // TODO: The reader and the tokenizer should be re-thought. Not Yet
+        Iterator<DataToken> tokens = executeTokenizeStrategy( config, tokenizer );
 
-        // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
-        // should be part of the pipeline configuration and be plugable
-        String inputString = readAllLinesFromFile( config.getIngestInputPath() );
-
-        // run "pipeline"
-        // TODO: tokenizer should not work on a fully processed string, and it should return a token iterator
-        // TODO: maybe it should be configurable whether we work on a fully processed text input, or binary
-        //       this is at least an interesting option, and actually depends on the tokenizer..., what the 
-        //       tokenizer prefers.
-        Iterator<DataToken> tokens = tokenizer.tokenize( inputString );
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         return buildCompiledDataFrame( config, compiledDataFrameColumns );
+    }
+
+    private static Iterator<DataToken> executeTokenizeStrategy( JobConfiguration config, DataTokenizer tokenizer ) {
+        // Tokenizer tells, it is a text file based strategy
+        if (tokenizer.isStringBased()) {
+            // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
+            // should be part of the pipeline configuration and be plugable
+
+            // TODO: tokenizer should not work on a fully processed string
+            String inputString = readAllLinesFromFile( config.getIngestInputPath() );
+            return tokenizer.tokenize( inputString );
+        }
+
+        // Tokenizer tells, it is a binary file based strategy
+        if (tokenizer.isBinaryBased()) {
+
+            // TODO: how do we want to manage this? 
+            // We have some kind of skipstream on a binary format and then have a consumer
+            ArrayList<DataToken> result = new ArrayList<DataToken>();
+            return result.iterator();
+        }
+
+        throw new IllegalArgumentException( "Illegal tokenizer strategy encoded." );
     }
 
     private static DataFrame buildCompiledDataFrame( JobConfiguration config, List<DataFrameColumn<?>> compiledDataFrameColumns ) {
