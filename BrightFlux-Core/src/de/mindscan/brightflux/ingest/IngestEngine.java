@@ -28,7 +28,6 @@ package de.mindscan.brightflux.ingest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -82,8 +81,10 @@ public class IngestEngine {
 
             // TODO: how do we want to manage this? 
             // We have some kind of skipstream on a binary format and then have a consumer
-            ArrayList<DataToken> result = new ArrayList<DataToken>();
-            return result.iterator();
+//            ArrayList<DataToken> result = new ArrayList<DataToken>();
+//            return result.iterator();
+
+            return tokenizer.tokenize( "IGNORE THIS STRING FOR NOW." );
         }
 
         throw new IllegalArgumentException( "Illegal tokenizer strategy encoded." );
