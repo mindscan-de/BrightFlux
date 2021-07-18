@@ -37,20 +37,20 @@ public class ColumnHeaderToken implements DataToken {
     private String columnHeaderName;
     private String typeHint;
 
-    /**
-     * 
-     */
     public ColumnHeaderToken( String columnHeaderName ) {
         this( columnHeaderName, null );
     }
 
-    /**
-     * 
-     */
     public ColumnHeaderToken( String columnHeaderName, String typeHint ) {
         this.columnHeaderName = columnHeaderName;
         this.typeHint = typeHint;
     }
+
+    public static DataToken create( String valueString ) {
+        return new ColumnHeaderToken( valueString );
+    }
+
+    // ----------------------
 
     /** 
      * {@inheritDoc}
@@ -81,4 +81,5 @@ public class ColumnHeaderToken implements DataToken {
     public boolean hasTypeHint() {
         return this.typeHint != null;
     }
+
 }

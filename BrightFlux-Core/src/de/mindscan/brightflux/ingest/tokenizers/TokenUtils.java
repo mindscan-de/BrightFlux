@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.ingest.tokenizers;
 
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.token.ColumnHeaderToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
@@ -53,6 +54,9 @@ public class TokenUtils {
         }
         else if (TextToken.class.equals( currentTokenType )) {
             return TextToken.create( valueString );
+        }
+        else if (ColumnHeaderToken.class.equals( currentTokenType )) {
+            return ColumnHeaderToken.create( valueString );
         }
 
         throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
