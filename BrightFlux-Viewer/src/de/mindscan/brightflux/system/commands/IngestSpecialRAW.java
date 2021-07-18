@@ -39,7 +39,11 @@ import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
 /**
+ * This is just a test for a binary oriented data reader for a file, which i have laying around here. 
+ * This is the way to find out which kind of binary file reading capabilities must be developed over time. 
+ * The SpecialRAWTokenizer is just a proof of concept for reading binary files to dataframes by converting them to iterable tokens.
  * 
+ * It also serves as an incubation example which is used to test the Plugin-Concept, even with custom tokenizer plugins.
  */
 public class IngestSpecialRAW implements BFCommand {
 
