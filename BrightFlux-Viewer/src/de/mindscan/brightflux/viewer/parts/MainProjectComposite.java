@@ -150,7 +150,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
             // TODO: take the width from the configuration? 
             // Settings or width of presentation?
-            tcl_composite.setColumnData( tableColumn, new ColumnPixelData( 70, true, true ) );
+            tcl_composite.setColumnData( tableColumn, new ColumnPixelData( 45, true, true ) );
             tableColumn.setText( columname );
 
             // TODO: the labelprovider should depend on the columnype
