@@ -62,4 +62,12 @@ public class TokenUtils {
         throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
     }
 
+    static DataToken createToken( Class<? extends DataToken> currentTokenType, String valueString, String otherValue ) {
+        if (ColumnHeaderToken.class.equals( currentTokenType )) {
+            return ColumnHeaderToken.create( valueString, otherValue );
+        }
+
+        throw new IllegalArgumentException( "tokentype is: " + currentTokenType );
+    }
+
 }

@@ -50,6 +50,10 @@ public class ColumnHeaderToken implements DataToken {
         return new ColumnHeaderToken( valueString );
     }
 
+    public static DataToken create( String valueString, String typehint ) {
+        return new ColumnHeaderToken( valueString, typehint );
+    }
+
     // ----------------------
 
     /** 
