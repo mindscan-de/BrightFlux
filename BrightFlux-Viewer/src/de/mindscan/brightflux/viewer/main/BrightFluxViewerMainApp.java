@@ -120,10 +120,13 @@ public class BrightFluxViewerMainApp {
                 fileDlg.setFilterPath( dirPath.toString() );
                 String filePathToOpen = fileDlg.open();
 
-                Path path = Paths.get( filePathToOpen );
-                if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
-                    BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
-                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                // Issue this command only if the user selected a file... 
+                if (filePathToOpen != null) {
+                    Path path = Paths.get( filePathToOpen );
+                    if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
+                        BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
+                        projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                    }
                 }
             }
         } );
