@@ -48,7 +48,8 @@ import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 
 /**
- * 
+ * DataFrame is held by DataFrameRow is held by the TableItem (data)
+ * TableItem[] are the arrays retaining the whole dataframe.
  */
 public class BrightFluxViewerMainApp {
 
@@ -148,6 +149,7 @@ public class BrightFluxViewerMainApp {
         mntmGarbageCollector.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
+                // Don't like it... 
                 System.gc();
             }
         } );
