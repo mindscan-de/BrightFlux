@@ -34,10 +34,10 @@ import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -56,7 +56,7 @@ import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
  * 
  */
 public class MainProjectComposite extends Composite implements ProjectRegistryParticipant {
-    private TabFolder mainTabFolder;
+    private CTabFolder mainTabFolder;
 
     // XXX: Awful hack right now.
     private final static Path path = Paths
@@ -98,22 +98,23 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        mainTabFolder = new TabFolder( this, SWT.NONE );
+        mainTabFolder = new CTabFolder( this, SWT.NONE );
 
         DataFrame ingestedDF = ingest.loadAsDataFrame( path );
         addTabItem( mainTabFolder, ingestedDF );
     }
 
     private void addDataFrameTab( DataFrame newDataFrame ) {
-        TabItem item = addTabItem( mainTabFolder, newDataFrame );
+        CTabItem item = addTabItem( mainTabFolder, newDataFrame );
         mainTabFolder.setSelection( item );
     }
 
-    private TabItem addTabItem( TabFolder tabFolder, DataFrame ingestedDF ) {
+    private CTabItem addTabItem( CTabFolder tabFolder, DataFrame ingestedDF ) {
         String ingestedDFName = ingestedDF.getName();
 
         // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
-        TabItem tbtmNewItem = new TabItem( tabFolder, SWT.NONE );
+        CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
+        tbtmNewItem.setShowClose( true );
         tbtmNewItem.setText( ingestedDFName );
 
         Composite composite = new Composite( tabFolder, SWT.NONE );
