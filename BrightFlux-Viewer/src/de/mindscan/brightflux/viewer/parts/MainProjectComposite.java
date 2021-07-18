@@ -40,6 +40,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestCsv;
@@ -122,6 +123,9 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
         TableViewer tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
         Table table = tableViewer.getTable();
+        table.setFont( SWTResourceManager.getFont( "Tahoma", 10, SWT.NORMAL ) );
+        // TODO: this should be per column?
+        // table.setFont( SWTResourceManager.getFont( "Courier New", 10, SWT.NORMAL ) );
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
 
