@@ -40,4 +40,8 @@ public class DataFrameCommandFactory {
     public static BFCommand ingestFile( Path filePath ) {
         return new IngestCommand( filePath );
     }
+
+    public static BFCommand ingestSpecialRaw() {
+        return new IngestSpecialRAW();
+    }
 }

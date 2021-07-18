@@ -129,6 +129,16 @@ public class BrightFluxViewerMainApp {
         } );
         mntmLoadFile.setText( "Load File" );
 
+        MenuItem mntmSpecialRawOption = new MenuItem( menu_1, SWT.NONE );
+        mntmSpecialRawOption.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw();
+                projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+            }
+        } );
+        mntmSpecialRawOption.setText( "Special Raw Option" );
+
         new MenuItem( menu_1, SWT.SEPARATOR );
 
         MenuItem mntmExit = new MenuItem( menu_1, SWT.PUSH );
@@ -150,5 +160,4 @@ public class BrightFluxViewerMainApp {
             ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
         }
     }
-
 }
