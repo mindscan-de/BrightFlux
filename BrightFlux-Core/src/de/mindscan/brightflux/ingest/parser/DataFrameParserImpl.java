@@ -32,6 +32,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.columns.DataTokenColumn;
+import de.mindscan.brightflux.ingest.token.ColumnHeaderToken;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.EmptyToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
@@ -123,6 +124,10 @@ public class DataFrameParserImpl implements DataFrameParser {
 
             if (dataToken instanceof EmptyToken) {
                 currentColumn.appendNA();
+            }
+
+            if (dataToken instanceof ColumnHeaderToken) {
+                currentColumn.append( dataToken );
             }
 
             lastToken = dataToken;
