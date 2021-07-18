@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.ingest.token;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.mindscan.brightflux.ingest.DataToken;
 
 /**
@@ -32,6 +35,7 @@ import de.mindscan.brightflux.ingest.DataToken;
  */
 public class NumberToken implements DataToken {
 
+    private static Map<String, NumberToken> NumberTokenPool = new HashMap<>();
     private String value;
 
     NumberToken( String value ) {
@@ -39,7 +43,15 @@ public class NumberToken implements DataToken {
     }
 
     public static NumberToken create( String value ) {
+        if (value.length() <= 3) {
+            return NumberTokenPool.computeIfAbsent( value, v -> {
+                return new NumberToken( v );
+            } );
+        }
+
         // TODO: Pool these tokens for values of stringlength 2 or smaller.
+        // Use conventional LRU Pool here for all unusual but repeatingvalues
+
         return new NumberToken( value );
     }
 
