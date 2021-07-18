@@ -144,6 +144,17 @@ public class BrightFluxViewerMainApp {
 
         new MenuItem( menu_1, SWT.SEPARATOR );
 
+        MenuItem mntmGarbageCollector = new MenuItem( menu_1, SWT.NONE );
+        mntmGarbageCollector.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                System.gc();
+            }
+        } );
+        mntmGarbageCollector.setText( "Garbage Collector" );
+
+        new MenuItem( menu_1, SWT.SEPARATOR );
+
         MenuItem mntmExit = new MenuItem( menu_1, SWT.PUSH );
         mntmExit.addSelectionListener( new SelectionAdapter() {
             @Override
