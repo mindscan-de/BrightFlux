@@ -39,6 +39,7 @@ public class NumberToken implements DataToken {
     }
 
     public static NumberToken create( String value ) {
+        // TODO: Pool these tokens for values of stringlength 2 or smaller.
         return new NumberToken( value );
     }
 
