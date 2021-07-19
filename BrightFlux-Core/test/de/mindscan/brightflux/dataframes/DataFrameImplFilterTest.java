@@ -240,4 +240,64 @@ public class DataFrameImplFilterTest {
         assertThat( result, hasSize( 116 ) );
     }
 
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnEndsWithA_expect755Rows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( aspargusCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.endsWithStr( "Area", "a" ) );
+
+        // assert
+        assertThat( result, hasSize( 755 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnEndsWithAA_expectZeroRows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( aspargusCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.endsWithStr( "Area", "aa" ) );
+
+        // assert
+        assertThat( result, hasSize( 0 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnEndsWithDA_expect59Rows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( aspargusCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.endsWithStr( "Area", "da" ) );
+
+        // assert
+        assertThat( result, hasSize( 59 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnStartsWithC_expect414Rows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( aspargusCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.startsWithStr( "Area", "C" ) );
+
+        // assert
+        assertThat( result, hasSize( 414 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnStartsWithCA_expect59Rows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( aspargusCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.startsWithStr( "Area", "Ca" ) );
+
+        // assert
+        assertThat( result, hasSize( 59 ) );
+    }
+
 }

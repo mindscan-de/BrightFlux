@@ -86,7 +86,7 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     // ############################################################
-    // TODO: some string operations, since i need them right now...
+    // TODO: some string operations, since i need them next ...
     // TODO: what about lowercase/Versions?
     // ############################################################    
 
@@ -95,11 +95,11 @@ public class DataFrameRowFilterPredicateFactory {
     }
 
     public static DataFrameRowFilterPredicate startsWithStr( String columnName, String startWithString ) {
-        return null;
+        return new StringEvaluationRowFilterPredicate( columnName, StringEvaluationOperation.STARTS_WITH, startWithString );
     }
 
     public static DataFrameRowFilterPredicate endsWithStr( String columnName, String endsWithString ) {
-        return null;
+        return new StringEvaluationRowFilterPredicate( columnName, StringEvaluationOperation.ENDS_WITH, endsWithString );
     }
 
     public static DataFrameRowFilterPredicate matchesWithStr( String columnName, String containedString ) {
