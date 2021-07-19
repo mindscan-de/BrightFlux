@@ -45,6 +45,9 @@ public class DataFrameImplFilterTest {
     private final static Path heartCSV = Paths.get(
                     "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart_original.csv" );
 
+    private final static Path aspargusCSV = Paths.get(
+                    "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\FAOSTAT_data_7-10-2021.csv" );
+
     @Test
     public void testGetRowsByPredicate_LoadHeartDatasetFilterAnyElement_expect303Rows() throws Exception {
         // arrange
@@ -211,6 +214,18 @@ public class DataFrameImplFilterTest {
 
         // assert
         assertThat( result, hasSize( 182 + 17 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnContainsINA_expect1000Rows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.containsStr( "Area", "ina" ) );
+
+        // assert
+        assertThat( result, hasSize( 1000 ) );
     }
 
 }
