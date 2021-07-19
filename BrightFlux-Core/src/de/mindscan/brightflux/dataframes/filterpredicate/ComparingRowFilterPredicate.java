@@ -53,6 +53,8 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
         Object rowValue = row.get( columnName );
         if (rowValue == null) {
+            // TODO: this is wring, because we have EQ and NEQ operations
+            // So what is the semantic here?
             return predicateValue == null;
         }
 
