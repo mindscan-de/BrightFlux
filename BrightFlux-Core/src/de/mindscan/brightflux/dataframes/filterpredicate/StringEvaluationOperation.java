@@ -30,13 +30,39 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
  */
 public enum StringEvaluationOperation {
 
-    CONTAINS,
+    CONTAINS {
+        @Override
+        boolean testResult( String stringRowValue, String predicateValue ) {
+            return stringRowValue.contains( predicateValue );
+        }
+    },
 
-    STARTS_WITH,
+    // TODO This as well?
+    // EMPTY_STRING,
 
-    ENDS_WITH,
+    STARTS_WITH {
+        @Override
+        boolean testResult( String stringRowValue, String predicateValue ) {
+            return stringRowValue.startsWith( predicateValue );
+        }
+    },
 
-    MATCHES_WITH;
+    ENDS_WITH {
+        @Override
+        boolean testResult( String stringRowValue, String predicateValue ) {
+            return stringRowValue.endsWith( predicateValue );
+        }
+    },
+
+    MATCHES_WITH {
+        @Override
+        boolean testResult( String stringRowValue, String predicateValue ) {
+            // TODO: implement this.
+            return false;
+        }
+    };
+
+    abstract boolean testResult( String stringRowValue, String predicateValue );
 
     // TODO: the test operation?
 }
