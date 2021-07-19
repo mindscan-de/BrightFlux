@@ -217,7 +217,7 @@ public class DataFrameImplFilterTest {
     }
 
     @Test
-    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnContainsINA_expect1000Rows() throws Exception {
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnContainsINA_expect233Rows() throws Exception {
         // arrange
         DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
 
@@ -225,7 +225,19 @@ public class DataFrameImplFilterTest {
         Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.containsStr( "Area", "ina" ) );
 
         // assert
-        assertThat( result, hasSize( 1000 ) );
+        assertThat( result, hasSize( 233 ) );
+    }
+
+    @Test
+    public void testGetRowsByPredicate_LoadAspargusDatasetAreaColumnContainsRIA_expect116Rows() throws Exception {
+        // arrange
+        DataFrame df = DataFrameTestUtils.loadCSV( heartCSV );
+
+        // act
+        Collection<DataFrameRow> result = df.getRowsByPredicate( DataFrameRowFilterPredicateFactory.containsStr( "Area", "ria" ) );
+
+        // assert
+        assertThat( result, hasSize( 116 ) );
     }
 
 }
