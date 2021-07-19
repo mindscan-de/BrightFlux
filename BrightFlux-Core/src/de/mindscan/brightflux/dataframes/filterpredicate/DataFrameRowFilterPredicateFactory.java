@@ -91,7 +91,7 @@ public class DataFrameRowFilterPredicateFactory {
     // ############################################################    
 
     public static DataFrameRowFilterPredicate containsStr( String columnName, String containedString ) {
-        return null;
+        return new StringEvaluationRowFilterPredicate( columnName, StringEvaluationOperation.CONTAINS, containedString );
     }
 
     public static DataFrameRowFilterPredicate startsWithStr( String columnName, String startWithString ) {

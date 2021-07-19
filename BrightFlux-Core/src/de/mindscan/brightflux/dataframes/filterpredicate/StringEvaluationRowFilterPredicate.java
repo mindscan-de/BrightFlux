@@ -33,11 +33,41 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
  */
 public class StringEvaluationRowFilterPredicate implements DataFrameRowFilterPredicate {
 
+    private String columnName;
+    private StringEvaluationOperation evalOperation;
+    private String predicateValue;
+
+    /**
+     * 
+     */
+    public StringEvaluationRowFilterPredicate( String columnName, StringEvaluationOperation evalOperation, String predicateValue ) {
+        this.columnName = columnName;
+        this.evalOperation = evalOperation;
+        this.predicateValue = predicateValue;
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public boolean test( DataFrameRow row ) {
+        Object rowValue = row.get( columnName );
+        if (rowValue == null) {
+            // TODO: this is not that easy, because we should figure out the semantics of this operation
+            return false;
+        }
+
+        if (rowValue instanceof String) {
+            String stringRowValue = (String) rowValue;
+
+            return evalOperation.testResult( stringRowValue, predicateValue );
+        }
+        else {
+            // TODO: 
+            // We rely here on a proper tostring operation...
+            // lets skip that for now...
+        }
+
         // TODO Auto-generated method stub
         return false;
     }
