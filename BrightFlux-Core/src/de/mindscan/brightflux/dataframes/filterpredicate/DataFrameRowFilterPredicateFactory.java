@@ -85,4 +85,25 @@ public class DataFrameRowFilterPredicateFactory {
         return new ComparingRowFilterPredicate( columnName, CompareOperation.LE, otherValue );
     }
 
+    // ############################################################
+    // TODO: some string operations, since i need them right now...
+    // TODO: what about lowercase/Versions?
+    // ############################################################    
+
+    public static DataFrameRowFilterPredicate containsStr( String columnName, String containedString ) {
+        return null;
+    }
+
+    public static DataFrameRowFilterPredicate startsWithStr( String columnName, String startWithString ) {
+        return null;
+    }
+
+    public static DataFrameRowFilterPredicate endsWithStr( String columnName, String endsWithString ) {
+        return null;
+    }
+
+    public static DataFrameRowFilterPredicate matchesWithStr( String columnName, String containedString ) {
+        return null;
+    }
+
 }
