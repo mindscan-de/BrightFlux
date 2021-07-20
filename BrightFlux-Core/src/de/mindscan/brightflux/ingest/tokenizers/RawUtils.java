@@ -58,4 +58,13 @@ public class RawUtils {
         return (hiInt << 32) | lowInt;
     }
 
+    static boolean isMarker( byte[] data, int offset, int expectedMarker ) {
+        if (data == null || data.length < offset + 4) {
+            return false;
+        }
+    
+        int marker = toUnsignedInt4b( data, offset );
+        return marker == expectedMarker;
+    }
+
 }
