@@ -30,16 +30,20 @@ package de.mindscan.brightflux.ingest.tokenizers;
  */
 public class InternalTokenizerColumnDescription {
 
-    public static InternalTokenizerColumnDescription create( String headername, String columntype ) {
-        return new InternalTokenizerColumnDescription( headername, columntype );
+    public static InternalTokenizerColumnDescription create( String headername, String columntype, int numBytes, int offset ) {
+        return new InternalTokenizerColumnDescription( headername, columntype, numBytes, offset );
     }
 
     private String headername;
     private String columntype;
+    private int numBytes;
+    private int offset;
 
-    public InternalTokenizerColumnDescription( String headername, String columntype ) {
+    public InternalTokenizerColumnDescription( String headername, String columntype, int numBytes, int offset ) {
         this.headername = headername;
         this.columntype = columntype;
+        this.numBytes = numBytes;
+        this.offset = offset;
 
     }
 
@@ -47,14 +51,19 @@ public class InternalTokenizerColumnDescription {
         return headername;
     }
 
-    /**
-     * @return the columntype
-     */
     public String getColumntype() {
         return columntype;
     }
 
     public boolean hasColumntype() {
         return columntype != null;
+    }
+
+    public int getNumBytes() {
+        return numBytes;
+    }
+
+    public int getOffset() {
+        return offset;
     }
 }
