@@ -58,7 +58,7 @@ public class RawUtils {
         return (hiInt << 32) | lowInt;
     }
 
-    static boolean isMarker( byte[] data, int offset, int expectedMarker ) {
+    static boolean isMarker4b( byte[] data, int offset, int expectedMarker ) {
         if (data == null || data.length < offset + 4) {
             return false;
         }
