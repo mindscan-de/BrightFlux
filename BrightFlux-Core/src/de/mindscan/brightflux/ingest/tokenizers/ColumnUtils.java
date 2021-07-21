@@ -39,7 +39,7 @@ import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
  */
 public class ColumnUtils {
 
-    static void exportAllColumnData( List<InternalTokenizerColumnDescription> allColumns, Consumer<DataToken> consumer ) {
+    static void exportAllColumnHeaderData( List<InternalTokenizerColumnDescription> allColumns, Consumer<DataToken> consumer ) {
         for (Iterator<InternalTokenizerColumnDescription> iterator = allColumns.iterator(); iterator.hasNext();) {
             InternalTokenizerColumnDescription column = iterator.next();
             consumer.accept( TokenUtils.createToken( ColumnHeaderToken.class, column.getHeadername(), column.getColumntype() ) );
