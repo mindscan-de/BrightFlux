@@ -28,6 +28,8 @@ package de.mindscan.brightflux.dataframes;
 import java.util.Collection;
 import java.util.Iterator;
 
+import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
+
 /**
  * 
  */
@@ -65,4 +67,11 @@ public interface DataFrame {
 
     Collection<DataFrameRow> getRowsByPredicate( DataFrameRowFilterPredicate predicate );
 
+    DataFrameColumnSelection select();
+
+    DataFrameColumnSelection select( String... columnname );
+
+    DataFrameColumnSelection select( DataFrameColumn<?> column );
+
+    DataFrameColumnSelection select( DataFrameColumn<?>... columns );
 }

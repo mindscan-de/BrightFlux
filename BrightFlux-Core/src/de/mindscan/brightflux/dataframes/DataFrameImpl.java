@@ -34,6 +34,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
+
 /**
  * TODO: use some example code for a dataframe, e.g. write them as a unit test
  *       and then develop from there. Use pandas examples for reading some files
@@ -331,6 +333,42 @@ public class DataFrameImpl implements DataFrame {
             columns[i].appendRaw( elements[i] );
         }
         this.size++;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrameColumnSelection select() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrameColumnSelection select( String... columnname ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrameColumnSelection select( DataFrameColumn<?> column ) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrameColumnSelection select( DataFrameColumn<?>... columns ) {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 //    // column-names
