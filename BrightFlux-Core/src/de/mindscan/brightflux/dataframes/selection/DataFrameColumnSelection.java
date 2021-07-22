@@ -25,45 +25,14 @@
  */
 package de.mindscan.brightflux.dataframes.selection;
 
-import java.util.Collection;
-
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameColumn;
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
-import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
  * 
  */
-public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
+public interface DataFrameColumnSelection {
 
-    private DataFrame df;
-    private DataFrameColumn<?> selectedColumns;
+    DataFrame where( DataFrameRowFilterPredicate predicate );
 
-    /**
-     * 
-     */
-    public DataFrameColumnSelectionImpl( DataFrame df, DataFrameColumn<?> selectedColumns ) {
-        this.df = df;
-        this.selectedColumns = selectedColumns;
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public DataFrame where( DataFrameRowFilterPredicate predicate ) {
-        Collection<DataFrameRow> selectedRows = df.getRowsByPredicate( predicate );
-        return buildNewDataFrame( selectedRows );
-    }
-
-    private DataFrame buildNewDataFrame( Collection<DataFrameRow> selectedRows ) {
-        DataFrameImpl newDataFrame = new DataFrameImpl( "" );
-
-        // TODO: add the fewer / selected columns
-        // TODO: append the selected rows, but only using the selected columns
-
-        return newDataFrame;
-    }
 }
