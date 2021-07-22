@@ -58,6 +58,8 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         return buildNewDataFrame( selectedRows );
     }
 
+    // TODO: implement a string based Predicate (The part after "WHERE" ) then compile the predicate into the predicate and then execute the other where statement
+
     private DataFrame buildNewDataFrame( Collection<DataFrameRow> selectedRows ) {
         DataFrameImpl newDataFrame = new DataFrameImpl( "" );
 
