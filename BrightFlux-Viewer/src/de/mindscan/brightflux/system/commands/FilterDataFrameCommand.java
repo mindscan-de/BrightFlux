@@ -25,29 +25,36 @@
  */
 package de.mindscan.brightflux.system.commands;
 
-import java.nio.file.Path;
+import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
+import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
 /**
- * This class provides commands around DataFrames 
+ * 
  */
-public class DataFrameCommandFactory {
+public class FilterDataFrameCommand implements BFCommand {
+
+    private DataFrame inputDataFrame;
 
     /**
-     * This method will create an {@link IngestCommand} which when executed will provide a DataFrame.
-     * @param filePath The path to the file containing the data to ingest.
-     * @return a command
+     * 
      */
-    public static BFCommand ingestFile( Path filePath ) {
-        return new IngestCommand( filePath );
+    public FilterDataFrameCommand( DataFrame inputDataFrame ) {
+        // TODO: later we should add the filter predicate here?
+        this.inputDataFrame = inputDataFrame;
     }
 
-    public static BFCommand ingestSpecialRaw() {
-        return new IngestSpecialRAW();
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void execute( Consumer<BFEvent> eventConsumer ) {
+        DataFrame filteredDataFrame = inputDataFrame.select().where( DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ) );
+
+        eventConsumer.accept( new DataFrameLoadedEvent( filteredDataFrame ) );
     }
 
-    public static BFCommand filterDataFrame( DataFrame inputDataFrame ) {
-        return new FilterDataFrameCommand( inputDataFrame );
-    }
 }
