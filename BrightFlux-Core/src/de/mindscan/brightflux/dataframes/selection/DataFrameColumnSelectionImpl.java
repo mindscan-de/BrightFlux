@@ -39,12 +39,12 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
 
     private DataFrame df;
-    private DataFrameColumn<?> selectedColumns;
+    private DataFrameColumn<?>[] selectedColumns;
 
     /**
      * 
      */
-    public DataFrameColumnSelectionImpl( DataFrame df, DataFrameColumn<?> selectedColumns ) {
+    public DataFrameColumnSelectionImpl( DataFrame df, DataFrameColumn<?>... selectedColumns ) {
         this.df = df;
         this.selectedColumns = selectedColumns;
     }

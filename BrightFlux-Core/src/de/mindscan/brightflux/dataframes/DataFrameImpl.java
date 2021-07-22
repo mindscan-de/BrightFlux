@@ -35,6 +35,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
+import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelectionImpl;
 
 /**
  * TODO: use some example code for a dataframe, e.g. write them as a unit test
@@ -340,8 +341,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select() {
-        // TODO Auto-generated method stub
-        return null;
+        return new DataFrameColumnSelectionImpl( this, this.columns );
     }
 
     /** 
