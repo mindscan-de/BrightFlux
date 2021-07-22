@@ -28,6 +28,7 @@ package de.mindscan.brightflux.system.commands;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
@@ -38,6 +39,7 @@ import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 public class FilterDataFrameCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
+    private DataFrameRowFilterPredicate clause;
 
     /**
      * 
@@ -52,7 +54,9 @@ public class FilterDataFrameCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        DataFrame filteredDataFrame = inputDataFrame.select().where( DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ) );
+        clause = DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 );
+
+        DataFrame filteredDataFrame = inputDataFrame.select().where( clause );
 
         eventConsumer.accept( new DataFrameLoadedEvent( filteredDataFrame ) );
     }
