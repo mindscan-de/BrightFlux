@@ -48,6 +48,8 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.ingest.IngestCsv;
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
@@ -143,9 +145,10 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                     if (pt.y < table.getHeaderHeight()) {
                         // header of columnindex (right) clicked....
 
-                        // TODO open a menu here...
-
-                        BFCommand command = DataFrameCommandFactory.filterDataFrame( ingestedDF );
+                        // TODO open a menu here... and then use predicates 
+                        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
+                                        DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
+                        BFCommand command = DataFrameCommandFactory.filterDataFrame( ingestedDF, predicate );
                         MainProjectComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
                     }
                     else {
