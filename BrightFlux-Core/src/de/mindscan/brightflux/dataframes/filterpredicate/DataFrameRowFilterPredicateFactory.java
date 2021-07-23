@@ -32,8 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
  * TODO : find some interesting and performant idea
  * TODO Later? must support number dates? 
  * 
- * TODO logical Rowfilterpredicates: implication - tt -> t, tf -> f, ft -> t, ff -> t
- * TODO logical Rowfilterpredicates: unary not
+ * TODO logical Rowfilterpredicates: implication - tt -> t, tf -> f, ft -> t, ff -> t  ((not a) or b - is this useful?)
  * 
  * TODO: some string operations, since i need them next ...
  * TODO: what about lowercase string operations /Versions? e.g. contains ignorecase.
@@ -50,6 +49,16 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 return true;
+            }
+        };
+    }
+
+    // unary not 
+    public static DataFrameRowFilterPredicate not( DataFrameRowFilterPredicate predicate ) {
+        return new DataFrameRowFilterPredicate() {
+            @Override
+            public boolean test( DataFrameRow row ) {
+                return !predicate.test( row );
             }
         };
     }
