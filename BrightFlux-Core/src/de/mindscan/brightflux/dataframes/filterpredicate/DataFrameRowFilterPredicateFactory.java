@@ -29,13 +29,14 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
- * This currently works only on Integers because of the integer cast. (I don't like it right now)
- * 
- * TODO: This could be interesting... for the SimpleNumberColumn
- * - <T extends Number & Comparable<T>> int compareTo(T otherValue)
- * 
  * TODO : find some interesting and performant idea
- * TODO Later? must support number types / Strings? / dates? 
+ * TODO Later? must support number dates? 
+ * 
+ * TODO logical Rowfilterpredicates: implication - tt -> t, tf -> f, ft -> t, ff -> t
+ * TODO logical Rowfilterpredicates: unary not
+ * 
+ * TODO: some string operations, since i need them next ...
+ * TODO: what about lowercase string operations /Versions? e.g. contains ignorecase.
  * 
  */
 public class DataFrameRowFilterPredicateFactory {
@@ -93,9 +94,6 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
-    // TODO implication - tt -> t, tf -> f, ft -> t, ff -> t
-    // TODO unary not
-
     // ################################################################################
     // Comparisons raw data / equal to, not equal to - this was general with "equals"
     // ################################################################################    
@@ -128,10 +126,9 @@ public class DataFrameRowFilterPredicateFactory {
         return new ComparingRowFilterPredicate( columnName, CompareOperation.LE, otherValue );
     }
 
-    // ############################################################
-    // TODO: some string operations, since i need them next ...
-    // TODO: what about lowercase/Versions?
-    // ############################################################    
+    // ############################
+    // String Evaluation Operations
+    // ############################    
 
     public static DataFrameRowFilterPredicate containsStr( String columnName, String containedString ) {
         return new StringEvaluationRowFilterPredicate( columnName, StringEvaluationOperation.CONTAINS, containedString );
@@ -145,7 +142,8 @@ public class DataFrameRowFilterPredicateFactory {
         return new StringEvaluationRowFilterPredicate( columnName, StringEvaluationOperation.ENDS_WITH, endsWithString );
     }
 
-    public static DataFrameRowFilterPredicate matchesWithStr( String columnName, String containedString ) {
+    public static DataFrameRowFilterPredicate matchesWithStr( String columnName, String matcherString ) {
+        // TODO: implement Regexfilter predicate
         return null;
     }
 
