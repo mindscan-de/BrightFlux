@@ -53,6 +53,15 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
+    public static DataFrameRowFilterPredicate and( DataFrameRowFilterPredicate left, DataFrameRowFilterPredicate right ) {
+        return new DataFrameRowFilterPredicate() {
+            @Override
+            public boolean test( DataFrameRow row ) {
+                return left.test( row ) && right.test( row );
+            }
+        };
+    }
+
     // ################################################################################
     // Comparisons raw data / equal to, not equal to - this was general with "equals"
     // ################################################################################    
