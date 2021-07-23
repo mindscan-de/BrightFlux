@@ -29,7 +29,6 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
-import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
@@ -40,17 +39,6 @@ public class FilterDataFrameCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
     private DataFrameRowFilterPredicate whereClause;
-
-    /**
-     * 
-     */
-    public FilterDataFrameCommand( DataFrame inputDataFrame ) {
-        this.inputDataFrame = inputDataFrame;
-        // TODO: add logic predicates... to do AND and OR , NOT, and such...
-        this.whereClause = DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ); // h2.sysctx == 6 && h2.b8==10
-        // TODO: later we should also add the selection 
-        // selectClause
-    }
 
     public FilterDataFrameCommand( DataFrame inputDataFrame, DataFrameRowFilterPredicate whereClause ) {
         this.inputDataFrame = inputDataFrame;

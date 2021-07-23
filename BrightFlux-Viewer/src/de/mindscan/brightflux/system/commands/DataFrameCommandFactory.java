@@ -28,6 +28,7 @@ package de.mindscan.brightflux.system.commands;
 import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
  * This class provides commands around DataFrames 
@@ -47,7 +48,8 @@ public class DataFrameCommandFactory {
         return new IngestSpecialRAW();
     }
 
-    public static BFCommand filterDataFrame( DataFrame inputDataFrame ) {
-        return new FilterDataFrameCommand( inputDataFrame );
+    public static BFCommand filterDataFrame( DataFrame inputDataFrame, DataFrameRowFilterPredicate predicate ) {
+        return new FilterDataFrameCommand( inputDataFrame, predicate );
     }
+
 }
