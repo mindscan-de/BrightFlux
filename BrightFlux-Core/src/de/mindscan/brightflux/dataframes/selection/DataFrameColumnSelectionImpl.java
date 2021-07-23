@@ -58,13 +58,33 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         return buildNewDataFrame( selectedRows );
     }
 
-    // TODO: implement a string based Predicate (The part after "WHERE" ) then compile the predicate into the predicate and then execute the other where statement
+    // TODO: implement a string based Predicate (The part after the "WHERE"-clause ) then compile the predicate into the predicate and then execute the other where statement
+    // the dataframe must be known fo this.
+    public DataFrame where( String predicate ) {
+        return null;
+    };
 
     private DataFrame buildNewDataFrame( Collection<DataFrameRow> selectedRows ) {
         DataFrameImpl newDataFrame = new DataFrameImpl( "" );
 
-        // TODO: add the fewer / selected columns
-        // TODO: append the selected rows, but only using the selected columns
+        DataFrameColumn<?>[] selectedColumnsCopy = new DataFrameColumn<?>[selectedColumns.length];
+        String[] selectedColumnsNames = new String[selectedColumns.length];
+
+        // create an empty but type correct copy of the columns
+        for (int i = 0; i < selectedColumns.length; i++) {
+            selectedColumnsCopy[i] = selectedColumns[i].cloneColumnEmpty();
+            selectedColumnsNames[i] = selectedColumns[i].getColumnName();
+        }
+
+        for (DataFrameRow row : selectedRows) {
+            for (int idx = 0; idx < selectedColumnsNames.length; idx++) {
+                // TODO: selectedColumnsNames[idx] is a bit expensive? because it is a map lookup in the get operation.
+                // anyhow, this is good enough for now...
+                selectedColumnsCopy[idx].appendRaw( row.get( selectedColumnsNames[idx] ) );
+            }
+        }
+
+        newDataFrame.addColumns( selectedColumnsCopy );
 
         return newDataFrame;
     }
