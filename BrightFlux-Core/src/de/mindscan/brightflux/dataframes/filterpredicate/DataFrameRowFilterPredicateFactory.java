@@ -53,6 +53,7 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
+    // conjunction - a.k.a. 'and'
     public static DataFrameRowFilterPredicate and( DataFrameRowFilterPredicate left, DataFrameRowFilterPredicate right ) {
         return new DataFrameRowFilterPredicate() {
             @Override
@@ -61,6 +62,21 @@ public class DataFrameRowFilterPredicateFactory {
             }
         };
     }
+
+    // disjunction - a.k.a. 'or'
+    public static DataFrameRowFilterPredicate or( DataFrameRowFilterPredicate left, DataFrameRowFilterPredicate right ) {
+        return new DataFrameRowFilterPredicate() {
+            @Override
+            public boolean test( DataFrameRow row ) {
+                return left.test( row ) || right.test( row );
+            }
+        };
+    }
+
+    // TODO equivalent - a.k.a. 'eq'
+    // TODO antivalent - a.k.a. 'xor' (also not equivalent)
+    // TODO implication - tt -> t, tf -> f, ft -> t, ff -> t
+    // TODO unary not
 
     // ################################################################################
     // Comparisons raw data / equal to, not equal to - this was general with "equals"
