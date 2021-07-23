@@ -73,8 +73,26 @@ public class DataFrameRowFilterPredicateFactory {
         };
     }
 
-    // TODO equivalent - a.k.a. 'eq'
-    // TODO antivalent - a.k.a. 'xor' (also not equivalent)
+    // equivalent - a.k.a. 'eq'
+    public static DataFrameRowFilterPredicate eq( DataFrameRowFilterPredicate left, DataFrameRowFilterPredicate right ) {
+        return new DataFrameRowFilterPredicate() {
+            @Override
+            public boolean test( DataFrameRow row ) {
+                return left.test( row ) == right.test( row );
+            }
+        };
+    }
+
+    // antivalent - a.k.a. 'xor' (also not equivalent - neq)
+    public static DataFrameRowFilterPredicate neq( DataFrameRowFilterPredicate left, DataFrameRowFilterPredicate right ) {
+        return new DataFrameRowFilterPredicate() {
+            @Override
+            public boolean test( DataFrameRow row ) {
+                return left.test( row ) != right.test( row );
+            }
+        };
+    }
+
     // TODO implication - tt -> t, tf -> f, ft -> t, ff -> t
     // TODO unary not
 
