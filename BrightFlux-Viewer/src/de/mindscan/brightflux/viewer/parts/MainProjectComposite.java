@@ -36,14 +36,21 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.MenuDetectEvent;
+import org.eclipse.swt.events.MenuDetectListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.IngestCsv;
+import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
@@ -63,6 +70,8 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private final static Path path = Paths
                     .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
     IngestCsv ingest = new IngestCsv();
+
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the composite.
@@ -84,6 +93,8 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+
+        this.projectRegistry = projectRegistry;
         // TODO: implement an anti corruption layer, for the specific events, instead of referencing specific classes in
         //       other packages, which may change over time. So that not every refactoring and move operation will lead 
         //       to a change in hundreds of files.
@@ -110,7 +121,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         mainTabFolder.setSelection( item );
     }
 
-    private CTabItem addTabItem( CTabFolder tabFolder, DataFrame ingestedDF ) {
+    private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame ingestedDF ) {
         String ingestedDFName = ingestedDF.getName();
 
         // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
@@ -123,6 +134,28 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
         TableViewer tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
         Table table = tableViewer.getTable();
+        table.addMenuDetectListener( new MenuDetectListener() {
+            public void menuDetected( MenuDetectEvent e ) {
+                Point absolute = new Point( e.x, e.y );
+                Point pt = table.toControl( absolute );
+                int columnIndex = columnIndexAtposition( table, pt );
+                if (columnIndex >= 0) {
+                    if (pt.y < table.getHeaderHeight()) {
+                        // header of columnindex (right) clicked....
+
+                        // TODO open a menu here...
+
+                        BFCommand command = DataFrameCommandFactory.filterDataFrame( ingestedDF );
+                        MainProjectComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                    }
+                    else {
+                        // content of columnindex (right) clicked.
+
+                        // TODO open a menu here...
+                    }
+                }
+            }
+        } );
         table.setFont( SWTResourceManager.getFont( "Tahoma", 10, SWT.NORMAL ) );
         // TODO: this should be per column?
         // table.setFont( SWTResourceManager.getFont( "Courier New", 10, SWT.NORMAL ) );
@@ -138,6 +171,19 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
         return tbtmNewItem;
 
+    }
+
+    private static int columnIndexAtposition( Table table, Point pt ) {
+        int colIndex = -1;
+        TableItem testRow = new TableItem( table, 0 );
+        for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
+            Rectangle bounds = testRow.getBounds( columnIndex );
+            if ((pt.x >= bounds.x) && (pt.x < (bounds.x + bounds.width))) {
+                colIndex = columnIndex;
+            }
+        }
+        testRow.dispose();
+        return colIndex;
     }
 
     // XXX: This is an awful quick hack to move towards the goal to present some data, 
