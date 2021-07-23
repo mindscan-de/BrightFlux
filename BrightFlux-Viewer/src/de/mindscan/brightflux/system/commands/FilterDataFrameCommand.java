@@ -46,8 +46,16 @@ public class FilterDataFrameCommand implements BFCommand {
      */
     public FilterDataFrameCommand( DataFrame inputDataFrame ) {
         this.inputDataFrame = inputDataFrame;
-        // TODO: later we should add the filter predicate here?
-        this.whereClause = DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 );
+        // this.whereClause = DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 );
+        this.whereClause = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", " 178" );
+        // TODO: later we should also add the selection 
+        // selectClause
+    }
+
+    public FilterDataFrameCommand( DataFrame inputDataFrame, DataFrameRowFilterPredicate whereClause ) {
+        this.inputDataFrame = inputDataFrame;
+        this.whereClause = whereClause;
+
         // TODO: later we should also add the selection 
         // selectClause
     }
