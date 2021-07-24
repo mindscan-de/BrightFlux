@@ -25,7 +25,14 @@
  */
 package de.mindscan.brightflux.dataframes.filterpredicate;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
+ * 
+ * This class implements and collects different useful string evaluation operations,
+ * these operations are 'contains', 'startsWith', 'endsWith', 'matchesWith'.
+ * 
+ * TODO: maybe extract matchesWith to a complete RegexImplementation 
  * 
  */
 public enum StringEvaluationOperation {
@@ -37,8 +44,19 @@ public enum StringEvaluationOperation {
         }
     },
 
-    // TODO This as well?
-    // EMPTY_STRING,
+    IS_EMPTY_STRING {
+        @Override
+        boolean testResult( String stringRowValue, String predicateValue ) {
+            return stringRowValue.isEmpty();
+        }
+    },
+
+    IS_NULLOREMPTY_STRING {
+        @Override
+        boolean testResult( String stringRowValue, String predicateValue ) {
+            return stringRowValue == null || stringRowValue.isEmpty();
+        }
+    },
 
     STARTS_WITH {
         @Override
@@ -57,12 +75,16 @@ public enum StringEvaluationOperation {
     MATCHES_WITH {
         @Override
         boolean testResult( String stringRowValue, String predicateValue ) {
-            // TODO: implement this.
-            return false;
+            throw new NotYetImplemetedException();
         }
     };
 
+    /**
+     * Test the stringRowValue against the predicateValue. 
+     * @param stringRowValue the value of the Row
+     * @param predicateValue the value to test against.
+     * @return <code>true</code> iff, the stringRowValue fulfills the condition against the predicateValue. 
+     */
     abstract boolean testResult( String stringRowValue, String predicateValue );
 
-    // TODO: the test operation?
 }
