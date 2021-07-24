@@ -29,7 +29,17 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
+ * This implements a row filter using different string functions. This row filter
+ * predicate can compare according to
  * 
+ * - a contains b
+ * - is empty string
+ * - starts with 
+ * - ends with
+ * - matches with
+ * 
+ * It is best used with strings. But a later implementation may include also
+ * string operation on numbers. But for now this is not required.
  */
 public class StringEvaluationRowFilterPredicate implements DataFrameRowFilterPredicate {
 
@@ -66,9 +76,11 @@ public class StringEvaluationRowFilterPredicate implements DataFrameRowFilterPre
             // TODO: 
             // We rely here on a proper tostring operation...
             // lets skip that for now...
+
+            // decided against breaking things - because we don't need feature completeness yet, by forced breaks.
+            // throw new NotYetImplemetedException();
         }
 
-        // TODO Auto-generated method stub
         return false;
     }
 
