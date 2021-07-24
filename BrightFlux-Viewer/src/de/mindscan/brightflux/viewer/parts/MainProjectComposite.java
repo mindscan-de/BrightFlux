@@ -25,9 +25,6 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -35,7 +32,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.ingest.IngestCsv;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
@@ -48,11 +44,6 @@ import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
  */
 public class MainProjectComposite extends Composite implements ProjectRegistryParticipant {
     private CTabFolder mainTabFolder;
-
-    // XXX: Awful hack right now.
-    private final static Path path = Paths
-                    .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\heart.csv" );
-    IngestCsv ingest = new IngestCsv();
 
     private ProjectRegistry projectRegistry;
 
@@ -94,9 +85,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         mainTabFolder = new CTabFolder( this, SWT.NONE );
-
-        DataFrame ingestedDF = ingest.loadAsDataFrame( path );
-        addTabItem( mainTabFolder, ingestedDF );
     }
 
     private void addDataFrameTab( DataFrame newDataFrame ) {
