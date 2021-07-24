@@ -27,10 +27,12 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
- * TODO : find some interesting and performant idea
- * TODO Later? must support number dates? 
+ * TODO: find some interesting and performant idea
+ * TODO: Later? must support number dates? 
+ * TODO: Implement comparison operations for two columns
  * 
  * TODO logical Rowfilterpredicates: implication - tt -> t, tf -> f, ft -> t, ff -> t  ((not a) or b - is this useful?)
  * 
@@ -153,7 +155,8 @@ public class DataFrameRowFilterPredicateFactory {
 
     public static DataFrameRowFilterPredicate matchesWithStr( String columnName, String matcherString ) {
         // TODO: implement Regexfilter predicate
-        return null;
+        throw new NotYetImplemetedException();
+        // return null;
     }
 
 }
