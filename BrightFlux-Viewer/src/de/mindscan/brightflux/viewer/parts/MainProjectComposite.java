@@ -39,7 +39,6 @@ import de.mindscan.brightflux.ingest.IngestCsv;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
@@ -77,12 +76,12 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-
         this.projectRegistry = projectRegistry;
-        // TODO: implement an anti corruption layer, for the specific events, instead of referencing specific classes in
-        //       other packages, which may change over time. So that not every refactoring and move operation will lead 
-        //       to a change in hundreds of files.
-        projectRegistry.getEventDispatcher().registerEventListener( DataFrameLoadedEvent.class, new BFEventListener() {
+        registerEvents( projectRegistry );
+    }
+
+    private void registerEvents( ProjectRegistry projectRegistry ) {
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, new BFEventListener() {
             @Override
             public void handleEvent( BFEvent event ) {
                 BFDataFrameEvent loaded = (BFDataFrameEvent) event;
@@ -108,7 +107,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame ingestedDF ) {
         String ingestedDFName = ingestedDF.getName();
 
-        // [Desired TabItem] - but leave it like this until we added some other interesting stuff to it 
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setShowClose( true );
         tbtmNewItem.setText( ingestedDFName );
@@ -117,8 +115,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         composite.setProjectRegistry( projectRegistry );
         composite.setDataFrame( ingestedDF );
         tbtmNewItem.setControl( composite );
-
-        // [/Desired TabItem]
 
         return tbtmNewItem;
 
