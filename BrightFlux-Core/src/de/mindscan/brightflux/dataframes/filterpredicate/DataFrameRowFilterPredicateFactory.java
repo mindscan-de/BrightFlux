@@ -38,7 +38,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * 
  * TODO: some string operations, since i need them next ...
  * TODO: what about lowercase string operations /Versions? e.g. contains ignorecase.
- * 
+ * TODO: isNA(IsPresent)/isNotNA(isNotPresent) - implement the Avail/NotAvail checks.
  */
 public class DataFrameRowFilterPredicateFactory {
 
