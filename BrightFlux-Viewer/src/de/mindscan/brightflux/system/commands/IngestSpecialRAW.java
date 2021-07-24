@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.system.commands;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -47,6 +46,15 @@ import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
  */
 public class IngestSpecialRAW implements BFCommand {
 
+    private Path path;
+
+    /**
+     * 
+     */
+    public IngestSpecialRAW( Path path ) {
+        this.path = path;
+    }
+
     /** 
      * {@inheritDoc}
      */
@@ -56,7 +64,6 @@ public class IngestSpecialRAW implements BFCommand {
         JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
                         DataFrameCompilerFactory.getIntance() );
 
-        Path path = Paths.get( "Y:\\TestDatasetABC\\ABC.raw" );
         config.setTokenizerConfiguration( "de.mindscan.brightflux.ingest.tokenizers.SpecialRAWTokenizerImpl" );
         config.setDataFrameName( path.getFileName().toString() );
         config.setIngestInputFilePath( path );

@@ -110,9 +110,7 @@ public class BrightFluxViewerMainApp {
         mntmLoadFile.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: remove this hard coded value... and get it from the history or settings 
-                Path dirPath = Paths
-                                .get( "D:\\Projects\\SinglePageApplication\\Angular\\BrightFlux\\BrightFlux-Core\\test\\de\\mindscan\\brightflux\\ingest\\" );
+                Path dirPath = Paths.get( "." );
 
                 FileDialog fileDlg = new FileDialog( shlBFViewerMainApp );
                 fileDlg.setText( "Select file" );
@@ -131,17 +129,31 @@ public class BrightFluxViewerMainApp {
                 }
             }
         } );
-        mntmLoadFile.setText( "Load File" );
+        mntmLoadFile.setText( "Load CSV File ..." );
 
         MenuItem mntmSpecialRawOption = new MenuItem( menu_1, SWT.NONE );
         mntmSpecialRawOption.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw();
-                projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                Path dirPath = Paths.get( "." );
+
+                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp );
+                fileDlg.setText( "Select file" );
+                fileDlg.setFilterExtensions( new String[] { "*.raw", "*.*" } );
+                fileDlg.setFilterNames( new String[] { "Raw log files (*.raw)" } );
+                fileDlg.setFilterPath( dirPath.toString() );
+                String filePathToOpen = fileDlg.open();
+
+                if (filePathToOpen != null) {
+                    Path path = Paths.get( filePathToOpen );
+                    if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
+                        BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
+                        projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                    }
+                }
             }
         } );
-        mntmSpecialRawOption.setText( "Special Raw Option" );
+        mntmSpecialRawOption.setText( "Load Raw File ..." );
 
         new MenuItem( menu_1, SWT.SEPARATOR );
 
@@ -153,7 +165,7 @@ public class BrightFluxViewerMainApp {
                 System.gc();
             }
         } );
-        mntmGarbageCollector.setText( "Garbage Collector" );
+        mntmGarbageCollector.setText( "Garbage Collector (debug)" );
 
         new MenuItem( menu_1, SWT.SEPARATOR );
 

@@ -44,8 +44,8 @@ public class DataFrameCommandFactory {
         return new IngestCommand( filePath );
     }
 
-    public static BFCommand ingestSpecialRaw() {
-        return new IngestSpecialRAW();
+    public static BFCommand ingestSpecialRaw( Path filePath ) {
+        return new IngestSpecialRAW( filePath );
     }
 
     public static BFCommand filterDataFrame( DataFrame inputDataFrame, DataFrameRowFilterPredicate predicate ) {

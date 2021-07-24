@@ -55,10 +55,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     public MainProjectComposite( Composite parent, int style ) {
         super( parent, style );
 
-        // TODO: * register for project configuration updates/changes, and provide a listener, so that we can add and remove the content for data frames to show in the tab folder.
-        //       * we should also be able to update the project configuration by closing a dataframe and such.
-
-        // build layout - basically the tabFolder.
         buildLayout();
     }
 
@@ -100,6 +96,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         tbtmNewItem.setText( ingestedDFName );
 
         DataFrameTableComposite composite = new DataFrameTableComposite( tabFolder, SWT.NONE );
+        // TODO: autowire?
         composite.setProjectRegistry( projectRegistry );
         composite.setDataFrame( ingestedDF );
         tbtmNewItem.setControl( composite );
