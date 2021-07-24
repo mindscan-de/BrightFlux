@@ -51,13 +51,6 @@ public enum StringEvaluationOperation {
         }
     },
 
-    IS_NULLOREMPTY_STRING {
-        @Override
-        boolean testResult( String stringRowValue, String predicateValue ) {
-            return stringRowValue == null || stringRowValue.isEmpty();
-        }
-    },
-
     STARTS_WITH {
         @Override
         boolean testResult( String stringRowValue, String predicateValue ) {
