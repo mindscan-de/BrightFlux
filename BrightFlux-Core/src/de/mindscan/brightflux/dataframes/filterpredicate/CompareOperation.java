@@ -27,6 +27,15 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
 
 /**
  * 
+ * This class implements and collects different compare operations, these 
+ * operations depend on the compateTo contract of {@link Comparable}.
+ * 
+ * TODO: [Ato de] Performance Evaluation 
+ * 
+ * Which approach is faster? 
+ * - The static method 
+ * - The abstract method with the operation implemented in the enum?  
+ * 
  */
 public enum CompareOperation {
     EQ {
@@ -68,13 +77,20 @@ public enum CompareOperation {
     };
 
     /**
+     * Tests the result of the compareTo operation according to the selected CompareOperation.
      * 
-     * @param compareResult
-     * @return
+     * @param compareResult is the result of the compareTo contract of {@link Comparable}
+     * @return <code>true</code> iff the result matches the comparison 
      */
     public abstract boolean testResult( int compareResult );
 
-    // Which approach is faster?
+    /**
+     * Tests the result of the compareTo operation according to the selected CompareOperation.
+     *
+     * @param op the CompareOperation
+     * @param compareResult compareResult is the result of the compareTo contact of {@link Comparable}
+     * @return <code>true</code> iff the result matches the given CompareOperation.
+     */
     public static boolean testResult( CompareOperation op, int compareResult ) {
         switch (op) {
             case EQ:

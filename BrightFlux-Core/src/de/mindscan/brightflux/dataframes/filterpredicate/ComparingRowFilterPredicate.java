@@ -29,7 +29,18 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
 /**
+ * This implements a Row Filter using the {@link Comparable} property of the implementing classes.
+ * This row filter predicate can compare according to 
  *  
+ * - equal, 
+ * - not equal, 
+ * - less or equal 
+ * - less than  
+ * - greater or equal
+ * - grater than
+ * 
+ * This is currently best done for Numbers. It also works for Strings if the compareTo implementation
+ * of the String class is sufficient compared to using the java.text.Collator.
  */
 public final class ComparingRowFilterPredicate implements DataFrameRowFilterPredicate {
 
