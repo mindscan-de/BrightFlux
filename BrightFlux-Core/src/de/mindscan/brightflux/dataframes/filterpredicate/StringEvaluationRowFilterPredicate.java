@@ -84,4 +84,12 @@ public class StringEvaluationRowFilterPredicate implements DataFrameRowFilterPre
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeOperation() {
+        return "( df.'" + columnName + "'" + evalOperation.describeOperation() + "('" + predicateValue + "') )";
+    }
+
 }

@@ -42,12 +42,23 @@ public enum StringEvaluationOperation {
         boolean testResult( String stringRowValue, String predicateValue ) {
             return stringRowValue.contains( predicateValue );
         }
+
+        @Override
+        public String describeOperation() {
+
+            return ".contains ";
+        }
     },
 
     IS_EMPTY_STRING {
         @Override
         boolean testResult( String stringRowValue, String predicateValue ) {
             return stringRowValue.isEmpty();
+        }
+
+        @Override
+        public String describeOperation() {
+            return ".isEmpty ";
         }
     },
 
@@ -56,6 +67,11 @@ public enum StringEvaluationOperation {
         boolean testResult( String stringRowValue, String predicateValue ) {
             return stringRowValue.startsWith( predicateValue );
         }
+
+        @Override
+        public String describeOperation() {
+            return ".startsWith ";
+        }
     },
 
     ENDS_WITH {
@@ -63,12 +79,22 @@ public enum StringEvaluationOperation {
         boolean testResult( String stringRowValue, String predicateValue ) {
             return stringRowValue.endsWith( predicateValue );
         }
+
+        @Override
+        public String describeOperation() {
+            return ".endsWith ";
+        }
     },
 
     MATCHES_WITH {
         @Override
         boolean testResult( String stringRowValue, String predicateValue ) {
             throw new NotYetImplemetedException();
+        }
+
+        @Override
+        public String describeOperation() {
+            return "TODO: describeOperation MatchesWith";
         }
     };
 
@@ -80,4 +106,5 @@ public enum StringEvaluationOperation {
      */
     abstract boolean testResult( String stringRowValue, String predicateValue );
 
+    public abstract String describeOperation();
 }

@@ -43,6 +43,11 @@ public enum CompareOperation {
         public boolean testResult( int compareResult ) {
             return compareResult == 0;
         }
+
+        @Override
+        public String describeOperation() {
+            return "==";
+        }
     },
 
     NEQ {
@@ -50,11 +55,21 @@ public enum CompareOperation {
         public boolean testResult( int compareResult ) {
             return compareResult != 0;
         }
+
+        @Override
+        public String describeOperation() {
+            return "!=";
+        }
     },
     GT {
         @Override
         public boolean testResult( int compareResult ) {
             return compareResult > 0;
+        }
+
+        @Override
+        public String describeOperation() {
+            return ">";
         }
     },
     GE {
@@ -62,17 +77,32 @@ public enum CompareOperation {
         public boolean testResult( int compareResult ) {
             return compareResult >= 0;
         }
+
+        @Override
+        public String describeOperation() {
+            return ">=";
+        }
     },
     LT {
         @Override
         public boolean testResult( int compareResult ) {
             return compareResult < 0;
         }
+
+        @Override
+        public String describeOperation() {
+            return "<";
+        }
     },
     LE {
         @Override
         public boolean testResult( int compareResult ) {
             return compareResult <= 0;
+        }
+
+        @Override
+        public String describeOperation() {
+            return "<=";
         }
     };
 
@@ -83,6 +113,8 @@ public enum CompareOperation {
      * @return <code>true</code> iff the result matches the comparison 
      */
     public abstract boolean testResult( int compareResult );
+
+    public abstract String describeOperation();
 
     /**
      * Tests the result of the compareTo operation according to the selected CompareOperation.

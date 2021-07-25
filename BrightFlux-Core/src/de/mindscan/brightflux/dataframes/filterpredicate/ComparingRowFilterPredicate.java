@@ -89,4 +89,13 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
 
         return operation.testResult( compareToResult );
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeOperation() {
+        return "( df.'" + columnName + "' " + operation.describeOperation() + " " + predicateValue.toString() + " ) ";
+    }
+
 }

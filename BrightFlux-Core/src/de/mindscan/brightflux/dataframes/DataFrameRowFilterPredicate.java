@@ -38,4 +38,10 @@ public interface DataFrameRowFilterPredicate {
      */
     boolean test( DataFrameRow row );
 
+    /**
+     * This method returns the predicate string.
+     * @return
+     */
+    String describeOperation();
+
 }
