@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.journal;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * A DataframeJournal keeps a log on what Data-Operations are executed on a particular DataFrame 
  * or a particular DataFrameView. The Idea is to have the raw data available and to replay every
@@ -47,5 +50,19 @@ package de.mindscan.brightflux.journal;
  *  
  */
 public class DataFrameJournal {
+
+    private List<DataFrameJournalEntry> journal = new LinkedList<>();
+
+    public DataFrameJournal() {
+        this.journal = new LinkedList<>();
+    }
+
+    public List<DataFrameJournalEntry> getJournalEntries() {
+        return journal;
+    }
+
+    public void addJournalEntry( DataFrameJournalEntry entry ) {
+        journal.add( entry );
+    }
 
 }
