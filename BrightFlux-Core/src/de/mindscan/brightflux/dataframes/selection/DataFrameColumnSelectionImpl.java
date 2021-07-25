@@ -60,8 +60,9 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         DataFrame newDataFrame = buildNewDataFrame( selectedRows );
 
         // TODO: reorder object generation
-
+        // TODO: make the copy operation of the journal, be part of the buildDataFrameOperation.
         newDataFrame.addJournalEntries( df.getJournal().getJournalEntries() );
+        // add the current operation to the Journal
         newDataFrame.addJournalEntry( new DataFrameJournalEntry( "SELECT * FROM df WHERE " + predicate.describeOperation() ) );
 
         return newDataFrame;

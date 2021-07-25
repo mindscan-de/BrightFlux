@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
@@ -32,6 +34,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
@@ -72,7 +75,15 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
             @Override
             public void handleEvent( BFEvent event ) {
                 BFDataFrameEvent loaded = (BFDataFrameEvent) event;
-                addDataFrameTab( loaded.getDataFrame() );
+                DataFrame dataFrame = loaded.getDataFrame();
+                addDataFrameTab( dataFrame );
+
+                // Just for checking and debugging...
+                System.out.println( "DataFrameLog:" );
+                List<DataFrameJournalEntry> journalEntries = dataFrame.getJournal().getJournalEntries();
+                for (DataFrameJournalEntry entry : journalEntries) {
+                    System.out.println( ": " + entry.getLogMessage() );
+                }
             }
         } );
     }
