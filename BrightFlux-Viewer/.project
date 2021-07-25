@@ -3,6 +3,7 @@
 	<name>BrightFlux-Viewer</name>
 	<comment></comment>
 	<projects>
+		<project>BrightFlux-Core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
