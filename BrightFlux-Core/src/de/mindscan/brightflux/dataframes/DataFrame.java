@@ -28,6 +28,7 @@ package de.mindscan.brightflux.dataframes;
 import java.util.Collection;
 import java.util.Iterator;
 
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
 
 /**
@@ -74,4 +75,6 @@ public interface DataFrame {
     DataFrameColumnSelection select( DataFrameColumn<?> column );
 
     DataFrameColumnSelection select( DataFrameColumn<?>... columns );
+
+    void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry );
 }

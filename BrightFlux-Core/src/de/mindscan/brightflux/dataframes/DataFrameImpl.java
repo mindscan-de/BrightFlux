@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelectionImpl;
 
@@ -63,15 +64,18 @@ public class DataFrameImpl implements DataFrame {
     private DataFrameColumn<?>[] columns = null;
 
     private int size = 0;
+    private DataFrameJournal dataFrameJournal;
 
     public DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.randomUUID();
+        this.dataFrameJournal = new DataFrameJournal();
     }
 
     public DataFrameImpl( String nameOfDataFrame, UUID uuid ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.fromString( uuid.toString() );
+        this.dataFrameJournal = new DataFrameJournal();
     }
 
     /**
@@ -369,6 +373,14 @@ public class DataFrameImpl implements DataFrame {
     public DataFrameColumnSelection select( DataFrameColumn<?>... columns ) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry ) {
+        dataFrameJournal.addJournalEntry( dataFrameJournalEntry );
     }
 
 //    // column-names
