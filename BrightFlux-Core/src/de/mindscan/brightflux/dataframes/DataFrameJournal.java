@@ -72,4 +72,13 @@ public class DataFrameJournal {
         journal.addAll( entries );
     }
 
+    /**
+     * @param message
+     * @return
+     */
+    public static DataFrameJournalEntry create( String message ) {
+        // TODO maybe use a factory instead.
+        return new DataFrameJournalEntry( message );
+    }
+
 }

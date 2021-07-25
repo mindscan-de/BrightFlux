@@ -379,6 +379,15 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
+    public void addJournalEntry( String message ) {
+        dataFrameJournal.addJournalEntry( DataFrameJournal.create( message ) );
+
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry ) {
         dataFrameJournal.addJournalEntry( dataFrameJournalEntry );
     }

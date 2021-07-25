@@ -32,7 +32,6 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
-import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 
 /**
  * 
@@ -63,7 +62,7 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         // TODO: make the copy operation of the journal, be part of the buildDataFrameOperation.
         newDataFrame.addJournalEntries( df.getJournal().getJournalEntries() );
         // add the current operation to the Journal
-        newDataFrame.addJournalEntry( new DataFrameJournalEntry( "SELECT * FROM df WHERE " + predicate.describeOperation() ) );
+        newDataFrame.addJournalEntry( "SELECT * FROM df WHERE " + predicate.describeOperation() );
 
         return newDataFrame;
     }
