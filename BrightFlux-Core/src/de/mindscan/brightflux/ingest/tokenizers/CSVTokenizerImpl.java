@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.datasource.DataSource;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
@@ -118,6 +119,15 @@ public class CSVTokenizerImpl implements DataTokenizer {
     // Or a different reader type for binary input for binary files.
     //  // also binary formats then can be handled better, by providing/injecting the necessary ColumnSeparatorTokens and LineSeparatorTokens, so the data frames
     //  // can be processed more generically and we don't have to reinvent the data processing and data conversion in the readers, but later.
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterator<DataToken> tokenize( DataSource input ) {
+        // TODO: rework that whole thing to a DataSource, such that we can also use a column of a frame as a datasource as well. 
+        return null;
+    }
 
     /** 
      * {@inheritDoc}
