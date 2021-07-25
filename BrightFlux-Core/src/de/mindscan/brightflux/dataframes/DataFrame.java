@@ -76,11 +76,11 @@ public interface DataFrame {
 
     DataFrameColumnSelection select( DataFrameColumn<?>... columns );
 
-    void addJournalEntry( String message );
+    void appendJournal( String message );
 
-    void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry );
+    void appendJournal( DataFrameJournalEntry dataFrameJournalEntry );
 
-    void addJournalEntries( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
+    void appendJournal( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
 
     DataFrameJournal getJournal();
 }

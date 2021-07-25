@@ -63,7 +63,7 @@ public class IngestEngine {
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         DataFrame newDataFrame = buildCompiledDataFrame( config, compiledDataFrameColumns );
-        newDataFrame.addJournalEntry( "LOAD '" + config.getIngestInputPath() + "' as df" );
+        newDataFrame.appendJournal( "LOAD '" + config.getIngestInputPath() + "' as df" );
         return newDataFrame;
     }
 

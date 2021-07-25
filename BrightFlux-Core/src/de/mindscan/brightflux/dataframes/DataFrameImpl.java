@@ -379,7 +379,7 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
-    public void addJournalEntry( String message ) {
+    public void appendJournal( String message ) {
         dataFrameJournal.addJournalEntry( DataFrameJournal.create( message ) );
 
     }
@@ -388,7 +388,7 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
-    public void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry ) {
+    public void appendJournal( DataFrameJournalEntry dataFrameJournalEntry ) {
         dataFrameJournal.addJournalEntry( dataFrameJournalEntry );
     }
 
@@ -396,7 +396,7 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
-    public void addJournalEntries( Collection<DataFrameJournalEntry> dataFrameJournalEntries ) {
+    public void appendJournal( Collection<DataFrameJournalEntry> dataFrameJournalEntries ) {
         dataFrameJournal.addAllJournalEntries( dataFrameJournalEntries );
     }
 
