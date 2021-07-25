@@ -32,6 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 
 /**
  * 
@@ -55,7 +56,17 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
     @Override
     public DataFrame where( DataFrameRowFilterPredicate predicate ) {
         Collection<DataFrameRow> selectedRows = df.getRowsByPredicate( predicate );
-        return buildNewDataFrame( selectedRows );
+
+        DataFrame newDataFrame = buildNewDataFrame( selectedRows );
+
+        // TODO: reorder object generation
+        // TODO: we want to take over the previous journal / this could be done instead of "new DataFrameImpl"
+        // TODO: we want to add the entry information about the selection and the 
+        // * select( {SELECTION.TOENTRYSTRING}) from 'DFNAME' WHERE {PREDICATE.TOENTRYSTRING}
+
+        newDataFrame.addJournalEntry( new DataFrameJournalEntry() );
+
+        return newDataFrame;
     }
 
     // TODO: implement a string based Predicate (The part after the "WHERE"-clause ) then compile the predicate into the predicate and then execute the other where statement
