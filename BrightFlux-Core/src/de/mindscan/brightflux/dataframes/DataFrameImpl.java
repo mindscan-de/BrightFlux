@@ -383,6 +383,14 @@ public class DataFrameImpl implements DataFrame {
         dataFrameJournal.addJournalEntry( dataFrameJournalEntry );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void addJournalEntries( Collection<DataFrameJournalEntry> dataFrameJournalEntries ) {
+        dataFrameJournal.addAllJournalEntries( dataFrameJournalEntries );
+    }
+
 //    // column-names
 //    // columns
 //    // rows

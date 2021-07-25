@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -65,6 +66,10 @@ public class DataFrameJournal {
 
     public void addJournalEntry( DataFrameJournalEntry entry ) {
         journal.add( entry );
+    }
+
+    public void addAllJournalEntries( Collection<DataFrameJournalEntry> entries ) {
+        journal.addAll( entries );
     }
 
 }

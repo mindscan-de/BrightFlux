@@ -77,4 +77,6 @@ public interface DataFrame {
     DataFrameColumnSelection select( DataFrameColumn<?>... columns );
 
     void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry );
+
+    void addJournalEntries( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
 }
