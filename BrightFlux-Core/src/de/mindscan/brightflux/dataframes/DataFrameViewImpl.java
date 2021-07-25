@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.dataframes;
 
-import de.mindscan.brightflux.journal.DataFrameJournal;
-
 /**
  * A dataframe view is a construction which is backed by one or more dataframes, using join operations
  * A dataframe view can have columns and rows which are set invisible

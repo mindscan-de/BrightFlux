@@ -23,11 +23,15 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.journal;
+package de.mindscan.brightflux.dataframes.journal;
 
 /**
  * 
  */
 public class DataFrameJournalEntry {
+
+    // TODO: Timstamp
+    // TODO: LogEntry-Type/Enum
+    // TODO: Logentry
 
 }

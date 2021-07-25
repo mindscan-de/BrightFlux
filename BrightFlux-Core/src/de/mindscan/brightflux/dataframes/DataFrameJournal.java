@@ -23,10 +23,12 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.journal;
+package de.mindscan.brightflux.dataframes;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 
 /**
  * A DataframeJournal keeps a log on what Data-Operations are executed on a particular DataFrame 
