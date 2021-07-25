@@ -86,7 +86,7 @@ public class IngestEngine {
 //            ArrayList<DataToken> result = new ArrayList<DataToken>();
 //            return result.iterator();
 
-            return tokenizer.tokenize( "IGNORE THIS STRING FOR NOW." );
+            return tokenizer.tokenize( config.getIngestInputPath().toAbsolutePath().toString() );
         }
 
         throw new IllegalArgumentException( "Illegal tokenizer strategy encoded." );
