@@ -391,6 +391,14 @@ public class DataFrameImpl implements DataFrame {
         dataFrameJournal.addAllJournalEntries( dataFrameJournalEntries );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrameJournal getJournal() {
+        return dataFrameJournal;
+    }
+
 //    // column-names
 //    // columns
 //    // rows

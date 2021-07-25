@@ -30,8 +30,21 @@ package de.mindscan.brightflux.dataframes.journal;
  */
 public class DataFrameJournalEntry {
 
-    // TODO: Timstamp
     // TODO: LogEntry-Type/Enum
-    // TODO: Logentry
 
+    private final long timestamp;
+    private final String logMessage;
+
+    public DataFrameJournalEntry( String message ) {
+        this.timestamp = 0;
+        this.logMessage = message;
+    }
+
+    public String getLogMessage() {
+        return logMessage;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
 }

@@ -79,4 +79,6 @@ public interface DataFrame {
     void addJournalEntry( DataFrameJournalEntry dataFrameJournalEntry );
 
     void addJournalEntries( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
+
+    DataFrameJournal getJournal();
 }

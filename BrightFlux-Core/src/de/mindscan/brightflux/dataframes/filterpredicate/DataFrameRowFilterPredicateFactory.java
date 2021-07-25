@@ -52,6 +52,11 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 return true;
             }
+
+            @Override
+            public String describeOperation() {
+                return "true";
+            }
         };
     }
 
@@ -61,6 +66,11 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 return !predicate.test( row );
+            }
+
+            @Override
+            public String describeOperation() {
+                return "( NOT " + predicate.describeOperation() + ")";
             }
         };
     }
@@ -72,6 +82,11 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 return left.test( row ) && right.test( row );
             }
+
+            @Override
+            public String describeOperation() {
+                return "( " + left.describeOperation() + " AND " + right.describeOperation() + "  )";
+            }
         };
     }
 
@@ -81,6 +96,11 @@ public class DataFrameRowFilterPredicateFactory {
             @Override
             public boolean test( DataFrameRow row ) {
                 return left.test( row ) || right.test( row );
+            }
+
+            @Override
+            public String describeOperation() {
+                return "( " + left.describeOperation() + " OR " + right.describeOperation() + "  )";
             }
         };
     }
@@ -92,6 +112,11 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 return left.test( row ) == right.test( row );
             }
+
+            @Override
+            public String describeOperation() {
+                return "( " + left.describeOperation() + " == " + right.describeOperation() + "  )";
+            }
         };
     }
 
@@ -102,6 +127,12 @@ public class DataFrameRowFilterPredicateFactory {
             public boolean test( DataFrameRow row ) {
                 return left.test( row ) != right.test( row );
             }
+
+            @Override
+            public String describeOperation() {
+                return "( " + left.describeOperation() + " != " + right.describeOperation() + "  )";
+            }
+
         };
     }
 
