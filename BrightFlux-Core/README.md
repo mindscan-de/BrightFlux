@@ -82,20 +82,20 @@ In the implementation as an internal DSL it could look like this:
 According to the Java-Comparator contract we can implement gt, ge, lt, le, neq, eq by comparisons with the zero 
 value and abstract from here.
 
+String columns can now be selected using StringEvaluationRowFilterPredicates like 'contains', 'endswith' and 'startswith'
+the equals contract works on String based columns as well as the gt, ge, lt and le contract. (But without locale support)
+
+we support logical combinations of row filter predicates 'and', 'or', 'eq', 'neq'(xor), also we can negate a rowFilterPredicate.
+
 * TODO:
   - between
   - in
   - compare values of two columns
-  - string implementation (contains, startswith, endswith, matches, ignorecase)
-  - string also needs (eq, neq)
-  - string may need (gt, ge, lt, le) ?
-
-* TODO:
+  - string implementation ( matches, ignorecase-operations)
   - logical operations between two row filter predicates
-  - and, or, nand, nor, eq, neq("xor"),
-  - unary logical operation (not)
-  
-* In case of exactly one Predicate a column wise approach would be much more efficient.  
+  - nand, nor
+* TODO  
+  - In case of exactly one Predicate a column wise approach would be much more efficient.  
 
 
 ## Data Frames - I/O
