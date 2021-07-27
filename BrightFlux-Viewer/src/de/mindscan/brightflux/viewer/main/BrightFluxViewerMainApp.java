@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Shell;
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 
@@ -55,7 +56,7 @@ public class BrightFluxViewerMainApp {
 
     protected Shell shlBFViewerMainApp;
     private Composite mainProjectComposite;
-    private ProjectRegistry projectRegistry = new ProjectRegistry();
+    private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
 
     /**
      * Launch the application.

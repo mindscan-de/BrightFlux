@@ -27,14 +27,47 @@ package de.mindscan.brightflux.system.registry;
 
 import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
 import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
+import de.mindscan.brightflux.system.dispatcher.SimpleEventDispatcher;
 
 /**
- * 
+ * TODO: maybe ProjectRegistry is the wrong name...
  */
-public interface ProjectRegistry {
+public class ProjectRegistryImpl implements ProjectRegistry {
 
-    SimpleCommandDispatcher getCommandDispatcher();
+    private EventDispatcher eventDispatcher;
+    private SimpleCommandDispatcher commandDispatcher;
 
-    EventDispatcher getEventDispatcher();
+    static class Holder {
+        static ProjectRegistry instance = new ProjectRegistryImpl();
+    }
 
+    public static ProjectRegistry getInstance() {
+        return Holder.instance;
+    }
+
+    public ProjectRegistryImpl() {
+        eventDispatcher = new SimpleEventDispatcher();
+        commandDispatcher = new SimpleCommandDispatcher( eventDispatcher );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public SimpleCommandDispatcher getCommandDispatcher() {
+        return commandDispatcher;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public EventDispatcher getEventDispatcher() {
+        return eventDispatcher;
+    }
+
+    // TODO: work on a mechanism that if the loaded files change, then we want to react on that....
+    // 
+    // addProjectListener
+    // removeProjectListener
 }
