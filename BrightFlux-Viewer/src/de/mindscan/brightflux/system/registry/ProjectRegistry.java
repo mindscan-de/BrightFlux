@@ -33,6 +33,10 @@ import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
  */
 public interface ProjectRegistry {
 
+    static ProjectRegistry getInstance() {
+        return ProjectRegistryImpl.getInstance();
+    }
+
     SimpleCommandDispatcher getCommandDispatcher();
 
     EventDispatcher getEventDispatcher();
