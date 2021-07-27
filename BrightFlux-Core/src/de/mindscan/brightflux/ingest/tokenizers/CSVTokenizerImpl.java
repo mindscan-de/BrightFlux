@@ -125,7 +125,9 @@ public class CSVTokenizerImpl implements DataTokenizer {
      */
     @Override
     public Iterator<DataToken> tokenize( DataSource input ) {
-        // TODO: rework that whole thing to a DataSource, such that we can also use a column of a frame as a datasource as well. 
+        // TODO: rework that whole thing to a DataSource, such that we can also use a column of a frame as a datasource as well.
+        // TODO also we don't care what the source actually is, only how we want to consume this data, and whether the source can provide the data the desired way.
+        // TODO: the datasource can announce its capabilities and the tokenizer may use the source according to its capabilities.
         return null;
     }
 
