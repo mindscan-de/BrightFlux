@@ -66,16 +66,20 @@ public class DataFrameImpl implements DataFrame {
     private int size = 0;
     private DataFrameJournal dataFrameJournal;
 
+    private int dataFrameGeneration;
+
     public DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.randomUUID();
         this.dataFrameJournal = new DataFrameJournal();
+        this.dataFrameGeneration = 0;
     }
 
     public DataFrameImpl( String nameOfDataFrame, UUID uuid ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.fromString( uuid.toString() );
         this.dataFrameJournal = new DataFrameJournal();
+        this.dataFrameGeneration = 0;
     }
 
     /**
@@ -92,9 +96,12 @@ public class DataFrameImpl implements DataFrame {
         return nameOfDataFrame;
     }
 
+    @Override
     public String getTitle() {
-        // + todo add the generation  
-        return nameOfDataFrame;
+        if (dataFrameGeneration == 0) {
+            return nameOfDataFrame;
+        }
+        return nameOfDataFrame + "(" + Integer.toString( dataFrameGeneration ) + ")";
     }
 
     public void setName( String dfName ) {
@@ -420,8 +427,20 @@ public class DataFrameImpl implements DataFrame {
     @Override
     public DataFrame inheritNewDataFrame() {
         DataFrameImpl inheritedDataFrame = new DataFrameImpl( getName() );
+        inheritedDataFrame.dataFrameGeneration = this.dataFrameGeneration + 1;
+
+        // add the current journal to the new DataFrame, because the new dataframe inherits from this dataframe
         inheritedDataFrame.appendJournal( this.getJournal().getJournalEntries() );
+
         return inheritedDataFrame;
+    }
+
+    /**
+     * @return the dataFrameGeneration
+     */
+    @Override
+    public int getDataFrameGeneration() {
+        return dataFrameGeneration;
     }
 
 //    // column-names

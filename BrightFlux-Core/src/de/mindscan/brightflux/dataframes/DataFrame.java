@@ -90,4 +90,6 @@ public interface DataFrame {
 
     DataFrame inheritNewDataFrame();
 
+    int getDataFrameGeneration();
+
 }
