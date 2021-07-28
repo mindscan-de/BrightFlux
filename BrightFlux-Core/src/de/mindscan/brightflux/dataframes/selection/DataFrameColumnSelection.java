@@ -35,4 +35,6 @@ public interface DataFrameColumnSelection {
 
     DataFrame where( DataFrameRowFilterPredicate predicate );
 
+    DataFrame where( String predicate );
+
 }

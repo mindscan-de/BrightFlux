@@ -67,7 +67,9 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
 
     // TODO: implement a string based Predicate (The part after the "WHERE"-clause ) then compile the predicate into the predicate and then execute the other where statement
     // the dataframe must be known fo this.
+    @Override
     public DataFrame where( String predicate ) {
+        // TODO compile the predicate to a DataFrameRowFilterPredicate
         return null;
     };
 
