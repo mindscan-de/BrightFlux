@@ -52,6 +52,8 @@ public interface DataFrame {
 
     Collection<String> getColumnNames();
 
+    void addColumns( DataFrameColumn<?>... selectedColumnsCopy );
+
     Iterator<DataFrameRow> rowIterator();
 
     Object getAt( int columnIndex, int rowIndex );
@@ -85,5 +87,7 @@ public interface DataFrame {
     void appendJournal( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
 
     DataFrameJournal getJournal();
+
+    DataFrame inheritNewDataFrame();
 
 }

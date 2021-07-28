@@ -184,6 +184,7 @@ public class DataFrameImpl implements DataFrame {
     }
 
     // add multiple data frame columns
+    @Override
     public void addColumns( DataFrameColumn<?>... allcolumns ) {
         for (DataFrameColumn<?> dataFrameColumn : allcolumns) {
             addColumn( dataFrameColumn );
@@ -411,6 +412,16 @@ public class DataFrameImpl implements DataFrame {
     @Override
     public DataFrameJournal getJournal() {
         return dataFrameJournal;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrame inheritNewDataFrame() {
+        DataFrameImpl inheritedDataFrame = new DataFrameImpl( getName() );
+        inheritedDataFrame.appendJournal( this.getJournal().getJournalEntries() );
+        return inheritedDataFrame;
     }
 
 //    // column-names

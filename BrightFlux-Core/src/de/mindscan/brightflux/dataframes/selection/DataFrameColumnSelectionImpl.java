@@ -29,7 +29,6 @@ import java.util.Collection;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 
@@ -56,11 +55,10 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
     public DataFrame where( DataFrameRowFilterPredicate predicate ) {
         Collection<DataFrameRow> selectedRows = df.getRowsByPredicate( predicate );
 
-        DataFrame newDataFrame = buildNewDataFrame( selectedRows );
+        DataFrame newDataFrame = df.inheritNewDataFrame();
 
-        // TODO: reorder object generation
-        // TODO: make the copy operation of the journal, be part of the buildDataFrameOperation.
-        newDataFrame.appendJournal( df.getJournal().getJournalEntries() );
+        buildNewDataFrame( newDataFrame, selectedRows );
+
         // add the current operation to the Journal
         newDataFrame.appendJournal( "SELECT * FROM df WHERE " + predicate.describeOperation() );
 
@@ -73,9 +71,7 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         return null;
     };
 
-    private DataFrame buildNewDataFrame( Collection<DataFrameRow> selectedRows ) {
-        DataFrameImpl newDataFrame = new DataFrameImpl( "" );
-
+    private void buildNewDataFrame( DataFrame newDataFrame, Collection<DataFrameRow> selectedRows ) {
         DataFrameColumn<?>[] selectedColumnsCopy = new DataFrameColumn<?>[selectedColumns.length];
         String[] selectedColumnsNames = new String[selectedColumns.length];
 
@@ -94,7 +90,5 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         }
 
         newDataFrame.addColumns( selectedColumnsCopy );
-
-        return newDataFrame;
     }
 }
