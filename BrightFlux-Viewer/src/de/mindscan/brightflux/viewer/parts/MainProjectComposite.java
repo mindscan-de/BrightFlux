@@ -90,7 +90,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     }
 
     private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame ingestedDF ) {
-        String ingestedDFName = ingestedDF.getName();
+        String ingestedDFName = ingestedDF.getTitle();
 
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setShowClose( true );
