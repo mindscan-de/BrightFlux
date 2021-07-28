@@ -37,7 +37,9 @@ import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
 public interface DataFrame {
 
     // Short name
-    public String getName();
+    String getName();
+
+    String getTitle();
 
     // TODO: full name?
     // public String getFullName();
@@ -83,4 +85,5 @@ public interface DataFrame {
     void appendJournal( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
 
     DataFrameJournal getJournal();
+
 }

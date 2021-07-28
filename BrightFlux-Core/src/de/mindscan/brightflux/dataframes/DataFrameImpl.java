@@ -92,6 +92,11 @@ public class DataFrameImpl implements DataFrame {
         return nameOfDataFrame;
     }
 
+    public String getTitle() {
+        // + todo add the generation  
+        return nameOfDataFrame;
+    }
+
     public void setName( String dfName ) {
         this.nameOfDataFrame = dfName;
     }
