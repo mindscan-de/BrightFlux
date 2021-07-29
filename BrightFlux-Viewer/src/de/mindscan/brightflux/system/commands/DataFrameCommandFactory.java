@@ -53,11 +53,11 @@ public class DataFrameCommandFactory {
     }
 
     public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {
-        return new ReceiptExecuteCommand( inputDataFrame, recipe );
+        return new RecipeExecuteCommand( inputDataFrame, recipe );
     }
 
     public static BFCommand saveRecipe( DataFrame inputDataFrame, Path targetFile ) {
-        return new ReceiptSaveCommand( inputDataFrame, targetFile );
+        return new RecipeSaveCommand( inputDataFrame, targetFile );
     }
 
 }

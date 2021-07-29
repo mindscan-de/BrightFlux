@@ -35,18 +35,19 @@ import de.mindscan.brightflux.system.events.BFEvent;
 /**
  * 
  */
-public class ReceiptExecuteCommand implements BFCommand {
+public class RecipeSaveCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
-    private Path receipt;
+    private Path targetFile;
 
     /**
      * @param inputDataFrame
-     * @param receipt
+     * @param targetFile
      */
-    public ReceiptExecuteCommand( DataFrame inputDataFrame, Path receiptFile ) {
+    public RecipeSaveCommand( DataFrame inputDataFrame, Path targetFile ) {
         this.inputDataFrame = inputDataFrame;
-        this.receipt = receiptFile;
+        this.targetFile = targetFile;
+
     }
 
     /** 
@@ -54,7 +55,7 @@ public class ReceiptExecuteCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO: implement the receipt application onto the dataframe...
+        // TODO Auto-generated method stub
         throw new NotYetImplemetedException();
     }
 
