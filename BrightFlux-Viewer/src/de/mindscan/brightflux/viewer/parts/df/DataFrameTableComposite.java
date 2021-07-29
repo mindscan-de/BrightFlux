@@ -49,6 +49,7 @@ import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
+import de.mindscan.brightflux.receipt.BFReceipt;
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
@@ -168,6 +169,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmReceipts.setMenu( menu_3 );
 
         MenuItem mntmApplyReceipt = new MenuItem( menu_3, SWT.NONE );
+        mntmApplyReceipt.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BFReceipt receipt = null;
+                applyReceipt( ingestedDF, receipt );
+            }
+        } );
         mntmApplyReceipt.setText( "Apply Receipt ..." );
     }
 
@@ -236,13 +244,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
                         DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
         BFCommand command = DataFrameCommandFactory.filterDataFrame( dataFrame, predicate );
-        DataFrameTableComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        dispatch( command );
     }
 
     private void apply666filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
         BFCommand command = DataFrameCommandFactory.filterDataFrame( dataFrame, predicate );
-        DataFrameTableComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        dispatch( command );
 
     }
 
@@ -254,4 +262,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
+    private void applyReceipt( DataFrame dataFrame, BFReceipt receipt ) {
+        BFCommand command = DataFrameCommandFactory.applyReceipt( dataFrame, receipt );
+        dispatch( command );
+    }
+
+    private void dispatch( BFCommand command ) {
+        DataFrameTableComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+    }
 }
