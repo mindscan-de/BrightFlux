@@ -23,30 +23,17 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.receipt;
+package de.mindscan.brightflux.recipe;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import de.mindscan.brightflux.dataframes.DataFrameJournal;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 
 /**
  * 
  */
-public class BFReceiptImpl implements BFReceipt {
+public interface BFRecipe {
 
-    private List<DataFrameJournalEntry> receiptEntries;
+    List<DataFrameJournalEntry> getRecipeEntries();
 
-    public BFReceiptImpl( DataFrameJournal journal ) {
-        receiptEntries = new LinkedList<>( journal.getJournalEntries() );
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public List<DataFrameJournalEntry> getReceiptEntries() {
-        return receiptEntries;
-    }
 }

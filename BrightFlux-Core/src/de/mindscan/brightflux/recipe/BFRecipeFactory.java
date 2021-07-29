@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.receipt;
+package de.mindscan.brightflux.recipe;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameJournal;
@@ -31,13 +31,13 @@ import de.mindscan.brightflux.dataframes.DataFrameJournal;
 /**
  * 
  */
-public class BFReceiptFactory {
+public class BFRecipeFactory {
 
-    public static BFReceipt create( DataFrame df ) {
-        return new BFReceiptImpl( df.getJournal() );
+    public static BFRecipe create( DataFrame df ) {
+        return new BFRecipeImpl( df.getJournal() );
     }
 
-    public static BFReceipt create( DataFrameJournal journal ) {
-        return new BFReceiptImpl( journal );
+    public static BFRecipe create( DataFrameJournal journal ) {
+        return new BFRecipeImpl( journal );
     }
 }
