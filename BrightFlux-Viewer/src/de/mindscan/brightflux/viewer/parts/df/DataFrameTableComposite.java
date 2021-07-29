@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.parts.df;
 
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
@@ -49,7 +50,6 @@ import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
-import de.mindscan.brightflux.receipt.BFReceipt;
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
@@ -118,6 +118,14 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmShowPrint.setText( "Show / Print" );
 
         MenuItem mntmSaveAsReceipt = new MenuItem( menu_4, SWT.NONE );
+        mntmSaveAsReceipt.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                Path targetPath = null;
+                saveReceipt( ingestedDF, targetPath );
+            }
+
+        } );
         mntmSaveAsReceipt.setText( "Save As Receipt ..." );
 
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
@@ -172,7 +180,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmApplyReceipt.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BFReceipt receipt = null;
+                Path receipt = null;
                 applyReceipt( ingestedDF, receipt );
             }
         } );
@@ -243,14 +251,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void apply610filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
                         DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-        BFCommand command = DataFrameCommandFactory.filterDataFrame( dataFrame, predicate );
-        dispatch( command );
+        dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
     }
 
     private void apply666filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-        BFCommand command = DataFrameCommandFactory.filterDataFrame( dataFrame, predicate );
-        dispatch( command );
+        dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
 
     }
 
@@ -262,12 +268,16 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
-    private void applyReceipt( DataFrame dataFrame, BFReceipt receipt ) {
-        BFCommand command = DataFrameCommandFactory.applyReceipt( dataFrame, receipt );
-        dispatch( command );
+    private void applyReceipt( DataFrame dataFrame, Path receipt ) {
+        dispatchCommand( DataFrameCommandFactory.applyReceipt( dataFrame, receipt ) );
     }
 
-    private void dispatch( BFCommand command ) {
+    private void saveReceipt( DataFrame dataFrame, Path targetPath ) {
+        dispatchCommand( DataFrameCommandFactory.saveReceipt( dataFrame, targetPath ) );
+
+    }
+
+    private void dispatchCommand( BFCommand command ) {
         DataFrameTableComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
     }
 }
