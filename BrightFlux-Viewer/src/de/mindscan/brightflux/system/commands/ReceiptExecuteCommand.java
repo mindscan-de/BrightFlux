@@ -25,28 +25,28 @@
  */
 package de.mindscan.brightflux.system.commands;
 
+import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
-import de.mindscan.brightflux.receipt.BFReceipt;
 import de.mindscan.brightflux.system.events.BFEvent;
 
 /**
  * 
  */
-public class ReceiptEexecuteCommand implements BFCommand {
+public class ReceiptExecuteCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
-    private BFReceipt receipt;
+    private Path receipt;
 
     /**
      * @param inputDataFrame
      * @param receipt
      */
-    public ReceiptEexecuteCommand( DataFrame inputDataFrame, BFReceipt receipt ) {
+    public ReceiptExecuteCommand( DataFrame inputDataFrame, Path receiptFile ) {
         this.inputDataFrame = inputDataFrame;
-        this.receipt = receipt;
+        this.receipt = receiptFile;
     }
 
     /** 
