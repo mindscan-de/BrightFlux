@@ -269,11 +269,11 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void applyReceipt( DataFrame dataFrame, Path receipt ) {
-        dispatchCommand( DataFrameCommandFactory.applyReceipt( dataFrame, receipt ) );
+        dispatchCommand( DataFrameCommandFactory.applyRecipe( dataFrame, receipt ) );
     }
 
     private void saveReceipt( DataFrame dataFrame, Path targetPath ) {
-        dispatchCommand( DataFrameCommandFactory.saveReceipt( dataFrame, targetPath ) );
+        dispatchCommand( DataFrameCommandFactory.saveRecipe( dataFrame, targetPath ) );
 
     }
 

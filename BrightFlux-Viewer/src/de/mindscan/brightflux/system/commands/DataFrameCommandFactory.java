@@ -52,11 +52,11 @@ public class DataFrameCommandFactory {
         return new FilterDataFrameCommand( inputDataFrame, predicate );
     }
 
-    public static BFCommand applyReceipt( DataFrame inputDataFrame, Path receipt ) {
-        return new ReceiptExecuteCommand( inputDataFrame, receipt );
+    public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {
+        return new ReceiptExecuteCommand( inputDataFrame, recipe );
     }
 
-    public static BFCommand saveReceipt( DataFrame inputDataFrame, Path targetFile ) {
+    public static BFCommand saveRecipe( DataFrame inputDataFrame, Path targetFile ) {
         return new ReceiptSaveCommand( inputDataFrame, targetFile );
     }
 
