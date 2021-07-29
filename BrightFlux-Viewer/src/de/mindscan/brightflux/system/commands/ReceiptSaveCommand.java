@@ -26,38 +26,37 @@
 package de.mindscan.brightflux.system.commands;
 
 import java.nio.file.Path;
+import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.system.events.BFEvent;
 
 /**
- * This class provides commands around DataFrames 
+ * 
  */
-public class DataFrameCommandFactory {
+public class ReceiptSaveCommand implements BFCommand {
+
+    private DataFrame inputDataFrame;
+    private Path targetFile;
 
     /**
-     * This method will create an {@link IngestCommand} which when executed will provide a DataFrame.
-     * @param filePath The path to the file containing the data to ingest.
-     * @return a command
+     * @param inputDataFrame
+     * @param targetFile
      */
-    public static BFCommand ingestFile( Path filePath ) {
-        return new IngestCommand( filePath );
+    public ReceiptSaveCommand( DataFrame inputDataFrame, Path targetFile ) {
+        this.inputDataFrame = inputDataFrame;
+        this.targetFile = targetFile;
+
     }
 
-    public static BFCommand ingestSpecialRaw( Path filePath ) {
-        return new IngestSpecialRAW( filePath );
-    }
-
-    public static BFCommand filterDataFrame( DataFrame inputDataFrame, DataFrameRowFilterPredicate predicate ) {
-        return new FilterDataFrameCommand( inputDataFrame, predicate );
-    }
-
-    public static BFCommand applyReceipt( DataFrame inputDataFrame, Path receipt ) {
-        return new ReceiptExecuteCommand( inputDataFrame, receipt );
-    }
-
-    public static BFCommand saveReceipt( DataFrame inputDataFrame, Path targetFile ) {
-        return new ReceiptSaveCommand( inputDataFrame, targetFile );
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void execute( Consumer<BFEvent> eventConsumer ) {
+        // TODO Auto-generated method stub
+        throw new NotYetImplemetedException();
     }
 
 }
