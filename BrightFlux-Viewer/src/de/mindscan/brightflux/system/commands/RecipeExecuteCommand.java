@@ -26,13 +26,16 @@
 package de.mindscan.brightflux.system.commands;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.recipe.BFRecipe;
 import de.mindscan.brightflux.recipe.BFRecipeIO;
 import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
 /**
  * 
@@ -60,10 +63,22 @@ public class RecipeExecuteCommand implements BFCommand {
 
         // TODO: apply the recipe
         if (recipe != null) {
-            // apply
-            // DataFrameLoaded
+            List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries();
 
-            // TODO: implement the receipt application onto the dataframe...
+            if (recipeEntries.size() > 0) {
+                // apply the receipt onto the data frame in a serial manner
+                DataFrame currentDataFrame = inputDataFrame;
+                for (DataFrameJournalEntry entry : recipeEntries) {
+                    String predicate = entry.getLogMessage();
+                    currentDataFrame = currentDataFrame.select().where( predicate );
+                }
+
+                // DataFrameLoaded
+                eventConsumer.accept( new DataFrameLoadedEvent( currentDataFrame ) );
+            }
+
+            // Nothing to do...
+
             // TODO: fire a event that this dataframe was processed / dataFrameLoaded / dataFrameCalculated
             throw new NotYetImplemetedException();
         }
