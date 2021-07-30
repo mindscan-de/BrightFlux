@@ -74,6 +74,9 @@ public class RecipeExecuteCommand implements BFCommand {
                 DataFrame currentDataFrame = inputDataFrame;
                 for (DataFrameJournalEntry entry : recipeEntries) {
                     String predicate = entry.getLogMessage();
+
+                    // TODO: according to the entry type we need to select the correct strategy to apply here... 
+
                     currentDataFrame = currentDataFrame.select().where( predicate );
                 }
 
