@@ -58,10 +58,19 @@ public class RecipeExecuteCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
 
-        // TODO: apply the recipe 
+        // TODO: apply the recipe
+        if (recipe != null) {
+            // apply
+            // DataFrameLoaded
 
-        // TODO: implement the receipt application onto the dataframe...
-        throw new NotYetImplemetedException();
+            // TODO: implement the receipt application onto the dataframe...
+            // TODO: fire a event that this dataframe was processed / dataFrameLoaded / dataFrameCalculated
+            throw new NotYetImplemetedException();
+        }
+        else {
+            // TODO: fire a event, that the recipe load operation failed
+            throw new NotYetImplemetedException();
+        }
     }
 
 }
