@@ -49,4 +49,8 @@ public class DataFrameJournalEntry {
     public long getTimestamp() {
         return timestamp;
     }
+
+    public DataFrameJournalEntryType getEntryType() {
+        return entryType;
+    }
 }

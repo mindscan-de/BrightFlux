@@ -28,9 +28,11 @@ package de.mindscan.brightflux.system.commands;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.recipe.BFRecipe;
 import de.mindscan.brightflux.recipe.BFRecipeIO;
@@ -63,7 +65,9 @@ public class RecipeExecuteCommand implements BFCommand {
 
         // TODO: apply the recipe
         if (recipe != null) {
-            List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries();
+            // use everything that is not a load command.
+            List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries().parallelStream()
+                            .filter( entry -> entry.getEntryType() != DataFrameJournalEntryType.LOAD ).collect( Collectors.toList() );
 
             if (recipeEntries.size() > 0) {
                 // apply the receipt onto the data frame in a serial manner
