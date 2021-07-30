@@ -23,39 +23,44 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands;
+package de.mindscan.brightflux.system.events;
 
 import java.nio.file.Path;
-import java.util.function.Consumer;
-
-import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.recipe.BFRecipeFactory;
-import de.mindscan.brightflux.recipe.BFRecipeIO;
-import de.mindscan.brightflux.system.events.BFEvent;
-import de.mindscan.brightflux.system.events.RecipeSaveResult;
 
 /**
  * 
  */
-public class RecipeSaveCommand implements BFCommand {
+public class RecipeSaveResult implements BFEvent {
 
-    private DataFrame inputDataFrame;
     private Path targetFile;
+    private boolean success;
 
-    public RecipeSaveCommand( DataFrame inputDataFrame, Path targetFile ) {
-        this.inputDataFrame = inputDataFrame;
+    /**
+     * @param targetFile 
+     * @param success
+     */
+    public RecipeSaveResult( Path targetFile, boolean success ) {
         this.targetFile = targetFile;
-
+        this.success = success;
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void execute( Consumer<BFEvent> eventConsumer ) {
-        boolean result = BFRecipeIO.saveToFile( BFRecipeFactory.create( inputDataFrame ), targetFile );
-
-        eventConsumer.accept( new RecipeSaveResult( targetFile, result ) );
+    public void foo() {
+        // TODO Auto-generated method stub
     }
 
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public boolean isFailed() {
+        return !success;
+    }
+
+    public String getPath() {
+        return targetFile.toString();
+    }
 }
