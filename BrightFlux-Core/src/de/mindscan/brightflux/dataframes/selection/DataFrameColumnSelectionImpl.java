@@ -31,6 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 
 /**
  * 
@@ -60,7 +61,7 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         buildNewDataFrame( newDataFrame, selectedRows );
 
         // add the current operation to the Journal
-        newDataFrame.appendJournal( "SELECT * FROM df WHERE " + predicate.describeOperation() );
+        newDataFrame.appendJournal( DataFrameJournalEntryType.SELECT_WHERE, "SELECT * FROM df WHERE " + predicate.describeOperation() );
 
         return newDataFrame;
     }

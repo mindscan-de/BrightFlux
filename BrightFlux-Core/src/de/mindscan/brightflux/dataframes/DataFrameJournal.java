@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 
 /**
  * A DataframeJournal keeps a log on what Data-Operations are executed on a particular DataFrame 
@@ -76,9 +77,9 @@ public class DataFrameJournal {
      * @param message
      * @return
      */
-    public static DataFrameJournalEntry create( String message ) {
+    public static DataFrameJournalEntry create( DataFrameJournalEntryType entryType, String message ) {
         // TODO maybe use a factory instead.
-        return new DataFrameJournalEntry( message );
+        return new DataFrameJournalEntry( entryType, message );
     }
 
 }

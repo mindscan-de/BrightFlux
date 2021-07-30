@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
 
 /**
@@ -80,7 +81,7 @@ public interface DataFrame {
 
     DataFrameColumnSelection select( DataFrameColumn<?>... columns );
 
-    void appendJournal( String message );
+    void appendJournal( DataFrameJournalEntryType entryType, String message );
 
     void appendJournal( DataFrameJournalEntry dataFrameJournalEntry );
 

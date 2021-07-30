@@ -35,6 +35,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelectionImpl;
 
@@ -392,8 +393,8 @@ public class DataFrameImpl implements DataFrame {
      * {@inheritDoc}
      */
     @Override
-    public void appendJournal( String message ) {
-        dataFrameJournal.addJournalEntry( DataFrameJournal.create( message ) );
+    public void appendJournal( DataFrameJournalEntryType entryType, String message ) {
+        dataFrameJournal.addJournalEntry( DataFrameJournal.create( entryType, message ) );
 
     }
 

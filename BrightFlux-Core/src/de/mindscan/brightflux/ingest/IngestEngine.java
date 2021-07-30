@@ -34,6 +34,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
@@ -63,7 +64,7 @@ public class IngestEngine {
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         DataFrame newDataFrame = buildCompiledDataFrame( config, compiledDataFrameColumns );
-        newDataFrame.appendJournal( "LOAD '" + config.getIngestInputPath() + "' as df" );
+        newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, "LOAD '" + config.getIngestInputPath() + "' as df" );
         return newDataFrame;
     }
 

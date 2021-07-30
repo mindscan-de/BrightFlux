@@ -33,10 +33,12 @@ public class DataFrameJournalEntry {
     // TODO: LogEntry-Type/Enum
 
     private final long timestamp;
+    private final DataFrameJournalEntryType entryType;
     private final String logMessage;
 
-    public DataFrameJournalEntry( String message ) {
+    public DataFrameJournalEntry( DataFrameJournalEntryType entryType, String message ) {
         this.timestamp = 0;
+        this.entryType = entryType;
         this.logMessage = message;
     }
 
