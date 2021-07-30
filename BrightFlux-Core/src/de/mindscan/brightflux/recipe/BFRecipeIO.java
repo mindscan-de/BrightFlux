@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.recipe;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -48,5 +49,16 @@ public class BFRecipeIO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static BFRecipe loadFromFile( Path targetPath ) {
+        try (BufferedReader jsonBufferedReader = Files.newBufferedReader( targetPath, StandardCharsets.UTF_8 )) {
+            Gson gson = new Gson();
+            return gson.fromJson( jsonBufferedReader, BFRecipeImpl.class );
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

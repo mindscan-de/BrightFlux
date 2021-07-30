@@ -30,6 +30,8 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.recipe.BFRecipe;
+import de.mindscan.brightflux.recipe.BFRecipeIO;
 import de.mindscan.brightflux.system.events.BFEvent;
 
 /**
@@ -38,15 +40,15 @@ import de.mindscan.brightflux.system.events.BFEvent;
 public class RecipeExecuteCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
-    private Path receipt;
+    private Path recipeFilePath;
 
     /**
      * @param inputDataFrame
-     * @param receipt
+     * @param recipeFilePath
      */
-    public RecipeExecuteCommand( DataFrame inputDataFrame, Path receiptFile ) {
+    public RecipeExecuteCommand( DataFrame inputDataFrame, Path recipeFilePath ) {
         this.inputDataFrame = inputDataFrame;
-        this.receipt = receiptFile;
+        this.recipeFilePath = recipeFilePath;
     }
 
     /** 
@@ -54,6 +56,10 @@ public class RecipeExecuteCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
+        BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
+
+        // TODO: apply the recipe 
+
         // TODO: implement the receipt application onto the dataframe...
         throw new NotYetImplemetedException();
     }
