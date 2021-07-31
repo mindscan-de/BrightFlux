@@ -57,6 +57,7 @@ import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
  * 
@@ -198,18 +199,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmApplyReceipt.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                Path dirPath = Paths.get( "." );
-
-                FileDialog fileDlg = new FileDialog( parentShell, SWT.OPEN );
-                fileDlg.setText( "Load Recipe" );
-                fileDlg.setFilterExtensions( new String[] { "*.bfrecipe" } );
-                fileDlg.setFilterNames( new String[] { "Brightflux recipe files (*.bfrecipe)" } );
-                fileDlg.setFilterPath( dirPath.toString() );
-                String filePathToOpen = fileDlg.open();
-
-                if (filePathToOpen != null) {
-                    applyReceipt( ingestedDF, Paths.get( filePathToOpen ) );
-                }
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Load Recipe", //
+                                new String[] { "*.bfrecipe" }, //
+                                new String[] { "Brightflux recipe files (*.bfrecipe)" }, //
+                                path -> {
+                                    applyReceipt( ingestedDF, path );
+                                } );
             }
         } );
         mntmApplyReceipt.setText( "Apply Receipt ..." );
