@@ -42,13 +42,9 @@ public class BrightFluxFileDialogs {
 
     public static void openRegularFileAndConsumePath( Shell shell, String header, String[] filterextensions, String[] filternames,
                     Consumer<Path> pathConsumer ) {
-        Path dirPath = Paths.get( "." );
-        FileDialog fileDlg = new FileDialog( shell, SWT.OPEN );
-        fileDlg.setText( header );
-        fileDlg.setFilterExtensions( filterextensions );
-        fileDlg.setFilterNames( filternames );
-        fileDlg.setFilterPath( dirPath.toString() );
-        String filePathToOpen = fileDlg.open();
+        Path startPath = Paths.get( "." );
+
+        String filePathToOpen = openDialog( shell, SWT.OPEN, startPath, header, filterextensions, filternames );
 
         if (filePathToOpen != null) {
             Path path = Paths.get( filePathToOpen );
@@ -60,18 +56,24 @@ public class BrightFluxFileDialogs {
 
     public static void saveRegularFileAndConsumePath( Shell shell, String header, String[] filterextensions, String[] filternames,
                     Consumer<Path> pathConsumer ) {
-        Path dirPath = Paths.get( "." );
-        FileDialog fileDlg = new FileDialog( shell, SWT.SAVE );
-        fileDlg.setText( header );
-        fileDlg.setFilterExtensions( filterextensions );
-        fileDlg.setFilterNames( filternames );
-        fileDlg.setFilterPath( dirPath.toString() );
-        String filePathToOpen = fileDlg.open();
+        Path startPath = Paths.get( "." );
+        String filePathToOpen = openDialog( shell, SWT.SAVE, startPath, header, filterextensions, filternames );
 
         if (filePathToOpen != null) {
             Path path = Paths.get( filePathToOpen );
             pathConsumer.accept( path );
         }
+    }
+
+    private static String openDialog( Shell shell, int dialogType, Path startPath, String header, String[] filterextensions, String[] filternames ) {
+        FileDialog fileDlg = new FileDialog( shell, dialogType );
+
+        fileDlg.setText( header );
+        fileDlg.setFilterExtensions( filterextensions );
+        fileDlg.setFilterNames( filternames );
+        fileDlg.setFilterPath( startPath.toString() );
+
+        return fileDlg.open();
     }
 
 }
