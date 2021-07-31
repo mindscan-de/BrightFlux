@@ -48,6 +48,12 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
  * TableItem[] are the arrays retaining the whole dataframe.
  */
 public class BrightFluxViewerMainApp {
+    // RAW
+    private static final String[] RAW_FILEEXTENSIONS = new String[] { "*.raw", "*.*" };
+    private static final String[] RAW_FILEDESCRIPTIONS = new String[] { "Raw log files (*.raw)", "All files" };
+    // CSV
+    private static final String[] CSV_FILEEXTENSTION = new String[] { "*.csv" };
+    private static final String[] CSV_FILEDESCRIPTION = new String[] { "Comma Separated files (*.csv)" };
 
     protected Shell shlBFViewerMainApp;
     private Composite mainProjectComposite;
@@ -107,8 +113,8 @@ public class BrightFluxViewerMainApp {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shlBFViewerMainApp, "Select file", //
-                                new String[] { "*.csv" }, //
-                                new String[] { "Comma Separated files (*.csv)" }, // 
+                                CSV_FILEEXTENSTION, //
+                                CSV_FILEDESCRIPTION, // 
                                 path -> {
                                     BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
                                     projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
@@ -122,8 +128,8 @@ public class BrightFluxViewerMainApp {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shlBFViewerMainApp, "Select file", //
-                                new String[] { "*.raw", "*.*" }, //
-                                new String[] { "Raw log files (*.raw)", "All files" }, // 
+                                RAW_FILEEXTENSIONS, //
+                                RAW_FILEDESCRIPTIONS, // 
                                 path -> {
                                     BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
                                     projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );

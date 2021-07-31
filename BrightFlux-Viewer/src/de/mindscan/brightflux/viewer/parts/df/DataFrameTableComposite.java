@@ -61,6 +61,10 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
  * 
  */
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
+    // RECIPE FILE INFO
+    private static final String[] RECIPE_FILEEXTENSION = new String[] { "*.bfrecipe" };
+    private static final String[] RECIPE_FILESESCRIPTION = new String[] { "Brightflux recipe files (*.bfrecipe)" };
+
     private Table table;
 
     private ProjectRegistry projectRegistry;
@@ -129,8 +133,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
 
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
-                                new String[] { "*.bfrecipe" }, //
-                                new String[] { "Brightflux recipe files (*.bfrecipe)" }, //
+                                RECIPE_FILEEXTENSION, //
+                                RECIPE_FILESESCRIPTION, //
                                 path -> {
                                     saveReceipt( ingestedDF, path );
                                 } );
@@ -191,8 +195,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Select Recipe to Execute", //
-                                new String[] { "*.bfrecipe" }, //
-                                new String[] { "Brightflux recipe files (*.bfrecipe)" }, //
+                                RECIPE_FILEEXTENSION, //
+                                RECIPE_FILESESCRIPTION, //
                                 path -> {
                                     applyReceipt( ingestedDF, path );
                                 } );
