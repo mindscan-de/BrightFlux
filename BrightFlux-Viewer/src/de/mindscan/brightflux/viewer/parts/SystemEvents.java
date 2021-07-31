@@ -25,15 +25,25 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
+import de.mindscan.brightflux.system.events.CommandExecutionExceptionEvent;
+import de.mindscan.brightflux.system.events.CommandExecutionFinishedEvent;
+import de.mindscan.brightflux.system.events.CommandExecutionStartedEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
 
 /**
- * This class acts as an anti corruption layer, in case of larger refactorings, then
- * only this class is modified.
+ * This class acts as an anti corruption layer, in case of larger refactorings, of 
+ * the events then only this class gets modified.
  * 
  * TODO: refactor to Strings instead of classes in future.
  */
 public class SystemEvents {
 
     public final static Class<?> DataFrameLoaded = DataFrameLoadedEvent.class;
+
+    public final static Class<?> CommandExecutionException = CommandExecutionExceptionEvent.class;
+    public final static Class<?> CommandExecutionFinished = CommandExecutionFinishedEvent.class;
+    public final static Class<?> CommandExecutionStarted = CommandExecutionStartedEvent.class;
+
+    public final static Class<?> RecipeSaveResult = RecipeSaveResultEvent.class;
 }
