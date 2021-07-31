@@ -30,7 +30,7 @@ import java.nio.file.Path;
 /**
  * 
  */
-public class RecipeSaveResult implements BFEvent {
+public class RecipeSaveResultEvent implements BFEvent {
 
     private Path targetFile;
     private boolean success;
@@ -39,7 +39,7 @@ public class RecipeSaveResult implements BFEvent {
      * @param targetFile 
      * @param success
      */
-    public RecipeSaveResult( Path targetFile, boolean success ) {
+    public RecipeSaveResultEvent( Path targetFile, boolean success ) {
         this.targetFile = targetFile;
         this.success = success;
     }
