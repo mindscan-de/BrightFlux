@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.viewer.parts.df;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 
@@ -40,7 +39,6 @@ import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -130,20 +128,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
 
-                Path dirPath = Paths.get( "." );
-
-                FileDialog fileDlg = new FileDialog( parentShell, SWT.SAVE );
-                fileDlg.setText( "Save file" );
-                fileDlg.setFilterExtensions( new String[] { "*.bfrecipe" } );
-                fileDlg.setFilterNames( new String[] { "Brightflux recipe files (*.bfrecipe)" } );
-                fileDlg.setFilterPath( dirPath.toString() );
-                String filePathToOpen = fileDlg.open();
-
-                if (filePathToOpen != null) {
-                    saveReceipt( ingestedDF, Paths.get( filePathToOpen ) );
-                }
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
+                                new String[] { "*.bfrecipe" }, //
+                                new String[] { "Brightflux recipe files (*.bfrecipe)" }, //
+                                path -> {
+                                    saveReceipt( ingestedDF, path );
+                                } );
             }
-
         } );
         mntmSaveAsReceipt.setText( "Save As Receipt ..." );
 
@@ -199,7 +190,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmApplyReceipt.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Load Recipe", //
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Select Recipe to Execute", //
                                 new String[] { "*.bfrecipe" }, //
                                 new String[] { "Brightflux recipe files (*.bfrecipe)" }, //
                                 path -> {
