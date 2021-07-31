@@ -33,6 +33,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * 
@@ -41,7 +42,7 @@ public class BFRecipeIO {
 
     public static boolean saveToFile( BFRecipe recipe, Path targetPath ) {
         try (BufferedWriter writer = Files.newBufferedWriter( targetPath, StandardCharsets.UTF_8 )) {
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
             writer.write( gson.toJson( recipe ) );
             return true;
         }
