@@ -25,18 +25,12 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -47,6 +41,7 @@ import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
+import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
  * DataFrame is held by DataFrameRow is held by the TableItem (data)
@@ -111,23 +106,13 @@ public class BrightFluxViewerMainApp {
         mntmLoadFile.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                Path dirPath = Paths.get( "." );
-
-                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp, SWT.OPEN );
-                fileDlg.setText( "Select file" );
-                fileDlg.setFilterExtensions( new String[] { "*.csv" } );
-                fileDlg.setFilterNames( new String[] { "Comma Separated files (*.csv)" } );
-                fileDlg.setFilterPath( dirPath.toString() );
-                String filePathToOpen = fileDlg.open();
-
-                // Issue this command only if the user selected a file... 
-                if (filePathToOpen != null) {
-                    Path path = Paths.get( filePathToOpen );
-                    if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
-                        BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
-                        projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
-                    }
-                }
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shlBFViewerMainApp, "Select file", //
+                                new String[] { "*.csv" }, //
+                                new String[] { "Comma Separated files (*.csv)" }, // 
+                                path -> {
+                                    BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
+                                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                                } );
             }
         } );
         mntmLoadFile.setText( "Load CSV File ..." );
@@ -136,22 +121,13 @@ public class BrightFluxViewerMainApp {
         mntmSpecialRawOption.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                Path dirPath = Paths.get( "." );
-
-                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp, SWT.OPEN );
-                fileDlg.setText( "Select file" );
-                fileDlg.setFilterExtensions( new String[] { "*.raw", "*.*" } );
-                fileDlg.setFilterNames( new String[] { "Raw log files (*.raw)" } );
-                fileDlg.setFilterPath( dirPath.toString() );
-                String filePathToOpen = fileDlg.open();
-
-                if (filePathToOpen != null) {
-                    Path path = Paths.get( filePathToOpen );
-                    if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
-                        BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
-                        projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
-                    }
-                }
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shlBFViewerMainApp, "Select file", //
+                                new String[] { "*.raw", "*.*" }, //
+                                new String[] { "Raw log files (*.raw)", "All files" }, // 
+                                path -> {
+                                    BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
+                                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                                } );
             }
         } );
         mntmSpecialRawOption.setText( "Load Raw File ..." );
