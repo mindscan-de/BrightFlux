@@ -198,8 +198,18 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmApplyReceipt.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                Path receipt = null;
-                applyReceipt( ingestedDF, receipt );
+                Path dirPath = Paths.get( "." );
+
+                FileDialog fileDlg = new FileDialog( parentShell, SWT.OPEN );
+                fileDlg.setText( "Load Recipe" );
+                fileDlg.setFilterExtensions( new String[] { "*.bfrecipe" } );
+                fileDlg.setFilterNames( new String[] { "Brightflux recipe files (*.bfrecipe)" } );
+                fileDlg.setFilterPath( dirPath.toString() );
+                String filePathToOpen = fileDlg.open();
+
+                if (filePathToOpen != null) {
+                    applyReceipt( ingestedDF, Paths.get( filePathToOpen ) );
+                }
             }
         } );
         mntmApplyReceipt.setText( "Apply Receipt ..." );

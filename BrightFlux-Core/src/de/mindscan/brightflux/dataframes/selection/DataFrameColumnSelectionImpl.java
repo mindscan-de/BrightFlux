@@ -32,6 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * 
@@ -71,7 +72,7 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
     @Override
     public DataFrame where( String predicate ) {
         // TODO compile the predicate to a DataFrameRowFilterPredicate
-        return null;
+        throw new NotYetImplemetedException();
     };
 
     private void buildNewDataFrame( DataFrame newDataFrame, Collection<DataFrameRow> selectedRows ) {
