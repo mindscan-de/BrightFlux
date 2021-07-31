@@ -113,7 +113,7 @@ public class BrightFluxViewerMainApp {
             public void widgetSelected( SelectionEvent e ) {
                 Path dirPath = Paths.get( "." );
 
-                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp );
+                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp, SWT.OPEN );
                 fileDlg.setText( "Select file" );
                 fileDlg.setFilterExtensions( new String[] { "*.csv" } );
                 fileDlg.setFilterNames( new String[] { "Comma Separated files (*.csv)" } );
