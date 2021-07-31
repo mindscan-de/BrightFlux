@@ -43,7 +43,6 @@ public class BrightFluxFileDialogs {
     public static void openRegularFileAndConsumePath( Shell shell, String header, String[] filterextensions, String[] filternames,
                     Consumer<Path> pathConsumer ) {
         Path dirPath = Paths.get( "." );
-
         FileDialog fileDlg = new FileDialog( shell, SWT.OPEN );
         fileDlg.setText( header );
         fileDlg.setFilterExtensions( filterextensions );
@@ -62,7 +61,6 @@ public class BrightFluxFileDialogs {
     public static void saveRegularFileAndConsumePath( Shell shell, String header, String[] filterextensions, String[] filternames,
                     Consumer<Path> pathConsumer ) {
         Path dirPath = Paths.get( "." );
-
         FileDialog fileDlg = new FileDialog( shell, SWT.SAVE );
         fileDlg.setText( header );
         fileDlg.setFilterExtensions( filterextensions );
@@ -72,9 +70,7 @@ public class BrightFluxFileDialogs {
 
         if (filePathToOpen != null) {
             Path path = Paths.get( filePathToOpen );
-            if (Files.isRegularFile( path, LinkOption.NOFOLLOW_LINKS )) {
-                pathConsumer.accept( path );
-            }
+            pathConsumer.accept( path );
         }
     }
 
