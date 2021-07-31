@@ -138,7 +138,7 @@ public class BrightFluxViewerMainApp {
             public void widgetSelected( SelectionEvent e ) {
                 Path dirPath = Paths.get( "." );
 
-                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp );
+                FileDialog fileDlg = new FileDialog( shlBFViewerMainApp, SWT.OPEN );
                 fileDlg.setText( "Select file" );
                 fileDlg.setFilterExtensions( new String[] { "*.raw", "*.*" } );
                 fileDlg.setFilterNames( new String[] { "Raw log files (*.raw)" } );
