@@ -64,6 +64,8 @@ public class IngestEngine {
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
         DataFrame newDataFrame = buildCompiledDataFrame( config, compiledDataFrameColumns );
+
+        // TODO: use a serializer in dfquery to generate this journal entry, so the parser and serializer are synchronous to each other 
         newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, "LOAD '" + config.getIngestInputPath() + "' as df" );
         return newDataFrame;
     }

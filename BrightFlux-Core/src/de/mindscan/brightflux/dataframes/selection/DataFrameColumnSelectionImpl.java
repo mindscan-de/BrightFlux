@@ -62,6 +62,8 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
         buildNewDataFrame( newDataFrame, selectedRows );
 
         // add the current operation to the Journal
+
+        // TODO use a writer (serializer) in dfquery to create these strings, instead of this  
         newDataFrame.appendJournal( DataFrameJournalEntryType.SELECT_WHERE, "SELECT * FROM df WHERE " + predicate.describeOperation() );
 
         return newDataFrame;
