@@ -35,7 +35,9 @@ import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
  * This class acts as an anti corruption layer, in case of larger refactorings, of 
  * the events then only this class gets modified.
  * 
- * TODO: refactor to Strings instead of classes in future.
+ * TODO: maybe refactor to Strings instead of classes in future. / but then isAssignable is more difficult, 
+ *       when we want to use to use interfaces/ base classes for events as well, so we can subscribe to base/super 
+ *       classes.
  */
 public class SystemEvents {
 
