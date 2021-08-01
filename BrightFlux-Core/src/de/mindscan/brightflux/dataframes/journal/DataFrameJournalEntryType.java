@@ -34,6 +34,17 @@ public enum DataFrameJournalEntryType {
 
     SELECT_WHERE,
 
+    // TODO: use a column of a data frame and tokenize it using a different dataframe tokenizer on it
+    // TOKENIZE,
+
+    // TODO: use multiple columns to join multiple dataframes on existing and nonnull values PK / FK relationship
+    // INNER_JOIN,
+
+    // TODO: use multiple also support null values on the join operation
+    // OUTER_JOIN,
+
+    // TODO: ato de?
+    // LEFT_OUTER_JOIN
     ;
 
 }
