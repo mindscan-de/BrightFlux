@@ -53,6 +53,7 @@ import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredi
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -61,9 +62,6 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
  * 
  */
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
-    // RECIPE FILE INFO
-    private static final String[] RECIPE_FILEEXTENSION = new String[] { "*.bfrecipe" };
-    private static final String[] RECIPE_FILESESCRIPTION = new String[] { "Brightflux recipe files (*.bfrecipe)" };
 
     private Table table;
 
@@ -133,8 +131,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
 
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
-                                RECIPE_FILEEXTENSION, //
-                                RECIPE_FILESESCRIPTION, //
+                                FileDescriptions.BFRECIPE, //
                                 path -> {
                                     saveReceipt( ingestedDF, path );
                                 } );
@@ -195,8 +192,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Select Recipe to Execute", //
-                                RECIPE_FILEEXTENSION, //
-                                RECIPE_FILESESCRIPTION, //
+                                FileDescriptions.BFRECIPE, //
                                 path -> {
                                     applyReceipt( ingestedDF, path );
                                 } );

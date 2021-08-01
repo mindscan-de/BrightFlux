@@ -35,10 +35,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import de.mindscan.brightflux.system.filedescription.FileDescription;
+
 /**
  * 
  */
 public class BrightFluxFileDialogs {
+
+    public static void openRegularFileAndConsumePath( Shell shell, String header, FileDescription description, Consumer<Path> pathConsumer ) {
+        openRegularFileAndConsumePath( shell, header, description.getFileExtensions(), description.getFileDescriptions(), pathConsumer );
+    }
 
     public static void openRegularFileAndConsumePath( Shell shell, String header, String[] filterextensions, String[] filternames,
                     Consumer<Path> pathConsumer ) {
@@ -52,6 +58,10 @@ public class BrightFluxFileDialogs {
                 pathConsumer.accept( path );
             }
         }
+    }
+
+    public static void saveRegularFileAndConsumePath( Shell shell, String header, FileDescription description, Consumer<Path> pathConsumer ) {
+        saveRegularFileAndConsumePath( shell, header, description.getFileExtensions(), description.getFileDescriptions(), pathConsumer );
     }
 
     public static void saveRegularFileAndConsumePath( Shell shell, String header, String[] filterextensions, String[] filternames,

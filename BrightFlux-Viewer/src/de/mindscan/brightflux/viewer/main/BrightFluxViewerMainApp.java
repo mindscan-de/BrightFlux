@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
@@ -48,12 +49,6 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
  * TableItem[] are the arrays retaining the whole dataframe.
  */
 public class BrightFluxViewerMainApp {
-    // RAW
-    private static final String[] RAW_FILEEXTENSIONS = new String[] { "*.raw", "*.*" };
-    private static final String[] RAW_FILEDESCRIPTIONS = new String[] { "Raw log files (*.raw)", "All files" };
-    // CSV
-    private static final String[] CSV_FILEEXTENSTION = new String[] { "*.csv" };
-    private static final String[] CSV_FILEDESCRIPTION = new String[] { "Comma Separated files (*.csv)" };
 
     protected Shell shlBFViewerMainApp;
     private Composite mainProjectComposite;
@@ -113,8 +108,7 @@ public class BrightFluxViewerMainApp {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shlBFViewerMainApp, "Select file", //
-                                CSV_FILEEXTENSTION, //
-                                CSV_FILEDESCRIPTION, // 
+                                FileDescriptions.CSV, //
                                 path -> {
                                     BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
                                     projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
@@ -128,8 +122,7 @@ public class BrightFluxViewerMainApp {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shlBFViewerMainApp, "Select file", //
-                                RAW_FILEEXTENSIONS, //
-                                RAW_FILEDESCRIPTIONS, // 
+                                FileDescriptions.RAW_ANY, //
                                 path -> {
                                     BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
                                     projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
