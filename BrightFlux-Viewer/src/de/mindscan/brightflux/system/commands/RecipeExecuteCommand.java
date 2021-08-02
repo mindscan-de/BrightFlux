@@ -75,19 +75,31 @@ public class RecipeExecuteCommand implements BFCommand {
                 for (DataFrameJournalEntry entry : recipeEntries) {
                     String predicate = entry.getLogMessage();
 
+                    // according to the entry type we need to select the correct strategy to apply here... 
                     switch (entry.getEntryType()) {
                         case LOAD:
                             // we already filtered them out before
                             break;
                         case SELECT_WHERE:
+                            // TODO implement the real parsing.
                             // TODO: parse the predicate -> get an AST
                             // compile the selectionPredicate,
                             // then compile the rowfilterpredicate...
                             // get columndescriptions of parsed tree
                             // get predicate of parsed tree
 
-                            // TODO: according to the entry type we need to select the correct strategy to apply here... 
-                            currentDataFrame = currentDataFrame.select().where( predicate );
+                            // "parse..." - i mean we only can/must do these at the moment
+                            // everything else is just a waste of time currently.
+                            if (predicate.equals( "SELECT * FROM df WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
+                                currentDataFrame = currentDataFrame.select().where( predicate );
+                            }
+                            else if (predicate.equals( "SELECT * FROM df WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
+                                currentDataFrame = currentDataFrame.select().where( predicate );
+                            }
+                            else {
+                                throw new NotYetImplemetedException();
+                            }
+
                             break;
                         default:
                             throw new NotYetImplemetedException();
