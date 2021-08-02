@@ -25,9 +25,15 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery;
 
+import java.util.List;
+
 /**
  * 
  */
 public class DataFrameQueryLanguageParser {
 
+    public void parseSelect( List<?> tokens ) {
+        // we want to extract the column names to parse
+        // extract the query to perform on the dataframe
+    }
 }

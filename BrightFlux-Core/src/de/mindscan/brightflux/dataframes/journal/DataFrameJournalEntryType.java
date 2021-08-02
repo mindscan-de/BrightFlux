@@ -27,6 +27,8 @@ package de.mindscan.brightflux.dataframes.journal;
 
 /**
  * 
+ * 
+ * TODO: this can also be used to simplify the parsing, since we know which kind of DataFrameQueryLanguage - Expression to parse... 
  */
 public enum DataFrameJournalEntryType {
 

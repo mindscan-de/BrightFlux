@@ -75,9 +75,24 @@ public class RecipeExecuteCommand implements BFCommand {
                 for (DataFrameJournalEntry entry : recipeEntries) {
                     String predicate = entry.getLogMessage();
 
-                    // TODO: according to the entry type we need to select the correct strategy to apply here... 
+                    switch (entry.getEntryType()) {
+                        case LOAD:
+                            // we already filtered them out before
+                            break;
+                        case SELECT_WHERE:
+                            // TODO: parse the predicate -> get an AST
+                            // compile the selectionPredicate,
+                            // then compile the rowfilterpredicate...
+                            // get columndescriptions of parsed tree
+                            // get predicate of parsed tree
 
-                    currentDataFrame = currentDataFrame.select().where( predicate );
+                            // TODO: according to the entry type we need to select the correct strategy to apply here... 
+                            currentDataFrame = currentDataFrame.select().where( predicate );
+                            break;
+                        default:
+                            throw new NotYetImplemetedException();
+                    }
+
                 }
 
                 // DataFrameLoaded
