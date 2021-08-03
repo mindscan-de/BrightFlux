@@ -369,9 +369,9 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select( String... columnname ) {
-        List<DataFrameColumn<?>> selectedColumns = Arrays.stream( columnname ).map( name -> columnsMap.get( name ) ).collect( Collectors.toList() );
-        DataFrameColumn<?>[] selectedColumnsDFC = (DataFrameColumn[]) selectedColumns.toArray( new Object[selectedColumns.size()] );
-        return new DataFrameColumnSelectionImpl( this, selectedColumnsDFC );
+        List<DataFrameColumn<?>> convertedColumns = Arrays.stream( columnname ).map( name -> columnsMap.get( name ) ).collect( Collectors.toList() );
+        DataFrameColumn<?>[] selectedColumns = (DataFrameColumn[]) convertedColumns.toArray( new Object[convertedColumns.size()] );
+        return new DataFrameColumnSelectionImpl( this, selectedColumns );
     }
 
     /** 
