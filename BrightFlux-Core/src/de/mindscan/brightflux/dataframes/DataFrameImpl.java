@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
@@ -188,7 +190,7 @@ public class DataFrameImpl implements DataFrame {
      */
     private void updateColumns( Map<String, DataFrameColumn<?>> columnsMap2 ) {
         Collection<DataFrameColumn<?>> values = columnsMap.values();
-        columns = (DataFrameColumn<?>[]) values.toArray( new DataFrameColumn<?>[values.size()] );
+        columns = values.toArray( new DataFrameColumn<?>[values.size()] );
     }
 
     // add multiple data frame columns
@@ -316,7 +318,7 @@ public class DataFrameImpl implements DataFrame {
         // get all rows from this dataframe, having a positive outcome if the predicate
         Iterator<DataFrameRow> rowIterator = this.rowIterator();
         while (rowIterator.hasNext()) {
-            DataFrameRow row = (DataFrameRow) rowIterator.next();
+            DataFrameRow row = rowIterator.next();
 
             // TODO: the predicate contains the info where are you looking what for.
             // e.g 'age' >= 50 - how to do that ?
@@ -367,8 +369,9 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select( String... columnname ) {
-        // TODO Auto-generated method stub
-        return null;
+        List<DataFrameColumn<?>> selectedColumns = Arrays.stream( columnname ).map( name -> columnsMap.get( name ) ).collect( Collectors.toList() );
+        DataFrameColumn<?>[] selectedColumnsDFC = (DataFrameColumn[]) selectedColumns.toArray( new Object[selectedColumns.size()] );
+        return new DataFrameColumnSelectionImpl( this, selectedColumnsDFC );
     }
 
     /** 
