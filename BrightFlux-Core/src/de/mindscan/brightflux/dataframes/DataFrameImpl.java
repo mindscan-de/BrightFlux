@@ -369,6 +369,10 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select( String... columnname ) {
+        if (columnname.length == 1 && "*".equals( columnname[0] )) {
+            return this.select();
+        }
+
         List<DataFrameColumn<?>> convertedColumns = Arrays.stream( columnname )//
                         .filter( name -> columnsMap.containsKey( name ) ) //
                         .map( name -> columnsMap.get( name ) ).collect( Collectors.toList() );
