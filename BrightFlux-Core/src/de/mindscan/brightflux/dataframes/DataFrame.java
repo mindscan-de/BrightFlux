@@ -81,6 +81,8 @@ public interface DataFrame {
 
     DataFrameColumnSelection select( DataFrameColumn<?>... columns );
 
+    DataFrame query( String query );
+
     void appendJournal( DataFrameJournalEntryType entryType, String message );
 
     void appendJournal( DataFrameJournalEntry dataFrameJournalEntry );

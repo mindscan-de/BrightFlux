@@ -31,8 +31,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
-import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -75,7 +73,7 @@ public class RecipeExecuteCommand implements BFCommand {
                 // apply the receipt onto the data frame in a serial manner
                 DataFrame currentDataFrame = inputDataFrame;
                 for (DataFrameJournalEntry entry : recipeEntries) {
-                    String predicate = entry.getLogMessage();
+                    String msg = entry.getLogMessage();
 
                     // according to the entry type we need to select the correct strategy to apply here... 
                     switch (entry.getEntryType()) {
@@ -83,27 +81,9 @@ public class RecipeExecuteCommand implements BFCommand {
                             // we already filtered them out before
                             break;
                         case SELECT_WHERE:
-                            // TODO implement the real parsing.
-                            // TODO: parse the predicate -> get an AST
-                            // compile the selectionPredicate,
-                            // then compile the rowfilterpredicate...
-                            // get columndescriptions of parsed tree
-                            // get predicate of parsed tree
+                            String query = msg;
 
-                            // "parse..." - i mean we only can/must do these at the moment
-                            // everything else is just a waste of time currently.
-                            if (predicate.equals( "SELECT * FROM df WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
-                                DataFrameRowFilterPredicate mypredicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-                                currentDataFrame = currentDataFrame.select( "*" ).where( mypredicate );
-                            }
-                            else if (predicate.equals( "SELECT * FROM df WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
-                                DataFrameRowFilterPredicate mypredicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
-                                                DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-                                currentDataFrame = currentDataFrame.select( "*" ).where( mypredicate );
-                            }
-                            else {
-                                throw new NotYetImplemetedException();
-                            }
+                            currentDataFrame = currentDataFrame.query( query );
 
                             break;
                         default:
