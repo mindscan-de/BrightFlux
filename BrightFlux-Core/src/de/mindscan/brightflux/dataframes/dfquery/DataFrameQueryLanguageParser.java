@@ -67,8 +67,10 @@ public class DataFrameQueryLanguageParser {
      * @return
      */
     public String[] getColumnNames() {
-
-        return new String[] { "*" };
+        if (query.startsWith( "SELECT * FROM" )) {
+            return new String[] { "*" };
+        }
+        throw new NotYetImplemetedException();
     }
 
     /**
@@ -77,11 +79,11 @@ public class DataFrameQueryLanguageParser {
     public DataFrameRowFilterPredicate getPredicate() {
         // TODO use the AST/Parseresult of the parse operation to compile a predicate.
 
-        if (query.equals( "SELECT * FROM df WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
+        if (query.endsWith( "WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
             return DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
         }
 
-        if (query.equals( "SELECT * FROM df WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
+        if (query.endsWith( "WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
 
             return DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
                             DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
