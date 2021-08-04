@@ -27,13 +27,67 @@ package de.mindscan.brightflux.dataframes.dfquery;
 
 import java.util.List;
 
+import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
  * 
  */
 public class DataFrameQueryLanguageParser {
 
+    private String query;
+
     public void parseSelect( List<?> tokens ) {
         // we want to extract the column names to parse
         // extract the query to perform on the dataframe
+    }
+
+    /**
+     * @param query
+     * @return <code>true</code> if success
+     */
+    public boolean parse( String query ) {
+
+        // TODO implement the real parsing.
+        // TODO: parse the predicate -> get an AST
+        // compile the selectionPredicate,
+        // then compile the rowfilterpredicate...
+        // get columndescriptions of parsed tree
+        // get predicate of parsed tree
+
+        // "parse..." - i mean we only can/must do these at the moment
+        // everything else is just a waste of time currently.
+
+        this.query = query;
+        return true;
+    }
+
+    /**
+     * @return
+     */
+    public String[] getColumnNames() {
+
+        return new String[] { "*" };
+    }
+
+    /**
+     * @return
+     */
+    public DataFrameRowFilterPredicate getPredicate() {
+        // TODO use the AST/Parseresult of the parse operation to compile a predicate.
+
+        if (query.equals( "SELECT * FROM df WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
+            return DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
+        }
+
+        if (query.equals( "SELECT * FROM df WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
+
+            return DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
+                            DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
+
+        }
+
+        throw new NotYetImplemetedException();
     }
 }

@@ -36,7 +36,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
+import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageParser;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
@@ -371,33 +371,12 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrame query( String query ) {
-        // TODO implement the real parsing.
-        // TODO: parse the predicate -> get an AST
-        // compile the selectionPredicate,
-        // then compile the rowfilterpredicate...
-        // get columndescriptions of parsed tree
-        // get predicate of parsed tree
-
-        // "parse..." - i mean we only can/must do these at the moment
-        // everything else is just a waste of time currently.
-        if (query.equals( "SELECT * FROM df WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
-
-            // TODO: parse these predicates and selections
-            String singleColumnName = "*";
-            DataFrameRowFilterPredicate mypredicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-            // i really don't like it., maybe we should introduce something like a query.
-            return select( singleColumnName ).where( mypredicate );
-        }
-        else if (query.equals( "SELECT * FROM df WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
-
-            // TODO: parse these predicates and selections
-            String singleColumnName = "*";
-            DataFrameRowFilterPredicate mypredicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
-                            DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-
-            return select( singleColumnName ).where( mypredicate );
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        if (parser.parse( query )) {
+            return select( parser.getColumnNames() ).where( parser.getPredicate() );
         }
         else {
+            // we got an invalid syntax...
             throw new NotYetImplemetedException();
         }
     }
