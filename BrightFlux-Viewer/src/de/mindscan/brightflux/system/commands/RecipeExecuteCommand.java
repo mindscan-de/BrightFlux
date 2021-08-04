@@ -94,12 +94,12 @@ public class RecipeExecuteCommand implements BFCommand {
                             // everything else is just a waste of time currently.
                             if (predicate.equals( "SELECT * FROM df WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
                                 DataFrameRowFilterPredicate mypredicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-                                currentDataFrame = currentDataFrame.select().where( mypredicate );
+                                currentDataFrame = currentDataFrame.select( "*" ).where( mypredicate );
                             }
                             else if (predicate.equals( "SELECT * FROM df WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
                                 DataFrameRowFilterPredicate mypredicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
                                                 DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-                                currentDataFrame = currentDataFrame.select().where( mypredicate );
+                                currentDataFrame = currentDataFrame.select( "*" ).where( mypredicate );
                             }
                             else {
                                 throw new NotYetImplemetedException();
