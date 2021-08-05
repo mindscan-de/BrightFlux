@@ -390,7 +390,7 @@ public class DataFrameImpl implements DataFrame {
                         .filter( name -> columnsMap.containsKey( name ) ) //
                         .map( name -> columnsMap.get( name ) ).collect( Collectors.toList() );
 
-        DataFrameColumn<?>[] selectedColumns = (DataFrameColumn[]) convertedColumns.toArray( new Object[convertedColumns.size()] );
+        DataFrameColumn<?>[] selectedColumns = convertedColumns.toArray( new DataFrameColumn[convertedColumns.size()] );
         return new DataFrameColumnSelectionImpl( this, selectedColumns );
     }
 
