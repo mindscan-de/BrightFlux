@@ -140,7 +140,19 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmSaveAsReceipt.setText( "Save As Receipt ..." );
 
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
-        mntmSaveToFile.setText( "Save As ..." );
+        mntmSaveToFile.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Data Frame", //
+                                FileDescriptions.CSV, //
+                                path -> {
+                                    saveAsCSV( ingestedDF, path );
+                                } );
+
+            }
+
+        } );
+        mntmSaveToFile.setText( "Save As CSV ..." );
 
         MenuItem mntmFilters = new MenuItem( menu, SWT.CASCADE );
         mntmFilters.setText( "Filters" );
@@ -288,6 +300,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private void saveReceipt( DataFrame dataFrame, Path targetPath ) {
         dispatchCommand( DataFrameCommandFactory.saveRecipe( dataFrame, targetPath ) );
+    }
+
+    private void saveAsCSV( DataFrame dataFrame, Path targetPath ) {
+        dispatchCommand( DataFrameCommandFactory.saveCSV( dataFrame, targetPath ) );
 
     }
 

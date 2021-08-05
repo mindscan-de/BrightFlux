@@ -60,4 +60,8 @@ public class DataFrameCommandFactory {
         return new RecipeSaveCommand( inputDataFrame, targetFile );
     }
 
+    public static BFCommand saveCSV( DataFrame inputDataFrame, Path targetFile ) {
+        return new SaveAsCSVCommand( inputDataFrame, targetFile );
+    }
+
 }
