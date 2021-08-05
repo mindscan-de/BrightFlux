@@ -148,9 +148,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                                 path -> {
                                     saveAsCSV( ingestedDF, path );
                                 } );
-
             }
-
         } );
         mntmSaveToFile.setText( "Save As CSV ..." );
 
@@ -304,7 +302,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private void saveAsCSV( DataFrame dataFrame, Path targetPath ) {
         dispatchCommand( DataFrameCommandFactory.saveCSV( dataFrame, targetPath ) );
-
     }
 
     private void dispatchCommand( BFCommand command ) {
