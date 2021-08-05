@@ -49,7 +49,7 @@ public class DataFrameCommandFactory {
     }
 
     public static BFCommand filterDataFrame( DataFrame inputDataFrame, DataFrameRowFilterPredicate predicate ) {
-        return new FilterDataFrameCommand( inputDataFrame, predicate );
+        return new DataFrameFilterCommand( inputDataFrame, predicate );
     }
 
     public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {

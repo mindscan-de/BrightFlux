@@ -35,12 +35,12 @@ import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 /**
  * 
  */
-public class FilterDataFrameCommand implements BFCommand {
+public class DataFrameFilterCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
     private DataFrameRowFilterPredicate whereClause;
 
-    public FilterDataFrameCommand( DataFrame inputDataFrame, DataFrameRowFilterPredicate whereClause ) {
+    public DataFrameFilterCommand( DataFrame inputDataFrame, DataFrameRowFilterPredicate whereClause ) {
         this.inputDataFrame = inputDataFrame;
         this.whereClause = whereClause;
 
