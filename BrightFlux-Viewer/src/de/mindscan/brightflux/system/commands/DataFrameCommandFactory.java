@@ -52,6 +52,10 @@ public class DataFrameCommandFactory {
         return new DataFrameFilterCommand( inputDataFrame, predicate );
     }
 
+    public static BFCommand selectAndFilterDataFrame( DataFrame inputDataFrame, String[] columnNames, DataFrameRowFilterPredicate predicate ) {
+        return new DataFrameSelectAndFilterCommand( inputDataFrame, columnNames, predicate );
+    }
+
     public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {
         return new RecipeExecuteCommand( inputDataFrame, recipe );
     }
