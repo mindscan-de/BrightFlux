@@ -191,6 +191,21 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmFilterx.setText( "filter 666" );
 
+        MenuItem mntmSelect = new MenuItem( menu, SWT.CASCADE );
+        mntmSelect.setText( "Select" );
+
+        Menu menu_1 = new Menu( mntmSelect );
+        mntmSelect.setMenu( menu_1 );
+
+        MenuItem mntmHtsAndHmsg = new MenuItem( menu_1, SWT.NONE );
+        mntmHtsAndHmsg.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                applyh1tsh2msg( ingestedDF );
+            }
+        } );
+        mntmHtsAndHmsg.setText( "h1.ts and h2.msg" );
+
         MenuItem mntmReceipts = new MenuItem( menu, SWT.CASCADE );
         mntmReceipts.setText( "Receipts" );
 
@@ -281,7 +296,11 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void apply666filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
+    }
 
+    private void applyh1tsh2msg( DataFrame dataFrame ) {
+        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.any();
+        dispatchCommand( DataFrameCommandFactory.selectAndFilterDataFrame( dataFrame, new String[] { "h1.ts", "h2.msg" }, predicate ) );
     }
 
     private void printOrShowDataFrameJournal( DataFrame dataFrame ) {
