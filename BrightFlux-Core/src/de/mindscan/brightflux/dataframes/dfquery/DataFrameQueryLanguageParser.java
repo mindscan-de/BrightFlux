@@ -48,7 +48,6 @@ public class DataFrameQueryLanguageParser {
      * @return <code>true</code> if success
      */
     public boolean parse( String query ) {
-
         // TODO implement the real parsing.
         // TODO: parse the predicate -> get an AST
         // compile the selectionPredicate,
@@ -78,6 +77,8 @@ public class DataFrameQueryLanguageParser {
      */
     public DataFrameRowFilterPredicate getPredicate() {
         // TODO use the AST/Parseresult of the parse operation to compile a predicate.
+
+        // compile The Predicate 
 
         if (query.endsWith( "WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
             return DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
