@@ -138,7 +138,6 @@ public class DataFrameImpl implements DataFrame {
 
                 return currentRow;
             }
-
         };
     }
 
@@ -317,13 +316,10 @@ public class DataFrameImpl implements DataFrame {
     public Collection<DataFrameRow> getRowsByPredicate( DataFrameRowFilterPredicate predicate ) {
         List<DataFrameRow> selectedResultRows = new ArrayList<>();
 
-        // get all rows from this dataframe, having a positive outcome if the predicate
         Iterator<DataFrameRow> rowIterator = this.rowIterator();
         while (rowIterator.hasNext()) {
             DataFrameRow row = rowIterator.next();
 
-            // TODO: the predicate contains the info where are you looking what for.
-            // e.g 'age' >= 50 - how to do that ?
             if (predicate.test( row )) {
                 selectedResultRows.add( row );
             }
