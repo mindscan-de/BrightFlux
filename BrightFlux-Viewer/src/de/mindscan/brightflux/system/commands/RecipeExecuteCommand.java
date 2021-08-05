@@ -63,7 +63,6 @@ public class RecipeExecuteCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
 
-        // TODO: apply the recipe
         if (recipe != null) {
             // use everything that is not a load command.
             List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries().parallelStream()
@@ -82,17 +81,13 @@ public class RecipeExecuteCommand implements BFCommand {
                             break;
                         case SELECT_WHERE:
                             String query = msg;
-
                             currentDataFrame = currentDataFrame.query( query );
-
                             break;
                         default:
                             throw new NotYetImplemetedException();
                     }
-
                 }
 
-                // DataFrameLoaded
                 eventConsumer.accept( new DataFrameLoadedEvent( currentDataFrame ) );
             }
 
