@@ -89,6 +89,7 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
 
     private String calculateDataLine( Object[] rowValues ) {
         // TODO: if a rowvalue contains the Separator char, this should be quoted in double quotes before writing the content.
+        // TODO: also if it contains whitespaces, this whole thing should be quoted in double quotes before writing the content.
         return String.join( ",", convertAllElementsToString( rowValues ) );
     }
 
