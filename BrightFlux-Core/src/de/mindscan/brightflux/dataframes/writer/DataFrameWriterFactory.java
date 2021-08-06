@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.dataframes.writer;
 
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
-
 /**
  * 
  */
@@ -38,9 +36,7 @@ public class DataFrameWriterFactory {
             case "h5":
                 return new DataFrameWriterH5Impl();
             case "log":
-                // TODO: Logformat writer (spaces or tab separated?, but with no Quotation marks for strings as in CSV.)
-                // this can/should be used for conversion from binary formats to text formats 
-                throw new NotYetImplemetedException();
+                return new DataFrameWriterLogImpl();
             default:
                 throw new IllegalArgumentException( "This writer Type is not supported." );
         }
