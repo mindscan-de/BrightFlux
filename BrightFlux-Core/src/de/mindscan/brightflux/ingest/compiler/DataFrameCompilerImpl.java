@@ -57,7 +57,6 @@ import de.mindscan.brightflux.ingest.token.TextToken;
  * Therefore the data frame compiler has to do actually two steps, determine the correct "column primitive"
  * and then transfer and convert the raw DataTokens into the "column primitive" representation. 
  *
- * TODO: support columns with type hints... Using the "ColumnHeaderToken".
  */
 public class DataFrameCompilerImpl implements DataFrameCompiler {
 

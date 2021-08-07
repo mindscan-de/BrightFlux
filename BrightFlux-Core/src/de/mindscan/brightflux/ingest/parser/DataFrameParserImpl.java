@@ -102,7 +102,7 @@ public class DataFrameParserImpl implements DataFrameParser {
                         // we should report an error for the current row.
                         System.out.println( "[READERROR] Too many Columns/Columnseparators found for row: " + currentRow );
 
-                        // TODO: InputFileFormatException, with the collected errors.
+                        // TODO: InputDataFormatException, with the collected errors.
                         // Also set a kind of format exception which should be thrown at the end of processing
                         // nothing is more worse, than processing a dataset finding one issue, processing it 
                         // the next time and then find the next issue.

@@ -46,11 +46,13 @@ public class DataTokenizerFactory {
     }
 
     public DataTokenizer buildTokenizerInstance( String tokenizerType ) {
+
+        // Use a predefined list of known Tokenizers
         if ("CSVTokenizer".equals( tokenizerType )) {
             return new CSVTokenizerImpl();
         }
 
-        // TODO: prepare for DataTokenizer plugins infrastructure 
+        // Use the name of a class and instantiate this tokenizer
         try {
             // use classloader  and search for named class in class path...
             ClassLoader classLoader = this.getClass().getClassLoader();
