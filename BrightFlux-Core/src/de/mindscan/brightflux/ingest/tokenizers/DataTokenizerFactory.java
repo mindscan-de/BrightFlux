@@ -48,6 +48,7 @@ public class DataTokenizerFactory {
     public DataTokenizer buildTokenizerInstance( String tokenizerType ) {
 
         // Use a predefined list of known Tokenizers
+        // TODO: publish more tokenizers... (when they are ready/good enough/abstract enough)
         if ("CSVTokenizer".equals( tokenizerType )) {
             return new CSVTokenizerImpl();
         }
