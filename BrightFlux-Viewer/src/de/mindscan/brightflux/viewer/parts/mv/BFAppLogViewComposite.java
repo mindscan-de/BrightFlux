@@ -31,14 +31,18 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
+import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.system.events.BFEventListener;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
  * 
  */
 public class BFAppLogViewComposite extends Composite implements ProjectRegistryParticipant {
     private Table table_1;
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the composite.
@@ -66,7 +70,26 @@ public class BFAppLogViewComposite extends Composite implements ProjectRegistryP
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
+        this.projectRegistry = projectRegistry;
+        // TODO: register for BFEvent and get all the BFEvents - but currently we can't do that
 
+        // Small work around: we register for all SystemEvents.
+
+        BFEventListener listener = new BFEventListener() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                String eventMessage = event.getBFEventMessage();
+                // TODO: create a timestamp  
+                // TODO: create a logentry this event
+                // TODO: add this logentry
+                System.out.println( "eventMessage: " + eventMessage );
+            }
+        };
+
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionStarted, listener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionFinished, listener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionException, listener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, listener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.RecipeSaveResult, listener );
     }
 }
