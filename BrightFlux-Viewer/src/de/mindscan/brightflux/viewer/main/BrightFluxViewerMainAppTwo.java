@@ -44,6 +44,7 @@ import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
+import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
@@ -170,9 +171,8 @@ public class BrightFluxViewerMainAppTwo {
 
         Composite mainProjectComposite = new MainProjectComposite( sashForm, SWT.NONE );
 
-        Composite bottomRightCommonViewAreaComposite = new Composite( sashForm, SWT.NONE );
-        bottomRightCommonViewAreaComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_MAGENTA ) );
-        sashForm.setWeights( new int[] { 379, 214 } );
+        Composite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
+        sashForm.setWeights( new int[] { 432, 161 } );
         sashForm_1.setWeights( new int[] { 190, 652 } );
 
         // This is still not nice, but good enough for now
