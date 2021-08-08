@@ -42,6 +42,8 @@ import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
  */
 public class MultiViewComposite extends Composite implements ProjectRegistryParticipant {
     private ProjectRegistry projectRegistry;
+    private BFAppLogViewComposite appLog;
+    private BFAppConsoleViewComposite appConsole;
 
     /**
      * Create the composite.
@@ -64,6 +66,8 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         // TODO: register for events.... 
 
         // TODO: Apply the project registry to all other registered Views in the tab folder.
+        appConsole.setProjectRegistry( projectRegistry );
+        appLog.setProjectRegistry( projectRegistry );
     }
 
     private void buildLayout() {
@@ -74,14 +78,12 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
 
         CTabItem tbtmConsole = new CTabItem( tabFolder, SWT.NONE );
         tbtmConsole.setText( "Console" );
-        BFAppConsoleViewComposite appConsole = new BFAppConsoleViewComposite( tbtmConsole.getParent(), SWT.NONE );
-        appConsole.setProjectRegistry( projectRegistry );
+        appConsole = new BFAppConsoleViewComposite( tbtmConsole.getParent(), SWT.NONE );
         tbtmConsole.setControl( appConsole );
 
         CTabItem tbtmApplicationLog = new CTabItem( tabFolder, SWT.NONE );
         tbtmApplicationLog.setText( "Application Log" );
-        BFAppLogViewComposite appLog = new BFAppLogViewComposite( tabFolder, SWT.NONE );
-        appLog.setProjectRegistry( projectRegistry );
+        appLog = new BFAppLogViewComposite( tabFolder, SWT.NONE );
         tbtmApplicationLog.setControl( appLog );
 
         tabFolder.setSelection( tbtmApplicationLog );
