@@ -181,6 +181,9 @@ public class BrightFluxViewerMainAppTwo {
         if (mainProjectComposite instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
         }
+        if (multiViewComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) multiViewComposite).setProjectRegistry( projectRegistry );
+        }
 
     }
 }
