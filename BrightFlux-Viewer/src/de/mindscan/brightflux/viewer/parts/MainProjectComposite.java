@@ -94,7 +94,9 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                 if (event.item instanceof CTabItem) {
                     Control control = ((CTabItem) event.item).getControl();
                     if (control instanceof DataFrameTableComposite) {
-                        // TODO: we want to ignore the visual update... before closing, because it takes a lot of time....
+                        // we want to ignore the visual update... before closing, because it takes a lot of time....
+                        // so we hide it first before voiding the referenced data
+                        control.setVisible( false );
                         ((DataFrameTableComposite) control).setDataFrame( null );
                     }
                 }
