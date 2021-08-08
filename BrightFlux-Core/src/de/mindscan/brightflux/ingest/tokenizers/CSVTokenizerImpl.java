@@ -203,12 +203,8 @@ public class CSVTokenizerImpl implements DataTokenizer {
                 valueString = inputString.substring( startIndex + 1, endIndex - 1 );
             }
 
-            System.out.println( valueString );
-
             return TokenUtils.createToken( TextToken.class, valueString );
         }
-
-        System.out.println( valueString );
 
         return TokenUtils.createToken( currentTokenType, valueString );
     }
