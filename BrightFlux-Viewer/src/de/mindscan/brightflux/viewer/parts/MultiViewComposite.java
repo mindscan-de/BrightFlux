@@ -65,9 +65,13 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
 
         // TODO: register for events.... 
 
-        // TODO: Apply the project registry to all other registered Views in the tab folder.
-        appConsole.setProjectRegistry( projectRegistry );
-        appLog.setProjectRegistry( projectRegistry );
+        if (appConsole instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) appConsole).setProjectRegistry( projectRegistry );
+        }
+
+        if (appLog instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) appLog).setProjectRegistry( projectRegistry );
+        }
     }
 
     private void buildLayout() {
