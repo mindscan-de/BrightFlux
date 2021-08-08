@@ -30,7 +30,6 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
@@ -78,7 +77,6 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         CTabFolder tabFolder = new CTabFolder( this, SWT.BORDER );
-        tabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
 
         CTabItem tbtmConsole = new CTabItem( tabFolder, SWT.NONE );
         tbtmConsole.setText( "Console" );
