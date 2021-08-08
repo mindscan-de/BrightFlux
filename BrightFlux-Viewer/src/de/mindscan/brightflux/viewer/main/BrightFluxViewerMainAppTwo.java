@@ -173,7 +173,7 @@ public class BrightFluxViewerMainAppTwo {
 
         Composite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
         sashForm.setWeights( new int[] { 432, 161 } );
-        sashForm_1.setWeights( new int[] { 190, 652 } );
+        sashForm_1.setWeights( new int[] { 100, 742 } );
 
         // This is still not nice, but good enough for now
         // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
