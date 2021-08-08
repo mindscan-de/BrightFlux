@@ -32,20 +32,21 @@ import de.mindscan.brightflux.system.commands.BFCommand;
  */
 public class CommandExecutionStartedEvent implements BFEvent {
 
+    private String commandName;
+
     /**
      * @param command
      */
     public CommandExecutionStartedEvent( BFCommand command ) {
-        // TODO Auto-generated constructor stub
+        this.commandName = command.getClass().getSimpleName();
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void foo() {
-        // TODO Auto-generated method stub
-
+    public String getBFEventMessage() {
+        return String.format( "Command '%s' started.", commandName );
     }
 
 }

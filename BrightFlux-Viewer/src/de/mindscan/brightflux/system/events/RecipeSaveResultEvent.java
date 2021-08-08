@@ -44,14 +44,6 @@ public class RecipeSaveResultEvent implements BFEvent {
         this.success = success;
     }
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void foo() {
-        // TODO Auto-generated method stub
-    }
-
     public boolean isSuccess() {
         return success;
     }
@@ -62,5 +54,16 @@ public class RecipeSaveResultEvent implements BFEvent {
 
     public String getPath() {
         return targetFile.toString();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getBFEventMessage() {
+        if (success) {
+            return String.format( "Recipe saved as: '%s'", getPath() );
+        }
+        return String.format( "Recipe could not be saved: '%s'", getPath() );
     }
 }

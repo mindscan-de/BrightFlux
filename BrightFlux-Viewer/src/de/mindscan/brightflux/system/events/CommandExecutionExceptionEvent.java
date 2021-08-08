@@ -32,21 +32,22 @@ import de.mindscan.brightflux.system.commands.BFCommand;
  */
 public class CommandExecutionExceptionEvent implements BFEvent {
 
+    private String commandName;
+
     /**
      * @param command
      * @param ex
      */
     public CommandExecutionExceptionEvent( BFCommand command, Exception ex ) {
-        // TODO Auto-generated constructor stub
+        this.commandName = command.getClass().getSimpleName();
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void foo() {
-        // TODO Auto-generated method stub
-
+    public String getBFEventMessage() {
+        return String.format( "Command '%s' threw an exception: ", commandName );
     }
 
 }

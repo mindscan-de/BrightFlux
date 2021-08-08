@@ -63,7 +63,8 @@ public class DataFrameLoadedEvent implements BFDataFrameEvent {
      * {@inheritDoc}
      */
     @Override
-    public void foo() {
-        // TODO Auto-generated method stub
+    public String getBFEventMessage() {
+        return String.format( "DataFrame '%s' loaded.", dataFrame.getName() );
     }
+
 }

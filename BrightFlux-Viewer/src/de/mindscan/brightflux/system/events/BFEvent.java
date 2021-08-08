@@ -29,5 +29,5 @@ package de.mindscan.brightflux.system.events;
  * 
  */
 public interface BFEvent {
-    void foo();
+    String getBFEventMessage();
 }
