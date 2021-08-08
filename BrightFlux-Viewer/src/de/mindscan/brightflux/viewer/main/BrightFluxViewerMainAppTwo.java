@@ -27,6 +27,8 @@ package de.mindscan.brightflux.viewer.main;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
@@ -35,7 +37,14 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.registry.ProjectRegistryImpl;
+import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
+import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
  * 
@@ -43,6 +52,7 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 public class BrightFluxViewerMainAppTwo {
 
     protected Shell shellBFViewerMainApp;
+    private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
 
     /**
      * Launch the application.
@@ -79,7 +89,7 @@ public class BrightFluxViewerMainAppTwo {
     protected void createContents() {
         shellBFViewerMainApp = new Shell();
         shellBFViewerMainApp.setSize( 853, 642 );
-        shellBFViewerMainApp.setText( "SWT Application" );
+        shellBFViewerMainApp.setText( "BrightFlux-Viewer 0.0.1.M1" );
         shellBFViewerMainApp.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Menu menu = new Menu( shellBFViewerMainApp, SWT.BAR );
@@ -90,6 +100,57 @@ public class BrightFluxViewerMainAppTwo {
 
         Menu menu_1 = new Menu( mntmFile );
         mntmFile.setMenu( menu_1 );
+
+        MenuItem mntmLoadFile = new MenuItem( menu_1, SWT.NONE );
+        mntmLoadFile.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
+                                FileDescriptions.CSV, //
+                                path -> {
+                                    BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
+                                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                                } );
+            }
+        } );
+        mntmLoadFile.setText( "Load CSV File ..." );
+
+        MenuItem mntmSpecialRawOption = new MenuItem( menu_1, SWT.NONE );
+        mntmSpecialRawOption.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
+                                FileDescriptions.RAW_ANY, //
+                                path -> {
+                                    BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
+                                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                                } );
+            }
+        } );
+        mntmSpecialRawOption.setText( "Load Raw File ..." );
+
+        new MenuItem( menu_1, SWT.SEPARATOR );
+
+        MenuItem mntmGarbageCollector = new MenuItem( menu_1, SWT.NONE );
+        mntmGarbageCollector.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // Don't like it... 
+                System.gc();
+            }
+        } );
+        mntmGarbageCollector.setText( "Garbage Collector (debug)" );
+
+        new MenuItem( menu_1, SWT.SEPARATOR );
+
+        MenuItem mntmExit = new MenuItem( menu_1, SWT.PUSH );
+        mntmExit.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                shellBFViewerMainApp.close();
+            }
+        } );
+        mntmExit.setText( "Exit" );
 
         Composite composite = new Composite( shellBFViewerMainApp, SWT.NONE );
         composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
@@ -113,6 +174,13 @@ public class BrightFluxViewerMainAppTwo {
         bottomRightCommonViewAreaComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_MAGENTA ) );
         sashForm.setWeights( new int[] { 379, 214 } );
         sashForm_1.setWeights( new int[] { 190, 652 } );
+
+        // This is still not nice, but good enough for now
+        // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
+        // basically also a ProjectRegistryParticipant and should not provide the truth to everyone else top down.
+        if (mainProjectComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
+        }
 
     }
 }
