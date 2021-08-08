@@ -74,7 +74,6 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
 
         CTabItem tbtmConsole = new CTabItem( tabFolder, SWT.NONE );
         tbtmConsole.setText( "Console" );
-
         BFAppConsoleViewComposite appConsole = new BFAppConsoleViewComposite( tbtmConsole.getParent(), SWT.NONE );
         appConsole.setProjectRegistry( projectRegistry );
         tbtmConsole.setControl( appConsole );
@@ -85,6 +84,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         appLog.setProjectRegistry( projectRegistry );
         tbtmApplicationLog.setControl( appLog );
 
+        tabFolder.setSelection( tbtmApplicationLog );
     }
 
     @Override
