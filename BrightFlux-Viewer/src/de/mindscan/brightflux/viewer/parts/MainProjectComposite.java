@@ -81,7 +81,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        mainTabFolder = new CTabFolder( this, SWT.NONE );
+        mainTabFolder = new CTabFolder( this, SWT.BORDER );
     }
 
     private void addDataFrameTab( DataFrame newDataFrame ) {
