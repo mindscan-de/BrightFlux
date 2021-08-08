@@ -23,35 +23,44 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts;
+package de.mindscan.brightflux.viewer.parts.mv;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.viewer.parts.mv.BFAppConsoleViewComposite;
-import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
 
 /**
  * 
  */
-public class MultiViewComposite extends Composite implements ProjectRegistryParticipant {
-    private ProjectRegistry projectRegistry;
+public class BFAppConsoleViewComposite extends Composite implements ProjectRegistryParticipant {
 
     /**
      * Create the composite.
      * @param parent
      * @param style
      */
-    public MultiViewComposite( Composite parent, int style ) {
+    public BFAppConsoleViewComposite( Composite parent, int style ) {
         super( parent, style );
+        setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        buildLayout();
+        ScrolledComposite scrolledComposite = new ScrolledComposite( this, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL );
+        scrolledComposite.setExpandHorizontal( true );
+        scrolledComposite.setExpandVertical( true );
+
+        StyledText styledText = new StyledText( scrolledComposite, SWT.BORDER );
+        scrolledComposite.setContent( styledText );
+        scrolledComposite.setMinSize( styledText.computeSize( SWT.DEFAULT, SWT.DEFAULT ) );
+
+    }
+
+    @Override
+    protected void checkSubclass() {
+        // Disable the check that prevents subclassing of SWT components
     }
 
     /** 
@@ -59,37 +68,8 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        this.projectRegistry = projectRegistry;
+        // TODO Auto-generated method stub
 
-        // TODO: register for events.... 
-
-        // TODO: Apply the project registry to all other registered Views in the tab folder.
-    }
-
-    private void buildLayout() {
-        setLayout( new FillLayout( SWT.HORIZONTAL ) );
-
-        CTabFolder tabFolder = new CTabFolder( this, SWT.BORDER );
-        tabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
-
-        CTabItem tbtmConsole = new CTabItem( tabFolder, SWT.NONE );
-        tbtmConsole.setText( "Console" );
-
-        BFAppConsoleViewComposite appConsole = new BFAppConsoleViewComposite( tbtmConsole.getParent(), SWT.NONE );
-        appConsole.setProjectRegistry( projectRegistry );
-        tbtmConsole.setControl( appConsole );
-
-        CTabItem tbtmApplicationLog = new CTabItem( tabFolder, SWT.NONE );
-        tbtmApplicationLog.setText( "Application Log" );
-        BFAppLogViewComposite appLog = new BFAppLogViewComposite( tabFolder, SWT.NONE );
-        appLog.setProjectRegistry( projectRegistry );
-        tbtmApplicationLog.setControl( appLog );
-
-    }
-
-    @Override
-    protected void checkSubclass() {
-        // Disable the check that prevents subclassing of SWT components
     }
 
 }

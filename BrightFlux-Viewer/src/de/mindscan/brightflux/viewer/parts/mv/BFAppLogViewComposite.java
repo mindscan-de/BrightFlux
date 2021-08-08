@@ -23,67 +23,36 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts;
+package de.mindscan.brightflux.viewer.parts.mv;
 
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Table;
 
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.viewer.parts.mv.BFAppConsoleViewComposite;
-import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
 
 /**
  * 
  */
-public class MultiViewComposite extends Composite implements ProjectRegistryParticipant {
-    private ProjectRegistry projectRegistry;
+public class BFAppLogViewComposite extends Composite implements ProjectRegistryParticipant {
+    private Table table_1;
 
     /**
      * Create the composite.
      * @param parent
      * @param style
      */
-    public MultiViewComposite( Composite parent, int style ) {
+    public BFAppLogViewComposite( Composite parent, int style ) {
         super( parent, style );
-
-        buildLayout();
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        this.projectRegistry = projectRegistry;
-
-        // TODO: register for events.... 
-
-        // TODO: Apply the project registry to all other registered Views in the tab folder.
-    }
-
-    private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        CTabFolder tabFolder = new CTabFolder( this, SWT.BORDER );
-        tabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
-
-        CTabItem tbtmConsole = new CTabItem( tabFolder, SWT.NONE );
-        tbtmConsole.setText( "Console" );
-
-        BFAppConsoleViewComposite appConsole = new BFAppConsoleViewComposite( tbtmConsole.getParent(), SWT.NONE );
-        appConsole.setProjectRegistry( projectRegistry );
-        tbtmConsole.setControl( appConsole );
-
-        CTabItem tbtmApplicationLog = new CTabItem( tabFolder, SWT.NONE );
-        tbtmApplicationLog.setText( "Application Log" );
-        BFAppLogViewComposite appLog = new BFAppLogViewComposite( tabFolder, SWT.NONE );
-        appLog.setProjectRegistry( projectRegistry );
-        tbtmApplicationLog.setControl( appLog );
+        TableViewer tableViewer = new TableViewer( this, SWT.BORDER | SWT.FULL_SELECTION );
+        table_1 = tableViewer.getTable();
+        table_1.setHeaderVisible( true );
+        table_1.setLinesVisible( true );
 
     }
 
@@ -92,4 +61,12 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         // Disable the check that prevents subclassing of SWT components
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        // TODO Auto-generated method stub
+
+    }
 }
