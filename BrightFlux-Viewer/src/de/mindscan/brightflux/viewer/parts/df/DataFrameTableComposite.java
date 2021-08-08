@@ -232,10 +232,16 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     public void setDataFrame( DataFrame dataFrame ) {
         this.ingestedDF = dataFrame;
 
-        appenddDataFrameColumns( ingestedDF, tableViewer, this );
+        if (this.ingestedDF != null) {
+            appenddDataFrameColumns( ingestedDF, tableViewer, this );
 
-        tableViewer.setContentProvider( new DataFrameContentProvider() );
-        tableViewer.setInput( ingestedDF );
+            tableViewer.setContentProvider( new DataFrameContentProvider() );
+            tableViewer.setInput( ingestedDF );
+        }
+        else {
+            tableViewer.setContentProvider( new DataFrameContentProvider() );
+            tableViewer.setInput( null );
+        }
     }
 
     /** 

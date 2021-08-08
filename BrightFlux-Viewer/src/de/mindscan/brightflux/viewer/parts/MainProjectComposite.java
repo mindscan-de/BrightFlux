@@ -27,9 +27,12 @@ package de.mindscan.brightflux.viewer.parts;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
+import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
@@ -82,6 +85,22 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         mainTabFolder = new CTabFolder( this, SWT.BORDER );
+        mainTabFolder.addCTabFolder2Listener( new CTabFolder2Adapter() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void close( CTabFolderEvent event ) {
+                if (event.item instanceof CTabItem) {
+                    Control control = ((CTabItem) event.item).getControl();
+                    if (control instanceof DataFrameTableComposite) {
+                        // TODO: we want to ignore the visual update... before closing, because it takes a lot of time....
+                        ((DataFrameTableComposite) control).setDataFrame( null );
+                    }
+                }
+                super.close( event );
+            }
+        } );
     }
 
     private void addDataFrameTab( DataFrame newDataFrame ) {
