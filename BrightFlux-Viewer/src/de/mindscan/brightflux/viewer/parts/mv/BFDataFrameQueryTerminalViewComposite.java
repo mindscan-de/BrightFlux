@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListener;
@@ -48,6 +49,7 @@ import de.mindscan.brightflux.viewer.parts.UIEvents;
 public class BFDataFrameQueryTerminalViewComposite extends Composite implements ProjectRegistryParticipant {
 
     private DataFrame currentSelectedDataFrame = null;
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the composite.
@@ -90,6 +92,8 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+
         BFEventListener listener = new BFEventListener() {
 
             @Override
@@ -103,6 +107,18 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         };
 
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
+    }
+
+    public void executeQuery() {
+        if (currentSelectedDataFrame != null) {
+            // TODO: calculate the "query".
+            String theQuery = "";
+            // currentSelectedDataFrame.query( theQuery );
+
+            BFCommand command = null;
+            // TODO: DataFrameCommandFactory.we want a query command to be run on he currentSelectedDataFrame;
+            // this.projectRegistry.getCommandDispatcher().dispatchCommand( command  );
+        }
     }
 
 }
