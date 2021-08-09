@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.system.registry;
 
+import de.mindscan.brightflux.system.dispatcher.CommandDispatcher;
 import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
 import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
 import de.mindscan.brightflux.system.dispatcher.SimpleEventDispatcher;
@@ -54,7 +55,7 @@ public class ProjectRegistryImpl implements ProjectRegistry {
      * {@inheritDoc}
      */
     @Override
-    public SimpleCommandDispatcher getCommandDispatcher() {
+    public CommandDispatcher getCommandDispatcher() {
         return commandDispatcher;
     }
 

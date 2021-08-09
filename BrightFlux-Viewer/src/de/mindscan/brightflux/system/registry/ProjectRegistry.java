@@ -25,8 +25,8 @@
  */
 package de.mindscan.brightflux.system.registry;
 
+import de.mindscan.brightflux.system.dispatcher.CommandDispatcher;
 import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
-import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
 
 /**
  * 
@@ -37,7 +37,7 @@ public interface ProjectRegistry {
         return ProjectRegistryImpl.getInstance();
     }
 
-    SimpleCommandDispatcher getCommandDispatcher();
+    CommandDispatcher getCommandDispatcher();
 
     EventDispatcher getEventDispatcher();
 
