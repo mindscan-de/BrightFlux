@@ -36,7 +36,7 @@ import de.mindscan.brightflux.system.dispatcher.SimpleEventDispatcher;
 public class ProjectRegistryImpl implements ProjectRegistry {
 
     private EventDispatcher eventDispatcher;
-    private SimpleCommandDispatcher commandDispatcher;
+    private CommandDispatcher commandDispatcher;
 
     static class Holder {
         static ProjectRegistry instance = new ProjectRegistryImpl();
