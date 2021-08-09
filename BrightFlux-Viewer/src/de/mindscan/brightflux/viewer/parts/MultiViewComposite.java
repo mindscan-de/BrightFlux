@@ -35,6 +35,7 @@ import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppConsoleViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
+import de.mindscan.brightflux.viewer.parts.mv.BFDataFrameQueryTerminalViewComposite;
 
 /**
  * 
@@ -43,6 +44,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
     private ProjectRegistry projectRegistry;
     private BFAppLogViewComposite appLog;
     private BFAppConsoleViewComposite appConsole;
+    private BFDataFrameQueryTerminalViewComposite appQueryTerminal;
 
     /**
      * Create the composite.
@@ -71,6 +73,11 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         if (appLog instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) appLog).setProjectRegistry( projectRegistry );
         }
+
+        if (appQueryTerminal instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) appQueryTerminal).setProjectRegistry( projectRegistry );
+        }
+
     }
 
     private void buildLayout() {
@@ -87,6 +94,11 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         tbtmApplicationLog.setText( "Application Log" );
         appLog = new BFAppLogViewComposite( tabFolder, SWT.NONE );
         tbtmApplicationLog.setControl( appLog );
+
+        CTabItem tbtmQueryTerminal = new CTabItem( tabFolder, SWT.NONE );
+        tbtmQueryTerminal.setText( "Query Terminal" );
+        appQueryTerminal = new BFDataFrameQueryTerminalViewComposite( tabFolder, SWT.NONE );
+        tbtmQueryTerminal.setControl( appQueryTerminal );
 
         tabFolder.setSelection( tbtmApplicationLog );
     }
