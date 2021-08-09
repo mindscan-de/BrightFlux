@@ -32,6 +32,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
@@ -74,6 +75,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         StyledText styledText = new StyledText( lowerComposite, SWT.BORDER );
+        styledText.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
         sashForm.setWeights( new int[] { 60, 237 } );
 
     }
@@ -94,7 +96,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
             public void handleEvent( BFEvent event ) {
                 BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
                 currentSelectedDataFrame = dataFrameEvent.getDataFrame();
-                
+
                 // Update View? Show name of selected DataFrame, 
                 // because the Terminal will be sensitive to the selected frame in the MainProjectComposite
             }
