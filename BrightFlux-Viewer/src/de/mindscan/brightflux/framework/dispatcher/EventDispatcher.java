@@ -25,8 +25,8 @@
  */
 package de.mindscan.brightflux.framework.dispatcher;
 
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.system.events.BFEvent;
-import de.mindscan.brightflux.system.events.BFEventListener;
 
 /**
  * 

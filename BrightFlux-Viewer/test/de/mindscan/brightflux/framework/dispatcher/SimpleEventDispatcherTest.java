@@ -5,9 +5,9 @@ import static org.mockito.Mockito.times;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventAdapter;
-import de.mindscan.brightflux.system.events.BFEventListener;
 import de.mindscan.brightflux.system.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.system.events.CommandExecutionStartedEvent;
 
