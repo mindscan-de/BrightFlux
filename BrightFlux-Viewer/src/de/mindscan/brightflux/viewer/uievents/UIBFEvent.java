@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.uievents;
 
-import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEvent;
 
 /**
  * This extends the BFEvent for the UI and acts as an anti corruption layer for 

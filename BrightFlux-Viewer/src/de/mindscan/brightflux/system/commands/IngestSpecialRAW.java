@@ -29,12 +29,12 @@ import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.ingest.IngestEngine;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
-import de.mindscan.brightflux.system.events.BFEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 
 /**

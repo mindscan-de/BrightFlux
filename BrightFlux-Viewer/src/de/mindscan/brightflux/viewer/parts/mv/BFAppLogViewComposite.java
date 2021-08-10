@@ -31,7 +31,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
-import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventAdapter;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;

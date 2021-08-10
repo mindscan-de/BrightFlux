@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events;
+package de.mindscan.brightflux.framework.events;
 
 /**
  * 

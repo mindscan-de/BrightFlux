@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.system.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.framework.events.BFEvent;
 
 /**
  * 

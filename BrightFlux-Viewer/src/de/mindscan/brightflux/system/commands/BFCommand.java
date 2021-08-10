@@ -27,7 +27,7 @@ package de.mindscan.brightflux.system.commands;
 
 import java.util.function.Consumer;
 
-import de.mindscan.brightflux.system.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEvent;
 
 /**
  * 
