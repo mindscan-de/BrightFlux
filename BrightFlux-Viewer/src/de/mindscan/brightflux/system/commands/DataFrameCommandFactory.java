@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
 
 /**
  * This class provides commands around DataFrames 
@@ -54,6 +55,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand selectAndFilterDataFrame( DataFrame inputDataFrame, String[] columnNames, DataFrameRowFilterPredicate predicate ) {
         return new DataFrameSelectAndFilterCommand( inputDataFrame, columnNames, predicate );
+    }
+
+    public static BFCommand queryDataFrame( DataFrame inputDataFrame, String queryString ) {
+        return new DataFrameQueryCommand( inputDataFrame, queryString );
     }
 
     public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {
