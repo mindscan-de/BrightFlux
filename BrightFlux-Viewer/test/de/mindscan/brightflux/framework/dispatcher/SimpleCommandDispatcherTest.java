@@ -1,4 +1,4 @@
-package de.mindscan.brightflux.system.dispatcher;
+package de.mindscan.brightflux.framework.dispatcher;
 
 import static org.mockito.Mockito.times;
 

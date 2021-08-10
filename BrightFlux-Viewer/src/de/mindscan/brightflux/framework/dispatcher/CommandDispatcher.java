@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.dispatcher;
+package de.mindscan.brightflux.framework.dispatcher;
 
 import de.mindscan.brightflux.system.commands.BFCommand;
 

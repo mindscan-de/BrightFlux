@@ -25,8 +25,8 @@
  */
 package de.mindscan.brightflux.system.registry;
 
-import de.mindscan.brightflux.system.dispatcher.CommandDispatcher;
-import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
+import de.mindscan.brightflux.framework.dispatcher.CommandDispatcher;
+import de.mindscan.brightflux.framework.dispatcher.EventDispatcher;
 
 /**
  * 

@@ -25,10 +25,10 @@
  */
 package de.mindscan.brightflux.system.registry;
 
-import de.mindscan.brightflux.system.dispatcher.CommandDispatcher;
-import de.mindscan.brightflux.system.dispatcher.EventDispatcher;
-import de.mindscan.brightflux.system.dispatcher.SimpleCommandDispatcher;
-import de.mindscan.brightflux.system.dispatcher.SimpleEventDispatcher;
+import de.mindscan.brightflux.framework.dispatcher.CommandDispatcher;
+import de.mindscan.brightflux.framework.dispatcher.EventDispatcher;
+import de.mindscan.brightflux.framework.dispatcher.SimpleCommandDispatcher;
+import de.mindscan.brightflux.framework.dispatcher.SimpleEventDispatcher;
 
 /**
  * TODO: maybe ProjectRegistry is the wrong name...
