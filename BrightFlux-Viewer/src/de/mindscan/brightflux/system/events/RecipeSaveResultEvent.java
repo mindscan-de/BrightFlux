@@ -30,7 +30,7 @@ import java.nio.file.Path;
 /**
  * 
  */
-public class RecipeSaveResultEvent implements BFEvent {
+public class RecipeSaveResultEvent extends BFAbstractEvent {
 
     private Path targetFile;
     private boolean success;

@@ -30,7 +30,7 @@ import de.mindscan.brightflux.system.commands.BFCommand;
 /**
  * 
  */
-public class CommandExecutionFinishedEvent implements BFEvent {
+public class CommandExecutionFinishedEvent extends BFAbstractEvent {
 
     private String commandName;
 
