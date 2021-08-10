@@ -37,6 +37,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
@@ -113,11 +114,9 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         if (currentSelectedDataFrame != null) {
             // TODO: calculate the "query".
             String theQuery = "";
-            // currentSelectedDataFrame.query( theQuery );
 
-            BFCommand command = null;
-            // TODO: DataFrameCommandFactory.we want a query command to be run on he currentSelectedDataFrame;
-            // this.projectRegistry.getCommandDispatcher().dispatchCommand( command  );
+            BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
+            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
 
