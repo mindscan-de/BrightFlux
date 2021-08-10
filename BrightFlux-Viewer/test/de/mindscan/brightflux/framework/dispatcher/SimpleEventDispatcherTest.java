@@ -7,9 +7,9 @@ import org.mockito.Mockito;
 
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
+import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
+import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.CommandExecutionFinishedEvent;
-import de.mindscan.brightflux.system.events.CommandExecutionStartedEvent;
 
 public class SimpleEventDispatcherTest {
 

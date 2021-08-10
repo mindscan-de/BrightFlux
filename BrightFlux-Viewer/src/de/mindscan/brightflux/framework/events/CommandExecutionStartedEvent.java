@@ -23,22 +23,21 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events;
+package de.mindscan.brightflux.framework.events;
 
 import de.mindscan.brightflux.system.commands.BFCommand;
 
 /**
  * 
  */
-public class CommandExecutionExceptionEvent extends BFAbstractEvent {
+public class CommandExecutionStartedEvent implements BFEvent {
 
     private String commandName;
 
     /**
      * @param command
-     * @param ex
      */
-    public CommandExecutionExceptionEvent( BFCommand command, Exception ex ) {
+    public CommandExecutionStartedEvent( BFCommand command ) {
         this.commandName = command.getClass().getSimpleName();
     }
 
@@ -47,7 +46,7 @@ public class CommandExecutionExceptionEvent extends BFAbstractEvent {
      */
     @Override
     public String getBFEventMessage() {
-        return String.format( "Command '%s' threw an exception: ", commandName );
+        return String.format( "Command '%s' started.", commandName );
     }
 
 }
