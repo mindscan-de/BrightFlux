@@ -38,7 +38,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.commands.BFCommand;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
-import de.mindscan.brightflux.system.events.BFEventAdapter;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -94,7 +94,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        BFEventAdapter listener = new BFEventAdapter() {
+        BFEventListenerAdapter listener = new BFEventListenerAdapter() {
 
             @Override
             public void handleEvent( BFEvent event ) {

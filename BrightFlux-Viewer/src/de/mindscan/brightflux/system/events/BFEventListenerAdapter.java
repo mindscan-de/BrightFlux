@@ -31,7 +31,7 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 /**
  * 
  */
-public class BFEventAdapter implements BFEventListener {
+public class BFEventListenerAdapter implements BFEventListener {
 
     /** 
      * {@inheritDoc}
