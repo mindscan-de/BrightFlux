@@ -27,11 +27,11 @@ package de.mindscan.brightflux.framework.dispatcher;
 
 import java.util.function.Consumer;
 
+import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
-import de.mindscan.brightflux.system.commands.BFCommand;
 
 /**
  * 

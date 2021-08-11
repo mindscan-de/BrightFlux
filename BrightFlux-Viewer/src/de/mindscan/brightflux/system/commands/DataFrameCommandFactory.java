@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
 
 /**

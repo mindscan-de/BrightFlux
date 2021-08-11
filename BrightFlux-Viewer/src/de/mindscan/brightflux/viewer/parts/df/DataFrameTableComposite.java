@@ -51,7 +51,7 @@ import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
-import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.registry.ProjectRegistry;

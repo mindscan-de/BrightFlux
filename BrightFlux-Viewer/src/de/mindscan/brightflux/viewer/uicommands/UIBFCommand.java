@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.uicommands;
 
-import de.mindscan.brightflux.system.commands.BFCommand;
+import de.mindscan.brightflux.framework.command.BFCommand;
 
 /**
  * This extends the BFCommand for the UI and acts as an anti corruption layer for 

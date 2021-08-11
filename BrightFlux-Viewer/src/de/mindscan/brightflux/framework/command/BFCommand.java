@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands;
+package de.mindscan.brightflux.framework.command;
 
 import java.util.function.Consumer;
 
