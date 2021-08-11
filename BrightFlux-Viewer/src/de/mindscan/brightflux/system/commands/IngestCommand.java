@@ -32,13 +32,12 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.ingest.IngestCsv;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * The IngestCommand implements the load and convert operation for a given file path to a 
  * DataFrame.
  * 
- * @resultevent {@link DataFrameLoadedEvent}
  */
 public class IngestCommand implements BFCommand {
 
@@ -59,7 +58,7 @@ public class IngestCommand implements BFCommand {
         IngestCsv ingest = new IngestCsv();
         DataFrame resultDataFrame = ingest.loadAsDataFrame( this.fileToIngest );
 
-        eventConsumer.accept( new DataFrameLoadedEvent( resultDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeLoaded( resultDataFrame ) );
     }
 
 }

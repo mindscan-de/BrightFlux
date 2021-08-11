@@ -31,7 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
@@ -59,7 +59,7 @@ public class DataFrameSelectAndFilterCommand implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame filteredDataFrame = inputDataFrame.select( columnNames ).where( predicate );
-        eventConsumer.accept( new DataFrameLoadedEvent( filteredDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeCreated( filteredDataFrame ) );
     }
 
 }

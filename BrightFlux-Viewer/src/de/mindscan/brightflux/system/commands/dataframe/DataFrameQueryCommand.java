@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
@@ -51,7 +51,7 @@ public class DataFrameQueryCommand implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame newDataFrame = inputDataFrame.query( queryString );
-        eventConsumer.accept( new DataFrameLoadedEvent( newDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeCreated( newDataFrame ) );
     }
 
 }

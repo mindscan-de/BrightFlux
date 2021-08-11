@@ -36,7 +36,7 @@ import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * This is just a test for a binary oriented data reader for a file, which i have laying around here. 
@@ -70,7 +70,7 @@ public class IngestSpecialRAW implements BFCommand {
         config.setIngestInputFilePath( path );
 
         DataFrame resultDataFrame = IngestEngine.execute( config );
-        eventConsumer.accept( new DataFrameLoadedEvent( resultDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeLoaded( resultDataFrame ) );
     }
 
 }

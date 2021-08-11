@@ -23,40 +23,22 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands;
-
-import java.util.function.Consumer;
+package de.mindscan.brightflux.system.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
-import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
  */
-public class DataFrameFilterCommand implements BFCommand {
+public class BFEventFactory {
 
-    private DataFrame inputDataFrame;
-    private DataFrameRowFilterPredicate whereClause;
-
-    public DataFrameFilterCommand( DataFrame inputDataFrame, DataFrameRowFilterPredicate whereClause ) {
-        this.inputDataFrame = inputDataFrame;
-        this.whereClause = whereClause;
-
-        // TODO: later we should also add the selection 
-        // selectClause
+    public static BFEvent dataframeLoaded( DataFrame dataFrame ) {
+        return new DataFrameLoadedEvent( dataFrame );
     }
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void execute( Consumer<BFEvent> eventConsumer ) {
-        DataFrame filteredDataFrame = inputDataFrame.select().where( whereClause );
-
-        eventConsumer.accept( BFEventFactory.dataframeCreated( filteredDataFrame ) );
+    public static BFEvent dataframeCreated( DataFrame dataFrame ) {
+        return new DataFrameLoadedEvent( dataFrame );
     }
 
 }

@@ -38,7 +38,7 @@ import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.recipe.BFRecipe;
 import de.mindscan.brightflux.recipe.BFRecipeIO;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
@@ -89,7 +89,7 @@ public class RecipeExecuteCommand implements BFCommand {
                     }
                 }
 
-                eventConsumer.accept( new DataFrameLoadedEvent( currentDataFrame ) );
+                eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame ) );
             }
 
             // Nothing to do...
