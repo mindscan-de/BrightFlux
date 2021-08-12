@@ -30,7 +30,9 @@ import java.nio.file.Path;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.system.commands.dataframe.DataFrameFilterCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
+import de.mindscan.brightflux.system.commands.dataframe.DataFrameSelectAndFilterCommand;
 
 /**
  * This class provides commands around DataFrames 
