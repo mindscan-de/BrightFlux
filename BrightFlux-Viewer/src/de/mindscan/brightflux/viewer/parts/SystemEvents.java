@@ -30,6 +30,7 @@ import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
 import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 
 /**
  * This class acts as an anti corruption layer, in case of larger refactorings, of 
@@ -42,6 +43,7 @@ import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
 public class SystemEvents {
 
     public final static Class<?> DataFrameLoaded = DataFrameLoadedEvent.class;
+    public final static Class<?> DataFrameCreated = DataFrameCreatedEvent.class;
 
     public final static Class<?> CommandExecutionException = CommandExecutionExceptionEvent.class;
     public final static Class<?> CommandExecutionFinished = CommandExecutionFinishedEvent.class;

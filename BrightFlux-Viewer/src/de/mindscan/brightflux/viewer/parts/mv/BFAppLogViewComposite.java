@@ -90,6 +90,7 @@ public class BFAppLogViewComposite extends Composite implements ProjectRegistryP
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionFinished, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionException, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, listener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.RecipeSaveResult, listener );
     }
 }
