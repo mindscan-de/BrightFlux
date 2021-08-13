@@ -26,37 +26,22 @@
 package de.mindscan.brightflux.system.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
 /**
  * This event class represents the event that a data frame was loaded.
  * 
  * TODO: this could also be the implementation of a base class for BFDataFrameEvent, it looks quite generic to me now.
  */
-public class DataFrameLoadedEvent extends BFAbstractEvent implements BFDataFrameEvent {
-    private DataFrame dataFrame;
+public class DataFrameLoadedEvent extends BFAbstractDataFrameEvent {
 
     /**
      * @param dataFrame 
      * 
      */
     public DataFrameLoadedEvent( DataFrame dataFrame ) {
-        this.dataFrame = dataFrame;
-    }
+        super( dataFrame );
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public DataFrame getDataFrame() {
-        return dataFrame;
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDataFrame( DataFrame dataframe ) {
-        this.dataFrame = dataframe;
     }
 
     /** 
@@ -64,7 +49,7 @@ public class DataFrameLoadedEvent extends BFAbstractEvent implements BFDataFrame
      */
     @Override
     public String getBFEventMessage() {
-        return String.format( "DataFrame '%s' loaded.", dataFrame.getName() );
+        return String.format( "DataFrame '%s' loaded.", getDataFrame().getName() );
     }
 
 }
