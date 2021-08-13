@@ -23,10 +23,9 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events;
+package de.mindscan.brightflux.system.events.dataframe;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
 /**
  * This event class represents the event that a data frame was loaded.

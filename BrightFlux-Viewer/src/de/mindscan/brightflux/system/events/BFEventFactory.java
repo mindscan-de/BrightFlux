@@ -27,6 +27,8 @@ package de.mindscan.brightflux.system.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 
 /**
  * 
@@ -38,7 +40,7 @@ public class BFEventFactory {
     }
 
     public static BFEvent dataframeCreated( DataFrame dataFrame ) {
-        return new DataFrameLoadedEvent( dataFrame );
+        return new DataFrameCreatedEvent( dataFrame );
     }
 
 }

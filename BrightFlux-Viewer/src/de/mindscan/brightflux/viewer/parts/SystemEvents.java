@@ -28,9 +28,9 @@ package de.mindscan.brightflux.viewer.parts;
 import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
-import de.mindscan.brightflux.system.events.DataFrameLoadedEvent;
 import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 
 /**
  * This class acts as an anti corruption layer, in case of larger refactorings, of 
