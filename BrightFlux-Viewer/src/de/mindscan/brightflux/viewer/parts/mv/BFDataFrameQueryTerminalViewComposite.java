@@ -26,12 +26,13 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -51,6 +52,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
 
     private DataFrame currentSelectedDataFrame = null;
     private ProjectRegistry projectRegistry;
+    private StyledText queryHistoryTextArea;
 
     /**
      * Create the composite.
@@ -66,19 +68,27 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         Composite upperComposite = new Composite( sashForm, SWT.NONE );
         upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        ToolBar toolBar = new ToolBar( upperComposite, SWT.FLAT | SWT.RIGHT );
+        CCombo combo = new CCombo( upperComposite, SWT.BORDER );
+        combo.addKeyListener( new KeyAdapter() {
+            @Override
+            public void keyReleased( KeyEvent e ) {
+                if (e.character == SWT.CR) {
+                    String theQuery = combo.getText();
 
-        ToolItem tltmFoo = new ToolItem( toolBar, SWT.NONE );
-        tltmFoo.setText( "Foo" );
+                    addToHistory( theQuery );
+                    combo.setText( "" );
 
-        ToolItem tltmBar = new ToolItem( toolBar, SWT.NONE );
-        tltmBar.setText( "Bar" );
+                    executeQuery( theQuery );
+                }
+            }
+        } );
+        combo.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
 
         Composite lowerComposite = new Composite( sashForm, SWT.NONE );
         lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        StyledText styledText = new StyledText( lowerComposite, SWT.BORDER );
-        styledText.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
+        queryHistoryTextArea = new StyledText( lowerComposite, SWT.BORDER );
+        queryHistoryTextArea.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
         sashForm.setWeights( new int[] { 60, 237 } );
 
     }
@@ -96,7 +106,6 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         this.projectRegistry = projectRegistry;
 
         BFEventListenerAdapter listener = new BFEventListenerAdapter() {
-
             @Override
             public void handleEvent( BFEvent event ) {
                 BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
@@ -110,14 +119,18 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
     }
 
-    public void executeQuery() {
+    public void executeQuery( String theQuery ) {
         if (currentSelectedDataFrame != null) {
-            // TODO: calculate the "query".
-            String theQuery = "";
-
             BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
             this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
+    }
+
+    public void addToHistory( String theQuery ) {
+        // Attention: Instead of using the text area as the main storage, we might be using an LRU Cache and rebuild the text on each Change or duplicate
+        // Also we might want to persist this History for the next start.
+        String newCurrentText = theQuery + System.lineSeparator() + queryHistoryTextArea.getText();
+        queryHistoryTextArea.setText( newCurrentText );
     }
 
 }
