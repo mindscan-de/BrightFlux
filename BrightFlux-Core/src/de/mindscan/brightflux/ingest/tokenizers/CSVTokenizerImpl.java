@@ -155,7 +155,8 @@ public class CSVTokenizerImpl implements DataTokenizer {
             else if (isStartOfLineSeparator( currentChar )) {
                 currentTokenType = consumeLineSeparator( inputString );
             }
-            if (isStartOfQuote( currentChar )) {
+            // TODO: add whitespace consumer here?
+            else if (isStartOfQuote( currentChar )) {
                 currentTokenType = consumeQuotedText( inputString );
             }
             else if (isDigit( currentChar )) {
