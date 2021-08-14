@@ -26,38 +26,23 @@
 package de.mindscan.brightflux.viewer.uievents;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.system.events.BFDataFrameEvent;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
 /**
  * 
  */
-public class DataFrameSelectedEvent implements UIBFEvent, BFDataFrameEvent {
+public class DataFrameSelectedEvent extends BFAbstractDataFrameEvent implements UIBFEvent {
+
+    public DataFrameSelectedEvent( DataFrame dataFrame ) {
+        super( dataFrame );
+    }
 
     /** 
      * {@inheritDoc}
      */
     @Override
     public String getBFEventMessage() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public DataFrame getDataFrame() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void setDataFrame( DataFrame dataframe ) {
-        // TODO Auto-generated method stub
-
+        return String.format( "DataFrame '%s' selected.", getDataFrame().getName() );
     }
 
 }
