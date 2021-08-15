@@ -27,7 +27,6 @@ package de.mindscan.brightflux.viewer.parts.df;
 
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnPixelData;
@@ -50,7 +49,6 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
-import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
@@ -115,15 +113,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
         Menu menu_4 = new Menu( mntmJournal );
         mntmJournal.setMenu( menu_4 );
-
-        MenuItem mntmShowPrint = new MenuItem( menu_4, SWT.NONE );
-        mntmShowPrint.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                printOrShowDataFrameJournal( ingestedDF );
-            }
-        } );
-        mntmShowPrint.setText( "Show / Print" );
 
         MenuItem mntmSaveAsReceipt = new MenuItem( menu_4, SWT.NONE );
         mntmSaveAsReceipt.addSelectionListener( new SelectionAdapter() {
@@ -311,14 +300,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void applyh1tsh2msg( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.any();
         dispatchCommand( DataFrameCommandFactory.selectAndFilterDataFrame( dataFrame, new String[] { "h1.ts", "h2.msg" }, predicate ) );
-    }
-
-    private void printOrShowDataFrameJournal( DataFrame dataFrame ) {
-        System.out.println( "DataFrameLog:" );
-        List<DataFrameJournalEntry> journalEntries = dataFrame.getJournal().getJournalEntries();
-        for (DataFrameJournalEntry entry : journalEntries) {
-            System.out.println( ": " + entry.getLogMessage() );
-        }
     }
 
     private void applyReceipt( DataFrame dataFrame, Path receipt ) {
