@@ -244,6 +244,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
+    public DataFrame getDataFrame() {
+        return ingestedDF;
+    }
+
     /** 
      * {@inheritDoc}
      */
