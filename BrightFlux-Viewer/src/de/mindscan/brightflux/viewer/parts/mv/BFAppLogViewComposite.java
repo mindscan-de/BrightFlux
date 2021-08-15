@@ -36,6 +36,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
+import de.mindscan.brightflux.viewer.parts.UIEvents;
 
 /**
  * 
@@ -91,5 +92,7 @@ public class BFAppLogViewComposite extends Composite implements ProjectRegistryP
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.RecipeSaveResult, listener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
+
     }
 }
