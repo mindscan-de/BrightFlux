@@ -31,8 +31,8 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import de.mindscan.brightflux.system.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppConsoleViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFDataFrameQueryTerminalViewComposite;

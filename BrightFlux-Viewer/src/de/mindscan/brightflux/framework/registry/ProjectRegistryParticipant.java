@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.registry;
+package de.mindscan.brightflux.framework.registry;
 
 /**
  * 

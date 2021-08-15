@@ -36,10 +36,10 @@ import org.eclipse.swt.widgets.Control;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
 
 /**

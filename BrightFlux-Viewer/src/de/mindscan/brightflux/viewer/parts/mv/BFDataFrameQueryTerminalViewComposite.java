@@ -38,11 +38,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 
 /**

@@ -31,8 +31,8 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-import de.mindscan.brightflux.system.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 
 /**
  * 

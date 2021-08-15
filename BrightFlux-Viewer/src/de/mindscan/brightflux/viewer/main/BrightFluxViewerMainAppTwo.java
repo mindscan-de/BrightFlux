@@ -38,11 +38,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
-import de.mindscan.brightflux.system.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.registry.ProjectRegistryImpl;
-import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;

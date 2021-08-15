@@ -32,9 +32,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
@@ -73,8 +73,6 @@ public class BFAppLogViewComposite extends Composite implements ProjectRegistryP
         this.projectRegistry = projectRegistry;
         // TODO: register for BFEvent and get all the BFEvents - but currently we can't do that
 
-        // Small work around: we register for all SystemEvents.
-
         BFEventListenerAdapter listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -86,6 +84,7 @@ public class BFAppLogViewComposite extends Composite implements ProjectRegistryP
             }
         };
 
+        // Small work around: we register for all SystemEvents.
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionStarted, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionFinished, listener );
         this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.CommandExecutionException, listener );
