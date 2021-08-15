@@ -34,6 +34,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.parts.ov.DataFrameJournalViewComposite;
 
 /**
  * 
@@ -41,6 +42,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 public class OutlineViewComposite extends Composite implements ProjectRegistryParticipant {
 
     private ProjectRegistry projectRegistry;
+    private DataFrameJournalViewComposite dataJournalOutline;
 
     /**
      * Create the composite.
@@ -61,6 +63,9 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
         this.projectRegistry = projectRegistry;
 
         // Set the inner composites to accept this projectregistry as well..
+        if (dataJournalOutline instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) dataJournalOutline).setProjectRegistry( projectRegistry );
+        }
     }
 
     private void buildLayout() {
@@ -74,6 +79,10 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
 
         CTabItem tbtmDataJournalOutline = new CTabItem( tabFolder, SWT.NONE );
         tbtmDataJournalOutline.setText( "Data Journal" );
+        dataJournalOutline = new DataFrameJournalViewComposite( tabFolder, SWT.NONE );
+        tbtmDataJournalOutline.setControl( dataJournalOutline );
+
+        tabFolder.setSelection( tbtmDataJournalOutline );
     }
 
     @Override
