@@ -30,6 +30,8 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolder2Adapter;
 import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -41,6 +43,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
+import de.mindscan.brightflux.viewer.uievents.DataFrameSelectedEvent;
 
 /**
  * 
@@ -94,6 +97,18 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         mainTabFolder = new CTabFolder( this, SWT.BORDER );
+        mainTabFolder.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent event ) {
+
+                if (event.item instanceof CTabItem) {
+                    Control control = ((CTabItem) event.item).getControl();
+                    if (control instanceof DataFrameTableComposite) {
+                        sendDataFrameSelectionEvent( ((DataFrameTableComposite) control).getDataFrame() );
+                    }
+                }
+            }
+        } );
         mainTabFolder.addCTabFolder2Listener( new CTabFolder2Adapter() {
             /** 
              * {@inheritDoc}
@@ -132,8 +147,16 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         composite.setDataFrame( ingestedDF );
         tbtmNewItem.setControl( composite );
 
+        sendDataFrameSelectionEvent( ingestedDF );
+
         return tbtmNewItem;
 
+    }
+
+    private void sendDataFrameSelectionEvent( final DataFrame dataFrame ) {
+        if (projectRegistry != null) {
+            projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameSelectedEvent( dataFrame ) );
+        }
     }
 
     @Override
