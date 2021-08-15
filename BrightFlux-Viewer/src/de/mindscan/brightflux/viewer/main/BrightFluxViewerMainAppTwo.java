@@ -45,6 +45,7 @@ import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
+import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
@@ -163,9 +164,8 @@ public class BrightFluxViewerMainAppTwo {
         Composite topLeftProjectComposite = new Composite( sashForm_2, SWT.NONE );
         topLeftProjectComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_RED ) );
 
-        Composite bottomLeftDataOutlineComposite = new Composite( sashForm_2, SWT.NONE );
-        bottomLeftDataOutlineComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_BLUE ) );
-        sashForm_2.setWeights( new int[] { 316, 277 } );
+        Composite outlineViewComposite = new OutlineViewComposite( sashForm_2, SWT.NONE );
+        sashForm_2.setWeights( new int[] { 375, 218 } );
 
         SashForm sashForm = new SashForm( sashForm_1, SWT.VERTICAL );
 
@@ -173,7 +173,7 @@ public class BrightFluxViewerMainAppTwo {
 
         Composite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
         sashForm.setWeights( new int[] { 432, 161 } );
-        sashForm_1.setWeights( new int[] { 100, 742 } );
+        sashForm_1.setWeights( new int[] { 148, 694 } );
 
         // This is still not nice, but good enough for now
         // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
@@ -183,6 +183,9 @@ public class BrightFluxViewerMainAppTwo {
         }
         if (multiViewComposite instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) multiViewComposite).setProjectRegistry( projectRegistry );
+        }
+        if (outlineViewComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) outlineViewComposite).setProjectRegistry( projectRegistry );
         }
 
     }
