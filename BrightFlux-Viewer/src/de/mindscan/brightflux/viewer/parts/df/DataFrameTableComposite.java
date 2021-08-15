@@ -334,6 +334,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void dispatchCommand( BFCommand command ) {
-        DataFrameTableComposite.this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        if (projectRegistry != null) {
+            projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 }
