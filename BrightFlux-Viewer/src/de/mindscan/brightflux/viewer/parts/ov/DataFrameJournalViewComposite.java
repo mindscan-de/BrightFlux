@@ -81,13 +81,24 @@ public class DataFrameJournalViewComposite extends Composite implements ProjectR
         TableColumnLayout tcl_composite = new TableColumnLayout();
         this.setLayout( tcl_composite );
 
-        TableViewerColumn tableViewerColumn = new TableViewerColumn( tableViewer, SWT.NONE );
-        TableColumn tableColumn = tableViewerColumn.getColumn();
+        // TODO: tiemstamp is currenmtly useless becaus there is no time stored at the moment
+//        TableViewerColumn tableViewerColumn1 = new TableViewerColumn( tableViewer, SWT.NONE );
+//        TableColumn tableColumn1 = tableViewerColumn1.getColumn();
+//        tcl_composite.setColumnData( tableColumn1, new ColumnPixelData( 65, true, true ) );
+//        tableColumn1.setText( DataFrameJournalEntriesColumnLabelProvider.TIMESTAMP_HEADER );
+//        tableViewerColumn1.setLabelProvider( new DataFrameJournalEntriesColumnLabelProvider( DataFrameJournalEntriesColumnLabelProvider.TIMESTAMP_HEADER ) );
 
-        tcl_composite.setColumnData( tableColumn, new ColumnPixelData( 145, true, true ) );
-        tableColumn.setText( "Message" );
+        TableViewerColumn tableViewerColumn3 = new TableViewerColumn( tableViewer, SWT.NONE );
+        TableColumn tableColumn3 = tableViewerColumn3.getColumn();
+        tcl_composite.setColumnData( tableColumn3, new ColumnPixelData( 85, true, true ) );
+        tableColumn3.setText( DataFrameJournalEntriesColumnLabelProvider.TYPE_HEADER );
+        tableViewerColumn3.setLabelProvider( new DataFrameJournalEntriesColumnLabelProvider( DataFrameJournalEntriesColumnLabelProvider.TYPE_HEADER ) );
 
-        tableViewerColumn.setLabelProvider( new DataFrameJournalEntriesColumnLabelProvider( "Message" ) );
+        TableViewerColumn tableViewerColumn2 = new TableViewerColumn( tableViewer, SWT.NONE );
+        TableColumn tableColumn2 = tableViewerColumn2.getColumn();
+        tcl_composite.setColumnData( tableColumn2, new ColumnPixelData( 445, true, true ) );
+        tableColumn2.setText( DataFrameJournalEntriesColumnLabelProvider.MESSAGE_HEADER );
+        tableViewerColumn2.setLabelProvider( new DataFrameJournalEntriesColumnLabelProvider( DataFrameJournalEntriesColumnLabelProvider.MESSAGE_HEADER ) );
 
     }
 
