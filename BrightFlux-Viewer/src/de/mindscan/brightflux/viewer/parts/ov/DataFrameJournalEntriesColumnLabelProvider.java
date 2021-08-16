@@ -36,6 +36,10 @@ public class DataFrameJournalEntriesColumnLabelProvider extends ColumnLabelProvi
 
     private final String columnName;
 
+    public final static String TIMESTAMP_HEADER = "Timestamp";
+    public final static String TYPE_HEADER = "Type";
+    public final static String MESSAGE_HEADER = "Message";
+
     /**
      * 
      */
@@ -54,15 +58,15 @@ public class DataFrameJournalEntriesColumnLabelProvider extends ColumnLabelProvi
 
         DataFrameJournalEntry entry = (DataFrameJournalEntry) element;
 
-        // depending on the columnname we can display a different entry
-
-        // Timestamp
-        // Type 
-        // Message
-
-        return entry.getLogMessage();
-
-        // TODO Auto-generated method stub
-        // return super.getText( element );
+        switch (columnName) {
+            case MESSAGE_HEADER:
+                return entry.getLogMessage();
+            case TYPE_HEADER:
+                return entry.getEntryType().name();
+            case TIMESTAMP_HEADER:
+                return Long.toString( entry.getTimestamp() );
+            default:
+                return super.getText( element );
+        }
     }
 }
