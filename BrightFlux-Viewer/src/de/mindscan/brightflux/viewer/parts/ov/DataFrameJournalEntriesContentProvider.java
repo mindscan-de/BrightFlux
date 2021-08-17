@@ -52,7 +52,7 @@ public class DataFrameJournalEntriesContentProvider implements IStructuredConten
             DataFrame input = (DataFrame) inputElement;
             return input.getJournal().getJournalEntries().toArray();
         }
-        // TODO Auto-generated method stub
+
         return new Object[0];
     }
 
@@ -61,7 +61,7 @@ public class DataFrameJournalEntriesContentProvider implements IStructuredConten
      */
     @Override
     public void inputChanged( Viewer viewer, Object oldInput, Object newInput ) {
-        // We don'tact on this, because we have one static instance
+        // We don't act on this, because we have one static instance
     }
 
 }
