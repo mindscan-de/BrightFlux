@@ -34,6 +34,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.parts.ov.DataFrameColumnViewComposite;
 import de.mindscan.brightflux.viewer.parts.ov.DataFrameJournalViewComposite;
 
 /**
@@ -43,6 +44,7 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
 
     private ProjectRegistry projectRegistry;
     private DataFrameJournalViewComposite dataJournalOutline;
+    private DataFrameColumnViewComposite dataColumnsOutline;
 
     /**
      * Create the composite.
@@ -66,6 +68,10 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
         if (dataJournalOutline instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) dataJournalOutline).setProjectRegistry( projectRegistry );
         }
+
+        if (dataColumnsOutline instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) dataColumnsOutline).setProjectRegistry( projectRegistry );
+        }
     }
 
     private void buildLayout() {
@@ -76,6 +82,8 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
 
         CTabItem tbtmDataColumnOutline = new CTabItem( tabFolder, SWT.NONE );
         tbtmDataColumnOutline.setText( "Data Columns" );
+        dataColumnsOutline = new DataFrameColumnViewComposite( tabFolder, SWT.NONE );
+        tbtmDataColumnOutline.setControl( dataColumnsOutline );
 
         CTabItem tbtmDataJournalOutline = new CTabItem( tabFolder, SWT.NONE );
         tbtmDataJournalOutline.setText( "Data Journal" );
