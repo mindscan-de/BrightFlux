@@ -78,6 +78,7 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         CTabFolder tabFolder = new CTabFolder( this, SWT.BORDER );
+        tabFolder.setSimple( false );
         tabFolder.setSelectionBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
 
         CTabItem tbtmDataColumnOutline = new CTabItem( tabFolder, SWT.NONE );

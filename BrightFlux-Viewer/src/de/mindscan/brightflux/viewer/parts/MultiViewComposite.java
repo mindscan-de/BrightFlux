@@ -85,6 +85,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
 
         CTabFolder tabFolder = new CTabFolder( this, SWT.BORDER );
         tabFolder.setSelectionBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
+        tabFolder.setSimple( false );
 
         CTabItem tbtmConsole = new CTabItem( tabFolder, SWT.NONE );
         tbtmConsole.setText( "Console" );

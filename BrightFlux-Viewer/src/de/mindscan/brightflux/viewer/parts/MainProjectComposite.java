@@ -97,6 +97,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         mainTabFolder = new CTabFolder( this, SWT.BORDER );
+        mainTabFolder.setSimple( false );
         mainTabFolder.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent event ) {
