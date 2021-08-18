@@ -33,6 +33,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
+import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
 
 /**
  * 
@@ -48,7 +49,7 @@ public class DataFrameQueryLanguageTokenizer {
     public final static String[] operators = new String[] { "==", "!=", "<=", ">=", "<", ">", ".", ",", "*", "+", "-", "!" };
     public final static char[] firstMengeOperators = firstMenge( operators );
     public final static char[] whitespace = new char[] { ' ', '\t', '\r', '\n' };
-    public final static String[] numbers = new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+    public final static char[] numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     public final static char[] parenthesis = new char[] { '(', ')' };
     public final static String[] quotes = new String[] { "'", "\"" };
 
@@ -58,6 +59,10 @@ public class DataFrameQueryLanguageTokenizer {
     public Iterator<DFQLToken> tokenize( String dfqlQuery ) {
         List<DFQLToken> tokens = new LinkedList<>();
 
+        if (dfqlQuery == null) {
+            return tokens.iterator();
+        }
+
         tokenStart = 0;
         tokenEnd = 0;
         while (tokenStart < dfqlQuery.length() && tokenEnd < dfqlQuery.length()) {
@@ -65,7 +70,7 @@ public class DataFrameQueryLanguageTokenizer {
 
             char currentChar = dfqlQuery.charAt( tokenStart );
 
-            Class<? extends DFQLToken> currentTokenType = null;
+            DFQLTokenType currentTokenType = DFQLTokenType.NONE;
 
             if (isWhiteSpace( currentChar )) {
                 currentTokenType = consumeWhiteSpaces( dfqlQuery );
@@ -90,8 +95,9 @@ public class DataFrameQueryLanguageTokenizer {
 //                //TODO produce last token.
 //            }
 
-            if (currentTokenType != null) {
-
+            if (currentTokenType != null && currentTokenType != DFQLTokenType.NONE) {
+                // produce token and add to tokenlist
+                tokens.add( createToken( currentTokenType, tokenStart, tokenEnd, dfqlQuery ) );
             }
 
             tokenStart = tokenEnd;
@@ -100,32 +106,48 @@ public class DataFrameQueryLanguageTokenizer {
         return tokens.iterator();
     }
 
-    private Class<? extends DFQLToken> consumeWhiteSpaces( String dfqlQuery ) {
-        // TODO Whitespace-class
-        return null;
+    private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
+        return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
     }
 
-    private Class<? extends DFQLToken> consumeParenthesis( String dfqlQuery ) {
-        // TODO return open or close parenthesis 
-        return null;
+    private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
+        while (tokenEnd < dfqlQuery.length()) {
+            if (!isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
+                return DFQLTokenType.WHITESPACE;
+            }
+            tokenEnd++;
+        }
+
+        return DFQLTokenType.WHITESPACE;
     }
 
-    private Class<? extends DFQLToken> consumeOperator( String dfqlQuery ) {
+    private DFQLTokenType consumeParenthesis( String dfqlQuery ) {
+        return DFQLTokenType.PARENTHESIS;
+    }
+
+    private DFQLTokenType consumeOperator( String dfqlQuery ) {
         // TODO return it depends on the operator what kind of operation we return or
         //      just say it is an operator and then let the parser figure out what kind of operator?
         return null;
     }
 
-    private Class<? extends DFQLToken> consumeQuotedText( String dfqlQuery ) {
+    private DFQLTokenType consumeQuotedText( String dfqlQuery ) {
         // TODO return Quoted Text class
         return null;
     }
 
-    private Class<? extends DFQLToken> consumeNumber( String dfqlQuery ) {
-        return null;
+    private DFQLTokenType consumeNumber( String dfqlQuery ) {
+        while (tokenEnd < dfqlQuery.length()) {
+            if (!isDigit( dfqlQuery.charAt( tokenEnd ) )) {
+                return DFQLTokenType.NUMBER;
+            }
+            tokenEnd++;
+        }
+
+        return DFQLTokenType.NUMBER;
     }
 
-    private Class<? extends DFQLToken> consumeIdentifier( String dfqlQuery ) {
+    private DFQLTokenType consumeIdentifier( String dfqlQuery ) {
         // TODO first consume string, and then check if this string is a keyword.
         // if it is a keyword, we must return a keyword-class instead of an identifier-class
         return null;
@@ -158,7 +180,7 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private boolean isDigit( char currentChar ) {
-        return false;
+        return isCharIn( currentChar, numbers );
     }
 
     private boolean isStartOfIdentifier( char currentChar ) {

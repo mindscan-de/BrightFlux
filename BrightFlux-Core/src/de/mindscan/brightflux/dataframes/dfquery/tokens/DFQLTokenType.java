@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.tokens;
 
-enum DFQLTokenType {
+public enum DFQLTokenType {
     KEYWORD,
 
     OPERATOR,
@@ -38,5 +38,7 @@ enum DFQLTokenType {
 
     IDENTIFIER,
 
-    STRING;
+    STRING,
+
+    NONE;
 }
