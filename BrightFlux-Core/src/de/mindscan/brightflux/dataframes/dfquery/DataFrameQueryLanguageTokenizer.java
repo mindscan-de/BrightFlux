@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * 
@@ -47,6 +48,8 @@ public class DataFrameQueryLanguageTokenizer {
 
     public final static String[] keywords = new String[] { "SELECT", "FROM", "WHERE", "ALL" /*, "AS"*/ };
     public final static String[] operators = new String[] { "==", "!=", "<=", ">=", "<", ">", ".", ",", "*", "+", "-", "!" };
+    public final static Set<String> operatorTwoChars = filteredByLength( 2, operators );
+    public final static Set<String> operatorOneChar = filteredByLength( 1, operators );
     public final static char[] firstMengeOperators = firstMenge( operators );
     public final static char[] whitespace = new char[] { ' ', '\t', '\r', '\n' };
     public final static char[] numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
@@ -126,9 +129,23 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeOperator( String dfqlQuery ) {
-        // TODO return it depends on the operator what kind of operation we return or
-        //      just say it is an operator and then let the parser figure out what kind of operator?
-        return null;
+        String twoChars = dfqlQuery.substring( tokenStart, tokenStart + 2 );
+        String oneChar = dfqlQuery.substring( tokenStart, tokenStart + 1 );
+
+        if (operatorTwoChars.contains( twoChars )) {
+            // advance to the second char
+            tokenEnd++;
+            return DFQLTokenType.OPERATOR;
+        }
+        else if (operatorOneChar.contains( oneChar )) {
+            return DFQLTokenType.OPERATOR;
+        }
+        else {
+
+        }
+
+        // TODO: we have some kind of issue here, that the operator is unknown, it matched the first char, but was incomplete...
+        throw new NotYetImplemetedException();
     }
 
     private DFQLTokenType consumeQuotedText( String dfqlQuery ) {
@@ -192,6 +209,12 @@ public class DataFrameQueryLanguageTokenizer {
         Set<String> firstCharacters = Arrays.stream( elements ).map( e -> e.substring( 0, 1 ) ).collect( Collectors.toSet() );
         // convert strings of length 1 to char array
         return firstCharacters.stream().collect( Collectors.joining() ).toCharArray();
+    }
+
+    private static Set<String> filteredByLength( int length, String[] elements ) {
+        Set<String> collected = Arrays.stream( elements ).filter( e -> e.length() == length ).collect( Collectors.toSet() );
+
+        return collected;
     }
 
 }
