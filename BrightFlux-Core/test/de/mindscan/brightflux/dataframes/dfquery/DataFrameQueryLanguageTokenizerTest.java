@@ -158,6 +158,20 @@ public class DataFrameQueryLanguageTokenizerTest {
         assertThat( toList( result ), hasSize( 1 ) );
     }
 
+    // TODO: the other numbers 43210, 543210, 6543210, 76543210, 876543210, 9876543210
+
+    @Test
+    public void testTokenize_10NumberWith9Spaces_hasSize19() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "9 8 7 6 5 4 3 2 1 0" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 19 ) );
+    }
+
     private List<DFQLToken> toList( Iterator<DFQLToken> iterator ) {
         ArrayList<DFQLToken> result = new ArrayList<DFQLToken>();
         iterator.forEachRemaining( result::add );
