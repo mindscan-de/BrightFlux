@@ -129,19 +129,20 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeOperator( String dfqlQuery ) {
-        String twoChars = dfqlQuery.substring( tokenStart, tokenStart + 2 );
+
+        // handle case that the string is possibly exceeded... (Exception found due to unit test) 
+        if (tokenStart + 1 < dfqlQuery.length()) {
+            String twoChars = dfqlQuery.substring( tokenStart, tokenStart + 2 );
+            if (operatorTwoChars.contains( twoChars )) {
+                // advance to the second char
+                tokenEnd++;
+                return DFQLTokenType.OPERATOR;
+            }
+        }
+
         String oneChar = dfqlQuery.substring( tokenStart, tokenStart + 1 );
-
-        if (operatorTwoChars.contains( twoChars )) {
-            // advance to the second char
-            tokenEnd++;
+        if (operatorOneChar.contains( oneChar )) {
             return DFQLTokenType.OPERATOR;
-        }
-        else if (operatorOneChar.contains( oneChar )) {
-            return DFQLTokenType.OPERATOR;
-        }
-        else {
-
         }
 
         // TODO: we have some kind of issue here, that the operator is unknown, it matched the first char, but was incomplete...

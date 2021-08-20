@@ -220,6 +220,102 @@ public class DataFrameQueryLanguageTokenizerTest {
         assertThat( toList( result ), hasSize( 1 ) );
     }
 
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1LessThan_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "<" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1GreaterThan_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( ">" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1Selection_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "." );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1Comma_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "," );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1Star_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "*" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1Plus_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "+" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1Minus_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "-" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
+    @Test
+    public void testTokenize_OnlyOneOperatorSize1Not_hasSize1() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "!" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 1 ) );
+    }
+
     private List<DFQLToken> toList( Iterator<DFQLToken> iterator ) {
         ArrayList<DFQLToken> result = new ArrayList<DFQLToken>();
         iterator.forEachRemaining( result::add );
