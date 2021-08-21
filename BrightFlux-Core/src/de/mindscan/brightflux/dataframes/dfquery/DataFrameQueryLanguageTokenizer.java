@@ -47,6 +47,7 @@ public class DataFrameQueryLanguageTokenizer {
     // and CREATE DATAFRAME FROM df.'columnname' USING TOKENIZER "tokenizername"
 
     public final static String[] keywords = new String[] { "SELECT", "FROM", "WHERE", "ALL" /*, "AS"*/ };
+    public final static Set<String> keywordsSet = convertToUppercaseSet( keywords );
     public final static String[] operators = new String[] { "==", "!=", "<=", ">=", "<", ">", ".", ",", "*", "+", "-", "!" };
     public final static Set<String> operatorTwoChars = filteredByLength( 2, operators );
     public final static Set<String> operatorOneChar = filteredByLength( 1, operators );
@@ -58,6 +59,7 @@ public class DataFrameQueryLanguageTokenizer {
 
     private int tokenStart = 0;
     private int tokenEnd = 0;
+    private boolean ignoreWhiteSpace = false;
 
     public Iterator<DFQLToken> tokenize( String dfqlQuery ) {
         List<DFQLToken> tokens = new LinkedList<>();
@@ -109,6 +111,10 @@ public class DataFrameQueryLanguageTokenizer {
         return tokens.iterator();
     }
 
+    public void setIgnoreWhiteSpace( boolean ignore ) {
+        ignoreWhiteSpace = ignore;
+    }
+
     private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
         return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
     }
@@ -116,12 +122,12 @@ public class DataFrameQueryLanguageTokenizer {
     private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
         while (tokenEnd < dfqlQuery.length()) {
             if (!isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
-                return DFQLTokenType.WHITESPACE;
+                return ignoreWhiteSpace ? DFQLTokenType.NONE : DFQLTokenType.WHITESPACE;
             }
             tokenEnd++;
         }
 
-        return DFQLTokenType.WHITESPACE;
+        return ignoreWhiteSpace ? DFQLTokenType.NONE : DFQLTokenType.WHITESPACE;
     }
 
     private DFQLTokenType consumeParenthesis( String dfqlQuery ) {
@@ -166,9 +172,20 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeIdentifier( String dfqlQuery ) {
-        // TODO first consume string, and then check if this string is a keyword.
-        // if it is a keyword, we must return a keyword-class instead of an identifier-class
-        return null;
+        while (tokenEnd < dfqlQuery.length()) {
+            if (!Character.isJavaIdentifierPart( dfqlQuery.charAt( tokenEnd ) )) {
+                break;
+            }
+            tokenEnd++;
+        }
+
+        String currentIdentifier = dfqlQuery.substring( tokenStart, tokenEnd );
+
+        if (keywordsSet.contains( currentIdentifier.toUpperCase() )) {
+            return DFQLTokenType.KEYWORD;
+        }
+
+        return DFQLTokenType.IDENTIFIER;
     }
 
     private boolean isWhiteSpace( char currentChar ) {
@@ -202,7 +219,7 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private boolean isStartOfIdentifier( char currentChar ) {
-        return false;
+        return Character.isJavaIdentifierStart( currentChar );
     }
 
     private static char[] firstMenge( String[] elements ) {
@@ -213,9 +230,11 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private static Set<String> filteredByLength( int length, String[] elements ) {
-        Set<String> collected = Arrays.stream( elements ).filter( e -> e.length() == length ).collect( Collectors.toSet() );
+        return Arrays.stream( elements ).filter( e -> e.length() == length ).collect( Collectors.toSet() );
+    }
 
-        return collected;
+    private static Set<String> convertToUppercaseSet( String[] elements ) {
+        return Arrays.stream( elements ).map( e -> e.toUpperCase() ).collect( Collectors.toSet() );
     }
 
 }

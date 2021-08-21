@@ -316,6 +316,55 @@ public class DataFrameQueryLanguageTokenizerTest {
         assertThat( toList( result ), hasSize( 1 ) );
     }
 
+    @Test
+    public void testTokenize_OneEqualsOne_hasSize5() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "(1==1)" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 5 ) );
+    }
+
+    @Test
+    public void testTokenize_SelectStarFromdf_hasSize7() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "SELECT * FROM df" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 7 ) );
+    }
+
+    @Test
+    public void testTokenize_SelectAllFromdf_hasSize7() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        Iterator<DFQLToken> result = tokenizer.tokenize( "SELECT ALL FROM df" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 7 ) );
+    }
+
+    @Test
+    public void testSetIgnoreWhiteSpace_SelectAllFromdfIgnoreSpaces_hasSize4() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        tokenizer.setIgnoreWhiteSpace( true );
+        Iterator<DFQLToken> result = tokenizer.tokenize( "SELECT ALL FROM df" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 4 ) );
+    }
+
     private List<DFQLToken> toList( Iterator<DFQLToken> iterator ) {
         ArrayList<DFQLToken> result = new ArrayList<DFQLToken>();
         iterator.forEachRemaining( result::add );
