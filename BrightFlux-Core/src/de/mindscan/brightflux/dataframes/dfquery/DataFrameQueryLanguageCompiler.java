@@ -25,9 +25,30 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery;
 
+import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectNode;
+import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
+ * We use a compiler to compile a Node into the objects understood by the dataframe.
  * 
+ * I don't know whether it is a good idea to hard code the PredicateFactory here - i have to think about this stuff... 
+ * Maybe we can 
  */
 public class DataFrameQueryLanguageCompiler {
 
+    public DataFrameRowFilterPredicate compileToRowFilterPredicate( DFQLNode node ) {
+        if (node instanceof DFQLEmptyNode) {
+            return DataFrameRowFilterPredicateFactory.any();
+        }
+
+        if (node instanceof DFQLSelectNode) {
+            return compileToRowFilterPredicate( ((DFQLSelectNode) node).getWhereClauseNode() );
+        }
+
+        throw new NotYetImplemetedException();
+    }
 }
