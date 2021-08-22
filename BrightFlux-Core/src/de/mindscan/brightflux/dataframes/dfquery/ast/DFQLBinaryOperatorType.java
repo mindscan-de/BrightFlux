@@ -40,5 +40,9 @@ public enum DFQLBinaryOperatorType {
 
     LE,
 
-    GE;
+    GE,
+
+    AND,
+
+    OR;
 }

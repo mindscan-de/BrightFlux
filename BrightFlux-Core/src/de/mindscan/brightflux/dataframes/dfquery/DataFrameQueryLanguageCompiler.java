@@ -159,8 +159,16 @@ public class DataFrameQueryLanguageCompiler {
 
                     throw new NotYetImplemetedException();
 
+                case AND:
+
+                    throw new NotYetImplemetedException();
+
+                case OR:
+
+                    throw new NotYetImplemetedException();
+
                 default:
-                    // AND, OR
+
                     throw new NotYetImplemetedException();
             }
         }
