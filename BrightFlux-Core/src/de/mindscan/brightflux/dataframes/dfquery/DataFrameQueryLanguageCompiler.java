@@ -96,19 +96,67 @@ public class DataFrameQueryLanguageCompiler {
                     throw new NotYetImplemetedException();
 
                 case GE:
-                    // return DataFrameRowFilterPredicateFactory.ge( columnName, otherValue );
+                    // depends on the left and right type...
+                    if (left instanceof DFQLDataFrameColumnNode) {
+                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+
+                        // if right side is a value string .... we did it. 
+                        if (right instanceof DFQLValueNode) {
+                            Object otherValue = ((DFQLValueNode) right).getRawValue();
+                            return DataFrameRowFilterPredicateFactory.ge( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
                     throw new NotYetImplemetedException();
 
                 case GT:
-                    // return DataFrameRowFilterPredicateFactory.gt( columnName, otherValue );
+                    // depends on the left and right type...
+                    if (left instanceof DFQLDataFrameColumnNode) {
+                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+
+                        // if right side is a value string .... we did it. 
+                        if (right instanceof DFQLValueNode) {
+                            Object otherValue = ((DFQLValueNode) right).getRawValue();
+                            return DataFrameRowFilterPredicateFactory.gt( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
                     throw new NotYetImplemetedException();
 
                 case LE:
-                    // return DataFrameRowFilterPredicateFactory.le( columnName, otherValue );
+                    // depends on the left and right type...
+                    if (left instanceof DFQLDataFrameColumnNode) {
+                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+
+                        // if right side is a value string .... we did it. 
+                        if (right instanceof DFQLValueNode) {
+                            Object otherValue = ((DFQLValueNode) right).getRawValue();
+                            return DataFrameRowFilterPredicateFactory.le( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
                     throw new NotYetImplemetedException();
 
                 case LT:
-                    //return DataFrameRowFilterPredicateFactory.lt( columnName, otherValue );
+                    // depends on the left and right type...
+                    if (left instanceof DFQLDataFrameColumnNode) {
+                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+
+                        // if right side is a value string .... we did it. 
+                        if (right instanceof DFQLValueNode) {
+                            Object otherValue = ((DFQLValueNode) right).getRawValue();
+                            return DataFrameRowFilterPredicateFactory.lt( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
                     throw new NotYetImplemetedException();
 
                 default:

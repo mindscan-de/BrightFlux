@@ -96,4 +96,74 @@ public class DataFrameQueryLanguageCompilerTest {
         assertThat( result, equalTo( "( df.'otherColumnName' != 3 )" ) );
     }
 
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithOtherNamedColumnGreaterOrEqualsValueThree_compilesToColumnGreaterOrEqualsThreeValuePredicate()
+                    throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GE, left, right );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( df.'otherColumnName' >= 3 )" ) );
+    }
+
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithOtherNamedColumnLessOrEqualsValueThree_compilesToColumnLessOrEqualsThreeValuePredicate()
+                    throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LE, left, right );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( df.'otherColumnName' <= 3 )" ) );
+    }
+
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithOtherNamedColumnGreaterThanValueThree_compilesToColumnGreaterThanThreeValuePredicate() throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GT, left, right );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( df.'otherColumnName' > 3 )" ) );
+    }
+
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithOtherNamedColumnLessThanValueThree_compilesToColumnLessThanThreeValuePredicate() throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LT, left, right );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( df.'otherColumnName' < 3 )" ) );
+    }
+
 }
