@@ -72,11 +72,11 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.eq( leftColumnName, otherValue );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
                     // return DataFrameRowFilterPredicateFactory.eq( left, right );
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case NEQ:
                     // depends on the left and right type...
@@ -89,11 +89,11 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.neq( leftColumnName, otherValue );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
                     // TODO: DataFrameRowFilterPredicateFactory.neq( left, right );
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case GE:
                     // depends on the left and right type...
@@ -106,10 +106,10 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.ge( leftColumnName, otherValue );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case GT:
                     // depends on the left and right type...
@@ -122,10 +122,10 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.gt( leftColumnName, otherValue );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case LE:
                     // depends on the left and right type...
@@ -138,10 +138,10 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.le( leftColumnName, otherValue );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case LT:
                     // depends on the left and right type...
@@ -154,10 +154,10 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.lt( leftColumnName, otherValue );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case AND:
 
@@ -170,10 +170,10 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compild );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 case OR:
 
@@ -186,17 +186,17 @@ public class DataFrameQueryLanguageCompiler {
                             return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compild );
                         }
 
-                        throw new NotYetImplemetedException();
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
                 default:
 
-                    throw new NotYetImplemetedException();
+                    throw new NotYetImplemetedException( "Binary Operation not supported: " + operation.name() );
             }
         }
 
-        throw new NotYetImplemetedException();
+        throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
     }
 }
