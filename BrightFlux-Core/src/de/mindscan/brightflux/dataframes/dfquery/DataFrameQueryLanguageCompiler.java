@@ -161,9 +161,33 @@ public class DataFrameQueryLanguageCompiler {
 
                 case AND:
 
+                    if (left instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                        if (right instanceof DFQLBinaryOperatorNode) {
+                            DataFrameRowFilterPredicate right_compild = this.compileToRowFilterPredicate( right );
+
+                            return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compild );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
                     throw new NotYetImplemetedException();
 
                 case OR:
+
+                    if (left instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                        if (right instanceof DFQLBinaryOperatorNode) {
+                            DataFrameRowFilterPredicate right_compild = this.compileToRowFilterPredicate( right );
+
+                            return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compild );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
 
                     throw new NotYetImplemetedException();
 

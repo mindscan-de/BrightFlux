@@ -86,10 +86,10 @@ public class DataFrameQueryLanguageCompilerTest {
         DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
         DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
-        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.NEQ, left, right );
+        DFQLBinaryOperatorNode neq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.NEQ, left, right );
 
         // act
-        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( neq );
 
         // assert
         String result = predicate.describeOperation().trim();
@@ -104,10 +104,10 @@ public class DataFrameQueryLanguageCompilerTest {
         DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
         DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
-        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GE, left, right );
+        DFQLBinaryOperatorNode ge = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GE, left, right );
 
         // act
-        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( ge );
 
         // assert
         String result = predicate.describeOperation().trim();
@@ -122,10 +122,10 @@ public class DataFrameQueryLanguageCompilerTest {
         DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
         DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
-        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LE, left, right );
+        DFQLBinaryOperatorNode le = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LE, left, right );
 
         // act
-        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( le );
 
         // assert
         String result = predicate.describeOperation().trim();
@@ -139,10 +139,10 @@ public class DataFrameQueryLanguageCompilerTest {
         DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
         DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
-        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GT, left, right );
+        DFQLBinaryOperatorNode gt = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GT, left, right );
 
         // act
-        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( gt );
 
         // assert
         String result = predicate.describeOperation().trim();
@@ -156,14 +156,68 @@ public class DataFrameQueryLanguageCompilerTest {
         DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
         DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
-        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LT, left, right );
+        DFQLBinaryOperatorNode lt = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LT, left, right );
 
         // act
-        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( lt );
 
         // assert
         String result = predicate.describeOperation().trim();
         assertThat( result, equalTo( "( df.'otherColumnName' < 3 )" ) );
+    }
+
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithTwoComparisonsCombinedWithAnd_compilesToTwoComparisonCombinedWithAnd() throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+
+        // left:
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left_left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        DFQLNumberNode left_right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode left_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left_left, left_right );
+
+        // right:
+        DFQLDataFrameColumnNode right_left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right_right = new DFQLNumberNode( Integer.valueOf( 2 ) );
+        DFQLBinaryOperatorNode right_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, right_left, right_right );
+
+        // and
+        DFQLBinaryOperatorNode and = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.AND, left_eq, right_eq );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( and );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( ( df.'columnName' == 3 )  AND ( df.'otherColumnName' == 2 )   )" ) );
+    }
+
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithTwoComparisonsCombinedWithOr_compilesToTwoComparisonCombinedWithOr() throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+
+        // left:
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left_left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        DFQLNumberNode left_right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode left_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left_left, left_right );
+
+        // right:
+        DFQLDataFrameColumnNode right_left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right_right = new DFQLNumberNode( Integer.valueOf( 2 ) );
+        DFQLBinaryOperatorNode right_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, right_left, right_right );
+
+        // and
+        DFQLBinaryOperatorNode or = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.OR, left_eq, right_eq );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( or );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( ( df.'columnName' == 3 )  OR ( df.'otherColumnName' == 2 )   )" ) );
     }
 
 }
