@@ -26,9 +26,13 @@
 package de.mindscan.brightflux.dataframes.dfquery;
 
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -47,6 +51,59 @@ public class DataFrameQueryLanguageCompiler {
 
         if (node instanceof DFQLSelectNode) {
             return compileToRowFilterPredicate( ((DFQLSelectNode) node).getWhereClauseNode() );
+        }
+
+        if (node instanceof DFQLBinaryOperatorNode) {
+            DFQLBinaryOperatorNode binaryNode = (DFQLBinaryOperatorNode) node;
+            DFQLBinaryOperatorType operation = binaryNode.getOperation();
+
+            DFQLNode left = binaryNode.getLeft();
+            DFQLNode right = binaryNode.getRight();
+
+            switch (operation) {
+                case EQ:
+                    // depends on the left and right type...
+                    if (left instanceof DFQLDataFrameColumnNode) {
+                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+
+                        // if right side is a value string .... we did it. 
+                        if (right instanceof DFQLValueNode) {
+                            Object otherValue = ((DFQLValueNode) right).getRawValue();
+                            return DataFrameRowFilterPredicateFactory.eq( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
+                    // return DataFrameRowFilterPredicateFactory.eq( left, right );
+                    throw new NotYetImplemetedException();
+
+                case NEQ:
+                    // TODO Choose between them...
+                    // DataFrameRowFilterPredicateFactory.neq( columnName, otherValue );
+                    // DataFrameRowFilterPredicateFactory.neq( left, right );
+                    throw new NotYetImplemetedException();
+
+                case GE:
+                    // return DataFrameRowFilterPredicateFactory.ge( columnName, otherValue );
+                    throw new NotYetImplemetedException();
+
+                case GT:
+                    // return DataFrameRowFilterPredicateFactory.gt( columnName, otherValue );
+                    throw new NotYetImplemetedException();
+
+                case LE:
+                    // return DataFrameRowFilterPredicateFactory.le( columnName, otherValue );
+                    throw new NotYetImplemetedException();
+
+                case LT:
+                    //return DataFrameRowFilterPredicateFactory.lt( columnName, otherValue );
+                    throw new NotYetImplemetedException();
+
+                default:
+                    // AND, OR
+                    throw new NotYetImplemetedException();
+            }
         }
 
         throw new NotYetImplemetedException();

@@ -33,11 +33,23 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 public class DFQLDataFrameNode implements DFQLNode {
 
     private DataFrame dataFrame;
+    private String identifier;
 
-    /**
-     * @return the dataFrame
-     */
+    public DFQLDataFrameNode( DataFrame dataFrame ) {
+        this.dataFrame = dataFrame;
+        this.identifier = "df";
+    }
+
+    public DFQLDataFrameNode( DataFrame dataFrame, String identifier ) {
+        this.dataFrame = dataFrame;
+        this.identifier = identifier;
+    }
+
     public DataFrame getDataFrame() {
         return dataFrame;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 }
