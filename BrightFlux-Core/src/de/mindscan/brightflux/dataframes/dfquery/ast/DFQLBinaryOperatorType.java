@@ -28,28 +28,17 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
 /**
  * 
  */
-public class DFQLBinaryOperatorNode implements DFQLNode {
+public enum DFQLBinaryOperatorType {
 
-    private DFQLNode left;
-    private DFQLNode right;
+    EQ,
 
-    private DFQLBinaryOperatorType operation;
+    NEQ,
 
-    public DFQLBinaryOperatorNode( DFQLBinaryOperatorType operation, DFQLNode left, DFQLNode right ) {
-        this.operation = operation;
-        this.left = left;
-        this.right = right;
-    }
+    LT,
 
-    public DFQLNode getLeft() {
-        return left;
-    }
+    GT,
 
-    public DFQLNode getRight() {
-        return right;
-    }
+    LE,
 
-    public DFQLBinaryOperatorType getOperation() {
-        return operation;
-    }
+    GE;
 }
