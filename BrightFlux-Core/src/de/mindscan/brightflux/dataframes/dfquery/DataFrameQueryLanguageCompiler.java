@@ -92,6 +92,18 @@ public class DataFrameQueryLanguageCompiler {
                         throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                     }
 
+                    if (left instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                        if (right instanceof DFQLBinaryOperatorNode) {
+                            DataFrameRowFilterPredicate right_compiled = this.compileToRowFilterPredicate( right );
+
+                            return DataFrameRowFilterPredicateFactory.eq( left_compiled, right_compiled );
+                        }
+
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                    }
+
                     // return DataFrameRowFilterPredicateFactory.eq( left, right );
                     throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
@@ -106,6 +118,18 @@ public class DataFrameQueryLanguageCompiler {
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
                             return factoryColImm.apply( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                    }
+
+                    if (left instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                        if (right instanceof DFQLBinaryOperatorNode) {
+                            DataFrameRowFilterPredicate right_compiled = this.compileToRowFilterPredicate( right );
+
+                            return DataFrameRowFilterPredicateFactory.neq( left_compiled, right_compiled );
                         }
 
                         throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
