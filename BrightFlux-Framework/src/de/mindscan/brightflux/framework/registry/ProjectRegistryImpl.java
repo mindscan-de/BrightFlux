@@ -38,14 +38,6 @@ public class ProjectRegistryImpl implements ProjectRegistry {
     private EventDispatcher eventDispatcher;
     private CommandDispatcher commandDispatcher;
 
-    static class Holder {
-        static ProjectRegistry instance = new ProjectRegistryImpl();
-    }
-
-    public static ProjectRegistry getInstance() {
-        return Holder.instance;
-    }
-
     public ProjectRegistryImpl() {
         this( new SimpleEventDispatcher() );
     }
