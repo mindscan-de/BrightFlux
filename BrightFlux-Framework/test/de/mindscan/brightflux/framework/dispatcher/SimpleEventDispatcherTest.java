@@ -35,7 +35,7 @@ public class SimpleEventDispatcherTest {
     public void testDispatchEvent_dispatchRegisteredEventClass_invokedHandleEventOnListener() throws Exception {
         // arrange
         EventDispatcher dispatcher = new SimpleEventDispatcher();
-        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
+        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "registerdEventType" );
         BFEventListener listener = Mockito.mock( BFEventListener.class, "listener" );
 
         dispatcher.registerEventListener( registerdEvent.getClass(), listener );
@@ -51,7 +51,7 @@ public class SimpleEventDispatcherTest {
     public void testDispatchEvent_RegisterDifferentEventClassButDispatchUnregistered_handlerNotInvoked() throws Exception {
         // arrange
         EventDispatcher dispatcher = new SimpleEventDispatcher();
-        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
+        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "registerdEventType" );
         BFEvent unRegisterdEvent = Mockito.mock( CommandExecutionFinishedEvent.class, "unregisterdEventType" );
         BFEventListener listener = Mockito.mock( BFEventListener.class, "listener" );
 
@@ -68,7 +68,7 @@ public class SimpleEventDispatcherTest {
     public void testDispatchEvent_dispatchRegisteredEventClassToTwoListeners_invokedHandleEventOnListenerOne() throws Exception {
         // arrange
         EventDispatcher dispatcher = new SimpleEventDispatcher();
-        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
+        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "registerdEventType" );
         BFEventListener listener1 = Mockito.mock( BFEventListener.class, "listener1" );
         BFEventListener listener2 = Mockito.mock( BFEventListener.class, "listener2" );
 
@@ -86,7 +86,7 @@ public class SimpleEventDispatcherTest {
     public void testDispatchEvent_dispatchRegisteredEventClassToTwoListeners_invokedHandleEventOnListenerTwo() throws Exception {
         // arrange
         EventDispatcher dispatcher = new SimpleEventDispatcher();
-        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
+        BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "registerdEventType" );
         BFEventListener listener1 = Mockito.mock( BFEventListener.class, "listener1" );
         BFEventListener listener2 = Mockito.mock( BFEventListener.class, "listener2" );
 
