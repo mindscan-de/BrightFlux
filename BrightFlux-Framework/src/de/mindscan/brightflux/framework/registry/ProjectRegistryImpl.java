@@ -47,8 +47,16 @@ public class ProjectRegistryImpl implements ProjectRegistry {
     }
 
     public ProjectRegistryImpl() {
-        eventDispatcher = new SimpleEventDispatcher();
-        commandDispatcher = new SimpleCommandDispatcher( eventDispatcher );
+        this( new SimpleEventDispatcher() );
+    }
+
+    public ProjectRegistryImpl( EventDispatcher eventdispatcher ) {
+        this( eventdispatcher, new SimpleCommandDispatcher( eventdispatcher ) );
+    }
+
+    public ProjectRegistryImpl( EventDispatcher eventdispatcher, CommandDispatcher commandDispatcher ) {
+        this.eventDispatcher = eventdispatcher;
+        this.commandDispatcher = commandDispatcher;
     }
 
     /** 
