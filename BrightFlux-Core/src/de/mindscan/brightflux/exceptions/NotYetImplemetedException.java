@@ -30,12 +30,18 @@ package de.mindscan.brightflux.exceptions;
  */
 public class NotYetImplemetedException extends RuntimeException {
 
+    private static final String THIS_FEATURE_IS_CURRENTLY_NOT_YET_IMPLEMENTED = "This feature is currently not yet implemented. ";
+
     private static final long serialVersionUID = 1L;
 
     /**
      * 
      */
     public NotYetImplemetedException() {
-        super( "This feature is currently not yet implemented." );
+        super( THIS_FEATURE_IS_CURRENTLY_NOT_YET_IMPLEMENTED );
+    }
+
+    public NotYetImplemetedException( String additionalMessage ) {
+        super( THIS_FEATURE_IS_CURRENTLY_NOT_YET_IMPLEMENTED + additionalMessage );
     }
 }
