@@ -57,6 +57,8 @@ public class DataFrameQueryLanguageCompiler {
     // TODO: PredicatePredicate Predicate
     // TODO: BiBi Predicate
 
+    // TODO: boolean predicate functions like contains, startsWith, endsWith, and "not"
+
     public DataFrameRowFilterPredicate compileToRowFilterPredicate( DFQLNode node ) {
         if (node instanceof DFQLEmptyNode) {
             return DataFrameRowFilterPredicateFactory.any();
