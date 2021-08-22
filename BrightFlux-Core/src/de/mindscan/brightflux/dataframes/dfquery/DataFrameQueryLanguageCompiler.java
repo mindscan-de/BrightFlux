@@ -46,12 +46,16 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class DataFrameQueryLanguageCompiler {
 
-    BiFunction<String, Object, DataFrameRowFilterPredicate> eqFunctionColImm = ( a, b ) -> DataFrameRowFilterPredicateFactory.eq( a, b );
-    BiFunction<String, Object, DataFrameRowFilterPredicate> neqFunctionColImm = ( a, b ) -> DataFrameRowFilterPredicateFactory.neq( a, b );
-    BiFunction<String, Object, DataFrameRowFilterPredicate> geFunctionColImm = ( a, b ) -> DataFrameRowFilterPredicateFactory.ge( a, b );
-    BiFunction<String, Object, DataFrameRowFilterPredicate> gtFunctionColImm = ( a, b ) -> DataFrameRowFilterPredicateFactory.gt( a, b );
-    BiFunction<String, Object, DataFrameRowFilterPredicate> leFunctionColImm = ( a, b ) -> DataFrameRowFilterPredicateFactory.le( a, b );
-    BiFunction<String, Object, DataFrameRowFilterPredicate> ltFunctionColImm = ( a, b ) -> DataFrameRowFilterPredicateFactory.lt( a, b );
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> eqFunctionColImm = DataFrameRowFilterPredicateFactory::eq;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> neqFunctionColImm = DataFrameRowFilterPredicateFactory::neq;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> geFunctionColImm = DataFrameRowFilterPredicateFactory::ge;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> gtFunctionColImm = DataFrameRowFilterPredicateFactory::gt;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> leFunctionColImm = DataFrameRowFilterPredicateFactory::le;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> ltFunctionColImm = DataFrameRowFilterPredicateFactory::lt;
+
+    // TODO: ColumnColumn Predicate
+    // TODO: PredicatePredicate Predicate
+    // TODO: BiBi Predicate
 
     public DataFrameRowFilterPredicate compileToRowFilterPredicate( DFQLNode node ) {
         if (node instanceof DFQLEmptyNode) {
