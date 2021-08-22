@@ -9,7 +9,6 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 
 public class SimpleEventDispatcherTest {
 
@@ -37,7 +36,7 @@ public class SimpleEventDispatcherTest {
         // arrange
         EventDispatcher dispatcher = new SimpleEventDispatcher();
         BFEvent registerdEvent = Mockito.mock( CommandExecutionStartedEvent.class, "unregisterdEventType" );
-        BFEventListenerAdapter listener = Mockito.mock( BFEventListenerAdapter.class, "listener" );
+        BFEventListener listener = Mockito.mock( BFEventListener.class, "listener" );
 
         dispatcher.registerEventListener( registerdEvent.getClass(), listener );
 
