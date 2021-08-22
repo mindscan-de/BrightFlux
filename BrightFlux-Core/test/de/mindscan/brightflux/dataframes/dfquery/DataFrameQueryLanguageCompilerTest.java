@@ -79,4 +79,21 @@ public class DataFrameQueryLanguageCompilerTest {
         assertThat( result, equalTo( "( df.'otherColumnName' == 3 )" ) );
     }
 
+    @Test
+    public void testCompileToRowFilterPredicate_DFWithOtherNamedColumnNotEqualsValueThree_compilesToColumnNotEqualsThreeValuePredicate() throws Exception {
+        // arrange
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DFQLDataFrameNode dfn = new DFQLDataFrameNode( null );
+        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
+        DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.NEQ, left, right );
+
+        // act
+        DataFrameRowFilterPredicate predicate = compiler.compileToRowFilterPredicate( eq );
+
+        // assert
+        String result = predicate.describeOperation().trim();
+        assertThat( result, equalTo( "( df.'otherColumnName' != 3 )" ) );
+    }
+
 }

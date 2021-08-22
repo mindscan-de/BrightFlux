@@ -79,9 +79,20 @@ public class DataFrameQueryLanguageCompiler {
                     throw new NotYetImplemetedException();
 
                 case NEQ:
-                    // TODO Choose between them...
-                    // DataFrameRowFilterPredicateFactory.neq( columnName, otherValue );
-                    // DataFrameRowFilterPredicateFactory.neq( left, right );
+                    // depends on the left and right type...
+                    if (left instanceof DFQLDataFrameColumnNode) {
+                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+
+                        // if right side is a value string .... we did it. 
+                        if (right instanceof DFQLValueNode) {
+                            Object otherValue = ((DFQLValueNode) right).getRawValue();
+                            return DataFrameRowFilterPredicateFactory.neq( leftColumnName, otherValue );
+                        }
+
+                        throw new NotYetImplemetedException();
+                    }
+
+                    // TODO: DataFrameRowFilterPredicateFactory.neq( left, right );
                     throw new NotYetImplemetedException();
 
                 case GE:
