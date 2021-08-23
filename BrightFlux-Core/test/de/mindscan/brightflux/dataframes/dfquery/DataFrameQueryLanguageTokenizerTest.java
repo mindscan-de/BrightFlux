@@ -371,4 +371,30 @@ public class DataFrameQueryLanguageTokenizerTest {
         return result;
     }
 
+    @Test
+    public void testTokenize_IndexNamedDataFrameColumn_hasSize3() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        tokenizer.setIgnoreWhiteSpace( true );
+        Iterator<DFQLToken> result = tokenizer.tokenize( "df.'myColumnName'" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 3 ) );
+    }
+
+    @Test
+    public void testTokenize_IndexNamedDataFrameColumContainsSatan_hasSize8() throws Exception {
+        // arrange
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+
+        // act
+        tokenizer.setIgnoreWhiteSpace( true );
+        Iterator<DFQLToken> result = tokenizer.tokenize( "df.'myColumnName'.contains('0x666')" );
+
+        // assert
+        assertThat( toList( result ), hasSize( 8 ) );
+    }
+
 }

@@ -55,7 +55,7 @@ public class DataFrameQueryLanguageTokenizer {
     public final static char[] whitespace = new char[] { ' ', '\t', '\r', '\n' };
     public final static char[] numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     public final static char[] parenthesis = new char[] { '(', ')' };
-    public final static String[] quotes = new String[] { "'", "\"" };
+    public final static char[] quotes = new char[] { '\'', '"' };
 
     private int tokenStart = 0;
     private int tokenEnd = 0;
@@ -95,10 +95,6 @@ public class DataFrameQueryLanguageTokenizer {
             else if (isStartOfIdentifier( currentChar )) {
                 currentTokenType = consumeIdentifier( dfqlQuery );
             }
-
-//            if(endPosition==dfqlQuery.length()) {
-//                //TODO produce last token.
-//            }
 
             if (currentTokenType != null && currentTokenType != DFQLTokenType.NONE) {
                 // produce token and add to tokenlist
@@ -156,8 +152,26 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeQuotedText( String dfqlQuery ) {
-        // TODO return Quoted Text class
-        return null;
+        char firstChar = dfqlQuery.charAt( tokenStart );
+
+        if (tokenEnd > dfqlQuery.length()) {
+            throw new NotYetImplemetedException( "The string is too short for an end of String operation." );
+        }
+
+        while (tokenEnd < dfqlQuery.length()) {
+            char currentChar = dfqlQuery.charAt( tokenEnd );
+            if (currentChar == firstChar) {
+                // TODO only if it is not escaped...
+                tokenEnd++;
+                return DFQLTokenType.STRING;
+            }
+
+            tokenEnd++;
+        }
+
+        // TODO: Actually the string is not ended...
+        throw new NotYetImplemetedException( "The String is not ended." );
+        // return DFQLTokenType.STRING;
     }
 
     private DFQLTokenType consumeNumber( String dfqlQuery ) {
@@ -188,6 +202,10 @@ public class DataFrameQueryLanguageTokenizer {
         return DFQLTokenType.IDENTIFIER;
     }
 
+    // ------------------------------------------------
+    // check the first char of the next potential token
+    // ------------------------------------------------
+
     private boolean isWhiteSpace( char currentChar ) {
         return isCharIn( currentChar, whitespace );
     }
@@ -200,18 +218,8 @@ public class DataFrameQueryLanguageTokenizer {
         return isCharIn( currentChar, firstMengeOperators );
     }
 
-    private boolean isCharIn( char currentChar, char[] charSet ) {
-        for (int i = 0; i < charSet.length; i++) {
-            if (currentChar == charSet[i]) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private boolean isStartOfQuote( char currentChar ) {
-        return false;
+        return isCharIn( currentChar, DataFrameQueryLanguageTokenizer.quotes );
     }
 
     private boolean isDigit( char currentChar ) {
@@ -221,6 +229,19 @@ public class DataFrameQueryLanguageTokenizer {
     private boolean isStartOfIdentifier( char currentChar ) {
         return Character.isJavaIdentifierStart( currentChar );
     }
+
+    private boolean isCharIn( char currentChar, char[] charSet ) {
+        for (int i = 0; i < charSet.length; i++) {
+            if (currentChar == charSet[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // -----------------------------------
+    // Service functions for the Tokenizer
+    // -----------------------------------
 
     private static char[] firstMenge( String[] elements ) {
         // each first char only once
