@@ -33,7 +33,7 @@ import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.recipe.BFRecipeFactory;
 import de.mindscan.brightflux.recipe.BFRecipeIO;
-import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class RecipeSaveCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         boolean result = BFRecipeIO.saveToFile( BFRecipeFactory.create( inputDataFrame ), targetFile );
 
-        eventConsumer.accept( new RecipeSaveResultEvent( targetFile, result ) );
+        eventConsumer.accept( BFEventFactory.recipeSaveResult( targetFile, result ) );
     }
 
 }
