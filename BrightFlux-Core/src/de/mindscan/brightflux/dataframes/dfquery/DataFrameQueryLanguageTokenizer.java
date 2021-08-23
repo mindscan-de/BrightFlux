@@ -37,7 +37,17 @@ import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
+ * This is just a basic and standard tokenizer for the internal DataFrameQueryLanguage (DFQL). 
  * 
+ * The role of this tokenizer is to preprocess the given query into a list of Tokens, which help the parser to build
+ * the abstract syntax tree (AST) according to the tokens instead of looking for individual characters. 
+ * 
+ * The tokenizer doesn't support very much right now, it even ignores escaped quotes (i mean it can't handle them) 
+ * and we do not support escape sequences at all. This is definitely an important thing to support in future, but 
+ * as of now, this is too much effort, while trying to get the whole thing running. If it becomes a necessity we
+ * still can implement a more sophisticated approach. But as of now speaking, we like it simple.
+ * 
+ * Since we have class state using tokenStart and tokenEnd this code is not thread safe at all. 
  */
 public class DataFrameQueryLanguageTokenizer {
 
@@ -112,6 +122,8 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
+        // TODO: if string token reduce the token by the first and last char
+
         return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
     }
 
