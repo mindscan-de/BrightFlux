@@ -39,6 +39,15 @@ public class DFQLSelectStatementNode implements DFQLNode {
     // WHERE
     private DFQLNode whereClause;
 
+    /**
+     * 
+     */
+    public DFQLSelectStatementNode( List<DFQLDataFrameColumnNode> selectedColumns, List<DFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
+        this.selectedColumns = selectedColumns;
+        this.dataFrames = dataFrames;
+        this.whereClause = whereClause;
+    }
+
     public List<DFQLDataFrameColumnNode> getSelectedColumns() {
         return selectedColumns;
     }
