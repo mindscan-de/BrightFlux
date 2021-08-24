@@ -33,7 +33,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
-import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -64,8 +64,8 @@ public class DataFrameQueryLanguageCompiler {
             return DataFrameRowFilterPredicateFactory.any();
         }
 
-        if (node instanceof DFQLSelectNode) {
-            return compileToRowFilterPredicate( ((DFQLSelectNode) node).getWhereClauseNode() );
+        if (node instanceof DFQLSelectStatementNode) {
+            return compileToRowFilterPredicate( ((DFQLSelectStatementNode) node).getWhereClauseNode() );
         }
 
         if (node instanceof DFQLBinaryOperatorNode) {

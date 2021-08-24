@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * 
  */
-public class DFQLSelectNode implements DFQLNode {
+public class DFQLSelectStatementNode implements DFQLNode {
 
     // SELECT
     private List<DFQLDataFrameColumnNode> selectedColumns;
