@@ -175,7 +175,7 @@ public class DataFrameQueryLanguageTokenizer {
         while (tokenEnd < dfqlQuery.length()) {
             char currentChar = dfqlQuery.charAt( tokenEnd );
             if (currentChar == firstChar) {
-                // TODO only if it is not escaped...
+                // TODO Handle if there is a escape sequence right before the quoting char. (use a simple state machine)
                 tokenEnd++;
                 return DFQLTokenType.STRING;
             }
@@ -183,9 +183,7 @@ public class DataFrameQueryLanguageTokenizer {
             tokenEnd++;
         }
 
-        // TODO: Actually the string is not ended...
         throw new NotYetImplemetedException( "The String is not ended." );
-        // return DFQLTokenType.STRING;
     }
 
     private DFQLTokenType consumeNumber( String dfqlQuery ) {
