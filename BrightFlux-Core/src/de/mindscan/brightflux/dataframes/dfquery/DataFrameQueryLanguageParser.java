@@ -28,6 +28,13 @@ package de.mindscan.brightflux.dataframes.dfquery;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
+import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
+import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -37,11 +44,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 public class DataFrameQueryLanguageParser {
 
     private String query;
-
-    public void parseSelect( List<?> tokens ) {
-        // we want to extract the column names to parse
-        // extract the query to perform on the dataframe
-    }
+    private DFQLTokenProvider tokens;
 
     /**
      * @param query
@@ -93,4 +96,35 @@ public class DataFrameQueryLanguageParser {
 
         throw new NotYetImplemetedException();
     }
+
+    public void parseSelect( List<?> tokens ) {
+        // we want to extract the column names to parse
+        // extract the query to perform on the dataframe
+    }
+
+    // we will again write the parser bottom up.
+    public DFQLNode parseLiteral() {
+        if (tryAndAcceptType( DFQLTokenType.STRING )) {
+            DFQLToken string = tokens.last();
+            return new DFQLStringNode( string.getValue() );
+        }
+
+        if (tryAndAcceptType( DFQLTokenType.NUMBER )) {
+            DFQLToken number = tokens.last();
+            // TODO Maybe convert that? integer, float, double, long? and then give that as an object?
+            return new DFQLNumberNode( number.getValue() );
+        }
+
+        if (tryAndAcceptType( DFQLTokenType.IDENTIFIER )) {
+            DFQLToken identifier = tokens.last();
+            return new DFQLIdentifierNode( identifier.getValue() );
+        }
+
+        throw new NotYetImplemetedException( "Can't parse the curent token." );
+    }
+
+    private boolean tryAndAcceptType( DFQLTokenType string ) {
+        return false;
+    }
+
 }
