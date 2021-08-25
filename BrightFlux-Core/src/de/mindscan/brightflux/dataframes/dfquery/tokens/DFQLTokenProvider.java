@@ -25,17 +25,42 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.tokens;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 /**
  * 
  */
 public class DFQLTokenProvider {
 
+    private List<DFQLToken> list;
+    private DFQLToken defaultToken;
+    private DFQLToken value;
+
+    private int currentPosition;
+    private int markedPosition;
+
     /**
-     * @return
+     * 
      */
+    public DFQLTokenProvider( Iterator<DFQLToken> tokenIterator ) {
+        this.list = toList( tokenIterator );
+        this.currentPosition = 0;
+        this.defaultToken = null;
+        this.value = null;
+        this.markedPosition = -1;
+    }
+
     public DFQLToken last() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.value;
+    }
+
+    // convert the iterator into a list representation
+    private static List<DFQLToken> toList( Iterator<DFQLToken> iterator ) {
+        ArrayList<DFQLToken> result = new ArrayList<>();
+        iterator.forEachRemaining( result::add );
+        return result;
     }
 
 }
