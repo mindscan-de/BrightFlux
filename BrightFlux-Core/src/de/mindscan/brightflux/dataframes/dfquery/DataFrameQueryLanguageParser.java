@@ -123,8 +123,16 @@ public class DataFrameQueryLanguageParser {
         throw new NotYetImplemetedException( "Can't parse the curent token." );
     }
 
-    private boolean tryAndAcceptType( DFQLTokenType string ) {
-        return false;
+    private boolean tryAndAcceptType( DFQLTokenType acceptableType ) {
+        DFQLToken la = tokens.lookahead();
+
+        // TODO: this does not support some kind of inheritance right now - do we need that here?
+        if (la.getType() != acceptableType) {
+            return false;
+        }
+
+        tokens.next();
+        return true;
     }
 
 }
