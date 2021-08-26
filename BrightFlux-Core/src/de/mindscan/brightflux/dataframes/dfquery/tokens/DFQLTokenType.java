@@ -40,5 +40,7 @@ public enum DFQLTokenType {
 
     STRING,
 
-    NONE;
+    NONE,
+
+    ENDOFINPUT;
 }
