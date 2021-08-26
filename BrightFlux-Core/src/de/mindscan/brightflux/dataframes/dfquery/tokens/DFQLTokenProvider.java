@@ -28,9 +28,10 @@ package de.mindscan.brightflux.dataframes.dfquery.tokens;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
- * 
+ * implement a simple dfql-token provider, which will be used in the parser.
  */
 public class DFQLTokenProvider {
 
@@ -41,6 +42,8 @@ public class DFQLTokenProvider {
     private int currentPosition;
     private int markedPosition;
 
+    private final static int MARKED_NONE = Integer.MIN_VALUE;
+
     /**
      * 
      */
@@ -49,11 +52,78 @@ public class DFQLTokenProvider {
         this.currentPosition = 0;
         this.defaultToken = null;
         this.value = null;
-        this.markedPosition = -1;
+        this.markedPosition = MARKED_NONE;
     }
 
+    /**
+     * This method returns the element from the last operation (e.g. next, lookahead)
+     * 
+     * @return the last element 
+     */
     public DFQLToken last() {
         return this.value;
+    }
+
+    /**
+     * This method returns the next element at the current position and moves to the next position index
+     * 
+     * @return the current / token.
+     */
+    public DFQLToken next() {
+        try {
+            this.value = this.list.get( this.currentPosition );
+            this.currentPosition++;
+        }
+        catch (IndexOutOfBoundsException ioobe) {
+            throw new NoSuchElementException( "No more elements in this TokenProvider." );
+        }
+        return this.value;
+    }
+
+    /**
+     * This method returns the current element at the current position but doesn't move the current position index
+     * 
+     * @return the current token
+     */
+    public DFQLToken lookahead() {
+        return lookahead( 0 );
+    }
+
+    /**
+     * This method returns the skipCount next elemnt to the current element at the skipcount + current positon but 
+     * lookahead doesn't move the current position index.
+     * 
+     * @param skipCount number of positions ahead to the current positions
+     * @return The token at the positon (currentPosition + skipCount)
+     */
+    public DFQLToken lookahead( int skipCount ) {
+        try {
+            this.value = this.list.get( this.currentPosition + skipCount );
+        }
+        catch (IndexOutOfBoundsException e) {
+            return this.defaultToken;
+        }
+        return this.value;
+    }
+
+    // save current position
+    public void pushMarker() {
+        this.markedPosition = this.currentPosition;
+    }
+
+    // discard the current position
+    public void discardMarker() {
+        this.markedPosition = MARKED_NONE;
+    }
+
+    // restore previously saved position
+    public void popMarker() {
+        if (this.markedPosition != MARKED_NONE) {
+            this.currentPosition = this.markedPosition;
+        }
+        else {
+            throw new IllegalStateException( "PopMarker has an invalid state." );
+        }
     }
 
     // convert the iterator into a list representation
