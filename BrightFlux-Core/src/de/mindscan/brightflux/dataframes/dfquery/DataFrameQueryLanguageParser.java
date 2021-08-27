@@ -102,6 +102,24 @@ public class DataFrameQueryLanguageParser {
         // extract the query to perform on the dataframe
     }
 
+    public DFQLNode parseMemberSelection() {
+        DFQLNode current = parseLiteral();
+
+        if (tryAndConsumeAsString( "." )) {
+            DFQLNode selector = parseLiteral();
+
+            while (tryAndConsumeAsString( "." )) {
+                // current = new PrimarySelection(value = current, selector = selector)
+
+                // selector = parseLiteral();
+            }
+
+            // return new PrimarySelection member selection... (valuue = current, selector = selector
+        }
+
+        return current;
+    }
+
     // we will again write the parser bottom up.
     public DFQLNode parseLiteral() {
         if (tryAndAcceptType( DFQLTokenType.STRING )) {
@@ -126,8 +144,19 @@ public class DataFrameQueryLanguageParser {
     private boolean tryAndAcceptType( DFQLTokenType acceptableType ) {
         DFQLToken la = tokens.lookahead();
 
-        // TODO: this does not support some kind of inheritance right now - do we need that here?
+        // TODO: this does not support some kind of inheritance right now - do we need that here? YAGNI?
         if (la.getType() != acceptableType) {
+            return false;
+        }
+
+        tokens.next();
+        return true;
+    }
+
+    private boolean tryAndConsumeAsString( String acceptableString ) {
+        DFQLToken la = tokens.lookahead();
+
+        if (!la.getValue().equals( acceptableString )) {
             return false;
         }
 
