@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -269,6 +270,38 @@ public class DataFrameQueryLanguageParserTest {
 
         // act
         DFQLNode result = parser.parseMemberSelection();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );
+    }
+
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnSelectionInvocationOfStartsWith_expectPrimarySelectionNode() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith()";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLApplyOperatorNode.class ) ) );
+    }
+
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnSelectionNoInvocationOfStartsWith_expectPrimarySelectionNode() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
         assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );

@@ -28,6 +28,7 @@ package de.mindscan.brightflux.dataframes.dfquery;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -111,6 +112,24 @@ public class DataFrameQueryLanguageParser {
     // parser rule sections
     // ---------------------------------------
 
+    public DFQLNode parseMemberSelectionInvocation() {
+        DFQLNode current = parseMemberSelection();
+
+        if (tryAndConsumeAsString( "(" )) {
+            // This is a method call
+            current = new DFQLApplyOperatorNode( current );
+
+            while (!tryAndConsumeAsString( ")" )) {
+                // TODO : collect the expressions and add them as an argument
+
+                // its either a "," which means, that we have more arguments after the first one
+                // or its a ")", which means we are complete here.
+            }
+        }
+
+        return current;
+    }
+
     public DFQLNode parseMemberSelection() {
         DFQLNode current = parseLiteral();
 
@@ -131,7 +150,6 @@ public class DataFrameQueryLanguageParser {
         return current;
     }
 
-    // we will again write the parser bottom up.
     public DFQLNode parseLiteral() {
         if (tryAndAcceptType( DFQLTokenType.STRING )) {
             DFQLToken string = tokens.last();
