@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.dfquery.ast;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameNode;
 
 /**
  * TODO Refactor this and remove from here...
