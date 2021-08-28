@@ -39,16 +39,16 @@ import java.util.List;
  * has the function: "df.'myColumn'.startsWith" (represented as the tree)
  * and the single only argument: '0x666'
  */
-public class DFQLApplyOperatorNode implements DFQLNode {
+public class DFQLApplyNode implements DFQLNode {
 
     private DFQLNode function;
     private List<DFQLNode> arguments;
 
-    public DFQLApplyOperatorNode( DFQLNode function ) {
+    public DFQLApplyNode( DFQLNode function ) {
         this( function, new ArrayList<DFQLNode>() );
     }
 
-    public DFQLApplyOperatorNode( DFQLNode function, List<DFQLNode> arguments ) {
+    public DFQLApplyNode( DFQLNode function, List<DFQLNode> arguments ) {
         this.function = function;
         this.arguments = arguments;
     }

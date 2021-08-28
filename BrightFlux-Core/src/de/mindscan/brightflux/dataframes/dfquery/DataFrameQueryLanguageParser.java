@@ -28,7 +28,7 @@ package de.mindscan.brightflux.dataframes.dfquery;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
-import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -117,7 +117,7 @@ public class DataFrameQueryLanguageParser {
 
         if (tryAndConsumeAsString( "(" )) {
             // This is a method call
-            current = new DFQLApplyOperatorNode( current );
+            current = new DFQLApplyNode( current );
 
             while (!tryAndConsumeAsString( ")" )) {
                 // TODO : collect the expressions and add them as an argument

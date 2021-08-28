@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 import org.junit.jupiter.api.Test;
 
-import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -288,7 +288,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLApplyOperatorNode.class ) ) );
+        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
     }
 
     @Test
