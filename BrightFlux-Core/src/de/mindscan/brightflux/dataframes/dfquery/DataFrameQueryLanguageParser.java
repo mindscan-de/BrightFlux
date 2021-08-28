@@ -31,6 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
@@ -122,7 +123,7 @@ public class DataFrameQueryLanguageParser {
                 // selector = parseLiteral();
             }
 
-            // return new PrimarySelection member selection... (valuue = current, selector = selector
+            return new DFQLPrimarySelectionNode( current, selector );
         }
 
         return current;

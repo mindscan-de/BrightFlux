@@ -50,9 +50,16 @@ public class DFQLTokenProvider {
     public DFQLTokenProvider( Iterator<DFQLToken> tokenIterator ) {
         this.list = toList( tokenIterator );
         this.currentPosition = 0;
-        this.defaultToken = null;
+        this.defaultToken = new DFQLToken( DFQLTokenType.ENDOFINPUT, "" );
         this.value = null;
         this.markedPosition = MARKED_NONE;
+    }
+
+    /**
+     * @param defaultToken the defaultToken to set
+     */
+    public void setDefaultToken( DFQLToken defaultToken ) {
+        this.defaultToken = defaultToken;
     }
 
     /**
