@@ -39,6 +39,7 @@ import java.util.List;
  * has the function: "df.'myColumn'.startsWith" (represented as the tree)
  * and the single only argument: '0x666'
  * 
+ * TODO:
  * Maybe it should be inheriting from a selection node such that it inherits this property and the node can be
  * unpacked? If the function is a primary selection node, and we can just convert it up? such that the selector
  * becomes an essential part of this node... (would make things probably much more easier...)
@@ -56,6 +57,10 @@ public class DFQLApplyNode implements DFQLNode {
     public DFQLApplyNode( DFQLNode function, List<DFQLNode> arguments ) {
         this.function = function;
         this.arguments = arguments;
+    }
+
+    public void appendArgument( DFQLNode argument ) {
+        this.arguments.add( argument );
     }
 
     public DFQLNode getFunction() {

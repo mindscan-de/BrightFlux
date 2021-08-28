@@ -117,12 +117,20 @@ public class DataFrameQueryLanguageParser {
 
         if (tryAndConsumeAsString( "(" )) {
             // This is a method call
-            current = new DFQLApplyNode( current );
+            DFQLApplyNode applyNode = new DFQLApplyNode( current );
+            current = applyNode;
 
             while (!tryAndConsumeAsString( ")" )) {
-                // TODO : collect the expressions and add them as an argument
+                // TODO : collect the expressions -> This This must use a different parser rule later.
+                DFQLNode argument = parseMemberSelectionInvocation();
+                applyNode.appendArgument( argument );
 
                 // its either a "," which means, that we have more arguments after the first one
+                while (tryAndConsumeAsString( "," )) {
+                    // TODO : collect the expressions -> This This must use a different parser rule later.
+                    argument = parseMemberSelectionInvocation();
+                    applyNode.appendArgument( argument );
+                }
                 // or its a ")", which means we are complete here.
             }
         }
@@ -168,7 +176,7 @@ public class DataFrameQueryLanguageParser {
             return new DFQLIdentifierNode( identifier.getValue() );
         }
 
-        throw new NotYetImplemetedException( "Can't parse the curent token." );
+        throw new NotYetImplemetedException( "Can't parse the curent token. '" + String.valueOf( tokens.last() ) + "'" );
     }
 
     // --------------------------

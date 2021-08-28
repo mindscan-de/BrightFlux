@@ -307,4 +307,53 @@ public class DataFrameQueryLanguageParserTest {
         assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );
     }
 
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringParameterArgument_expectPrimarySelectionNode()
+                    throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith(\"0x666\")";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+    }
+
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringArgumentAndInt_expectApplyNode() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith(\"0x666\",1)";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+    }
+
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithTwoStringArguments_expectApplyNode() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith(\"0x666\",\"\")";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+    }
+
 }
