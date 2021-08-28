@@ -9,6 +9,7 @@ import java.util.Iterator;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -354,6 +355,22 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+    }
+
+    @Test
+    public void testParseExpression_DataFrameColumsEqualsNumber_() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'==1";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
     }
 
 }

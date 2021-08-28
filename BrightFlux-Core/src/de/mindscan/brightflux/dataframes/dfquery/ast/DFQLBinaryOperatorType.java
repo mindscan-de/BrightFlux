@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.ast;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
  * 
  */
@@ -45,4 +47,24 @@ public enum DFQLBinaryOperatorType {
     AND,
 
     OR;
+
+    public static DFQLBinaryOperatorType asType( String input ) {
+
+        switch (input) {
+            case "==":
+                return EQ;
+            case "!=":
+                return NEQ;
+            case "<":
+                return LT;
+            case ">":
+                return GT;
+            case "<=":
+                return LE;
+            case ">=":
+                return GE;
+        }
+
+        throw new NotYetImplemetedException( "This operator is not suppported: '" + String.valueOf( input ) + "'" );
+    }
 }

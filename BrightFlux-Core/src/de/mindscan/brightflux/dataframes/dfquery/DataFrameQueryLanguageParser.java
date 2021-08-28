@@ -125,6 +125,7 @@ public class DataFrameQueryLanguageParser {
 
         if (tryAndConsumeAsString( "(" )) {
             // TODO: parseExpression
+            // and also collect the closing parenthesis
             throw new NotYetImplemetedException( "The parenthesis around expression is not yet supported." );
         }
         else {
@@ -132,12 +133,11 @@ public class DataFrameQueryLanguageParser {
 
             if (tryAndAcceptType( DFQLTokenType.OPERATOR )) {
                 DFQLToken operator = tokens.last();
-                //  TODO: transform the operator to the operation using the enum itself.
-                DFQLBinaryOperatorType operation = null;
 
                 DFQLNode left = current;
+                // TODO: figure out which next rule to do... I think parseExpression is correct.
                 DFQLNode right = parseExpression();
-                current = new DFQLBinaryOperatorNode( operation, left, right );
+                current = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.asType( operator.getValue() ), left, right );
             }
         }
 
