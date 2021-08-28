@@ -29,6 +29,8 @@ import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -111,6 +113,36 @@ public class DataFrameQueryLanguageParser {
     // ---------------------------------------
     // parser rule sections
     // ---------------------------------------
+
+    public DFQLNode parseDFQLStatement() {
+        // TODO: according to the keywords we use then the keywords specific parsers
+        return null;
+    }
+
+    // TODO operator precedence AND; OR; +, -, Comparisons
+    public DFQLNode parseExpression() {
+        DFQLNode current = null;
+
+        if (tryAndConsumeAsString( "(" )) {
+            // TODO: parseExpression
+            throw new NotYetImplemetedException( "The parenthesis around expression is not yet supported." );
+        }
+        else {
+            current = parseMemberSelectionInvocation();
+
+            if (tryAndAcceptType( DFQLTokenType.OPERATOR )) {
+                DFQLToken operator = tokens.last();
+                //  TODO: transform the operator to the operation using the enum itself.
+                DFQLBinaryOperatorType operation = null;
+
+                DFQLNode left = current;
+                DFQLNode right = parseExpression();
+                current = new DFQLBinaryOperatorNode( operation, left, right );
+            }
+        }
+
+        return current;
+    }
 
     public DFQLNode parseMemberSelectionInvocation() {
         DFQLNode current = parseMemberSelection();

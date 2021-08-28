@@ -26,7 +26,7 @@
 package de.mindscan.brightflux.dataframes.dfquery.ast;
 
 /**
- * 
+ * Basically this is an expression node with a left and right side. Maybe we should later on rename this thing.
  */
 public class DFQLBinaryOperatorNode implements DFQLNode {
 
