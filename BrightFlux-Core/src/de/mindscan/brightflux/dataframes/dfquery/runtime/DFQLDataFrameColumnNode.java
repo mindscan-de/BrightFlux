@@ -23,10 +23,10 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes.dfquery.ast;
+package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 
 /**
  * TODO Refactor this and remove from here...

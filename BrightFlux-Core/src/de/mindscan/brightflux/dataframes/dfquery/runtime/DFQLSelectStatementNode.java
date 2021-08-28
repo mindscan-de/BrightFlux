@@ -27,7 +27,6 @@ package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import java.util.List;
 
-import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 

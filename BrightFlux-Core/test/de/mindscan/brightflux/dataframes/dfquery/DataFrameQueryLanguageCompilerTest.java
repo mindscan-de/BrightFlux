@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
-import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameNode;
 
 public class DataFrameQueryLanguageCompilerTest {
