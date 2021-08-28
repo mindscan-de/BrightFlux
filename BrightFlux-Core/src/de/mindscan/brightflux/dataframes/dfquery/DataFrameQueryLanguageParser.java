@@ -117,6 +117,9 @@ public class DataFrameQueryLanguageParser {
         if (tryAndConsumeAsString( "." )) {
             DFQLNode selector = parseLiteral();
 
+            // TODO handle number dot number as a float or double value... / 
+            //      it depends on what is done in the tokenizer.
+
             while (tryAndConsumeAsString( "." )) {
                 current = new DFQLPrimarySelectionNode( current, selector );
                 selector = parseLiteral();
