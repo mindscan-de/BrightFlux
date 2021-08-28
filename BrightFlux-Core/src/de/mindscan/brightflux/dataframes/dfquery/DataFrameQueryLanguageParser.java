@@ -65,6 +65,10 @@ public class DataFrameQueryLanguageParser {
         return true;
     }
 
+    void setTokenProvider( DFQLTokenProvider newProvider ) {
+        this.tokens = newProvider;
+    }
+
     /**
      * @return
      */
@@ -130,6 +134,7 @@ public class DataFrameQueryLanguageParser {
         if (tryAndAcceptType( DFQLTokenType.NUMBER )) {
             DFQLToken number = tokens.last();
             // TODO Maybe convert that? integer, float, double, long? and then give that as an object?
+            //      or let the runtime or the compiler deal with that?
             return new DFQLNumberNode( number.getValue() );
         }
 
@@ -144,7 +149,7 @@ public class DataFrameQueryLanguageParser {
     private boolean tryAndAcceptType( DFQLTokenType acceptableType ) {
         DFQLToken la = tokens.lookahead();
 
-        // TODO: this does not support some kind of inheritance right now - do we need that here? YAGNI?
+        // TODO: this does not support some kind of inheritance as of now speaking - do we need that here? YAGNI?
         if (la.getType() != acceptableType) {
             return false;
         }
