@@ -106,6 +106,10 @@ public class DataFrameQueryLanguageParser {
         // extract the query to perform on the dataframe
     }
 
+    // ---------------------------------------
+    // parser rule sections
+    // ---------------------------------------
+
     public DFQLNode parseMemberSelection() {
         DFQLNode current = parseLiteral();
 
@@ -145,6 +149,10 @@ public class DataFrameQueryLanguageParser {
 
         throw new NotYetImplemetedException( "Can't parse the curent token." );
     }
+
+    // --------------------------
+    // parser support code
+    // --------------------------
 
     private boolean tryAndAcceptType( DFQLTokenType acceptableType ) {
         DFQLToken la = tokens.lookahead();
