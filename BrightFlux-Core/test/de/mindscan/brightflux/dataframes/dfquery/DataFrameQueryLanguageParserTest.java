@@ -243,9 +243,25 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
-    public void testParseMemberSelection_DataframeColumnSelection_expect() throws Exception {
+    public void testParseMemberSelection_DataframeColumnSelection_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseMemberSelection();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );
+    }
+
+    @Test
+    public void testParseMemberSelection_DataframeColumnSelectionStartsWith_expectPrimarySelectionNode() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith";
         Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
 
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();

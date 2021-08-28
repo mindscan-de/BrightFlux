@@ -118,9 +118,8 @@ public class DataFrameQueryLanguageParser {
             DFQLNode selector = parseLiteral();
 
             while (tryAndConsumeAsString( "." )) {
-                // current = new PrimarySelection(value = current, selector = selector)
-
-                // selector = parseLiteral();
+                current = new DFQLPrimarySelectionNode( current, selector );
+                selector = parseLiteral();
             }
 
             return new DFQLPrimarySelectionNode( current, selector );
