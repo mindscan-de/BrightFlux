@@ -30,7 +30,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLNumberNode.class ) ) );
+        assertNodeType( result, DFQLNumberNode.class );
     }
 
     @Test
@@ -43,7 +43,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLStringNode.class ) ) );
+        assertNodeType( result, DFQLStringNode.class );
     }
 
     @Test
@@ -56,7 +56,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLStringNode.class ) ) );
+        assertNodeType( result, DFQLStringNode.class );
     }
 
     @Test
@@ -69,7 +69,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLStringNode.class ) ) );
+        assertNodeType( result, DFQLStringNode.class );
     }
 
     @Test
@@ -82,7 +82,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLIdentifierNode.class ) ) );
+        assertNodeType( result, DFQLIdentifierNode.class );
     }
 
     @Test
@@ -95,7 +95,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLIdentifierNode.class ) ) );
+        assertNodeType( result, DFQLIdentifierNode.class );
     }
 
     @Test
@@ -108,7 +108,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseLiteral();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLIdentifierNode.class ) ) );
+        assertNodeType( result, DFQLIdentifierNode.class );
     }
 
     @Test
@@ -121,7 +121,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLNumberNode.class ) ) );
+        assertNodeType( result, DFQLNumberNode.class );
     }
 
     @Test
@@ -134,7 +134,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLStringNode.class ) ) );
+        assertNodeType( result, DFQLStringNode.class );
     }
 
     @Test
@@ -147,7 +147,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLStringNode.class ) ) );
+        assertNodeType( result, DFQLStringNode.class );
     }
 
     @Test
@@ -160,7 +160,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLStringNode.class ) ) );
+        assertNodeType( result, DFQLStringNode.class );
     }
 
     @Test
@@ -173,7 +173,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLIdentifierNode.class ) ) );
+        assertNodeType( result, DFQLIdentifierNode.class );
     }
 
     @Test
@@ -186,7 +186,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLIdentifierNode.class ) ) );
+        assertNodeType( result, DFQLIdentifierNode.class );
     }
 
     @Test
@@ -199,7 +199,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLIdentifierNode.class ) ) );
+        assertNodeType( result, DFQLIdentifierNode.class );
     }
 
     @Test
@@ -212,7 +212,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );
+        assertNodeType( result, DFQLPrimarySelectionNode.class );
     }
 
     @Test
@@ -225,7 +225,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelection();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );
+        assertNodeType( result, DFQLPrimarySelectionNode.class );
     }
 
     @Test
@@ -238,7 +238,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+        assertNodeType( result, DFQLApplyNode.class );
     }
 
     @Test
@@ -251,7 +251,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLPrimarySelectionNode.class ) ) );
+        assertNodeType( result, DFQLPrimarySelectionNode.class );
     }
 
     @Test
@@ -265,7 +265,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+        assertNodeType( result, DFQLApplyNode.class );
     }
 
     @Test
@@ -278,7 +278,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+        assertNodeType( result, DFQLApplyNode.class );
     }
 
     @Test
@@ -291,7 +291,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseMemberSelectionInvocation();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLApplyNode.class ) ) );
+        assertNodeType( result, DFQLApplyNode.class );
     }
 
     @Test
@@ -304,7 +304,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseExpression();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+        assertNodeType( result, DFQLBinaryOperatorNode.class );
     }
 
     @Test
@@ -317,7 +317,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseExpression();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+        assertNodeType( result, DFQLBinaryOperatorNode.class );
     }
 
     @Test
@@ -330,7 +330,7 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseExpression();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+        assertNodeType( result, DFQLBinaryOperatorNode.class );
     }
 
     @Test
@@ -343,7 +343,11 @@ public class DataFrameQueryLanguageParserTest {
         DFQLNode result = parser.parseExpression();
 
         // assert
-        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+        assertNodeType( result, DFQLBinaryOperatorNode.class );
+    }
+
+    private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {
+        assertThat( result, is( instanceOf( type ) ) );
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
