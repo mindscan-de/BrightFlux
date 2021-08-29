@@ -27,6 +27,7 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This node will only apply the arguments on a Node, but the function may be
@@ -73,7 +74,8 @@ public class DFQLApplyNode implements DFQLNode {
 
     @Override
     public String describeNodeOperation() {
-        return function.describeNodeOperation() + "(" + ")";
+        String argumentlist = arguments.stream().map( n -> n.describeNodeOperation() ).collect( Collectors.joining( "," ) );
+        return function.describeNodeOperation() + "(" + argumentlist + ")";
     }
 
     /** 
@@ -81,6 +83,7 @@ public class DFQLApplyNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        return "(apply:" + function.describeNodeOperationDebug() + "())";
+        String argumentlist = arguments.stream().map( n -> n.describeNodeOperationDebug() ).collect( Collectors.joining( "," ) );
+        return "(apply:" + function.describeNodeOperationDebug() + "(" + argumentlist + "))";
     }
 }

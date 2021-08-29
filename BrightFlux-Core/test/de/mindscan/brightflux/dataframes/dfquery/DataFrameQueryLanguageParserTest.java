@@ -348,7 +348,7 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
-    public void testParseMemberSelectionInvocation_DataframeColumnSelectionInvocationOfStartsWith_expectPrimarySelectionNode() throws Exception {
+    public void testParseMemberSelectionInvocation_DataframeColumnSelectionInvocationOfStartsWith_expectApplyNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith()";
         DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
@@ -387,8 +387,7 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
-    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringParameterArgument_expectPrimarySelectionNode()
-                    throws Exception {
+    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringParameterArgument_expectApplyNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith(\"0x666\")";
         DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
@@ -398,6 +397,20 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLApplyNode.class );
+    }
+
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringParameterArgument_expectSameNodeDescriptione()
+                    throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith(\"0x666\")";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertNodeDescription( result, "df.'columnname'.startsWith('0x666')" );
     }
 
     @Test
@@ -411,6 +424,20 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLApplyNode.class );
+    }
+
+    @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringArgumentAndInt_expectSameNodeDescription()
+                    throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith(\"0x666\",1)";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertNodeDescription( result, "df.'columnname'.startsWith('0x666',1)" );
     }
 
     @Test
