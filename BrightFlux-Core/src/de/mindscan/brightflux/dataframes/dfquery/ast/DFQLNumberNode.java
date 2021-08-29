@@ -49,4 +49,13 @@ public class DFQLNumberNode extends DFQLValueNode {
         return String.valueOf( number );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

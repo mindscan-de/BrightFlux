@@ -50,4 +50,13 @@ public class DFQLStringNode extends DFQLValueNode {
         return "'" + value + "'";
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

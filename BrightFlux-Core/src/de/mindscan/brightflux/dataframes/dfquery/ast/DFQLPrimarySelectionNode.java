@@ -54,4 +54,13 @@ public class DFQLPrimarySelectionNode implements DFQLNode {
         return value.describeNodeOperation() + "." + selector.describeNodeOperation();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

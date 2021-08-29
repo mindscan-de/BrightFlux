@@ -76,4 +76,13 @@ public class DFQLApplyNode implements DFQLNode {
         // TODO Auto-generated method stub
         return null;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

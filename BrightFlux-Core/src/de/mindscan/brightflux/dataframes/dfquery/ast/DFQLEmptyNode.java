@@ -45,4 +45,13 @@ public class DFQLEmptyNode implements DFQLNode {
     public String describeNodeOperation() {
         return "";
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

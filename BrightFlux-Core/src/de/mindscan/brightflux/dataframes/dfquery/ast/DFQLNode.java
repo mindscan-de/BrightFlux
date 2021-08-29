@@ -31,4 +31,6 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
 public interface DFQLNode {
 
     String describeNodeOperation();
+
+    String describeNodeOperationDebug();
 }

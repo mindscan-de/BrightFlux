@@ -55,4 +55,13 @@ public class DFQLIdentifierNode extends DFQLValueNode {
         return identifier;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

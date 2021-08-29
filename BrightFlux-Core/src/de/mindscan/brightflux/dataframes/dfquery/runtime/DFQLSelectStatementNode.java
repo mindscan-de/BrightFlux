@@ -75,4 +75,13 @@ public class DFQLSelectStatementNode implements DFQLNode {
     public String describeNodeOperation() {
         throw new NotYetImplemetedException();
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperationDebug() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
