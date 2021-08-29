@@ -36,6 +36,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
@@ -116,7 +117,7 @@ public class DataFrameQueryLanguageParser {
     // ---------------------------------------
 
     public DFQLNode parseDFQLStatement() {
-        if (tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
+        if (tryToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
             return parseDFQLSelectStatement();
         }
 
@@ -128,10 +129,27 @@ public class DataFrameQueryLanguageParser {
      * @return
      */
     private DFQLNode parseDFQLSelectStatement() {
-        // SELECT * FROM * WHERE expression
+        if (!tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
+            throw new NotYetImplemetedException( "" );
+        }
 
-        // TODO Auto-generated method stub
-        return null;
+        DFQLSelectStatementNode statement = new DFQLSelectStatementNode();
+
+        // parseSelectStatementColumnList
+
+        // FROM
+
+        // parseDataframe
+
+        // WHERE :: Optional
+        if (tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" ) )) {
+
+            // parseExpression
+            DFQLNode whereClause = parseExpression();
+            statement.setWhereClause( whereClause );
+        }
+
+        return statement;
     }
 
     // TODO operator precedence AND; OR; +, -, Comparisons
@@ -164,7 +182,7 @@ public class DataFrameQueryLanguageParser {
         if (mustCloseParenthesis) {
             if (!tryAndConsumeAsString( ")" )) {
                 DFQLToken lasttoken = tokens.last();
-                throw new NotYetImplemetedException( "Expected an ')' " + lasttoken.getValue() );
+                throw new NotYetImplemetedException( "Expected an ')' but found: '" + lasttoken.getValue() + "' instead." );
             }
         }
 
@@ -276,6 +294,10 @@ public class DataFrameQueryLanguageParser {
     }
 
     private boolean tryAndAcceptToken( DFQLToken acceptableToken ) {
+        return false;
+    }
+
+    private boolean tryToken( DFQLToken acceptableToken ) {
         return false;
     }
 
