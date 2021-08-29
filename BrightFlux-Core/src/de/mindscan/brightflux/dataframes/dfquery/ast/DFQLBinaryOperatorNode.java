@@ -58,7 +58,7 @@ public class DFQLBinaryOperatorNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        return "(" + left.describeNodeOperation() + "==" + right.describeNodeOperation() + ")";
+        return "(" + left.describeNodeOperation() + operation.asString() + right.describeNodeOperation() + ")";
     }
 
     /** 

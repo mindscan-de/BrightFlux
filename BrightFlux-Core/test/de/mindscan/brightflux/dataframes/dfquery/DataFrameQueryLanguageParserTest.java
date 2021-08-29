@@ -519,21 +519,6 @@ public class DataFrameQueryLanguageParserTest {
         assertNodeDescription( result, "(df.'columnname'==1)" );
     }
 
-    //TODO: fix me
-    @Disabled( " it only reads the first expression for some reason..." )
-    @Test
-    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectSameNodeDescription() throws Exception {
-        // arrange
-        String dfqlQuery = "(df.'columnname'==1) == (df.'othercolumnname'==666)";
-        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
-
-        // act
-        DFQLNode result = parser.parseExpression();
-
-        // assert
-        assertNodeDescription( result, "((df.'columnname'==1)==(df.'othercolumnname'==666))" );
-    }
-
     @Test
     public void testParseExpression_DataTwoFrameColumEqualsNumberAllInParenthesisEqualsEachOther_expectSameNodeDescription() throws Exception {
         // arrange
@@ -560,6 +545,21 @@ public class DataFrameQueryLanguageParserTest {
         assertNodeType( result, DFQLBinaryOperatorNode.class );
     }
 
+    //TODO: fix me
+    @Disabled( " it only reads the first expression for some reason..." )
+    @Test
+    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectSameNodeDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "(df.'columnname'==1) == (df.'othercolumnname'==666)";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertNodeDescription( result, "((df.'columnname'==1)==(df.'othercolumnname'==666))" );
+    }
+
     @Test
     public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOtherInParenthesis_expectBinaryOperatorNode() throws Exception {
         // arrange
@@ -571,6 +571,19 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLBinaryOperatorNode.class );
+    }
+
+    @Test
+    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOtherInParenthesis_expectSameDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "((df.'columnname'>=1)==(df.'othercolumnname'<=666))";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertNodeDescription( result, "((df.'columnname'>=1)==(df.'othercolumnname'<=666))" );
     }
 
     @Test

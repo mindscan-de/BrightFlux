@@ -32,21 +32,30 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public enum DFQLBinaryOperatorType {
 
-    EQ,
+    EQ( "==" ),
 
-    NEQ,
+    NEQ( "!=" ),
 
-    LT,
+    LT( "<" ),
 
-    GT,
+    GT( ">" ),
 
-    LE,
+    LE( "<=" ),
 
-    GE,
+    GE( ">=" ),
 
-    AND,
+    AND( "&&" ),
 
-    OR;
+    OR( "||" );
+
+    private String operationString;
+
+    /**
+     * 
+     */
+    private DFQLBinaryOperatorType( String operation ) {
+        this.operationString = operation;
+    }
 
     public static DFQLBinaryOperatorType asType( String input ) {
 
@@ -66,5 +75,9 @@ public enum DFQLBinaryOperatorType {
         }
 
         throw new NotYetImplemetedException( "This operator is not suppported: '" + String.valueOf( input ) + "'" );
+    }
+
+    public String asString() {
+        return operationString;
     }
 }
