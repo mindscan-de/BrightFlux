@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.ast;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
  * Basically this is an expression node with a left and right side. Maybe we should later on rename this thing.
  */
@@ -51,5 +53,13 @@ public class DFQLBinaryOperatorNode implements DFQLNode {
 
     public DFQLBinaryOperatorType getOperation() {
         return operation;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        throw new NotYetImplemetedException();
     }
 }

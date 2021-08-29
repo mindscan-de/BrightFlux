@@ -47,4 +47,12 @@ public class DFQLIdentifierNode extends DFQLValueNode {
         return identifier;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        return identifier;
+    }
+
 }

@@ -27,6 +27,7 @@ package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * TODO Refactor this and remove from here...
@@ -55,5 +56,13 @@ public class DFQLDataFrameNode implements DFQLNode {
 
     public String getIdentifier() {
         return identifier;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        throw new NotYetImplemetedException();
     }
 }

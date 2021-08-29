@@ -29,6 +29,7 @@ import java.util.List;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * 
@@ -65,5 +66,13 @@ public class DFQLSelectStatementNode implements DFQLNode {
         }
 
         return whereClause;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        throw new NotYetImplemetedException();
     }
 }

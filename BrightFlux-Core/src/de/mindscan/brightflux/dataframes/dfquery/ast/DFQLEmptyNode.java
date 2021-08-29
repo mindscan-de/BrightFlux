@@ -37,4 +37,12 @@ public class DFQLEmptyNode implements DFQLNode {
     public static DFQLNode getInstance() {
         return Holder.instance;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        return "";
+    }
 }

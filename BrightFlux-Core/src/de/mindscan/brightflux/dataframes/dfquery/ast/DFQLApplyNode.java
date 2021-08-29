@@ -70,4 +70,10 @@ public class DFQLApplyNode implements DFQLNode {
     public List<DFQLNode> getArguments() {
         return arguments;
     }
+
+    @Override
+    public String describeNodeOperation() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

@@ -41,4 +41,13 @@ public class DFQLStringNode extends DFQLValueNode {
         return value;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+
+        return "'" + value + "'";
+    }
+
 }

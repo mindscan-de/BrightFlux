@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.ast;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
  * 
  */
@@ -44,6 +46,15 @@ public class DFQLSelectStatementNode implements DFQLNode {
      */
     public DFQLNode getWhereClause() {
         return whereClause;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        // TODO Auto-generated method stub
+        throw new NotYetImplemetedException();
     }
 
 }

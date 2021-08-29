@@ -41,4 +41,12 @@ public class DFQLNumberNode extends DFQLValueNode {
         return number;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String describeNodeOperation() {
+        return String.valueOf( number );
+    }
+
 }
