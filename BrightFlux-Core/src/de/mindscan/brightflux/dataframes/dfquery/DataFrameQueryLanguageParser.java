@@ -124,18 +124,22 @@ public class DataFrameQueryLanguageParser {
         DFQLNode current = null;
 
         if (tryAndConsumeAsString( "(" )) {
-            // TODO: parseExpression
-            // and also collect the closing parenthesis
-            throw new NotYetImplemetedException( "The parenthesis around expression is not yet supported." );
+            current = parseExpression();
+
+            // TODO: "((expr) ==" won't work at the moment. i will have to think about it.
+            if (!tryAndConsumeAsString( ")" )) {
+                DFQLToken lasttoken = tokens.last();
+                throw new NotYetImplemetedException( "Expected an ')' " + lasttoken.getValue() );
+            }
         }
         else {
             current = parseMemberSelectionInvocation();
 
             if (tryAndAcceptType( DFQLTokenType.OPERATOR )) {
+                // collect the last operator token
                 DFQLToken operator = tokens.last();
 
                 DFQLNode left = current;
-                // TODO: figure out which next rule to do... I think parseExpression is correct.
                 DFQLNode right = parseExpression();
                 current = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.asType( operator.getValue() ), left, right );
             }

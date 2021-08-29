@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.Iterator;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
@@ -358,9 +359,59 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
-    public void testParseExpression_DataFrameColumsEqualsNumber_() throws Exception {
+    public void testParseExpression_DataFrameColumsEqualsNumber_expectBinaryOperatorNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'==1";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+    }
+
+    @Test
+    public void testParseExpression_DataFrameColumEqualsNumberInParenthesis_expectBinaryOperatorNode() throws Exception {
+        // arrange
+        String dfqlQuery = "(df.'columnname'==1)";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+    }
+
+    // @Disabled( "the expression parser doesn't work for this case right now. Although it being green (but not fully parsed)" )
+    @Test
+    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectBinaryOperatorNode() throws Exception {
+        // arrange
+        String dfqlQuery = "(df.'columnname'==1) == (df.'othercolumnname'==666)";
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+    }
+
+    @Disabled( "the expression parser doesn't work for this case right now." )
+    @Test
+    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOtherInParenthesis_expectBinaryOperatorNode() throws Exception {
+        // arrange
+        String dfqlQuery = "((df.'columnname'>=1)==(df.'othercolumnname'<=666))";
         Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
 
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
