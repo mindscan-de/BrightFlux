@@ -166,6 +166,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseLiteral_UppercaseDFAsIdentifier_expectUpperCaseDFAsIdentiferDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "DF";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "DF" );
+    }
+
+    @Test
     public void testParseLiteral_UnderscoreUppercaseDFAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "_DF";
@@ -176,6 +189,19 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLIdentifierNode.class );
+    }
+
+    @Test
+    public void testParseLiteral_UnderscoreUppercaseDFAsIdentifier_expectUnderscoreUpperCaseDFAsIdentiferDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "_DF";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "_DF" );
     }
 
     @Test
@@ -283,6 +309,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseMemberSelection_DataframeColumnSelection_expectPrimarySelectionDFColoumnSelectionDescriptionNode() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseMemberSelection();
+
+        // assert
+        assertNodeDescription( result, "df.'columnname'" );
+    }
+
+    @Test
     public void testParseMemberSelection_DataframeColumnSelectionStartsWith_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith";
@@ -293,6 +332,19 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLPrimarySelectionNode.class );
+    }
+
+    @Test
+    public void testParseMemberSelection_DataframeColumnSelectionStartsWith_expectSameDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseMemberSelection();
+
+        // assert
+        assertNodeDescription( result, "df.'columnname'.startsWith" );
     }
 
     @Test
