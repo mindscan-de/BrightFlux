@@ -59,8 +59,8 @@ public class DFQLPrimarySelectionNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        return "(select:" + value.describeNodeOperationDebug() + "." + selector.describeNodeOperationDebug() + ")";
+
     }
 
 }

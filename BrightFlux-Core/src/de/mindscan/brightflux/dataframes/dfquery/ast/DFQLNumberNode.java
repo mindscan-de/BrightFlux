@@ -54,8 +54,7 @@ public class DFQLNumberNode extends DFQLValueNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        return "(number:" + String.valueOf( number ) + ")";
     }
 
 }

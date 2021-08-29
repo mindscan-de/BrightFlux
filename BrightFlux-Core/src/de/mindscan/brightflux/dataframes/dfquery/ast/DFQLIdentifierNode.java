@@ -60,8 +60,7 @@ public class DFQLIdentifierNode extends DFQLValueNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        return "(id:" + String.valueOf( identifier ) + ")";
     }
 
 }
