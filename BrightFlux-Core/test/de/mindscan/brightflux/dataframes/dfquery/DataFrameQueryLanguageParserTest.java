@@ -24,10 +24,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_Number_expectInstanceofDFQLNumberNode() throws Exception {
         // arrange
         String dfqlQuery = "123";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -40,10 +37,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_NumberAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'123'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -56,10 +50,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_UnderscoreXyzAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'_xyz_'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -72,10 +63,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_FooAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'foo'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -88,10 +76,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_FooAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "foo";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -104,10 +89,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_UppercaseDFAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "DF";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -120,10 +102,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseLiteral_UnderscoreUppercaseDFAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "_DF";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseLiteral();
@@ -136,10 +115,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_Number_expectInstanceofDFQLNumberNode() throws Exception {
         // arrange
         String dfqlQuery = "123";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -152,10 +128,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_NumberAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'123'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -168,10 +141,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_UnderscoreXyzAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'_xyz_'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -184,10 +154,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_FooAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'foo'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -200,10 +167,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_FooAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "foo";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -216,10 +180,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_UppercaseDFAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "DF";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -232,10 +193,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_UnderscoreUppercaseDFAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "_DF";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -248,10 +206,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_DataframeColumnSelection_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -264,10 +219,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelection_DataframeColumnSelectionStartsWith_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelection();
@@ -280,10 +232,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelectionInvocation_DataframeColumnSelectionInvocationOfStartsWith_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith()";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelectionInvocation();
@@ -296,10 +245,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelectionInvocation_DataframeColumnSelectionNoInvocationOfStartsWith_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelectionInvocation();
@@ -313,10 +259,7 @@ public class DataFrameQueryLanguageParserTest {
                     throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith(\"0x666\")";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelectionInvocation();
@@ -329,10 +272,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithSingleStringArgumentAndInt_expectApplyNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith(\"0x666\",1)";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelectionInvocation();
@@ -345,10 +285,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseMemberSelectionInvocation_DataframeColumnInvocationOfStartsWithTwoStringArguments_expectApplyNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith(\"0x666\",\"\")";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseMemberSelectionInvocation();
@@ -361,10 +298,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseExpression_DataFrameColumsEqualsNumber_expectBinaryOperatorNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'==1";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseExpression();
@@ -377,10 +311,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseExpression_DataFrameColumEqualsNumberInParenthesis_expectBinaryOperatorNode() throws Exception {
         // arrange
         String dfqlQuery = "(df.'columnname'==1)";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseExpression();
@@ -393,10 +324,7 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectBinaryOperatorNode() throws Exception {
         // arrange
         String dfqlQuery = "(df.'columnname'==1) == (df.'othercolumnname'==666)";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseExpression();
@@ -409,16 +337,21 @@ public class DataFrameQueryLanguageParserTest {
     public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOtherInParenthesis_expectBinaryOperatorNode() throws Exception {
         // arrange
         String dfqlQuery = "((df.'columnname'>=1)==(df.'othercolumnname'<=666))";
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
 
         // act
         DFQLNode result = parser.parseExpression();
 
         // assert
         assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
+    }
+
+    private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
+        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        return parser;
     }
 
 }
