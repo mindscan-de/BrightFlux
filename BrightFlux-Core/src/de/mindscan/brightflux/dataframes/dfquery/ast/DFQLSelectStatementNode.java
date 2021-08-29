@@ -30,7 +30,7 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
  */
 public class DFQLSelectStatementNode implements DFQLNode {
 
-    private DFQLNode whereClause;
+    private DFQLNode whereClause = new DFQLEmptyNode();
 
     /**
      * @param whereClause
@@ -45,4 +45,5 @@ public class DFQLSelectStatementNode implements DFQLNode {
     public DFQLNode getWhereClause() {
         return whereClause;
     }
+
 }
