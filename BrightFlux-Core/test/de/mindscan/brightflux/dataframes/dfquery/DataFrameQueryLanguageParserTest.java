@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -344,6 +345,19 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLBinaryOperatorNode.class );
+    }
+
+    @Test
+    public void testParseExpression_EmptyString_expectEmptyNode() throws Exception {
+        // arrange
+        String dfqlQuery = "";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseExpression();
+
+        // assert
+        assertNodeType( result, DFQLEmptyNode.class );
     }
 
     private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {

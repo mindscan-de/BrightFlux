@@ -31,6 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
@@ -115,12 +116,31 @@ public class DataFrameQueryLanguageParser {
     // ---------------------------------------
 
     public DFQLNode parseDFQLStatement() {
+        if (tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
+            return parseDFQLSelectStatement();
+        }
+
         // TODO: according to the keywords we use then the keywords specific parsers
+        return null;
+    }
+
+    /**
+     * @return
+     */
+    private DFQLNode parseDFQLSelectStatement() {
+        // SELECT * FROM * WHERE expression
+
+        // TODO Auto-generated method stub
         return null;
     }
 
     // TODO operator precedence AND; OR; +, -, Comparisons
     public DFQLNode parseExpression() {
+        if (tryType( DFQLTokenType.ENDOFINPUT )) {
+            // The empty token must not be consumed
+            return new DFQLEmptyNode();
+        }
+
         DFQLNode current = null;
         boolean mustCloseParenthesis = false;
 
@@ -234,6 +254,16 @@ public class DataFrameQueryLanguageParser {
         return true;
     }
 
+    private boolean tryType( DFQLTokenType acceptableType ) {
+        DFQLToken la = tokens.lookahead();
+
+        if (la.getType() != acceptableType) {
+            return false;
+        }
+
+        return true;
+    }
+
     private boolean tryAndConsumeAsString( String acceptableString ) {
         DFQLToken la = tokens.lookahead();
 
@@ -243,6 +273,10 @@ public class DataFrameQueryLanguageParser {
 
         tokens.next();
         return true;
+    }
+
+    private boolean tryAndAcceptToken( DFQLToken acceptableToken ) {
+        return false;
     }
 
 }
