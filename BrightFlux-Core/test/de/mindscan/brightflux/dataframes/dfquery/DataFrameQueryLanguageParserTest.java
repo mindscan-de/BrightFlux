@@ -1,6 +1,7 @@
 package de.mindscan.brightflux.dataframes.dfquery;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
@@ -35,6 +36,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseLiteral_Number_expectSameNumberAsDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "123";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "123" );
+    }
+
+    @Test
     public void testParseLiteral_NumberAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'123'";
@@ -45,6 +59,19 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLStringNode.class );
+    }
+
+    @Test
+    public void testParseLiteral_NumberAsString_expectSameNumberAsStringDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "'123'";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "'123'" );
     }
 
     @Test
@@ -61,6 +88,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseLiteral_UnderscoreXyzAsString_expectSameStringAsDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "'_xyz_'";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "'_xyz_'" );
+    }
+
+    @Test
     public void testParseLiteral_FooAsString_expectInstanceofDFQLStringNode() throws Exception {
         // arrange
         String dfqlQuery = "'foo'";
@@ -74,6 +114,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseLiteral_FooAsString_expectSameStringAsDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "'foo'";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "'foo'" );
+    }
+
+    @Test
     public void testParseLiteral_FooAsIdentifier_expectInstanceofDFQLIdentifierNode() throws Exception {
         // arrange
         String dfqlQuery = "foo";
@@ -84,6 +137,19 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLIdentifierNode.class );
+    }
+
+    @Test
+    public void testParseLiteral_FooAsIdentifier_expectFooAsIdentiferDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "foo";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseLiteral();
+
+        // assert
+        assertNodeDescription( result, "foo" );
     }
 
     @Test
@@ -362,6 +428,10 @@ public class DataFrameQueryLanguageParserTest {
 
     private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {
         assertThat( result, is( instanceOf( type ) ) );
+    }
+
+    private void assertNodeDescription( DFQLNode result, String expectedDescription ) {
+        assertThat( result.describeNodeOperation(), equalTo( expectedDescription ) );
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
