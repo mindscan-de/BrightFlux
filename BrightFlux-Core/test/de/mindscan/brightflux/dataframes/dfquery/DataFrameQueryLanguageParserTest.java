@@ -347,7 +347,10 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
-        Iterator<DFQLToken> tokenIterator = new DataFrameQueryLanguageTokenizer().tokenize( dfqlQuery );
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+        tokenizer.setIgnoreWhiteSpace( true );
+
+        Iterator<DFQLToken> tokenIterator = tokenizer.tokenize( dfqlQuery );
 
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
         parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
