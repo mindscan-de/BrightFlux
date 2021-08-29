@@ -361,6 +361,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseMemberSelectionInvocation_DataframeColumnSelectionInvocationOfStartsWith_expectSameDescription() throws Exception {
+        // arrange
+        String dfqlQuery = "df.'columnname'.startsWith()";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseMemberSelectionInvocation();
+
+        // assert
+        assertNodeDescription( result, "df.'columnname'.startsWith()" );
+    }
+
+    @Test
     public void testParseMemberSelectionInvocation_DataframeColumnSelectionNoInvocationOfStartsWith_expectPrimarySelectionNode() throws Exception {
         // arrange
         String dfqlQuery = "df.'columnname'.startsWith";
