@@ -72,6 +72,10 @@ public enum DFQLBinaryOperatorType {
                 return LE;
             case ">=":
                 return GE;
+            case "&&":
+                return AND;
+            case "||":
+                return OR;
         }
 
         throw new NotYetImplemetedException( "This operator is not suppported: '" + String.valueOf( input ) + "'" );

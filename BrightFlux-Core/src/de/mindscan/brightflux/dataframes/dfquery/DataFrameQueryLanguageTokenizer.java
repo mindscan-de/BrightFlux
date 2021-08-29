@@ -58,7 +58,7 @@ public class DataFrameQueryLanguageTokenizer {
 
     public final static String[] keywords = new String[] { "SELECT", "FROM", "WHERE", "ALL" /*, "AS"*/ };
     public final static Set<String> keywordsSet = convertToUppercaseSet( keywords );
-    public final static String[] operators = new String[] { "==", "!=", "<=", ">=", "<", ">", ".", ",", "*", "+", "-", "!" };
+    public final static String[] operators = new String[] { "==", "!=", "<=", ">=", "&&", "||", "<", ">", ".", ",", "*", "+", "-", "!" };
     public final static Set<String> operatorTwoChars = filteredByLength( 2, operators );
     public final static Set<String> operatorOneChar = filteredByLength( 1, operators );
     public final static char[] firstMengeOperators = firstMenge( operators );
