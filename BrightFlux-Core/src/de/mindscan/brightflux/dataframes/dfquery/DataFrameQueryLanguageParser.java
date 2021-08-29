@@ -122,26 +122,29 @@ public class DataFrameQueryLanguageParser {
     // TODO operator precedence AND; OR; +, -, Comparisons
     public DFQLNode parseExpression() {
         DFQLNode current = null;
+        boolean mustCloseParenthesis = false;
 
         if (tryAndConsumeAsString( "(" )) {
+            mustCloseParenthesis = true;
             current = parseExpression();
-
-            // TODO: "((expr) ==" won't work at the moment. i will have to think about it.
-            if (!tryAndConsumeAsString( ")" )) {
-                DFQLToken lasttoken = tokens.last();
-                throw new NotYetImplemetedException( "Expected an ')' " + lasttoken.getValue() );
-            }
         }
         else {
             current = parseMemberSelectionInvocation();
+        }
 
-            if (tryAndAcceptType( DFQLTokenType.OPERATOR )) {
-                // collect the last operator token
-                DFQLToken operator = tokens.last();
+        if (tryAndAcceptType( DFQLTokenType.OPERATOR )) {
+            // get the operator token
+            DFQLToken operator = tokens.last();
 
-                DFQLNode left = current;
-                DFQLNode right = parseExpression();
-                current = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.asType( operator.getValue() ), left, right );
+            DFQLNode left = current;
+            DFQLNode right = parseExpression();
+            current = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.asType( operator.getValue() ), left, right );
+        }
+
+        if (mustCloseParenthesis) {
+            if (!tryAndConsumeAsString( ")" )) {
+                DFQLToken lasttoken = tokens.last();
+                throw new NotYetImplemetedException( "Expected an ')' " + lasttoken.getValue() );
             }
         }
 

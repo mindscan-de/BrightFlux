@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.Iterator;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
@@ -390,7 +389,6 @@ public class DataFrameQueryLanguageParserTest {
         assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
     }
 
-    // @Disabled( "the expression parser doesn't work for this case right now. Although it being green (but not fully parsed)" )
     @Test
     public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectBinaryOperatorNode() throws Exception {
         // arrange
@@ -407,7 +405,6 @@ public class DataFrameQueryLanguageParserTest {
         assertThat( result, is( instanceOf( DFQLBinaryOperatorNode.class ) ) );
     }
 
-    @Disabled( "the expression parser doesn't work for this case right now." )
     @Test
     public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOtherInParenthesis_expectBinaryOperatorNode() throws Exception {
         // arrange
