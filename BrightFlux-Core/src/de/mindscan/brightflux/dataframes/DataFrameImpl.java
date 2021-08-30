@@ -367,6 +367,9 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrame query( String query ) {
+        // TODO: rewrite this using the "DFQLEngine"
+        // ?? Maybe DFQLEngine.query(this, query) ??
+
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
         if (parser.parse( query )) {
             return select( parser.getColumnNames() ).where( parser.getPredicate() );

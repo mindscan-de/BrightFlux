@@ -27,6 +27,7 @@ package de.mindscan.brightflux.dataframes.dfquery;
 
 import java.util.Iterator;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 
@@ -41,7 +42,7 @@ public class DataFrameQueryLanguageEngine {
         // TODO: compile to statement
         // TODO: prepare environment for the compilet (bind the df to "df")
         // TODO: excute the statment using the given dataframe
-        
+
         // TODO what to return?
         // some runtime configuration?
     }
