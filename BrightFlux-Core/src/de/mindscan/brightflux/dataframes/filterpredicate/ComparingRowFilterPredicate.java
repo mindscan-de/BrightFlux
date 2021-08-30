@@ -95,7 +95,7 @@ public final class ComparingRowFilterPredicate implements DataFrameRowFilterPred
      */
     @Override
     public String describeOperation() {
-        return "( df.'" + columnName + "' " + operation.describeOperation() + " " + predicateValue.toString() + " ) ";
+        return "(df.'" + columnName + "'" + operation.describeOperation() + "" + predicateValue.toString() + ")";
     }
 
 }

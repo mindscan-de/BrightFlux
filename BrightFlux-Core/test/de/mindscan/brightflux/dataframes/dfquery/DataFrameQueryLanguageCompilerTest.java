@@ -42,7 +42,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'columnName' == 1 )" ) );
+        assertThat( result, equalTo( "(df.'columnName'==1)" ) );
     }
 
     @Test
@@ -59,7 +59,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'columnName' == 2 )" ) );
+        assertThat( result, equalTo( "(df.'columnName'==2)" ) );
     }
 
     @Test
@@ -76,7 +76,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'otherColumnName' == 3 )" ) );
+        assertThat( result, equalTo( "(df.'otherColumnName'==3)" ) );
     }
 
     @Test
@@ -93,7 +93,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'otherColumnName' != 3 )" ) );
+        assertThat( result, equalTo( "(df.'otherColumnName'!=3)" ) );
     }
 
     @Test
@@ -111,7 +111,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'otherColumnName' >= 3 )" ) );
+        assertThat( result, equalTo( "(df.'otherColumnName'>=3)" ) );
     }
 
     @Test
@@ -129,7 +129,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'otherColumnName' <= 3 )" ) );
+        assertThat( result, equalTo( "(df.'otherColumnName'<=3)" ) );
     }
 
     @Test
@@ -146,7 +146,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'otherColumnName' > 3 )" ) );
+        assertThat( result, equalTo( "(df.'otherColumnName'>3)" ) );
     }
 
     @Test
@@ -163,7 +163,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( df.'otherColumnName' < 3 )" ) );
+        assertThat( result, equalTo( "(df.'otherColumnName'<3)" ) );
     }
 
     @Test
@@ -190,7 +190,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( ( df.'columnName' == 3 )  AND ( df.'otherColumnName' == 2 )   )" ) );
+        assertThat( result, equalTo( "((df.'columnName'==3)&&(df.'otherColumnName'==2))" ) );
     }
 
     @Test
@@ -217,7 +217,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( ( df.'columnName' == 3 )  OR ( df.'otherColumnName' == 2 )   )" ) );
+        assertThat( result, equalTo( "((df.'columnName'==3)||(df.'otherColumnName'==2))" ) );
     }
 
     @Test
@@ -244,7 +244,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( ( df.'columnName' == 3 )  == ( df.'otherColumnName' == 2 )   )" ) );
+        assertThat( result, equalTo( "((df.'columnName'==3)==(df.'otherColumnName'==2))" ) );
     }
 
     @Test
@@ -271,7 +271,7 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // assert
         String result = predicate.describeOperation().trim();
-        assertThat( result, equalTo( "( ( df.'columnName' == 3 )  != ( df.'otherColumnName' == 2 )   )" ) );
+        assertThat( result, equalTo( "((df.'columnName'==3)!=(df.'otherColumnName'==2))" ) );
     }
 
 }

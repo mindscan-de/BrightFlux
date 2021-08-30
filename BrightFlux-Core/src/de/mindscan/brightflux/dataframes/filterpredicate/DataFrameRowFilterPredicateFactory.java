@@ -70,7 +70,7 @@ public class DataFrameRowFilterPredicateFactory {
 
             @Override
             public String describeOperation() {
-                return "( NOT " + predicate.describeOperation() + ")";
+                return "(NOT " + predicate.describeOperation() + ")";
             }
         };
     }
@@ -85,7 +85,7 @@ public class DataFrameRowFilterPredicateFactory {
 
             @Override
             public String describeOperation() {
-                return "( " + left.describeOperation() + " AND " + right.describeOperation() + "  )";
+                return "(" + left.describeOperation() + "&&" + right.describeOperation() + ")";
             }
         };
     }
@@ -100,7 +100,7 @@ public class DataFrameRowFilterPredicateFactory {
 
             @Override
             public String describeOperation() {
-                return "( " + left.describeOperation() + " OR " + right.describeOperation() + "  )";
+                return "(" + left.describeOperation() + "||" + right.describeOperation() + ")";
             }
         };
     }
@@ -115,7 +115,7 @@ public class DataFrameRowFilterPredicateFactory {
 
             @Override
             public String describeOperation() {
-                return "( " + left.describeOperation() + " == " + right.describeOperation() + "  )";
+                return "(" + left.describeOperation() + "==" + right.describeOperation() + ")";
             }
         };
     }
@@ -130,7 +130,7 @@ public class DataFrameRowFilterPredicateFactory {
 
             @Override
             public String describeOperation() {
-                return "( " + left.describeOperation() + " != " + right.describeOperation() + "  )";
+                return "(" + left.describeOperation() + "!=" + right.describeOperation() + ")";
             }
 
         };
