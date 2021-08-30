@@ -39,12 +39,16 @@ public class DataFrameQueryLanguageEngine {
     public void executeDFQuery( DataFrame df, String query ) {
         DataFrameQueryLanguageParser parser = createParser( query );
 
-        // TODO: compile to statement
-        // TODO: prepare environment for the compilet (bind the df to "df")
-        // TODO: excute the statment using the given dataframe
+        // statement = parser.parseDFQLStatement();
+        // compile for runtime?
+
+        // runtimeConfiguration = new DFQLRuntimeConfiguration();
+        // runtimeConfiguration.setVar("df", df);
+
+        // runtime = new DFQLRuntime();
+        // runtime.execute(statement, runtimeConfiguration)
 
         // TODO what to return?
-        // some runtime configuration?
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
