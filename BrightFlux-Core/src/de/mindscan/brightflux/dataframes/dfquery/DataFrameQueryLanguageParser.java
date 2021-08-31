@@ -129,6 +129,9 @@ public class DataFrameQueryLanguageParser {
      * @return
      */
     private DFQLNode parseDFQLSelectStatement() {
+
+        // SELECT
+
         if (!tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
             throw new NotYetImplemetedException( "" );
         }
@@ -136,10 +139,18 @@ public class DataFrameQueryLanguageParser {
         DFQLSelectStatementNode statement = new DFQLSelectStatementNode();
 
         // parseSelectStatementColumnList
+        DFQLNode parsedColumnList = parseSelectStatementColumnList();
+        statement.setDataframeColumns( parsedColumnList );
 
         // FROM
 
+        if (!tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "FROM" ) )) {
+            throw new NotYetImplemetedException( "" );
+        }
+
         // parseDataframe
+        DFQLNode parsedDataFrames = parseSelectStatementDataframeList();
+        statement.setDataFrames( parsedDataFrames );
 
         // WHERE :: Optional
         if (tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" ) )) {
@@ -150,6 +161,14 @@ public class DataFrameQueryLanguageParser {
         }
 
         return statement;
+    }
+
+    public DFQLNode parseSelectStatementColumnList() {
+        return null;
+    }
+
+    public DFQLNode parseSelectStatementDataframeList() {
+        return null;
     }
 
     // TODO operator precedence AND; OR; +, -, Comparisons
