@@ -41,6 +41,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
+import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokens;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -117,7 +118,7 @@ public class DataFrameQueryLanguageParser {
     // ---------------------------------------
 
     public DFQLNode parseDFQLStatement() {
-        if (tryToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
+        if (tryToken( DFQLTokens.KEYWORD_SELECT )) {
             return parseDFQLSelectStatement();
         }
 
@@ -132,7 +133,7 @@ public class DataFrameQueryLanguageParser {
 
         // SELECT
 
-        if (!tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" ) )) {
+        if (!tryAndAcceptToken( DFQLTokens.KEYWORD_SELECT )) {
             throw new NotYetImplemetedException( "" );
         }
 
@@ -144,7 +145,7 @@ public class DataFrameQueryLanguageParser {
 
         // FROM
 
-        if (!tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "FROM" ) )) {
+        if (!tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
             throw new NotYetImplemetedException( "" );
         }
 
@@ -164,7 +165,7 @@ public class DataFrameQueryLanguageParser {
     }
 
     public DFQLNode parseSelectStatementColumnList() {
-        while (!tryToken( new DFQLToken( DFQLTokenType.KEYWORD, "FROM" ) )) {
+        while (!tryToken( DFQLTokens.KEYWORD_FROM )) {
             // TODO implement the correct rules... currently we just skip the parsing....
             tokens.next();
         }
@@ -174,7 +175,7 @@ public class DataFrameQueryLanguageParser {
     }
 
     public DFQLNode parseSelectStatementDataframeList() {
-        while (!tryToken( new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" ) ) && !tryType( DFQLTokenType.ENDOFINPUT )) {
+        while (!tryToken( DFQLTokens.KEYWORD_WHERE ) && !tryType( DFQLTokenType.ENDOFINPUT )) {
             // TODO implement the correct rules... currently we just skip the parsing....
             tokens.next();
         }
