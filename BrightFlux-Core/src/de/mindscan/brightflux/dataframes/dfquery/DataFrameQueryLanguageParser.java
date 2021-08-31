@@ -170,13 +170,17 @@ public class DataFrameQueryLanguageParser {
         }
 
         // TODO implement the correct return value.
-        return new DFQLEmptyNode();
+        return new DFQLIdentifierNode( "*" );
     }
 
     public DFQLNode parseSelectStatementDataframeList() {
+        while (!tryToken( new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" ) ) && !tryType( DFQLTokenType.ENDOFINPUT )) {
+            // TODO implement the correct rules... currently we just skip the parsing....
+            tokens.next();
+        }
 
         // TODO implement the correct return value.
-        return new DFQLEmptyNode();
+        return new DFQLIdentifierNode( "df" );
     }
 
     // TODO operator precedence AND; OR; +, -, Comparisons
