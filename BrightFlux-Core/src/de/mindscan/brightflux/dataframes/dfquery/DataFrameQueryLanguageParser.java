@@ -164,10 +164,18 @@ public class DataFrameQueryLanguageParser {
     }
 
     public DFQLNode parseSelectStatementColumnList() {
+        while (!tryToken( new DFQLToken( DFQLTokenType.KEYWORD, "FROM" ) )) {
+            // TODO implement the correct rules... currently we just skip the parsing....
+            tokens.next();
+        }
+
+        // TODO implement the correct return value.
         return null;
     }
 
     public DFQLNode parseSelectStatementDataframeList() {
+
+        // TODO implement the correct return value.
         return null;
     }
 
@@ -329,7 +337,17 @@ public class DataFrameQueryLanguageParser {
     }
 
     private boolean tryToken( DFQLToken acceptableToken ) {
-        return false;
+        if (acceptableToken == null) {
+            throw new IllegalArgumentException( " acceptableToken must not be null " );
+        }
+
+        DFQLToken la = tokens.lookahead();
+
+        if (!acceptableToken.equals( la )) {
+            return false;
+        }
+
+        return true;
     }
 
 }
