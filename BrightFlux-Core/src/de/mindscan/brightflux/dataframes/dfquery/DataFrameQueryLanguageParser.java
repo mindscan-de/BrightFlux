@@ -128,7 +128,7 @@ public class DataFrameQueryLanguageParser {
     /**
      * @return
      */
-    private DFQLNode parseDFQLSelectStatement() {
+    public DFQLNode parseDFQLSelectStatement() {
 
         // SELECT
 

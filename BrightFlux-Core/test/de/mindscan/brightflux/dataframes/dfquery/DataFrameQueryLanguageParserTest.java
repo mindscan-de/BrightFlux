@@ -17,6 +17,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
@@ -597,6 +598,32 @@ public class DataFrameQueryLanguageParserTest {
 
         // assert
         assertNodeType( result, DFQLEmptyNode.class );
+    }
+
+    @Test
+    public void testParseDFQLSelectStatement_SelectStatementWithComplexWhereClause_expectSelectStatementNode() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT * FROM df WHERE ((df.'columnname'>=1) && (df.'othercolumnname'<=666))";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeType( result, DFQLSelectStatementNode.class );
+    }
+
+    @Test
+    public void testParseDFQLSelectStatement_SelectStatementWithComplexWhereClause_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT * FROM df WHERE ((df.'columnname'>=1) && (df.'othercolumnname'<=666))";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT * FROM df WHERE ((df.'columnname'>=1)&&(df.'othercolumnname'<=666))" );
     }
 
     private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {
