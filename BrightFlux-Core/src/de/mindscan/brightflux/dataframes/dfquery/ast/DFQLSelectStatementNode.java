@@ -25,14 +25,14 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.ast;
 
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
-
 /**
  * 
  */
 public class DFQLSelectStatementNode implements DFQLNode {
 
     private DFQLNode whereClause = new DFQLEmptyNode();
+    private DFQLNode parsedColumnList = new DFQLEmptyNode();
+    private DFQLNode parsedDataFrames = new DFQLEmptyNode();
 
     /**
      * @param whereClause
@@ -52,16 +52,14 @@ public class DFQLSelectStatementNode implements DFQLNode {
      * @param parsedColumnList
      */
     public void setDataframeColumns( DFQLNode parsedColumnList ) {
-        // TODO Auto-generated method stub
-
+        this.parsedColumnList = parsedColumnList;
     }
 
     /**
      * @param parsedDataFrames
      */
     public void setDataFrames( DFQLNode parsedDataFrames ) {
-        // TODO Auto-generated method stub
-
+        this.parsedDataFrames = parsedDataFrames;
     }
 
     /** 
@@ -69,8 +67,20 @@ public class DFQLSelectStatementNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        // TODO Auto-generated method stub
-        throw new NotYetImplemetedException();
+        StringBuilder sb = new StringBuilder();
+
+        sb.append( "SELECT " );
+        sb.append( parsedColumnList.describeNodeOperation() );
+        sb.append( " FROM " );
+        sb.append( parsedDataFrames.describeNodeOperation() );
+
+        String whereClauseAsString = whereClause.describeNodeOperation();
+        if (!whereClauseAsString.isEmpty()) {
+            sb.append( " WHERE " );
+            sb.append( whereClauseAsString );
+        }
+
+        return sb.toString();
     }
 
     /** 
