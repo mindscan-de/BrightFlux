@@ -48,6 +48,10 @@ public class DataFrameQueryLanguageEngine {
         // runtime = new DFQLRuntime();
         // runtime.execute(statement, runtimeConfiguration)
 
+        // runtime selectStatement
+        // df.select().where( predicate )
+        // df.select(columnList).where( predicate )
+
         // TODO what to return?
     }
 
