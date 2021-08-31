@@ -154,7 +154,7 @@ public class DataFrameQueryLanguageParser {
         statement.setDataFrames( parsedDataFrames );
 
         // WHERE :: Optional
-        if (tryAndAcceptToken( new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" ) )) {
+        if (tryAndAcceptToken( DFQLTokens.KEYWORD_WHERE )) {
 
             // parseExpression
             DFQLNode whereClause = parseExpression();
