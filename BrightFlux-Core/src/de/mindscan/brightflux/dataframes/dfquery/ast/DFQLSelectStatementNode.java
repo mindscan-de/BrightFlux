@@ -48,6 +48,22 @@ public class DFQLSelectStatementNode implements DFQLNode {
         return whereClause;
     }
 
+    /**
+     * @param parsedColumnList
+     */
+    public void setDataframeColumns( DFQLNode parsedColumnList ) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @param parsedDataFrames
+     */
+    public void setDataFrames( DFQLNode parsedDataFrames ) {
+        // TODO Auto-generated method stub
+
+    }
+
     /** 
      * {@inheritDoc}
      */
