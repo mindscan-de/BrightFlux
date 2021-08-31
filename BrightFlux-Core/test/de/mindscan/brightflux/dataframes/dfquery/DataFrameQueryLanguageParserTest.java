@@ -614,6 +614,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     @Test
+    public void testParseDFQLSelectStatement_SelectSimpleSelectStatemenet_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT * FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT * FROM df" );
+    }
+
+    @Test
     public void testParseDFQLSelectStatement_SelectStatementWithComplexWhereClause_expectSameQuery() throws Exception {
         // arrange
         String dfqlQuery = "SELECT * FROM df WHERE ((df.'columnname'>=1) && (df.'othercolumnname'<=666))";

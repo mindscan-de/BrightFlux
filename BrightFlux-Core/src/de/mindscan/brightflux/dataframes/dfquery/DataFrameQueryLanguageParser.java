@@ -170,13 +170,13 @@ public class DataFrameQueryLanguageParser {
         }
 
         // TODO implement the correct return value.
-        return null;
+        return new DFQLEmptyNode();
     }
 
     public DFQLNode parseSelectStatementDataframeList() {
 
         // TODO implement the correct return value.
-        return null;
+        return new DFQLEmptyNode();
     }
 
     // TODO operator precedence AND; OR; +, -, Comparisons
