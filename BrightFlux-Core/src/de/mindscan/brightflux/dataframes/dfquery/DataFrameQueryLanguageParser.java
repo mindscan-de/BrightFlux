@@ -313,7 +313,19 @@ public class DataFrameQueryLanguageParser {
     }
 
     private boolean tryAndAcceptToken( DFQLToken acceptableToken ) {
-        return false;
+        if (acceptableToken == null) {
+            throw new IllegalArgumentException( " acceptableToken must not be null " );
+        }
+
+        DFQLToken la = tokens.lookahead();
+
+        if (!acceptableToken.equals( la )) {
+            return false;
+        }
+
+        tokens.next();
+
+        return true;
     }
 
     private boolean tryToken( DFQLToken acceptableToken ) {
