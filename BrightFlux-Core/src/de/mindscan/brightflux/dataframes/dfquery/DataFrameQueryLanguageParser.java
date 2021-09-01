@@ -44,7 +44,8 @@ import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokens;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
- * 
+ * Compiles a sequence of tokens of the data frame query language into an abstract syntax tree. Which needs 
+ * to be typed and compiled. Maybe that compiled tree will be then passed to a runtime engine. 
  */
 public class DataFrameQueryLanguageParser {
 
