@@ -28,22 +28,31 @@ package de.mindscan.brightflux.dataframes.dfquery;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
+import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * 
  */
 public class DataFrameQueryLanguageEngine {
 
-    public void executeDFQuery( DataFrame df, String query ) {
+    public DataFrame executeDFQuery( DataFrame df, String query ) {
         DataFrameQueryLanguageParser parser = createParser( query );
 
-        // statement = parser.parseDFQLStatement();
+        DFQLSelectStatementNode statement = (DFQLSelectStatementNode) parser.parseDFQLStatement();
         // compile for runtime?
 
         // runtimeConfiguration = new DFQLRuntimeConfiguration();
         // runtimeConfiguration.setVar("df", df);
+
+        // TODO: Problem here is that the identifier df must be mapped to a dataframe
+        // TODO: selection of a column of a dataframe is also not yet implemented here....
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DataFrameRowFilterPredicate rowPredicate = compiler.compileToRowFilterPredicate( statement.getWhereClause() );
 
         // runtime = new DFQLRuntime();
         // runtime.execute(statement, runtimeConfiguration)
@@ -52,7 +61,41 @@ public class DataFrameQueryLanguageEngine {
         // df.select().where( predicate )
         // df.select(columnList).where( predicate )
 
-        // TODO what to return?
+        return df.select().where( rowPredicate );
+    }
+
+    /**
+     * @return
+     */
+    @Deprecated
+    public static DataFrameRowFilterPredicate deprecatedGetPredicate( String query ) {
+        // TODO use the AST/Parseresult of the parse operation to compile a predicate.
+
+        // compile The Predicate 
+
+        if (query.endsWith( "WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
+            return DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
+        }
+
+        if (query.endsWith( "WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
+
+            return DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
+                            DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
+
+        }
+
+        throw new NotYetImplemetedException();
+    }
+
+    /**
+     * @return
+     */
+    @Deprecated
+    public static String[] getColumnNames( String query ) {
+        if (query.startsWith( "SELECT * FROM" )) {
+            return new String[] { "*" };
+        }
+        throw new NotYetImplemetedException();
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {

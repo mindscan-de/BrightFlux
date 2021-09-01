@@ -27,7 +27,6 @@ package de.mindscan.brightflux.dataframes.dfquery;
 
 import java.util.List;
 
-import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
@@ -42,7 +41,6 @@ import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokens;
-import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
@@ -74,38 +72,6 @@ public class DataFrameQueryLanguageParser {
 
     void setTokenProvider( DFQLTokenProvider newProvider ) {
         this.tokens = newProvider;
-    }
-
-    /**
-     * @return
-     */
-    public String[] getColumnNames() {
-        if (query.startsWith( "SELECT * FROM" )) {
-            return new String[] { "*" };
-        }
-        throw new NotYetImplemetedException();
-    }
-
-    /**
-     * @return
-     */
-    public DataFrameRowFilterPredicate getPredicate() {
-        // TODO use the AST/Parseresult of the parse operation to compile a predicate.
-
-        // compile The Predicate 
-
-        if (query.endsWith( "WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
-            return DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-        }
-
-        if (query.endsWith( "WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
-
-            return DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
-                            DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-
-        }
-
-        throw new NotYetImplemetedException();
     }
 
     public void parseSelect( List<?> tokens ) {
