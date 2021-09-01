@@ -64,6 +64,7 @@ public class DataFrameQueryLanguageCompiler {
             return DataFrameRowFilterPredicateFactory.any();
         }
 
+        // TODO a.t.m. this doesn't work This is not longer tha case... right now
         if (node instanceof DFQLSelectStatementNode) {
             return compileToRowFilterPredicate( ((DFQLSelectStatementNode) node).getWhereClauseNode() );
         }
@@ -81,6 +82,7 @@ public class DataFrameQueryLanguageCompiler {
                 case EQ:
                     factoryColImm = eqFunctionColImm;
 
+                    // TODO a.t.m. this doesn't work This is not longer tha case... right now 
                     // depends on the left and right type...
                     if (left instanceof DFQLDataFrameColumnNode) {
                         String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
@@ -112,6 +114,7 @@ public class DataFrameQueryLanguageCompiler {
                 case NEQ:
                     factoryColImm = neqFunctionColImm;
 
+                    // TODO a.t.m. this doesn't work This is not longer tha case... right now                    
                     // depends on the left and right type...
                     if (left instanceof DFQLDataFrameColumnNode) {
                         String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
@@ -195,6 +198,7 @@ public class DataFrameQueryLanguageCompiler {
 
     private DataFrameRowFilterPredicate buildColumnValuePredicate( BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm, DFQLNode left,
                     DFQLNode right ) {
+        // TODO a.t.m. this doesn't work This is not longer tha case... right now
         // depends on the left and right type...
         if (left instanceof DFQLDataFrameColumnNode) {
             String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
