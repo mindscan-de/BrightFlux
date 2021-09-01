@@ -36,6 +36,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageEngine;
 import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageParser;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
@@ -372,7 +373,7 @@ public class DataFrameImpl implements DataFrame {
 
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
         if (parser.parse( query )) {
-            return select( parser.getColumnNames() ).where( parser.getPredicate() );
+            return select( DataFrameQueryLanguageEngine.getColumnNames( query ) ).where( DataFrameQueryLanguageEngine.deprecatedGetPredicate( query ) );
         }
         else {
             // we got an invalid syntax...
