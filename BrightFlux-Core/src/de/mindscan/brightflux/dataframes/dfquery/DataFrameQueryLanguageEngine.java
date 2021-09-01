@@ -64,6 +64,19 @@ public class DataFrameQueryLanguageEngine {
         return df.select().where( rowPredicate );
     }
 
+    private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
+        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
+        tokenizer.setIgnoreWhiteSpace( true );
+
+        Iterator<DFQLToken> tokenIterator = tokenizer.tokenize( dfqlQuery );
+
+        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
+        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
+        return parser;
+    }
+
+    // Deprecated contract, for now it is somehow sh*t but was a good fake to work with until now. 
+
     /**
      * @return
      */
@@ -96,17 +109,6 @@ public class DataFrameQueryLanguageEngine {
             return new String[] { "*" };
         }
         throw new NotYetImplemetedException();
-    }
-
-    private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
-        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
-        tokenizer.setIgnoreWhiteSpace( true );
-
-        Iterator<DFQLToken> tokenIterator = tokenizer.tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
-        return parser;
     }
 
 }
