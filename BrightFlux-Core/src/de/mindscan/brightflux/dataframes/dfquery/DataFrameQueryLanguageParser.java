@@ -48,27 +48,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class DataFrameQueryLanguageParser {
 
-    private String query;
     private DFQLTokenProvider tokens;
-
-    /**
-     * @param query
-     * @return <code>true</code> if success
-     */
-    public boolean parse( String query ) {
-        // TODO implement the real parsing.
-        // TODO: parse the predicate -> get an AST
-        // compile the selectionPredicate,
-        // then compile the rowfilterpredicate...
-        // get columndescriptions of parsed tree
-        // get predicate of parsed tree
-
-        // "parse..." - i mean we only can/must do these at the moment
-        // everything else is just a waste of time currently.
-
-        this.query = query;
-        return true;
-    }
 
     void setTokenProvider( DFQLTokenProvider newProvider ) {
         this.tokens = newProvider;

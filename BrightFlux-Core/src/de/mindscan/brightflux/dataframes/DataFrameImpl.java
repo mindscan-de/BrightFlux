@@ -37,7 +37,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageEngine;
-import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageParser;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
@@ -368,14 +367,12 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrame query( String query ) {
-        // TODO: rewrite this using the "DFQLEngine"
-        // ?? Maybe DFQLEngine.query(this, query) ??
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        if (parser.parse( query )) {
-            return select( DataFrameQueryLanguageEngine.getColumnNames( query ) ).where( DataFrameQueryLanguageEngine.deprecatedGetPredicate( query ) );
+        try {
+            DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
+            return engine.executeDFQuery( this, query );
         }
-        else {
+        catch (Exception ex) {
+            ex.printStackTrace();
             // we got an invalid syntax...
             throw new NotYetImplemetedException();
         }
