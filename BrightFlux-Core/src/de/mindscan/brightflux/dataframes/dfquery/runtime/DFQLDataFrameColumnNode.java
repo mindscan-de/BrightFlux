@@ -36,13 +36,13 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class DFQLDataFrameColumnNode implements TypedDFQLNode {
 
-    private DFQLDataFrameNode dataFrame;
+    private TypedDFQLDataFrameNode dataFrame;
     private String columnName;
 
     /**
      * 
      */
-    public DFQLDataFrameColumnNode( DFQLDataFrameNode dataFrameNode, String columnName ) {
+    public DFQLDataFrameColumnNode( TypedDFQLDataFrameNode dataFrameNode, String columnName ) {
         this.dataFrame = dataFrameNode;
         this.columnName = columnName;
     }
@@ -55,7 +55,7 @@ public class DFQLDataFrameColumnNode implements TypedDFQLNode {
         return dataFrame.getDataFrame();
     }
 
-    public DFQLDataFrameNode getDataFrameNode() {
+    public TypedDFQLDataFrameNode getDataFrameNode() {
         return dataFrame;
     }
 
