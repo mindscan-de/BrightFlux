@@ -33,7 +33,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
-import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameColumnNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -84,8 +84,8 @@ public class DataFrameQueryLanguageCompiler {
 
                     // TODO a.t.m. this doesn't work This is not longer tha case... right now 
                     // depends on the left and right type...
-                    if (left instanceof DFQLDataFrameColumnNode) {
-                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+                    if (left instanceof TypedDFQLDataFrameColumnNode) {
+                        String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
 
                         // if right side is a value string .... we did it. 
                         if (right instanceof DFQLValueNode) {
@@ -116,8 +116,8 @@ public class DataFrameQueryLanguageCompiler {
 
                     // TODO a.t.m. this doesn't work This is not longer tha case... right now                    
                     // depends on the left and right type...
-                    if (left instanceof DFQLDataFrameColumnNode) {
-                        String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+                    if (left instanceof TypedDFQLDataFrameColumnNode) {
+                        String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
 
                         // if right side is a value string .... we did it. 
                         if (right instanceof DFQLValueNode) {
@@ -200,8 +200,8 @@ public class DataFrameQueryLanguageCompiler {
                     DFQLNode right ) {
         // TODO a.t.m. this doesn't work This is not longer tha case... right now
         // depends on the left and right type...
-        if (left instanceof DFQLDataFrameColumnNode) {
-            String leftColumnName = ((DFQLDataFrameColumnNode) left).getColumnName();
+        if (left instanceof TypedDFQLDataFrameColumnNode) {
+            String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
 
             // if right side is a value string .... we did it. 
             if (right instanceof DFQLValueNode) {

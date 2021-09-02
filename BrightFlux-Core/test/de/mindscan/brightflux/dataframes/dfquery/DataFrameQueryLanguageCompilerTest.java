@@ -10,7 +10,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
-import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameColumnNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
 
 public class DataFrameQueryLanguageCompilerTest {
@@ -33,7 +33,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "columnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 1 ) );
         DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left, right );
 
@@ -50,7 +50,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "columnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 2 ) );
         DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left, right );
 
@@ -67,7 +67,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left, right );
 
@@ -84,7 +84,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode neq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.NEQ, left, right );
 
@@ -102,7 +102,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode ge = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GE, left, right );
 
@@ -120,7 +120,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode le = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LE, left, right );
 
@@ -137,7 +137,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode gt = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.GT, left, right );
 
@@ -154,7 +154,7 @@ public class DataFrameQueryLanguageCompilerTest {
         // arrange
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode lt = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.LT, left, right );
 
@@ -173,12 +173,12 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // left:
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left_left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        TypedDFQLDataFrameColumnNode left_left = new TypedDFQLDataFrameColumnNode( dfn, "columnName" );
         DFQLNumberNode left_right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode left_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left_left, left_right );
 
         // right:
-        DFQLDataFrameColumnNode right_left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode right_left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right_right = new DFQLNumberNode( Integer.valueOf( 2 ) );
         DFQLBinaryOperatorNode right_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, right_left, right_right );
 
@@ -200,12 +200,12 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // left:
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left_left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        TypedDFQLDataFrameColumnNode left_left = new TypedDFQLDataFrameColumnNode( dfn, "columnName" );
         DFQLNumberNode left_right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode left_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left_left, left_right );
 
         // right:
-        DFQLDataFrameColumnNode right_left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode right_left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right_right = new DFQLNumberNode( Integer.valueOf( 2 ) );
         DFQLBinaryOperatorNode right_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, right_left, right_right );
 
@@ -227,12 +227,12 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // left:
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left_left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        TypedDFQLDataFrameColumnNode left_left = new TypedDFQLDataFrameColumnNode( dfn, "columnName" );
         DFQLNumberNode left_right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode left_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left_left, left_right );
 
         // right:
-        DFQLDataFrameColumnNode right_left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode right_left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right_right = new DFQLNumberNode( Integer.valueOf( 2 ) );
         DFQLBinaryOperatorNode right_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, right_left, right_right );
 
@@ -254,12 +254,12 @@ public class DataFrameQueryLanguageCompilerTest {
 
         // left:
         TypedDFQLDataFrameNode dfn = new TypedDFQLDataFrameNode( null );
-        DFQLDataFrameColumnNode left_left = new DFQLDataFrameColumnNode( dfn, "columnName" );
+        TypedDFQLDataFrameColumnNode left_left = new TypedDFQLDataFrameColumnNode( dfn, "columnName" );
         DFQLNumberNode left_right = new DFQLNumberNode( Integer.valueOf( 3 ) );
         DFQLBinaryOperatorNode left_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, left_left, left_right );
 
         // right:
-        DFQLDataFrameColumnNode right_left = new DFQLDataFrameColumnNode( dfn, "otherColumnName" );
+        TypedDFQLDataFrameColumnNode right_left = new TypedDFQLDataFrameColumnNode( dfn, "otherColumnName" );
         DFQLNumberNode right_right = new DFQLNumberNode( Integer.valueOf( 2 ) );
         DFQLBinaryOperatorNode right_eq = new DFQLBinaryOperatorNode( DFQLBinaryOperatorType.EQ, right_left, right_right );
 
