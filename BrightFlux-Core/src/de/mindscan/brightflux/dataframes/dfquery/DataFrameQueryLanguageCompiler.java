@@ -34,7 +34,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLDataFrameColumnNode;
-import de.mindscan.brightflux.dataframes.dfquery.runtime.DFQLSelectStatementNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -65,8 +65,8 @@ public class DataFrameQueryLanguageCompiler {
         }
 
         // TODO a.t.m. this doesn't work This is not longer tha case... right now
-        if (node instanceof DFQLSelectStatementNode) {
-            return compileToRowFilterPredicate( ((DFQLSelectStatementNode) node).getWhereClauseNode() );
+        if (node instanceof TypedDFQLSelectStatementNode) {
+            return compileToRowFilterPredicate( ((TypedDFQLSelectStatementNode) node).getWhereClauseNode() );
         }
 
         if (node instanceof DFQLBinaryOperatorNode) {
