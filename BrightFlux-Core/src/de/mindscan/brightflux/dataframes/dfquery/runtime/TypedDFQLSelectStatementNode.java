@@ -34,29 +34,29 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 /**
  * 
  */
-public class DFQLSelectStatementNode implements TypedDFQLNode {
+public class TypedDFQLSelectStatementNode implements TypedDFQLNode {
 
     // SELECT
-    private List<DFQLDataFrameColumnNode> selectedColumns;
+    private List<TypedDFQLDataFrameColumnNode> selectedColumns;
     // FROM
-    private List<DFQLDataFrameNode> dataFrames;
+    private List<TypedDFQLDataFrameNode> dataFrames;
     // WHERE
     private DFQLNode whereClause;
 
     /**
      * 
      */
-    public DFQLSelectStatementNode( List<DFQLDataFrameColumnNode> selectedColumns, List<DFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
+    public TypedDFQLSelectStatementNode( List<TypedDFQLDataFrameColumnNode> selectedColumns, List<TypedDFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
         this.selectedColumns = selectedColumns;
         this.dataFrames = dataFrames;
         this.whereClause = whereClause;
     }
 
-    public List<DFQLDataFrameColumnNode> getSelectedColumns() {
+    public List<TypedDFQLDataFrameColumnNode> getSelectedColumns() {
         return selectedColumns;
     }
 
-    public List<DFQLDataFrameNode> getDataFrameNodes() {
+    public List<TypedDFQLDataFrameNode> getDataFrameNodes() {
         return dataFrames;
     }
 

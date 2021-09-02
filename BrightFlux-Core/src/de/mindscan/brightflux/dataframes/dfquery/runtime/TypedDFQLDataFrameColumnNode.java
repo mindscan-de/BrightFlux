@@ -34,7 +34,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * This is more of a compiled runtime node. I think i made a mistake introducing this at this stage. The abstract
  * syntaxtree should not know anything about dataframes or dataframecolumns. 
  */
-public class DFQLDataFrameColumnNode implements TypedDFQLNode {
+public class TypedDFQLDataFrameColumnNode implements TypedDFQLNode {
 
     private TypedDFQLDataFrameNode dataFrame;
     private String columnName;
@@ -42,7 +42,7 @@ public class DFQLDataFrameColumnNode implements TypedDFQLNode {
     /**
      * 
      */
-    public DFQLDataFrameColumnNode( TypedDFQLDataFrameNode dataFrameNode, String columnName ) {
+    public TypedDFQLDataFrameColumnNode( TypedDFQLDataFrameNode dataFrameNode, String columnName ) {
         this.dataFrame = dataFrameNode;
         this.columnName = columnName;
     }
