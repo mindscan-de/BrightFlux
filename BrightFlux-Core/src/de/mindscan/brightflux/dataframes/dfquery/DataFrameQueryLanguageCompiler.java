@@ -32,6 +32,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
@@ -90,6 +91,14 @@ public class DataFrameQueryLanguageCompiler {
                         // if right side is a value string .... we did it. 
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
+
+                            // TODO this is a hack only working for integers right now 
+                            if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
+                                Integer intOtherValue = Integer.parseInt( (String) otherValue );
+
+                                return factoryColImm.apply( leftColumnName, intOtherValue );
+                            }
+
                             return factoryColImm.apply( leftColumnName, otherValue );
                         }
 
@@ -122,6 +131,14 @@ public class DataFrameQueryLanguageCompiler {
                         // if right side is a value string .... we did it. 
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
+
+                            // TODO this is a hack only working for integers right now 
+                            if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
+                                Integer intOtherValue = Integer.parseInt( (String) otherValue );
+
+                                return factoryColImm.apply( leftColumnName, intOtherValue );
+                            }
+
                             return factoryColImm.apply( leftColumnName, otherValue );
                         }
 
@@ -206,6 +223,14 @@ public class DataFrameQueryLanguageCompiler {
             // if right side is a value string .... we did it. 
             if (right instanceof DFQLValueNode) {
                 Object otherValue = ((DFQLValueNode) right).getRawValue();
+
+                // TODO this is a hack only working for integers right now
+                if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
+                    Integer intOtherValue = Integer.parseInt( (String) otherValue );
+
+                    return factoryColImm.apply( leftColumnName, intOtherValue );
+                }
+
                 return factoryColImm.apply( leftColumnName, otherValue );
             }
 
