@@ -30,15 +30,24 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
  */
 public class DFQLNumberNode extends DFQLValueNode {
 
-    private Object number;
+    private Object numberValue;
+    private String numberType = "unknown";
 
     public DFQLNumberNode( Object number ) {
-        this.number = number;
+        this.numberValue = number;
     }
 
     @Override
     public Object getRawValue() {
-        return number;
+        return numberValue;
+    }
+
+    public void setNumberType( String numberType ) {
+        this.numberType = numberType;
+    }
+
+    public String getNumberType() {
+        return numberType;
     }
 
     /** 
@@ -46,7 +55,7 @@ public class DFQLNumberNode extends DFQLValueNode {
      */
     @Override
     public String describeNodeOperation() {
-        return String.valueOf( number );
+        return String.valueOf( numberValue );
     }
 
     /** 
@@ -54,7 +63,7 @@ public class DFQLNumberNode extends DFQLValueNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        return "(number:" + String.valueOf( number ) + ")";
+        return "(number:" + String.valueOf( numberValue ) + ")";
     }
 
 }
