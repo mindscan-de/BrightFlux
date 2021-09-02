@@ -25,11 +25,20 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
@@ -43,7 +52,13 @@ public class DataFrameQueryLanguageEngine {
     public DataFrame executeDFQuery( DataFrame df, String query ) {
         DataFrameQueryLanguageParser parser = createParser( query );
 
+        // this is currently only a fully abstract syntax tree, which doesn't know that "df" is a dataframe...
+        // or df.'columnname' is a  dataframe column name... So at least we have to type that AST into a typed AST
         DFQLSelectStatementNode statement = (DFQLSelectStatementNode) parser.parseDFQLStatement();
+
+        // TODO: first do the typing using an environment / we do a simple visitor pattern
+        DFQLNode transformed = transformAST( statement, df );
+
         // compile for runtime?
 
         // runtimeConfiguration = new DFQLRuntimeConfiguration();
@@ -52,7 +67,7 @@ public class DataFrameQueryLanguageEngine {
         // TODO: Problem here is that the identifier df must be mapped to a dataframe
         // TODO: selection of a column of a dataframe is also not yet implemented here....
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
-        DataFrameRowFilterPredicate rowPredicate = compiler.compileToRowFilterPredicate( statement.getWhereClause() );
+        DataFrameRowFilterPredicate rowPredicate = compiler.compileToRowFilterPredicate( ((TypedDFQLSelectStatementNode) transformed).getWhereClauseNode() );
 
         // runtime = new DFQLRuntime();
         // runtime.execute(statement, runtimeConfiguration)
@@ -73,6 +88,52 @@ public class DataFrameQueryLanguageEngine {
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
         parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
         return parser;
+    }
+
+    private DFQLNode transformAST( DFQLNode node, DataFrame df ) {
+
+        if (node instanceof DFQLSelectStatementNode) {
+            // TODO columnselection
+            // TODO table selection
+            // TODO: transform where clause....
+            DFQLNode transformedWhere = transformAST( ((DFQLSelectStatementNode) node).getWhereClause(), df );
+
+            // TODO columnselection
+            // TODO table selection
+            return new TypedDFQLSelectStatementNode( new ArrayList<>(), new ArrayList<>(), transformedWhere );
+        }
+        else if (node instanceof DFQLIdentifierNode) {
+            if ("df".equals( ((DFQLIdentifierNode) node).getRawValue() )) {
+                return new TypedDFQLDataFrameNode( df );
+            }
+            return node;
+        }
+        else if (node instanceof DFQLPrimarySelectionNode) {
+            DFQLNode oldValue = ((DFQLPrimarySelectionNode) node).getValue();
+            DFQLNode oldSelector = ((DFQLPrimarySelectionNode) node).getSelector();
+
+            DFQLNode newValue = transformAST( oldValue, df );
+            DFQLNode newSelector = transformAST( oldSelector, df );
+
+            if (newValue instanceof TypedDFQLDataFrameNode) {
+                if (newSelector instanceof DFQLStringNode) {
+                    return new TypedDFQLDataFrameColumnNode( (TypedDFQLDataFrameNode) newValue, ((DFQLStringNode) newSelector).getRawValue().toString() );
+                }
+            }
+            return new DFQLPrimarySelectionNode( newValue, newSelector );
+        }
+        else if (node instanceof DFQLBinaryOperatorNode) {
+            DFQLNode oldLeft = ((DFQLBinaryOperatorNode) node).getLeft();
+            DFQLNode oldRight = ((DFQLBinaryOperatorNode) node).getRight();
+
+            DFQLNode newLeft = transformAST( oldLeft, df );
+            DFQLNode newRight = transformAST( oldRight, df );
+
+            return new DFQLBinaryOperatorNode( ((DFQLBinaryOperatorNode) node).getOperation(), newLeft, newRight );
+        }
+
+        // TODO repackage String, number, 
+        return node;
     }
 
     // Deprecated contract, for now it is somehow sh*t but was a good fake to work with until now. 
