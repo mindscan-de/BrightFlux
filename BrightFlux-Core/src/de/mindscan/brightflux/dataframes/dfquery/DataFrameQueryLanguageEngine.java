@@ -41,8 +41,6 @@ import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
-import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * 
@@ -134,42 +132,6 @@ public class DataFrameQueryLanguageEngine {
 
         // TODO repackage String, number, 
         return node;
-    }
-
-    // Deprecated contract, for now it is somehow sh*t but was a good fake to work with until now. 
-
-    /**
-     * @return
-     */
-    @Deprecated
-    public static DataFrameRowFilterPredicate deprecatedGetPredicate( String query ) {
-        // TODO use the AST/Parseresult of the parse operation to compile a predicate.
-
-        // compile The Predicate 
-
-        if (query.endsWith( "WHERE ( df.'h2.msg'.contains ('0x666') )" )) {
-            return DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-        }
-
-        if (query.endsWith( "WHERE ( ( df.'h2.sysctx' == 6 )  AND ( df.'h2.b8' == 10 )   )" )) {
-
-            return DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
-                            DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-
-        }
-
-        throw new NotYetImplemetedException();
-    }
-
-    /**
-     * @return
-     */
-    @Deprecated
-    public static String[] getColumnNames( String query ) {
-        if (query.startsWith( "SELECT * FROM" )) {
-            return new String[] { "*" };
-        }
-        throw new NotYetImplemetedException();
     }
 
 }
