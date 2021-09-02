@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
@@ -35,7 +34,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * This is more of a compiled runtime node. I think i made a mistake introducing this at this stage. The abstract
  * syntaxtree should not know anything about dataframes or dataframecolumns. 
  */
-public class DFQLDataFrameColumnNode implements DFQLNode {
+public class DFQLDataFrameColumnNode implements TypedDFQLNode {
 
     private DFQLDataFrameNode dataFrame;
     private String columnName;

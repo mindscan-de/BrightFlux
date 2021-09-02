@@ -34,7 +34,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 /**
  * 
  */
-public class DFQLSelectStatementNode implements DFQLNode {
+public class DFQLSelectStatementNode implements TypedDFQLNode {
 
     // SELECT
     private List<DFQLDataFrameColumnNode> selectedColumns;
