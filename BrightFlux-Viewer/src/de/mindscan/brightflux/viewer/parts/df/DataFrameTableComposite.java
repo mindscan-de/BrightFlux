@@ -147,28 +147,19 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_2 = new Menu( mntmFilters );
         mntmFilters.setMenu( menu_2 );
 
-        MenuItem mntmevents = new MenuItem( menu_2, SWT.NONE );
-        mntmevents.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-
-//                Point absolute = new Point( e.x, e.y );
-//                Point pt = table.toControl( absolute );
-//                int columnIndex = columnIndexAtposition( table, pt );
-//                if (columnIndex >= 0) {
-//                    if (pt.y < table.getHeaderHeight()) {
-//                        // header of columnindex (right) clicked....
-//                    }
-//                    else {
-//                        // content of columnindex (right) clicked.
-//                        // TODO open a menu here...
-//                    }
-//                }
-
-                apply610filter( ingestedDF );
-            }
-        } );
-        mntmevents.setText( "filter 6.10_events" );
+//       SelectionEvent e
+//      Point absolute = new Point( e.x, e.y );
+//      Point pt = table.toControl( absolute );
+//      int columnIndex = columnIndexAtposition( table, pt );
+//      if (columnIndex >= 0) {
+//          if (pt.y < table.getHeaderHeight()) {
+//              // header of columnindex (right) clicked....
+//          }
+//          else {
+//              // content of columnindex (right) clicked.
+//              // TODO open a menu here...
+//          }
+//      }
 
         MenuItem mntmFilterx = new MenuItem( menu_2, SWT.NONE );
         mntmFilterx.addSelectionListener( new SelectionAdapter() {
@@ -284,12 +275,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
-    }
-
-    private void apply610filter( DataFrame dataFrame ) {
-        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.and( // h2.sysctx == 6 && h2.b8==10 
-                        DataFrameRowFilterPredicateFactory.eq( "h2.sysctx", 6 ), DataFrameRowFilterPredicateFactory.eq( "h2.b8", 10 ) );
-        dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
     }
 
     private void apply666filter( DataFrame dataFrame ) {
