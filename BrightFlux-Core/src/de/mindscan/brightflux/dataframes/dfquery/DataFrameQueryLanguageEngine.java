@@ -54,8 +54,12 @@ public class DataFrameQueryLanguageEngine {
         // or df.'columnname' is a  dataframe column name... So at least we have to type that AST into a typed AST
         DFQLSelectStatementNode statement = (DFQLSelectStatementNode) parser.parseDFQLStatement();
 
-        // TODO: first do the typing using an environment / we do a simple visitor pattern
+        // node transformation to more target-like types - dataframes, columns, method invocations etc.
         DFQLNode transformed = transformAST( statement, df );
+
+        // TODO: type evaluation...
+        // type type evaluation
+        // DFQLNode transformed = transformAST( statement, df );
 
         // compile for runtime?
 
