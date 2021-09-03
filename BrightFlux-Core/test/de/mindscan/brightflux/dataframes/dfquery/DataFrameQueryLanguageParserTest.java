@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 
 import java.util.Iterator;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
@@ -547,19 +546,19 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     //TODO: fix me
-    @Disabled( " it only reads the first expression for some reason..." )
-    @Test
-    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectSameNodeDescription() throws Exception {
-        // arrange
-        String dfqlQuery = "(df.'columnname'==1) == (df.'othercolumnname'==666)";
-        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
-
-        // act
-        DFQLNode result = parser.parseExpression();
-
-        // assert
-        assertNodeDescription( result, "((df.'columnname'==1)==(df.'othercolumnname'==666))" );
-    }
+//    @Disabled( " it only reads the first expression for some reason..." )
+//    @Test
+//    public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOther_expectSameNodeDescription() throws Exception {
+//        // arrange
+//        String dfqlQuery = "(df.'columnname'==1) == (df.'othercolumnname'==666)";
+//        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+//
+//        // act
+//        DFQLNode result = parser.parseExpression();
+//
+//        // assert
+//        assertNodeDescription( result, "((df.'columnname'==1)==(df.'othercolumnname'==666))" );
+//    }
 
     @Test
     public void testParseExpression_DataTwoFrameColumEqualsNumberInParenthesisEqualsEachOtherInParenthesis_expectBinaryOperatorNode() throws Exception {
