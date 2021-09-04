@@ -102,7 +102,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         appQueryTerminal = new BFDataFrameQueryTerminalViewComposite( tabFolder, SWT.NONE );
         tbtmQueryTerminal.setControl( appQueryTerminal );
 
-        tabFolder.setSelection( tbtmApplicationLog );
+        tabFolder.setSelection( tbtmQueryTerminal );
     }
 
     @Override
