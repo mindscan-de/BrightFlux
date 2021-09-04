@@ -100,10 +100,9 @@ public class DataFrameQueryLanguageEngine {
             DFQLNode selectedColumns = transformAST( ((DFQLSelectStatementNode) node).getDataframeColumns(), df );
 
             // TODO table selection
-            // TODO: transform where clause....
+
             DFQLNode transformedWhere = transformAST( ((DFQLSelectStatementNode) node).getWhereClause(), df );
 
-            // TODO columnselection
             // TODO table selection
             return new TypedDFQLSelectStatementNode( selectedColumns, new ArrayList<>(), transformedWhere );
         }
