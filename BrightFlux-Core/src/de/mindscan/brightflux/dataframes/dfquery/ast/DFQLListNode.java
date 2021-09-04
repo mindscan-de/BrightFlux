@@ -57,8 +57,8 @@ public class DFQLListNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        String collected = nodes.stream().map( node -> node.describeNodeOperationDebug() ).collect( Collectors.joining( "," ) );
+        return "(list:(" + collected + "))";
     }
 
 }
