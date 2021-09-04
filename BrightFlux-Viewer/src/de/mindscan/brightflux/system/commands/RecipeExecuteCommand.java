@@ -93,9 +93,6 @@ public class RecipeExecuteCommand implements BFCommand {
             }
 
             // Nothing to do...
-
-            // TODO: fire a event that this dataframe was processed / dataFrameLoaded / dataFrameCalculated
-            throw new NotYetImplemetedException();
         }
         else {
             // TODO: fire a event, that the recipe load operation failed
