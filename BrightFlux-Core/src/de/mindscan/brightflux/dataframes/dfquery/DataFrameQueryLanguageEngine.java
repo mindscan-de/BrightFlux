@@ -72,11 +72,19 @@ public class DataFrameQueryLanguageEngine {
         // TODO: selection of a column of a dataframe is also not yet implemented here....
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         DataFrameRowFilterPredicate rowPredicate = compiler.compileToRowFilterPredicate( ((TypedDFQLSelectStatementNode) transformed).getWhereClauseNode() );
+        List<String> columNamesAsStrings = compiler.getColumNamesAsStrings( transformed );
 
         // runtime = new DFQLRuntime();
         // runtime.execute(statement, runtimeConfiguration)
 
         // runtime selectStatement
+        if (columNamesAsStrings.size() > 1) {
+            return df.select( columNamesAsStrings.toArray( new String[columNamesAsStrings.size()] ) ).where( rowPredicate );
+        }
+        else if (columNamesAsStrings.size() == 1) {
+            return df.select( columNamesAsStrings.toArray( new String[columNamesAsStrings.size()] ) ).where( rowPredicate );
+        }
+
         // df.select().where( predicate )
         // df.select(columnList).where( predicate )
 
