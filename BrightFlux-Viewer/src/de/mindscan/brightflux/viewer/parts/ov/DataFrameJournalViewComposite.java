@@ -109,7 +109,7 @@ public class DataFrameJournalViewComposite extends Composite implements ProjectR
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        if (projectRegistry != null) {
+        if (this.projectRegistry != null) {
             BFEventListener listener = new BFEventListenerAdapter() {
                 @Override
                 public void handleEvent( BFEvent event ) {
@@ -117,7 +117,7 @@ public class DataFrameJournalViewComposite extends Composite implements ProjectR
                     setCurrentDataFrame( selectedDataFrame );
                 }
             };
-            projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
+            this.projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
         }
     }
 
