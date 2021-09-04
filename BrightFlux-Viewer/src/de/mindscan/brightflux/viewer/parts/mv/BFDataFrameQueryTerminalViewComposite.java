@@ -205,9 +205,14 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     }
 
     public void addToHistory( String theQuery ) {
-        queryHistoryStack.addFirst( theQuery );
+        int previousSelectionIndex = listViewer.getList().getSelectionIndex();
 
+        queryHistoryStack.addFirst( theQuery );
         updateListViewer();
+
+        if (previousSelectionIndex >= 0) {
+            listViewer.getList().setSelection( previousSelectionIndex + 1 );
+        }
     }
 
     private void updateListViewer() {
