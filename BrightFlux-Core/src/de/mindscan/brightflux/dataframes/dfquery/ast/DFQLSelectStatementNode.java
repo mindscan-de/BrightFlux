@@ -56,6 +56,13 @@ public class DFQLSelectStatementNode implements DFQLNode {
     }
 
     /**
+     * @return the parsedColumnList
+     */
+    public DFQLNode getDataframeColumns() {
+        return parsedColumnList;
+    }
+
+    /**
      * @param parsedDataFrames
      */
     public void setDataFrames( DFQLNode parsedDataFrames ) {

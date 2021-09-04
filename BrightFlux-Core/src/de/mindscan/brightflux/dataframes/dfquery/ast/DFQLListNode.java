@@ -43,6 +43,10 @@ public class DFQLListNode implements DFQLNode {
         nodes.add( dfqlNode );
     }
 
+    public List<DFQLNode> getNodes() {
+        return nodes;
+    }
+
     /** 
      * {@inheritDoc}
      */
