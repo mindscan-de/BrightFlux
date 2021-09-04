@@ -25,14 +25,19 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery;
 
+import java.util.List;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
@@ -238,6 +243,32 @@ public class DataFrameQueryLanguageCompiler {
         }
 
         throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+    }
+
+    public List<String> getColumNamesAsStrings( DFQLNode node ) {
+        if (node instanceof DFQLListNode) {
+            return ((DFQLListNode) node).getNodes().stream().map( this::columnNameExtractor ).collect( Collectors.toList() );
+        }
+        else if (node instanceof TypedDFQLSelectStatementNode) {
+            return getColumNamesAsStrings( ((TypedDFQLSelectStatementNode) node).getSelectedColumns() );
+        }
+
+        throw new NotYetImplemetedException();
+    }
+
+    private String columnNameExtractor( DFQLNode node ) {
+        if (node instanceof DFQLIdentifierNode) {
+            // Actually this should not happen...
+            return (String) ((DFQLIdentifierNode) node).getRawValue();
+        }
+        else if (node instanceof TypedDFQLDataFrameColumnNode) {
+            return ((TypedDFQLDataFrameColumnNode) node).getColumnName();
+        }
+        else if (node instanceof DFQLStringNode) {
+            return (String) ((DFQLStringNode) node).getRawValue();
+        }
+
+        throw new NotYetImplemetedException();
     }
 
 }
