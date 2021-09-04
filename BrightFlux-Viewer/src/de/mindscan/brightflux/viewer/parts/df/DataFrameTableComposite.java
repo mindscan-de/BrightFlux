@@ -114,19 +114,19 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_4 = new Menu( mntmJournal );
         mntmJournal.setMenu( menu_4 );
 
-        MenuItem mntmSaveAsReceipt = new MenuItem( menu_4, SWT.NONE );
-        mntmSaveAsReceipt.addSelectionListener( new SelectionAdapter() {
+        MenuItem mntmSaveAsRecipe = new MenuItem( menu_4, SWT.NONE );
+        mntmSaveAsRecipe.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
 
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
                                 FileDescriptions.BFRECIPE, //
                                 path -> {
-                                    saveReceipt( ingestedDF, path );
+                                    saveRecipe( ingestedDF, path );
                                 } );
             }
         } );
-        mntmSaveAsReceipt.setText( "Save As Receipt ..." );
+        mntmSaveAsRecipe.setText( "Save As Recipe ..." );
 
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
         mntmSaveToFile.addSelectionListener( new SelectionAdapter() {
@@ -186,24 +186,24 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmHtsAndHmsg.setText( "h1.ts and h2.msg" );
 
-        MenuItem mntmReceipts = new MenuItem( menu, SWT.CASCADE );
-        mntmReceipts.setText( "Receipts" );
+        MenuItem mntmRecipe = new MenuItem( menu, SWT.CASCADE );
+        mntmRecipe.setText( "Recipe" );
 
-        Menu menu_3 = new Menu( mntmReceipts );
-        mntmReceipts.setMenu( menu_3 );
+        Menu menu_3 = new Menu( mntmRecipe );
+        mntmRecipe.setMenu( menu_3 );
 
-        MenuItem mntmApplyReceipt = new MenuItem( menu_3, SWT.NONE );
-        mntmApplyReceipt.addSelectionListener( new SelectionAdapter() {
+        MenuItem mntmApplyRecipe = new MenuItem( menu_3, SWT.NONE );
+        mntmApplyRecipe.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Select Recipe to Execute", //
                                 FileDescriptions.BFRECIPE, //
                                 path -> {
-                                    applyReceipt( ingestedDF, path );
+                                    applyRecipe( ingestedDF, path );
                                 } );
             }
         } );
-        mntmApplyReceipt.setText( "Apply Receipt ..." );
+        mntmApplyRecipe.setText( "Apply Recipe ..." );
     }
 
     /**
@@ -287,12 +287,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         dispatchCommand( DataFrameCommandFactory.selectAndFilterDataFrame( dataFrame, new String[] { "h1.ts", "h2.msg" }, predicate ) );
     }
 
-    private void applyReceipt( DataFrame dataFrame, Path receipt ) {
-        dispatchCommand( DataFrameCommandFactory.applyRecipe( dataFrame, receipt ) );
+    private void applyRecipe( DataFrame dataFrame, Path recipePath ) {
+        dispatchCommand( DataFrameCommandFactory.applyRecipe( dataFrame, recipePath ) );
     }
 
-    private void saveReceipt( DataFrame dataFrame, Path targetPath ) {
-        dispatchCommand( DataFrameCommandFactory.saveRecipe( dataFrame, targetPath ) );
+    private void saveRecipe( DataFrame dataFrame, Path recipePath ) {
+        dispatchCommand( DataFrameCommandFactory.saveRecipe( dataFrame, recipePath ) );
     }
 
     private void saveAsCSV( DataFrame dataFrame, Path targetPath ) {
