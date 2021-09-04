@@ -27,11 +27,13 @@ package de.mindscan.brightflux.dataframes.dfquery;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
@@ -95,14 +97,15 @@ public class DataFrameQueryLanguageEngine {
     private DFQLNode transformAST( DFQLNode node, DataFrame df ) {
 
         if (node instanceof DFQLSelectStatementNode) {
-            // TODO columnselection
+            DFQLNode selectedColumns = transformAST( ((DFQLSelectStatementNode) node).getDataframeColumns(), df );
+
             // TODO table selection
             // TODO: transform where clause....
             DFQLNode transformedWhere = transformAST( ((DFQLSelectStatementNode) node).getWhereClause(), df );
 
             // TODO columnselection
             // TODO table selection
-            return new TypedDFQLSelectStatementNode( new ArrayList<>(), new ArrayList<>(), transformedWhere );
+            return new TypedDFQLSelectStatementNode( selectedColumns, new ArrayList<>(), transformedWhere );
         }
         else if (node instanceof DFQLIdentifierNode) {
             if ("df".equals( ((DFQLIdentifierNode) node).getRawValue() )) {
@@ -133,8 +136,16 @@ public class DataFrameQueryLanguageEngine {
 
             return new DFQLBinaryOperatorNode( ((DFQLBinaryOperatorNode) node).getOperation(), newLeft, newRight );
         }
+        else if (node instanceof DFQLListNode) {
+            DFQLListNode newList = new DFQLListNode();
+            List<DFQLNode> nodes = ((DFQLListNode) node).getNodes();
+            for (DFQLNode dfqlNode : nodes) {
+                newList.append( transformAST( dfqlNode, df ) );
+            }
+            return newList;
+        }
 
-        // TODO repackage String, number, 
+        // TODO repackage String, number
         return node;
     }
 

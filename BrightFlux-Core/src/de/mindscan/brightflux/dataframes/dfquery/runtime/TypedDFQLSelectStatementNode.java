@@ -37,7 +37,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 public class TypedDFQLSelectStatementNode implements TypedDFQLNode {
 
     // SELECT
-    private List<TypedDFQLDataFrameColumnNode> selectedColumns;
+    private DFQLNode selectedColumns;
     // FROM
     private List<TypedDFQLDataFrameNode> dataFrames;
     // WHERE
@@ -46,13 +46,13 @@ public class TypedDFQLSelectStatementNode implements TypedDFQLNode {
     /**
      * 
      */
-    public TypedDFQLSelectStatementNode( List<TypedDFQLDataFrameColumnNode> selectedColumns, List<TypedDFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
-        this.selectedColumns = selectedColumns;
+    public TypedDFQLSelectStatementNode( DFQLNode selectedColumns2, List<TypedDFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
+        this.selectedColumns = selectedColumns2;
         this.dataFrames = dataFrames;
         this.whereClause = whereClause;
     }
 
-    public List<TypedDFQLDataFrameColumnNode> getSelectedColumns() {
+    public DFQLNode getSelectedColumns() {
         return selectedColumns;
     }
 
