@@ -400,8 +400,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select( DataFrameColumn<?> column ) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new NotYetImplemetedException();
     }
 
     /** 
@@ -409,8 +408,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select( DataFrameColumn<?>... columns ) {
-        // TODO Auto-generated method stub
-        return null;
+        throw new NotYetImplemetedException();
     }
 
     /** 
