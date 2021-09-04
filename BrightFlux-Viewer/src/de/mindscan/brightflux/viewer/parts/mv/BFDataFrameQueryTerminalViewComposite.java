@@ -79,6 +79,10 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         buildLayout();
+
+        queryHistoryStack.add( "SELECT * FROM df WHERE (df.''==  )" );
+        queryHistoryStack.add( "SELECT * FROM df WHERE ((df.''==  ) && (df.''==  ))" );
+        updateListViewer();
     }
 
     private void buildLayout() {
