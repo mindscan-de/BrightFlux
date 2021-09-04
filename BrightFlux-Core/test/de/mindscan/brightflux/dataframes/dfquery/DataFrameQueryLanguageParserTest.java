@@ -638,6 +638,45 @@ public class DataFrameQueryLanguageParserTest {
         assertNodeDescription( result, "SELECT * FROM df WHERE ((df.'columnname'>=1)&&(df.'othercolumnname'<=666))" );
     }
 
+    @Test
+    public void testParseDFQLSelectStatement_SelectOneDataframeColumnSelectStatemenet_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT df.'column' FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT df.'column' FROM df" );
+    }
+
+    @Test
+    public void testParseDFQLSelectStatement_SelectTwoDataframeColumnSelectStatemenet_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT df.'column', df.'otherColumn' FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT df.'column',df.'otherColumn' FROM df" );
+    }
+
+    @Test
+    public void testParseDFQLSelectStatement_SelectTwoColumnNamesSelectStatemenet_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT 'column', 'otherColumn' FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT 'column','otherColumn' FROM df" );
+    }
+
     private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {
         assertThat( result, is( instanceOf( type ) ) );
     }

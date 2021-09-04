@@ -32,6 +32,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
@@ -112,13 +113,23 @@ public class DataFrameQueryLanguageParser {
     }
 
     public DFQLNode parseSelectStatementColumnList() {
+        DFQLListNode columnList = new DFQLListNode();
+
         while (!tryToken( DFQLTokens.KEYWORD_FROM )) {
-            // TODO implement the correct rules... currently we just skip the parsing....
-            tokens.next();
+            if (tryAndAcceptToken( DFQLTokens.OPERATOR_STAR )) {
+                columnList.append( new DFQLIdentifierNode( "*" ) );
+            }
+            else {
+                DFQLNode member = parseMemberSelection();
+                columnList.append( member );
+                while (tryAndAcceptToken( DFQLTokens.OPERATOR_COMMA )) {
+                    member = parseMemberSelection();
+                    columnList.append( member );
+                }
+            }
         }
 
-        // TODO implement the correct return value.
-        return new DFQLIdentifierNode( "*" );
+        return columnList;
     }
 
     public DFQLNode parseSelectStatementDataframeList() {
