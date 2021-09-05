@@ -41,12 +41,14 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
 
     private DataFrame df;
     private DataFrameColumn<?>[] selectedColumns;
+    private String columnNameString;
 
     /**
      * 
      */
-    public DataFrameColumnSelectionImpl( DataFrame df, DataFrameColumn<?>... selectedColumns ) {
+    public DataFrameColumnSelectionImpl( DataFrame df, String columnNameString, DataFrameColumn<?>... selectedColumns ) {
         this.df = df;
+        this.columnNameString = columnNameString;
         this.selectedColumns = selectedColumns;
     }
 
@@ -63,8 +65,17 @@ public class DataFrameColumnSelectionImpl implements DataFrameColumnSelection {
 
         // add the current operation to the Journal
 
-        // TODO use a writer (serializer) in dfquery to create these strings, instead of this  
-        newDataFrame.appendJournal( DataFrameJournalEntryType.SELECT_WHERE, "SELECT * FROM df WHERE " + predicate.describeOperation() );
+        // TODO use a writer (serializer) in dfquery to create these strings, instead of this
+        // The way how this message is constructed here is not optimal, because the columnSelection instance is unaware of the whole context....
+        // so either we provide an object, which can serialize the whole string 
+        String dfqlQueryString = "SELECT " + columnNameString + " FROM df";
+        String predicateString = predicate.describeOperation();
+
+        if (!("true".equals( predicate.describeOperation() ))) {
+            dfqlQueryString += " WHERE " + predicateString;
+        }
+
+        newDataFrame.appendJournal( DataFrameJournalEntryType.SELECT_WHERE, dfqlQueryString );
 
         return newDataFrame;
     }

@@ -359,7 +359,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public DataFrameColumnSelection select() {
-        return new DataFrameColumnSelectionImpl( this, this.columns );
+        return new DataFrameColumnSelectionImpl( this, "*", this.columns );
     }
 
     /** 
@@ -391,8 +391,11 @@ public class DataFrameImpl implements DataFrame {
                         .filter( name -> columnsMap.containsKey( name ) ) //
                         .map( name -> columnsMap.get( name ) ).collect( Collectors.toList() );
 
+        String collectedColumnNames = convertedColumns.stream().map( c -> "'" + c.getColumnName() + "'" ).collect( Collectors.joining( ", " ) );
+
         DataFrameColumn<?>[] selectedColumns = convertedColumns.toArray( new DataFrameColumn[convertedColumns.size()] );
-        return new DataFrameColumnSelectionImpl( this, selectedColumns );
+
+        return new DataFrameColumnSelectionImpl( this, collectedColumnNames, selectedColumns );
     }
 
     /** 
