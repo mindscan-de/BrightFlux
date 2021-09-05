@@ -117,11 +117,14 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
-        if (currentTokenType == DFQLTokenType.STRING) {
-            return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2 + 1, tokenEnd2 - 1 ) );
+        switch (currentTokenType) {
+            case STRING:
+                new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2 + 1, tokenEnd2 - 1 ) );
+            case KEYWORD:
+                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ).toUpperCase() );
+            default:
+                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
         }
-
-        return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
     }
 
     private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
