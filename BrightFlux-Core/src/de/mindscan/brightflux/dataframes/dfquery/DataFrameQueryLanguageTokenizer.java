@@ -137,10 +137,7 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
-        while (tokenEnd < dfqlQuery.length()) {
-            if (!DFQLTokenizerTerminals.isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
-                return createWhitespaceTokenType();
-            }
+        while (tokenEnd < dfqlQuery.length() && DFQLTokenizerTerminals.isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
             tokenEnd++;
         }
 
@@ -194,10 +191,7 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeNumber( String dfqlQuery ) {
-        while (tokenEnd < dfqlQuery.length()) {
-            if (!DFQLTokenizerTerminals.isDigit( dfqlQuery.charAt( tokenEnd ) )) {
-                return DFQLTokenType.NUMBER;
-            }
+        while (tokenEnd < dfqlQuery.length() && DFQLTokenizerTerminals.isDigit( dfqlQuery.charAt( tokenEnd ) )) {
             tokenEnd++;
         }
 
@@ -205,10 +199,7 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeIdentifier( String dfqlQuery ) {
-        while (tokenEnd < dfqlQuery.length()) {
-            if (!DFQLTokenizerTerminals.isPartOfIdentifier( dfqlQuery.charAt( tokenEnd ) )) {
-                break;
-            }
+        while (tokenEnd < dfqlQuery.length() && DFQLTokenizerTerminals.isPartOfIdentifier( dfqlQuery.charAt( tokenEnd ) )) {
             tokenEnd++;
         }
 
