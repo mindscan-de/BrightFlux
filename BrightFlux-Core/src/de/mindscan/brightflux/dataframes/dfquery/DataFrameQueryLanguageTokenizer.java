@@ -82,31 +82,9 @@ public class DataFrameQueryLanguageTokenizer {
         while (tokenStart < dfqlQuery.length() && tokenEnd < dfqlQuery.length()) {
             tokenEnd = tokenStart + 1;
 
-            char currentChar = dfqlQuery.charAt( tokenStart );
+            DFQLTokenType currentTokenType = consumeToken( dfqlQuery );
 
-            DFQLTokenType currentTokenType = DFQLTokenType.NONE;
-
-            if (DFQLTokenizerTerminals.isWhiteSpace( currentChar )) {
-                currentTokenType = consumeWhiteSpaces( dfqlQuery );
-            }
-            else if (DFQLTokenizerTerminals.isParenthesis( currentChar )) {
-                currentTokenType = consumeParenthesis( dfqlQuery );
-            }
-            else if (DFQLTokenizerTerminals.isStartOfOperator( currentChar )) {
-                currentTokenType = consumeOperator( dfqlQuery );
-            }
-            else if (DFQLTokenizerTerminals.isStartOfQuote( currentChar )) {
-                currentTokenType = consumeQuotedText( dfqlQuery );
-            }
-            else if (DFQLTokenizerTerminals.isDigit( currentChar )) {
-                currentTokenType = consumeNumber( dfqlQuery );
-            }
-            else if (DFQLTokenizerTerminals.isStartOfIdentifier( currentChar )) {
-                currentTokenType = consumeIdentifier( dfqlQuery );
-            }
-
-            if (currentTokenType != null && currentTokenType != DFQLTokenType.NONE) {
-                // produce token and add to tokenlist
+            if (isValidTokenType( currentTokenType )) {
                 tokens.add( createToken( currentTokenType, tokenStart, tokenEnd, dfqlQuery ) );
             }
 
@@ -114,6 +92,10 @@ public class DataFrameQueryLanguageTokenizer {
         }
 
         return tokens.iterator();
+    }
+
+    private boolean isValidTokenType( DFQLTokenType currentTokenType ) {
+        return (currentTokenType != null) && (currentTokenType != DFQLTokenType.NONE);
     }
 
     private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
@@ -125,6 +107,33 @@ public class DataFrameQueryLanguageTokenizer {
             default:
                 return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
         }
+    }
+
+    private DFQLTokenType consumeToken( String dfqlQuery ) {
+        DFQLTokenType currentTokenType = DFQLTokenType.NONE;
+
+        char currentChar = dfqlQuery.charAt( tokenStart );
+
+        if (DFQLTokenizerTerminals.isWhiteSpace( currentChar )) {
+            currentTokenType = consumeWhiteSpaces( dfqlQuery );
+        }
+        else if (DFQLTokenizerTerminals.isParenthesis( currentChar )) {
+            currentTokenType = consumeParenthesis( dfqlQuery );
+        }
+        else if (DFQLTokenizerTerminals.isStartOfOperator( currentChar )) {
+            currentTokenType = consumeOperator( dfqlQuery );
+        }
+        else if (DFQLTokenizerTerminals.isStartOfQuote( currentChar )) {
+            currentTokenType = consumeQuotedText( dfqlQuery );
+        }
+        else if (DFQLTokenizerTerminals.isDigit( currentChar )) {
+            currentTokenType = consumeNumber( dfqlQuery );
+        }
+        else if (DFQLTokenizerTerminals.isStartOfIdentifier( currentChar )) {
+            currentTokenType = consumeIdentifier( dfqlQuery );
+        }
+
+        return currentTokenType;
     }
 
     private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
