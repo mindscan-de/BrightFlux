@@ -206,7 +206,7 @@ public class DataFrameQueryLanguageTokenizer {
 
     private DFQLTokenType consumeIdentifier( String dfqlQuery ) {
         while (tokenEnd < dfqlQuery.length()) {
-            if (!Character.isJavaIdentifierPart( dfqlQuery.charAt( tokenEnd ) )) {
+            if (!DFQLTokenizerTerminals.isPartOfIdentifier( dfqlQuery.charAt( tokenEnd ) )) {
                 break;
             }
             tokenEnd++;

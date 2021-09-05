@@ -116,6 +116,10 @@ public final class DFQLTokenizerTerminals {
         return Character.isJavaIdentifierStart( currentChar );
     }
 
+    public static boolean isPartOfIdentifier( char currentChar ) {
+        return Character.isJavaIdentifierPart( currentChar );
+    }
+
     public static boolean isTwoCharOperator( String twoChars ) {
         return TERMINAL_OPERATORS_WITH_2_CHARS.contains( twoChars );
     }
