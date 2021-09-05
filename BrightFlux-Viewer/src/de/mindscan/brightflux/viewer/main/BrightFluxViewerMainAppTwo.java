@@ -62,6 +62,10 @@ public class BrightFluxViewerMainAppTwo {
      */
     public static void main( String[] args ) {
         try {
+            // TODO: load some configuration from file
+            // TODO: set the current configuration (e.g. the window size)
+            // TODO: the configuration an be distributed with configuration events
+
             BrightFluxViewerMainAppTwo window = new BrightFluxViewerMainAppTwo();
             window.open();
         }
@@ -94,6 +98,45 @@ public class BrightFluxViewerMainAppTwo {
         shellBFViewerMainApp.setText( "BrightFlux-Viewer 0.0.1.M1" );
         shellBFViewerMainApp.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
+        createMainMenu();
+
+        Composite composite = new Composite( shellBFViewerMainApp, SWT.NONE );
+        composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        SashForm sashForm_1 = new SashForm( composite, SWT.NONE );
+
+        SashForm sashForm_2 = new SashForm( sashForm_1, SWT.VERTICAL );
+
+        Composite topLeftProjectComposite = new Composite( sashForm_2, SWT.NONE );
+        topLeftProjectComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_RED ) );
+
+        Composite outlineViewComposite = new OutlineViewComposite( sashForm_2, SWT.NONE );
+        sashForm_2.setWeights( new int[] { 375, 218 } );
+
+        SashForm sashForm = new SashForm( sashForm_1, SWT.VERTICAL );
+
+        Composite mainProjectComposite = new MainProjectComposite( sashForm, SWT.NONE );
+
+        Composite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
+        sashForm.setWeights( new int[] { 432, 161 } );
+        sashForm_1.setWeights( new int[] { 148, 694 } );
+
+        // This is still not nice, but good enough for now
+        // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
+        // basically also a ProjectRegistryParticipant and should not provide the truth to everyone else top down.
+        if (mainProjectComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
+        }
+        if (multiViewComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) multiViewComposite).setProjectRegistry( projectRegistry );
+        }
+        if (outlineViewComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) outlineViewComposite).setProjectRegistry( projectRegistry );
+        }
+
+    }
+
+    private void createMainMenu() {
         Menu menu = new Menu( shellBFViewerMainApp, SWT.BAR );
         shellBFViewerMainApp.setMenuBar( menu );
 
@@ -153,40 +196,5 @@ public class BrightFluxViewerMainAppTwo {
             }
         } );
         mntmExit.setText( "Exit" );
-
-        Composite composite = new Composite( shellBFViewerMainApp, SWT.NONE );
-        composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
-
-        SashForm sashForm_1 = new SashForm( composite, SWT.NONE );
-
-        SashForm sashForm_2 = new SashForm( sashForm_1, SWT.VERTICAL );
-
-        Composite topLeftProjectComposite = new Composite( sashForm_2, SWT.NONE );
-        topLeftProjectComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_RED ) );
-
-        Composite outlineViewComposite = new OutlineViewComposite( sashForm_2, SWT.NONE );
-        sashForm_2.setWeights( new int[] { 375, 218 } );
-
-        SashForm sashForm = new SashForm( sashForm_1, SWT.VERTICAL );
-
-        Composite mainProjectComposite = new MainProjectComposite( sashForm, SWT.NONE );
-
-        Composite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
-        sashForm.setWeights( new int[] { 432, 161 } );
-        sashForm_1.setWeights( new int[] { 148, 694 } );
-
-        // This is still not nice, but good enough for now
-        // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
-        // basically also a ProjectRegistryParticipant and should not provide the truth to everyone else top down.
-        if (mainProjectComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
-        }
-        if (multiViewComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) multiViewComposite).setProjectRegistry( projectRegistry );
-        }
-        if (outlineViewComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) outlineViewComposite).setProjectRegistry( projectRegistry );
-        }
-
     }
 }
