@@ -42,19 +42,19 @@ public final class DFQLTokenizerTerminals {
     public final static String[] TERMINAL_OPERATORS = new String[] { "==", "!=", "<=", ">=", "&&", "||", "<", ">", ".", ",", "*", "+", "-", "!" };
     public final static Set<String> TERMINAL_OPERATORS_WITH_2_CHARS = filteredByLength( 2, TERMINAL_OPERATORS );
     public final static Set<String> TERMINAL_OPERATORS_WITH_1_CHAR = filteredByLength( 1, TERMINAL_OPERATORS );
-    public final static char[] firstMengeOperators = firstMenge( TERMINAL_OPERATORS );
+    public final static char[] TERMINAL_OPERATORS_FIRST = firstMenge( TERMINAL_OPERATORS );
 
     // Whitespaces
-    public final static char[] whitespace = new char[] { ' ', '\t', '\r', '\n' };
+    public final static char[] TERMINAL_WHITESPACE = new char[] { ' ', '\t', '\r', '\n' };
 
     // Numbers
-    public final static char[] numbers = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    public final static char[] TERMINAL_DIGITS = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 
     // Parenthesis
-    public final static char[] parenthesis = new char[] { '(', ')' };
+    public final static char[] TERMINAL_PARENTHESIS = new char[] { '(', ')' };
 
     // Quotes
-    public final static char[] quotes = new char[] { '\'', '"' };
+    public final static char[] TERMINAL_QUOTES = new char[] { '\'', '"' };
 
     // ----------------
     // Helper functions
@@ -89,23 +89,23 @@ public final class DFQLTokenizerTerminals {
     // ----------------------------------------------------
 
     public static boolean isWhiteSpace( char currentChar ) {
-        return isCharIn( currentChar, whitespace );
+        return isCharIn( currentChar, TERMINAL_WHITESPACE );
     }
 
     public static boolean isParenthesis( char currentChar ) {
-        return isCharIn( currentChar, parenthesis );
+        return isCharIn( currentChar, TERMINAL_PARENTHESIS );
     }
 
     public static boolean isStartOfOperator( char currentChar ) {
-        return isCharIn( currentChar, firstMengeOperators );
+        return isCharIn( currentChar, TERMINAL_OPERATORS_FIRST );
     }
 
     public static boolean isStartOfQuote( char currentChar ) {
-        return isCharIn( currentChar, quotes );
+        return isCharIn( currentChar, TERMINAL_QUOTES );
     }
 
     public static boolean isDigit( char currentChar ) {
-        return isCharIn( currentChar, numbers );
+        return isCharIn( currentChar, TERMINAL_DIGITS );
     }
 
     public static boolean isKeyword( String currentIdentifier ) {
