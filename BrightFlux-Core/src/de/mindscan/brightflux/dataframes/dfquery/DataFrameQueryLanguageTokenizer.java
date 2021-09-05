@@ -136,7 +136,7 @@ public class DataFrameQueryLanguageTokenizer {
         // handle case that the string is possibly exceeded... (Exception found due to unit test) 
         if (tokenStart + 1 < dfqlQuery.length()) {
             String twoChars = dfqlQuery.substring( tokenStart, tokenStart + 2 );
-            if (DFQLTokenizerTerminals.TERMINAL_OPERATORS_WITH_2_CHARS.contains( twoChars )) {
+            if (DFQLTokenizerTerminals.isTwoCharOperator( twoChars )) {
                 // advance to the second char
                 tokenEnd++;
                 return DFQLTokenType.OPERATOR;
@@ -144,7 +144,7 @@ public class DataFrameQueryLanguageTokenizer {
         }
 
         String oneChar = dfqlQuery.substring( tokenStart, tokenStart + 1 );
-        if (DFQLTokenizerTerminals.TERMINAL_OPERATORS_WITH_1_CHAR.contains( oneChar )) {
+        if (DFQLTokenizerTerminals.isOneCharOperator( oneChar )) {
             return DFQLTokenType.OPERATOR;
         }
 
