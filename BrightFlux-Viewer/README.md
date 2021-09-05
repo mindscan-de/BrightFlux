@@ -8,7 +8,7 @@ side project of mine.
 The Idea is basically to have a simple GUI, where the log files can be viewed and analyzed. I
 didn't meant to start the GUI that early, but I really like the end-to-end experience. The big
 advantage of the end-to-end experience is, that each day the application can do something that
-it couldn't do the day before and the progress becomes visible. On the other side this also 
+it couldn't do the day before and the progress becomes more visible. On the other side this also 
 means, that the project will look very unsatisfying for a long time, because it is not polished. 
 
 Anyway, because I want to see the content of the data frames and I don't want to stick to write 
@@ -16,10 +16,12 @@ them back to text files (what I obviously could do), I decided to start with the
 possible - to present a single data frame only and then work from here.
 
 I will probably even delete it and restart from scratch if I'm not satisfied with the outcome,
-but for now I prefer the end-to-end experience over the usability. The end-to-end approach also
+but for now, I prefer the end-to-end experience over the usability. An end-to-end approach also
 helps to focus and develop the right and smallest feature for the next improvement. Things can
 be refactored and improved as we go. Also because I don't intend to keep that GUI application 
-forever, I hopefully will be able to decouple the functions from the presentation. 
+forever, I made the decision to not do any complex stuff related to the data processing into 
+the GUI. That means hopefully most of the functionality will be decoupled enough to not cause
+issues, when I will delete this GUI.  
   
 Also I'm not a GUI-guy, therefore do not expect me to do something fancy right now. Maybe later.
 
