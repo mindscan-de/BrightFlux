@@ -45,18 +45,30 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * as of now, this is too much effort, while trying to get the whole thing running. If it becomes a necessity we
  * still can implement a more sophisticated approach. But as of now speaking, we like it simple.
  * 
- * Since we have class state using tokenStart and tokenEnd this code is not thread safe at all. 
+ * Since we have class state using tokenStart and tokenEnd this code is not thread safe at all.
+ * 
+ * More cool stuff to come:
+ * - CREATE DATAFRAME FROM df.'columnname' USING TOKENIZER "tokenizername"
  */
 public class DataFrameQueryLanguageTokenizer {
 
-    // At the starting pooint we will start with very basic tokens
-    // but we will also not only support SELECT ALL FROM
-    // but also things like EXECUTE RECIPE "" ON
-    // and CREATE DATAFRAME FROM df.'columnname' USING TOKENIZER "tokenizername"
+    private int tokenStart;
+    private int tokenEnd;
+    private boolean ignoreWhiteSpace;
 
-    private int tokenStart = 0;
-    private int tokenEnd = 0;
-    private boolean ignoreWhiteSpace = false;
+    public DataFrameQueryLanguageTokenizer() {
+        tokenStart = 0;
+        tokenEnd = 0;
+        ignoreWhiteSpace = false;
+    }
+
+    public void setIgnoreWhiteSpace( boolean ignore ) {
+        ignoreWhiteSpace = ignore;
+    }
+
+    public DFQLTokenType createWhitespaceTokenType() {
+        return ignoreWhiteSpace ? DFQLTokenType.NONE : DFQLTokenType.WHITESPACE;
+    }
 
     public Iterator<DFQLToken> tokenize( String dfqlQuery ) {
         List<DFQLToken> tokens = new LinkedList<>();
@@ -104,10 +116,6 @@ public class DataFrameQueryLanguageTokenizer {
         return tokens.iterator();
     }
 
-    public void setIgnoreWhiteSpace( boolean ignore ) {
-        ignoreWhiteSpace = ignore;
-    }
-
     private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
         if (currentTokenType == DFQLTokenType.STRING) {
             return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2 + 1, tokenEnd2 - 1 ) );
@@ -119,12 +127,12 @@ public class DataFrameQueryLanguageTokenizer {
     private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
         while (tokenEnd < dfqlQuery.length()) {
             if (!DFQLTokenizerTerminals.isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
-                return ignoreWhiteSpace ? DFQLTokenType.NONE : DFQLTokenType.WHITESPACE;
+                return createWhitespaceTokenType();
             }
             tokenEnd++;
         }
 
-        return ignoreWhiteSpace ? DFQLTokenType.NONE : DFQLTokenType.WHITESPACE;
+        return createWhitespaceTokenType();
     }
 
     private DFQLTokenType consumeParenthesis( String dfqlQuery ) {
