@@ -39,10 +39,10 @@ public final class DFQLTokenizerTerminals {
     public final static Set<String> TERMINAL_KEYWORD_SET = convertToUppercaseSet( TERMINAL_KEYWORDS );
 
     // Operators
-    public final static String[] operators = new String[] { "==", "!=", "<=", ">=", "&&", "||", "<", ">", ".", ",", "*", "+", "-", "!" };
-    public final static Set<String> operatorTwoChars = filteredByLength( 2, operators );
-    public final static Set<String> operatorOneChar = filteredByLength( 1, operators );
-    public final static char[] firstMengeOperators = firstMenge( operators );
+    public final static String[] TERMINAL_OPERATORS = new String[] { "==", "!=", "<=", ">=", "&&", "||", "<", ">", ".", ",", "*", "+", "-", "!" };
+    public final static Set<String> TERMINAL_OPERATORS_WITH_2_CHARS = filteredByLength( 2, TERMINAL_OPERATORS );
+    public final static Set<String> TERMINAL_OPERATORS_WITH_1_CHAR = filteredByLength( 1, TERMINAL_OPERATORS );
+    public final static char[] firstMengeOperators = firstMenge( TERMINAL_OPERATORS );
 
     // Whitespaces
     public final static char[] whitespace = new char[] { ' ', '\t', '\r', '\n' };
@@ -73,6 +73,47 @@ public final class DFQLTokenizerTerminals {
         Set<String> firstCharacters = Arrays.stream( elements ).map( e -> e.substring( 0, 1 ) ).collect( Collectors.toSet() );
         // convert strings of length 1 to char array
         return firstCharacters.stream().collect( Collectors.joining() ).toCharArray();
+    }
+
+    public static boolean isCharIn( char currentChar, char[] charSet ) {
+        for (int i = 0; i < charSet.length; i++) {
+            if (currentChar == charSet[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // ----------------------------------------------------
+    // service Methods for recognizing the Terminal Classes
+    // ----------------------------------------------------
+
+    public static boolean isWhiteSpace( char currentChar ) {
+        return isCharIn( currentChar, whitespace );
+    }
+
+    public static boolean isParenthesis( char currentChar ) {
+        return isCharIn( currentChar, parenthesis );
+    }
+
+    public static boolean isStartOfOperator( char currentChar ) {
+        return isCharIn( currentChar, firstMengeOperators );
+    }
+
+    public static boolean isStartOfQuote( char currentChar ) {
+        return isCharIn( currentChar, quotes );
+    }
+
+    public static boolean isDigit( char currentChar ) {
+        return isCharIn( currentChar, numbers );
+    }
+
+    public static boolean isKeyword( String currentIdentifier ) {
+        return TERMINAL_KEYWORD_SET.contains( currentIdentifier );
+    }
+
+    public static boolean isStartOfIdentifier( char currentChar ) {
+        return Character.isJavaIdentifierStart( currentChar );
     }
 
 }

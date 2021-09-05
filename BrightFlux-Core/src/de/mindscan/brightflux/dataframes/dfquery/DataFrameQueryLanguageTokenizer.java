@@ -74,22 +74,22 @@ public class DataFrameQueryLanguageTokenizer {
 
             DFQLTokenType currentTokenType = DFQLTokenType.NONE;
 
-            if (isWhiteSpace( currentChar )) {
+            if (DFQLTokenizerTerminals.isWhiteSpace( currentChar )) {
                 currentTokenType = consumeWhiteSpaces( dfqlQuery );
             }
-            else if (isParenthesis( currentChar )) {
+            else if (DFQLTokenizerTerminals.isParenthesis( currentChar )) {
                 currentTokenType = consumeParenthesis( dfqlQuery );
             }
-            else if (isStartOfOperator( currentChar )) {
+            else if (DFQLTokenizerTerminals.isStartOfOperator( currentChar )) {
                 currentTokenType = consumeOperator( dfqlQuery );
             }
-            else if (isStartOfQuote( currentChar )) {
+            else if (DFQLTokenizerTerminals.isStartOfQuote( currentChar )) {
                 currentTokenType = consumeQuotedText( dfqlQuery );
             }
-            else if (isDigit( currentChar )) {
+            else if (DFQLTokenizerTerminals.isDigit( currentChar )) {
                 currentTokenType = consumeNumber( dfqlQuery );
             }
-            else if (isStartOfIdentifier( currentChar )) {
+            else if (DFQLTokenizerTerminals.isStartOfIdentifier( currentChar )) {
                 currentTokenType = consumeIdentifier( dfqlQuery );
             }
 
@@ -118,7 +118,7 @@ public class DataFrameQueryLanguageTokenizer {
 
     private DFQLTokenType consumeWhiteSpaces( String dfqlQuery ) {
         while (tokenEnd < dfqlQuery.length()) {
-            if (!isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
+            if (!DFQLTokenizerTerminals.isWhiteSpace( dfqlQuery.charAt( tokenEnd ) )) {
                 return ignoreWhiteSpace ? DFQLTokenType.NONE : DFQLTokenType.WHITESPACE;
             }
             tokenEnd++;
@@ -136,7 +136,7 @@ public class DataFrameQueryLanguageTokenizer {
         // handle case that the string is possibly exceeded... (Exception found due to unit test) 
         if (tokenStart + 1 < dfqlQuery.length()) {
             String twoChars = dfqlQuery.substring( tokenStart, tokenStart + 2 );
-            if (DFQLTokenizerTerminals.operatorTwoChars.contains( twoChars )) {
+            if (DFQLTokenizerTerminals.TERMINAL_OPERATORS_WITH_2_CHARS.contains( twoChars )) {
                 // advance to the second char
                 tokenEnd++;
                 return DFQLTokenType.OPERATOR;
@@ -144,7 +144,7 @@ public class DataFrameQueryLanguageTokenizer {
         }
 
         String oneChar = dfqlQuery.substring( tokenStart, tokenStart + 1 );
-        if (DFQLTokenizerTerminals.operatorOneChar.contains( oneChar )) {
+        if (DFQLTokenizerTerminals.TERMINAL_OPERATORS_WITH_1_CHAR.contains( oneChar )) {
             return DFQLTokenType.OPERATOR;
         }
 
@@ -175,7 +175,7 @@ public class DataFrameQueryLanguageTokenizer {
 
     private DFQLTokenType consumeNumber( String dfqlQuery ) {
         while (tokenEnd < dfqlQuery.length()) {
-            if (!isDigit( dfqlQuery.charAt( tokenEnd ) )) {
+            if (!DFQLTokenizerTerminals.isDigit( dfqlQuery.charAt( tokenEnd ) )) {
                 return DFQLTokenType.NUMBER;
             }
             tokenEnd++;
@@ -194,52 +194,11 @@ public class DataFrameQueryLanguageTokenizer {
 
         String currentIdentifier = dfqlQuery.substring( tokenStart, tokenEnd ).toUpperCase();
 
-        if (isKeyword( currentIdentifier )) {
+        if (DFQLTokenizerTerminals.isKeyword( currentIdentifier )) {
             return DFQLTokenType.KEYWORD;
         }
 
         return DFQLTokenType.IDENTIFIER;
-    }
-
-    // ------------------------------------------------
-    // check the first char of the next potential token
-    // ------------------------------------------------
-
-    private static boolean isWhiteSpace( char currentChar ) {
-        return isCharIn( currentChar, DFQLTokenizerTerminals.whitespace );
-    }
-
-    private static boolean isParenthesis( char currentChar ) {
-        return isCharIn( currentChar, DFQLTokenizerTerminals.parenthesis );
-    }
-
-    private static boolean isStartOfOperator( char currentChar ) {
-        return isCharIn( currentChar, DFQLTokenizerTerminals.firstMengeOperators );
-    }
-
-    private static boolean isStartOfQuote( char currentChar ) {
-        return isCharIn( currentChar, DFQLTokenizerTerminals.quotes );
-    }
-
-    private static boolean isDigit( char currentChar ) {
-        return isCharIn( currentChar, DFQLTokenizerTerminals.numbers );
-    }
-
-    private static boolean isStartOfIdentifier( char currentChar ) {
-        return Character.isJavaIdentifierStart( currentChar );
-    }
-
-    private static boolean isKeyword( String currentIdentifier ) {
-        return DFQLTokenizerTerminals.TERMINAL_KEYWORD_SET.contains( currentIdentifier );
-    }
-
-    private static boolean isCharIn( char currentChar, char[] charSet ) {
-        for (int i = 0; i < charSet.length; i++) {
-            if (currentChar == charSet[i]) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }
