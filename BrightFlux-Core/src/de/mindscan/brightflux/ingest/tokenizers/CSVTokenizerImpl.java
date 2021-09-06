@@ -269,7 +269,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
     private Class<NumberToken> consumeNumber( String inputString ) {
         int i = data.tokenStart;
 
-        while (i < inputString.length() && (CSVTokenizerTerminals.isDigit( inputString.charAt( i ) ) || isFraction( inputString.charAt( i ) ))) {
+        while (i < inputString.length() && CSVTokenizerTerminals.isDigitOrFraction( inputString.charAt( i ) )) {
             i = i + 1;
         }
 
@@ -287,10 +287,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
     private boolean isColumnSeparator( char currentChar ) {
         return this.columnSeparator.equals( Character.toString( currentChar ) );
-    }
-
-    private boolean isFraction( char currentChar ) {
-        return currentChar == '.';
     }
 
     private boolean isStartOfLineSeparator( char currentChar ) {

@@ -69,4 +69,12 @@ public class CSVTokenizerTerminals {
         return Character.isJavaIdentifierPart( currentChar );
     }
 
+    static boolean isFraction( char currentChar ) {
+        return currentChar == '.';
+    }
+
+    static boolean isDigitOrFraction( char currentChar ) {
+        return isDigit( currentChar ) || isFraction( currentChar );
+    }
+
 }
