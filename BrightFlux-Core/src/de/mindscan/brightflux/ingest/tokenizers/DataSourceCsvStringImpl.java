@@ -54,4 +54,8 @@ public class DataSourceCsvStringImpl implements DataSource {
     boolean isTokenStartBeforeEnd() {
         return tokenStart < inputString.length();
     }
+
+    void advanceToNextToken() {
+        tokenStart = tokenEnd;
+    }
 }

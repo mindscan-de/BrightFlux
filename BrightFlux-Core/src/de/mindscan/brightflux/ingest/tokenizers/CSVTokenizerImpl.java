@@ -158,7 +158,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             // Advance to next token
             // ---------------------            
 
-            data.tokenStart = data.tokenEnd;
+            data.advanceToNextToken();
         }
 
         return tokens.iterator();
@@ -188,24 +188,24 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private Class<? extends DataToken> consumeToken( String inputString ) {
-        char currentChar = data.charAtTokenStart();
+        char charAtTokenStart = data.charAtTokenStart();
 
         Class<? extends DataToken> currentTokenType = null;
 
-        if (isColumnSeparator( currentChar )) {
+        if (isColumnSeparator( charAtTokenStart )) {
             currentTokenType = ColumnSeparatorToken.class;
         }
-        else if (isStartOfLineSeparator( currentChar )) {
+        else if (isStartOfLineSeparator( charAtTokenStart )) {
             currentTokenType = consumeLineSeparator( inputString );
         }
         // TODO: add whitespace consumer here?
-        else if (CSVTokenizerTerminals.isStartOfQuote( currentChar )) {
+        else if (CSVTokenizerTerminals.isStartOfQuote( charAtTokenStart )) {
             currentTokenType = consumeQuotedText( inputString );
         }
-        else if (CSVTokenizerTerminals.isDigit( currentChar )) {
+        else if (CSVTokenizerTerminals.isDigit( charAtTokenStart )) {
             currentTokenType = consumeNumber( inputString );
         }
-        else if (CSVTokenizerTerminals.isStartOfIdentifier( currentChar )) {
+        else if (CSVTokenizerTerminals.isStartOfIdentifier( charAtTokenStart )) {
             currentTokenType = consumeIdentifier( inputString );
         }
         return currentTokenType;
