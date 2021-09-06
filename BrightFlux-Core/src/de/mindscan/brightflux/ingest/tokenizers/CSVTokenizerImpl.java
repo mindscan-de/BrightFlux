@@ -207,7 +207,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             currentTokenType = consumeNumber( data );
         }
         else if (CSVTokenizerTerminals.isStartOfIdentifier( charAtTokenStart )) {
-            currentTokenType = consumeIdentifier( inputString );
+            currentTokenType = consumeIdentifier( data );
         }
         return currentTokenType;
     }
@@ -235,7 +235,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return QuotedTextToken.class;
     }
 
-    private Class<? extends DataToken> consumeIdentifier( String inputString ) {
+    private Class<? extends DataToken> consumeIdentifier( DataSourceCsvStringImpl data ) {
         if (CSVTokenizerTerminals.isStartOfIdentifier( data.charAtTokenStart() )) {
             incrementTokenEndWhile( data, CSVTokenizerTerminals::isPartOfIdentifier );
         }
