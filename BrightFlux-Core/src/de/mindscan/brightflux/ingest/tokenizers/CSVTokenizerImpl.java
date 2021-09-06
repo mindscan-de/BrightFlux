@@ -268,7 +268,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
     private Class<NumberToken> consumeNumber( DataSourceCsvStringImpl data ) {
         while (data.isTokenEndBeforeInputEnd() && CSVTokenizerTerminals.isDigitOrFraction( data.charAtTokenEnd() )) {
-            data.tokenEnd++;
+            data.incrementTokenEnd();
         }
 
         return NumberToken.class;
