@@ -69,11 +69,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
     @SuppressWarnings( "unused" )
     private int maxColumnCount;
 
-    /**
-     * 
-     */
-    private int tokenStart;
-    private int tokenEnd;
+    private DataSourceCsvStringImpl data = new DataSourceCsvStringImpl();
 
     /**
      * @param columnSeparator
@@ -139,20 +135,20 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        tokenStart = 0;
-        tokenEnd = 0;
+        data.resetTokenPositions();
+        data.setInputString( inputString );
 
-        while (tokenStart < inputString.length()) {
-            tokenEnd = tokenStart + 1;
+        while (data.isTokenStartBeforeEnd()) {
+            data.tokenEnd = data.tokenStart + 1;
 
             Class<? extends DataToken> currentTokenType = consumeToken( inputString );
 
             if (isValidTokenType( currentTokenType )) {
-                tokens.add( createToken( currentTokenType, inputString, tokenStart, tokenEnd ) );
+                tokens.add( createToken( currentTokenType, inputString, data.tokenStart, data.tokenEnd ) );
             }
             else {
-                System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
-                for (int i = tokenStart; i < tokenEnd; i++) {
+                System.out.println( "could not process string (" + data.tokenStart + ";" + data.tokenEnd + ")" );
+                for (int i = data.tokenStart; i < data.tokenEnd; i++) {
                     System.out.println( "0x" + Integer.toString( i, 16 ) );
                 }
                 // ignore that unknown "token"....
@@ -162,7 +158,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             // Advance to next token
             // ---------------------            
 
-            tokenStart = tokenEnd;
+            data.tokenStart = data.tokenEnd;
         }
 
         return tokens.iterator();
@@ -192,7 +188,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private Class<? extends DataToken> consumeToken( String inputString ) {
-        char currentChar = inputString.charAt( tokenStart );
+        char currentChar = data.charAtTokenStart();
 
         Class<? extends DataToken> currentTokenType = null;
 
@@ -217,7 +213,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
     private Class<? extends DataToken> consumeQuotedText( String inputString ) {
 
-        int i = this.tokenStart;
+        int i = this.data.tokenStart;
 
         char firstChar = inputString.charAt( i );
 
@@ -230,16 +226,16 @@ public class CSVTokenizerImpl implements DataTokenizer {
         }
 
         if (i >= inputString.length()) {
-            this.tokenEnd = i;
+            this.data.tokenEnd = i;
             return QuotedTextToken.class;
         }
 
-        this.tokenEnd = i + 1;
+        this.data.tokenEnd = i + 1;
         return QuotedTextToken.class;
     }
 
     private Class<? extends DataToken> consumeIdentifier( String inputString ) {
-        int i = this.tokenStart;
+        int i = this.data.tokenStart;
         char currentChar = inputString.charAt( i );
         if (CSVTokenizerTerminals.isStartOfIdentifier( currentChar )) {
             i++;
@@ -250,13 +246,13 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
         // End of input reached, we declare this an identifier
         if (i >= inputString.length()) {
-            this.tokenEnd = i;
+            this.data.tokenEnd = i;
             return IdentifierToken.class;
         }
 
         char nextChar = inputString.charAt( i );
         if (isStartOfLineSeparator( nextChar ) || isColumnSeparator( nextChar )) {
-            this.tokenEnd = i;
+            this.data.tokenEnd = i;
             return IdentifierToken.class;
         }
 
@@ -265,26 +261,26 @@ public class CSVTokenizerImpl implements DataTokenizer {
             i++;
         }
 
-        this.tokenEnd = i;
+        this.data.tokenEnd = i;
         return TextToken.class;
 
     }
 
     private Class<NumberToken> consumeNumber( String inputString ) {
-        int i = tokenStart;
+        int i = data.tokenStart;
 
         while (i < inputString.length() && (CSVTokenizerTerminals.isDigit( inputString.charAt( i ) ) || isFraction( inputString.charAt( i ) ))) {
             i = i + 1;
         }
 
-        this.tokenEnd = i;
+        this.data.tokenEnd = i;
 
         return NumberToken.class;
     }
 
     private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
         // good enough for now
-        tokenEnd = tokenStart + 1;
+        data.tokenEnd = data.tokenStart + 1;
 
         return LineSeparatorToken.class;
     }
