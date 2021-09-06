@@ -138,7 +138,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         data.resetTokenPositions();
         data.setInputString( inputString );
 
-        while (data.isTokenStartBeforeEnd()) {
+        while (data.isTokenStartBeforeInputEnd()) {
             data.tokenEnd = data.tokenStart + 1;
 
             Class<? extends DataToken> currentTokenType = consumeToken( inputString );
@@ -203,7 +203,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             currentTokenType = consumeQuotedText( inputString );
         }
         else if (CSVTokenizerTerminals.isDigit( charAtTokenStart )) {
-            currentTokenType = consumeNumber( inputString );
+            currentTokenType = consumeNumber( data );
         }
         else if (CSVTokenizerTerminals.isStartOfIdentifier( charAtTokenStart )) {
             currentTokenType = consumeIdentifier( inputString );
@@ -266,14 +266,10 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
     }
 
-    private Class<NumberToken> consumeNumber( String inputString ) {
-        int i = data.tokenStart;
-
-        while (i < inputString.length() && CSVTokenizerTerminals.isDigitOrFraction( inputString.charAt( i ) )) {
-            i = i + 1;
+    private Class<NumberToken> consumeNumber( DataSourceCsvStringImpl data ) {
+        while (data.isTokenEndBeforeInputEnd() && CSVTokenizerTerminals.isDigitOrFraction( data.charAtTokenEnd() )) {
+            data.tokenEnd++;
         }
-
-        this.data.tokenEnd = i;
 
         return NumberToken.class;
     }
