@@ -236,15 +236,9 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private Class<? extends DataToken> consumeIdentifier( String inputString ) {
-        int i = this.data.tokenStart;
-        char currentChar = data.charAtTokenStart();
-        if (CSVTokenizerTerminals.isStartOfIdentifier( currentChar )) {
-            i++;
-            while (i < inputString.length() && CSVTokenizerTerminals.isPartOfIdentifier( inputString.charAt( i ) )) {
-                i++;
-            }
+        if (CSVTokenizerTerminals.isStartOfIdentifier( data.charAtTokenStart() )) {
+            incrementTokenEndWhile( data, CSVTokenizerTerminals::isPartOfIdentifier );
         }
-        this.data.tokenEnd = i;
 
         // End of input reached, we declare this an identifier
         if (!data.isTokenEndBeforeInputEnd()) {
