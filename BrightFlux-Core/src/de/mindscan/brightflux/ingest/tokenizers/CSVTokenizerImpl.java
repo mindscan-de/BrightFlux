@@ -188,7 +188,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return TokenUtils.createToken( currentTokenType, valueString );
     }
 
-    private Class<? extends DataToken> consumeToken( DataSourceCsvStringImpl data ) {
+    private Class<? extends DataToken> consumeToken( DataSource data ) {
         char charAtTokenStart = data.charAtTokenStart();
 
         Class<? extends DataToken> currentTokenType = null;
@@ -212,7 +212,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType;
     }
 
-    private Class<? extends DataToken> consumeQuotedText( DataSourceCsvStringImpl data ) {
+    private Class<? extends DataToken> consumeQuotedText( DataSource data ) {
         char firstChar = data.charAtTokenStart();
 
         if (CSVTokenizerTerminals.isStartOfQuote( firstChar )) {
@@ -229,7 +229,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return QuotedTextToken.class;
     }
 
-    private Class<? extends DataToken> consumeIdentifier( DataSourceCsvStringImpl data ) {
+    private Class<? extends DataToken> consumeIdentifier( DataSource data ) {
         if (CSVTokenizerTerminals.isStartOfIdentifier( data.charAtTokenStart() )) {
             incrementTokenEndWhile( data, CSVTokenizerTerminals::isPartOfIdentifier );
         }
@@ -248,13 +248,13 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return TextToken.class;
     }
 
-    private Class<NumberToken> consumeNumber( DataSourceCsvStringImpl data ) {
+    private Class<NumberToken> consumeNumber( DataSource data ) {
         incrementTokenEndWhile( data, CSVTokenizerTerminals::isDigitOrFraction );
 
         return NumberToken.class;
     }
 
-    private Class<? extends DataToken> consumeLineSeparator( DataSourceCsvStringImpl data ) {
+    private Class<? extends DataToken> consumeLineSeparator( DataSource data ) {
         // Not yet perfect....
         // DataSourceCsvStringImpl.prepareNextToken();
 
@@ -262,14 +262,14 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     // TODO: This is some tokenizer level logic... This should not be part of the data source.
-    void incrementTokenEndWhile( DataSourceCsvStringImpl data, Predicate<Character> object ) {
+    void incrementTokenEndWhile( DataSource data, Predicate<Character> object ) {
         while (data.isTokenEndBeforeInputEnd() && object.test( data.charAtTokenEnd() )) {
             data.incrementTokenEnd();
         }
     }
 
     // TODO: This is some tokenizer level logic... This should not be part of the data source.    
-    void incrementTokenEndWhileNot( DataSourceCsvStringImpl data, Predicate<Character> object ) {
+    void incrementTokenEndWhileNot( DataSource data, Predicate<Character> object ) {
         while (data.isTokenEndBeforeInputEnd() && !object.test( data.charAtTokenEnd() )) {
             data.incrementTokenEnd();
         }

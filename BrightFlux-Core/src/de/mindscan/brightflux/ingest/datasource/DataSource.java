@@ -38,4 +38,14 @@ package de.mindscan.brightflux.ingest.datasource;
  */
 public interface DataSource {
 
+    char charAtTokenEnd();
+
+    char charAtTokenStart();
+
+    boolean isTokenEndBeforeInputEnd();
+
+    boolean isTokenStartBeforeInputEnd();
+
+    void incrementTokenEnd();
+
 }

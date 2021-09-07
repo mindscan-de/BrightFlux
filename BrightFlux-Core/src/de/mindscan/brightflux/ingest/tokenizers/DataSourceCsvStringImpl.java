@@ -38,6 +38,10 @@ public class DataSourceCsvStringImpl implements DataSource {
     public DataSourceCsvStringImpl() {
     }
 
+    public DataSourceCsvStringImpl( String inputString ) {
+        this.inputString = inputString;
+    }
+
     public void resetTokenPositions() {
         tokenStart = 0;
         tokenEnd = 0;
@@ -47,19 +51,23 @@ public class DataSourceCsvStringImpl implements DataSource {
         this.inputString = inputString;
     }
 
-    char charAtTokenStart() {
+    @Override
+    public char charAtTokenStart() {
         return inputString.charAt( tokenStart );
     }
 
-    char charAtTokenEnd() {
+    @Override
+    public char charAtTokenEnd() {
         return inputString.charAt( tokenEnd );
     }
 
-    boolean isTokenStartBeforeInputEnd() {
+    @Override
+    public boolean isTokenStartBeforeInputEnd() {
         return tokenStart < inputString.length();
     }
 
-    boolean isTokenEndBeforeInputEnd() {
+    @Override
+    public boolean isTokenEndBeforeInputEnd() {
         return tokenEnd < inputString.length();
     }
 
@@ -67,7 +75,8 @@ public class DataSourceCsvStringImpl implements DataSource {
         tokenStart = tokenEnd;
     }
 
-    void incrementTokenEnd() {
+    @Override
+    public void incrementTokenEnd() {
         tokenEnd++;
     }
 
