@@ -301,7 +301,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private boolean isStartOfLineSeparator( char currentChar ) {
-        // TODO: Firstmenge of this.lineSeparator
+        // Firstmenge of this.lineSeparator
         return currentChar == '\n' || currentChar == '\r';
     }
 
