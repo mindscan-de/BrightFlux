@@ -84,7 +84,8 @@ public class DataSourceCsvStringImpl implements DataSource {
         tokenEnd = tokenStart + 1;
     }
 
-    String getTokenString() {
+    @Override
+    public String getTokenString() {
         return inputString.substring( tokenStart, tokenEnd );
     }
 

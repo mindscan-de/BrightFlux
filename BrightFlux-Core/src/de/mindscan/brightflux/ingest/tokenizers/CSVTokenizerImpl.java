@@ -169,7 +169,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType != null;
     }
 
-    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSourceCsvStringImpl data ) {
+    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSource data ) {
 
         String valueString = data.getTokenString();
 

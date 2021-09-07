@@ -48,4 +48,6 @@ public interface DataSource {
 
     void incrementTokenEnd();
 
+    String getTokenString();
+
 }
