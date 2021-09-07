@@ -31,8 +31,8 @@ import de.mindscan.brightflux.ingest.datasource.DataSource;
  */
 public class DataSourceCsvStringImpl implements DataSource {
 
-    public int tokenStart;
-    public int tokenEnd;
+    private int tokenStart;
+    private int tokenEnd;
     private String inputString;
 
     public DataSourceCsvStringImpl() {
@@ -87,6 +87,14 @@ public class DataSourceCsvStringImpl implements DataSource {
     @Override
     public String getTokenString() {
         return inputString.substring( tokenStart, tokenEnd );
+    }
+
+    public int getTokenStart() {
+        return tokenStart;
+    }
+
+    public int getTokenEnd() {
+        return tokenEnd;
     }
 
 }
