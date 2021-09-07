@@ -201,7 +201,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         }
         // TODO: add whitespace consumer here?
         else if (CSVTokenizerTerminals.isStartOfQuote( charAtTokenStart )) {
-            currentTokenType = consumeQuotedText( inputString );
+            currentTokenType = consumeQuotedText( data );
         }
         else if (CSVTokenizerTerminals.isDigit( charAtTokenStart )) {
             currentTokenType = consumeNumber( data );
@@ -212,26 +212,20 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType;
     }
 
-    private Class<? extends DataToken> consumeQuotedText( String inputString ) {
-
-        int i = this.data.tokenStart;
-
+    private Class<? extends DataToken> consumeQuotedText( DataSourceCsvStringImpl data ) {
         char firstChar = data.charAtTokenStart();
 
         if (CSVTokenizerTerminals.isStartOfQuote( firstChar )) {
-            i++;
-            // This will ignore or miss line endings... for now.
-            while (i < inputString.length() && inputString.charAt( i ) != firstChar) {
-                i++;
-            }
+            incrementTokenEndWhileNot( data, c -> c == firstChar );
         }
 
-        if (i >= inputString.length()) {
-            this.data.tokenEnd = i;
+        if (!data.isTokenEndBeforeInputEnd()) {
             return QuotedTextToken.class;
         }
 
-        this.data.tokenEnd = i + 1;
+        // we increment here because we found the first char again.
+        data.incrementTokenEnd();
+
         return QuotedTextToken.class;
     }
 
