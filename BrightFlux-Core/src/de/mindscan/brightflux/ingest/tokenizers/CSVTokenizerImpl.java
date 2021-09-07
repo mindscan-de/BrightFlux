@@ -254,6 +254,13 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return NumberToken.class;
     }
 
+    private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
+        // good enough for now
+        data.tokenEnd = data.tokenStart + 1;
+
+        return LineSeparatorToken.class;
+    }
+
     // TODO: This is some tokenizer level logic... This should not be part of the data source.
     void incrementTokenEndWhile( DataSourceCsvStringImpl data, Predicate<Character> object ) {
         while (data.isTokenEndBeforeInputEnd() && object.test( data.charAtTokenEnd() )) {
@@ -266,13 +273,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
         while (data.isTokenEndBeforeInputEnd() && !object.test( data.charAtTokenEnd() )) {
             data.incrementTokenEnd();
         }
-    }
-
-    private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
-        // good enough for now
-        data.tokenEnd = data.tokenStart + 1;
-
-        return LineSeparatorToken.class;
     }
 
     private boolean isLineOrColumnSeparator( char nextChar ) {
