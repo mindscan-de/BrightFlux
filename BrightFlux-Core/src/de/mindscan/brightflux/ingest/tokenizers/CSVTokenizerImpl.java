@@ -145,8 +145,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             Class<? extends DataToken> currentTokenType = consumeToken( data );
 
             if (isValidTokenType( currentTokenType )) {
-
-                tokens.add( createToken( currentTokenType, data, inputString, data.tokenStart, data.tokenEnd ) );
+                tokens.add( createToken( currentTokenType, data ) );
             }
             else {
                 System.out.println( "could not process string (" + data.tokenStart + ";" + data.tokenEnd + ")" );
@@ -170,19 +169,17 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType != null;
     }
 
-    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSourceCsvStringImpl data, String inputString, int startIndex,
-                    int endIndex ) {
+    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSourceCsvStringImpl data ) {
 
         String valueString = data.getTokenString();
 
         if (currentTokenType.equals( QuotedTextToken.class )) {
 
             char startsWith = valueString.charAt( 0 );
-            // tricky...
-            char endsWith = inputString.charAt( endIndex - 1 );
+            char endsWith = valueString.charAt( valueString.length() - 1 );
 
             if (startsWith == endsWith) {
-                valueString = inputString.substring( startIndex + 1, endIndex - 1 );
+                valueString = valueString.substring( 1, valueString.length() - 1 );
             }
 
             return TokenUtils.createToken( TextToken.class, valueString );
