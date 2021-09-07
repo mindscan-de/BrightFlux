@@ -83,8 +83,13 @@ public class BrightFluxViewerMainAppTwo {
         shellBFViewerMainApp.open();
         shellBFViewerMainApp.layout();
         while (!shellBFViewerMainApp.isDisposed()) {
-            if (!display.readAndDispatch()) {
-                display.sleep();
+            try {
+                if (!display.readAndDispatch()) {
+                    display.sleep();
+                }
+            }
+            catch (Exception ex) {
+                ex.printStackTrace();
             }
         }
     }
