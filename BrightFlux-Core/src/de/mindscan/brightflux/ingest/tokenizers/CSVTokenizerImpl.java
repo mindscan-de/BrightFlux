@@ -54,6 +54,9 @@ import de.mindscan.brightflux.ingest.token.TextToken;
  */
 public class CSVTokenizerImpl implements DataTokenizer {
 
+    private static final int _0X0A_LINEFEED = 0x0a;
+    private static final int _0X0D_CARRIAGERETURN = 0x0d;
+
     private String columnSeparator = ",";
 
     // TODO: we will address the configurable lineseparator later
@@ -256,8 +259,21 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private Class<? extends DataToken> consumeLineSeparator( DataSource data ) {
-        // Not yet perfect....
-        // DataSourceCsvStringImpl.prepareNextToken();
+        char firstChar = data.charAtTokenStart();
+        char secondChar = data.charAtTokenEnd();
+        if (firstChar == _0X0A_LINEFEED) {
+            // Unix, Linux, Android, macOS, AmigaOS, BSD, ....
+        }
+        else if (firstChar == _0X0D_CARRIAGERETURN) {
+            if (secondChar == _0X0A_LINEFEED) {
+                // windows, DOS,OS/2, CP/M, TOS (Atari) Ordering and 
+                // consume second part of the full new line
+                data.incrementTokenEnd();
+            }
+            else {
+                // Mac OS Classic, Apple II, C64
+            }
+        }
 
         return LineSeparatorToken.class;
     }
