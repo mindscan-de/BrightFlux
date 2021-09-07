@@ -140,7 +140,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         data.setInputString( inputString );
 
         while (data.isTokenStartBeforeInputEnd()) {
-            data.tokenEnd = data.tokenStart + 1;
+            data.prepareNextToken();
 
             Class<? extends DataToken> currentTokenType = consumeToken( inputString );
 
@@ -255,8 +255,8 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private Class<? extends DataToken> consumeLineSeparator( String inputString ) {
-        // good enough for now
-        data.tokenEnd = data.tokenStart + 1;
+        // Not yet perfect....
+        // DataSourceCsvStringImpl.prepareNextToken();
 
         return LineSeparatorToken.class;
     }

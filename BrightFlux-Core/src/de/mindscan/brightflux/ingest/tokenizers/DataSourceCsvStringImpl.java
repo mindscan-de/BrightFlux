@@ -71,4 +71,8 @@ public class DataSourceCsvStringImpl implements DataSource {
         tokenEnd++;
     }
 
+    void prepareNextToken() {
+        tokenEnd = tokenStart + 1;
+    }
+
 }
