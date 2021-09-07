@@ -49,6 +49,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
@@ -127,6 +128,21 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmSaveAsRecipe.setText( "Save As Recipe ..." );
+
+        MenuItem mntmAlter = new MenuItem( menu_DataFrame, SWT.CASCADE );
+        mntmAlter.setText( "Alter" );
+
+        Menu menu_1 = new Menu( mntmAlter );
+        mntmAlter.setMenu( menu_1 );
+
+        MenuItem mntmAppendColumnAnnotations = new MenuItem( menu_1, SWT.NONE );
+        mntmAppendColumnAnnotations.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                alterDFAppendColumnWithAnnotations( ingestedDF );
+            }
+        } );
+        mntmAppendColumnAnnotations.setText( "Append Column Annotations" );
 
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
         mntmSaveToFile.addSelectionListener( new SelectionAdapter() {
@@ -265,6 +281,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void apply666filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
+    }
+
+    private void alterDFAppendColumnWithAnnotations( DataFrame dataFrame ) {
+        // TODO implement this feature to add a new Column to the current dataframe.
+        throw new NotYetImplemetedException( "" );
+        // System.out.println( "This feature is not yet implemented." );
     }
 
     private void applyRecipe( DataFrame dataFrame, Path recipePath ) {
