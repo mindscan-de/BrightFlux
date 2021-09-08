@@ -285,6 +285,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private void alterDFAppendColumnWithAnnotations( DataFrame dataFrame ) {
         // TODO implement this feature to add a new Column to the current dataframe.
+        // dispatchCommand( DataFrameCommandFactory.alterDataframeAddColumn( dataFrame, "annotations" ) );
+
         throw new NotYetImplemetedException( "" );
         // System.out.println( "This feature is not yet implemented." );
     }

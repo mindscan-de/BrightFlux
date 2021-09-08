@@ -76,4 +76,8 @@ public class DataFrameCommandFactory {
         return new SaveAsCSVCommand( inputDataFrame, targetFile );
     }
 
+    public static BFCommand alterDataframeAddColumn( DataFrame inputDataFrame, String newColumnName ) {
+        return null;
+    }
+
 }
