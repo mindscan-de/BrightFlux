@@ -109,4 +109,42 @@ public class SparseStringColumnTest {
         assertThat( result.getColumnName(), equalTo( "XYZName" ) );
     }
 
+    public void testSet_SetIndex2ToTwo_expectIndex2IsTwo() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "XYZName" );
+
+        // act
+        stringColumn.set( 2, "Two" );
+        String result = stringColumn.get( 2 );
+
+        // assert
+        assertThat( result, equalTo( "Two" ) );
+    }
+
+    public void testSet_SetIndex1ToOneAnd2ToTwo_expectIndex2IsTwo() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "XYZName" );
+
+        // act
+        stringColumn.set( 1, "One" );
+        stringColumn.set( 2, "Two" );
+        String result = stringColumn.get( 2 );
+
+        // assert
+        assertThat( result, equalTo( "Two" ) );
+    }
+
+    public void testSet_SetIndex1ToOneAnd2ToTwo_expectIndex1IsOne() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "XYZName" );
+
+        // act
+        stringColumn.set( 1, "One" );
+        stringColumn.set( 2, "Two" );
+        String result = stringColumn.get( 1 );
+
+        // assert
+        assertThat( result, equalTo( "One" ) );
+    }
+
 }
