@@ -115,9 +115,9 @@ public class SparseStringColumnTest {
 
         // act
         stringColumn.set( 2, "Two" );
-        String result = stringColumn.get( 2 );
 
         // assert
+        String result = stringColumn.get( 2 );
         assertThat( result, equalTo( "Two" ) );
     }
 
@@ -128,9 +128,9 @@ public class SparseStringColumnTest {
         // act
         stringColumn.set( 1, "One" );
         stringColumn.set( 2, "Two" );
-        String result = stringColumn.get( 2 );
 
         // assert
+        String result = stringColumn.get( 2 );
         assertThat( result, equalTo( "Two" ) );
     }
 
@@ -141,10 +141,68 @@ public class SparseStringColumnTest {
         // act
         stringColumn.set( 1, "One" );
         stringColumn.set( 2, "Two" );
-        String result = stringColumn.get( 1 );
 
         // assert
+        String result = stringColumn.get( 1 );
         assertThat( result, equalTo( "One" ) );
+    }
+
+    public void testIsPresent_SetIndex1ToOne_expectIndex1IsPesent() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
+
+        // act
+        stringColumn.set( 1, "One" );
+        boolean result = stringColumn.isPresent( 1 );
+
+        // assert
+        assertThat( result, equalTo( true ) );
+    }
+
+    public void testIsPresent_SetIndex0ToOne_expectIndex1IsNotPresent() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
+
+        // act
+        stringColumn.set( 0, "Zero" );
+        boolean result = stringColumn.isPresent( 1 );
+
+        // assert
+        assertThat( result, equalTo( false ) );
+    }
+
+    public void testIsPresent_EmptyColumn_expectIndex1IsNotPresent() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
+
+        // act
+        boolean result = stringColumn.isPresent( 1 );
+
+        // assert
+        assertThat( result, equalTo( false ) );
+    }
+
+    public void testIsEmpty_SetIndex0ToOne_expectIsNotEmpty() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
+
+        // act
+        stringColumn.set( 0, "Zero" );
+        boolean result = stringColumn.isEmpty();
+
+        // assert
+        assertThat( result, equalTo( false ) );
+    }
+
+    public void testIsEmpty_SetNothing_expectIsEmpty() throws Exception {
+        // arrange
+        SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
+
+        // act
+        boolean result = stringColumn.isEmpty();
+
+        // assert
+        assertThat( result, equalTo( true ) );
     }
 
 }
