@@ -32,11 +32,14 @@ import de.mindscan.brightflux.dataframes.DataFrame;
  */
 public class DataFrameAnnotateRowEvent extends BFAbstractDataFrameEvent {
 
+    private String annotation;
+
     /**
      * @param dataFrame
      */
-    public DataFrameAnnotateRowEvent( DataFrame dataFrame ) {
+    public DataFrameAnnotateRowEvent( DataFrame dataFrame, String annotation ) {
         super( dataFrame );
+        this.annotation = annotation;
     }
 
     /** 
@@ -47,4 +50,10 @@ public class DataFrameAnnotateRowEvent extends BFAbstractDataFrameEvent {
         return "some Dataframe Anntation Event ";
     }
 
+    /**
+     * @return the annotation
+     */
+    public String getAnnotation() {
+        return annotation;
+    }
 }

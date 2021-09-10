@@ -86,8 +86,8 @@ public class DataFrameCommandFactory {
         return new DataFrameCreateSparseDfCommand();
     }
 
-    public static BFCommand annotateRow( int rowIndex, DataFrame inputDataFrame ) {
-        return new DataFrameAnnotateRowCommand( inputDataFrame );
+    public static BFCommand annotateRow( int rowIndex, DataFrame inputDataFrame, String annotation ) {
+        return new DataFrameAnnotateRowCommand( inputDataFrame, annotation );
 
     }
 

@@ -38,12 +38,14 @@ import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
 public class DataFrameAnnotateRowCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
+    private String annotation;
 
     /**
      * @param inputDataFrame
      */
-    public DataFrameAnnotateRowCommand( DataFrame inputDataFrame ) {
+    public DataFrameAnnotateRowCommand( DataFrame inputDataFrame, String annotation ) {
         this.inputDataFrame = inputDataFrame;
+        this.annotation = annotation;
 
     }
 
@@ -55,7 +57,7 @@ public class DataFrameAnnotateRowCommand implements BFCommand {
         // TODO Auto-generated method stub
         // Translate that to an event which can be subscribed to.... 
         // The AnnotatorComponent will be subscribed to this event, and will issue some other command event?
-        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame ) );
+        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, annotation ) );
     }
 
 }
