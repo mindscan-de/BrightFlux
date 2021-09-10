@@ -220,6 +220,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmApplyRecipe.setText( "Apply Recipe ..." );
+
+        MenuItem mntmAddAnnotation = new MenuItem( menu, SWT.NONE );
+        mntmAddAnnotation.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                addAnnotation();
+            }
+        } );
+        mntmAddAnnotation.setText( "Add Annotation" );
     }
 
     /**
@@ -320,6 +329,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private void createSparseDataframe() {
         dispatchCommand( DataFrameCommandFactory.createSparseDataFrame() );
+    }
+
+    private void addAnnotation() {
+        dispatchCommand( DataFrameCommandFactory.annotateRow( 1, ingestedDF, "This is my new annotation for this row...." ) );
     }
 
     private void dispatchCommand( BFCommand command ) {
