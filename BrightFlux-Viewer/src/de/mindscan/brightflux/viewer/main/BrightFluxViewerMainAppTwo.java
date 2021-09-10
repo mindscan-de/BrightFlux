@@ -41,6 +41,7 @@ import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
@@ -55,6 +56,9 @@ public class BrightFluxViewerMainAppTwo {
 
     protected Shell shellBFViewerMainApp;
     private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
+
+    // Business Level code / component.
+    private AnnotatorComponent annotatorComponent = new AnnotatorComponent();
 
     /**
      * Launch the application.
@@ -137,6 +141,11 @@ public class BrightFluxViewerMainAppTwo {
         }
         if (outlineViewComposite instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) outlineViewComposite).setProjectRegistry( projectRegistry );
+        }
+
+        // some business logic comes here too
+        if (annotatorComponent instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) annotatorComponent).setProjectRegistry( projectRegistry );
         }
 
     }
