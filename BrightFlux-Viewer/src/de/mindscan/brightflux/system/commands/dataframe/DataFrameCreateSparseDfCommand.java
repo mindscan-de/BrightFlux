@@ -48,7 +48,7 @@ public class DataFrameCreateSparseDfCommand implements BFCommand {
         DataFrameImpl newDataFrame = new DataFrameImpl( "logAnalysisFrame" );
         newDataFrame.addColumn( ss );
 
-        BFEventFactory.dataframeCreated( newDataFrame );
+        eventConsumer.accept( BFEventFactory.dataframeCreated( newDataFrame ) );
     }
 
 }
