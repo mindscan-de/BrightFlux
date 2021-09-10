@@ -80,6 +80,10 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 // x.getDataFrame()
 
                 System.out.println( "We want to annotate the dataframe, with the following text? Using the following String: '" + x.getAnnotation() + "'" );
+
+                // TODO: 
+                // we might want to send somethjing around, that we updated the dataframe - maybe the dataframe 
+                // should be able to do this on its own... but this kind of listeners are just a way to loose track of listeners and memory.
             }
         };
         // TODO: register for logdata analysis annotate events, and do the annotation accordingly on the correct dataframe.
