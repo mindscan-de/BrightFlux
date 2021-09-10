@@ -31,6 +31,7 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 
 /**
@@ -57,7 +58,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
         // TODO: register for dataframe created events, look for dataframes with certain name
         //       keep reference to it.
-        BFEventListener listener = new BFEventListenerAdapter() {
+        BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof DataFrameCreatedEvent) {
@@ -69,9 +70,20 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( DataFrameCreatedEvent.class, listener );
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameCreatedEvent.class, dfCreatedListener );
 
-        // TODO: register for logdata analysis annotate events, and do the annotation accordingly on the correct dataframe. 
+        BFEventListener dfAnnotateListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                DataFrameAnnotateRowEvent x = ((DataFrameAnnotateRowEvent) event);
+
+                // x.getDataFrame()
+
+                System.out.println( "We want to annotate the dataframe, with the following text? Using the following String: '" + x.getAnnotation() + "'" );
+            }
+        };
+        // TODO: register for logdata analysis annotate events, and do the annotation accordingly on the correct dataframe.
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameAnnotateRowEvent.class, dfAnnotateListener );
     }
 
     /**
