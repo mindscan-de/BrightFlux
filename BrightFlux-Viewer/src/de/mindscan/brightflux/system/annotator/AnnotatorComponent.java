@@ -32,7 +32,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
-import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -70,7 +69,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, listener );
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameCreatedEvent.class, listener );
 
         // TODO: register for logdata analysis annotate events, and do the annotation accordingly on the correct dataframe. 
     }
