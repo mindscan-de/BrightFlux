@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.system.commands.dataframe.DataFrameCreateSparseDfCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameFilterCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameSelectAndFilterCommand;
@@ -78,6 +79,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand alterDataframeAddColumn( DataFrame inputDataFrame, String newColumnName ) {
         return null;
+    }
+
+    public static BFCommand createSparseDataFrame() {
+        return new DataFrameCreateSparseDfCommand();
     }
 
 }
