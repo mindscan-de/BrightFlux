@@ -41,6 +41,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
+import de.mindscan.brightflux.viewer.parts.UIEvents;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 
 /**
  * 
@@ -49,6 +51,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private Table table;
 
     private DataFrame logAnalysisFrame = null;
+
+    private StyledText annotatedStyledText;
 
     /**
      * Create the composite.
@@ -65,7 +69,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
+        BFEventListener annotationDfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFAbstractDataFrameEvent) {
@@ -77,7 +81,23 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameCreated, dfCreatedListener );
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameCreated, annotationDfCreatedListener );
+
+        BFEventListener dataFrameRowSelectionListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                DataFrameRowSelectedEvent x = (DataFrameRowSelectedEvent) event;
+
+                int rowIndex = x.getSelectedIndex();
+                Object rowItem = x.getSelectedItem();
+                annotatedStyledText.setText( String.format( " %d : %s", rowIndex, rowItem ) );
+
+                // ok someone selected a row - we should do something....
+                // we might want too update the content of a textfield
+                // we might want to save a previous content of a textfield if changed.
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, dataFrameRowSelectionListener );
 
     }
 
@@ -93,7 +113,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        StyledText styledText = new StyledText( composite_1, SWT.BORDER );
+        annotatedStyledText = new StyledText( composite_1, SWT.BORDER );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
         Composite composite_2 = new Composite( sashForm, SWT.NONE );
