@@ -31,12 +31,12 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 /**
  * 
  */
-public class AnnotationDataFrameCreated extends BFAbstractDataFrameEvent implements BFEvent {
+public class AnnotationDataFrameCreatedEvent extends BFAbstractDataFrameEvent implements BFEvent {
 
     /**
      * @param dataFrame
      */
-    public AnnotationDataFrameCreated( DataFrame dataFrame ) {
+    public AnnotationDataFrameCreatedEvent( DataFrame dataFrame ) {
         super( dataFrame );
     }
 

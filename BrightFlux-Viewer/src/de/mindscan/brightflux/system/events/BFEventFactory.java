@@ -29,7 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreated;
+import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 
@@ -47,7 +47,7 @@ public class BFEventFactory {
     }
 
     public static BFEvent annotationDataframeCreated( DataFrame dataFrame ) {
-        return new AnnotationDataFrameCreated( dataFrame );
+        return new AnnotationDataFrameCreatedEvent( dataFrame );
     }
 
     public static BFEvent recipeSaveSucceeded( Path targetFile ) {
