@@ -51,7 +51,7 @@ import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
  */
 public class AnnotatorComponent implements ProjectRegistryParticipant {
 
-    DataFrame logAnalysisFrame = null;
+    private DataFrame logAnalysisFrame = null;
 
     /**
      * 
