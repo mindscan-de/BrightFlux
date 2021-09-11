@@ -33,14 +33,22 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
+import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
  * 
  */
 public class BFAnnotationConsoleViewComposite extends Composite implements ProjectRegistryParticipant {
     private Table table;
+
+    private DataFrame logAnalysisFrame = null;
 
     /**
      * Create the composite.
@@ -57,8 +65,20 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Register register events...
-        // 
+        BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof DataFrameCreatedEvent) {
+                    DataFrame frameToAnnotate = ((DataFrameCreatedEvent) event).getDataFrame();
+                    if ("logAnalysisFrame".equals( frameToAnnotate.getName() )) {
+                        // copy reference for the loganalysis frame
+                        BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
+                    }
+                }
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, dfCreatedListener );
+
     }
 
     private void createContent() {
@@ -91,6 +111,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
+
     }
 
 }
