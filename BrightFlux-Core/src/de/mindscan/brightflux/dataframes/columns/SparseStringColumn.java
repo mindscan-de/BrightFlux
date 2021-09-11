@@ -56,4 +56,12 @@ public class SparseStringColumn extends SparseColumn<String> {
         return newColumn;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setRaw( int index, Object element ) {
+        set( index, String.valueOf( element ) );
+    }
+
 }
