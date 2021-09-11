@@ -31,8 +31,8 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -72,8 +72,8 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                if (event instanceof DataFrameCreatedEvent) {
-                    DataFrame frameToAnnotate = ((DataFrameCreatedEvent) event).getDataFrame();
+                if (event instanceof AnnotationDataFrameCreatedEvent) {
+                    DataFrame frameToAnnotate = ((AnnotationDataFrameCreatedEvent) event).getDataFrame();
                     if ("logAnalysisFrame".equals( frameToAnnotate.getName() )) {
                         AnnotatorComponent.this.logAnalysisFrame = frameToAnnotate;
                         System.out.println( "Found the annotator dataframe" );
@@ -81,7 +81,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( DataFrameCreatedEvent.class, dfCreatedListener );
+        projectRegistry.getEventDispatcher().registerEventListener( AnnotationDataFrameCreatedEvent.class, dfCreatedListener );
 
         BFEventListener dfAnnotateListener = new BFEventListenerAdapter() {
             @Override
