@@ -34,6 +34,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.parts.mv.BFAnnotationConsoleViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppConsoleViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFDataFrameQueryTerminalViewComposite;
@@ -46,6 +47,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
     private BFAppLogViewComposite appLog;
     private BFAppConsoleViewComposite appConsole;
     private BFDataFrameQueryTerminalViewComposite appQueryTerminal;
+    private BFAnnotationConsoleViewComposite annotationsComposite;
 
     /**
      * Create the composite.
@@ -78,6 +80,11 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         if (appQueryTerminal instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) appQueryTerminal).setProjectRegistry( this.projectRegistry );
         }
+
+        if (annotationsComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) annotationsComposite).setProjectRegistry( this.projectRegistry );
+        }
+
     }
 
     private void buildLayout() {
@@ -101,6 +108,11 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         tbtmQueryTerminal.setText( "Query Terminal" );
         appQueryTerminal = new BFDataFrameQueryTerminalViewComposite( tabFolder, SWT.NONE );
         tbtmQueryTerminal.setControl( appQueryTerminal );
+
+        CTabItem tbtmAnnotations = new CTabItem( tabFolder, SWT.NONE );
+        tbtmAnnotations.setText( "Annotations" );
+        annotationsComposite = new BFAnnotationConsoleViewComposite( tabFolder, SWT.NONE );
+        tbtmAnnotations.setControl( annotationsComposite );
 
         tabFolder.setSelection( tbtmQueryTerminal );
     }
