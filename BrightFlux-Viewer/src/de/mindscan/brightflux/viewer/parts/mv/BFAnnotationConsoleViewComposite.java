@@ -39,7 +39,7 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
@@ -68,8 +68,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                if (event instanceof DataFrameCreatedEvent) {
-                    DataFrame frameToAnnotate = ((DataFrameCreatedEvent) event).getDataFrame();
+                if (event instanceof BFAbstractDataFrameEvent) {
+                    DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
                     if ("logAnalysisFrame".equals( frameToAnnotate.getName() )) {
                         // copy reference for the loganalysis frame
                         BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
@@ -77,7 +77,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, dfCreatedListener );
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameCreated, dfCreatedListener );
 
     }
 

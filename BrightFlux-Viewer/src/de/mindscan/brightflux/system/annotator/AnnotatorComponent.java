@@ -32,6 +32,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
 
 /**
@@ -72,8 +73,8 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                if (event instanceof AnnotationDataFrameCreatedEvent) {
-                    DataFrame frameToAnnotate = ((AnnotationDataFrameCreatedEvent) event).getDataFrame();
+                if (event instanceof BFAbstractDataFrameEvent) {
+                    DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
                     if ("logAnalysisFrame".equals( frameToAnnotate.getName() )) {
                         AnnotatorComponent.this.logAnalysisFrame = frameToAnnotate;
                         System.out.println( "Found the annotator dataframe" );
