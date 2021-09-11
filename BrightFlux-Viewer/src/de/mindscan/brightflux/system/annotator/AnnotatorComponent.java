@@ -37,6 +37,17 @@ import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
  * but one which provides some business logic for log data analysis 
+ * 
+ * This whole annotator component will probably refactored, when some mechanics will be understood and when we 
+ * introduce the log analysis project file, then we probably have a different structure. but for now this thing
+ * is just learning how a business component without a gui may work in that command and event dispatcher system
+ * 
+ * Maybe we will have generic commands in future, where each component registers itself and says which commands
+ * it will be serving. Such that not only the event dispatcher has a listener, but also the commands have their 
+ * own listeners as well. This is useful, because we already have one command which directly translates this 
+ * command into an event, which then is routed here due to a listener, to process...
+ * 
+ * Having a specialized command and event might not be the best idea, but let's see.
  */
 public class AnnotatorComponent implements ProjectRegistryParticipant {
 
@@ -80,6 +91,10 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 // x.getDataFrame()
 
                 System.out.println( "We want to annotate the dataframe, with the following text? Using the following String: '" + x.getAnnotation() + "'" );
+
+                // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
+                // logAnalysisFrame.setRawValue( "h1.ts", 1, x.getTimestamp() );
+                logAnalysisFrame.setRawValue( "annotation", x.getRow(), x.getAnnotation() );
 
                 // TODO: 
                 // we might want to send somethjing around, that we updated the dataframe - maybe the dataframe 
