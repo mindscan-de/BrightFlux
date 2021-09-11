@@ -23,43 +23,29 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events;
-
-import java.nio.file.Path;
+package de.mindscan.brightflux.system.events.dataframe;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreated;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 
 /**
  * 
  */
-public class BFEventFactory {
+public class AnnotationDataFrameCreated extends BFAbstractDataFrameEvent implements BFEvent {
 
-    public static BFEvent dataframeLoaded( DataFrame dataFrame ) {
-        return new DataFrameLoadedEvent( dataFrame );
+    /**
+     * @param dataFrame
+     */
+    public AnnotationDataFrameCreated( DataFrame dataFrame ) {
+        super( dataFrame );
     }
 
-    public static BFEvent dataframeCreated( DataFrame dataFrame ) {
-        return new DataFrameCreatedEvent( dataFrame );
-    }
-
-    public static BFEvent annotationDataframeCreated( DataFrame dataFrame ) {
-        return new AnnotationDataFrameCreated( dataFrame );
-    }
-
-    public static BFEvent recipeSaveSucceeded( Path targetFile ) {
-        return new RecipeSaveResultEvent( targetFile, true );
-    }
-
-    public static BFEvent recipeSaveFailed( Path targetFile ) {
-        return new RecipeSaveResultEvent( targetFile, false );
-    }
-
-    public static BFEvent recipeSaveResult( Path targetFile, boolean success ) {
-        return new RecipeSaveResultEvent( targetFile, success );
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getBFEventMessage() {
+        return "Annotation Dataframe created. ";
     }
 
 }
