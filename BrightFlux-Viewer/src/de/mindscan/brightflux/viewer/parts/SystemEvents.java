@@ -29,6 +29,7 @@ import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
 import de.mindscan.brightflux.system.events.RecipeSaveResultEvent;
+import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 
@@ -44,6 +45,7 @@ public class SystemEvents {
 
     public final static Class<?> DataFrameLoaded = DataFrameLoadedEvent.class;
     public final static Class<?> DataFrameCreated = DataFrameCreatedEvent.class;
+    public final static Class<?> AnnotationDataFrameCreated = AnnotationDataFrameCreatedEvent.class;
 
     public final static Class<?> CommandExecutionException = CommandExecutionExceptionEvent.class;
     public final static Class<?> CommandExecutionFinished = CommandExecutionFinishedEvent.class;
