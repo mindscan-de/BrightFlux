@@ -23,20 +23,47 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts;
+package de.mindscan.brightflux.viewer.uievents;
 
-import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
-import de.mindscan.brightflux.viewer.uievents.DataFrameSelectedEvent;
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
 /**
  * 
  */
-public class UIEvents {
+public class DataFrameRowSelectedEvent extends BFAbstractDataFrameEvent implements UIBFEvent {
 
-    // Broadcast event, that a Frame was selected in the UI
-    public final static Class<?> DataFrameSelectedEvent = DataFrameSelectedEvent.class;
+    private int selectedIndex;
+    private Object selectedItem;
 
-    // Broadcast event, that a row was selected in the UI
-    public final static Class<?> DataFrameRowSelectedEvent = DataFrameRowSelectedEvent.class;
+    /**
+     * 
+     */
+    public DataFrameRowSelectedEvent( DataFrame dataFrame, int selectedIndex, Object selectedItem ) {
+        super( dataFrame );
+        this.selectedIndex = selectedIndex;
+        this.selectedItem = selectedItem;
+    }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getBFEventMessage() {
+        return String.format( "DataFrame '%s' Rows XYZ selected.", getDataFrame().getName() );
+    }
+
+    /**
+     * @return the selectedIndex
+     */
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    /**
+     * @return the selectedItem
+     */
+    public Object getSelectedItem() {
+        return selectedItem;
+    }
 }

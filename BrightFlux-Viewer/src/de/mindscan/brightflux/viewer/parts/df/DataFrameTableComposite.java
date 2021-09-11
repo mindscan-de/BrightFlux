@@ -47,6 +47,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -56,6 +57,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
+import de.mindscan.brightflux.viewer.uievents.UIBFEvent;
 
 /**
  * 
@@ -88,6 +91,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void buildLayout() {
         tableViewer = new TableViewer( this, SWT.BORDER | SWT.FULL_SELECTION );
         table = tableViewer.getTable();
+        table.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (e.item != null && e.item.getData() != null) {
+                    DataFrameRow rowData = (DataFrameRow) e.item.getData();
+                    selectDataFrameRow( rowData.getRowIndex(), rowData );
+                }
+            }
+        } );
 
         table.addMenuDetectListener( new MenuDetectListener() {
             public void menuDetected( MenuDetectEvent e ) {
@@ -119,7 +131,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmSaveAsRecipe.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
                                 FileDescriptions.BFRECIPE, //
                                 path -> {
@@ -301,6 +312,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
     }
 
+    private void selectDataFrameRow( int rowIndex, Object rowData ) {
+        dispatchEvent( new DataFrameRowSelectedEvent( ingestedDF, rowIndex, rowData ) );
+    }
+
     private void alterDFAppendColumnWithAnnotations( DataFrame dataFrame ) {
         // TODO implement this feature to add a new Column to the current dataframe.
         // dispatchCommand( DataFrameCommandFactory.alterDataframeAddColumn( dataFrame, "annotations" ) );
@@ -335,6 +350,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void dispatchCommand( BFCommand command ) {
         if (projectRegistry != null) {
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
+    }
+
+    private void dispatchEvent( UIBFEvent event ) {
+        if (projectRegistry != null) {
+            projectRegistry.getEventDispatcher().dispatchEvent( event );
         }
     }
 }
