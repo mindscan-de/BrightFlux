@@ -332,7 +332,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void addAnnotation() {
-        dispatchCommand( DataFrameCommandFactory.annotateRow( 1, ingestedDF, "This is my new annotation for this row...." ) );
+        dispatchCommand( DataFrameCommandFactory.annotateRow( ingestedDF, 1, "This is my new annotation for this row...." ) );
     }
 
     private void dispatchCommand( BFCommand command ) {

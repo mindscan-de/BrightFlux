@@ -39,12 +39,15 @@ public class DataFrameAnnotateRowCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
     private String annotation;
+    private int row;
 
     /**
      * @param inputDataFrame
+     * @param row TODO
      */
-    public DataFrameAnnotateRowCommand( DataFrame inputDataFrame, String annotation ) {
+    public DataFrameAnnotateRowCommand( DataFrame inputDataFrame, int row, String annotation ) {
         this.inputDataFrame = inputDataFrame;
+        this.row = row;
         this.annotation = annotation;
 
     }
@@ -54,10 +57,10 @@ public class DataFrameAnnotateRowCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO Auto-generated method stub
         // Translate that to an event which can be subscribed to.... 
         // The AnnotatorComponent will be subscribed to this event, and will issue some other command event?
-        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, 1, annotation ) );
+        // We should have some kinds of intents or an command to intent translation...
+        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation ) );
     }
 
 }
