@@ -57,7 +57,7 @@ public class DataFrameAnnotateRowCommand implements BFCommand {
         // TODO Auto-generated method stub
         // Translate that to an event which can be subscribed to.... 
         // The AnnotatorComponent will be subscribed to this event, and will issue some other command event?
-        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, annotation ) );
+        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, 1, annotation ) );
     }
 
 }
