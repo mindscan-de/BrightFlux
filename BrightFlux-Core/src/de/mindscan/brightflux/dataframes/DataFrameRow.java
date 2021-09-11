@@ -55,4 +55,6 @@ public interface DataFrameRow {
      */
     public int compareToRaw( String columnName, Object convertedPredicateValue );
 
+    int getRowIndex();
+
 }

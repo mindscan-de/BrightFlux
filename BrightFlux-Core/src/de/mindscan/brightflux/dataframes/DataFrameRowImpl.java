@@ -56,6 +56,11 @@ public class DataFrameRowImpl implements DataFrameRow {
         return maxCols;
     }
 
+    @Override
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
     /** 
      * {@inheritDoc}
      */
