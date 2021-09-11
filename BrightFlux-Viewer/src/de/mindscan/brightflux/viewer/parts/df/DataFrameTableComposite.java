@@ -144,21 +144,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmAppendColumnAnnotations.setText( "Append Column Annotations" );
 
-        MenuItem mntmCreate = new MenuItem( menu_DataFrame, SWT.CASCADE );
-        mntmCreate.setText( "Create" );
-
-        Menu menu_5 = new Menu( mntmCreate );
-        mntmCreate.setMenu( menu_5 );
-
-        MenuItem mntmLoganalysisframe = new MenuItem( menu_5, SWT.NONE );
-        mntmLoganalysisframe.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                createSparseDataframe();
-            }
-        } );
-        mntmLoganalysisframe.setText( "logAnalysisFrame" );
-
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
         mntmSaveToFile.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -220,6 +205,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmApplyRecipe.setText( "Apply Recipe ..." );
+
+        MenuItem mntmLoganalysisframe = new MenuItem( menu, SWT.NONE );
+        mntmLoganalysisframe.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                createSparseDataframe();
+            }
+        } );
+        mntmLoganalysisframe.setText( "Enable Annotations" );
 
         MenuItem mntmAddAnnotation = new MenuItem( menu, SWT.NONE );
         mntmAddAnnotation.addSelectionListener( new SelectionAdapter() {
