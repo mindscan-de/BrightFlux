@@ -469,18 +469,8 @@ public class DataFrameImpl implements DataFrame {
     }
 
     @Override
-    public void setRawValue( int columnIndex, int rowIndex, Object value ) {
-        setAt( columnIndex, rowIndex, value );
-    }
-
-    @Override
     public void setAt( int columnIndex, int rowIndex, Object value ) {
         columns[columnIndex].setRaw( rowIndex, value );
-    }
-
-    @Override
-    public void setRawValue( String columnName, int rowIndex, Object value ) {
-        setAt( columnName, rowIndex, value );
     }
 
     @Override

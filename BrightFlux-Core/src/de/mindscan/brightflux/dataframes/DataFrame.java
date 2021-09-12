@@ -103,10 +103,6 @@ public interface DataFrame {
 
     int getDataFrameGeneration();
 
-    void setRawValue( int column, int row, Object value );
-
-    void setRawValue( String columnName, int row, Object value );
-
     boolean isPresent( String columName, int row );
 
     boolean isPresent( int column, int row );

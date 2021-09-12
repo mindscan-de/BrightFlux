@@ -95,10 +95,10 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
                 // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
                 // logAnalysisFrame.setRawValue( "h1.ts", 1, x.getTimestamp() );
-                logAnalysisFrame.setRawValue( "annotation", x.getRow(), x.getAnnotation() );
+                logAnalysisFrame.setAt( "annotation", x.getRow(), x.getAnnotation() );
 
                 // TODO: 
-                // we might want to send somethjing around, that we updated the dataframe - maybe the dataframe 
+                // we might want to send something around, that we updated the dataframe - maybe the dataframe 
                 // should be able to do this on its own... but this kind of listeners are just a way to loose track of listeners and memory.
             }
         };
