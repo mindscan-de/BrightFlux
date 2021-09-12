@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands.dataframe;
+package de.mindscan.brightflux.system.commands.annotations;
 
 import java.util.function.Consumer;
 
@@ -60,6 +60,8 @@ public class DataFrameAnnotateRowCommand implements BFCommand {
         // Translate that to an event which can be subscribed to.... 
         // The AnnotatorComponent will be subscribed to this event, and will issue some other command event?
         // We should have some kinds of intents or an command to intent translation...
+
+        // TODO: refactor to the use of the factory.
         eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation ) );
     }
 
