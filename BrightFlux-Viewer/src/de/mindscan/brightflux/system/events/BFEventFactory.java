@@ -32,6 +32,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
+import de.mindscan.brightflux.system.events.recipes.RecipeSaveResultEvent;
 
 /**
  * 

@@ -23,9 +23,11 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events;
+package de.mindscan.brightflux.system.events.recipes;
 
 import java.nio.file.Path;
+
+import de.mindscan.brightflux.system.events.BFAbstractEvent;
 
 /**
  * 
