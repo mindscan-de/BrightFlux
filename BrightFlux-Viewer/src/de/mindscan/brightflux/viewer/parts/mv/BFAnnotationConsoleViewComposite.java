@@ -48,9 +48,14 @@ import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
  * 
  */
 public class BFAnnotationConsoleViewComposite extends Composite implements ProjectRegistryParticipant {
+
+    private static final String ANNOTATION_COLUMN_NAME = "annotation";
+
     private Table table;
 
     private DataFrame logAnalysisFrame = null;
+    private int previouslySelectedIndex = -1;
+    private Object previouslySelectedItem = null;
 
     private StyledText annotatedStyledText;
 
@@ -90,11 +95,18 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
                 int rowIndex = x.getSelectedIndex();
                 Object rowItem = x.getSelectedItem();
-                annotatedStyledText.setText( String.format( " %d : %s", rowIndex, rowItem ) );
 
-                // ok someone selected a row - we should do something....
-                // we might want too update the content of a textfield
-                // we might want to save a previous content of a textfield if changed.
+                if ((rowIndex != previouslySelectedIndex) || (rowItem != previouslySelectedItem)) {
+                    // we want to update the content of the annotations by reading the text field
+                    savePreviousState( previouslySelectedIndex, previouslySelectedItem );
+
+                    // we update the text field with the previously written annotation. 
+                    prepareNewState( rowIndex, rowItem );
+
+                    previouslySelectedIndex = rowIndex;
+                    previouslySelectedItem = rowItem;
+                }
+
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, dataFrameRowSelectionListener );
@@ -126,6 +138,49 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
         sashForm.setWeights( new int[] { 1, 1 } );
+    }
+
+    protected void savePreviousState( int previousRow, Object previousItem ) {
+        // TODO: This is rather lowlevel code which should be handled via command and event stuff.
+        // TODO: This is just proof of concept code right now
+        // TODO: use some of the information of the previous Item
+        if (isDataFrameValid()) {
+            if (previousRow != -1) {
+
+                String newText = annotatedStyledText.getText();
+
+                // TODO: if the string is empty, the rawValue should be set to "N/A" (not available instead)
+                if (newText.isBlank()) {
+                    // null is internal representation of N/A
+                    // TODO we must introduce setting a NA value instead.
+                    logAnalysisFrame.setRawValue( ANNOTATION_COLUMN_NAME, previousRow, null );
+                }
+                else {
+                    logAnalysisFrame.setRawValue( ANNOTATION_COLUMN_NAME, previousRow, newText );
+                }
+                System.out.println( "annotation saved." );
+            }
+        }
+    }
+
+    /**
+     * @param rowItem 
+     * 
+     */
+    protected void prepareNewState( int newRowIndex, Object rowItem ) {
+        if (isDataFrameValid()) {
+            if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, newRowIndex )) {
+                String previousAnnotation = (String) logAnalysisFrame.getRawValue( ANNOTATION_COLUMN_NAME, newRowIndex );
+                annotatedStyledText.setText( previousAnnotation );
+            }
+            else {
+                annotatedStyledText.setText( "" );
+            }
+        }
+    }
+
+    private boolean isDataFrameValid() {
+        return logAnalysisFrame != null;
     }
 
     @Override
