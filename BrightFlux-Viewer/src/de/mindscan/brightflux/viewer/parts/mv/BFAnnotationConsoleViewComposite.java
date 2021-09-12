@@ -98,10 +98,10 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
                 if ((rowIndex != previouslySelectedIndex) || (rowItem != previouslySelectedItem)) {
                     // we want to update the content of the annotations by reading the text field
-                    savePreviousState( previouslySelectedIndex, previouslySelectedItem );
+                    savePreviousAnnotation( previouslySelectedIndex, previouslySelectedItem );
 
                     // we update the text field with the previously written annotation. 
-                    prepareNewState( rowIndex, rowItem );
+                    prepareCurrentAnnotation( rowIndex, rowItem );
 
                     previouslySelectedIndex = rowIndex;
                     previouslySelectedItem = rowItem;
@@ -140,7 +140,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         sashForm.setWeights( new int[] { 1, 1 } );
     }
 
-    protected void savePreviousState( int previousRow, Object previousItem ) {
+    private void savePreviousAnnotation( int previousRow, Object previousItem ) {
         // TODO: This is rather lowlevel code which should be handled via command and event stuff.
         // TODO: This is just proof of concept code right now
         // TODO: use some of the information of the previous Item
@@ -163,14 +163,10 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         }
     }
 
-    /**
-     * @param rowItem 
-     * 
-     */
-    protected void prepareNewState( int newRowIndex, Object rowItem ) {
+    private void prepareCurrentAnnotation( int newRowIndex, Object rowItem ) {
         if (isDataFrameValid()) {
             if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, newRowIndex )) {
-                String previousAnnotation = (String) logAnalysisFrame.getRawValue( ANNOTATION_COLUMN_NAME, newRowIndex );
+                String previousAnnotation = (String) logAnalysisFrame.getAt( ANNOTATION_COLUMN_NAME, newRowIndex );
                 annotatedStyledText.setText( previousAnnotation );
             }
             else {
