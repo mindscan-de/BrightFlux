@@ -32,6 +32,7 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -126,6 +127,11 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         annotatedStyledText = new StyledText( composite_1, SWT.BORDER );
+        annotatedStyledText.setLeftMargin( 3 );
+        annotatedStyledText.setBottomMargin( 3 );
+        annotatedStyledText.setTopMargin( 3 );
+        annotatedStyledText.setRightMargin( 3 );
+        annotatedStyledText.setFont( SWTResourceManager.getFont( "Arial", 12, SWT.NORMAL ) );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
         Composite composite_2 = new Composite( sashForm, SWT.NONE );
