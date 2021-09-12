@@ -488,6 +488,16 @@ public class DataFrameImpl implements DataFrame {
         columnsMap.get( columnName ).setRaw( row, value );
     }
 
+    @Override
+    public boolean isPresent( int column, int row ) {
+        return columns[column].isPresent( row );
+    }
+
+    @Override
+    public boolean isPresent( String columnName, int row ) {
+        return columnsMap.get( columnName ).isPresent( row );
+    }
+
 //    // column-names
 //    // columns
 //    // rows

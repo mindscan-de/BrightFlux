@@ -103,4 +103,8 @@ public interface DataFrame {
 
     Object getRawValue( String columnName, int row );
 
+    boolean isPresent( String columName, int row );
+
+    boolean isPresent( int column, int row );
+
 }
