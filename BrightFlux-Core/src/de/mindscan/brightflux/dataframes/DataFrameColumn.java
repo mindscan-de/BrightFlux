@@ -62,6 +62,8 @@ public interface DataFrameColumn<T> {
 
     public abstract void set( int index, T element );
 
+    public abstract void setNA( int index );
+
     public abstract void setRaw( int index, Object element );
 
     public abstract DataFrameColumn<T> cloneColumnEmpty();

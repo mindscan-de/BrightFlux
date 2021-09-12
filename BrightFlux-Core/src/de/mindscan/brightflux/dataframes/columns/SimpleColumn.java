@@ -105,4 +105,8 @@ public abstract class SimpleColumn<T> extends DataFrameColumnBase<T> {
         // TODO: implement this, such that we can override the value at acertain position.
     }
 
+    @Override
+    public void setNA( int index ) {
+        // TODO: implement this, such that we can override the value at acertain position.
+    }
 }
