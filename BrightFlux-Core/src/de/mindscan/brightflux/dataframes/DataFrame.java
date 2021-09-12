@@ -61,6 +61,14 @@ public interface DataFrame {
 
     Object getAt( String columnName, int rowIndex );
 
+    void setAt( int column, int row, Object value );
+
+    void setAt( String columnName, int row, Object value );
+
+    void setNA( int columnIndex, int rowIndex );
+
+    void setNA( String columnName, int rowIndex );
+
     DataFrame head();
 
     DataFrame tail();

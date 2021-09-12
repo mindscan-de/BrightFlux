@@ -469,23 +469,43 @@ public class DataFrameImpl implements DataFrame {
     }
 
     @Override
-    public void setRawValue( int column, int row, Object value ) {
-        columns[column].setRaw( row, value );
+    public void setRawValue( int columnIndex, int rowIndex, Object value ) {
+        setAt( columnIndex, rowIndex, value );
     }
 
     @Override
-    public void setRawValue( String columnName, int row, Object value ) {
-        columnsMap.get( columnName ).setRaw( row, value );
+    public void setAt( int columnIndex, int rowIndex, Object value ) {
+        columns[columnIndex].setRaw( rowIndex, value );
     }
 
     @Override
-    public boolean isPresent( int column, int row ) {
-        return columns[column].isPresent( row );
+    public void setRawValue( String columnName, int rowIndex, Object value ) {
+        setAt( columnName, rowIndex, value );
+    }
+
+    @Override
+    public void setAt( String columnName, int rowIndex, Object value ) {
+        columnsMap.get( columnName ).setRaw( rowIndex, value );
+    }
+
+    @Override
+    public boolean isPresent( int columnIndex, int row ) {
+        return columns[columnIndex].isPresent( row );
+    }
+
+    @Override
+    public void setNA( int columnIndex, int rowIndex ) {
+        columns[columnIndex].setNA( rowIndex );
     }
 
     @Override
     public boolean isPresent( String columnName, int row ) {
         return columnsMap.get( columnName ).isPresent( row );
+    }
+
+    @Override
+    public void setNA( String columnName, int rowIndex ) {
+        columnsMap.get( columnName ).setNA( rowIndex );
     }
 
 //    // column-names
