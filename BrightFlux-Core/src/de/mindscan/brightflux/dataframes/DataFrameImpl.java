@@ -469,16 +469,6 @@ public class DataFrameImpl implements DataFrame {
     }
 
     @Override
-    public Object getRawValue( int column, int row ) {
-        return columns[column].get( row );
-    }
-
-    @Override
-    public Object getRawValue( String columnName, int row ) {
-        return columnsMap.get( columnName ).get( row );
-    }
-
-    @Override
     public void setRawValue( int column, int row, Object value ) {
         columns[column].setRaw( row, value );
     }
