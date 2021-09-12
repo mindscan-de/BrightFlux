@@ -152,19 +152,14 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         // TODO: use some of the information of the previous Item
         if (isDataFrameValid()) {
             if (previousRow != -1) {
-
                 String newText = annotatedStyledText.getText();
 
-                // TODO: if the string is empty, the rawValue should be set to "N/A" (not available instead)
                 if (newText.isBlank()) {
-                    // null is internal representation of N/A
-                    // TODO we must introduce setting a NA value instead.
-                    logAnalysisFrame.setRawValue( ANNOTATION_COLUMN_NAME, previousRow, null );
+                    logAnalysisFrame.setNA( ANNOTATION_COLUMN_NAME, previousRow );
                 }
                 else {
-                    logAnalysisFrame.setRawValue( ANNOTATION_COLUMN_NAME, previousRow, newText );
+                    logAnalysisFrame.setAt( ANNOTATION_COLUMN_NAME, previousRow, newText );
                 }
-                System.out.println( "annotation saved." );
             }
         }
     }
