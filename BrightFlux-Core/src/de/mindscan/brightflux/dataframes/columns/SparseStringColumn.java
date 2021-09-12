@@ -61,7 +61,12 @@ public class SparseStringColumn extends SparseColumn<String> {
      */
     @Override
     public void setRaw( int index, Object element ) {
-        set( index, String.valueOf( element ) );
+        if (element != null) {
+            set( index, String.valueOf( element ) );
+        }
+        else {
+            setNA( index );
+        }
     }
 
 }

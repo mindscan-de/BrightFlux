@@ -109,4 +109,11 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
         columnValues.put( Integer.valueOf( index ), element );
     }
 
+    /**
+     * @param index
+     */
+    protected void setNA( int index ) {
+        columnValues.remove( Integer.valueOf( index ) );
+    }
+
 }
