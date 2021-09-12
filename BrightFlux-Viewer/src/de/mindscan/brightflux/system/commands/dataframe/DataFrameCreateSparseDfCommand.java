@@ -43,7 +43,7 @@ public class DataFrameCreateSparseDfCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        SparseStringColumn ss = new SparseStringColumn( "annotations" );
+        SparseStringColumn ss = new SparseStringColumn( "annotation" );
 
         DataFrameImpl newDataFrame = new DataFrameImpl( "logAnalysisFrame" );
         newDataFrame.addColumn( ss );
