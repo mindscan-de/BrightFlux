@@ -419,8 +419,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public void appendJournal( DataFrameJournalEntryType entryType, String message ) {
-        dataFrameJournal.addJournalEntry( DataFrameJournal.create( entryType, message ) );
-
+        dataFrameJournal.addJournalEntry( entryType, message );
     }
 
     /** 

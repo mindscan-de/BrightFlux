@@ -69,16 +69,15 @@ public class DataFrameJournal {
         journal.add( entry );
     }
 
+    public void addJournalEntry( DataFrameJournalEntryType entryType, String message ) {
+        journal.add( createEntry( entryType, message ) );
+    }
+
     public void addAllJournalEntries( Collection<DataFrameJournalEntry> entries ) {
         journal.addAll( entries );
     }
 
-    /**
-     * @param message
-     * @return
-     */
-    public static DataFrameJournalEntry create( DataFrameJournalEntryType entryType, String message ) {
-        // TODO maybe use a factory instead.
+    public static DataFrameJournalEntry createEntry( DataFrameJournalEntryType entryType, String message ) {
         return new DataFrameJournalEntry( entryType, message );
     }
 
