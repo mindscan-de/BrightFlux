@@ -80,18 +80,25 @@ layer of abstraction. Doing such things too early will cause more harm then good
 
 Some of the planned features are: 
 
+* Annonate Logmessages
+  * save annotations to an analysis project file
+  * load annotations from analyis project file for a file
+  * use annotations for the analysis writeup / create a simple report from the annotations
+* Help with writing up the analysis, eg. using templates  
+  * use of templates for creating a report
 * Treat logs like data frames and use transformations on columns
   * save the transformations and dataframe configuration to an analysis project file
+* Support original Index
+  *  copy the original index in a derived dataframe 
+  *  annotate the original dataframe by annotating the derived dataframes using their original index id.
+* Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
+  * DataSource Tokenizer for Dataframe Columns  
 * Create Sequence-Diagrams from Logmessages / log-dataframes
 * Create Activity-Diagrams from Logmessages / log-dataframes
 * Have Swimlanes for different Components
-  * save swimplane configuration into an analysis project file
-* Annonate Logmessages
-  * save the annotations to an analysis project file
-  * use annotations for the analysis writeup
+  * save swimlane configuration into an analysis project file
 * have multiple views / diagram options for the same logs to understand particular system behavior
 * Export the analysis result in short form
-* Help with writing up the analysis, eg. using templates
 * Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
 * Using recipes for reproducing some analysis on a second log
   * using labelling techniques to mark suspicious occurences and make them available for machine learning training
@@ -113,7 +120,6 @@ Some of the planned features are:
 
 
 * indexing dataframes columnwise for future search operations
-* Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
 
 
 * Ingest text files into table oriented dataframes
