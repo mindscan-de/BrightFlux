@@ -29,7 +29,11 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -122,6 +126,22 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
         Composite composite = new Composite( sashForm_1, SWT.NONE );
+        composite.setLayout( new GridLayout( 1, false ) );
+
+        Button btnGenerateReport = new Button( composite, SWT.NONE );
+        btnGenerateReport.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // Someone pressed the button.
+                // We know the analysis frame and the currentFrame, so we can actually generate a report from it...
+                // well building the report should be done elsewhere?
+                // This is just a proof of concept for now.
+                // and an idea, how this can be achieved....
+                // we should be able to go though the annotations, lookup the items at the positions, and then 
+                // generate some text from it, basically.
+            }
+        } );
+        btnGenerateReport.setText( "Generate Report..." );
 
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
