@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts.mv;
 
+import java.util.Iterator;
+
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -39,12 +41,15 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
@@ -58,6 +63,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private Table table;
 
+    private DataFrame currentSelectedDataFrame = null;
     private DataFrame logAnalysisFrame = null;
     private int previouslySelectedIndex = -1;
     private Object previouslySelectedItem = null;
@@ -93,6 +99,20 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameCreated, annotationDfCreatedListener );
 
+        // current Selected Dataframe, not nice yet, but for proof of concept
+        BFEventListenerAdapter listener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
+                currentSelectedDataFrame = dataFrameEvent.getDataFrame();
+
+                // Update View? Show name of selected DataFrame, 
+                // because the Terminal will be sensitive to the selected frame in the MainProjectComposite
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
+
+        // row selection...
         BFEventListener dataFrameRowSelectionListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -132,6 +152,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         btnGenerateReport.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
+
+                buildReport( currentSelectedDataFrame, logAnalysisFrame );
                 // Someone pressed the button.
                 // We know the analysis frame and the currentFrame, so we can actually generate a report from it...
                 // well building the report should be done elsewhere?
@@ -198,6 +220,26 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private boolean isDataFrameValid() {
         return logAnalysisFrame != null;
+    }
+
+    private void buildReport( DataFrame currentSelectedDF, DataFrame logAnalysisDF ) {
+        ReportGeneratorImpl generator = new ReportGeneratorImpl();
+
+        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
+        while (currentDFRowsIterator.hasNext()) {
+            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
+            int rowIndex = dataFrameRow.getRowIndex();
+            if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, rowIndex )) {
+                // we found a candidate to report ...
+                String message = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
+                if (!".".equals( message.trim() )) {
+                    generator.addAnnotationMessage( message );
+                }
+                generator.addDataRow( dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" ) );
+            }
+        }
+
+        System.out.println( generator.build() );
     }
 
     @Override
