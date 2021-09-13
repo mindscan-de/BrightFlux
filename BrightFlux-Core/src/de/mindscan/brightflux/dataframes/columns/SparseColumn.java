@@ -81,7 +81,7 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
      */
     @Override
     public boolean isEmpty() {
-        return this.getSize() == 0;
+        return columnValues.size() == 0 && this.getSize() == 0;
     }
 
     /** 
