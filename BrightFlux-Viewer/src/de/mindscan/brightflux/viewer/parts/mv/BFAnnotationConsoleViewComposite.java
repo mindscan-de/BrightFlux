@@ -31,6 +31,9 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.TextTransfer;
+import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -163,7 +166,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 // generate some text from it, basically.
             }
         } );
-        btnGenerateReport.setText( "Generate Report..." );
+        btnGenerateReport.setText( "Generate and Copy Report..." );
 
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
@@ -238,8 +241,15 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 generator.addDataRow( dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" ) );
             }
         }
+        String report = generator.build();
 
-        System.out.println( generator.build() );
+        System.out.println( report );
+
+        // Actually this should fire the command to show the built string as a report window
+        // or it just copies this quietly into the clipboard.... 
+        TextTransfer textTransfer = TextTransfer.getInstance();
+        Clipboard clipBoard = new Clipboard( this.getShell().getDisplay() );
+        clipBoard.setContents( new String[] { report }, new Transfer[] { textTransfer } );
     }
 
     @Override
