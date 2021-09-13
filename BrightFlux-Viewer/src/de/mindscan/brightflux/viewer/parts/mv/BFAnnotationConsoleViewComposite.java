@@ -235,9 +235,16 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, rowIndex )) {
                 // we found a candidate to report ...
                 String message = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
-                if (!".".equals( message.trim() )) {
+                String trimmed = message.trim();
+
+                if (!".".equals( trimmed ) && !"..".equals( trimmed )) {
                     generator.addAnnotationMessage( message );
                 }
+
+                if ("..".equals( trimmed )) {
+                    generator.addDataRow( "[..]" );
+                }
+
                 generator.addDataRow( dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" ) );
             }
         }
