@@ -242,18 +242,10 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, rowIndex )) {
                 // we found a candidate to report ...
                 String message = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
-                String trimmed = message.trim();
 
-                // check it is not any kind of connector or omit'tor
-                if (!isConnect( trimmed ) && !isOmit( trimmed )) {
-                    generator.addAnnotationMessage( message );
-                }
+                String renderedDataRowContent = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
 
-                if (isOmit( trimmed )) {
-                    generator.addDataRow( "[..]" );
-                }
-
-                generator.addDataRow( dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" ) );
+                generator.appendMessageAndRow( message, renderedDataRowContent );
             }
         }
         String report = generator.build();
@@ -265,14 +257,6 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         TextTransfer textTransfer = TextTransfer.getInstance();
         Clipboard clipBoard = new Clipboard( this.getShell().getDisplay() );
         clipBoard.setContents( new String[] { report }, new Transfer[] { textTransfer } );
-    }
-
-    private boolean isConnect( String trimmed ) {
-        return ".".equals( trimmed );
-    }
-
-    private boolean isOmit( String trimmed ) {
-        return "..".equals( trimmed );
     }
 
     @Override

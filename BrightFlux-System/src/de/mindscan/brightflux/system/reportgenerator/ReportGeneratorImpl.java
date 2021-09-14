@@ -69,4 +69,26 @@ public class ReportGeneratorImpl {
         sb.append( String.format( TEMPLATE, lastMessage, lastRows ) );
     }
 
+    public boolean isOmit( String trimmed ) {
+        return "..".equals( trimmed );
+    }
+
+    public boolean isConnect( String trimmed ) {
+        return ".".equals( trimmed );
+    }
+
+    public void appendMessageAndRow( String message, String renderedDataRowContent ) {
+        String trimmed = message.trim();
+        // check it is not any kind of connector or omit'tor
+        if (!isConnect( trimmed ) && !isOmit( trimmed )) {
+            addAnnotationMessage( message );
+        }
+    
+        if (isOmit( trimmed )) {
+            addDataRow( "[..]" );
+        }
+    
+        addDataRow( renderedDataRowContent );
+    }
+
 }
