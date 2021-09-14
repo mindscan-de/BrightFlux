@@ -52,6 +52,7 @@ import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
  */
 public class AnnotatorComponent implements ProjectRegistryParticipant {
 
+    public static final String ANNOTATION_COLUMN_NAME = "annotation";
     private DataFrame logAnalysisFrame = null;
 
     /**
@@ -66,10 +67,39 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
+        registerAnnotationDFCreateEvent( projectRegistry );
+        registerAnnotationSaveEvent( projectRegistry );
+        registerAnnotateRowEvent( projectRegistry );
+    }
 
-        // TODO: register for dataframe created events, look for dataframes with certain name
-        //       keep reference to it.
+    private void registerAnnotateRowEvent( ProjectRegistry projectRegistry ) {
+        BFEventListener dfAnnotateListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                DataFrameAnnotateRowEvent x = ((DataFrameAnnotateRowEvent) event);
+
+                // TODO: the dataframe should be used to figure out which logAnalysisFrame should be used...
+
+                // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
+                // logAnalysisFrame.setRawValue( "h1.ts", 1, x.getTimestamp() );
+                String newText = x.getAnnotation();
+
+                if (newText.isBlank()) {
+                    logAnalysisFrame.setNA( ANNOTATION_COLUMN_NAME, x.getRow() );
+                }
+                else {
+                    logAnalysisFrame.setAt( ANNOTATION_COLUMN_NAME, x.getRow(), newText );
+                }
+
+                // TODO: 
+                // we might want to send something around, that we updated the dataframe - maybe the dataframe 
+                // should be able to do this on its own... but this kind of listeners are just a way to loose track of listeners and memory.
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameAnnotateRowEvent.class, dfAnnotateListener );
+    }
+
+    private void registerAnnotationDFCreateEvent( ProjectRegistry projectRegistry ) {
         BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -83,27 +113,11 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( AnnotationDataFrameCreatedEvent.class, dfCreatedListener );
+    }
 
-        BFEventListener dfAnnotateListener = new BFEventListenerAdapter() {
-            @Override
-            public void handleEvent( BFEvent event ) {
-                DataFrameAnnotateRowEvent x = ((DataFrameAnnotateRowEvent) event);
+    private void registerAnnotationSaveEvent( ProjectRegistry projectRegistry ) {
+        // TODO Auto-generated method stub
 
-                // x.getDataFrame()
-
-                System.out.println( "We want to annotate the dataframe, with the following text? Using the following String: '" + x.getAnnotation() + "'" );
-
-                // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
-                // logAnalysisFrame.setRawValue( "h1.ts", 1, x.getTimestamp() );
-                logAnalysisFrame.setAt( "annotation", x.getRow(), x.getAnnotation() );
-
-                // TODO: 
-                // we might want to send something around, that we updated the dataframe - maybe the dataframe 
-                // should be able to do this on its own... but this kind of listeners are just a way to loose track of listeners and memory.
-            }
-        };
-        // TODO: register for logdata analysis annotate events, and do the annotation accordingly on the correct dataframe.
-        projectRegistry.getEventDispatcher().registerEventListener( DataFrameAnnotateRowEvent.class, dfAnnotateListener );
     }
 
     /**
