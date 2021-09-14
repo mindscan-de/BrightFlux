@@ -45,10 +45,13 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
@@ -62,7 +65,7 @@ import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
  */
 public class BFAnnotationConsoleViewComposite extends Composite implements ProjectRegistryParticipant {
 
-    private static final String ANNOTATION_COLUMN_NAME = "annotation";
+    private static final String ANNOTATION_COLUMN_NAME = AnnotatorComponent.ANNOTATION_COLUMN_NAME;
 
     private Table table;
 
@@ -72,6 +75,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private Object previouslySelectedItem = null;
 
     private StyledText annotatedStyledText;
+
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the composite.
@@ -88,6 +93,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+
         BFEventListener annotationDfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -192,19 +199,25 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void savePreviousAnnotation( int previousRow, Object previousItem ) {
-        // TODO: This is rather lowlevel code which should be handled via command and event stuff.
-        // TODO: This is just proof of concept code right now
-        // TODO: use some of the information of the previous Item
+        // TODO: use some of the information of the previousItem, 
+
+        // previousRow is the rowindex in the filtered dataset / as of today 2021-09-14 speaking
+        // The real rowIndex should be the originalIndex, which should be part of the DataFrameRow.
+        // previousItem is actually a DataFrameRow.
+
         if (isDataFrameValid()) {
             if (previousRow != -1) {
                 String newText = annotatedStyledText.getText();
+                DataFrameRow x = (DataFrameRow) previousItem;
 
-                if (newText.isBlank()) {
-                    logAnalysisFrame.setNA( ANNOTATION_COLUMN_NAME, previousRow );
-                }
-                else {
-                    logAnalysisFrame.setAt( ANNOTATION_COLUMN_NAME, previousRow, newText );
-                }
+                /**
+                 * TODO: We will use the current SelectedDataFrame as a reference for the annotations. It 
+                 * is the responsibility of the annotator backend to figure out, which dataframe to store 
+                 * these annotations in and to pick the correct annotation dataframe according the the 
+                 * current selectedDataFrame.
+                 */
+                BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, previousRow, newText );
+                projectRegistry.getCommandDispatcher().dispatchCommand( command );
             }
         }
     }
