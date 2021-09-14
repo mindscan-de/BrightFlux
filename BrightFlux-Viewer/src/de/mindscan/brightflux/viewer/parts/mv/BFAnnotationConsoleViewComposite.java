@@ -244,11 +244,12 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 String message = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
                 String trimmed = message.trim();
 
-                if (!".".equals( trimmed ) && !"..".equals( trimmed )) {
+                // check it is not any kind of connector or omit'tor
+                if (!isConnect( trimmed ) && !isOmit( trimmed )) {
                     generator.addAnnotationMessage( message );
                 }
 
-                if ("..".equals( trimmed )) {
+                if (isOmit( trimmed )) {
                     generator.addDataRow( "[..]" );
                 }
 
@@ -264,6 +265,14 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         TextTransfer textTransfer = TextTransfer.getInstance();
         Clipboard clipBoard = new Clipboard( this.getShell().getDisplay() );
         clipBoard.setContents( new String[] { report }, new Transfer[] { textTransfer } );
+    }
+
+    private boolean isConnect( String trimmed ) {
+        return ".".equals( trimmed );
+    }
+
+    private boolean isOmit( String trimmed ) {
+        return "..".equals( trimmed );
     }
 
     @Override
