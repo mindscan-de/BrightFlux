@@ -31,9 +31,6 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.dnd.Clipboard;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -58,6 +55,7 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
+import de.mindscan.brightflux.viewer.uicommands.CopyTextToClipBoardCommand;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 
 /**
@@ -240,23 +238,15 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
             int rowIndex = dataFrameRow.getOriginalRowIndex();
             if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, rowIndex )) {
-                // we found a candidate to report ...
-                String message = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
+                String annotation = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
+                String renderedDataRow = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
 
-                String renderedDataRowContent = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
-
-                generator.appendMessageAndRow( message, renderedDataRowContent );
+                generator.appendMessageAndRow( annotation, renderedDataRow );
             }
         }
         String report = generator.build();
 
-        System.out.println( report );
-
-        // Actually this should fire the command to show the built string as a report window
-        // or it just copies this quietly into the clipboard.... 
-        TextTransfer textTransfer = TextTransfer.getInstance();
-        Clipboard clipBoard = new Clipboard( this.getShell().getDisplay() );
-        clipBoard.setContents( new String[] { report }, new Transfer[] { textTransfer } );
+        projectRegistry.getCommandDispatcher().dispatchCommand( new CopyTextToClipBoardCommand( this.getShell(), report ) );
     }
 
     @Override
