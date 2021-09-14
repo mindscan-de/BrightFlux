@@ -238,7 +238,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
         while (currentDFRowsIterator.hasNext()) {
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-            int rowIndex = dataFrameRow.getRowIndex();
+            int rowIndex = dataFrameRow.getOriginalRowIndex();
             if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, rowIndex )) {
                 // we found a candidate to report ...
                 String message = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );

@@ -55,8 +55,18 @@ public interface DataFrameRow {
      */
     public int compareToRaw( String columnName, Object convertedPredicateValue );
 
+    /**
+     * Current Rowindex in the filtered / unfiltered dataset.
+     * @return
+     */
     int getRowIndex();
 
+    /**
+     * The If this is a filtered dataset, we still want to keep a copy of the index, in the unfiltered dataset.
+     * And with such a information we can annotate childframes, and the indexes are correct and can be used in 
+     * the ancestor frame for the report.
+     * @return
+     */
     int getOriginalRowIndex();
 
 }
