@@ -57,4 +57,6 @@ public interface DataFrameRow {
 
     int getRowIndex();
 
+    int getOriginalRowIndex();
+
 }

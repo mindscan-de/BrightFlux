@@ -65,6 +65,16 @@ public class DataFrameRowImpl implements DataFrameRow {
      * {@inheritDoc}
      */
     @Override
+    public int getOriginalRowIndex() {
+        // TODO if there is a column containing the originalRowIndex, we take this value fom the column, 
+        //      otherwise, we return the rowIndex (we might be the original)
+        return rowIndex;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public Object[] getAll() {
         Object[] values = new Object[maxCols];
 
