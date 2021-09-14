@@ -198,15 +198,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         sashForm.setWeights( new int[] { 1, 1 } );
     }
 
-    private void savePreviousAnnotation( int previousRow, Object previousItem ) {
-        // TODO: use some of the information of the previousItem, 
-
-        // previousRow is the rowindex in the filtered dataset / as of today 2021-09-14 speaking
-        // The real rowIndex should be the originalIndex, which should be part of the DataFrameRow.
-        // previousItem is actually a DataFrameRow.
-
+    private void savePreviousAnnotation( int previousSelectedRowIndex, Object previousItem ) {
         if (isDataFrameValid()) {
-            if (previousRow != -1) {
+            if (previousSelectedRowIndex != -1) {
                 String newText = annotatedStyledText.getText();
                 DataFrameRow x = (DataFrameRow) previousItem;
 
@@ -216,7 +210,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                  * these annotations in and to pick the correct annotation dataframe according the the 
                  * current selectedDataFrame.
                  */
-                BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, previousRow, newText );
+                BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, x.getOriginalRowIndex(), newText );
                 projectRegistry.getCommandDispatcher().dispatchCommand( command );
             }
         }
