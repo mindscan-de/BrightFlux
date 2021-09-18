@@ -66,7 +66,7 @@ public class RecipeExecuteCommand implements BFCommand {
 
         if (recipe != null) {
             // use everything that is not a load command.
-            List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries().parallelStream()
+            List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries().stream()
                             .filter( entry -> entry.getEntryType() != DataFrameJournalEntryType.LOAD ).collect( Collectors.toList() );
 
             if (recipeEntries.size() > 0) {
