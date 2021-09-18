@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands.dataframe;
+package de.mindscan.brightflux.system.commands.annotations;
 
 import java.util.function.Consumer;
 
@@ -36,7 +36,7 @@ import de.mindscan.brightflux.system.events.BFEventFactory;
 /**
  * 
  */
-public class DataFrameCreateSparseDfCommand implements BFCommand {
+public class CreateAnnoationDataFrameCommand implements BFCommand {
 
     /** 
      * {@inheritDoc}

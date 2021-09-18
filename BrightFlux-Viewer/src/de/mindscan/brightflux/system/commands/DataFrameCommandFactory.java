@@ -30,8 +30,8 @@ import java.nio.file.Path;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.system.commands.annotations.CreateAnnoationDataFrameCommand;
 import de.mindscan.brightflux.system.commands.annotations.DataFrameAnnotateRowCommand;
-import de.mindscan.brightflux.system.commands.dataframe.DataFrameCreateSparseDfCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameFilterCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameSelectAndFilterCommand;
@@ -85,7 +85,7 @@ public class DataFrameCommandFactory {
     }
 
     public static BFCommand createSparseDataFrame() {
-        return new DataFrameCreateSparseDfCommand();
+        return new CreateAnnoationDataFrameCommand();
     }
 
     public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
