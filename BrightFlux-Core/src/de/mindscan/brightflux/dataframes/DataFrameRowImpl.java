@@ -65,14 +65,7 @@ public class DataFrameRowImpl implements DataFrameRow {
      */
     @Override
     public int getOriginalRowIndex() {
-        // prefer the original index column over the given value... 
-        if (df.hasColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME )) {
-            Object originalColumnIndexValue = df.getAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, this.rowIndex );
-            if (originalColumnIndexValue != null) {
-                return ((Integer) originalColumnIndexValue).intValue();
-            }
-        }
-        return rowIndex;
+        return df.getOriginalRowIndex( rowIndex );
     }
 
     /** 

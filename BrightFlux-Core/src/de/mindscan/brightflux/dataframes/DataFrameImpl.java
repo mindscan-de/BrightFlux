@@ -507,6 +507,21 @@ public class DataFrameImpl implements DataFrame {
         columnsMap.get( columnName ).setNA( rowIndex );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int getOriginalRowIndex( int rowIndex ) {
+        if (hasColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME )) {
+            Object originalColumnIndexValue = getAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, rowIndex );
+            if (originalColumnIndexValue != null) {
+                return ((Integer) originalColumnIndexValue).intValue();
+            }
+        }
+
+        return rowIndex;
+    }
+
 //    // column-names
 //    // columns
 //    // rows

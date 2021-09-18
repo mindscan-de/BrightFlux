@@ -112,4 +112,6 @@ public interface DataFrame {
 
     UUID getUuid();
 
+    int getOriginalRowIndex( int row );
+
 }
