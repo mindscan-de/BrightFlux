@@ -222,6 +222,14 @@ public class DataFrameImpl implements DataFrame {
         return size;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasColumn( String columnName ) {
+        return columnsMap.get( columnName ) != null;
+    }
+
     public Object getAt( int columnIndex, int rowIndex ) {
         DataFrameColumn<?> column = columns[columnIndex];
         return column.get( rowIndex );

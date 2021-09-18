@@ -107,4 +107,6 @@ public interface DataFrame {
 
     boolean isPresent( int column, int row );
 
+    boolean hasColumn( String columnName );
+
 }
