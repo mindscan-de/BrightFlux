@@ -216,8 +216,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private void prepareCurrentAnnotation( int newRowIndex, Object rowItem ) {
         if (isDataFrameValid()) {
-            if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, newRowIndex )) {
-                String previousAnnotation = (String) logAnalysisFrame.getAt( ANNOTATION_COLUMN_NAME, newRowIndex );
+            int originalRowIndex = ((DataFrameRow) rowItem).getOriginalRowIndex();
+            if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
+                String previousAnnotation = (String) logAnalysisFrame.getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
                 annotatedStyledText.setText( previousAnnotation );
             }
             else {
@@ -236,9 +237,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
         while (currentDFRowsIterator.hasNext()) {
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-            int rowIndex = dataFrameRow.getOriginalRowIndex();
-            if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, rowIndex )) {
-                String annotation = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, rowIndex );
+            int originalRowIndex = dataFrameRow.getOriginalRowIndex();
+            if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
+                String annotation = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
                 String renderedDataRow = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
 
                 generator.appendMessageAndRow( annotation, renderedDataRow );
