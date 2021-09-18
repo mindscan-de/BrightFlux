@@ -75,6 +75,12 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * A limited DataFrame Query Language is implemented
 * A limited GUI is implemented
 * Export the dataframe as a CSV file
+* Support for the original row index (in a derived frame)
+  * "select *" will copy the original index
+* Annotate log messages
+  * (runtime feature only / no persistence yet) - annotate line of a dataframe or one of its child dataframes
+  * (runtime feature only / no persistence yet) - annotations are global over different (related) dataframes
+  * (runtime feature only / no persistence yet) - create a simple report from the annotations
 
 ## Planned Features
 
@@ -83,14 +89,14 @@ Some of the planned features are:
 * Annonate Logmessages
   * save annotations to an analysis project file
   * load annotations from analyis project file for a file
-  * use annotations for the analysis writeup / create a simple report from the annotations
 * Help with writing up the analysis, eg. using templates  
   * use of templates for creating a report
 * Treat logs like data frames and use transformations on columns
   * save the transformations and dataframe configuration to an analysis project file
 * Support original Index
   *  copy the original index in a derived dataframe 
-  *  annotate the original dataframe by annotating the derived dataframes using their original index id.
+* Improve support of "__org_idx" and "__idx", when doing select statements
+* reindex "__idx" row on dataframe filtering and dataframe column selection
 * Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
   * DataSource Tokenizer for Dataframe Columns  
 * Create Sequence-Diagrams from Logmessages / log-dataframes
@@ -116,7 +122,7 @@ Some of the planned features are:
 * Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
 * identify same events for different log sources (e.g. in case they are connected) and correlate logs to each other using very different log formats.
 * provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
-* sync logmessage with video, e.g. select a logentry and then show the content of the video at axactly this timestamp
+* sync logmessage with video, e.g. select a logentry and then show the content of the video at exactly this timestamp
 
 
 * indexing dataframes columnwise for future search operations
