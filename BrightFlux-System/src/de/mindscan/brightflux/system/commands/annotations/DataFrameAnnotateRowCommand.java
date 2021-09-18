@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
@@ -61,8 +61,7 @@ public class DataFrameAnnotateRowCommand implements BFCommand {
         // The AnnotatorComponent will be subscribed to this event, and will issue some other command event?
         // We should have some kinds of intents or an command to intent translation...
 
-        // TODO: refactor to the use of the factory.
-        eventConsumer.accept( new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation ) );
+        eventConsumer.accept( BFEventFactory.annotateDataFrameRow( inputDataFrame, row, annotation ) );
     }
 
 }
