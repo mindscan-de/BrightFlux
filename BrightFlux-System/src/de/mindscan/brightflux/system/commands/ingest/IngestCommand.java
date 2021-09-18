@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands;
+package de.mindscan.brightflux.system.commands.ingest;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
@@ -31,45 +31,33 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.ingest.IngestEngine;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
-import de.mindscan.brightflux.ingest.engine.JobConfiguration;
-import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
-import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
+import de.mindscan.brightflux.ingest.IngestCsv;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
- * This is just a test for a binary oriented data reader for a file, which i have laying around here. 
- * This is the way to find out which kind of binary file reading capabilities must be developed over time. 
- * The SpecialRAWTokenizer is just a proof of concept for reading binary files to dataframes by converting them to iterable tokens.
+ * The IngestCommand implements the load and convert operation for a given file path to a 
+ * DataFrame.
  * 
- * It also serves as an incubation example which is used to test the Plugin-Concept, even with custom tokenizer plugins.
  */
-public class IngestSpecialRAW implements BFCommand {
+public class IngestCommand implements BFCommand {
 
-    private Path path;
+    private Path fileToIngest;
 
-    /**
-     * 
-     */
-    public IngestSpecialRAW( Path path ) {
-        this.path = path;
+    public IngestCommand( Path fileToIngest ) {
+        this.fileToIngest = fileToIngest;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
-    @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
+        // TODO: auto-detect the type of file ?
+        // decide because of file which ingest-operation to perform, but we hard decide for a CSV right now.
+        // But this might be totally complex... But this encapsulation here should to the trick.
 
-        JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
-                        DataFrameCompilerFactory.getIntance() );
+        IngestCsv ingest = new IngestCsv();
+        DataFrame resultDataFrame = ingest.loadAsDataFrame( this.fileToIngest );
 
-        config.setTokenizerConfiguration( "de.mindscan.brightflux.ingest.tokenizers.SpecialRAWTokenizerImpl" );
-        config.setDataFrameName( path.getFileName().toString() );
-        config.setIngestInputFilePath( path );
-
-        DataFrame resultDataFrame = IngestEngine.execute( config );
         eventConsumer.accept( BFEventFactory.dataframeLoaded( resultDataFrame ) );
     }
 
