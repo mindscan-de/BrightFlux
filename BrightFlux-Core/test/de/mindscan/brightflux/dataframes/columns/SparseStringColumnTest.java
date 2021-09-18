@@ -109,6 +109,7 @@ public class SparseStringColumnTest {
         assertThat( result.getColumnName(), equalTo( "XYZName" ) );
     }
 
+    @Test
     public void testSet_SetIndex2ToTwo_expectIndex2IsTwo() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "XYZName" );
@@ -121,6 +122,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( "Two" ) );
     }
 
+    @Test
     public void testSet_SetIndex1ToOneAnd2ToTwo_expectIndex2IsTwo() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "XYZName" );
@@ -134,6 +136,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( "Two" ) );
     }
 
+    @Test
     public void testSet_SetIndex1ToOneAnd2ToTwo_expectIndex1IsOne() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "XYZName" );
@@ -147,6 +150,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( "One" ) );
     }
 
+    @Test
     public void testIsPresent_SetIndex1ToOne_expectIndex1IsPesent() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
@@ -159,6 +163,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( true ) );
     }
 
+    @Test
     public void testIsPresent_SetIndex0ToOne_expectIndex1IsNotPresent() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
@@ -171,6 +176,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( false ) );
     }
 
+    @Test
     public void testIsPresent_EmptyColumn_expectIndex1IsNotPresent() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
@@ -182,6 +188,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( false ) );
     }
 
+    @Test
     public void testIsEmpty_SetIndex0ToOne_expectIsNotEmpty() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
@@ -194,6 +201,7 @@ public class SparseStringColumnTest {
         assertThat( result, equalTo( false ) );
     }
 
+    @Test
     public void testIsEmpty_SetNothing_expectIsEmpty() throws Exception {
         // arrange
         SparseStringColumn stringColumn = new SparseStringColumn( "anonymous" );
