@@ -133,9 +133,7 @@ public class DataFrameImpl implements DataFrame {
                     throw new NoSuchElementException();
                 }
 
-                // TODO: also use the original Index (lookup) instead of the currentIndexPosition
-                int originalIndex = currentIndexPosition;
-                DataFrameRow currentRow = new DataFrameRowImpl( DataFrameImpl.this, currentIndexPosition, originalIndex );
+                DataFrameRow currentRow = new DataFrameRowImpl( DataFrameImpl.this, currentIndexPosition );
                 currentIndexPosition++;
 
                 return currentRow;
@@ -312,9 +310,7 @@ public class DataFrameImpl implements DataFrame {
         if (fromIndex < toIndex) {
             // collect that stuff...
             for (int index = fromIndex; index < toIndex; index++) {
-                // TODO: also use the originalIndex (lookup) instead of the index
-                int originalIndex = index;
-                result.add( new DataFrameRowImpl( this, index, originalIndex ) );
+                result.add( new DataFrameRowImpl( this, index ) );
             }
         }
 

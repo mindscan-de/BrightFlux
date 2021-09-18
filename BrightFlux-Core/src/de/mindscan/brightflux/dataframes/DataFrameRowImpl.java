@@ -33,16 +33,13 @@ public class DataFrameRowImpl implements DataFrameRow {
     private DataFrame df;
     private int rowIndex;
     private int maxCols;
-    private int originalRowIndex;
 
     /**
      * 
      */
-    public DataFrameRowImpl( DataFrame df, int rowIndex, int originalRowIndex ) {
+    public DataFrameRowImpl( DataFrame df, int rowIndex ) {
         this.df = df;
         this.rowIndex = rowIndex;
-        this.originalRowIndex = originalRowIndex;
-
         this.maxCols = df.getColumnNames().size();
     }
 
@@ -68,7 +65,14 @@ public class DataFrameRowImpl implements DataFrameRow {
      */
     @Override
     public int getOriginalRowIndex() {
-        return originalRowIndex;
+        // prefer the original index column over the given value... 
+        if (df.hasColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME )) {
+            Object originalColumnIndexValue = df.getAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, this.rowIndex );
+            if (originalColumnIndexValue != null) {
+                return ((Integer) originalColumnIndexValue).intValue();
+            }
+        }
+        return rowIndex;
     }
 
     /** 
