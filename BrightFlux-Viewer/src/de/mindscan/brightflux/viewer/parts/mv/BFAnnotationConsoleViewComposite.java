@@ -55,7 +55,7 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
-import de.mindscan.brightflux.viewer.uicommands.CopyTextToClipBoardCommand;
+import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 
 /**
@@ -111,11 +111,15 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         BFEventListenerAdapter listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
+                // TODO: Actually when switching the dataframe, we should save the previous annotation input  
+
                 BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
                 currentSelectedDataFrame = dataFrameEvent.getDataFrame();
 
                 // Update View? Show name of selected DataFrame, 
                 // because the Terminal will be sensitive to the selected frame in the MainProjectComposite
+
+                // TODO: Actually we should load the annotation text input content according to the new frame, and also clear the previouslySelectedIndex
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
@@ -247,7 +251,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         }
         String report = generator.build();
 
-        projectRegistry.getCommandDispatcher().dispatchCommand( new CopyTextToClipBoardCommand( this.getShell(), report ) );
+        projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
     }
 
     @Override
