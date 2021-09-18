@@ -27,6 +27,7 @@ package de.mindscan.brightflux.dataframes;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
@@ -108,5 +109,7 @@ public interface DataFrame {
     boolean isPresent( int column, int row );
 
     boolean hasColumn( String columnName );
+
+    UUID getUuid();
 
 }

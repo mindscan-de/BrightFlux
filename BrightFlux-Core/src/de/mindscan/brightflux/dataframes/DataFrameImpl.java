@@ -90,8 +90,9 @@ public class DataFrameImpl implements DataFrame {
     /**
      * @return the uuid of the data frame
      */
+    @Override
     public UUID getUuid() {
-        return uuidOfDataFrame;
+        return UUID.fromString( uuidOfDataFrame.toString() );
     }
 
     /**
