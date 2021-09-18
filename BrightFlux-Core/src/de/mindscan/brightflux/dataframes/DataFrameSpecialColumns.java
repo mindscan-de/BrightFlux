@@ -61,6 +61,17 @@ public class DataFrameSpecialColumns {
         return index_column;
     }
 
-    // TODO: we might want to create anoriginalIndex column as well
+    /**
+     * @return
+     */
+    public static DataFrameColumn<?> createOriginalIndexColumn( int size ) {
+        IntegerColumn index_column = new IntegerColumn( ORIGINAL_INDEX_COLUMN_NAME );
+        for (int i = 0; i < size; i++) {
+            index_column.append( i );
+        }
+        return index_column;
+    }
+
+    // TODO: we might want to create anoriginalIndex column using an idexcolumn as well (like copyying the contents)
 
 }

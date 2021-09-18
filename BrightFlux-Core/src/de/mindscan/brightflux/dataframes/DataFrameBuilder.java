@@ -28,6 +28,7 @@ package de.mindscan.brightflux.dataframes;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.OptionalInt;
 
 import de.mindscan.brightflux.dataframes.columns.FloatColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
@@ -38,7 +39,7 @@ import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 public class DataFrameBuilder {
 
     private DataFrameImpl df = null;
-    private List<DataFrameColumn<?>> columns = new ArrayList<>();
+    private ArrayList<DataFrameColumn<?>> columns = new ArrayList<>();
 
     /**
      * 
@@ -48,10 +49,77 @@ public class DataFrameBuilder {
     }
 
     public DataFrameImpl build() {
+
+        int maxColumnLength = calculateMaxColumnLength( columns );
+
+        prepareOriginalIndexColumn( maxColumnLength, columns );
+        prepareIndexColumn( maxColumnLength, columns );
+
         // this will finalize the building of the dataframe
         df.addColumns( columns );
         // return the final dataframe
         return df;
+    }
+
+    private void prepareOriginalIndexColumn( int maxColumnLength, ArrayList<DataFrameColumn<?>> columns ) {
+        // TODO:
+        // Okay two things:
+        // we just make sure that the columns will conatin an __original_index
+        if (isColumnPresent( columns, DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME )) {
+            // if we have an original index column we keep it.
+            // and we don't touch it at all.
+        }
+        else {
+            // if we have no original column we look for an index column
+            if (isColumnPresent( columns, DataFrameSpecialColumns.INDEX_COLUMN_NAME )) {
+                // TODO: we use the previous index column now as the original index
+                columns.add( 0, DataFrameSpecialColumns.createOriginalIndexColumn( maxColumnLength ) );
+            }
+            else {
+                // if we have no index column, we can use for the original index, we create one (first)
+                columns.add( 0, DataFrameSpecialColumns.createOriginalIndexColumn( maxColumnLength ) );
+            }
+        }
+    }
+
+    private void prepareIndexColumn( int maxColumnLength, ArrayList<DataFrameColumn<?>> columns ) {
+        // We just make sure that this dataframe gets an __index, for this current frame
+        // if one is present, we remove it
+        // then we create a new column
+        if (isColumnPresent( columns, DataFrameSpecialColumns.INDEX_COLUMN_NAME )) {
+            // TODO: Don't do anything until we also implemented the original column index as well...
+
+            // we might want to remove the index column from the columns
+
+            // and then just create a new one of the right size...
+            // columns.add( 0, DataFrameSpecialColumns.createIndexColumn( maxColumnLength ) );
+        }
+        else {
+            // TODO: This is how we will start this feature, that the correct columns are annotated.
+            // but this code will be reconsidered once we introduced the original index column as well...
+
+            // just create one.
+            columns.add( 0, DataFrameSpecialColumns.createIndexColumn( maxColumnLength ) );
+        }
+    }
+
+    private int calculateMaxColumnLength( ArrayList<DataFrameColumn<?>> columns2 ) {
+        OptionalInt max = columns2.stream().mapToInt( c -> c.getSize() ).max();
+
+        if (max.isPresent()) {
+            return max.getAsInt();
+        }
+
+        return 0;
+    }
+
+    private boolean isColumnPresent( List<DataFrameColumn<?>> columns2, String indexColumnName ) {
+        for (DataFrameColumn<?> dataFrameColumn : columns2) {
+            if (indexColumnName.equals( dataFrameColumn.getColumnName() )) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public DataFrameBuilder addName( String dfName ) {
