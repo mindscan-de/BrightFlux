@@ -30,8 +30,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.OptionalInt;
 
+import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.FloatColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
+import de.mindscan.brightflux.dataframes.columns.LongColumn;
+import de.mindscan.brightflux.dataframes.columns.StringColumn;
 
 /**
  * 
@@ -135,6 +138,14 @@ public class DataFrameBuilder {
             case "float":
                 columns.add( new FloatColumn( columnName ) );
                 break;
+            case "double":
+                columns.add( new DoubleColumn( columnName ) );
+                break;
+            case "long":
+                columns.add( new LongColumn( columnName ) );
+                break;
+            case "string":
+                columns.add( new StringColumn( columnName ) );
 
             default:
                 throw new IllegalArgumentException( "unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
