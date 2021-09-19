@@ -89,7 +89,9 @@ public class RecipeExecuteCommand implements BFCommand {
                     }
                 }
 
-                eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame, inputDataFrame ) );
+                if (currentDataFrame != inputDataFrame) {
+                    eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame, inputDataFrame ) );
+                }
             }
 
             // Nothing to do...
