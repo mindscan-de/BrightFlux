@@ -88,7 +88,7 @@ public class ProjectViewComposite extends Composite implements ProjectRegistryPa
         tbtmProject.setControl( logAnalysisProjectProjectView );
 
         CTabItem tbtmDataframeHierarchy = new CTabItem( tabFolder, SWT.NONE );
-        tbtmDataframeHierarchy.setText( "DataFrame Hierarchy" );
+        tbtmDataframeHierarchy.setText( "Frame Hierarchy" );
         dataframeHierarchyProjectView = new DataFrameHierarchyViewComposite( tabFolder, SWT.NONE );
         tbtmDataframeHierarchy.setControl( dataframeHierarchyProjectView );
 
