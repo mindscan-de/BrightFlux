@@ -32,11 +32,29 @@ import de.mindscan.brightflux.dataframes.DataFrame;
  */
 public class DataFrameCreatedEvent extends BFAbstractDataFrameEvent {
 
+    private String parentDataFrameUUID;
+
     /**
      * @param dataFrame
      */
     public DataFrameCreatedEvent( DataFrame dataFrame ) {
+        this( dataFrame, null );
+    }
+
+    public DataFrameCreatedEvent( DataFrame dataFrame, String parentDataFrameUUID ) {
         super( dataFrame );
+        this.parentDataFrameUUID = parentDataFrameUUID;
+    }
+
+    public boolean hasParentDataFrame() {
+        return parentDataFrameUUID != null;
+    }
+
+    /**
+     * @return the parentDataFrameUUID
+     */
+    public String getParentDataFrameUUID() {
+        return parentDataFrameUUID;
     }
 
     /** 
