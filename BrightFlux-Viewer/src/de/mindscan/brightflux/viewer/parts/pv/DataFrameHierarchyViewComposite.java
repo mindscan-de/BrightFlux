@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
+import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
@@ -63,18 +64,35 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        // register to (create event / created from a parent frame)
-        // these contain a hierarchy
-        BFEventListener createdListener = new BFEventListenerAdapter();
-        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
-
-        // register to (load events)
-        // these do not contain a hierarchy
-        BFEventListener loadedListener = new BFEventListenerAdapter();
-        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
+        registerDataFrameCreatedListener( this.projectRegistry );
+        registerDataFrameLoadedListener( this.projectRegistry );
 
         // TODO: Register to dataframe close events, so we can mark the hierarchy, that the frame is away from the hierarchy. 
         // (disable intermediate dataframes, remove leaf dataframes)
+    }
+
+    private void registerDataFrameCreatedListener( ProjectRegistry projectRegistry ) {
+        // register to (create event / created from a parent frame)
+        // these contain a hierarchy
+        BFEventListener createdListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
+    }
+
+    private void registerDataFrameLoadedListener( ProjectRegistry projectRegistry ) {
+        // register to (load events)
+        // these do not contain a hierarchy
+        BFEventListener loadedListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
     }
 
     private void buildLayout() {
@@ -85,16 +103,16 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         tree.setHeaderVisible( true );
 
         TreeColumn trclmnNewColumn = new TreeColumn( tree, SWT.NONE );
-        trclmnNewColumn.setWidth( 100 );
+        trclmnNewColumn.setWidth( 220 );
         trclmnNewColumn.setText( "New Column" );
 
         TreeColumn trclmnNewColumn_1 = new TreeColumn( tree, SWT.NONE );
-        trclmnNewColumn_1.setWidth( 100 );
+        trclmnNewColumn_1.setWidth( 62 );
         trclmnNewColumn_1.setText( "New Column" );
 
         TreeColumn trclmnNewColumn_2 = new TreeColumn( tree, SWT.NONE );
-        trclmnNewColumn_2.setWidth( 100 );
-        trclmnNewColumn_2.setText( "New Column" );
+        trclmnNewColumn_2.setWidth( 43 );
+        trclmnNewColumn_2.setText( "Color" );
     }
 
     @Override
