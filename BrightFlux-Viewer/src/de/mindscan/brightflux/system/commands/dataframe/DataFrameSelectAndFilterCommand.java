@@ -59,7 +59,7 @@ public class DataFrameSelectAndFilterCommand implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame filteredDataFrame = inputDataFrame.select( columnNames ).where( predicate );
-        eventConsumer.accept( BFEventFactory.dataframeCreated( filteredDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeCreated( filteredDataFrame, inputDataFrame ) );
     }
 
 }

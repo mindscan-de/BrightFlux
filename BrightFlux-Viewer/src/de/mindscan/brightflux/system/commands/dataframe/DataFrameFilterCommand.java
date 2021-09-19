@@ -56,7 +56,7 @@ public class DataFrameFilterCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame filteredDataFrame = inputDataFrame.select().where( whereClause );
 
-        eventConsumer.accept( BFEventFactory.dataframeCreated( filteredDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeCreated( filteredDataFrame, inputDataFrame ) );
     }
 
 }

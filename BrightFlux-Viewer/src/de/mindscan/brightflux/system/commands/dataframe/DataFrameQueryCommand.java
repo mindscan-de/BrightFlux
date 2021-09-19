@@ -51,7 +51,7 @@ public class DataFrameQueryCommand implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame newDataFrame = inputDataFrame.query( queryString );
-        eventConsumer.accept( BFEventFactory.dataframeCreated( newDataFrame ) );
+        eventConsumer.accept( BFEventFactory.dataframeCreated( newDataFrame, inputDataFrame ) );
     }
 
 }

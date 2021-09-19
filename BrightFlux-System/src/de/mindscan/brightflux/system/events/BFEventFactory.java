@@ -48,6 +48,14 @@ public class BFEventFactory {
         return new DataFrameCreatedEvent( dataFrame );
     }
 
+    public static BFEvent dataframeCreated( DataFrame dataFrame, DataFrame parentDataFrame ) {
+        if (parentDataFrame == null) {
+            return new DataFrameCreatedEvent( dataFrame );
+        }
+
+        return new DataFrameCreatedEvent( dataFrame, parentDataFrame.getUuid().toString() );
+    }
+
     public static BFEvent annotationDataframeCreated( DataFrame dataFrame ) {
         return new AnnotationDataFrameCreatedEvent( dataFrame );
     }
