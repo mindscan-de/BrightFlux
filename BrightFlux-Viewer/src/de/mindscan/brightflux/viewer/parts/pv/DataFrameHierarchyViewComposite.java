@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.viewer.parts.pv;
 
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -98,21 +101,20 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Tree tree = new Tree( this, SWT.BORDER );
+        TreeViewer treeViewer = new TreeViewer( this, SWT.BORDER );
+        treeViewer.setContentProvider( new DataFrameHierarchyTreeContentProvider() );
+
+        Tree tree = treeViewer.getTree();
         tree.setLinesVisible( true );
         tree.setHeaderVisible( true );
 
-        TreeColumn trclmnNewColumn = new TreeColumn( tree, SWT.NONE );
-        trclmnNewColumn.setWidth( 220 );
-        trclmnNewColumn.setText( "New Column" );
+        TreeViewerColumn treeViewerColumn = new TreeViewerColumn( treeViewer, SWT.NONE );
+        TreeColumn trclmnDataframe = treeViewerColumn.getColumn();
+        trclmnDataframe.setWidth( 100 );
+        trclmnDataframe.setText( "DataFrame" );
+        treeViewerColumn.setLabelProvider( new ColumnLabelProvider() );
 
-        TreeColumn trclmnNewColumn_1 = new TreeColumn( tree, SWT.NONE );
-        trclmnNewColumn_1.setWidth( 62 );
-        trclmnNewColumn_1.setText( "New Column" );
-
-        TreeColumn trclmnNewColumn_2 = new TreeColumn( tree, SWT.NONE );
-        trclmnNewColumn_2.setWidth( 43 );
-        trclmnNewColumn_2.setText( "Color" );
+        treeViewer.setInput( new String[] { "MyFirstDataFrame", "MySecondDataFrame" } );
     }
 
     @Override
