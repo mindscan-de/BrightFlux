@@ -35,7 +35,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -47,6 +46,7 @@ import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
+import de.mindscan.brightflux.viewer.parts.ProjectViewComposite;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
@@ -116,8 +116,7 @@ public class BrightFluxViewerMainAppTwo {
 
         SashForm sashForm_2 = new SashForm( sashForm_1, SWT.VERTICAL );
 
-        Composite topLeftProjectComposite = new Composite( sashForm_2, SWT.NONE );
-        topLeftProjectComposite.setBackground( SWTResourceManager.getColor( SWT.COLOR_RED ) );
+        Composite projectViewComposite = new ProjectViewComposite( sashForm_2, SWT.NONE );
 
         Composite outlineViewComposite = new OutlineViewComposite( sashForm_2, SWT.NONE );
         sashForm_2.setWeights( new int[] { 375, 218 } );
@@ -133,6 +132,9 @@ public class BrightFluxViewerMainAppTwo {
         // This is still not nice, but good enough for now
         // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
         // basically also a ProjectRegistryParticipant and should not provide the truth to everyone else top down.
+        if (projectViewComposite instanceof ProjectRegistryParticipant) {
+            ((ProjectRegistryParticipant) projectViewComposite).setProjectRegistry( projectRegistry );
+        }
         if (mainProjectComposite instanceof ProjectRegistryParticipant) {
             ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
         }
