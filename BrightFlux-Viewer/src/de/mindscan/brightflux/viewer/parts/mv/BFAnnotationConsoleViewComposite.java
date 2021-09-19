@@ -29,20 +29,20 @@ import java.util.Iterator;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnWeightData;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -81,7 +81,6 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private StyledText annotatedStyledText;
 
     private ProjectRegistry projectRegistry;
-    private Table table_1;
 
     /**
      * Create the composite.
@@ -187,12 +186,21 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        annotatedStyledText = new StyledText( composite_1, SWT.BORDER );
-        annotatedStyledText.setLeftMargin( 3 );
-        annotatedStyledText.setBottomMargin( 3 );
-        annotatedStyledText.setTopMargin( 3 );
-        annotatedStyledText.setRightMargin( 3 );
-        annotatedStyledText.setFont( SWTResourceManager.getFont( "Arial", 12, SWT.NORMAL ) );
+        ListViewer listViewer = new ListViewer( composite_1, SWT.BORDER | SWT.V_SCROLL );
+        List list = listViewer.getList();
+        list.setFont( SWTResourceManager.getFont( "Courier New", 9, SWT.NORMAL ) );
+        list.addMouseListener( new MouseAdapter() {
+            @Override
+            public void mouseDoubleClick( MouseEvent e ) {
+                String[] selection = ((List) e.getSource()).getSelection();
+                if (selection != null && selection.length > 0) {
+                    appendAnnotatedTextField( selection[0] );
+                }
+            }
+        } );
+
+        listViewer.setContentProvider( ArrayContentProvider.getInstance() );
+        list.setItems( ReportGeneratorSnippets.getSnippets() );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
         SashForm sashForm_2 = new SashForm( sashForm, SWT.NONE );
@@ -210,26 +218,23 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Composite composite_4 = new Composite( sashForm_2, SWT.NONE );
         composite_4.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Composite composite_5 = new Composite( composite_4, SWT.NONE );
-
-        TableColumnLayout tcl_composite_5 = new TableColumnLayout();
-        composite_5.setLayout( tcl_composite_5 );
-
-        TableViewer textSnippetsTableViewer = new TableViewer( composite_5, SWT.BORDER | SWT.FULL_SELECTION );
-        table_1 = textSnippetsTableViewer.getTable();
-        table_1.setHeaderVisible( true );
-        table_1.setLinesVisible( true );
-        textSnippetsTableViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        textSnippetsTableViewer.setInput( ReportGeneratorSnippets.getSnippets() );
-
-        TableViewerColumn tableViewerColumn = new TableViewerColumn( textSnippetsTableViewer, SWT.NONE );
-
-        TableColumn tblclmnTextSnippet = tableViewerColumn.getColumn();
-        tcl_composite_5.setColumnData( tblclmnTextSnippet, new ColumnWeightData( 1, ColumnWeightData.MINIMUM_WIDTH, true ) );
-        tblclmnTextSnippet.setText( "Text Snippet" );
+        annotatedStyledText = new StyledText( composite_4, SWT.BORDER );
+        annotatedStyledText.setLeftMargin( 3 );
+        annotatedStyledText.setBottomMargin( 3 );
+        annotatedStyledText.setTopMargin( 3 );
+        annotatedStyledText.setRightMargin( 3 );
+        annotatedStyledText.setFont( SWTResourceManager.getFont( "Arial", 12, SWT.NORMAL ) );
 
         sashForm_2.setWeights( new int[] { 1, 1 } );
         sashForm.setWeights( new int[] { 1, 1 } );
+    }
+
+    /**
+     * @param string
+     */
+    private void appendAnnotatedTextField( String annotation ) {
+        String newText = annotatedStyledText.getText() + annotation;
+        annotatedStyledText.setText( newText );
     }
 
     private void savePreviousAnnotation( int previousSelectedRowIndex, Object previousItem ) {
