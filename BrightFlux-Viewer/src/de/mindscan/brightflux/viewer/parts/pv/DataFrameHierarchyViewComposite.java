@@ -31,8 +31,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
  * 
@@ -60,8 +63,18 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        // Register to dataframe create / close events 
-        // register to dataframe hierarchy events
+        // register to (create event / created from a parent frame)
+        // these contain a hierarchy
+        BFEventListener createdListener = new BFEventListenerAdapter();
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
+
+        // register to (load events)
+        // these do not contain a hierarchy
+        BFEventListener loadedListener = new BFEventListenerAdapter();
+        this.projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
+
+        // TODO: Register to dataframe close events, so we can mark the hierarchy, that the frame is away from the hierarchy. 
+        // (disable intermediate dataframes, remove leaf dataframes)
     }
 
     private void buildLayout() {
