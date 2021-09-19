@@ -218,7 +218,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Composite composite_4 = new Composite( sashForm_2, SWT.NONE );
         composite_4.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        annotatedStyledText = new StyledText( composite_4, SWT.BORDER );
+        annotatedStyledText = new StyledText( composite_4, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL );
         annotatedStyledText.setLeftMargin( 3 );
         annotatedStyledText.setBottomMargin( 3 );
         annotatedStyledText.setTopMargin( 3 );
