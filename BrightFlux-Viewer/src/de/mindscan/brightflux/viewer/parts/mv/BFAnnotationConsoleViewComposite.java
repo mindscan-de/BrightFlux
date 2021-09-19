@@ -28,6 +28,10 @@ package de.mindscan.brightflux.viewer.parts.mv;
 import java.util.Iterator;
 
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
@@ -38,6 +42,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -53,6 +58,7 @@ import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
@@ -75,6 +81,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private StyledText annotatedStyledText;
 
     private ProjectRegistry projectRegistry;
+    private Table table_1;
 
     /**
      * Create the composite.
@@ -188,7 +195,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         annotatedStyledText.setFont( SWTResourceManager.getFont( "Arial", 12, SWT.NORMAL ) );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
-        Composite composite_2 = new Composite( sashForm, SWT.NONE );
+        SashForm sashForm_2 = new SashForm( sashForm, SWT.NONE );
+
+        Composite composite_2 = new Composite( sashForm_2, SWT.NONE );
         composite_2.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Composite composite_3 = new Composite( composite_2, SWT.NONE );
@@ -197,6 +206,29 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         table = new Table( composite_3, SWT.BORDER | SWT.FULL_SELECTION );
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
+
+        Composite composite_4 = new Composite( sashForm_2, SWT.NONE );
+        composite_4.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Composite composite_5 = new Composite( composite_4, SWT.NONE );
+
+        TableColumnLayout tcl_composite_5 = new TableColumnLayout();
+        composite_5.setLayout( tcl_composite_5 );
+
+        TableViewer textSnippetsTableViewer = new TableViewer( composite_5, SWT.BORDER | SWT.FULL_SELECTION );
+        table_1 = textSnippetsTableViewer.getTable();
+        table_1.setHeaderVisible( true );
+        table_1.setLinesVisible( true );
+        textSnippetsTableViewer.setContentProvider( ArrayContentProvider.getInstance() );
+        textSnippetsTableViewer.setInput( ReportGeneratorSnippets.getSnippets() );
+
+        TableViewerColumn tableViewerColumn = new TableViewerColumn( textSnippetsTableViewer, SWT.NONE );
+
+        TableColumn tblclmnTextSnippet = tableViewerColumn.getColumn();
+        tcl_composite_5.setColumnData( tblclmnTextSnippet, new ColumnWeightData( 1, ColumnWeightData.MINIMUM_WIDTH, true ) );
+        tblclmnTextSnippet.setText( "Text Snippet" );
+
+        sashForm_2.setWeights( new int[] { 1, 1 } );
         sashForm.setWeights( new int[] { 1, 1 } );
     }
 
