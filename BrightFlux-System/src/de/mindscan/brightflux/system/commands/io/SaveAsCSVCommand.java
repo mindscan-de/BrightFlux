@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands;
+package de.mindscan.brightflux.system.commands.io;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
