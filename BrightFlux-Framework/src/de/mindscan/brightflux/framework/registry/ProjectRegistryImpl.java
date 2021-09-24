@@ -67,6 +67,16 @@ public class ProjectRegistryImpl implements ProjectRegistry {
         return eventDispatcher;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void registerParticipant( ProjectRegistryParticipant participant ) {
+        // TODO put this element to a list
+        // and then execute the initializion according to the list.
+        participant.setProjectRegistry( this );
+    }
+
     // TODO: work on a mechanism that if the loaded files change, then we want to react on that....
     // 
     // addProjectListener

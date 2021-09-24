@@ -37,4 +37,6 @@ public interface ProjectRegistry {
 
     EventDispatcher getEventDispatcher();
 
+    void registerParticipant( ProjectRegistryParticipant participant );
+
 }
