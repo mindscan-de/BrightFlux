@@ -310,7 +310,11 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     public void closeDataframe() {
         this.setVisible( false );
-        dispatchEvent( BFEventFactory.dataframeClosed( ingestedDF ) );
+
+        if (ingestedDF != null) {
+            dispatchEvent( BFEventFactory.dataframeClosed( ingestedDF ) );
+            setDataFrame( null );
+        }
     }
 
     private void apply666filter( DataFrame dataFrame ) {
