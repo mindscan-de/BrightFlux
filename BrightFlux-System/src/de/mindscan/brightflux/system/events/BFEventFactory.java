@@ -29,8 +29,8 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
+import de.mindscan.brightflux.system.events.annotations.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.annotations.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameClosedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;

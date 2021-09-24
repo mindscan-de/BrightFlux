@@ -23,20 +23,27 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events.dataframe;
+package de.mindscan.brightflux.system.events.annotations;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
 /**
  * 
  */
-public class AnnotationDataFrameCreatedEvent extends BFAbstractDataFrameEvent {
+public class DataFrameAnnotateRowEvent extends BFAbstractDataFrameEvent {
+
+    private String annotation;
+    private int row;
 
     /**
      * @param dataFrame
+     * @param row TODO
      */
-    public AnnotationDataFrameCreatedEvent( DataFrame dataFrame ) {
+    public DataFrameAnnotateRowEvent( DataFrame dataFrame, int row, String annotation ) {
         super( dataFrame );
+        this.annotation = annotation;
+        this.row = row;
     }
 
     /** 
@@ -44,7 +51,20 @@ public class AnnotationDataFrameCreatedEvent extends BFAbstractDataFrameEvent {
      */
     @Override
     public String getBFEventMessage() {
-        return "Annotation Dataframe created. ";
+        return "some Dataframe Anntation Event ";
     }
 
+    /**
+     * @return the annotation
+     */
+    public String getAnnotation() {
+        return annotation;
+    }
+
+    /**
+     * @return the row
+     */
+    public int getRow() {
+        return row;
+    }
 }

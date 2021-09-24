@@ -31,9 +31,9 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.annotations.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.annotations.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -81,14 +81,15 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 // TODO: the dataframe should be used to figure out which logAnalysisFrame should be used...
 
                 // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
-                // logAnalysisFrame.setRawValue( "h1.ts", 1, x.getTimestamp() );
                 String newText = x.getAnnotation();
 
                 if (newText.isBlank()) {
                     logAnalysisFrame.setNA( ANNOTATION_COLUMN_NAME, x.getRow() );
+                    // TODO: clear a previous classification
                 }
                 else {
                     logAnalysisFrame.setAt( ANNOTATION_COLUMN_NAME, x.getRow(), newText );
+                    // TODO: classify the annotation Text
                 }
 
                 // TODO: 
