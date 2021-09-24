@@ -31,6 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.dataframe.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameAnnotateRowEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameClosedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 import de.mindscan.brightflux.system.events.recipes.RecipeSaveResultEvent;
@@ -46,6 +47,10 @@ public class BFEventFactory {
 
     public static BFEvent dataframeCreated( DataFrame dataFrame ) {
         return new DataFrameCreatedEvent( dataFrame );
+    }
+
+    public static BFEvent dataframeClosed( DataFrame dataFrame ) {
+        return new DataFrameClosedEvent( dataFrame );
     }
 
     public static BFEvent dataframeCreated( DataFrame dataFrame, DataFrame parentDataFrame ) {
