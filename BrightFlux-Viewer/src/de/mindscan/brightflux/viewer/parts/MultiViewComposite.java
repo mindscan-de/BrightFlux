@@ -67,23 +67,12 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        // TODO: register for events.... 
+        // TODO: register for events....
 
-        if (appConsole instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) appConsole).setProjectRegistry( this.projectRegistry );
-        }
-
-        if (appLog instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) appLog).setProjectRegistry( this.projectRegistry );
-        }
-
-        if (appQueryTerminal instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) appQueryTerminal).setProjectRegistry( this.projectRegistry );
-        }
-
-        if (annotationsComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) annotationsComposite).setProjectRegistry( this.projectRegistry );
-        }
+        this.projectRegistry.registerParticipant( appConsole );
+        this.projectRegistry.registerParticipant( appLog );
+        this.projectRegistry.registerParticipant( appQueryTerminal );
+        this.projectRegistry.registerParticipant( annotationsComposite );
 
     }
 
