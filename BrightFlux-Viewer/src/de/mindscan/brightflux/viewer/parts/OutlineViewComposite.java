@@ -65,13 +65,9 @@ public class OutlineViewComposite extends Composite implements ProjectRegistryPa
         this.projectRegistry = projectRegistry;
 
         // Set the inner composites to accept this projectregistry as well..
-        if (dataJournalOutline instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) dataJournalOutline).setProjectRegistry( this.projectRegistry );
-        }
+        this.projectRegistry.registerParticipant( dataJournalOutline );
+        this.projectRegistry.registerParticipant( dataColumnsOutline );
 
-        if (dataColumnsOutline instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) dataColumnsOutline).setProjectRegistry( this.projectRegistry );
-        }
     }
 
     private void buildLayout() {
