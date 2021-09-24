@@ -39,7 +39,7 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     @Override
     public void addLeafNode( DataFrame dataFrame ) {
         // TODO Auto-generated method stub
-
+        System.out.println( "add leaf node" );
     }
 
     /** 
@@ -48,7 +48,7 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     @Override
     public void addRootNode( DataFrame dataFrame ) {
         // TODO Auto-generated method stub
-
+        System.out.println( "add root node" );
     }
 
     /** 
@@ -58,7 +58,7 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     public void removeNode( DataFrame dataFrame ) {
         // TODO Auto-generated method stub
         // (disable intermediate dataframes, remove leaf dataframes)
-
+        System.out.println( "disable node" );
     }
 
 }
