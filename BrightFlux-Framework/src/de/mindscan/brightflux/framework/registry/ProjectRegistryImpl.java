@@ -77,6 +77,14 @@ public class ProjectRegistryImpl implements ProjectRegistry {
         participant.setProjectRegistry( this );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void completeParticipantRegistration() {
+        // TODO implement using the queue.
+    }
+
     // TODO: work on a mechanism that if the loaded files change, then we want to react on that....
     // 
     // addProjectListener

@@ -39,4 +39,6 @@ public interface ProjectRegistry {
 
     void registerParticipant( ProjectRegistryParticipant participant );
 
+    void completeParticipantRegistration();
+
 }
