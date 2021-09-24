@@ -57,6 +57,7 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     @Override
     public void removeNode( DataFrame dataFrame ) {
         // TODO Auto-generated method stub
+        // (disable intermediate dataframes, remove leaf dataframes)
 
     }
 
