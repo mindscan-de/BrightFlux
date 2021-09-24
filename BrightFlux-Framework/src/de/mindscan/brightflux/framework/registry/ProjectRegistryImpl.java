@@ -87,6 +87,9 @@ public class ProjectRegistryImpl implements ProjectRegistry {
     public void completeParticipantRegistration() {
         Set<ProjectRegistryParticipant> alreadyRegistered = new HashSet<>();
 
+        // TODO: Actually we want to run the injector on all ProjectRegistryParticipant instead of this approach
+        // TODO: for the moment this is good enough...
+
         while (!registeredParticipantsQueue.isEmpty()) {
             ProjectRegistryParticipant participant = registeredParticipantsQueue.poll();
 
