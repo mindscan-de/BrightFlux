@@ -25,6 +25,10 @@
  */
 package de.mindscan.brightflux.framework.registry;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 import de.mindscan.brightflux.framework.dispatcher.CommandDispatcher;
 import de.mindscan.brightflux.framework.dispatcher.EventDispatcher;
 import de.mindscan.brightflux.framework.dispatcher.SimpleCommandDispatcher;
@@ -37,6 +41,7 @@ public class ProjectRegistryImpl implements ProjectRegistry {
 
     private EventDispatcher eventDispatcher;
     private CommandDispatcher commandDispatcher;
+    private ConcurrentLinkedQueue<ProjectRegistryParticipant> registeredParticipantsQueue = new ConcurrentLinkedQueue<>();
 
     public ProjectRegistryImpl() {
         this( new SimpleEventDispatcher() );
@@ -72,9 +77,7 @@ public class ProjectRegistryImpl implements ProjectRegistry {
      */
     @Override
     public void registerParticipant( ProjectRegistryParticipant participant ) {
-        // TODO put this element to a list
-        // and then execute the initializion according to the list.
-        participant.setProjectRegistry( this );
+        registeredParticipantsQueue.add( participant );
     }
 
     /** 
@@ -82,7 +85,19 @@ public class ProjectRegistryImpl implements ProjectRegistry {
      */
     @Override
     public void completeParticipantRegistration() {
-        // TODO implement using the queue.
+        Set<ProjectRegistryParticipant> alreadyRegistered = new HashSet<>();
+
+        while (!registeredParticipantsQueue.isEmpty()) {
+            ProjectRegistryParticipant participant = registeredParticipantsQueue.poll();
+
+            // avoid registraton loops
+            if (!alreadyRegistered.contains( participant )) {
+                alreadyRegistered.add( participant );
+                participant.setProjectRegistry( this );
+            }
+        }
+
+        alreadyRegistered.clear();
     }
 
     // TODO: work on a mechanism that if the loaded files change, then we want to react on that....
