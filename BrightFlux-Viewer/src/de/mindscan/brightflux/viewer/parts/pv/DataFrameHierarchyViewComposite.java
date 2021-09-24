@@ -38,6 +38,9 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
+import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
+import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
@@ -47,6 +50,7 @@ import de.mindscan.brightflux.viewer.parts.SystemEvents;
 public class DataFrameHierarchyViewComposite extends Composite implements ProjectRegistryParticipant {
 
     private ProjectRegistry projectRegistry;
+    private DataFrameHierarchy dfHierarchy = new DataFrameHierarchyImpl();
 
     /**
      * Create the composite.
@@ -69,9 +73,28 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
 
         registerDataFrameCreatedListener( this.projectRegistry );
         registerDataFrameLoadedListener( this.projectRegistry );
+        registerDataFrameClosedListener( this.projectRegistry );
 
+        // TODO register to the UIDataFrameSelectionEvent
+    }
+
+    private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
+        // TODO Auto-generated method stub
+        BFEventListener closeListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof BFDataFrameEvent) {
+                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
+
+                    dfHierarchy.removeNode( dfEvent.getDataFrame() );
+                    updateDataframeTree( dfHierarchy );
+                }
+            }
+        };
         // TODO: Register to dataframe close events, so we can mark the hierarchy, that the frame is away from the hierarchy. 
         // (disable intermediate dataframes, remove leaf dataframes)
+
+        // projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameClosed, createdListener );
     }
 
     private void registerDataFrameCreatedListener( ProjectRegistry projectRegistry ) {
@@ -80,7 +103,12 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         BFEventListener createdListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
+                if (event instanceof BFDataFrameEvent) {
+                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
 
+                    dfHierarchy.addLeafNode( dfEvent.getDataFrame() );
+                    updateDataframeTree( dfHierarchy );
+                }
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
@@ -92,7 +120,12 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         BFEventListener loadedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
+                if (event instanceof BFDataFrameEvent) {
+                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
 
+                    dfHierarchy.addRootNode( dfEvent.getDataFrame() );
+                    updateDataframeTree( dfHierarchy );
+                }
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
@@ -120,6 +153,12 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
+    }
+
+    private void updateDataframeTree( DataFrameHierarchy dfHierarchy2 ) {
+        // get selection?
+        // TODO: setInput of the TreeViewer.... 
+        // set selection?
     }
 
 }
