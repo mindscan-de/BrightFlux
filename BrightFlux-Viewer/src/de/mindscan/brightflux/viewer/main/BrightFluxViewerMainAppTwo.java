@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Shell;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
-import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
@@ -116,40 +115,31 @@ public class BrightFluxViewerMainAppTwo {
 
         SashForm sashForm_2 = new SashForm( sashForm_1, SWT.VERTICAL );
 
-        Composite projectViewComposite = new ProjectViewComposite( sashForm_2, SWT.NONE );
+        ProjectViewComposite projectViewComposite = new ProjectViewComposite( sashForm_2, SWT.NONE );
 
-        Composite outlineViewComposite = new OutlineViewComposite( sashForm_2, SWT.NONE );
+        OutlineViewComposite outlineViewComposite = new OutlineViewComposite( sashForm_2, SWT.NONE );
         sashForm_2.setWeights( new int[] { 375, 218 } );
 
         SashForm sashForm = new SashForm( sashForm_1, SWT.VERTICAL );
 
-        Composite mainProjectComposite = new MainProjectComposite( sashForm, SWT.NONE );
+        MainProjectComposite mainProjectComposite = new MainProjectComposite( sashForm, SWT.NONE );
 
-        Composite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
+        MultiViewComposite multiViewComposite = new MultiViewComposite( sashForm, SWT.NONE );
         sashForm.setWeights( new int[] { 432, 161 } );
         sashForm_1.setWeights( new int[] { 148, 694 } );
 
         // This is still not nice, but good enough for now
         // we might implement a patched classloader or some DependenyInjector mechanism, since the app is 
         // basically also a ProjectRegistryParticipant and should not provide the truth to everyone else top down.
-        if (projectViewComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) projectViewComposite).setProjectRegistry( projectRegistry );
-        }
-        if (mainProjectComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) mainProjectComposite).setProjectRegistry( projectRegistry );
-        }
-        if (multiViewComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) multiViewComposite).setProjectRegistry( projectRegistry );
-        }
-        if (outlineViewComposite instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) outlineViewComposite).setProjectRegistry( projectRegistry );
-        }
+        projectRegistry.registerParticipant( projectViewComposite );
+        projectRegistry.registerParticipant( mainProjectComposite );
+        projectRegistry.registerParticipant( multiViewComposite );
+        projectRegistry.registerParticipant( outlineViewComposite );
 
-        // some business logic comes here too
-        if (annotatorComponent instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) annotatorComponent).setProjectRegistry( projectRegistry );
-        }
+        // init some business logic comes here too
+        projectRegistry.registerParticipant( annotatorComponent );
 
+        projectRegistry.completeParticipantRegistration();
     }
 
     private void createMainMenu() {
