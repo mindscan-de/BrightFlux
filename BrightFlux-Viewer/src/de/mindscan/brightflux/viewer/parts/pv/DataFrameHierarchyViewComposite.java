@@ -79,8 +79,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     }
 
     private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
-        // TODO Auto-generated method stub
-        BFEventListener closeListener = new BFEventListenerAdapter() {
+        // Register to close event, so we can mark the hierarchy, that the frame is closed in the hierarchy. 
+        BFEventListener closedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFDataFrameEvent) {
@@ -91,10 +91,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
                 }
             }
         };
-        // TODO: Register to dataframe close events, so we can mark the hierarchy, that the frame is away from the hierarchy. 
-        // (disable intermediate dataframes, remove leaf dataframes)
-
-        // projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameClosed, createdListener );
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameClosed, closedListener );
     }
 
     private void registerDataFrameCreatedListener( ProjectRegistry projectRegistry ) {
