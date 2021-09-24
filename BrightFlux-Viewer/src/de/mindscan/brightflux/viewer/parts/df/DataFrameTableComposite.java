@@ -52,13 +52,14 @@ import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
-import de.mindscan.brightflux.viewer.uievents.UIBFEvent;
 
 /**
  * 
@@ -307,6 +308,11 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         // Disable the check that prevents subclassing of SWT components
     }
 
+    public void closeDataframe() {
+        this.setVisible( false );
+        dispatchEvent( BFEventFactory.dataframeClosed( ingestedDF ) );
+    }
+
     private void apply666filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
@@ -353,7 +359,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
-    private void dispatchEvent( UIBFEvent event ) {
+    private void dispatchEvent( BFEvent event ) {
         if (projectRegistry != null) {
             projectRegistry.getEventDispatcher().dispatchEvent( event );
         }
