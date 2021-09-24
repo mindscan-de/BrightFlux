@@ -121,7 +121,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                     if (control instanceof DataFrameTableComposite) {
                         // we want to ignore the visual update... before closing, because it takes a lot of time....
                         // so we hide it first before voiding the referenced data
-                        control.setVisible( false );
+                        ((DataFrameTableComposite) control).closeDataframe();
                         ((DataFrameTableComposite) control).setDataFrame( null );
                     }
                 }
