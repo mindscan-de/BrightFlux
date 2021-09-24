@@ -66,12 +66,9 @@ public class ProjectViewComposite extends Composite implements ProjectRegistryPa
         this.projectRegistry = projectRegistry;
 
         // register and initialize sub components
-        if (logAnalysisProjectProjectView instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) logAnalysisProjectProjectView).setProjectRegistry( this.projectRegistry );
-        }
-        if (dataframeHierarchyProjectView instanceof ProjectRegistryParticipant) {
-            ((ProjectRegistryParticipant) dataframeHierarchyProjectView).setProjectRegistry( this.projectRegistry );
-        }
+        this.projectRegistry.registerParticipant( logAnalysisProjectProjectView );
+        this.projectRegistry.registerParticipant( dataframeHierarchyProjectView );
+
     }
 
     private void buildLayout() {
