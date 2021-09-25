@@ -290,7 +290,7 @@ public class DataFrameQueryLanguageParser {
 
         DFQLToken la = tokens.lookahead();
 
-        if (!acceptableToken.equals( la )) {
+        if (!acceptableToken.equalsIgnorePosition( la )) {
             return false;
         }
 
@@ -306,7 +306,7 @@ public class DataFrameQueryLanguageParser {
 
         DFQLToken la = tokens.lookahead();
 
-        if (!acceptableToken.equals( la )) {
+        if (!acceptableToken.equalsIgnorePosition( la )) {
             return false;
         }
 

@@ -101,11 +101,11 @@ public class DataFrameQueryLanguageTokenizer {
     private DFQLToken createToken( DFQLTokenType currentTokenType, int tokenStart2, int tokenEnd2, String dfqlQuery ) {
         switch (currentTokenType) {
             case STRING:
-                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2 + 1, tokenEnd2 - 1 ) );
+                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2 + 1, tokenEnd2 - 1 ), tokenStart2 );
             case KEYWORD:
-                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ).toUpperCase() );
+                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ).toUpperCase(), tokenStart2 );
             default:
-                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ) );
+                return new DFQLToken( currentTokenType, dfqlQuery.substring( tokenStart2, tokenEnd2 ), tokenStart2 );
         }
     }
 

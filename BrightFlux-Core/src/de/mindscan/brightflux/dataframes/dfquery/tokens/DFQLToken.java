@@ -74,10 +74,30 @@ public class DFQLToken {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        
+
         DFQLToken other = (DFQLToken) obj;
         if (position != other.position)
             return false;
+        if (type != other.type)
+            return false;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        }
+        else if (!value.equals( other.value ))
+            return false;
+        return true;
+    }
+
+    public boolean equalsIgnorePosition( Object obj ) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+
+        DFQLToken other = (DFQLToken) obj;
         if (type != other.type)
             return false;
         if (value == null) {
