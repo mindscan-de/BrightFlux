@@ -184,12 +184,13 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
 
     private void updateDataframeTree( DataFrameHierarchy dfHierarchy2 ) {
         treeViewer.refresh();
-        treeViewer.expandAll();
 
         if (currentSelectedID != null) {
             DataFrameHierarchyNode selectedNode = dfHierarchy2.getNodeByUUID( currentSelectedID );
-            // treeViewer.expandToLevel( selectedNode, TreeViewer.ALL_LEVELS );
-            treeViewer.setSelection( new StructuredSelection( selectedNode ) );
+            if (selectedNode != null) {
+                treeViewer.expandToLevel( selectedNode, TreeViewer.ALL_LEVELS );
+                treeViewer.setSelection( new StructuredSelection( selectedNode ) );
+            }
         }
     }
 
