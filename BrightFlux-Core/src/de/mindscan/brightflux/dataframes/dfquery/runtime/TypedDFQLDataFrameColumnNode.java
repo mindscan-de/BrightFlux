@@ -26,13 +26,12 @@
 package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
- * TODO Refactor this and remove from here...
+ *
+ * This typed node represents a column of a dataframe. This representation is used to introduce a type system
+ * in the compiler step of the data frame query language.
  * 
- * This is more of a compiled runtime node. I think i made a mistake introducing this at this stage. The abstract
- * syntaxtree should not know anything about dataframes or dataframecolumns. 
  */
 public class TypedDFQLDataFrameColumnNode implements TypedDFQLNode {
 
@@ -64,7 +63,7 @@ public class TypedDFQLDataFrameColumnNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        throw new NotYetImplemetedException();
+        return this.dataFrame.describeNodeOperation() + ".'" + this.columnName + "'";
     }
 
     /** 
@@ -72,7 +71,6 @@ public class TypedDFQLDataFrameColumnNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        return "(dataframecolumn:" + dataFrame.describeNodeOperationDebug() + "; (columnName:'" + columnName + "'))";
     }
 }

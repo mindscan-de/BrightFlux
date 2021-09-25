@@ -46,8 +46,8 @@ public class TypedDFQLSelectStatementNode implements TypedDFQLNode {
     /**
      * 
      */
-    public TypedDFQLSelectStatementNode( DFQLNode selectedColumns2, List<TypedDFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
-        this.selectedColumns = selectedColumns2;
+    public TypedDFQLSelectStatementNode( DFQLNode selectedColumns, List<TypedDFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
+        this.selectedColumns = selectedColumns;
         this.dataFrames = dataFrames;
         this.whereClause = whereClause;
     }

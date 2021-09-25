@@ -29,7 +29,18 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 
 /**
  * 
+ * This is more of a runtime node type produced by the compiler. It is still an AST node but 
+ * contains type information. The original AST produced by the parser doesn't know anything
+ * about data frames or columns, but those are essential for the runtime, that it knows its
+ * implicit types. And a typed tree is then easier to evaluate or to compile further.
+ *
  */
 public interface TypedDFQLNode extends DFQLNode {
+
+    // TODO: implement the return type calculation and add an interface for the returntype (setters and getters)
+
+    // TODO: also a node should report its own type e.g. a dataframe columnnode is a dataframe column 
+    //       node but may return strings. So there is a clear difference between these two information
+    //       let's see how that works out.
 
 }

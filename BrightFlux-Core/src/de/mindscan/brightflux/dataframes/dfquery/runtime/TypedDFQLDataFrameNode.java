@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * TODO Refactor this and remove from here...
@@ -62,7 +61,7 @@ public class TypedDFQLDataFrameNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        throw new NotYetImplemetedException();
+        return identifier;
     }
 
     /** 
@@ -70,7 +69,6 @@ public class TypedDFQLDataFrameNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        return "(dataframe: identifier'" + identifier + "'; name:'" + dataFrame.getName() + "'; uuid:" + dataFrame.getUuid().toString() + "";
     }
 }
