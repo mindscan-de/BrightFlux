@@ -124,13 +124,7 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
             return null;
         }
 
-        UUID parentUUID = element.getParentDataFrameUUID();
-
-        if (parentUUID == null) {
-            return null;
-        }
-
-        return nodes.get( parentUUID );
+        return element.getParentNode();
     }
 
     /** 

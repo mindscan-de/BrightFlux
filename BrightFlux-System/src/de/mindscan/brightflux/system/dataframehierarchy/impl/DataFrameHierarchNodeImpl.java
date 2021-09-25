@@ -36,12 +36,12 @@ public class DataFrameHierarchNodeImpl implements DataFrameHierarchyNode {
 
     private String dataFrameName;
     private UUID dataFrameUUID;
-    private DataFrameHierarchyNode parentDataFrameUUID;
+    private DataFrameHierarchyNode parentNode;
 
     public DataFrameHierarchNodeImpl( String dataFrameName, UUID dataFrameUUID, DataFrameHierarchyNode parentNode ) {
         this.dataFrameName = dataFrameName;
         this.dataFrameUUID = dataFrameUUID;
-        this.parentDataFrameUUID = parentNode;
+        this.parentNode = parentNode;
     }
 
     /**
@@ -65,10 +65,18 @@ public class DataFrameHierarchNodeImpl implements DataFrameHierarchyNode {
      */
     @Override
     public UUID getParentDataFrameUUID() {
-        if (parentDataFrameUUID == null) {
+        if (parentNode == null) {
             return null;
         }
 
-        return parentDataFrameUUID.getDataFrameUUID();
+        return parentNode.getDataFrameUUID();
+    }
+
+    /**
+     * @return the parentNode
+     */
+    @Override
+    public DataFrameHierarchyNode getParentNode() {
+        return parentNode;
     }
 }

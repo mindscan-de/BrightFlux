@@ -47,4 +47,9 @@ public interface DataFrameHierarchyNode {
      */
     UUID getParentDataFrameUUID();
 
+    /**
+     * @return the parentNode
+     */
+    DataFrameHierarchyNode getParentNode();
+
 }
