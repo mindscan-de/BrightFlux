@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.parts.pv;
 
 import java.util.UUID;
 
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
@@ -40,11 +41,13 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
+import de.mindscan.brightflux.viewer.parts.UIEvents;
 
 /**
  * 
@@ -54,6 +57,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private ProjectRegistry projectRegistry;
     private DataFrameHierarchy dfHierarchy = new DataFrameHierarchyImpl();
     private TreeViewer treeViewer;
+    protected UUID currentSelectedID;
 
     /**
      * Create the composite.
@@ -78,7 +82,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         registerDataFrameLoadedListener( this.projectRegistry );
         registerDataFrameClosedListener( this.projectRegistry );
 
-        // TODO register to the UIDataFrameSelectionEvent
+        // register to the UIDataFrameSelectionEvent
+        registerDataFrameSelectedListener( this.projectRegistry );
     }
 
     private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
@@ -131,14 +136,29 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
     }
 
+    private void registerDataFrameSelectedListener( ProjectRegistry projectRegistry2 ) {
+        BFEventListener selectedListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof BFDataFrameEvent) {
+                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
+
+                    currentSelectedID = dfEvent.getDataFrame().getUuid();
+                    updateDataframeTree( dfHierarchy );
+                }
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, selectedListener );
+    }
+
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        treeViewer = new TreeViewer( this, SWT.BORDER );
+        treeViewer = new TreeViewer( this, SWT.BORDER | SWT.FULL_SELECTION );
         treeViewer.setContentProvider( new DataFrameHierarchyTreeContentProvider() );
 
         Tree tree = treeViewer.getTree();
-        tree.setLinesVisible( true );
+        // tree.setLinesVisible( true );
         tree.setHeaderVisible( true );
 
         TreeViewerColumn treeViewerNameColumn = new TreeViewerColumn( treeViewer, SWT.NONE );
@@ -163,13 +183,14 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     }
 
     private void updateDataframeTree( DataFrameHierarchy dfHierarchy2 ) {
-
-        // get selection and ?
-
         treeViewer.refresh();
         treeViewer.expandAll();
 
-        // set selection?
+        if (currentSelectedID != null) {
+            DataFrameHierarchyNode selectedNode = dfHierarchy2.getNodeByUUID( currentSelectedID );
+            // treeViewer.expandToLevel( selectedNode, TreeViewer.ALL_LEVELS );
+            treeViewer.setSelection( new StructuredSelection( selectedNode ) );
+        }
     }
 
 }

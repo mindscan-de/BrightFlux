@@ -132,4 +132,14 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
 
         return nodes.get( parentUUID );
     }
+
+    /** 
+     * {@inheritDoc}
+     * @return 
+     */
+    @Override
+    public DataFrameHierarchyNode getNodeByUUID( UUID nodeUUID ) {
+        return nodes.get( nodeUUID );
+
+    }
 }

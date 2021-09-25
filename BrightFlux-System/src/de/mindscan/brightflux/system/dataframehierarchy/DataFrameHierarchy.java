@@ -69,4 +69,9 @@ public interface DataFrameHierarchy {
      */
     DataFrameHierarchyNode getParent( DataFrameHierarchyNode element );
 
+    /**
+     * @param currentSelectedID
+     */
+    DataFrameHierarchyNode getNodeByUUID( UUID currentSelectedID );
+
 }
