@@ -25,20 +25,31 @@
  */
 package de.mindscan.brightflux.viewer.parts.pv;
 
-import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 
  */
 public class DataFrameHierarchyTreeContentProvider implements ITreeContentProvider {
 
+    private DataFrameHierarchy dfHierarchy = null;
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public Object[] getElements( Object inputElement ) {
-        return ArrayContentProvider.getInstance().getElements( inputElement );
+        // if it is a dataframe hierarchy we want to return he root elements
+        if (inputElement instanceof DataFrameHierarchy) {
+            dfHierarchy = (DataFrameHierarchy) inputElement;
+            DataFrameHierarchy dataFrameHierarchy = (DataFrameHierarchy) inputElement;
+            return dataFrameHierarchy.getRootNodes().toArray();
+        }
+
+        return new DataFrameHierarchyNode[0];
     }
 
     /** 
@@ -46,7 +57,11 @@ public class DataFrameHierarchyTreeContentProvider implements ITreeContentProvid
      */
     @Override
     public Object[] getChildren( Object parentElement ) {
-        // TODO Auto-generated method stub
+        if (dfHierarchy != null) {
+            if (parentElement instanceof DataFrameHierarchyNode) {
+                return dfHierarchy.getChildren( (DataFrameHierarchyNode) parentElement ).toArray();
+            }
+        }
         return null;
     }
 
@@ -55,6 +70,12 @@ public class DataFrameHierarchyTreeContentProvider implements ITreeContentProvid
      */
     @Override
     public Object getParent( Object element ) {
+        if (dfHierarchy != null) {
+            if (element instanceof DataFrameHierarchyNode) {
+                return dfHierarchy.getParent( (DataFrameHierarchyNode) element );
+            }
+        }
+
         // TODO Auto-generated method stub
         return null;
     }
@@ -64,7 +85,12 @@ public class DataFrameHierarchyTreeContentProvider implements ITreeContentProvid
      */
     @Override
     public boolean hasChildren( Object element ) {
-        // TODO Auto-generated method stub
+        if (dfHierarchy != null) {
+            if (element instanceof DataFrameHierarchyNode) {
+                return dfHierarchy.hasChildren( (DataFrameHierarchyNode) element );
+            }
+        }
+
         return false;
     }
 

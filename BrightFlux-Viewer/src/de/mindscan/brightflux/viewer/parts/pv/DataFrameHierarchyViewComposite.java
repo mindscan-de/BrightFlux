@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts.pv;
 
+import java.util.UUID;
+
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
@@ -42,6 +44,7 @@ import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 
 /**
@@ -51,6 +54,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
 
     private ProjectRegistry projectRegistry;
     private DataFrameHierarchy dfHierarchy = new DataFrameHierarchyImpl();
+    private TreeViewer treeViewer;
 
     /**
      * Create the composite.
@@ -101,9 +105,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFDataFrameEvent) {
-                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
+                    DataFrameCreatedEvent dfEvent = (DataFrameCreatedEvent) event;
 
-                    dfHierarchy.addLeafNode( dfEvent.getDataFrame() );
+                    dfHierarchy.addLeafNode( dfEvent.getDataFrame(), UUID.fromString( dfEvent.getParentDataFrameUUID() ) );
                     updateDataframeTree( dfHierarchy );
                 }
             }
@@ -131,7 +135,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private void buildLayout() {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        TreeViewer treeViewer = new TreeViewer( this, SWT.BORDER );
+        treeViewer = new TreeViewer( this, SWT.BORDER );
         treeViewer.setContentProvider( new DataFrameHierarchyTreeContentProvider() );
 
         Tree tree = treeViewer.getTree();
@@ -144,7 +148,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         trclmnDataframe.setText( "DataFrame" );
         treeViewerColumn.setLabelProvider( new ColumnLabelProvider() );
 
-        treeViewer.setInput( new String[] { "MyFirstDataFrame", "MySecondDataFrame" } );
+        // treeViewer.setInput( dfHierarchy );
     }
 
     @Override
@@ -153,8 +157,12 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     }
 
     private void updateDataframeTree( DataFrameHierarchy dfHierarchy2 ) {
-        // get selection?
+
+        // get selection and ?
         // TODO: setInput of the TreeViewer.... 
+        treeViewer.setInput( dfHierarchy2 );
+        treeViewer.expandAll();
+
         // set selection?
     }
 
