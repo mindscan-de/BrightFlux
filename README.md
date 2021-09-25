@@ -81,24 +81,28 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * (runtime feature only / no persistence yet) - annotate line of a dataframe or one of its child dataframes
   * (runtime feature only / no persistence yet) - annotations are global over different (related) dataframes
   * (runtime feature only / no persistence yet) - create a simple report from the annotations
+  * (runtime feature only / no persistence yet) - use report snippets for annotations
+* Show dataframe hierarchy for the current selected dataframe
 
 ## Planned Features
 
 Some of the planned features are: 
 
 * Annonate Logmessages
-  * save annotations to an analysis project file
-  * load annotations from analyis project file for a file
-* Help with writing up the analysis, eg. using templates  
-  * use of templates for creating a report
+  * save annotations to an analysis project file or at least in a .bfannotation file
+  * load annotations from analyis project file for a file or at least in a .bfannotation file
+* Improve DFQL 
+  * implement compilation of row filters with functions (e.g. df.'column'.contains('666')) from parsed AST
 * Treat logs like data frames and use transformations on columns
   * save the transformations and dataframe configuration to an analysis project file
 * Support original Index
   *  copy the original index in a derived dataframe 
-* Improve support of "__org_idx" and "__idx", when doing select statements
+* Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
 * reindex "__idx" row on dataframe filtering and dataframe column selection
 * Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
   * DataSource Tokenizer for Dataframe Columns  
+* Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
+  * use of templates for creating a report
 * Create Sequence-Diagrams from Logmessages / log-dataframes
 * Create Activity-Diagrams from Logmessages / log-dataframes
 * Have Swimlanes for different Components
