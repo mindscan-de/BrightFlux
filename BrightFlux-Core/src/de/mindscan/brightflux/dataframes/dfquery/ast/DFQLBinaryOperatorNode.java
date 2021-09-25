@@ -66,7 +66,6 @@ public class DFQLBinaryOperatorNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
-        return null;
+        return "(binary:" + left.describeNodeOperationDebug() + "(op:" + operation.asString() + ")" + right.describeNodeOperationDebug() + ")";
     }
 }
