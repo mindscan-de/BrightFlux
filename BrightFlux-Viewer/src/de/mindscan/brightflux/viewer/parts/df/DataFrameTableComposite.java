@@ -28,6 +28,8 @@ package de.mindscan.brightflux.viewer.parts.df;
 import java.nio.file.Path;
 import java.util.Collection;
 
+import org.eclipse.jface.dialogs.IInputValidator;
+import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
@@ -159,6 +161,29 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_2 = new Menu( mntmFilters );
         mntmFilters.setMenu( menu_2 );
 
+        MenuItem mntmFilterText = new MenuItem( menu_2, SWT.NONE );
+        mntmFilterText.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                IInputValidator validator = new IInputValidator() {
+                    @Override
+                    public String isValid( String newText ) {
+                        return null;
+                    }
+                };
+                InputDialog inputDialog = new InputDialog( parentShell, "Text", "Text used for filter.", "", validator );
+                int inputresult = inputDialog.open();
+
+                if (inputresult == InputDialog.OK) {
+                    String value = inputDialog.getValue();
+                    if (value != null && !value.isBlank()) {
+                        applyValueFilter( ingestedDF, value );
+                    }
+                }
+            }
+        } );
+        mntmFilterText.setText( "Filter Text ..." );
+
 //       SelectionEvent e
 //      Point absolute = new Point( e.x, e.y );
 //      Point pt = table.toControl( absolute );
@@ -210,15 +235,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmLoganalysisframe.setText( "Enable Annotations" );
-
-        MenuItem mntmAddAnnotation = new MenuItem( menu, SWT.NONE );
-//        mntmAddAnnotation.addSelectionListener( new SelectionAdapter() {
-//            @Override
-//            public void widgetSelected( SelectionEvent e ) {
-//                addAnnotation();
-//            }
-//        } );
-        mntmAddAnnotation.setText( "Add Annotation" );
     }
 
     /**
@@ -304,6 +320,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void apply666filter( DataFrame dataFrame ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
+    }
+
+    protected void applyValueFilter( DataFrame dataFrame, String value ) {
+        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", value );
+        dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
+
     }
 
     private void selectDataFrameRow( int rowIndex, Object rowData ) {
