@@ -50,7 +50,6 @@ import de.mindscan.brightflux.dataframes.DataFrameImpl;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -141,21 +140,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmSaveAsRecipe.setText( "Save As Recipe ..." );
 
-        MenuItem mntmAlter = new MenuItem( menu_DataFrame, SWT.CASCADE );
-        mntmAlter.setText( "Alter" );
-
-        Menu menu_1 = new Menu( mntmAlter );
-        mntmAlter.setMenu( menu_1 );
-
-        MenuItem mntmAppendColumnAnnotations = new MenuItem( menu_1, SWT.NONE );
-        mntmAppendColumnAnnotations.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                alterDFAppendColumnWithAnnotations( ingestedDF );
-            }
-        } );
-        mntmAppendColumnAnnotations.setText( "Append Column Annotations" );
-
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
         mntmSaveToFile.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -228,12 +212,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmLoganalysisframe.setText( "Enable Annotations" );
 
         MenuItem mntmAddAnnotation = new MenuItem( menu, SWT.NONE );
-        mntmAddAnnotation.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                addAnnotation();
-            }
-        } );
+//        mntmAddAnnotation.addSelectionListener( new SelectionAdapter() {
+//            @Override
+//            public void widgetSelected( SelectionEvent e ) {
+//                addAnnotation();
+//            }
+//        } );
         mntmAddAnnotation.setText( "Add Annotation" );
     }
 
@@ -326,14 +310,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         dispatchEvent( new DataFrameRowSelectedEvent( ingestedDF, rowIndex, rowData ) );
     }
 
-    private void alterDFAppendColumnWithAnnotations( DataFrame dataFrame ) {
-        // TODO implement this feature to add a new Column to the current dataframe.
-        // dispatchCommand( DataFrameCommandFactory.alterDataframeAddColumn( dataFrame, "annotations" ) );
-
-        throw new NotYetImplemetedException( "" );
-        // System.out.println( "This feature is not yet implemented." );
-    }
-
     private void applyRecipe( DataFrame dataFrame, Path recipePath ) {
         dispatchCommand( DataFrameCommandFactory.applyRecipe( dataFrame, recipePath ) );
     }
@@ -350,12 +326,14 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         dispatchCommand( DataFrameCommandFactory.createSparseDataFrame() );
     }
 
-    private void addAnnotation() {
-        if (table.getSelectionCount() > 0) {
-            int selectionIndex = table.getSelectionIndex();
-            dispatchCommand( DataFrameCommandFactory.annotateRow( ingestedDF, selectionIndex, "This is my new annotation for this row...." ) );
-        }
-    }
+//    private void addAnnotation() {
+//        if (table.getSelectionCount() > 0) {
+//            int selectionIndex = table.getSelectionIndex();
+//
+//            dispatchCommand( DataFrameCommandFactory.annotateRow( ingestedDF, ingestedDF.getOriginalRowIndex( selectionIndex ),
+//                            "This is my new annotation for this row...." ) );
+//        }
+//    }
 
     private void dispatchCommand( BFCommand command ) {
         if (projectRegistry != null) {
