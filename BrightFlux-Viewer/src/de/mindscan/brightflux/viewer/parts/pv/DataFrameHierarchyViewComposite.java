@@ -148,7 +148,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         trclmnDataframe.setText( "DataFrame" );
         treeViewerColumn.setLabelProvider( new ColumnLabelProvider() );
 
-        // treeViewer.setInput( dfHierarchy );
+        treeViewer.setInput( dfHierarchy );
+
     }
 
     @Override
@@ -159,8 +160,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private void updateDataframeTree( DataFrameHierarchy dfHierarchy2 ) {
 
         // get selection and ?
-        // TODO: setInput of the TreeViewer.... 
-        treeViewer.setInput( dfHierarchy2 );
+
+        treeViewer.refresh();
         treeViewer.expandAll();
 
         // set selection?

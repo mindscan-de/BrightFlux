@@ -26,7 +26,7 @@
 package de.mindscan.brightflux.system.dataframehierarchy.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -43,7 +43,7 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
 
     private List<DataFrameHierarchyNode> rootNodes = new ArrayList<>();
 
-    private Map<UUID, DataFrameHierarchyNode> nodes = new HashMap<>();
+    private Map<UUID, DataFrameHierarchyNode> nodes = new LinkedHashMap<>();
 
     /** 
      * {@inheritDoc}
