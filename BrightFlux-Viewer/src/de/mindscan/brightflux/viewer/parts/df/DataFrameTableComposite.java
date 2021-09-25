@@ -227,6 +227,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmApplyRecipe.setText( "Apply Recipe ..." );
 
+        MenuItem mntmCopytoclipboard = new MenuItem( menu, SWT.NONE );
+        mntmCopytoclipboard.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: copy current selected row to clipboard
+            }
+        } );
+        mntmCopytoclipboard.setText( "Copy Row to Clipboard" );
+
         MenuItem mntmLoganalysisframe = new MenuItem( menu, SWT.NONE );
         mntmLoganalysisframe.addSelectionListener( new SelectionAdapter() {
             @Override
