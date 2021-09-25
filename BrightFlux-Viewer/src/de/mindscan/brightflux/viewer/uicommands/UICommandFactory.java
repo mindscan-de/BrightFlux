@@ -27,6 +27,8 @@ package de.mindscan.brightflux.viewer.uicommands;
 
 import org.eclipse.swt.widgets.Shell;
 
+import de.mindscan.brightflux.viewer.uicommands.dnd.CopyTextToClipBoardCommand;
+
 /**
  * 
  */

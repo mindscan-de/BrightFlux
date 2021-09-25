@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.uicommands;
+package de.mindscan.brightflux.viewer.uicommands.dnd;
 
 import java.util.function.Consumer;
 
@@ -33,6 +33,7 @@ import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
 
 /**
  * 
