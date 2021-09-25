@@ -58,7 +58,9 @@ public class CopyTextToClipBoardCommand implements UIBFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         TextTransfer textTransfer = TextTransfer.getInstance();
         Clipboard clipBoard = new Clipboard( this.shell.getDisplay() );
-        clipBoard.setContents( new String[] { contentForClipboard }, new Transfer[] { textTransfer } );
+        if (contentForClipboard != null) {
+            clipBoard.setContents( new String[] { contentForClipboard }, new Transfer[] { textTransfer } );
+        }
 
     }
 
