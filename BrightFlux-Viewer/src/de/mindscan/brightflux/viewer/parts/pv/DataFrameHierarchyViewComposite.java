@@ -27,7 +27,6 @@ package de.mindscan.brightflux.viewer.parts.pv;
 
 import java.util.UUID;
 
-import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
@@ -142,11 +141,17 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         tree.setLinesVisible( true );
         tree.setHeaderVisible( true );
 
-        TreeViewerColumn treeViewerColumn = new TreeViewerColumn( treeViewer, SWT.NONE );
-        TreeColumn trclmnDataframe = treeViewerColumn.getColumn();
-        trclmnDataframe.setWidth( 100 );
-        trclmnDataframe.setText( "DataFrame" );
-        treeViewerColumn.setLabelProvider( new ColumnLabelProvider() );
+        TreeViewerColumn treeViewerNameColumn = new TreeViewerColumn( treeViewer, SWT.NONE );
+        TreeColumn trclmnDataframeName = treeViewerNameColumn.getColumn();
+        trclmnDataframeName.setWidth( 150 );
+        trclmnDataframeName.setText( "Name" );
+        treeViewerNameColumn.setLabelProvider( new DataFrameHierarchyTreeColumnLabelProvider( DataFrameHierarchyTreeColumnLabelProvider.DF_NAME_HEADER ) );
+
+        TreeViewerColumn treeViewerUUIDColumn = new TreeViewerColumn( treeViewer, SWT.NONE );
+        TreeColumn trclmnUuid = treeViewerUUIDColumn.getColumn();
+        trclmnUuid.setWidth( 150 );
+        trclmnUuid.setText( "uuid" );
+        treeViewerUUIDColumn.setLabelProvider( new DataFrameHierarchyTreeColumnLabelProvider( DataFrameHierarchyTreeColumnLabelProvider.DF_UUID ) );
 
         treeViewer.setInput( dfHierarchy );
 
