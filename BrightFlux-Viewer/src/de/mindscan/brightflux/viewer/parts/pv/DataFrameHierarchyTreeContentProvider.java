@@ -42,7 +42,7 @@ public class DataFrameHierarchyTreeContentProvider implements ITreeContentProvid
      */
     @Override
     public Object[] getElements( Object inputElement ) {
-        // if it is a dataframe hierarchy we want to return he root elements
+        // if it is a data frame hierarchy we want to return he root elements
         if (inputElement instanceof DataFrameHierarchy) {
             dfHierarchy = (DataFrameHierarchy) inputElement;
             DataFrameHierarchy dataFrameHierarchy = (DataFrameHierarchy) inputElement;
@@ -76,7 +76,6 @@ public class DataFrameHierarchyTreeContentProvider implements ITreeContentProvid
             }
         }
 
-        // TODO Auto-generated method stub
         return null;
     }
 
