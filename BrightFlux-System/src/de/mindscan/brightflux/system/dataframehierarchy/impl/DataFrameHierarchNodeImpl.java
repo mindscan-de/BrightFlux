@@ -23,50 +23,52 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.dataframehierarchy;
+package de.mindscan.brightflux.system.dataframehierarchy.impl;
 
-import java.util.List;
 import java.util.UUID;
 
-import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 
  */
-public interface DataFrameHierarchy {
+public class DataFrameHierarchNodeImpl implements DataFrameHierarchyNode {
+
+    private String dataFrameName;
+    private UUID dataFrameUUID;
+    private DataFrameHierarchyNode parentDataFrameUUID;
+
+    public DataFrameHierarchNodeImpl( String dataFrameName, UUID dataFrameUUID, DataFrameHierarchyNode parentNode ) {
+        this.dataFrameName = dataFrameName;
+        this.dataFrameUUID = dataFrameUUID;
+        this.parentDataFrameUUID = parentNode;
+    }
 
     /**
-     * @param dataFrame
-     * @param parentUUID 
-     */
-    void addLeafNode( DataFrame dataFrame, UUID parentUUID );
-
-    /**
-     * @param dataFrame
-     */
-    void addRootNode( DataFrame dataFrame );
-
-    /**
-     * @param dataFrame
-     */
-    void removeNode( DataFrame dataFrame );
+    * @return the dataFrameName
+    */
+    @Override
+    public String getDataFrameName() {
+        return dataFrameName;
+    }
 
     /**
      * 
      */
-    List<DataFrameHierarchyNode> getRootNodes();
+    @Override
+    public UUID getDataFrameUUID() {
+        return dataFrameUUID;
+    }
 
     /**
-     * @param parentElement
+     * @return the parentDataFrameUUID
      */
-    List<DataFrameHierarchyNode> getChildren( DataFrameHierarchyNode parentElement );
+    @Override
+    public UUID getParentDataFrameUUID() {
+        if (parentDataFrameUUID == null) {
+            return null;
+        }
 
-    boolean hasChildren( DataFrameHierarchyNode parentElement );
-
-    /**
-     * @param element
-     * @return
-     */
-    DataFrameHierarchyNode getParent( DataFrameHierarchyNode element );
-
+        return parentDataFrameUUID.getDataFrameUUID();
+    }
 }

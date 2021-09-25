@@ -25,48 +25,26 @@
  */
 package de.mindscan.brightflux.system.dataframehierarchy;
 
-import java.util.List;
 import java.util.UUID;
-
-import de.mindscan.brightflux.dataframes.DataFrame;
 
 /**
  * 
  */
-public interface DataFrameHierarchy {
-
-    /**
-     * @param dataFrame
-     * @param parentUUID 
-     */
-    void addLeafNode( DataFrame dataFrame, UUID parentUUID );
-
-    /**
-     * @param dataFrame
-     */
-    void addRootNode( DataFrame dataFrame );
-
-    /**
-     * @param dataFrame
-     */
-    void removeNode( DataFrame dataFrame );
+public interface DataFrameHierarchyNode {
 
     /**
      * 
      */
-    List<DataFrameHierarchyNode> getRootNodes();
+    UUID getDataFrameUUID();
 
     /**
-     * @param parentElement
-     */
-    List<DataFrameHierarchyNode> getChildren( DataFrameHierarchyNode parentElement );
-
-    boolean hasChildren( DataFrameHierarchyNode parentElement );
+    * @return the dataFrameName
+    */
+    String getDataFrameName();
 
     /**
-     * @param element
-     * @return
+     * @return the parentDataFrameUUID
      */
-    DataFrameHierarchyNode getParent( DataFrameHierarchyNode element );
+    UUID getParentDataFrameUUID();
 
 }

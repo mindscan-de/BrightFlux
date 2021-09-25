@@ -25,21 +25,36 @@
  */
 package de.mindscan.brightflux.system.dataframehierarchy.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 
  */
 public class DataFrameHierarchyImpl implements DataFrameHierarchy {
 
+    private List<DataFrameHierarchyNode> rootNodes = new ArrayList<>();
+
+    private Map<UUID, DataFrameHierarchyNode> nodes = new HashMap<>();
+
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void addLeafNode( DataFrame dataFrame ) {
-        // TODO Auto-generated method stub
-        System.out.println( "add leaf node" );
+    public void addLeafNode( DataFrame dataFrame, UUID parentDataFrameUUID ) {
+        //
+        DataFrameHierarchyNode parentNode = nodes.get( parentDataFrameUUID );
+        DataFrameHierarchNodeImpl newLeafNode = new DataFrameHierarchNodeImpl( dataFrame.getName(), dataFrame.getUuid(), parentNode );
+
+        nodes.put( dataFrame.getUuid(), newLeafNode );
     }
 
     /** 
@@ -47,8 +62,9 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
      */
     @Override
     public void addRootNode( DataFrame dataFrame ) {
-        // TODO Auto-generated method stub
-        System.out.println( "add root node" );
+        DataFrameHierarchNodeImpl newRootNode = new DataFrameHierarchNodeImpl( dataFrame.getName(), dataFrame.getUuid(), null );
+        nodes.put( dataFrame.getUuid(), newRootNode );
+        rootNodes.add( newRootNode );
     }
 
     /** 
@@ -56,9 +72,64 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
      */
     @Override
     public void removeNode( DataFrame dataFrame ) {
-        // TODO Auto-generated method stub
-        // (disable intermediate dataframes, remove leaf dataframes)
+        UUID uuid = dataFrame.getUuid();
+
+        // TODO: check if it is a root node.
+        rootNodes = rootNodes.stream().filter( n -> !n.getDataFrameUUID().equals( uuid ) ).collect( Collectors.toList() );
+
+        // TODO: (disable intermediate dataframes, remove leaf dataframes)
         System.out.println( "disable node" );
+        // remove the node finally from the table.
+        nodes.remove( uuid );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public List<DataFrameHierarchyNode> getRootNodes() {
+        return rootNodes;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public List<DataFrameHierarchyNode> getChildren( DataFrameHierarchyNode parentElement ) {
+        UUID parentUUID = parentElement.getDataFrameUUID();
+        if (parentUUID != null) {
+            return nodes.values().stream().filter( node -> parentUUID.equals( node.getParentDataFrameUUID() ) ).collect( Collectors.toList() );
+        }
+
+        return new ArrayList<>();
+    }
+
+    @Override
+    public boolean hasChildren( DataFrameHierarchyNode parentElement ) {
+        UUID parentUUID = parentElement.getDataFrameUUID();
+        if (parentUUID != null) {
+            return nodes.values().stream().filter( node -> parentUUID.equals( node.getParentDataFrameUUID() ) ).collect( Collectors.toList() )
+                            .isEmpty() == false;
+        }
+
+        return false;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrameHierarchyNode getParent( DataFrameHierarchyNode element ) {
+        if (element == null) {
+            return null;
+        }
+
+        UUID parentUUID = element.getParentDataFrameUUID();
+
+        if (parentUUID != null) {
+            return nodes.get( parentUUID );
+        }
+
+        return null;
+    }
 }
