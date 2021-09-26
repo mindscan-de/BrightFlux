@@ -235,15 +235,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmCopytoclipboard.setText( "Copy Row to Clipboard" );
-
-        MenuItem mntmLoganalysisframe = new MenuItem( menu, SWT.NONE );
-        mntmLoganalysisframe.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                createSparseDataframe();
-            }
-        } );
-        mntmLoganalysisframe.setText( "Enable Annotations" );
     }
 
     /**
@@ -351,10 +342,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private void saveAsCSV( DataFrame dataFrame, Path targetPath ) {
         dispatchCommand( DataFrameCommandFactory.saveCSV( dataFrame, targetPath ) );
-    }
-
-    private void createSparseDataframe() {
-        dispatchCommand( DataFrameCommandFactory.createSparseDataFrame() );
     }
 
 //    private void addAnnotation() {

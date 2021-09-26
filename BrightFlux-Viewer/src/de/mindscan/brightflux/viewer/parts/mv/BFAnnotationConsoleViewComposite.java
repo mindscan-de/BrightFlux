@@ -82,6 +82,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private ProjectRegistry projectRegistry;
 
+    private Button btnEnableAnnotations;
+
     /**
      * Create the composite.
      * @param parent
@@ -165,6 +167,16 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
         Composite composite = new Composite( sashForm_1, SWT.NONE );
         composite.setLayout( new GridLayout( 1, false ) );
+
+        btnEnableAnnotations = new Button( composite, SWT.NONE );
+        btnEnableAnnotations.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                createAnnotationDataFrame();
+                btnEnableAnnotations.setEnabled( false );
+            }
+        } );
+        btnEnableAnnotations.setText( "Enable Annotations" );
 
         Button btnGenerateReport = new Button( composite, SWT.NONE );
         btnGenerateReport.addSelectionListener( new SelectionAdapter() {
@@ -289,6 +301,16 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         String report = generator.build();
 
         projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
+    }
+
+    private void createAnnotationDataFrame() {
+        dispatchCommand( DataFrameCommandFactory.createSparseDataFrame() );
+    }
+
+    private void dispatchCommand( BFCommand command ) {
+        if (projectRegistry != null) {
+            projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 
     @Override
