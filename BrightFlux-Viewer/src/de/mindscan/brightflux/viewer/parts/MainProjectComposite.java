@@ -91,6 +91,13 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                 addDataFrameTab( dataFrame );
             }
         } );
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRequestSelectEvent, new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                // TODO: do the selection of the dataframe if not the current....
+            }
+        } );
     }
 
     private void buildLayout() {
