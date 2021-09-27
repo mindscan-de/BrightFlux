@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
+import java.util.UUID;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolder2Adapter;
@@ -43,6 +45,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRequestSelectEvent;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
@@ -95,7 +98,8 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRequestSelectEvent, new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                // TODO: do the selection of the dataframe if not the current....
+                UUID requestedUUID = ((DataFrameRequestSelectEvent) event).getRequestedUUID();
+                requestDataFrameSelection( requestedUUID );
             }
         } );
     }
@@ -163,6 +167,29 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private void sendDataFrameSelectionEvent( final DataFrame dataFrame ) {
         if (projectRegistry != null) {
             projectRegistry.getEventDispatcher().dispatchEvent( UIEventFactory.dataFrameSelected( dataFrame ) );
+        }
+    }
+
+    private void requestDataFrameSelection( UUID requestedUUID ) {
+        if (requestedUUID == null) {
+
+        }
+
+        CTabItem[] items = mainTabFolder.getItems();
+        if (items != null) {
+            for (int i = 0; i < items.length; i++) {
+                CTabItem item = items[i];
+                Control currentControl = item.getControl();
+                if (currentControl instanceof DataFrameTableComposite) {
+                    DataFrameTableComposite dataFrameTableComposite = (DataFrameTableComposite) currentControl;
+                    DataFrame dataFrame = dataFrameTableComposite.getDataFrame();
+                    if (requestedUUID.equals( dataFrame.getUuid() )) {
+                        mainTabFolder.setSelection( item );
+                        sendDataFrameSelectionEvent( dataFrame );
+                    }
+
+                }
+            }
         }
     }
 

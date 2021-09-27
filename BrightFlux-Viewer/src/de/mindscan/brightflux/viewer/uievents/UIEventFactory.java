@@ -44,7 +44,6 @@ public class UIEventFactory {
     }
 
     public static BFEvent dataFrameSelectionRequest( UUID uuidToSelect ) {
-        // TODO Auto-generated method stub
-        return null;
+        return new DataFrameRequestSelectEvent( uuidToSelect );
     }
 }
