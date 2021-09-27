@@ -27,7 +27,10 @@ package de.mindscan.brightflux.viewer.parts.pv;
 
 import java.util.UUID;
 
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
@@ -48,6 +51,7 @@ import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
+import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
  * 
@@ -155,6 +159,22 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         treeViewer = new TreeViewer( this, SWT.BORDER | SWT.FULL_SELECTION );
+        treeViewer.addDoubleClickListener( new IDoubleClickListener() {
+            public void doubleClick( DoubleClickEvent event ) {
+                TreeSelection selection = (TreeSelection) event.getSelection();
+                if (selection.isEmpty()) {
+                    return;
+                }
+
+                Object firstElement = selection.getFirstElement();
+                if (firstElement instanceof DataFrameHierarchyNode) {
+                    UUID uuidToSelect = ((DataFrameHierarchyNode) firstElement).getDataFrameUUID();
+                    BFEvent bfevent = UIEventFactory.dataFrameSelectionRequest( uuidToSelect );
+                    projectRegistry.getEventDispatcher().dispatchEvent( bfevent );
+                }
+
+            }
+        } );
         treeViewer.setContentProvider( new DataFrameHierarchyTreeContentProvider() );
 
         Tree tree = treeViewer.getTree();
