@@ -43,7 +43,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
-import de.mindscan.brightflux.viewer.uievents.DataFrameSelectedEvent;
+import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
  * 
@@ -155,7 +155,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
     private void sendDataFrameSelectionEvent( final DataFrame dataFrame ) {
         if (projectRegistry != null) {
-            projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameSelectedEvent( dataFrame ) );
+            projectRegistry.getEventDispatcher().dispatchEvent( UIEventFactory.dataFrameSelected( dataFrame ) );
         }
     }
 

@@ -60,7 +60,7 @@ import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
-import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
+import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
  * 
@@ -329,7 +329,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void selectDataFrameRow( int rowIndex, Object rowData ) {
-        dispatchEvent( new DataFrameRowSelectedEvent( ingestedDF, rowIndex, rowData ) );
+        dispatchEvent( UIEventFactory.dataFrameRowSelected( ingestedDF, rowIndex, rowData ) );
     }
 
     private void applyRecipe( DataFrame dataFrame, Path recipePath ) {
