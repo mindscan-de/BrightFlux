@@ -187,7 +187,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                         mainTabFolder.setSelection( item );
                         sendDataFrameSelectionEvent( dataFrame );
                     }
-
                 }
             }
         }

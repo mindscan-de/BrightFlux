@@ -178,7 +178,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         treeViewer.setContentProvider( new DataFrameHierarchyTreeContentProvider() );
 
         Tree tree = treeViewer.getTree();
-        // tree.setLinesVisible( true );
+        tree.setLinesVisible( true );
         tree.setHeaderVisible( true );
 
         TreeViewerColumn treeViewerNameColumn = new TreeViewerColumn( treeViewer, SWT.NONE );
@@ -213,5 +213,4 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             }
         }
     }
-
 }
