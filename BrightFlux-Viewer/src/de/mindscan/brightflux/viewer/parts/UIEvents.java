@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
+import de.mindscan.brightflux.viewer.uievents.DataFrameRequestSelectEvent;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 import de.mindscan.brightflux.viewer.uievents.DataFrameSelectedEvent;
 
@@ -39,4 +40,6 @@ public class UIEvents {
     // Broadcast event, that a row was selected in the UI
     public final static Class<?> DataFrameRowSelectedEvent = DataFrameRowSelectedEvent.class;
 
+    // Request event, for a data frame to be selected in the UI
+    public final static Class<?> DataFrameRequestSelectEvent = DataFrameRequestSelectEvent.class;
 }
