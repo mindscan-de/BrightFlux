@@ -37,6 +37,7 @@ import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameSelectAndFilterCommand;
 import de.mindscan.brightflux.system.commands.ingest.IngestCommand;
 import de.mindscan.brightflux.system.commands.ingest.IngestSpecialRAW;
+import de.mindscan.brightflux.system.commands.io.ExpandCommand;
 import de.mindscan.brightflux.system.commands.io.SaveAsCSVCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeExecuteCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeSaveCommand;
@@ -94,6 +95,10 @@ public class DataFrameCommandFactory {
     public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
         return new DataFrameAnnotateRowCommand( inputDataFrame, rowIndex, annotation );
 
+    }
+
+    public static BFCommand expandFile( Path filePath ) {
+        return new ExpandCommand( filePath );
     }
 
 }
