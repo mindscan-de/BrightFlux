@@ -56,39 +56,57 @@ public class ExpandProprietaryZipStreamCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO Auto-generated method stub
-
         // TODO: Check if the file starts with PK - Phil Kahn (Zipfile)
 
         // we want to expand the path by the directory "expanded"
         // we want to create the target file position and the parent directory "expanded"...
 
-        long processed = 0L;
+        long processedSize = 0L;
 
         // TODO: write the output stream...
 
         try (ZipInputStream zip = new ZipInputStream( Files.newInputStream( filePath, StandardOpenOption.READ ) )) {
 
-            ZipEntry firstEnry = zip.getNextEntry();
-            System.out.println( "firstEntryName... is: '" + firstEnry.getName() + "'" );
+            ZipEntry firstEntry = zip.getNextEntry();
+            long extractedSize = firstEntry.getSize();
+            long safeSize = extractedSize;
+
+            if (extractedSize == -1) {
+                // TODO: we calculate a safe size, by trying to read it once without saving the file...
+                safeSize = 9300992;
+            }
+
+            // in this proprietary format it has a size of -1 (probably threated as unknown)
+            // actually we then need to read this file once, until we find the cutoff, and from there we read byte for byte....
+            // we note the cutoff and after we reached the cutoff we switch tactics and read byte by byte...
+
+            System.out.println( "firstEntryName... is: '" + firstEntry.getName() + "' and is " + firstEntry.getSize() + " bytes long..." );
+
+            int chunksize = 1024;
 
             byte[] data;
             while (true) {
-                data = zip.readNBytes( 8192 );
+
+                // once the safesize is reached, we can't read 1 kbyte, but from here byte by byte.
+                if (processedSize >= safeSize) {
+                    chunksize = 1;
+                }
+
+                data = zip.readNBytes( chunksize );
                 if (data == null) {
                     // TODO: close the outputstream
                     break;
                 }
 
                 int dataLength = data.length;
-                processed += dataLength;
+                processedSize += dataLength;
 
                 if (dataLength > 0) {
                     // TODO: write the data to the disk to the target file
                     // TODO: write all bytes to the outputstream
                 }
 
-                if (dataLength < 8192) {
+                if (dataLength < chunksize) {
                     // TODO: close the outputstream
                     break;
                 }
@@ -96,18 +114,19 @@ public class ExpandProprietaryZipStreamCommand implements BFCommand {
                 // i have some kind of corrupt/broken format... where i will always produce an EOFEception. It is intentionally encoded this way.
             }
 
-            System.out.println( "Processed this numbe of expanded bytes: " + processed );
+            System.out.println( "Processed this numbe of expanded bytes: " + processedSize );
         }
         catch (EOFException eof) {
-            // we know this happens with this file format....
+            // we know this happens with this file format.... / but here we can close the output file... in case we didn't before.
             System.out.println( "We knew this would happen..." );
+
         }
         catch (IOException e) {
             // this is something unexpected....
             e.printStackTrace();
         }
 
-        System.out.println( "Processed this number of expanded bytes: " + processed );
+        System.out.println( "Processed this number of expanded bytes: " + processedSize );
     }
 
 }
