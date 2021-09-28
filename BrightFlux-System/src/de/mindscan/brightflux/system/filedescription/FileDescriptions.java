@@ -30,13 +30,17 @@ package de.mindscan.brightflux.system.filedescription;
  */
 public class FileDescriptions {
 
+    public final static FileDescription ANY = new FileDescription( //
+                    new String[] { "*.*" }, //
+                    new String[] { "All files" } );
+
     public final static FileDescription CSV = new FileDescription( //
                     new String[] { "*.csv" }, //
                     new String[] { "Comma Separated files (*.csv)" } );
 
     public final static FileDescription RAW_ANY = new FileDescription( //
                     new String[] { "*.raw", "*.*" }, //
-                    new String[] { "Raw log files (*.raw)", "All files" } );
+                    new String[] { "Raw log files (*.raw)", "All files (*.*)" } );
 
     public final static FileDescription BFRECIPE = new FileDescription( //
                     new String[] { "*.bfrecipe" }, //
