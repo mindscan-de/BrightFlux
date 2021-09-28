@@ -72,7 +72,9 @@ public class ExpandProprietaryZipStreamCommand implements BFCommand {
             long safeSize = extractedSize;
 
             if (extractedSize == -1) {
-                // TODO: we calculate a safe size, by trying to read it once without saving the file...
+                // TODO: we must calculate a safe size, by trying to read it once without saving the file...
+                // another way would be to detect that the zipinputstream is near the end of the input file...
+                // the chunksize would be quarter of the remaining bytes? 
                 safeSize = 9300992;
             }
 
