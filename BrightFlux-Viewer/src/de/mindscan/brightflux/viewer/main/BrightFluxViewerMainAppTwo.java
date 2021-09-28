@@ -202,5 +202,25 @@ public class BrightFluxViewerMainAppTwo {
             }
         } );
         mntmExit.setText( "Exit" );
+
+        MenuItem mntmTools = new MenuItem( menu, SWT.CASCADE );
+        mntmTools.setText( "Tools" );
+
+        Menu menu_2 = new Menu( mntmTools );
+        mntmTools.setMenu( menu_2 );
+
+        MenuItem mntmExtract = new MenuItem( menu_2, SWT.NONE );
+        mntmExtract.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
+                                FileDescriptions.ANY, //
+                                path -> {
+                                    BFCommand expandCommand = DataFrameCommandFactory.expandFile( path );
+                                    projectRegistry.getCommandDispatcher().dispatchCommand( expandCommand );
+                                } );
+            }
+        } );
+        mntmExtract.setText( "Extract..." );
     }
 }
