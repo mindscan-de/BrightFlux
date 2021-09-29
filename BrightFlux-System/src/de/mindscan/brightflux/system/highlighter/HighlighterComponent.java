@@ -84,7 +84,15 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
      * @param projectRegistry
      */
     private void registerHighlightRowEvent( ProjectRegistry projectRegistry ) {
-        BFEventListener listener = new BFEventListenerAdapter();
+        BFEventListener listener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof DataFrameHighlightRowEvent) {
+                    DataFrame dataframe = ((DataFrameHighlightRowEvent) event).getDataFrame();
+                    // TODO: use the data of the event and fill the data into the logDataFrame
+                }
+            }
+        };
         projectRegistry.getEventDispatcher().registerEventListener( DataFrameHighlightRowEvent.class, listener );
 
     }
