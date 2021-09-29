@@ -39,8 +39,8 @@ import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCrea
 public class HighlighterComponent implements ProjectRegistryParticipant {
 
     // HLS?
-    public static final String HIGHLIGHT_COLOR_VALUE = "colorValue";
-    public static final String HIGHLIGHT_COLOR_INTENSITY = "colorIntensity";
+    public static final String HIGHLIGHT_COLOR_VALUE_COLUMN_NAME = "colorValue";
+    public static final String HIGHLIGHT_COLOR_INTENSITY_COLUMN_NAME = "colorIntensity";
 
     private DataFrame logHighlightFrame = null;
 
