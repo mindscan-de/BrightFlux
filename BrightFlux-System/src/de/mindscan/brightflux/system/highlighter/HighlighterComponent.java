@@ -26,10 +26,12 @@
 package de.mindscan.brightflux.system.highlighter;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
 
@@ -64,8 +66,18 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
      * @param projectRegistry
      */
     private void registerHighlightDFCreateEvent( ProjectRegistry projectRegistry ) {
-        BFEventListener listener = new BFEventListenerAdapter();
-        projectRegistry.getEventDispatcher().registerEventListener( HighlighterDataFrameCreatedEvent.class, listener );
+        BFEventListener dataframeCreatedListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof HighlighterDataFrameCreatedEvent) {
+                    DataFrame dataframe = ((BFAbstractDataFrameEvent) event).getDataFrame();
+                    if (dataframe != null) {
+                        logHighlightFrame = dataframe;
+                    }
+                }
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( HighlighterDataFrameCreatedEvent.class, dataframeCreatedListener );
     }
 
     /**
