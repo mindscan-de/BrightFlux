@@ -227,6 +227,24 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmApplyRecipe.setText( "Apply Recipe ..." );
 
+        MenuItem mntmHighlighter = new MenuItem( menu, SWT.CASCADE );
+        mntmHighlighter.setText( "Highlighter" );
+
+        Menu menu_1 = new Menu( mntmHighlighter );
+        mntmHighlighter.setMenu( menu_1 );
+
+        MenuItem mntmEnableFeature = new MenuItem( menu_1, SWT.NONE );
+        mntmEnableFeature.setText( "Enable Feature" );
+
+        MenuItem mntmHighlightYellow = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightYellow.setText( "Highlight Yellow" );
+
+        MenuItem mntmHighlightPink = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightPink.setText( "Highlight Pink" );
+
+        MenuItem mntmHighlightNone = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightNone.setText( "Highlight Clear" );
+
         MenuItem mntmCopytoclipboard = new MenuItem( menu, SWT.NONE );
         mntmCopytoclipboard.addSelectionListener( new SelectionAdapter() {
             @Override
