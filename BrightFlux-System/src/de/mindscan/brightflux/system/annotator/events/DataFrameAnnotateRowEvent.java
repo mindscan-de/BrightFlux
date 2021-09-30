@@ -51,7 +51,7 @@ public class DataFrameAnnotateRowEvent extends BFAbstractDataFrameEvent {
      */
     @Override
     public String getBFEventMessage() {
-        return "some Dataframe Anntation Event ";
+        return "Annotate row event";
     }
 
     /**

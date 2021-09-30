@@ -45,8 +45,7 @@ public class HighlighterDataFrameCreatedEvent extends BFAbstractDataFrameEvent {
      */
     @Override
     public String getBFEventMessage() {
-        // TODO Auto-generated method stub
-        return null;
+        return "Highlighter dataframe created";
     }
 
 }

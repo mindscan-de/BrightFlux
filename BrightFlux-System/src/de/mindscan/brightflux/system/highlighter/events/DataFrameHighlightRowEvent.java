@@ -45,8 +45,7 @@ public class DataFrameHighlightRowEvent extends BFAbstractDataFrameEvent {
      */
     @Override
     public String getBFEventMessage() {
-        // TODO Auto-generated method stub
-        return null;
+        return "Highlight row event";
     }
 
 }
