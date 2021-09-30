@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.commands.annotations;
+package de.mindscan.brightflux.system.annotator.commands;
 
 import java.util.function.Consumer;
 
