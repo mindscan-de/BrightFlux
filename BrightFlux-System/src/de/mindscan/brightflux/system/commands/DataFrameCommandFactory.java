@@ -41,6 +41,8 @@ import de.mindscan.brightflux.system.commands.io.ExpandProprietaryZipStreamComma
 import de.mindscan.brightflux.system.commands.io.SaveAsCSVCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeExecuteCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeSaveCommand;
+import de.mindscan.brightflux.system.highlighter.commands.CreateHighlightDataFrameCommand;
+import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
 
 /**
  * This class provides commands around DataFrames 
@@ -84,17 +86,20 @@ public class DataFrameCommandFactory {
         return new SaveAsCSVCommand( inputDataFrame, targetFile );
     }
 
-    public static BFCommand alterDataframeAddColumn( DataFrame inputDataFrame, String newColumnName ) {
-        return null;
-    }
-
     public static BFCommand createSparseDataFrame() {
         return new CreateAnnoationDataFrameCommand();
     }
 
     public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
         return new DataFrameAnnotateRowCommand( inputDataFrame, rowIndex, annotation );
+    }
 
+    public static BFCommand createHighlightDataFrame() {
+        return new CreateHighlightDataFrameCommand();
+    }
+
+    public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex ) {
+        return new DataFrameHighlightRowCommand( inputDataFrame, rowIndex );
     }
 
     public static BFCommand expandFile( Path filePath ) {
