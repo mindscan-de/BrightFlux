@@ -30,9 +30,9 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.annotator.events.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.annotations.AnnotationDataFrameCreatedEvent;
-import de.mindscan.brightflux.system.events.annotations.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
 /**

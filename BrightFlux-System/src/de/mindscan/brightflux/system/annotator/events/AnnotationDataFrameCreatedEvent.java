@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.events.annotations;
+package de.mindscan.brightflux.system.annotator.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
