@@ -242,9 +242,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
                     projectRegistry.getCommandDispatcher().dispatchCommand( DataFrameCommandFactory.createHighlightDataFrame() );
-                    DataFrameTableComposite.this.setVisible( false );
-                    tableViewer.refresh();
-                    DataFrameTableComposite.this.setVisible( true );
                 }
             }
         } );
@@ -258,6 +255,17 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
         MenuItem mntmHighlightNone = new MenuItem( menu_1, SWT.NONE );
         mntmHighlightNone.setText( "Highlight Clear" );
+
+        MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
+        mntmRefreshTableContent.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                DataFrameTableComposite.this.setVisible( false );
+                tableViewer.refresh();
+                DataFrameTableComposite.this.setVisible( true );
+            }
+        } );
+        mntmRefreshTableContent.setText( "Refresh table content" );
 
         MenuItem mntmCopytoclipboard = new MenuItem( menu, SWT.NONE );
         mntmCopytoclipboard.addSelectionListener( new SelectionAdapter() {
