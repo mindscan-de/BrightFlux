@@ -44,6 +44,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRequestSelectEvent;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
@@ -55,6 +56,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private CTabFolder mainTabFolder;
 
     private ProjectRegistry projectRegistry;
+    private HighlighterComponent highlighterComponent;
 
     /**
      * Create the composite.
@@ -64,6 +66,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     public MainProjectComposite( Composite parent, int style ) {
         super( parent, style );
 
+        buildComponent();
         buildLayout();
     }
 
@@ -74,6 +77,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
         registerEvents( projectRegistry );
+        registerHighlighter( projectRegistry );
     }
 
     private void registerEvents( ProjectRegistry projectRegistry ) {
@@ -102,6 +106,12 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                 requestDataFrameSelection( requestedUUID );
             }
         } );
+    }
+
+    private void registerHighlighter( ProjectRegistry projectRegistry ) {
+        if (highlighterComponent != null) {
+            highlighterComponent.setProjectRegistry( projectRegistry );
+        }
     }
 
     private void buildLayout() {
@@ -140,6 +150,10 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         } );
     }
 
+    private void buildComponent() {
+        this.highlighterComponent = new HighlighterComponent();
+    }
+
     private void addDataFrameTab( DataFrame newDataFrame ) {
         CTabItem item = addTabItem( mainTabFolder, newDataFrame );
         mainTabFolder.setSelection( item );
@@ -153,6 +167,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         tbtmNewItem.setText( ingestedDFName );
 
         DataFrameTableComposite composite = new DataFrameTableComposite( tabFolder, SWT.NONE );
+        composite.setHighlighterComponent( highlighterComponent );
         // TODO: autowire?
         composite.setProjectRegistry( projectRegistry );
         composite.setDataFrame( ingestedDF );

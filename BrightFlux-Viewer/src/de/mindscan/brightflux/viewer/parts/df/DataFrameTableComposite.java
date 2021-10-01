@@ -59,6 +59,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
@@ -76,6 +77,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private TableViewer tableViewer;
 
     private Shell parentShell;
+
+    private HighlighterComponent highlighterComponent;
 
     /**
      * Create the composite.
@@ -234,6 +237,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmHighlighter.setMenu( menu_1 );
 
         MenuItem mntmEnableFeature = new MenuItem( menu_1, SWT.NONE );
+        mntmEnableFeature.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    projectRegistry.getCommandDispatcher().dispatchCommand( DataFrameCommandFactory.createHighlightDataFrame() );
+
+                }
+            }
+        } );
         mntmEnableFeature.setText( "Enable Feature" );
 
         MenuItem mntmHighlightYellow = new MenuItem( menu_1, SWT.NONE );
@@ -317,7 +329,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             // TODO: the labelprovider should depend on the columnype
             // TODO: the labelprovider should depend also on a configuration for presentation,
             //       e.g. present long-value as timstamp.
-            tableViewerColumn.setLabelProvider( new DataFrameColumnLabelProvider( columname ) );
+
+            DataFrameColumnLabelProvider labelProvider = new DataFrameColumnLabelProvider( columname );
+            labelProvider.setHighLightherComponent( highlighterComponent );
+            tableViewerColumn.setLabelProvider( labelProvider );
         }
     }
 
@@ -381,5 +396,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         if (projectRegistry != null) {
             projectRegistry.getEventDispatcher().dispatchEvent( event );
         }
+    }
+
+    /**
+     * @param highlighterComponent
+     */
+    public void setHighlighterComponent( HighlighterComponent highlighterComponent ) {
+        this.highlighterComponent = highlighterComponent;
     }
 }

@@ -30,6 +30,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 
 /**
  * TODO: the Label provider should be dependent of either configuration
@@ -44,6 +45,7 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
     private final String columname;
     private static final Color YELLOW = new Color( Display.getDefault(), 255, 255, 224 );
     private static final Color PINK = new Color( Display.getDefault(), 255, 224, 255 );
+    private HighlighterComponent highlighterComponent;
 
     /**
      * @param columname The column name of the column determines, what column is shown from the data frame rows.
@@ -80,6 +82,13 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
             return super.getBackground( element );
         }
 
+        if (highlighterComponent == null) {
+            return super.getBackground( element );
+        }
+        if (highlighterComponent.getLogHighlightFrame() == null) {
+            return super.getBackground( element );
+        }
+
         DataFrameRow row = (DataFrameRow) element;
 
         int originalRowIndex = row.getOriginalRowIndex();
@@ -96,5 +105,12 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
         return super.getBackground( element );
 
+    }
+
+    /**
+     * @param highlighterComponent
+     */
+    public void setHighLightherComponent( HighlighterComponent highlighterComponent ) {
+        this.highlighterComponent = highlighterComponent;
     }
 }
