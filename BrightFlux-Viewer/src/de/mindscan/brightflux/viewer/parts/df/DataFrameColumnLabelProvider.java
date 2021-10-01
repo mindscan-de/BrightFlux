@@ -42,9 +42,14 @@ import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
  */
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
-    private final String columname;
+    // some predefined colors
     private static final Color YELLOW = new Color( Display.getDefault(), 255, 255, 224 );
     private static final Color PINK = new Color( Display.getDefault(), 255, 224, 255 );
+    private static final Color RED = new Color( Display.getDefault(), 255, 224, 224 );
+    private static final Color GREEN = new Color( Display.getDefault(), 224, 255, 224 );
+    private static final Color BLUE = new Color( Display.getDefault(), 224, 224, 255 );
+
+    private final String columname;
     private HighlighterComponent highlighterComponent;
 
     /**
@@ -113,4 +118,5 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
     public void setHighLightherComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
     }
+
 }

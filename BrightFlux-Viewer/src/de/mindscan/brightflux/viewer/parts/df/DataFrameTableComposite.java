@@ -242,7 +242,9 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
                     projectRegistry.getCommandDispatcher().dispatchCommand( DataFrameCommandFactory.createHighlightDataFrame() );
-
+                    DataFrameTableComposite.this.setVisible( false );
+                    tableViewer.refresh();
+                    DataFrameTableComposite.this.setVisible( true );
                 }
             }
         } );
