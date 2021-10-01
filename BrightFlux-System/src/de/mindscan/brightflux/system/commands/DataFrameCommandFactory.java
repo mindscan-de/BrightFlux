@@ -42,6 +42,7 @@ import de.mindscan.brightflux.system.commands.io.SaveAsCSVCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeExecuteCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeSaveCommand;
 import de.mindscan.brightflux.system.highlighter.commands.CreateHighlightDataFrameCommand;
+import de.mindscan.brightflux.system.highlighter.commands.DataFrameClarHighlightRowCommand;
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
 
 /**
@@ -102,13 +103,12 @@ public class DataFrameCommandFactory {
         return new DataFrameHighlightRowCommand( inputDataFrame, rowIndex );
     }
 
-    public static BFCommand expandFile( Path filePath ) {
-        return new ExpandProprietaryZipStreamCommand( filePath );
+    public static BFCommand clearHighlightRow( DataFrame ingestedDF, int rowIndex ) {
+        return new DataFrameClarHighlightRowCommand( ingestedDF, rowIndex );
     }
 
-    public static BFCommand clearHighlightRow( DataFrame ingestedDF, int rowIndex ) {
-        // TODO: implement this clearHighlightRow
-        return null;
+    public static BFCommand expandFile( Path filePath ) {
+        return new ExpandProprietaryZipStreamCommand( filePath );
     }
 
 }

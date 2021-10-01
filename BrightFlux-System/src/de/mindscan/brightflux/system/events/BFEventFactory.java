@@ -35,6 +35,7 @@ import de.mindscan.brightflux.system.events.dataframe.DataFrameClosedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 import de.mindscan.brightflux.system.events.recipes.RecipeSaveResultEvent;
+import de.mindscan.brightflux.system.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
 
@@ -89,6 +90,10 @@ public class BFEventFactory {
 
     public static BFEvent highlightDataFrameRow( DataFrame inputDataFrame, int row ) {
         return new DataFrameHighlightRowEvent( inputDataFrame, row );
+    }
+
+    public static BFEvent clearHighlightDataFrameRow( DataFrame inputDataFrame, int row ) {
+        return new DataFrameClearHighlightRowEvent( inputDataFrame, row );
     }
 
 }
