@@ -187,20 +187,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmFilterText.setText( "Filter Text ..." );
 
-//       SelectionEvent e
-//      Point absolute = new Point( e.x, e.y );
-//      Point pt = table.toControl( absolute );
-//      int columnIndex = columnIndexAtposition( table, pt );
-//      if (columnIndex >= 0) {
-//          if (pt.y < table.getHeaderHeight()) {
-//              // header of columnindex (right) clicked....
-//          }
-//          else {
-//              // content of columnindex (right) clicked.
-//              // TODO open a menu here...
-//          }
-//      }
-
         MenuItem mntmFilterx = new MenuItem( menu_2, SWT.NONE );
         mntmFilterx.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -308,19 +294,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         this.projectRegistry = projectRegistry;
     }
 
-//    private static int columnIndexAtposition( Table table, Point pt ) {
-//        int colIndex = -1;
-//        TableItem testRow = new TableItem( table, 0 );
-//        for (int columnIndex = 0; columnIndex < table.getColumnCount(); columnIndex++) {
-//            Rectangle bounds = testRow.getBounds( columnIndex );
-//            if ((pt.x >= bounds.x) && (pt.x < (bounds.x + bounds.width))) {
-//                colIndex = columnIndex;
-//            }
-//        }
-//        testRow.dispose();
-//        return colIndex;
-//    }
-
     private void appenddDataFrameColumns( DataFrame ingestedDF, TableViewer tableViewer, Composite composite ) {
         Collection<String> columnNames = ingestedDF.getColumnNames();
 
@@ -387,15 +360,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         dispatchCommand( DataFrameCommandFactory.saveCSV( dataFrame, targetPath ) );
     }
 
-//    private void addAnnotation() {
-//        if (table.getSelectionCount() > 0) {
-//            int selectionIndex = table.getSelectionIndex();
-//
-//            dispatchCommand( DataFrameCommandFactory.annotateRow( ingestedDF, ingestedDF.getOriginalRowIndex( selectionIndex ),
-//                            "This is my new annotation for this row...." ) );
-//        }
-//    }
-
     private void dispatchCommand( BFCommand command ) {
         if (projectRegistry != null) {
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
@@ -408,9 +372,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
-    /**
-     * @param highlighterComponent
-     */
     public void setHighlighterComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
     }
