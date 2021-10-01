@@ -227,19 +227,101 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    projectRegistry.getCommandDispatcher().dispatchCommand( DataFrameCommandFactory.createHighlightDataFrame() );
+                    BFCommand command = DataFrameCommandFactory.createHighlightDataFrame();
+                    dispatchCommand( command );
                 }
             }
         } );
         mntmEnableFeature.setText( "Enable Feature" );
 
         MenuItem mntmHighlightYellow = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightYellow.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    // TODO: calculate the current row...
+                    int rowIndex = 0;
+
+                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "yellow" );
+                    dispatchCommand( command );
+                }
+            }
+        } );
         mntmHighlightYellow.setText( "Highlight Yellow" );
 
         MenuItem mntmHighlightPink = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightPink.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    // TODO: calculate the current row...
+                    int rowIndex = 0;
+
+                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "pink" );
+                    dispatchCommand( command );
+                }
+            }
+        } );
         mntmHighlightPink.setText( "Highlight Pink" );
 
+        MenuItem mntmHighlightRed = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightRed.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    // TODO: calculate the current row...
+                    int rowIndex = 0;
+
+                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "red" );
+                    dispatchCommand( command );
+                }
+            }
+        } );
+        mntmHighlightRed.setText( "Highlight Red" );
+
+        MenuItem mntmHighlightGreen = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightGreen.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    // TODO: calculate the current row...
+                    int rowIndex = 0;
+
+                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "green" );
+                    dispatchCommand( command );
+                }
+            }
+        } );
+        mntmHighlightGreen.setText( "Highlight Green" );
+
+        MenuItem mntmHighlightBlue = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightBlue.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    // TODO: calculate the current row...
+                    int rowIndex = 0;
+
+                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "blue" );
+                    dispatchCommand( command );
+                }
+            }
+        } );
+        mntmHighlightBlue.setText( "Highlight Blue" );
+
         MenuItem mntmHighlightNone = new MenuItem( menu_1, SWT.NONE );
+        mntmHighlightNone.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    // TODO: calculate the current row...
+                    int rowIndex = 0;
+
+                    BFCommand command = DataFrameCommandFactory.clearHighlightRow( ingestedDF, rowIndex );
+                    dispatchCommand( command );
+                }
+            }
+        } );
         mntmHighlightNone.setText( "Highlight Clear" );
 
         MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
@@ -361,13 +443,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void dispatchCommand( BFCommand command ) {
-        if (projectRegistry != null) {
+        if (projectRegistry != null && command != null) {
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
 
     private void dispatchEvent( BFEvent event ) {
-        if (projectRegistry != null) {
+        if (projectRegistry != null && event != null) {
             projectRegistry.getEventDispatcher().dispatchEvent( event );
         }
     }

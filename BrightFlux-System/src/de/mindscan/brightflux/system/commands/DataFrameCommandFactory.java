@@ -98,12 +98,17 @@ public class DataFrameCommandFactory {
         return new CreateHighlightDataFrameCommand();
     }
 
-    public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex ) {
+    public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex, String color ) {
         return new DataFrameHighlightRowCommand( inputDataFrame, rowIndex );
     }
 
     public static BFCommand expandFile( Path filePath ) {
         return new ExpandProprietaryZipStreamCommand( filePath );
+    }
+
+    public static BFCommand clearHighlightRow( DataFrame ingestedDF, int rowIndex ) {
+        // TODO: implement this clearHighlightRow
+        return null;
     }
 
 }
