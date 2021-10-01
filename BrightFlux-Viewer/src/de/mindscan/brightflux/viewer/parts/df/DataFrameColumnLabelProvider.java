@@ -26,6 +26,8 @@
 package de.mindscan.brightflux.viewer.parts.df;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.widgets.Display;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 
@@ -40,6 +42,8 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
     private final String columname;
+    private static final Color YELLOW = new Color( Display.getDefault(), 255, 255, 224 );
+    private static final Color PINK = new Color( Display.getDefault(), 255, 224, 255 );
 
     /**
      * @param columname The column name of the column determines, what column is shown from the data frame rows.
@@ -65,5 +69,32 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
         }
 
         return object.toString();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Color getBackground( Object element ) {
+        if (element == null) {
+            return super.getBackground( element );
+        }
+
+        DataFrameRow row = (DataFrameRow) element;
+
+        int originalRowIndex = row.getOriginalRowIndex();
+        // TODO: check in the highlight frame, whether this rowindex contains a color
+        // if present in the highlight frame, then we use the color set in the originalRowIndex position...
+        if ((originalRowIndex % 3) == 0) {
+            return YELLOW;
+        }
+        if ((originalRowIndex % 3) == 2) {
+            return PINK;
+        }
+
+        // if not, then just also super.getBackground( element );
+
+        return super.getBackground( element );
+
     }
 }
