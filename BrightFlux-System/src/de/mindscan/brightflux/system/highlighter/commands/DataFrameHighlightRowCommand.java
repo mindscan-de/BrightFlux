@@ -39,13 +39,16 @@ public class DataFrameHighlightRowCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
     private int row;
+    private String color;
 
     /**
+     * @param color 
      * 
      */
-    public DataFrameHighlightRowCommand( DataFrame inputDataFrame, int row ) {
+    public DataFrameHighlightRowCommand( DataFrame inputDataFrame, int row, String color ) {
         this.inputDataFrame = inputDataFrame;
         this.row = row;
+        this.color = color;
     }
 
     /** 
@@ -56,7 +59,7 @@ public class DataFrameHighlightRowCommand implements BFCommand {
         // TODO Translate the row to the original Index here, because...
         // inputDataFrame.getOriginalRowIndex( row );
 
-        eventConsumer.accept( BFEventFactory.highlightDataFrameRow( inputDataFrame, row ) );
+        eventConsumer.accept( BFEventFactory.highlightDataFrameRow( inputDataFrame, row, color ) );
     }
 
 }

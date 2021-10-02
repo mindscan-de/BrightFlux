@@ -100,7 +100,7 @@ public class DataFrameCommandFactory {
     }
 
     public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex, String color ) {
-        return new DataFrameHighlightRowCommand( inputDataFrame, rowIndex );
+        return new DataFrameHighlightRowCommand( inputDataFrame, rowIndex, color );
     }
 
     public static BFCommand clearHighlightRow( DataFrame ingestedDF, int rowIndex ) {

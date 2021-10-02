@@ -88,8 +88,8 @@ public class BFEventFactory {
         return new HighlighterDataFrameCreatedEvent( newDataFrame );
     }
 
-    public static BFEvent highlightDataFrameRow( DataFrame inputDataFrame, int row ) {
-        return new DataFrameHighlightRowEvent( inputDataFrame, row );
+    public static BFEvent highlightDataFrameRow( DataFrame inputDataFrame, int row, String color ) {
+        return new DataFrameHighlightRowEvent( inputDataFrame, row, color );
     }
 
     public static BFEvent clearHighlightDataFrameRow( DataFrame inputDataFrame, int row ) {

@@ -34,14 +34,17 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 public class DataFrameHighlightRowEvent extends BFAbstractDataFrameEvent {
 
     private int row;
+    private String color;
 
     /**
      * @param dataFrame
      * @param row 
+     * @param color 
      */
-    public DataFrameHighlightRowEvent( DataFrame dataFrame, int row ) {
+    public DataFrameHighlightRowEvent( DataFrame dataFrame, int row, String color ) {
         super( dataFrame );
         this.row = row;
+        this.color = color;
     }
 
     /** 
@@ -59,4 +62,10 @@ public class DataFrameHighlightRowEvent extends BFAbstractDataFrameEvent {
         return row;
     }
 
+    /**
+     * @return the color
+     */
+    public String getColor() {
+        return color;
+    }
 }
