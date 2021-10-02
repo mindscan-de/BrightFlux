@@ -32,6 +32,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
+import de.mindscan.brightflux.system.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
 
@@ -39,6 +40,8 @@ import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCrea
  * 
  */
 public class HighlighterComponent implements ProjectRegistryParticipant {
+    
+    public static final String HIGHLIGHT_DATAFRAME_NAME = "logHighlightFrame";
 
     // HLS?
     public static final String HIGHLIGHT_COLOR_VALUE_COLUMN_NAME = "colorValue";
@@ -59,6 +62,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         registerHighlightRowEvent( projectRegistry );
+        registerClearHighlightRowEvent( projectRegistry );
         registerHighlightDFCreateEvent( projectRegistry );
     }
 
@@ -84,7 +88,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
      * @param projectRegistry
      */
     private void registerHighlightRowEvent( ProjectRegistry projectRegistry ) {
-        BFEventListener listener = new BFEventListenerAdapter() {
+        BFEventListener highlightListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof DataFrameHighlightRowEvent) {
@@ -93,8 +97,23 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( DataFrameHighlightRowEvent.class, listener );
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameHighlightRowEvent.class, highlightListener );
+    }
 
+    /**
+     * @param projectRegistry
+     */
+    private void registerClearHighlightRowEvent( ProjectRegistry projectRegistry ) {
+        BFEventListener clearHighlightListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof DataFrameClearHighlightRowEvent) {
+                    DataFrame dataframe = ((DataFrameClearHighlightRowEvent) event).getDataFrame();
+                    // TODO: use the data of the event and fill the data intor the logDataFrame
+                }
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameClearHighlightRowEvent.class, clearHighlightListener );
     }
 
     /**
