@@ -199,6 +199,9 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                     DataFrameTableComposite dataFrameTableComposite = (DataFrameTableComposite) currentControl;
                     DataFrame dataFrame = dataFrameTableComposite.getDataFrame();
                     if (requestedUUID.equals( dataFrame.getUuid() )) {
+                        // make sure the highlights and annotations and markers are refreshed/updated.
+                        dataFrameTableComposite.refresh();
+                        // now set the selection
                         mainTabFolder.setSelection( item );
                         sendDataFrameSelectionEvent( dataFrame );
                     }

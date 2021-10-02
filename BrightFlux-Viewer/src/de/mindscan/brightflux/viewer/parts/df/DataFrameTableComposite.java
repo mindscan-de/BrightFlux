@@ -328,9 +328,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmRefreshTableContent.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                DataFrameTableComposite.this.setVisible( false );
-                tableViewer.refresh();
-                DataFrameTableComposite.this.setVisible( true );
+                refresh();
             }
         } );
         mntmRefreshTableContent.setText( "Refresh table content" );
@@ -343,6 +341,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmCopytoclipboard.setText( "Copy Row to Clipboard" );
+    }
+
+    public void refresh() {
+        setVisible( false );
+        tableViewer.refresh();
+        setVisible( true );
     }
 
     /**
