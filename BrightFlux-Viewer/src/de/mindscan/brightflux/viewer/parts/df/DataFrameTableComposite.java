@@ -48,7 +48,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
@@ -72,7 +72,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private ProjectRegistry projectRegistry;
 
-    private DataFrame ingestedDF = new DataFrameImpl( "(empty)" );
+    private DataFrame ingestedDF = new DataFrameBuilder( "(empty)" ).build();;
 
     private TableViewer tableViewer;
 
