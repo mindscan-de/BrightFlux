@@ -448,7 +448,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private void highlightRow( DataFrameRow currentSelectedRow, String color ) {
         if (currentSelectedRow != null) {
             BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, currentSelectedRow.getOriginalRowIndex(), color );
-            System.out.println( "should paint row " + currentSelectedRow.getOriginalRowIndex() + " in " + color );
             dispatchCommand( command );
         }
     }

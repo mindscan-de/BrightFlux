@@ -40,7 +40,7 @@ import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCrea
  * 
  */
 public class HighlighterComponent implements ProjectRegistryParticipant {
-    
+
     public static final String HIGHLIGHT_DATAFRAME_NAME = "logHighlightFrame";
 
     // HLS?
@@ -92,9 +92,12 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof DataFrameHighlightRowEvent) {
-                    DataFrame dataframe = ((DataFrameHighlightRowEvent) event).getDataFrame();
-                    System.out.println( "HighlightRowEventFound..." );
-                    // TODO: use the data of the event and fill the data into the logDataFrame
+                    // DataFrame dataframe = ((DataFrameHighlightRowEvent) event).getDataFrame();
+                    if (logHighlightFrame != null) {
+                        String color = ((DataFrameHighlightRowEvent) event).getColor();
+                        int row = ((DataFrameHighlightRowEvent) event).getRow();
+                        logHighlightFrame.setAt( HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, row, color );
+                    }
                 }
             }
         };
