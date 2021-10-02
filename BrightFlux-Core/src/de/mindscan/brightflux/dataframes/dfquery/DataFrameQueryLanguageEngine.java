@@ -36,6 +36,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
@@ -96,18 +97,20 @@ public class DataFrameQueryLanguageEngine {
         return df.select().where( rowPredicate );
     }
 
-    public DataFrame executeDFCallbackQuery( DataFrame dataFrame, String query, Map<String, DataFrameRowQueryCallback> callbacks ) {
+    public DataFrame executeDFCallbackQuery( DataFrame df, String query, Map<String, DataFrameRowQueryCallback> callbacks ) {
 
-        TypedDFQLCallbackStatementNode transformed = null;
-        // TODO: compile the where clause 
+        DataFrameQueryLanguageParser parser = createParser( query );
+        DFQLCallbackStatementNode callbackStatement = (DFQLCallbackStatementNode) parser.parseDFQLCallbackStatement();
+
+        TypedDFQLCallbackStatementNode transformed = (TypedDFQLCallbackStatementNode) transformAST( callbackStatement, df );
+
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
         DataFrameRowFilterPredicate rowPredicate = compiler.compileToRowFilterPredicate( transformed.getWhereClauseNode() );
 
-        // TODO: now execute the row predicate and then callback the 
-        Collection<DataFrameRow> rows = dataFrame.getRowsByPredicate( rowPredicate );
-        String callbackFunction = transformed.getCallbackFunction();
+        Collection<DataFrameRow> rows = df.getRowsByPredicate( rowPredicate );
+        String callbackFunction = (String) ((DFQLIdentifierNode) transformed.getCallbackFunction()).getRawValue();
         if (callbackFunction == null) {
-            return dataFrame;
+            return df;
         }
 
         DataFrameRowQueryCallback callback = callbacks.get( callbackFunction );
@@ -117,7 +120,7 @@ public class DataFrameQueryLanguageEngine {
             }
         }
 
-        return dataFrame;
+        return df;
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
@@ -142,6 +145,14 @@ public class DataFrameQueryLanguageEngine {
 
             // TODO table selection
             return new TypedDFQLSelectStatementNode( selectedColumns, new ArrayList<>(), transformedWhere );
+        }
+        else if (node instanceof DFQLCallbackStatementNode) {
+
+            DFQLNode callbackIdentifier = transformAST( ((DFQLCallbackStatementNode) node).getCallBackIdentifier(), df );
+
+            DFQLNode transformedWhere = transformAST( ((DFQLCallbackStatementNode) node).getWhereClause(), df );
+
+            return new TypedDFQLCallbackStatementNode( callbackIdentifier, new ArrayList<>(), transformedWhere );
         }
         else if (node instanceof DFQLIdentifierNode) {
             if ("df".equals( ((DFQLIdentifierNode) node).getRawValue() )) {

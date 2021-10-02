@@ -83,7 +83,7 @@ public class DFQLCallbackStatementNode implements DFQLNode {
         sb.append( parsedDataFrames.describeNodeOperation() );
 
         String whereClauseAsString = whereClause.describeNodeOperation();
-        if (!whereClauseAsString.isEmpty()) {
+        if (!whereClauseAsString.isBlank()) {
             sb.append( " WHERE " );
             sb.append( whereClauseAsString );
         }

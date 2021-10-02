@@ -25,12 +25,29 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
+import java.util.List;
+
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 
 /**
  * 
  */
 public class TypedDFQLCallbackStatementNode implements TypedDFQLNode {
+
+    private DFQLNode callbackIdentifier;
+    private List<TypedDFQLDataFrameNode> dataFrames;
+    private DFQLNode whereClause;
+
+    /**
+     * @param callbackIdentifier
+     * @param arrayList
+     * @param transformedWhere
+     */
+    public TypedDFQLCallbackStatementNode( DFQLNode callbackIdentifier, List<TypedDFQLDataFrameNode> dataFrames, DFQLNode whereClause ) {
+        this.callbackIdentifier = callbackIdentifier;
+        this.dataFrames = dataFrames;
+        this.whereClause = whereClause;
+    }
 
     /** 
      * {@inheritDoc}
@@ -54,15 +71,14 @@ public class TypedDFQLCallbackStatementNode implements TypedDFQLNode {
      * @return
      */
     public DFQLNode getWhereClauseNode() {
-        // TODO Auto-generated method stub
-        return null;
+        return whereClause;
     }
 
     /**
      * @return
      */
-    public String getCallbackFunction() {
-        return null;
+    public DFQLNode getCallbackFunction() {
+        return callbackIdentifier;
     }
 
 }
