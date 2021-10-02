@@ -73,14 +73,14 @@ public class DataFrameImpl implements DataFrame {
 
     private int dataFrameGeneration;
 
-    public DataFrameImpl( String nameOfDataFrame ) {
+    DataFrameImpl( String nameOfDataFrame ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.randomUUID();
         this.dataFrameJournal = new DataFrameJournal();
         this.dataFrameGeneration = 0;
     }
 
-    public DataFrameImpl( String nameOfDataFrame, UUID uuid ) {
+    DataFrameImpl( String nameOfDataFrame, UUID uuid ) {
         this.nameOfDataFrame = nameOfDataFrame;
         this.uuidOfDataFrame = UUID.fromString( uuid.toString() );
         this.dataFrameJournal = new DataFrameJournal();
