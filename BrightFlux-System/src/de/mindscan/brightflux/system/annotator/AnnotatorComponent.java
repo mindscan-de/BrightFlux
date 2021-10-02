@@ -53,6 +53,8 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 public class AnnotatorComponent implements ProjectRegistryParticipant {
 
     public static final String ANNOTATION_COLUMN_NAME = "annotation";
+    public static final String ANNOTATION_DATAFRAME_NAME = "logAnalysisFrame";
+
     private DataFrame logAnalysisFrame = null;
 
     /**
