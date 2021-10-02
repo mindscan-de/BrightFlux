@@ -65,7 +65,7 @@ public class DataFrameBuilder {
         df = new DataFrameImpl( dataFrameName );
     }
 
-    public DataFrameImpl build() {
+    public DataFrame build() {
 
         int maxColumnLength = calculateMaxColumnLength( columns );
 

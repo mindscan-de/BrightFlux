@@ -30,7 +30,7 @@ package de.mindscan.brightflux.dataframes;
  */
 public class DataFrameFactory {
 
-    public static DataFrameImpl create( String name, String[] columnnames, String[] formats ) {
+    public static DataFrame create( String name, String[] columnnames, String[] formats ) {
         DataFrameBuilder builder = new DataFrameBuilder();
 
         // TODO: probably this is a bad idea, since i want to handle the columns as immutable as
