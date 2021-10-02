@@ -27,10 +27,12 @@ package de.mindscan.brightflux.system.highlighter.commands;
 
 import java.util.function.Consumer;
 
-import de.mindscan.brightflux.dataframes.DataFrameImpl;
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 
 /**
  * 
@@ -42,10 +44,11 @@ public class CreateHighlightDataFrameCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO SparseXYZColumn for objects
         // TODO SparseXYZColumn for colorintensity...
 
-        DataFrameImpl newDataFrame = new DataFrameImpl( "logHighlightFrame" );
+        DataFrame newDataFrame = new DataFrameBuilder( HighlighterComponent.HIGHLIGHT_DATAFRAME_NAME )//
+                        .addColumn( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, DataFrameBuilder.COLUMN_TYPE_SPARSE_STRING )//
+                        .build();
 
         eventConsumer.accept( BFEventFactory.highlightDataframeCreated( newDataFrame ) );
 
