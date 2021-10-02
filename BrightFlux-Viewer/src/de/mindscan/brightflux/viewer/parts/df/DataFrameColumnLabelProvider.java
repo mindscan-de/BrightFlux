@@ -29,6 +29,7 @@ import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 
@@ -90,23 +91,35 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
         if (highlighterComponent == null) {
             return super.getBackground( element );
         }
-        if (highlighterComponent.getLogHighlightFrame() == null) {
+
+        DataFrame logHighlightFrame = highlighterComponent.getLogHighlightFrame();
+
+        if (logHighlightFrame == null) {
             return super.getBackground( element );
         }
 
         DataFrameRow row = (DataFrameRow) element;
 
         int originalRowIndex = row.getOriginalRowIndex();
-        // TODO: check in the highlight frame, whether this rowindex contains a color
-        // if present in the highlight frame, then we use the color set in the originalRowIndex position...
-        if ((originalRowIndex % 3) == 0) {
-            return YELLOW;
-        }
-        if ((originalRowIndex % 3) == 2) {
-            return PINK;
-        }
 
-        // if not, then just also super.getBackground( element );
+        // check in the highlight frame, whether this rowindex contains a color
+        if (logHighlightFrame.isPresent( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex )) {
+            String color = (String) logHighlightFrame.getAt( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex );
+            switch (color) {
+                case "yellow":
+                    return YELLOW;
+                case "pink":
+                    return PINK;
+                case "red":
+                    return RED;
+                case "green":
+                    return GREEN;
+                case "blue":
+                    return BLUE;
+                default:
+                    break;
+            }
+        }
 
         return super.getBackground( element );
 
