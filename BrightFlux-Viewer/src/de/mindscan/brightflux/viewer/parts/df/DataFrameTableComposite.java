@@ -239,11 +239,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    // TODO: calculate the current row...
-                    int rowIndex = 0;
-
-                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "yellow" );
-                    dispatchCommand( command );
+                    highlightRow( e, "yellow" );
                 }
             }
         } );
@@ -254,11 +250,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    // TODO: calculate the current row...
-                    int rowIndex = 0;
-
-                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "pink" );
-                    dispatchCommand( command );
+                    highlightRow( e, "pink" );
                 }
             }
         } );
@@ -269,11 +261,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    // TODO: calculate the current row...
-                    int rowIndex = 0;
-
-                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "red" );
-                    dispatchCommand( command );
+                    highlightRow( e, "red" );
                 }
             }
         } );
@@ -284,11 +272,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    // TODO: calculate the current row...
-                    int rowIndex = 0;
-
-                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "green" );
-                    dispatchCommand( command );
+                    highlightRow( e, "green" );
                 }
             }
         } );
@@ -299,11 +283,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    // TODO: calculate the current row...
-                    int rowIndex = 0;
-
-                    BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowIndex, "blue" );
-                    dispatchCommand( command );
+                    highlightRow( e, "blue" );
                 }
             }
         } );
@@ -314,8 +294,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    // TODO: calculate the current row...
-                    int rowIndex = 0;
+                    DataFrameRow rowData = (DataFrameRow) e.item.getData();
+                    int rowIndex = rowData.getOriginalRowIndex();
 
                     BFCommand command = DataFrameCommandFactory.clearHighlightRow( ingestedDF, rowIndex );
                     dispatchCommand( command );
@@ -460,5 +440,14 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     public void setHighlighterComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
+    }
+
+    private void highlightRow( SelectionEvent e, String color ) {
+        if (e.item != null && e.item.getData() != null) {
+            DataFrameRow rowData = (DataFrameRow) e.item.getData();
+            BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowData.getOriginalRowIndex(), color );
+            System.out.println( "should paint row " + rowData.getOriginalRowIndex() + " in " + color );
+            dispatchCommand( command );
+        }
     }
 }
