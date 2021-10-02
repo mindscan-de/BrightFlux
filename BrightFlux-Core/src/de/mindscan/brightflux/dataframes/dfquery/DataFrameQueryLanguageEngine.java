@@ -156,4 +156,14 @@ public class DataFrameQueryLanguageEngine {
         return node;
     }
 
+    /**
+     * @param dataFrame
+     * @param query
+     * @return
+     */
+    public DataFrame executeDFCallbackQuery( DataFrame dataFrame, String query ) {
+        // TODO implement a callback query...
+        return dataFrame;
+    }
+
 }

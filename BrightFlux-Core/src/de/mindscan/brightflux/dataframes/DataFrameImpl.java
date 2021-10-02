@@ -387,6 +387,21 @@ public class DataFrameImpl implements DataFrame {
         }
     }
 
+    @Override
+    public DataFrame queryCB( String query, Map<String, DataFrameRowQueryCallback> callbacks ) {
+        try {
+            DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
+            /* return */
+            engine.executeDFCallbackQuery( this, query );
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            throw new NotYetImplemetedException();
+        }
+
+        return this;
+    }
+
     /** 
      * {@inheritDoc}
      */

@@ -27,6 +27,7 @@ package de.mindscan.brightflux.dataframes;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
@@ -91,6 +92,8 @@ public interface DataFrame {
     DataFrameColumnSelection select( DataFrameColumn<?>... columns );
 
     DataFrame query( String query );
+
+    DataFrame queryCB( String query, Map<String, DataFrameRowQueryCallback> callbacks );
 
     void appendJournal( DataFrameJournalEntryType entryType, String message );
 
