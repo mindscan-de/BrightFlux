@@ -34,12 +34,22 @@ import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.FloatColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.dataframes.columns.LongColumn;
+import de.mindscan.brightflux.dataframes.columns.SparseStringColumn;
 import de.mindscan.brightflux.dataframes.columns.StringColumn;
 
 /**
  * 
  */
 public class DataFrameBuilder {
+
+    public static final String COLUMN_TYPE_INT = "int";
+    public static final String COLUMN_TYPE_FLOAT = "float";
+    public static final String COLUMN_TYPE_DOUBLE = "double";
+    public static final String COLUMN_TYPE_LONG = "long";
+    public static final String COLUMN_TYPE_STRING = "string";
+    public static final String COLUMN_TYPE_SPARSE_STRING = "s_string";
+
+    private static final String EMPTY_DATAFRAME_NAME = "";
 
     private DataFrameImpl df = null;
     private ArrayList<DataFrameColumn<?>> columns = new ArrayList<>();
@@ -48,7 +58,11 @@ public class DataFrameBuilder {
      * 
      */
     public DataFrameBuilder() {
-        df = new DataFrameImpl( "" );
+        this( EMPTY_DATAFRAME_NAME );
+    }
+
+    public DataFrameBuilder( String dataFrameName ) {
+        df = new DataFrameImpl( dataFrameName );
     }
 
     public DataFrameImpl build() {
@@ -132,20 +146,24 @@ public class DataFrameBuilder {
 
     public DataFrameBuilder addColumn( String columnName, String columnType ) {
         switch (columnType) {
-            case "int":
+            case COLUMN_TYPE_INT:
                 columns.add( new IntegerColumn( columnName ) );
                 break;
-            case "float":
+            case COLUMN_TYPE_FLOAT:
                 columns.add( new FloatColumn( columnName ) );
                 break;
-            case "double":
+            case COLUMN_TYPE_DOUBLE:
                 columns.add( new DoubleColumn( columnName ) );
                 break;
-            case "long":
+            case COLUMN_TYPE_LONG:
                 columns.add( new LongColumn( columnName ) );
                 break;
-            case "string":
+            case COLUMN_TYPE_STRING:
                 columns.add( new StringColumn( columnName ) );
+                break;
+            case COLUMN_TYPE_SPARSE_STRING:
+                columns.add( new SparseStringColumn( columnName ) );
+                break;
 
             default:
                 throw new IllegalArgumentException( "unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
