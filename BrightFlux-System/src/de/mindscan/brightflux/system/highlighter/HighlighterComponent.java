@@ -93,6 +93,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
             public void handleEvent( BFEvent event ) {
                 if (event instanceof DataFrameHighlightRowEvent) {
                     DataFrame dataframe = ((DataFrameHighlightRowEvent) event).getDataFrame();
+                    System.out.println( "HighlightRowEventFound..." );
                     // TODO: use the data of the event and fill the data into the logDataFrame
                 }
             }
