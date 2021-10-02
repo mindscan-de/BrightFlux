@@ -392,7 +392,7 @@ public class DataFrameImpl implements DataFrame {
         try {
             DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
             /* return */
-            engine.executeDFCallbackQuery( this, query );
+            engine.executeDFCallbackQuery( this, query, callbacks );
         }
         catch (Exception ex) {
             ex.printStackTrace();

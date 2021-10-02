@@ -26,11 +26,15 @@
 package de.mindscan.brightflux.dataframes.dfquery;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
@@ -38,6 +42,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
@@ -89,6 +94,30 @@ public class DataFrameQueryLanguageEngine {
         // df.select(columnList).where( predicate )
 
         return df.select().where( rowPredicate );
+    }
+
+    public DataFrame executeDFCallbackQuery( DataFrame dataFrame, String query, Map<String, DataFrameRowQueryCallback> callbacks ) {
+
+        TypedDFQLCallbackStatementNode transformed = null;
+        // TODO: compile the where clause 
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        DataFrameRowFilterPredicate rowPredicate = compiler.compileToRowFilterPredicate( transformed.getWhereClauseNode() );
+
+        // TODO: now execute the row predicate and then callback the 
+        Collection<DataFrameRow> rows = dataFrame.getRowsByPredicate( rowPredicate );
+        String callbackFunction = transformed.getCallbackFunction();
+        if (callbackFunction == null) {
+            return dataFrame;
+        }
+
+        DataFrameRowQueryCallback callback = callbacks.get( callbackFunction );
+        if (callback != null) {
+            for (DataFrameRow dataFrameRow : rows) {
+                callback.apply( dataFrameRow );
+            }
+        }
+
+        return dataFrame;
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
@@ -154,16 +183,6 @@ public class DataFrameQueryLanguageEngine {
 
         // TODO repackage String, number
         return node;
-    }
-
-    /**
-     * @param dataFrame
-     * @param query
-     * @return
-     */
-    public DataFrame executeDFCallbackQuery( DataFrame dataFrame, String query ) {
-        // TODO implement a callback query...
-        return dataFrame;
     }
 
 }
