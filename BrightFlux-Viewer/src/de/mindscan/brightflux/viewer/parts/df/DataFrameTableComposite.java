@@ -80,6 +80,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private HighlighterComponent highlighterComponent;
 
+    protected DataFrameRow currentSelectedRow;
+
     /**
      * Create the composite.
      * @param parent
@@ -101,6 +103,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
                 if (e.item != null && e.item.getData() != null) {
                     DataFrameRow rowData = (DataFrameRow) e.item.getData();
+                    currentSelectedRow = rowData;
                     selectDataFrameRow( rowData.getRowIndex(), rowData );
                 }
             }
@@ -239,7 +242,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    highlightRow( e, "yellow" );
+                    highlightRow( currentSelectedRow, "yellow" );
                 }
             }
         } );
@@ -250,7 +253,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    highlightRow( e, "pink" );
+                    highlightRow( currentSelectedRow, "pink" );
                 }
             }
         } );
@@ -261,7 +264,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    highlightRow( e, "red" );
+                    highlightRow( currentSelectedRow, "red" );
                 }
             }
         } );
@@ -272,7 +275,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    highlightRow( e, "green" );
+                    highlightRow( currentSelectedRow, "green" );
                 }
             }
         } );
@@ -283,7 +286,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    highlightRow( e, "blue" );
+                    highlightRow( currentSelectedRow, "blue" );
                 }
             }
         } );
@@ -442,11 +445,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         this.highlighterComponent = highlighterComponent;
     }
 
-    private void highlightRow( SelectionEvent e, String color ) {
-        if (e.item != null && e.item.getData() != null) {
-            DataFrameRow rowData = (DataFrameRow) e.item.getData();
-            BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, rowData.getOriginalRowIndex(), color );
-            System.out.println( "should paint row " + rowData.getOriginalRowIndex() + " in " + color );
+    private void highlightRow( DataFrameRow currentSelectedRow, String color ) {
+        if (currentSelectedRow != null) {
+            BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, currentSelectedRow.getOriginalRowIndex(), color );
+            System.out.println( "should paint row " + currentSelectedRow.getOriginalRowIndex() + " in " + color );
             dispatchCommand( command );
         }
     }
