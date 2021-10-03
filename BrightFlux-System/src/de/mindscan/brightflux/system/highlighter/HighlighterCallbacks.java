@@ -39,6 +39,12 @@ import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
  */
 public class HighlighterCallbacks {
 
+    private static final String CALLBACK_HIGHLIGHT_YELLOW = "highlight_yellow";
+    private static final String CALLBACK_HIGHLIGHT_PINK = "highlight_pink";
+    private static final String CALLBACK_HIGHLIGHT_BLUE = "highlight_blue";
+    private static final String CALLBACK_HIGHLIGHT_GREEN = "highlight_green";
+    private static final String CALLBACK_HIGHLIGHT_RED = "highlight_red";
+
     private static class Holder {
         private static HighlighterCallbacks instance = new HighlighterCallbacks();
     }
@@ -64,7 +70,7 @@ public class HighlighterCallbacks {
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightRedCommand );
             }
         };
-        callbacks.put( "highlight_red", highlightRed );
+        callbacks.put( CALLBACK_HIGHLIGHT_RED, highlightRed );
 
         // --
 
@@ -75,7 +81,7 @@ public class HighlighterCallbacks {
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightGreenCommand );
             }
         };
-        callbacks.put( "highlight_green", highlightGreen );
+        callbacks.put( CALLBACK_HIGHLIGHT_GREEN, highlightGreen );
 
         // --
 
@@ -86,7 +92,7 @@ public class HighlighterCallbacks {
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightBlueCommand );
             }
         };
-        callbacks.put( "highlight_blue", highlightBlue );
+        callbacks.put( CALLBACK_HIGHLIGHT_BLUE, highlightBlue );
 
         // --
 
@@ -97,7 +103,7 @@ public class HighlighterCallbacks {
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightPinkCommand );
             }
         };
-        callbacks.put( "highlight_pink", highlightPink );
+        callbacks.put( CALLBACK_HIGHLIGHT_PINK, highlightPink );
 
         // -- 
 
@@ -108,7 +114,7 @@ public class HighlighterCallbacks {
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightYellowCommand );
             }
         };
-        callbacks.put( "highlight_red", highlightYellow );
+        callbacks.put( CALLBACK_HIGHLIGHT_YELLOW, highlightYellow );
     }
 
     private Map<String, DataFrameRowQueryCallback> callbacks = new HashMap<>();
