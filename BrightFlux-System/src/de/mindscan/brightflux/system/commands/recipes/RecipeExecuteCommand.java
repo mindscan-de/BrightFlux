@@ -77,14 +77,12 @@ public class RecipeExecuteCommand implements BFCommand {
         BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
 
         if (recipe != null) {
-            // use everything that is not a load command.
-            List<DataFrameJournalEntry> recipeEntries = recipe.getRecipeEntries().stream()
-                            .filter( entry -> entry.getEntryType() != DataFrameJournalEntryType.LOAD ).collect( Collectors.toList() );
+            List<DataFrameJournalEntry> executableEntries = getExecutableRecipeEntries( recipe );
 
-            if (recipeEntries.size() > 0) {
+            if (executableEntries.size() > 0) {
                 // apply the receipt onto the data frame in a serial manner
                 DataFrame currentDataFrame = inputDataFrame;
-                for (DataFrameJournalEntry entry : recipeEntries) {
+                for (DataFrameJournalEntry entry : executableEntries) {
                     String msg = entry.getLogMessage();
 
                     // according to the entry type we need to select the correct strategy to apply here... 
@@ -118,6 +116,12 @@ public class RecipeExecuteCommand implements BFCommand {
             // TODO: fire a event, that the recipe load operation failed
             throw new NotYetImplemetedException();
         }
+    }
+
+    private List<DataFrameJournalEntry> getExecutableRecipeEntries( BFRecipe recipe ) {
+        return recipe.getRecipeEntries().stream()//
+                        .filter( entry -> entry.getEntryType() != DataFrameJournalEntryType.LOAD )//
+                        .collect( Collectors.toList() );
     }
 
 }
