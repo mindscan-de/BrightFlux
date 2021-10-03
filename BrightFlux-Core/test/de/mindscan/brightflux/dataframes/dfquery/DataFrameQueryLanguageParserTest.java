@@ -677,6 +677,32 @@ public class DataFrameQueryLanguageParserTest {
         assertNodeDescription( result, "SELECT 'column','otherColumn' FROM df" );
     }
 
+    @Test
+    public void testParseDFQLCallbackStatement_HighlightRedForALlRows_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "ROWCALLBACK highlight_red FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLCallbackStatement();
+
+        // assert
+        assertNodeDescription( result, "ROWCALLBACK highlight_red FROM df" );
+    }
+
+    @Test
+    public void testParseDFQLCallbackStatement_HighlightRedForALlRowsWHEREColumnValueIsOne_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "ROWCALLBACK highlight_red FROM df WHERE (df.'x'==1)";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLCallbackStatement();
+
+        // assert
+        assertNodeDescription( result, "ROWCALLBACK highlight_red FROM df WHERE (df.'x'==1)" );
+    }
+
     private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {
         assertThat( result, is( instanceOf( type ) ) );
     }

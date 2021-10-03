@@ -30,6 +30,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
@@ -70,8 +71,52 @@ public class DataFrameQueryLanguageParser {
             return parseDFQLSelectStatement();
         }
 
+        if (tryToken( DFQLTokens.KEYWORD_ROWCALLBACK )) {
+            return parseDFQLCallbackStatement();
+        }
+
         // TODO: according to the keywords we use then the keywords specific parsers
         return null;
+    }
+
+    /**
+     * ROWCALLBACK identifier FROM df WHERE
+     * 
+     * @return
+     */
+    public DFQLCallbackStatementNode parseDFQLCallbackStatement() {
+
+        // ROWCALLBACK
+
+        if (!tryAndAcceptToken( DFQLTokens.KEYWORD_ROWCALLBACK )) {
+            throw new NotYetImplemetedException( "" );
+        }
+
+        DFQLCallbackStatementNode statement = new DFQLCallbackStatementNode();
+
+        // we want to parse the callback identifier here
+        DFQLNode callbackIdentifier = parseLiteral();
+        statement.setCallBackIdentifier( callbackIdentifier );
+
+        // FROM
+
+        if (!tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
+            throw new NotYetImplemetedException( "" );
+        }
+
+        // parseDataframe
+        DFQLNode parsedDataFrames = parseSelectStatementDataframeList();
+        statement.setDataFrames( parsedDataFrames );
+
+        // WHERE :: Optional
+        if (tryAndAcceptToken( DFQLTokens.KEYWORD_WHERE )) {
+
+            // parseExpression
+            DFQLNode whereClause = parseExpression();
+            statement.setWhereClause( whereClause );
+        }
+
+        return statement;
     }
 
     /**
