@@ -69,4 +69,6 @@ public interface DataFrameRow {
      */
     int getOriginalRowIndex();
 
+    DataFrame getDataFrameInternal();
+
 }

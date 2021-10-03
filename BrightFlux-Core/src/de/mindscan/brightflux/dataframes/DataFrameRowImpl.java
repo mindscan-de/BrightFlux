@@ -90,6 +90,11 @@ public class DataFrameRowImpl implements DataFrameRow {
         return Integer.class;
     }
 
+    @Override
+    public DataFrame getDataFrameInternal() {
+        return df;
+    }
+
     /** 
      * {@inheritDoc}
      */
