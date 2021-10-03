@@ -27,6 +27,7 @@ package de.mindscan.brightflux.system.commands.io;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -62,41 +63,50 @@ public class ExpandProprietaryZipStreamCommand implements BFCommand {
         // we want to create the target file position and the parent directory "expanded"...
 
         long processedSize = 0L;
+        int startChunkSize = 1536;
 
-        // TODO: write the output stream...
+        long safeSize = calculateSafeSize( startChunkSize, filePath );
 
-        try (ZipInputStream zip = new ZipInputStream( Files.newInputStream( filePath, StandardOpenOption.READ ) )) {
+        Path extractFile = filePath.getParent().resolve( "extracted" ).resolve( filePath.getFileName() + ".bin" );
+        try {
+            Files.createDirectories( extractFile.getParent() );
+            Files.createFile( extractFile );
+        }
+        catch (Exception e) {
+            return;
+        }
+
+        System.out.println( " We should exract to this file path.. " + extractFile.toAbsolutePath().toString() );
+
+        try (OutputStream outputStream = Files.newOutputStream( extractFile, StandardOpenOption.WRITE );
+                        ZipInputStream zip = new ZipInputStream( Files.newInputStream( filePath, StandardOpenOption.READ ) )) {
 
             ZipEntry firstEntry = zip.getNextEntry();
             long extractedSize = firstEntry.getSize();
-            long safeSize = extractedSize;
 
-            if (extractedSize == -1) {
-                // TODO: we must calculate a safe size, by trying to read it once without saving the file...
-                // another way would be to detect that the zipinputstream is near the end of the input file...
-                // the chunksize would be quarter of the remaining bytes? 
-                safeSize = 9300992;
+            if (extractedSize != -1) {
+                safeSize = extractedSize;
             }
 
             // in this proprietary format it has a size of -1 (probably threated as unknown)
             // actually we then need to read this file once, until we find the cutoff, and from there we read byte for byte....
             // we note the cutoff and after we reached the cutoff we switch tactics and read byte by byte...
 
-            System.out.println( "firstEntryName... is: '" + firstEntry.getName() + "' and is " + firstEntry.getSize() + " bytes long..." );
+            System.out.println( "firstEntryName... is: '" + firstEntry.getName() + "' and is " + firstEntry.getSize() + " bytes long... safe size is: "
+                            + safeSize );
 
-            int chunksize = 1024;
+            int chunksize = startChunkSize;
 
             byte[] data;
             while (true) {
-
-                // once the safesize is reached, we can't read 1 kbyte, but from here byte by byte.
+                // once the safesize is reached, we can't read safesize bytes any more in full, but from here we go byte by byte.
                 if (processedSize >= safeSize) {
                     chunksize = 1;
                 }
 
                 data = zip.readNBytes( chunksize );
                 if (data == null) {
-                    // TODO: close the outputstream
+                    outputStream.close();
                     break;
                 }
 
@@ -104,24 +114,20 @@ public class ExpandProprietaryZipStreamCommand implements BFCommand {
                 processedSize += dataLength;
 
                 if (dataLength > 0) {
-                    // TODO: write the data to the disk to the target file
-                    // TODO: write all bytes to the outputstream
+                    outputStream.write( data );
                 }
 
                 if (dataLength < chunksize) {
-                    // TODO: close the outputstream
+                    outputStream.close();
                     break;
                 }
-
-                // i have some kind of corrupt/broken format... where i will always produce an EOFEception. It is intentionally encoded this way.
             }
 
             System.out.println( "Processed this numbe of expanded bytes: " + processedSize );
         }
         catch (EOFException eof) {
-            // we know this happens with this file format.... / but here we can close the output file... in case we didn't before.
-            System.out.println( "We knew this would happen..." );
-
+            // we know this happens with this special file format.... / but here we can close the output file... in case we didn't before.
+            System.out.println( "EOF found." );
         }
         catch (IOException e) {
             // this is something unexpected....
@@ -129,6 +135,46 @@ public class ExpandProprietaryZipStreamCommand implements BFCommand {
         }
 
         System.out.println( "Processed this number of expanded bytes: " + processedSize );
+    }
+
+    /**
+     * Calculate how much bytes can be safely read using the given chunk size, since we don't know how many bytes 
+     * are there, we have the following method: read as many bytes using the given chunksize until we get an 
+     * EOF exception.
+     *   
+     * @param chunkSize
+     * @param filePath
+     * @return
+     */
+    private long calculateSafeSize( int chunkSize, Path filePath ) {
+        // we must calculate a safe size, by trying to read it once without saving the file...
+        // another way would be to detect that the zipinputstream is near the end of the input file...
+        // the chunksize would be quarter of the remaining bytes? 
+
+        long processedSize = 0L;
+
+        try (ZipInputStream zip = new ZipInputStream( Files.newInputStream( filePath, StandardOpenOption.READ ) )) {
+            // go to first zip entry
+            zip.getNextEntry();
+
+            byte[] data;
+            while (true) {
+                data = zip.readNBytes( chunkSize );
+                if (data == null) {
+                    break;
+                }
+                if (data.length == 0) {
+                    break;
+                }
+
+                processedSize += data.length;
+            }
+        }
+        catch (Exception e) {
+            // intentionally left blank
+        }
+
+        return processedSize;
     }
 
 }
