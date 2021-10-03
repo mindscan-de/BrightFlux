@@ -55,6 +55,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 
 /**
@@ -197,14 +198,23 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
                 // because the Terminal will be sensitive to the selected frame in the MainProjectComposite
             }
         };
-
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
+
     }
 
     public void executeQuery( String theQuery ) {
         if (currentSelectedDataFrame != null) {
-            BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
-            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+
+            // TODO: this is a very ugly workaround, to support rowcallbacks and select statements, we can't do such things forever...
+            if (theQuery.trim().toLowerCase().startsWith( "select" )) {
+                BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
+                this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+            }
+            else if (theQuery.trim().toLowerCase().startsWith( "rowcallback" )) {
+                BFCommand command = DataFrameCommandFactory.queryCBDataFrame( currentSelectedDataFrame, theQuery,
+                                HighlighterCallbacks.getInstance().getCallbacks() );
+                this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+            }
         }
     }
 
