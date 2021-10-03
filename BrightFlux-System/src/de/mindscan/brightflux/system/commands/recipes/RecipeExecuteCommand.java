@@ -26,11 +26,14 @@
 package de.mindscan.brightflux.system.commands.recipes;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -47,14 +50,23 @@ public class RecipeExecuteCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
     private Path recipeFilePath;
+    private Map<String, DataFrameRowQueryCallback> callbacks;
 
     /**
      * @param inputDataFrame
      * @param recipeFilePath
      */
     public RecipeExecuteCommand( DataFrame inputDataFrame, Path recipeFilePath ) {
+        this( inputDataFrame, recipeFilePath, new HashMap<>() );
+    }
+
+    /**
+     * 
+     */
+    public RecipeExecuteCommand( DataFrame inputDataFrame, Path recipeFilePath, Map<String, DataFrameRowQueryCallback> callbacks ) {
         this.inputDataFrame = inputDataFrame;
         this.recipeFilePath = recipeFilePath;
+        this.callbacks = callbacks;
     }
 
     /** 
@@ -80,10 +92,16 @@ public class RecipeExecuteCommand implements BFCommand {
                         case LOAD:
                             // we already filtered them out before
                             break;
-                        case SELECT_WHERE:
+                        case SELECT_WHERE: {
                             String query = msg;
                             currentDataFrame = currentDataFrame.query( query );
                             break;
+                        }
+                        case ROWCALLBACK: {
+                            String query = msg;
+                            currentDataFrame = currentDataFrame.queryCB( query, callbacks );
+                            break;
+                        }
                         default:
                             throw new NotYetImplemetedException();
                     }

@@ -36,6 +36,8 @@ public enum DataFrameJournalEntryType {
 
     SELECT_WHERE,
 
+    ROWCALLBACK,
+
     // TODO: use a column of a data frame and tokenize it using a different dataframe tokenizer on it
     // TOKENIZE,
 
