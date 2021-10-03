@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.parts.df;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Map;
 
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -51,6 +52,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -59,6 +61,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
@@ -232,6 +235,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 if (projectRegistry != null) {
                     BFCommand command = DataFrameCommandFactory.createHighlightDataFrame();
                     dispatchCommand( command );
+
+                    HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
                 }
             }
         } );
@@ -418,7 +423,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void applyRecipe( DataFrame dataFrame, Path recipePath ) {
-        dispatchCommand( DataFrameCommandFactory.applyRecipe( dataFrame, recipePath ) );
+        Map<String, DataFrameRowQueryCallback> callbacks = HighlighterCallbacks.getInstance().getCallbacks();
+        dispatchCommand( DataFrameCommandFactory.applyRecipe( dataFrame, recipePath, callbacks ) );
     }
 
     private void saveRecipe( DataFrame dataFrame, Path recipePath ) {

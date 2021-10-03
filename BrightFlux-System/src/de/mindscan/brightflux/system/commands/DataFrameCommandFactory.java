@@ -26,9 +26,11 @@
 package de.mindscan.brightflux.system.commands;
 
 import java.nio.file.Path;
+import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.annotator.commands.CreateAnnoationDataFrameCommand;
 import de.mindscan.brightflux.system.annotator.commands.DataFrameAnnotateRowCommand;
@@ -77,6 +79,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {
         return new RecipeExecuteCommand( inputDataFrame, recipe );
+    }
+
+    public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe, Map<String, DataFrameRowQueryCallback> callbacks ) {
+        return new RecipeExecuteCommand( inputDataFrame, recipe, callbacks );
     }
 
     public static BFCommand saveRecipe( DataFrame inputDataFrame, Path targetFile ) {
