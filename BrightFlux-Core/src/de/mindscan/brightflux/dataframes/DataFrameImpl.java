@@ -393,6 +393,8 @@ public class DataFrameImpl implements DataFrame {
             DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
             /* return */
             engine.executeDFCallbackQuery( this, query, callbacks );
+
+            this.appendJournal( DataFrameJournalEntryType.ROWCALLBACK, query );
         }
         catch (Exception ex) {
             ex.printStackTrace();
