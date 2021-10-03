@@ -75,9 +75,8 @@ public class DFQLCallbackStatementNode implements DFQLNode {
     @Override
     public String describeNodeOperation() {
         StringBuilder sb = new StringBuilder();
-        // TODO Auto-generated method stub
 
-        sb.append( "CALLBACK " );
+        sb.append( "ROWCALLBACK " );
         sb.append( parsedCallBackIdentifier.describeNodeOperation() );
         sb.append( " FROM " );
         sb.append( parsedDataFrames.describeNodeOperation() );
