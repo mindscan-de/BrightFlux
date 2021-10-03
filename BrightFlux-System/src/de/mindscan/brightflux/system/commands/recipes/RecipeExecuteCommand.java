@@ -80,8 +80,9 @@ public class RecipeExecuteCommand implements BFCommand {
             List<DataFrameJournalEntry> executableEntries = getExecutableRecipeEntries( recipe );
 
             if (executableEntries.size() > 0) {
-                // apply the receipt onto the data frame in a serial manner
                 DataFrame currentDataFrame = inputDataFrame;
+
+                // apply the recipe onto the data frame in a serial manner
                 for (DataFrameJournalEntry entry : executableEntries) {
                     String msg = entry.getLogMessage();
 
