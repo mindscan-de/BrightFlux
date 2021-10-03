@@ -235,8 +235,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 if (projectRegistry != null) {
                     BFCommand command = DataFrameCommandFactory.createHighlightDataFrame();
                     dispatchCommand( command );
-
-                    HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
                 }
             }
         } );

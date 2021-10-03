@@ -42,6 +42,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
@@ -138,6 +139,7 @@ public class BrightFluxViewerMainAppTwo {
 
         // init some business logic comes here too
         projectRegistry.registerParticipant( annotatorComponent );
+        HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
 
         projectRegistry.completeParticipantRegistration();
     }
