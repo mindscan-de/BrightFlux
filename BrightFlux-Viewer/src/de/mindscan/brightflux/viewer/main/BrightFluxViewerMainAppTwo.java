@@ -70,6 +70,9 @@ public class BrightFluxViewerMainAppTwo {
             // TODO: set the current configuration (e.g. the window size)
             // TODO: the configuration an be distributed with configuration events
 
+            // TODO: Implement a startup component, such that some of the components can be initialized before
+            //       first usage, (e.g. annotation, highlight, QueryCallbacks, project registry, system services,  ....)
+
             BrightFluxViewerMainAppTwo window = new BrightFluxViewerMainAppTwo();
             window.open();
         }
