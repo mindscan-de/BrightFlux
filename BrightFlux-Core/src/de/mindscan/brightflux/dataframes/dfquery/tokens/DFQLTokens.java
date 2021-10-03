@@ -31,6 +31,7 @@ package de.mindscan.brightflux.dataframes.dfquery.tokens;
 public class DFQLTokens {
 
     public final static DFQLToken KEYWORD_SELECT = new DFQLToken( DFQLTokenType.KEYWORD, "SELECT" );
+    public final static DFQLToken KEYWORD_CALLBACK = new DFQLToken( DFQLTokenType.KEYWORD, "CALLBACK" );
     public final static DFQLToken KEYWORD_FROM = new DFQLToken( DFQLTokenType.KEYWORD, "FROM" );
     public final static DFQLToken KEYWORD_WHERE = new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" );
 
