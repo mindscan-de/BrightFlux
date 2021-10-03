@@ -100,7 +100,7 @@ public class DataFrameQueryLanguageEngine {
     public DataFrame executeDFCallbackQuery( DataFrame df, String query, Map<String, DataFrameRowQueryCallback> callbacks ) {
 
         DataFrameQueryLanguageParser parser = createParser( query );
-        DFQLCallbackStatementNode callbackStatement = (DFQLCallbackStatementNode) parser.parseDFQLCallbackStatement();
+        DFQLCallbackStatementNode callbackStatement = (DFQLCallbackStatementNode) parser.parseDFQLStatement();
 
         TypedDFQLCallbackStatementNode transformed = (TypedDFQLCallbackStatementNode) transformAST( callbackStatement, df );
 
