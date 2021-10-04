@@ -114,10 +114,12 @@ public class DataFrameImpl implements DataFrame {
         this.nameOfDataFrame = dfName;
     }
 
+    @Override
     public Collection<String> getColumnNames() {
         return new ArrayList<>( columnsMap.keySet() );
     }
 
+    @Override
     public Iterator<DataFrameRow> rowIterator() {
         return new Iterator<DataFrameRow>() {
             private int currentIndexPosition = 0;
@@ -146,6 +148,7 @@ public class DataFrameImpl implements DataFrame {
      * This will return all columns for this data frame
      * @return
      */
+    @Override
     public Collection<DataFrameColumn<?>> getColumns() {
         return new ArrayList<>( columnsMap.values() );
     }
@@ -210,6 +213,7 @@ public class DataFrameImpl implements DataFrame {
         }
     }
 
+    @Override
     public boolean isEmpty() {
         return this.getSize() == 0;
     }
@@ -217,6 +221,7 @@ public class DataFrameImpl implements DataFrame {
     /**
      * @return
      */
+    @Override
     public int getSize() {
         return size;
     }
@@ -229,6 +234,7 @@ public class DataFrameImpl implements DataFrame {
         return columnsMap.get( columnName ) != null;
     }
 
+    @Override
     public Object getAt( int columnIndex, int rowIndex ) {
         DataFrameColumn<?> column = columns[columnIndex];
         return column.get( rowIndex );
@@ -247,10 +253,12 @@ public class DataFrameImpl implements DataFrame {
     // TODO? is that needed? rename data frame column
     // TODO? is that needed? replace data frame column
 
+    @Override
     public DataFrame head() {
         return head( DEFAULT_HEAD_ROW_COUNT );
     }
 
+    @Override
     public DataFrame tail() {
         return tail( DEFAULT_TAIL_ROW_COUNT );
     }
