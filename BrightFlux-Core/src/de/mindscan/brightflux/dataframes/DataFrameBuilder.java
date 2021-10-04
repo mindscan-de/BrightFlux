@@ -34,6 +34,7 @@ import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
 import de.mindscan.brightflux.dataframes.columns.FloatColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.dataframes.columns.LongColumn;
+import de.mindscan.brightflux.dataframes.columns.SparseIntegerColumn;
 import de.mindscan.brightflux.dataframes.columns.SparseStringColumn;
 import de.mindscan.brightflux.dataframes.columns.StringColumn;
 
@@ -48,6 +49,7 @@ public class DataFrameBuilder {
     public static final String COLUMN_TYPE_LONG = "long";
     public static final String COLUMN_TYPE_STRING = "string";
     public static final String COLUMN_TYPE_SPARSE_STRING = "s_string";
+    public static final String COLUMN_TYPE_SPARSE_INT = "s_int";
 
     private static final String EMPTY_DATAFRAME_NAME = "";
 
@@ -163,6 +165,9 @@ public class DataFrameBuilder {
                 break;
             case COLUMN_TYPE_SPARSE_STRING:
                 columns.add( new SparseStringColumn( columnName ) );
+                break;
+            case COLUMN_TYPE_SPARSE_INT:
+                columns.add( new SparseIntegerColumn( columnName ) );
                 break;
 
             default:
