@@ -130,4 +130,18 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
         return logHighlightFrame;
     }
 
+    // TODO: basic idea on how to save the highlighter dataframe... 
+    private void saveHighlightFrame() {
+
+        // DataFrameImpl?
+        // // TODO: get index_column or TODO: get Original index column
+        // // logHighlightFrame.getOriginalIndexColumn();
+
+        // // TODO: iterate over the index column
+        // // then get row for each of these OriginalRowIndexes... indexes
+
+        // DataFrameIO for the list of ROWs?
+        // TODO: Write these rows to the disk in a JSON way?
+    }
+
 }
