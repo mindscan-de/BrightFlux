@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.system.highlighter;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -96,6 +97,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
                     if (logHighlightFrame != null) {
                         String color = ((DataFrameHighlightRowEvent) event).getColor();
                         int row = ((DataFrameHighlightRowEvent) event).getRow();
+                        logHighlightFrame.setAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, row, row );
                         logHighlightFrame.setAt( HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, row, color );
                     }
                 }

@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.system.annotator;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -86,10 +87,12 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 String newText = x.getAnnotation();
 
                 if (newText.isBlank()) {
+                    logAnalysisFrame.setNA( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, x.getRow() );
                     logAnalysisFrame.setNA( ANNOTATION_COLUMN_NAME, x.getRow() );
                     // TODO: clear a previous classification
                 }
                 else {
+                    logAnalysisFrame.setAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, x.getRow(), x.getRow() );
                     logAnalysisFrame.setAt( ANNOTATION_COLUMN_NAME, x.getRow(), newText );
                     // TODO: classify the annotation Text
                 }
