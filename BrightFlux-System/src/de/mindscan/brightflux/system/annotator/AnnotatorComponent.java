@@ -87,11 +87,13 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 String newText = x.getAnnotation();
 
                 if (newText.isBlank()) {
+                    logAnalysisFrame.setNA( DataFrameSpecialColumns.INDEX_COLUMN_NAME, x.getRow() );
                     logAnalysisFrame.setNA( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, x.getRow() );
                     logAnalysisFrame.setNA( ANNOTATION_COLUMN_NAME, x.getRow() );
                     // TODO: clear a previous classification
                 }
                 else {
+                    logAnalysisFrame.setAt( DataFrameSpecialColumns.INDEX_COLUMN_NAME, x.getRow(), x.getRow() );
                     logAnalysisFrame.setAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, x.getRow(), x.getRow() );
                     logAnalysisFrame.setAt( ANNOTATION_COLUMN_NAME, x.getRow(), newText );
                     // TODO: classify the annotation Text

@@ -97,6 +97,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
                     if (logHighlightFrame != null) {
                         String color = ((DataFrameHighlightRowEvent) event).getColor();
                         int row = ((DataFrameHighlightRowEvent) event).getRow();
+                        logHighlightFrame.setAt( DataFrameSpecialColumns.INDEX_COLUMN_NAME, row, row );
                         logHighlightFrame.setAt( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, row, row );
                         logHighlightFrame.setAt( HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, row, color );
                     }
