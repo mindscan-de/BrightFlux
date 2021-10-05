@@ -122,9 +122,34 @@ public class DataFrameImpl implements DataFrame {
     @Override
     public Iterator<DataFrameRow> rowIterator() {
         // TODO instead of iterating through size, we can use the "__idx" column values to iterate over....
-        if (columnsMap.containsKey( DataFrameSpecialColumns.INDEX_COLUMN_NAME )) {
+        if (!columnsMap.containsKey( DataFrameSpecialColumns.INDEX_COLUMN_NAME )) {
+            // iterate over the column index.... if idx-column is not present..
+            return new Iterator<DataFrameRow>() {
+                private int currentIndexPosition = 0;
+
+                @Override
+                public boolean hasNext() {
+                    return currentIndexPosition < DataFrameImpl.this.getSize();
+                }
+
+                @Override
+                public DataFrameRow next() {
+                    // check for validity of position
+                    if (currentIndexPosition >= DataFrameImpl.this.getSize()) {
+                        throw new NoSuchElementException();
+                    }
+
+                    DataFrameRow currentRow = new DataFrameRowImpl( DataFrameImpl.this, currentIndexPosition );
+                    currentIndexPosition++;
+
+                    return currentRow;
+                }
+            };
+        }
+        else {
             // TODO: here we must iterate over the __idx-column instead
             // Maybe we use an iterator over the __idx - columnvalues
+            // for sparse columns  this is the right approach...
 
             // TODO: we need to redindex the __idx column each time.... (it actually is not that simple ....
             //       for some time it might be still okay to iterate over the original columnindex... but this is quite a stretch... and a hack.
@@ -151,30 +176,6 @@ public class DataFrameImpl implements DataFrame {
                 }
             };
 
-        }
-        else {
-            // iterate over the column index....
-            return new Iterator<DataFrameRow>() {
-                private int currentIndexPosition = 0;
-
-                @Override
-                public boolean hasNext() {
-                    return currentIndexPosition < DataFrameImpl.this.getSize();
-                }
-
-                @Override
-                public DataFrameRow next() {
-                    // check for validity of position
-                    if (currentIndexPosition >= DataFrameImpl.this.getSize()) {
-                        throw new NoSuchElementException();
-                    }
-
-                    DataFrameRow currentRow = new DataFrameRowImpl( DataFrameImpl.this, currentIndexPosition );
-                    currentIndexPosition++;
-
-                    return currentRow;
-                }
-            };
         }
     }
 
