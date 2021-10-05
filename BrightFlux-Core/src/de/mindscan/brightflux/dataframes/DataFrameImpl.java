@@ -341,6 +341,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public Collection<DataFrameRow> getRows() {
+        // TODO maybe we have to work around this... for sparse frames
         return getRows( 0, size );
     }
 
@@ -349,6 +350,7 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public Collection<DataFrameRow> getRows( int fromIndex, int toIndex ) {
+        // TODO maybe we have to work around this... for sparse frames
         List<DataFrameRow> result = new ArrayList<>();
 
         if (fromIndex < toIndex) {
