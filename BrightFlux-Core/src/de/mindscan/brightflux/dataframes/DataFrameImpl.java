@@ -126,6 +126,8 @@ public class DataFrameImpl implements DataFrame {
             // TODO: here we must iterate over the __idx-column instead
             // Maybe we use an iterator over the __idx - columnvalues
 
+            // TODO: we need to redindex the __idx column each time.... (it actually is not that simple ....
+            //       for some time it might be still okay to iterate over the original columnindex... but this is quite a stretch... and a hack.
             // TODO: iterate over the __idx column next... replace this current implementation.
             return new Iterator<DataFrameRow>() {
                 private int currentIndexPosition = 0;
