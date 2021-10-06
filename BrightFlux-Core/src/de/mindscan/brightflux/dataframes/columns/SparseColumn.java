@@ -122,6 +122,8 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
     @SuppressWarnings( "unchecked" )
     @Override
     public T[] toArray() {
+        // TODO: is there a good ordering?
+        // TODO: is this even a good implmentation?
         return ((T[]) columnValues.values().toArray());
     }
 
