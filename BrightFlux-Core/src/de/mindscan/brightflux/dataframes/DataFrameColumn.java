@@ -52,6 +52,11 @@ public interface DataFrameColumn<T> {
 
     public abstract String getColumnName();
 
+    public abstract DataFrameColumn<T> cloneColumnEmpty();
+
+    // return the values of this column
+    public abstract T[] toArray();
+
     // -----------------------------------------
     // Element wise access get / set / isPresent
     // -----------------------------------------    
@@ -65,7 +70,5 @@ public interface DataFrameColumn<T> {
     public abstract void setNA( int index );
 
     public abstract void setRaw( int index, Object element );
-
-    public abstract DataFrameColumn<T> cloneColumnEmpty();
 
 }

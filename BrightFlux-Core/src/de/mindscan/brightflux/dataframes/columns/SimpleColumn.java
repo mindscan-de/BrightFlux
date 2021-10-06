@@ -28,6 +28,8 @@ package de.mindscan.brightflux.dataframes.columns;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
  * 
  */
@@ -96,17 +98,25 @@ public abstract class SimpleColumn<T> extends DataFrameColumnBase<T> {
     }
 
     @Override
+    public T[] toArray() {
+        return Arrays.copyOf( columnValues, getSize() );
+    }
+
+    @Override
     public void set( int index, T element ) {
         // TODO: Implement this, that we can override the value at a certain position.
+        throw new NotYetImplemetedException( "'set' is not yet implemented in SimpleColumn" );
     }
 
     @Override
     public void setRaw( int index, Object element ) {
         // TODO: implement this, such that we can override the value at acertain position.
+        throw new NotYetImplemetedException( "'setRaw' is not yet implemented in SimpleColumn" );
     }
 
     @Override
     public void setNA( int index ) {
         // TODO: implement this, such that we can override the value at acertain position.
+        throw new NotYetImplemetedException( "'setNa' is not yet implemented in SimpleColumn" );
     }
 }

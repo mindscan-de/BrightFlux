@@ -116,4 +116,13 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
         columnValues.remove( Integer.valueOf( index ) );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @SuppressWarnings( "unchecked" )
+    @Override
+    public T[] toArray() {
+        return ((T[]) columnValues.values().toArray());
+    }
+
 }
