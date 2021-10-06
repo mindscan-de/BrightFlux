@@ -36,6 +36,7 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import de.mindscan.brightflux.dataframes.columns.SparseColumn;
 import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageEngine;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
@@ -123,6 +124,7 @@ public class DataFrameImpl implements DataFrame {
     public Iterator<DataFrameRow> rowIterator() {
         // TODO instead of iterating through size, we can use the "__idx" column values to iterate over....
         if (!columnsMap.containsKey( DataFrameSpecialColumns.INDEX_COLUMN_NAME )) {
+
             // iterate over the column index.... if idx-column is not present..
             return new Iterator<DataFrameRow>() {
                 private int currentIndexPosition = 0;
@@ -150,6 +152,35 @@ public class DataFrameImpl implements DataFrame {
             // TODO: here we must iterate over the __idx-column instead
             // Maybe we use an iterator over the __idx - columnvalues
             // for sparse columns  this is the right approach...
+
+            DataFrameColumn<?> index_column = columnsMap.get( DataFrameSpecialColumns.INDEX_COLUMN_NAME );
+
+            if (index_column instanceof SparseColumn) {
+                Object[] indexArray = index_column.toArray();
+                Arrays.sort( indexArray );
+
+                return new Iterator<DataFrameRow>() {
+                    private int currentIndexPosition = 0;
+
+                    @Override
+                    public boolean hasNext() {
+                        return currentIndexPosition < indexArray.length;
+                    }
+
+                    @Override
+                    public DataFrameRow next() {
+                        // check for validity of position
+                        if (currentIndexPosition >= indexArray.length) {
+                            throw new NoSuchElementException();
+                        }
+
+                        DataFrameRow currentRow = new DataFrameRowImpl( DataFrameImpl.this, (Integer) indexArray[currentIndexPosition] );
+                        currentIndexPosition++;
+
+                        return currentRow;
+                    }
+                };
+            }
 
             // TODO: we need to redindex the __idx column each time.... (it actually is not that simple ....
             //       for some time it might be still okay to iterate over the original columnindex... but this is quite a stretch... and a hack.
@@ -250,6 +281,9 @@ public class DataFrameImpl implements DataFrame {
 
     @Override
     public boolean isEmpty() {
+        // TODO: this needs to be fixed in case we have sparse columns in the dataframe, and when we start from empty...
+        // the set operation is nice for dataframes, but the dataframe assumes, that set only replaces instead of adds in case of a sparse column...
+        // this thing somehow needs to be fixed...
         return this.getSize() == 0;
     }
 

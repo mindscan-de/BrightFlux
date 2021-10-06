@@ -58,6 +58,8 @@ public class DataFrameWriterCSVImpl implements DataFrameWriter {
             // write header
             writer.write( calculateColumnNameLine( df ) );
 
+            // TODO: for dataframes with sparse columns the empty calculation fails.
+            // that also means that the content doesn't get written.
             if (!df.isEmpty()) {
                 Iterator<DataFrameRow> iter = df.rowIterator();
 
