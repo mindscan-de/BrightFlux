@@ -25,47 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes;
 
-import de.mindscan.brightflux.dataframes.columns.BooleanColumn;
-import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
-import de.mindscan.brightflux.dataframes.columns.FloatColumn;
-import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
-import de.mindscan.brightflux.dataframes.columns.LongColumn;
-import de.mindscan.brightflux.dataframes.columns.SparseIntegerColumn;
-import de.mindscan.brightflux.dataframes.columns.SparseStringColumn;
-import de.mindscan.brightflux.dataframes.columns.StringColumn;
-import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
-
 /**
  * 
  */
 public class DataFrameColumnFactory {
-
-    public static DataFrameColumn<?> createColumnForType( String columnName, String columnType ) {
-        switch (columnType) {
-            case ColumnTypes.COLUMN_TYPE_INT:
-            case ColumnTypes.COLUMN_TYPE_INTEGER:
-                return new IntegerColumn( columnName );
-
-            case ColumnTypes.COLUMN_TYPE_BOOL:
-            case ColumnTypes.COLUMN_TYPE_BOOLEAN:
-                return new BooleanColumn( columnName );
-
-            case ColumnTypes.COLUMN_TYPE_FLOAT:
-                return new FloatColumn( columnName );
-            case ColumnTypes.COLUMN_TYPE_DOUBLE:
-                return new DoubleColumn( columnName );
-            case ColumnTypes.COLUMN_TYPE_LONG:
-                return new LongColumn( columnName );
-            case ColumnTypes.COLUMN_TYPE_STRING:
-                return new StringColumn( columnName );
-            case ColumnTypes.COLUMN_TYPE_SPARSE_STRING:
-                return new SparseStringColumn( columnName );
-            case ColumnTypes.COLUMN_TYPE_SPARSE_INT:
-                return new SparseIntegerColumn( columnName );
-
-            default:
-                throw new IllegalArgumentException( "Unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
-        }
-
-    }
 }

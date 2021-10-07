@@ -30,6 +30,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.OptionalInt;
 
+import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
+
 /**
  * 
  */
