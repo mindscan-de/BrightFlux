@@ -25,23 +25,23 @@
  */
 package de.mindscan.brightflux.dataframes.writer;
 
+import java.nio.file.Path;
+
+import de.mindscan.brightflux.dataframes.DataFrame;
+
 /**
- * 
+ * Brightflux 
  */
-public class DataFrameWriterFactory {
-    public static DataFrameWriter create( String writerType ) {
-        switch (writerType.toLowerCase()) {
-            case "csv":
-                return new DataFrameWriterCSVImpl();
-            case "h5":
-                return new DataFrameWriterH5Impl();
-            case "log":
-                return new DataFrameWriterLogImpl();
-            case "bfdfjson":
-                return new DataFrameWriterBFDFJsonImpl();
-            default:
-                throw new IllegalArgumentException( "This writer Type is not supported." );
-        }
+public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void writeToFile( DataFrame df, Path outputPath ) {
+        // we want to process the columns (headers)
+
+        // we want to process the data 
     }
 
 }
