@@ -52,6 +52,10 @@ public interface DataFrameColumn<T> {
 
     public abstract String getColumnName();
 
+    public abstract String getColumnType();
+
+    public abstract String getColumnValueType();
+
     public abstract DataFrameColumn<T> cloneColumnEmpty();
 
     // return the values of this column

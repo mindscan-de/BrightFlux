@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.columns;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 
 /**
  * 
@@ -58,7 +59,16 @@ public class BooleanColumn extends SimpleColumn<Boolean> {
                 throw new IllegalArgumentException( "Expecting Boolean or null, but got " + element.getClass().getName() );
             }
         }
+    }
 
+    @Override
+    public String getColumnType() {
+        return ColumnTypes.COLUMN_TYPE_BOOL;
+    }
+
+    @Override
+    public String getColumnValueType() {
+        return ColumnTypes.COLUMN_TYPE_BOOL;
     }
 
 }

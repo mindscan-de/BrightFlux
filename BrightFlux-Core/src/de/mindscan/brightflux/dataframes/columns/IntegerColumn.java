@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.columns;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 
 /**
  * 
@@ -59,7 +60,15 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
                 throw new IllegalArgumentException( "Expecting Integer or null, but got " + element.getClass().getName() );
             }
         }
-
     }
 
+    @Override
+    public String getColumnType() {
+        return ColumnTypes.COLUMN_TYPE_INT;
+    }
+
+    @Override
+    public String getColumnValueType() {
+        return ColumnTypes.COLUMN_TYPE_INT;
+    }
 }

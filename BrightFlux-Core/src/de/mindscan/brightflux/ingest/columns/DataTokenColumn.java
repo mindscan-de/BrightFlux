@@ -27,6 +27,7 @@ package de.mindscan.brightflux.ingest.columns;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.SimpleColumn;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.DataToken;
 
 /**
@@ -72,6 +73,16 @@ public class DataTokenColumn extends SimpleColumn<DataToken> {
                 throw new IllegalArgumentException( "Expecting DataToken or null, but got " + element.getClass().getName() );
             }
         }
+    }
+
+    @Override
+    public String getColumnType() {
+        throw new NotYetImplemetedException( "Currently do not support columntypes for datatoken columns" );
+    }
+
+    @Override
+    public String getColumnValueType() {
+        throw new NotYetImplemetedException( "Currently do not support columnValueTtype for datatoken columns" );
     }
 
 }

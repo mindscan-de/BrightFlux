@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.columns;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 
 /**
  * 
@@ -70,7 +71,15 @@ public class SparseIntegerColumn extends SparseColumn<Integer> {
         else {
             setNA( index );
         }
-
     }
 
+    @Override
+    public String getColumnType() {
+        return ColumnTypes.COLUMN_TYPE_SPARSE_INT;
+    }
+
+    @Override
+    public String getColumnValueType() {
+        return ColumnTypes.COLUMN_TYPE_INT;
+    }
 }

@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.columns;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 
 /**
  * 
@@ -59,7 +60,16 @@ public class FloatColumn extends SimpleColumn<Float> {
                 throw new IllegalArgumentException( "Expecting Float or null, but got " + element.getClass().getName() );
             }
         }
+    }
 
+    @Override
+    public String getColumnType() {
+        return ColumnTypes.COLUMN_TYPE_FLOAT;
+    }
+
+    @Override
+    public String getColumnValueType() {
+        return ColumnTypes.COLUMN_TYPE_FLOAT;
     }
 
 }

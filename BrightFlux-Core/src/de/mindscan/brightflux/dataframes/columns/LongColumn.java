@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.columns;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 
 /**
  * 
@@ -59,7 +60,16 @@ public class LongColumn extends SimpleNumberColumn<Long> {
                 throw new IllegalArgumentException( "Expecting Long or null, but got " + element.getClass().getName() );
             }
         }
+    }
 
+    @Override
+    public String getColumnType() {
+        return ColumnTypes.COLUMN_TYPE_LONG;
+    }
+
+    @Override
+    public String getColumnValueType() {
+        return ColumnTypes.COLUMN_TYPE_LONG;
     }
 
 }
