@@ -30,6 +30,7 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
@@ -46,9 +47,9 @@ public class CreateAnnoationDataFrameCommand implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame newDataFrame = new DataFrameBuilder( AnnotatorComponent.ANNOTATION_DATAFRAME_NAME ) //
-                        .addColumn( DataFrameSpecialColumns.INDEX_COLUMN_NAME, DataFrameBuilder.COLUMN_TYPE_SPARSE_INT ) //
-                        .addColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, DataFrameBuilder.COLUMN_TYPE_SPARSE_INT ) //
-                        .addColumn( AnnotatorComponent.ANNOTATION_COLUMN_NAME, DataFrameBuilder.COLUMN_TYPE_SPARSE_STRING ) //
+                        .addColumn( DataFrameSpecialColumns.INDEX_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) //
+                        .addColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) //
+                        .addColumn( AnnotatorComponent.ANNOTATION_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_STRING ) //
                         .build();
 
         eventConsumer.accept( BFEventFactory.annotationDataframeCreated( newDataFrame ) );

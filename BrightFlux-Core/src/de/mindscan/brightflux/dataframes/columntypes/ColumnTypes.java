@@ -31,6 +31,9 @@ package de.mindscan.brightflux.dataframes.columntypes;
 public class ColumnTypes {
 
     public static final String COLUMN_TYPE_INT = "int";
+    public static final String COLUMN_TYPE_INTEGER = "integer";
+    public static final String COLUMN_TYPE_BOOL = "bool";
+    public static final String COLUMN_TYPE_BOOLEAN = "boolean";
     public static final String COLUMN_TYPE_FLOAT = "float";
     public static final String COLUMN_TYPE_DOUBLE = "double";
     public static final String COLUMN_TYPE_LONG = "long";
