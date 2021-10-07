@@ -26,8 +26,10 @@
 package de.mindscan.brightflux.dataframes.writer;
 
 import java.nio.file.Path;
+import java.util.Collection;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
 /**
  * Brightflux 
@@ -40,8 +42,20 @@ public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
     @Override
     public void writeToFile( DataFrame df, Path outputPath ) {
         // we want to process the columns (headers)
+        processColumnInformation( df.getColumns() );
 
-        // we want to process the data 
+        // we want to process the data
+
+    }
+
+    /**
+     * @param columns
+     */
+    private void processColumnInformation( Collection<DataFrameColumn<?>> columns ) {
+        // .columns[]
+        // __.name - name of column
+        // __.type - type of column - Use the type information of the DataFrameBuilder
+
     }
 
 }
