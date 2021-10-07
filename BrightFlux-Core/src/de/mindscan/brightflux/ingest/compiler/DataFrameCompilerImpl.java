@@ -41,6 +41,7 @@ import de.mindscan.brightflux.dataframes.columns.FloatColumn;
 import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
 import de.mindscan.brightflux.dataframes.columns.LongColumn;
 import de.mindscan.brightflux.dataframes.columns.StringColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.token.ColumnHeaderToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
@@ -161,22 +162,22 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
         // TODO very basic implementation of the type interference 
         // we should compare two converted values and then do inference on their type on a pair by pair basis
 
-        String returntype = "int";
+        String returntype = ColumnTypes.COLUMN_TYPE_INT;
         for (DataToken dataToken : x) {
             if (dataToken instanceof IdentifierToken) {
-                return "string";
+                return ColumnTypes.COLUMN_TYPE_STRING;
             }
             if (dataToken instanceof TextToken) {
-                return "string";
+                return ColumnTypes.COLUMN_TYPE_STRING;
             }
             if (dataToken instanceof NumberToken) {
                 // not so easy, because it can be different locale etc.
                 if (dataToken.getValue().contains( "." )) {
-                    return "double";
+                    return ColumnTypes.COLUMN_TYPE_DOUBLE;
                 }
 
                 if (dataToken.getValue().length() > 9) {
-                    return "long";
+                    return ColumnTypes.COLUMN_TYPE_LONG;
                 }
             }
         }
