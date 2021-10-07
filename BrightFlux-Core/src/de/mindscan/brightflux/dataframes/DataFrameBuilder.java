@@ -37,19 +37,12 @@ import de.mindscan.brightflux.dataframes.columns.LongColumn;
 import de.mindscan.brightflux.dataframes.columns.SparseIntegerColumn;
 import de.mindscan.brightflux.dataframes.columns.SparseStringColumn;
 import de.mindscan.brightflux.dataframes.columns.StringColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 
 /**
  * 
  */
 public class DataFrameBuilder {
-
-    public static final String COLUMN_TYPE_INT = "int";
-    public static final String COLUMN_TYPE_FLOAT = "float";
-    public static final String COLUMN_TYPE_DOUBLE = "double";
-    public static final String COLUMN_TYPE_LONG = "long";
-    public static final String COLUMN_TYPE_STRING = "string";
-    public static final String COLUMN_TYPE_SPARSE_STRING = "s_string";
-    public static final String COLUMN_TYPE_SPARSE_INT = "s_int";
 
     private static final String EMPTY_DATAFRAME_NAME = "";
 
@@ -148,25 +141,25 @@ public class DataFrameBuilder {
 
     public DataFrameBuilder addColumn( String columnName, String columnType ) {
         switch (columnType) {
-            case COLUMN_TYPE_INT:
+            case ColumnTypes.COLUMN_TYPE_INT:
                 columns.add( new IntegerColumn( columnName ) );
                 break;
-            case COLUMN_TYPE_FLOAT:
+            case ColumnTypes.COLUMN_TYPE_FLOAT:
                 columns.add( new FloatColumn( columnName ) );
                 break;
-            case COLUMN_TYPE_DOUBLE:
+            case ColumnTypes.COLUMN_TYPE_DOUBLE:
                 columns.add( new DoubleColumn( columnName ) );
                 break;
-            case COLUMN_TYPE_LONG:
+            case ColumnTypes.COLUMN_TYPE_LONG:
                 columns.add( new LongColumn( columnName ) );
                 break;
-            case COLUMN_TYPE_STRING:
+            case ColumnTypes.COLUMN_TYPE_STRING:
                 columns.add( new StringColumn( columnName ) );
                 break;
-            case COLUMN_TYPE_SPARSE_STRING:
+            case ColumnTypes.COLUMN_TYPE_SPARSE_STRING:
                 columns.add( new SparseStringColumn( columnName ) );
                 break;
-            case COLUMN_TYPE_SPARSE_INT:
+            case ColumnTypes.COLUMN_TYPE_SPARSE_INT:
                 columns.add( new SparseIntegerColumn( columnName ) );
                 break;
 
