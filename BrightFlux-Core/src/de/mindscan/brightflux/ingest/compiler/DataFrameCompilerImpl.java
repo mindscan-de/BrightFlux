@@ -126,13 +126,13 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
             ColumnHeaderToken columnHeader = (ColumnHeaderToken) firstRowToken;
             if (columnHeader.hasTypeHint()) {
                 // In case we also have a type, this part is easy and we can generate a column of the correct type and name
-                destinationColumn = DataFrameColumnFactory.getColumnForType( columnHeader.getTypeHint() );
+                destinationColumn = DataFrameColumnFactory.createColumnForType( columnHeader.getTypeHint() );
             }
             else {
                 // TODO: we repeat this 4 times
                 String interferenceType = inferType( getRandomDataTokenSample( 7, sourceColumn ) );
 
-                destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
+                destinationColumn = DataFrameColumnFactory.createColumnForType( interferenceType );
             }
 
             destinationColumn.setColumnName( columnHeader.getColumnHeaderName() );
@@ -144,7 +144,7 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
             // TODO: we repeat this 4 times
             String interferenceType = inferType( getRandomDataTokenSample( 7, sourceColumn ) );
 
-            destinationColumn = DataFrameColumnFactory.getColumnForType( interferenceType );
+            destinationColumn = DataFrameColumnFactory.createColumnForType( interferenceType );
             destinationColumn.setColumnName( columnHeaderName );
         }
 
