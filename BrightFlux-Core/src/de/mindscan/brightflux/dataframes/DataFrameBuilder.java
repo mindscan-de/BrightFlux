@@ -30,15 +30,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.OptionalInt;
 
-import de.mindscan.brightflux.dataframes.columns.DoubleColumn;
-import de.mindscan.brightflux.dataframes.columns.FloatColumn;
-import de.mindscan.brightflux.dataframes.columns.IntegerColumn;
-import de.mindscan.brightflux.dataframes.columns.LongColumn;
-import de.mindscan.brightflux.dataframes.columns.SparseIntegerColumn;
-import de.mindscan.brightflux.dataframes.columns.SparseStringColumn;
-import de.mindscan.brightflux.dataframes.columns.StringColumn;
-import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
-
 /**
  * 
  */
@@ -140,32 +131,7 @@ public class DataFrameBuilder {
     }
 
     public DataFrameBuilder addColumn( String columnName, String columnType ) {
-        switch (columnType) {
-            case ColumnTypes.COLUMN_TYPE_INT:
-                columns.add( new IntegerColumn( columnName ) );
-                break;
-            case ColumnTypes.COLUMN_TYPE_FLOAT:
-                columns.add( new FloatColumn( columnName ) );
-                break;
-            case ColumnTypes.COLUMN_TYPE_DOUBLE:
-                columns.add( new DoubleColumn( columnName ) );
-                break;
-            case ColumnTypes.COLUMN_TYPE_LONG:
-                columns.add( new LongColumn( columnName ) );
-                break;
-            case ColumnTypes.COLUMN_TYPE_STRING:
-                columns.add( new StringColumn( columnName ) );
-                break;
-            case ColumnTypes.COLUMN_TYPE_SPARSE_STRING:
-                columns.add( new SparseStringColumn( columnName ) );
-                break;
-            case ColumnTypes.COLUMN_TYPE_SPARSE_INT:
-                columns.add( new SparseIntegerColumn( columnName ) );
-                break;
-
-            default:
-                throw new IllegalArgumentException( "unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
-        }
+        columns.add( DataFrameColumnFactory.createColumnForType( columnName, columnType ) );
         return this;
     }
 
