@@ -26,7 +26,23 @@
 package de.mindscan.brightflux.dataframes.columntypes;
 
 /**
+ * I think this thing should be transformed in such a way, that we have real typeinformation, such that this
+ * typeinformation and its type information contract can be used to convert data from and to the correct target 
+ * type depending on the columns.
  * 
+ * This is needed also for the caclulation of the types of columns, e.g if we have a column with a long type,
+ * that it can be compared to a value, which should be treated as long not as an integer. So we have to solcve 
+ * some type interference issues.
+ * 
+ * This type is needed for many things, like predicates and all such things. Also this would allow an integeger 
+ * row to accept integers instead of only "raw" values... 
+ * 
+ * I guess right now, that the column types will enable some next level features. "e.g." providing 
+ * contains, startswith, endswith operations not only for string value type columns, but also for integers, with 
+ * an additional wrapper, using the correct typewrapper.
+ * 
+ * This will also add/provide some more typesafety and implicit conversion abilities to the current dataframe 
+ * concept.
  */
 public class ColumnTypes {
 
