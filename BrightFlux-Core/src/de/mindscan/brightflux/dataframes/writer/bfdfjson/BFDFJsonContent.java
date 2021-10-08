@@ -25,23 +25,29 @@
  */
 package de.mindscan.brightflux.dataframes.writer.bfdfjson;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 /**
  * 
  */
 public class BFDFJsonContent {
-    private BFDFColumnInfo[] columns;
+
+    private List<BFDFColumnInfo> columns = new ArrayList<>();
+    private List<Map<String, Object>> data = new ArrayList<>();
 
     /**
      * @param columns the columns to set
      */
-    public void setColumns( BFDFColumnInfo[] columns ) {
+    public void setColumns( List<BFDFColumnInfo> columns ) {
         this.columns = columns;
     }
 
     /**
      * @return the columns
      */
-    public BFDFColumnInfo[] getColumns() {
+    public List<BFDFColumnInfo> getColumns() {
         return columns;
     }
 }

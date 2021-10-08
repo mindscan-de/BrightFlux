@@ -59,7 +59,7 @@ public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
      * @param columns
      * @return 
      */
-    private BFDFColumnInfo[] processColumnInformation( Collection<DataFrameColumn<?>> columns ) {
+    private List<BFDFColumnInfo> processColumnInformation( Collection<DataFrameColumn<?>> columns ) {
         List<BFDFColumnInfo> columnInfoList = new ArrayList<>();
 
         // DO we need this?
@@ -67,7 +67,7 @@ public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
             columnInfoList.add( new BFDFColumnInfo( dataFrameColumn.getColumnName(), dataFrameColumn.getColumnType() ) );
         }
 
-        return columnInfoList.toArray( new BFDFColumnInfo[columnInfoList.size()] );
+        return columnInfoList;
     }
 
 }
