@@ -342,7 +342,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         this.ingestedDF = dataFrame;
 
         if (this.ingestedDF != null) {
-            appenddDataFrameColumns( ingestedDF, tableViewer, this );
+            appendDataFrameColumns( ingestedDF, tableViewer, this );
 
             tableViewer.setContentProvider( new DataFrameContentProvider() );
             tableViewer.setInput( ingestedDF );
@@ -366,7 +366,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         this.projectRegistry = projectRegistry;
     }
 
-    private void appenddDataFrameColumns( DataFrame ingestedDF, TableViewer tableViewer, Composite composite ) {
+    private void appendDataFrameColumns( DataFrame ingestedDF, TableViewer tableViewer, Composite composite ) {
         Collection<String> columnNames = ingestedDF.getColumnNames();
 
         TableColumnLayout tcl_composite = new TableColumnLayout();
