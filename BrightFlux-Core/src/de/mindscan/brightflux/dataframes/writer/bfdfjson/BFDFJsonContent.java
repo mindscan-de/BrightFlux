@@ -28,7 +28,7 @@ package de.mindscan.brightflux.dataframes.writer.bfdfjson;
 /**
  * 
  */
-public class BFDFJsonType {
+public class BFDFJsonContent {
     private BFDFColumnInfo[] columns;
 
     /**

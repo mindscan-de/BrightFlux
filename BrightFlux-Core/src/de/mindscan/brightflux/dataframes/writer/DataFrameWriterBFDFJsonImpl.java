@@ -33,7 +33,7 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFColumnInfo;
-import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFJsonType;
+import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFJsonContent;
 
 /**
  * Brightflux 
@@ -45,7 +45,7 @@ public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
      */
     @Override
     public void writeToFile( DataFrame df, Path outputPath ) {
-        BFDFJsonType jsonDF = new BFDFJsonType();
+        BFDFJsonContent jsonDF = new BFDFJsonContent();
 
         // we want to process the columns (headers)
         jsonDF.setColumns( processColumnInformation( df.getColumns() ) );
