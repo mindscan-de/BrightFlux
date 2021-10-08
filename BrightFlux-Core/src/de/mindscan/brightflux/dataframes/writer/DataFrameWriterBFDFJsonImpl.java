@@ -26,10 +26,14 @@
 package de.mindscan.brightflux.dataframes.writer;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFColumnInfo;
+import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFJsonType;
 
 /**
  * Brightflux 
@@ -41,21 +45,29 @@ public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
      */
     @Override
     public void writeToFile( DataFrame df, Path outputPath ) {
+        BFDFJsonType jsonDF = new BFDFJsonType();
+
         // we want to process the columns (headers)
-        processColumnInformation( df.getColumns() );
+        jsonDF.setColumns( processColumnInformation( df.getColumns() ) );
 
         // we want to process the data
 
+        // TODO write the json dataframe using GSON
     }
 
     /**
      * @param columns
+     * @return 
      */
-    private void processColumnInformation( Collection<DataFrameColumn<?>> columns ) {
-        // .columns[]
-        // __.name - name of column
-        // __.type - type of column - Use the type information of the DataFrameBuilder
+    private BFDFColumnInfo[] processColumnInformation( Collection<DataFrameColumn<?>> columns ) {
+        List<BFDFColumnInfo> columnInfoList = new ArrayList<>();
 
+        // DO we need this?
+        for (DataFrameColumn<?> dataFrameColumn : columns) {
+            columnInfoList.add( new BFDFColumnInfo( dataFrameColumn.getColumnName(), dataFrameColumn.getColumnType() ) );
+        }
+
+        return columnInfoList.toArray( new BFDFColumnInfo[columnInfoList.size()] );
     }
 
 }
