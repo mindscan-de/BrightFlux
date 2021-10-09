@@ -237,6 +237,12 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
                 StringColumn stringColumn = (StringColumn) destinationColumn;
                 stringColumn.append( rowValue );
             }
+
+            // TODO: we have BooleanColumns, 
+
+            // TODO: for sparse Columns, we actually don't know how to handle these, because the append metapther doesn't really work here at this moment.
+            // SparseIntegerColumns, SparseStringColumns
+            // 
         }
     }
 
