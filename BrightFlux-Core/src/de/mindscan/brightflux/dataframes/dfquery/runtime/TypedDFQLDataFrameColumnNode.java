@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 
 /**
  *
@@ -56,6 +57,14 @@ public class TypedDFQLDataFrameColumnNode implements TypedDFQLNode {
 
     public TypedDFQLDataFrameNode getDataFrameNode() {
         return dataFrame;
+    }
+
+    public boolean isValidColumn() {
+        return dataFrame.getDataFrame().hasColumn( columnName );
+    }
+
+    public DataFrameColumn<?> getColumn() {
+        return dataFrame.getDataFrame().getColumn( columnName );
     }
 
     /** 
