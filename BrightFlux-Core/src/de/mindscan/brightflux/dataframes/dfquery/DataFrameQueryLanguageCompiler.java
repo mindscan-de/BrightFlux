@@ -73,138 +73,145 @@ public class DataFrameQueryLanguageCompiler {
         }
 
         if (node instanceof TypedDFQLSelectStatementNode) {
-            return compileToRowFilterPredicate( ((TypedDFQLSelectStatementNode) node).getWhereClauseNode() );
+            return compileToRowFilterPredicate_TypedDFQLSelectStatementNode( (TypedDFQLSelectStatementNode) node );
         }
 
         if (node instanceof DFQLBinaryOperatorNode) {
-            DFQLBinaryOperatorNode binaryNode = (DFQLBinaryOperatorNode) node;
-            DFQLBinaryOperatorType operation = binaryNode.getOperation();
-
-            DFQLNode left = binaryNode.getLeft();
-            DFQLNode right = binaryNode.getRight();
-
-            BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm;
-
-            switch (operation) {
-                case EQ:
-                    factoryColImm = eqFunctionColImm;
-
-                    if (left instanceof TypedDFQLDataFrameColumnNode) {
-                        TypedDFQLDataFrameColumnNode leftColumn = (TypedDFQLDataFrameColumnNode) left;
-                        // if right side is a value string .... we did it. 
-                        if (right instanceof DFQLValueNode) {
-                            Object otherValue = ((DFQLValueNode) right).getRawValue();
-
-                            if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                                return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
-                            }
-
-                            return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
-                        }
-
-                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                    }
-
-                    if (left instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
-
-                        if (right instanceof DFQLBinaryOperatorNode) {
-                            DataFrameRowFilterPredicate right_compiled = this.compileToRowFilterPredicate( right );
-
-                            return DataFrameRowFilterPredicateFactory.eq( left_compiled, right_compiled );
-                        }
-
-                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                    }
-
-                    // return DataFrameRowFilterPredicateFactory.eq( left, right );
-                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-
-                case NEQ:
-                    factoryColImm = neqFunctionColImm;
-
-                    if (left instanceof TypedDFQLDataFrameColumnNode) {
-                        TypedDFQLDataFrameColumnNode leftColumn = (TypedDFQLDataFrameColumnNode) left;
-                        // if right side is a value string .... we did it. 
-                        if (right instanceof DFQLValueNode) {
-                            Object otherValue = ((DFQLValueNode) right).getRawValue();
-
-                            if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                                return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
-                            }
-
-                            return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
-                        }
-
-                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                    }
-
-                    if (left instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
-
-                        if (right instanceof DFQLBinaryOperatorNode) {
-                            DataFrameRowFilterPredicate right_compiled = this.compileToRowFilterPredicate( right );
-
-                            return DataFrameRowFilterPredicateFactory.neq( left_compiled, right_compiled );
-                        }
-
-                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                    }
-
-                    // TODO: DataFrameRowFilterPredicateFactory.neq( left, right );
-                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-
-                case GE:
-                    return buildColumnValuePredicate( geFunctionColImm, left, right );
-
-                case GT:
-                    return buildColumnValuePredicate( gtFunctionColImm, left, right );
-
-                case LE:
-                    return buildColumnValuePredicate( leFunctionColImm, left, right );
-
-                case LT:
-                    return buildColumnValuePredicate( ltFunctionColImm, left, right );
-
-                case AND:
-
-                    if (left instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
-
-                        if (right instanceof DFQLBinaryOperatorNode) {
-                            DataFrameRowFilterPredicate right_compild = this.compileToRowFilterPredicate( right );
-
-                            return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compild );
-                        }
-
-                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                    }
-
-                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-
-                case OR:
-
-                    if (left instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
-
-                        if (right instanceof DFQLBinaryOperatorNode) {
-                            DataFrameRowFilterPredicate right_compild = this.compileToRowFilterPredicate( right );
-
-                            return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compild );
-                        }
-
-                        throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                    }
-
-                    throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-
-                default:
-
-                    throw new NotYetImplemetedException( "Binary Operation not supported: " + operation.name() );
-            }
+            return compileToRowFilterPredicate_DFQLBinaryOperatorNode( (DFQLBinaryOperatorNode) node );
         }
 
         throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
+    }
+
+    private DataFrameRowFilterPredicate compileToRowFilterPredicate_DFQLBinaryOperatorNode( DFQLBinaryOperatorNode binaryNode ) {
+        DFQLBinaryOperatorType operation = binaryNode.getOperation();
+
+        DFQLNode left = binaryNode.getLeft();
+        DFQLNode right = binaryNode.getRight();
+
+        BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm;
+
+        switch (operation) {
+            case EQ:
+                factoryColImm = eqFunctionColImm;
+
+                if (left instanceof TypedDFQLDataFrameColumnNode) {
+                    TypedDFQLDataFrameColumnNode leftColumn = (TypedDFQLDataFrameColumnNode) left;
+                    // if right side is a value string .... we did it. 
+                    if (right instanceof DFQLValueNode) {
+                        Object otherValue = ((DFQLValueNode) right).getRawValue();
+
+                        if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
+                            return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
+                        }
+
+                        return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
+                    }
+
+                    throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                if (left instanceof DFQLBinaryOperatorNode) {
+                    DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                    if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compiled = this.compileToRowFilterPredicate( right );
+
+                        return DataFrameRowFilterPredicateFactory.eq( left_compiled, right_compiled );
+                    }
+
+                    throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                // return DataFrameRowFilterPredicateFactory.eq( left, right );
+                throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+
+            case NEQ:
+                factoryColImm = neqFunctionColImm;
+
+                if (left instanceof TypedDFQLDataFrameColumnNode) {
+                    TypedDFQLDataFrameColumnNode leftColumn = (TypedDFQLDataFrameColumnNode) left;
+                    // if right side is a value string .... we did it. 
+                    if (right instanceof DFQLValueNode) {
+                        Object otherValue = ((DFQLValueNode) right).getRawValue();
+
+                        if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
+                            return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
+                        }
+
+                        return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
+                    }
+
+                    throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                if (left instanceof DFQLBinaryOperatorNode) {
+                    DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                    if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compiled = this.compileToRowFilterPredicate( right );
+
+                        return DataFrameRowFilterPredicateFactory.neq( left_compiled, right_compiled );
+                    }
+
+                    throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                // TODO: DataFrameRowFilterPredicateFactory.neq( left, right );
+                throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+
+            case GE:
+                return buildColumnValuePredicate( geFunctionColImm, left, right );
+
+            case GT:
+                return buildColumnValuePredicate( gtFunctionColImm, left, right );
+
+            case LE:
+                return buildColumnValuePredicate( leFunctionColImm, left, right );
+
+            case LT:
+                return buildColumnValuePredicate( ltFunctionColImm, left, right );
+
+            case AND:
+
+                if (left instanceof DFQLBinaryOperatorNode) {
+                    DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                    if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compild = this.compileToRowFilterPredicate( right );
+
+                        return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compild );
+                    }
+
+                    throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+
+            case OR:
+
+                if (left instanceof DFQLBinaryOperatorNode) {
+                    DataFrameRowFilterPredicate left_compiled = this.compileToRowFilterPredicate( left );
+
+                    if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compild = this.compileToRowFilterPredicate( right );
+
+                        return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compild );
+                    }
+
+                    throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+
+            default:
+
+                throw new NotYetImplemetedException( "Binary Operation not supported: " + operation.name() );
+        }
+    }
+
+    private DataFrameRowFilterPredicate compileToRowFilterPredicate_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
+        return compileToRowFilterPredicate( typedDFQLSelectStatementNode.getWhereClauseNode() );
     }
 
     private DataFrameRowFilterPredicate buildColumnValuePredicate( BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm, DFQLNode left,
