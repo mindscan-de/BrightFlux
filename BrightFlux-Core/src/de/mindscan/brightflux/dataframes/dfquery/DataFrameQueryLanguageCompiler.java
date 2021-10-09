@@ -42,6 +42,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
+import de.mindscan.brightflux.dataframes.dfquery.compiler.RowFilterPredicateCompileStrategy;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
@@ -54,6 +55,8 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * Maybe we can 
  */
 public class DataFrameQueryLanguageCompiler {
+
+    private RowFilterPredicateCompileStrategy rowFilterStrategy = new RowFilterPredicateCompileStrategy();
 
     private BiFunction<String, Object, DataFrameRowFilterPredicate> eqFunctionColImm = DataFrameRowFilterPredicateFactory::eq;
     private BiFunction<String, Object, DataFrameRowFilterPredicate> neqFunctionColImm = DataFrameRowFilterPredicateFactory::neq;
@@ -69,6 +72,10 @@ public class DataFrameQueryLanguageCompiler {
     // TODO: boolean predicate functions like contains, startsWith, endsWith, and "not"
 
     public DataFrameRowFilterPredicate compileToRowFilterPredicate( DFQLNode node ) {
+        return compile( node );
+    }
+
+    private DataFrameRowFilterPredicate compile( DFQLNode node ) {
         if (node instanceof DFQLEmptyNode) {
             return DataFrameRowFilterPredicateFactory.any();
         }
