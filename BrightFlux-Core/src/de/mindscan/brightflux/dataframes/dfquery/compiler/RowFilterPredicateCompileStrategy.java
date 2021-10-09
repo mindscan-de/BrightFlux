@@ -60,29 +60,25 @@ public class RowFilterPredicateCompileStrategy {
         }
 
         if (node instanceof TypedDFQLSelectStatementNode) {
-            return compileToRowFilterPredicate_TypedDFQLSelectStatementNode( (TypedDFQLSelectStatementNode) node );
+            return compile_TypedDFQLSelectStatementNode( (TypedDFQLSelectStatementNode) node );
         }
 
         if (node instanceof DFQLBinaryOperatorNode) {
-            return compileToRowFilterPredicate_DFQLBinaryOperatorNode( (DFQLBinaryOperatorNode) node );
+            return compile_DFQLBinaryOperatorNode( (DFQLBinaryOperatorNode) node );
         }
 
         if (node instanceof DFQLApplyNode) {
-            return compileToRowFilterPredicate_DFQLApplyNode( (DFQLApplyNode) node );
+            return compile_DFQLApplyNode( (DFQLApplyNode) node );
         }
 
         throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
     }
 
-    private DataFrameRowFilterPredicate compileToRowFilterPredicate_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
+    private DataFrameRowFilterPredicate compile_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
         return compile( typedDFQLSelectStatementNode.getWhereClauseNode() );
     }
 
-    private DataFrameRowFilterPredicate compileToRowFilterPredicate_DFQLApplyNode( DFQLApplyNode node ) {
-        throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
-    }
-
-    private DataFrameRowFilterPredicate compileToRowFilterPredicate_DFQLBinaryOperatorNode( DFQLBinaryOperatorNode binaryNode ) {
+    private DataFrameRowFilterPredicate compile_DFQLBinaryOperatorNode( DFQLBinaryOperatorNode binaryNode ) {
         DFQLBinaryOperatorType operation = binaryNode.getOperation();
 
         DFQLNode left = binaryNode.getLeft();
@@ -207,6 +203,10 @@ public class RowFilterPredicateCompileStrategy {
 
                 throw new NotYetImplemetedException( "Binary Operation not supported: " + operation.name() );
         }
+    }
+
+    private DataFrameRowFilterPredicate compile_DFQLApplyNode( DFQLApplyNode node ) {
+        throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
     }
 
     private DataFrameRowFilterPredicate buildColumnValuePredicate( BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm, DFQLNode left,
