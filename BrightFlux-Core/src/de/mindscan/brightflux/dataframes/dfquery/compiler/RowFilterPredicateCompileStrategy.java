@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.compiler;
 
+import java.util.List;
 import java.util.function.BiFunction;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
@@ -34,8 +35,11 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
@@ -206,7 +210,69 @@ public class RowFilterPredicateCompileStrategy {
     }
 
     private DataFrameRowFilterPredicate compile_DFQLApplyNode( DFQLApplyNode node ) {
-        throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
+
+        List<DFQLNode> arguments = node.getArguments();
+
+        if (arguments.size() == 0) {
+            throw new NotYetImplemetedException(
+                            "Node type (" + node.getClass().getSimpleName() + ") is not supported with zero arguments for DFQLApplyNode." );
+        }
+        if (arguments.size() > 1) {
+            throw new NotYetImplemetedException(
+                            "Node type (" + node.getClass().getSimpleName() + ") is not supported with more than one arguments for DFQLApplyNode." );
+        }
+
+        // will the the value to look for
+        DFQLNode firstArgument = arguments.get( 0 );
+
+        if (!(firstArgument instanceof DFQLStringNode)) {
+            throw new NotYetImplemetedException(
+                            "Node type (" + firstArgument.getClass().getSimpleName() + ") is not supported as first argument of an DFQLApplyNode." );
+        }
+
+        String firstArgumentAsString = ((String) ((DFQLStringNode) firstArgument).getRawValue());
+
+        DFQLNode function = node.getFunction();
+        if (function instanceof DFQLPrimarySelectionNode) {
+            DFQLPrimarySelectionNode primarySelectionNode = (DFQLPrimarySelectionNode) function;
+            DFQLNode selector = primarySelectionNode.getSelector();
+
+            if (!(selector instanceof DFQLIdentifierNode)) {
+                throw new NotYetImplemetedException(
+                                "Node type (" + selector.getClass().getSimpleName() + ") is not supported as the selector for a primary selection node." );
+            }
+
+            String selectorName = ((String) ((DFQLIdentifierNode) selector).getRawValue());
+
+            primarySelectionNode.getValue();
+
+            DFQLNode columnSelectionNode = primarySelectionNode.getValue();
+
+            DFQLNode value = ((DFQLPrimarySelectionNode) columnSelectionNode).getSelector();
+
+            if (value instanceof DFQLStringNode) {
+                String columnName = (String) ((DFQLStringNode) value).getRawValue();
+
+                switch (selectorName) {
+                    case "contains":
+                        return DataFrameRowFilterPredicateFactory.containsStr( columnName, firstArgumentAsString );
+                    case "startsWith":
+                        return DataFrameRowFilterPredicateFactory.startsWithStr( columnName, firstArgumentAsString );
+                    case "endsWith":
+                        return DataFrameRowFilterPredicateFactory.endsWithStr( columnName, firstArgumentAsString );
+                    default:
+                        throw new NotYetImplemetedException( "the selector name '" + selectorName + "' is not properly mapped." );
+                }
+            }
+
+            throw new NotYetImplemetedException( "the type of the selection node '" + value.getClass().getSimpleName() + "' is not yet supported." );
+
+            // DataFrameRowFilterPredicateFactory.containsStr( columnName, containedString );
+            // DataFrameRowFilterPredicateFactory.startsWithStr( columnName, containedString );
+            // DataFrameRowFilterPredicateFactory.endsWithStr( columnName, containedString );
+        }
+
+        throw new NotYetImplemetedException( "Node type (" + function.getClass().getSimpleName() + ") is not supported." );
     }
 
     private DataFrameRowFilterPredicate buildColumnValuePredicate( BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm, DFQLNode left,
