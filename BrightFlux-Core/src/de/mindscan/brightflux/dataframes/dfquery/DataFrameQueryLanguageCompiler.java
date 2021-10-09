@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
@@ -70,7 +72,6 @@ public class DataFrameQueryLanguageCompiler {
             return DataFrameRowFilterPredicateFactory.any();
         }
 
-        // TODO a.t.m. this doesn't work This is not longer tha case... right now
         if (node instanceof TypedDFQLSelectStatementNode) {
             return compileToRowFilterPredicate( ((TypedDFQLSelectStatementNode) node).getWhereClauseNode() );
         }
@@ -88,20 +89,17 @@ public class DataFrameQueryLanguageCompiler {
                 case EQ:
                     factoryColImm = eqFunctionColImm;
 
-                    // TODO a.t.m. this doesn't work This is not longer tha case... right now 
-                    // depends on the left and right type...
                     if (left instanceof TypedDFQLDataFrameColumnNode) {
-                        String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
-
+                        TypedDFQLDataFrameColumnNode leftColumn = (TypedDFQLDataFrameColumnNode) left;
                         // if right side is a value string .... we did it. 
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
 
                             if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                                return factoryColImm.apply( leftColumnName, toColumnValueType( (String) otherValue ) );
+                                return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
                             }
 
-                            return factoryColImm.apply( leftColumnName, otherValue );
+                            return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
                         }
 
                         throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
@@ -125,20 +123,17 @@ public class DataFrameQueryLanguageCompiler {
                 case NEQ:
                     factoryColImm = neqFunctionColImm;
 
-                    // TODO a.t.m. this doesn't work This is not longer the case... right now                    
-                    // depends on the left and right type...
                     if (left instanceof TypedDFQLDataFrameColumnNode) {
-                        String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
-
+                        TypedDFQLDataFrameColumnNode leftColumn = (TypedDFQLDataFrameColumnNode) left;
                         // if right side is a value string .... we did it. 
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
 
                             if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                                return factoryColImm.apply( leftColumnName, toColumnValueType( (String) otherValue ) );
+                                return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
                             }
 
-                            return factoryColImm.apply( leftColumnName, otherValue );
+                            return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
                         }
 
                         throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
@@ -214,20 +209,18 @@ public class DataFrameQueryLanguageCompiler {
 
     private DataFrameRowFilterPredicate buildColumnValuePredicate( BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm, DFQLNode left,
                     DFQLNode right ) {
-        // TODO a.t.m. this doesn't work This is not longer tha case... right now
-        // depends on the left and right type...
-        if (left instanceof TypedDFQLDataFrameColumnNode) {
-            String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
 
+        if (left instanceof TypedDFQLDataFrameColumnNode) {
+            TypedDFQLDataFrameColumnNode leftColumn = ((TypedDFQLDataFrameColumnNode) left);
             // if right side is a value string .... we did it. 
             if (right instanceof DFQLValueNode) {
                 Object otherValue = ((DFQLValueNode) right).getRawValue();
 
                 if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                    return factoryColImm.apply( leftColumnName, toColumnValueType( (String) otherValue ) );
+                    return factoryColImm.apply( leftColumn.getColumnName(), toColumnValueType( leftColumn, (String) otherValue ) );
                 }
 
-                return factoryColImm.apply( leftColumnName, otherValue );
+                return factoryColImm.apply( leftColumn.getColumnName(), otherValue );
             }
 
             throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
@@ -262,10 +255,29 @@ public class DataFrameQueryLanguageCompiler {
         throw new NotYetImplemetedException();
     }
 
-    // TODO: use the column of the dataframe to determine the correct target / value type for the column.
-    // actually the column should deal with it.
-    private Object toColumnValueType( String value ) {
-        return Integer.parseInt( (String) value );
+    // use the column of the dataframe to determine the correct target / value type for the column.
+    // TODO: actually the column or the predicate builder should deal with it.
+    private Object toColumnValueType( TypedDFQLDataFrameColumnNode leftColumn, String value ) {
+        if (leftColumn.isValidColumn()) {
+            DataFrameColumn<?> column = leftColumn.getColumn();
+            switch (column.getColumnValueType()) {
+                case ColumnValueTypes.COLUMN_TYPE_INT:
+                    return Integer.parseInt( value );
+                case ColumnValueTypes.COLUMN_TYPE_LONG:
+                    return Long.parseLong( value );
+                case ColumnValueTypes.COLUMN_TYPE_FLOAT:
+                    return Float.parseFloat( value );
+                case ColumnValueTypes.COLUMN_TYPE_DOUBLE:
+                    return Double.parseDouble( value );
+                case ColumnValueTypes.COLUMN_TYPE_STRING:
+                    return value;
+
+                default:
+                    throw new NotYetImplemetedException( "value type '" + column.getColumnValueType() + "' is not yet supported for conversion." );
+            }
+
+        }
+        throw new NotYetImplemetedException( "This Columnname is not present/known in the dataframe." );
     }
 
 }
