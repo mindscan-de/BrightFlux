@@ -58,6 +58,14 @@ public class RowFilterPredicateCompileStrategy {
     public BiFunction<String, Object, DataFrameRowFilterPredicate> leFunctionColImm = DataFrameRowFilterPredicateFactory::le;
     public BiFunction<String, Object, DataFrameRowFilterPredicate> ltFunctionColImm = DataFrameRowFilterPredicateFactory::lt;
 
+    // XXX: Actually we can not combine two predicates which consists of two  applyNodes.... will need to work on that. 
+    //      ROWCALLBACK highlight_blue FROM df WHERE ((df.'h2.msg'.contains('at de.v')) || (df.'h2.msg'.contains('Exception')))
+    //      For now we can just highlights in series...
+    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('Exception'))
+    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('at de.v'))
+    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('at java.'))
+    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('at com.'))
+
     public DataFrameRowFilterPredicate compile( DFQLNode node ) {
         if (node instanceof DFQLEmptyNode) {
             return DataFrameRowFilterPredicateFactory.any();
@@ -243,6 +251,10 @@ public class RowFilterPredicateCompileStrategy {
             }
 
             String selectorName = ((String) ((DFQLIdentifierNode) selector).getRawValue());
+
+            // TODO: actually we would expect a nodetype based on the TypedDFQLDataFrameColumnNode, but obviously
+            //       the transform operation currently ignores DFQLApplyNodes and can't transform them properly...
+            //       That means that this is a dirty hack to make this features work, because i need them to work right now.
 
             primarySelectionNode.getValue();
 
