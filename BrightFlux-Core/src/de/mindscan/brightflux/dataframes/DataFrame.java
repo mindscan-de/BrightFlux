@@ -55,6 +55,10 @@ public interface DataFrame {
 
     Collection<String> getColumnNames();
 
+    DataFrameColumn<?> getColumn( String name );
+
+    boolean hasColumn( String columnName );
+
     void addColumns( DataFrameColumn<?>... selectedColumnsCopy );
 
     Iterator<DataFrameRow> rowIterator();
@@ -110,8 +114,6 @@ public interface DataFrame {
     boolean isPresent( String columName, int row );
 
     boolean isPresent( int column, int row );
-
-    boolean hasColumn( String columnName );
 
     UUID getUuid();
 

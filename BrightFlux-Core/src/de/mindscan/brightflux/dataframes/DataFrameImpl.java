@@ -121,6 +121,11 @@ public class DataFrameImpl implements DataFrame {
     }
 
     @Override
+    public DataFrameColumn<?> getColumn( String name ) {
+        return columnsMap.get( name );
+    }
+
+    @Override
     public Iterator<DataFrameRow> rowIterator() {
         // TODO instead of iterating through size, we can use the "__idx" column values to iterate over....
         if (!columnsMap.containsKey( DataFrameSpecialColumns.INDEX_COLUMN_NAME )) {
