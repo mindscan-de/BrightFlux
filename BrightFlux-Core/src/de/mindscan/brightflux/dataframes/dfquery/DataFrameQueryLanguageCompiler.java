@@ -97,11 +97,8 @@ public class DataFrameQueryLanguageCompiler {
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
 
-                            // TODO this is a hack only working for integers right now 
                             if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                                Integer intOtherValue = Integer.parseInt( (String) otherValue );
-
-                                return factoryColImm.apply( leftColumnName, intOtherValue );
+                                return factoryColImm.apply( leftColumnName, toColumnValueType( (String) otherValue ) );
                             }
 
                             return factoryColImm.apply( leftColumnName, otherValue );
@@ -128,7 +125,7 @@ public class DataFrameQueryLanguageCompiler {
                 case NEQ:
                     factoryColImm = neqFunctionColImm;
 
-                    // TODO a.t.m. this doesn't work This is not longer tha case... right now                    
+                    // TODO a.t.m. this doesn't work This is not longer the case... right now                    
                     // depends on the left and right type...
                     if (left instanceof TypedDFQLDataFrameColumnNode) {
                         String leftColumnName = ((TypedDFQLDataFrameColumnNode) left).getColumnName();
@@ -137,11 +134,8 @@ public class DataFrameQueryLanguageCompiler {
                         if (right instanceof DFQLValueNode) {
                             Object otherValue = ((DFQLValueNode) right).getRawValue();
 
-                            // TODO this is a hack only working for integers right now 
                             if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                                Integer intOtherValue = Integer.parseInt( (String) otherValue );
-
-                                return factoryColImm.apply( leftColumnName, intOtherValue );
+                                return factoryColImm.apply( leftColumnName, toColumnValueType( (String) otherValue ) );
                             }
 
                             return factoryColImm.apply( leftColumnName, otherValue );
@@ -229,11 +223,8 @@ public class DataFrameQueryLanguageCompiler {
             if (right instanceof DFQLValueNode) {
                 Object otherValue = ((DFQLValueNode) right).getRawValue();
 
-                // TODO this is a hack only working for integers right now
                 if ((right instanceof DFQLNumberNode) && (otherValue instanceof String)) {
-                    Integer intOtherValue = Integer.parseInt( (String) otherValue );
-
-                    return factoryColImm.apply( leftColumnName, intOtherValue );
+                    return factoryColImm.apply( leftColumnName, toColumnValueType( (String) otherValue ) );
                 }
 
                 return factoryColImm.apply( leftColumnName, otherValue );
@@ -269,6 +260,12 @@ public class DataFrameQueryLanguageCompiler {
         }
 
         throw new NotYetImplemetedException();
+    }
+
+    // TODO: use the column of the dataframe to determine the correct target / value type for the column.
+    // actually the column should deal with it.
+    private Object toColumnValueType( String value ) {
+        return Integer.parseInt( (String) value );
     }
 
 }
