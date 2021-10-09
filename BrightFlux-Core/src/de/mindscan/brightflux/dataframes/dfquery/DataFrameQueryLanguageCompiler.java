@@ -88,6 +88,10 @@ public class DataFrameQueryLanguageCompiler {
         throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
     }
 
+    private DataFrameRowFilterPredicate compileToRowFilterPredicate_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
+        return compileToRowFilterPredicate( typedDFQLSelectStatementNode.getWhereClauseNode() );
+    }
+
     private DataFrameRowFilterPredicate compileToRowFilterPredicate_DFQLBinaryOperatorNode( DFQLBinaryOperatorNode binaryNode ) {
         DFQLBinaryOperatorType operation = binaryNode.getOperation();
 
@@ -213,10 +217,6 @@ public class DataFrameQueryLanguageCompiler {
 
                 throw new NotYetImplemetedException( "Binary Operation not supported: " + operation.name() );
         }
-    }
-
-    private DataFrameRowFilterPredicate compileToRowFilterPredicate_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
-        return compileToRowFilterPredicate( typedDFQLSelectStatementNode.getWhereClauseNode() );
     }
 
     private DataFrameRowFilterPredicate compileToRowFilterPredicate_DFQLApplyNode( DFQLApplyNode node ) {
