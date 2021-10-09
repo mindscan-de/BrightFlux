@@ -86,8 +86,10 @@ public class DataFrameRowImpl implements DataFrameRow {
      * {@inheritDoc}
      */
     @Override
-    public Object getType( String columnName ) {
-        return Integer.class;
+    public Object getValueType( String columnName ) {
+        // TODO: refactor this as well
+        return df.getColumn( columnName ).getColumnValueType();
+        // return Integer.class;
     }
 
     @Override
@@ -116,6 +118,10 @@ public class DataFrameRowImpl implements DataFrameRow {
 
         if (rowValue instanceof Float) {
             return ((Float) rowValue).compareTo( (Float) convertedPredicateValue );
+        }
+
+        if (rowValue instanceof Long) {
+            return ((Long) rowValue).compareTo( (Long) convertedPredicateValue );
         }
 
         // TODO: all the other comparisons and conversions / casts

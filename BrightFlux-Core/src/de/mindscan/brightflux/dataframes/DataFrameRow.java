@@ -45,7 +45,7 @@ public interface DataFrameRow {
      * @param columnName Name of the column
      * @return the type of the column
      */
-    public Object getType( String columnName );
+    public Object getValueType( String columnName );
 
     /**
      * This method will invoke the correct compareToRaw-operation of the columnName 
