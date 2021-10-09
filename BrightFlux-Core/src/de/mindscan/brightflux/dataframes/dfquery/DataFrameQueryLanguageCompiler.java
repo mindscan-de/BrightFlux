@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLEmptyNode;
@@ -78,6 +79,10 @@ public class DataFrameQueryLanguageCompiler {
 
         if (node instanceof DFQLBinaryOperatorNode) {
             return compileToRowFilterPredicate_DFQLBinaryOperatorNode( (DFQLBinaryOperatorNode) node );
+        }
+
+        if (node instanceof DFQLApplyNode) {
+            return compileToRowFilterPredicate_DFQLApplyNode( (DFQLApplyNode) node );
         }
 
         throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
@@ -212,6 +217,10 @@ public class DataFrameQueryLanguageCompiler {
 
     private DataFrameRowFilterPredicate compileToRowFilterPredicate_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
         return compileToRowFilterPredicate( typedDFQLSelectStatementNode.getWhereClauseNode() );
+    }
+
+    private DataFrameRowFilterPredicate compileToRowFilterPredicate_DFQLApplyNode( DFQLApplyNode node ) {
+        throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
     }
 
     private DataFrameRowFilterPredicate buildColumnValuePredicate( BiFunction<String, Object, DataFrameRowFilterPredicate> factoryColImm, DFQLNode left,
