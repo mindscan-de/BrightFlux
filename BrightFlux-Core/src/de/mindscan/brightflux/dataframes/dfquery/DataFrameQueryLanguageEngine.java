@@ -191,6 +191,18 @@ public class DataFrameQueryLanguageEngine {
             }
             return newList;
         }
+//        else if (node instanceof DFQLApplyNode) {
+
+//            List<DFQLNode> formerArguments = ((DFQLApplyNode) node).getArguments();
+
+//            DFQLListNode newArguments = new DFQLListNode();
+//            for (DFQLNode dfqlNode : formerArguments) {
+//                newArguments.add( transformAST( dfqlNode, df ) );
+//            }
+//
+//            DFQLApplyNode newApplyNode = new DFQLApplyNode( newFunction, newArguments );
+//            return newApplyNode;
+//        }
 
         // TODO repackage String, number
         return node;
