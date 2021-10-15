@@ -83,9 +83,19 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
 
         queryHistoryStack.add( "SELECT * FROM df WHERE (df.''==  )" );
         queryHistoryStack.add( "SELECT * FROM df WHERE ((df.''==  ) && (df.''==  ))" );
+        queryHistoryStack.add( "SELECT * FROM df WHERE (df.''.contains(''))" );
+
         queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df" );
         queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df WHERE (df.''==  )" );
         queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df WHERE ((df.''==  ) && (df.''==  ))" );
+
+        queryHistoryStack.add( "ROWCALLBACK highlight_red FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_green FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_blue FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_yellow FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_pink FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''.contains(''))" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''== " );
 
         updateListViewer();
     }
