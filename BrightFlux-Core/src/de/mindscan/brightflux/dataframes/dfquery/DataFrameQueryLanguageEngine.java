@@ -30,11 +30,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLBinaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
@@ -191,18 +193,15 @@ public class DataFrameQueryLanguageEngine {
             }
             return newList;
         }
-//        else if (node instanceof DFQLApplyNode) {
+        else if (node instanceof DFQLApplyNode) {
+            List<DFQLNode> formerArguments = ((DFQLApplyNode) node).getArguments();
 
-//            List<DFQLNode> formerArguments = ((DFQLApplyNode) node).getArguments();
+            List<DFQLNode> newArguments = formerArguments.stream().map( dfqlNode -> transformAST( dfqlNode, df ) ).collect( Collectors.toList() );
+            DFQLNode newFunction = transformAST( ((DFQLApplyNode) node).getFunction(), df );
 
-//            DFQLListNode newArguments = new DFQLListNode();
-//            for (DFQLNode dfqlNode : formerArguments) {
-//                newArguments.add( transformAST( dfqlNode, df ) );
-//            }
-//
-//            DFQLApplyNode newApplyNode = new DFQLApplyNode( newFunction, newArguments );
-//            return newApplyNode;
-//        }
+            DFQLApplyNode newApplyNode = new DFQLApplyNode( newFunction, newArguments );
+            return newApplyNode;
+        }
 
         // TODO repackage String, number
         return node;

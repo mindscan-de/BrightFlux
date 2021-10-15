@@ -252,19 +252,13 @@ public class RowFilterPredicateCompileStrategy {
 
             String selectorName = ((String) ((DFQLIdentifierNode) selector).getRawValue());
 
-            // TODO: actually we would expect a nodetype based on the TypedDFQLDataFrameColumnNode, but obviously
-            //       the transform operation currently ignores DFQLApplyNodes and can't transform them properly...
-            //       That means that this is a dirty hack to make this features work, because i need them to work right now.
-
-            primarySelectionNode.getValue();
-
             DFQLNode columnSelectionNode = primarySelectionNode.getValue();
+            TypedDFQLDataFrameColumnNode typedDFQLDataFrameColumnNode = (TypedDFQLDataFrameColumnNode) columnSelectionNode;
 
-            DFQLNode value = ((DFQLPrimarySelectionNode) columnSelectionNode).getSelector();
+            if (ColumnValueTypes.COLUMN_TYPE_STRING.equals( typedDFQLDataFrameColumnNode.getColumn().getColumnValueType() )) {
+                String columnName = typedDFQLDataFrameColumnNode.getColumnName();
 
-            if (value instanceof DFQLStringNode) {
-                String columnName = (String) ((DFQLStringNode) value).getRawValue();
-
+                // For string columns we provide these functions 'contains', 'startsWith' and 'endsWith' 
                 switch (selectorName) {
                     case "contains":
                         return DataFrameRowFilterPredicateFactory.containsStr( columnName, firstArgumentAsString );
@@ -277,11 +271,8 @@ public class RowFilterPredicateCompileStrategy {
                 }
             }
 
-            throw new NotYetImplemetedException( "the type of the selection node '" + value.getClass().getSimpleName() + "' is not yet supported." );
-
-            // DataFrameRowFilterPredicateFactory.containsStr( columnName, containedString );
-            // DataFrameRowFilterPredicateFactory.startsWithStr( columnName, containedString );
-            // DataFrameRowFilterPredicateFactory.endsWithStr( columnName, containedString );
+            throw new NotYetImplemetedException(
+                            "the type of the selection node '" + columnSelectionNode.getClass().getSimpleName() + "' is not yet supported." );
         }
 
         throw new NotYetImplemetedException( "Node type (" + function.getClass().getSimpleName() + ") is not supported." );
