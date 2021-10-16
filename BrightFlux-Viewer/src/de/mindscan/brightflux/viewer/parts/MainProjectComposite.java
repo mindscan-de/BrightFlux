@@ -179,34 +179,46 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
     }
 
-    private void sendDataFrameSelectionEvent( final DataFrame dataFrame ) {
-        if (projectRegistry != null) {
-            projectRegistry.getEventDispatcher().dispatchEvent( UIEventFactory.dataFrameSelected( dataFrame ) );
-        }
-    }
-
     private void requestDataFrameSelection( UUID requestedUUID ) {
         if (requestedUUID == null) {
-
+            return;
         }
 
         CTabItem[] items = mainTabFolder.getItems();
-        if (items != null) {
-            for (int i = 0; i < items.length; i++) {
-                CTabItem item = items[i];
-                Control currentControl = item.getControl();
-                if (currentControl instanceof DataFrameTableComposite) {
-                    DataFrameTableComposite dataFrameTableComposite = (DataFrameTableComposite) currentControl;
-                    DataFrame dataFrame = dataFrameTableComposite.getDataFrame();
-                    if (requestedUUID.equals( dataFrame.getUuid() )) {
-                        // make sure the highlights and annotations and markers are refreshed/updated.
-                        dataFrameTableComposite.refresh();
-                        // now set the selection
-                        mainTabFolder.setSelection( item );
-                        sendDataFrameSelectionEvent( dataFrame );
-                    }
-                }
+        if (items == null)
+            return;
+
+        for (int i = 0; i < items.length; i++) {
+            if (selectIfRequestedUuidMatches( requestedUUID, items[i] )) {
+                return;
             }
+        }
+    }
+
+    private boolean selectIfRequestedUuidMatches( UUID requestedUUID, CTabItem item ) {
+        Control currentControl = item.getControl();
+
+        if (!(currentControl instanceof DataFrameTableComposite)) {
+            return false;
+        }
+
+        DataFrameTableComposite dataFrameTableComposite = (DataFrameTableComposite) currentControl;
+        DataFrame dataFrame = dataFrameTableComposite.getDataFrame();
+        if (requestedUUID.equals( dataFrame.getUuid() )) {
+            // make sure the highlights and annotations and markers are refreshed/updated.
+            dataFrameTableComposite.refresh();
+
+            mainTabFolder.setSelection( item );
+            sendDataFrameSelectionEvent( dataFrame );
+            return true;
+        }
+
+        return false;
+    }
+
+    private void sendDataFrameSelectionEvent( final DataFrame dataFrame ) {
+        if (projectRegistry != null) {
+            projectRegistry.getEventDispatcher().dispatchEvent( UIEventFactory.dataFrameSelected( dataFrame ) );
         }
     }
 
