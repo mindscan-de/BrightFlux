@@ -81,6 +81,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
 
         buildLayout();
 
+        // TODO: Provide previous history through other means.
         queryHistoryStack.add( "SELECT * FROM df WHERE (df.''==  )" );
         queryHistoryStack.add( "SELECT * FROM df WHERE ((df.''==  ) && (df.''==  ))" );
         queryHistoryStack.add( "SELECT * FROM df WHERE (df.''.contains(''))" );
@@ -97,7 +98,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''.contains(''))" );
         queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''== " );
 
-        updateListViewer();
+        updateListViewer( queryHistoryStack.toArray() );
     }
 
     private void buildLayout() {
@@ -232,15 +233,15 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
         int previousSelectionIndex = listViewer.getList().getSelectionIndex();
 
         queryHistoryStack.addFirst( theQuery );
-        updateListViewer();
+        updateListViewer( queryHistoryStack.toArray() );
 
         if (previousSelectionIndex >= 0) {
             listViewer.getList().setSelection( previousSelectionIndex + 1 );
         }
     }
 
-    private void updateListViewer() {
-        listViewer.setInput( queryHistoryStack.toArray() );
+    private void updateListViewer( Object[] queryHistory ) {
+        listViewer.setInput( queryHistory );
     }
 
     private void updateComboText( String newComboText ) {
