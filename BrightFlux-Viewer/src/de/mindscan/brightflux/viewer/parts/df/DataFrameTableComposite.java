@@ -193,16 +193,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmFilterText.setText( "Filter Text ..." );
 
-        MenuItem mntmFilterx = new MenuItem( menu_2, SWT.NONE );
-        mntmFilterx.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                apply666filter( ingestedDF );
-            }
-
-        } );
-        mntmFilterx.setText( "filter 666" );
-
         MenuItem mntmRecipe = new MenuItem( menu, SWT.CASCADE );
         mntmRecipe.setText( "Recipe" );
 
@@ -403,11 +393,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             dispatchEvent( BFEventFactory.dataframeClosed( ingestedDF ) );
             setDataFrame( null );
         }
-    }
-
-    private void apply666filter( DataFrame dataFrame ) {
-        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", "0x666" );
-        dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
     }
 
     protected void applyValueFilter( DataFrame dataFrame, String value ) {
