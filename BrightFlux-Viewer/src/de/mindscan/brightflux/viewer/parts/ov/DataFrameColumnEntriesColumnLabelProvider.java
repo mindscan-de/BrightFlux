@@ -61,8 +61,7 @@ public class DataFrameColumnEntriesColumnLabelProvider extends ColumnLabelProvid
             case NAME_HEADER:
                 return entry.getColumnName();
             case TYPE_HEADER:
-                // TODO: dataframe columns should know their type, i need this feature also for different reasons.
-                return entry.getClass().getSimpleName();
+                return entry.getColumnValueType() + " - " + entry.getClass().getSimpleName();
             default:
                 return super.getText( element );
         }
