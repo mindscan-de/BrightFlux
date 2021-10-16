@@ -44,7 +44,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
  */
 public class HighlighterJsonLWriterImpl {
 
-    Type type = new TypeToken<Map<String, Object>>() {
+    private Type dataType = new TypeToken<Map<String, Object>>() {
     }.getType();
 
     /**
@@ -71,7 +71,7 @@ public class HighlighterJsonLWriterImpl {
                 rowMap.put( columnName, dataFrameRow.get( columnName ) );
             }
 
-            System.out.println( gson.toJson( rowMap, type ) );
+            System.out.println( gson.toJson( rowMap, dataType ) );
         }
     }
 
