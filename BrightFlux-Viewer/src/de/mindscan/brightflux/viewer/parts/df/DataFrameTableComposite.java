@@ -67,7 +67,7 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
- * 
+ * TODO: provide a catalog of recipes and build a filter/recipe menu from it
  */
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
 
