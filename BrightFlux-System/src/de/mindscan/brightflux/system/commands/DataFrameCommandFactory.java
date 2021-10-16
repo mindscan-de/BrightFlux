@@ -47,6 +47,7 @@ import de.mindscan.brightflux.system.commands.recipes.RecipeSaveCommand;
 import de.mindscan.brightflux.system.highlighter.commands.CreateHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameClarHighlightRowCommand;
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
+import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
 
 /**
  * This class provides commands around DataFrames 
@@ -108,6 +109,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand createHighlightDataFrame() {
         return new CreateHighlightDataFrameCommand();
+    }
+
+    public static BFCommand saveHighlightDataFrame( DataFrame highlightDataFrame, Path targetFilePath ) {
+        return new SaveHighlightDataFrameCommand( highlightDataFrame, targetFilePath );
     }
 
     public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex, String color ) {
