@@ -418,6 +418,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         dispatchCommand( DataFrameCommandFactory.saveCSV( dataFrame, targetPath ) );
     }
 
+    private void highlightRow( DataFrameRow currentSelectedRow, String color ) {
+        if (currentSelectedRow != null) {
+            BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, currentSelectedRow.getOriginalRowIndex(), color );
+            dispatchCommand( command );
+        }
+    }
+
     private void dispatchCommand( BFCommand command ) {
         if (projectRegistry != null && command != null) {
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
@@ -434,10 +441,4 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         this.highlighterComponent = highlighterComponent;
     }
 
-    private void highlightRow( DataFrameRow currentSelectedRow, String color ) {
-        if (currentSelectedRow != null) {
-            BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, currentSelectedRow.getOriginalRowIndex(), color );
-            dispatchCommand( command );
-        }
-    }
 }
