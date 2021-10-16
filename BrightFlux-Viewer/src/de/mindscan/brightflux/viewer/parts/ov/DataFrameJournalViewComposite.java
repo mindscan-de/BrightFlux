@@ -50,6 +50,7 @@ import de.mindscan.brightflux.viewer.parts.UIEvents;
  */
 public class DataFrameJournalViewComposite extends Composite implements ProjectRegistryParticipant {
 
+    @SuppressWarnings( "unused" )
     private Shell parentShell;
     private ProjectRegistry projectRegistry;
     private TableViewer tableViewer;
@@ -100,6 +101,7 @@ public class DataFrameJournalViewComposite extends Composite implements ProjectR
         tableColumn2.setText( DataFrameJournalEntriesColumnLabelProvider.MESSAGE_HEADER );
         tableViewerColumn2.setLabelProvider( new DataFrameJournalEntriesColumnLabelProvider( DataFrameJournalEntriesColumnLabelProvider.MESSAGE_HEADER ) );
 
+        tableViewer.setContentProvider( DataFrameJournalEntriesContentProvider.getInstance() );
     }
 
     /** 
@@ -125,7 +127,6 @@ public class DataFrameJournalViewComposite extends Composite implements ProjectR
      * @param selectedDataFrame
      */
     private void setCurrentDataFrame( DataFrame selectedDataFrame ) {
-        tableViewer.setContentProvider( DataFrameJournalEntriesContentProvider.getInstance() );
         tableViewer.setInput( selectedDataFrame );
     }
 
