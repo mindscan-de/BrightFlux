@@ -35,7 +35,7 @@ import de.mindscan.brightflux.system.events.BFEventFactory;
 /**
  * 
  */
-public class DataFrameClarHighlightRowCommand implements BFCommand {
+public class DataFrameClearHighlightRowCommand implements BFCommand {
 
     private DataFrame inputDataFrame;
     private int row;
@@ -43,7 +43,7 @@ public class DataFrameClarHighlightRowCommand implements BFCommand {
     /**
      * 
      */
-    public DataFrameClarHighlightRowCommand( DataFrame inputDataFrame, int row ) {
+    public DataFrameClearHighlightRowCommand( DataFrame inputDataFrame, int row ) {
         this.inputDataFrame = inputDataFrame;
         this.row = row;
     }
