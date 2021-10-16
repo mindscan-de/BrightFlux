@@ -50,6 +50,7 @@ import de.mindscan.brightflux.viewer.parts.UIEvents;
  */
 public class DataFrameColumnViewComposite extends Composite implements ProjectRegistryParticipant {
 
+    @SuppressWarnings( "unused" )
     private Shell parentShell;
     private ProjectRegistry projectRegistry;
     private TableViewer tableViewer;
@@ -96,6 +97,7 @@ public class DataFrameColumnViewComposite extends Composite implements ProjectRe
         tableColumn2.setText( DataFrameColumnEntriesColumnLabelProvider.TYPE_HEADER );
         tableViewerColumn2.setLabelProvider( new DataFrameColumnEntriesColumnLabelProvider( DataFrameColumnEntriesColumnLabelProvider.TYPE_HEADER ) );
 
+        tableViewer.setContentProvider( DataFrameColumnEntriesContentProvider.getInstance() );
     }
 
     /** 
@@ -118,7 +120,6 @@ public class DataFrameColumnViewComposite extends Composite implements ProjectRe
     }
 
     private void setCurrentDataFrame( DataFrame selectedDataFrame ) {
-        tableViewer.setContentProvider( DataFrameColumnEntriesContentProvider.getInstance() );
         tableViewer.setInput( selectedDataFrame );
     }
 
