@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.system.highlighter;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -36,6 +38,7 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.highlighter.writer.HighlighterJsonLWriterImpl;
 
 /**
  * 
@@ -131,17 +134,10 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
     }
 
     // TODO: basic idea on how to save the highlighter dataframe... 
-    private void saveHighlightFrame() {
+    public void saveHighlightFrame( Path highlightFilePath ) {
+        HighlighterJsonLWriterImpl highlighterJSONLWriterImpl = new HighlighterJsonLWriterImpl();
 
-        // DataFrameImpl?
-        // // TODO: get index_column or TODO: get Original index column
-        // // logHighlightFrame.getOriginalIndexColumn();
-
-        // // TODO: iterate over the index column
-        // // then get row for each of these OriginalRowIndexes... indexes
-
-        // DataFrameIO for the list of ROWs?
-        // TODO: Write these rows to the disk in a JSON way?
+        highlighterJSONLWriterImpl.writeFile( logHighlightFrame, highlightFilePath );
     }
 
 }
