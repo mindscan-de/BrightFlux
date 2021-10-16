@@ -300,6 +300,20 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmHighlightNone.setText( "Highlight Clear" );
 
+        MenuItem mntmSaveHighlights = new MenuItem( menu_1, SWT.NONE );
+        mntmSaveHighlights.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (highlighterComponent != null) {
+                    if (highlighterComponent.getLogHighlightFrame() != null) {
+                        BFCommand command = DataFrameCommandFactory.saveHighlightDataFrame( highlighterComponent.getLogHighlightFrame(), null );
+                        dispatchCommand( command );
+                    }
+                }
+            }
+        } );
+        mntmSaveHighlights.setText( "Save Highlights ..." );
+
         MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
         mntmRefreshTableContent.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -440,5 +454,4 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     public void setHighlighterComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
     }
-
 }
