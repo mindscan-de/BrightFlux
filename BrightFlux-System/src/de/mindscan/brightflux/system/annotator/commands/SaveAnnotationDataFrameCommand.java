@@ -55,11 +55,13 @@ public class SaveAnnotationDataFrameCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        AnnotatorJsonLWriterImpl annotatorJsonLWriterImpl = new AnnotatorJsonLWriterImpl();
+        if (annotationDataFrame != null) {
+            AnnotatorJsonLWriterImpl annotatorJsonLWriterImpl = new AnnotatorJsonLWriterImpl();
 
-        annotatorJsonLWriterImpl.writeFile( annotationDataFrame, targetFilePath );
+            annotatorJsonLWriterImpl.writeFile( annotationDataFrame, targetFilePath );
 
-        // TODO: fire event that AnnotationDataFrame was saved.
+            // TODO: fire event that AnnotationDataFrame was saved.
+        }
     }
 
 }
