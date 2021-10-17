@@ -304,12 +304,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmSaveHighlights.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                if (highlighterComponent != null) {
-                    if (highlighterComponent.getLogHighlightFrame() != null) {
-                        BFCommand command = DataFrameCommandFactory.saveHighlightDataFrame( highlighterComponent.getLogHighlightFrame(), null );
-                        dispatchCommand( command );
+                String header = "Save Highlight Information";
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, header, FileDescriptions.BF_HIGHLIGHT, p -> {
+                    if (highlighterComponent != null) {
+                        if (highlighterComponent.getLogHighlightFrame() != null) {
+                            BFCommand command = DataFrameCommandFactory.saveHighlightDataFrame( highlighterComponent.getLogHighlightFrame(), p );
+                            dispatchCommand( command );
+                        }
                     }
-                }
+                } );
             }
         } );
         mntmSaveHighlights.setText( "Save Highlights ..." );
