@@ -41,6 +41,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -166,7 +167,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
         Composite composite = new Composite( sashForm_1, SWT.NONE );
-        composite.setLayout( new GridLayout( 1, false ) );
+        composite.setLayout( new GridLayout( 2, false ) );
 
         btnEnableAnnotations = new Button( composite, SWT.NONE );
         btnEnableAnnotations.addSelectionListener( new SelectionAdapter() {
@@ -194,6 +195,26 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             }
         } );
         btnGenerateReport.setText( "Generate and Copy Report..." );
+
+        Button btnLoadAnnotations = new Button( composite, SWT.NONE );
+        btnLoadAnnotations.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+            }
+        } );
+        btnLoadAnnotations.setText( "Load Annotations ..." );
+        new Label( composite, SWT.NONE );
+
+        Button btnSaveAnnotations = new Button( composite, SWT.NONE );
+        btnSaveAnnotations.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BFCommand command = DataFrameCommandFactory.saveAnnotationFataFrame( logAnalysisFrame, null );
+                dispatchCommand( command );
+            }
+        } );
+        btnSaveAnnotations.setText( "Save Annotations ..." );
+        new Label( composite, SWT.NONE );
 
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
