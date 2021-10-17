@@ -25,7 +25,7 @@ public class DataFrameWriterFactoryTest {
         // arrange
 
         // act
-        DataFrameWriter result = DataFrameWriterFactory.create( "CSV" );
+        DataFrameWriter result = DataFrameWriterFactory.create( DataFrameWriterFactory.CSV_WRITER );
 
         // assert
         assertThat( result, is( instanceOf( DataFrameWriter.class ) ) );
@@ -37,7 +37,7 @@ public class DataFrameWriterFactoryTest {
         DataFrame df = DataFrameTestUtils.loadCSV( inputPath );
 
         // act
-        DataFrameWriter writer = DataFrameWriterFactory.create( "CSV" );
+        DataFrameWriter writer = DataFrameWriterFactory.create( DataFrameWriterFactory.CSV_WRITER );
 
         // assert -  we should compare the content of the input file to the output file
         Files.deleteIfExists( outputPath );

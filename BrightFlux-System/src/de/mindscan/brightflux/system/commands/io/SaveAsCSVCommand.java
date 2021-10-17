@@ -51,7 +51,7 @@ public class SaveAsCSVCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        DataFrameWriterFactory.create( "csv" ).writeToFile( inputDataFrame, targetFile );
+        DataFrameWriterFactory.create( DataFrameWriterFactory.CSV_WRITER ).writeToFile( inputDataFrame, targetFile );
     }
 
 }
