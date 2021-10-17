@@ -70,6 +70,12 @@ public class BrightFluxFileDialogs {
         String filePathToOpen = openDialog( shell, SWT.SAVE, startPath, header, filterextensions, filternames );
 
         if (filePathToOpen != null) {
+            String extension = filterextensions[0].replaceAll( "*", "" );
+
+            if (!filePathToOpen.endsWith( extension )) {
+                filePathToOpen += extension;
+            }
+
             Path path = Paths.get( filePathToOpen );
             pathConsumer.accept( path );
         }
