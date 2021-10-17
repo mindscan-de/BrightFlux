@@ -46,4 +46,12 @@ public class FileDescriptions {
                     new String[] { "*.bfrecipe" }, //
                     new String[] { "Brightflux recipe files (*.bfrecipe)" } );
 
+    public final static FileDescription BF_ANNOTATION = new FileDescription( //
+                    new String[] { "*.annotations.bf_jsonl" }, //
+                    new String[] { "Brightflux anotation file (*.annotations.bf_jsonl)" } );
+
+    public final static FileDescription BF_HIGHLIGHT = new FileDescription( //
+                    new String[] { "*.highlight.bf_jsonl" }, //
+                    new String[] { "Brightflux anotation file (*.highlight.bf_jsonl)" } );
+
 }
