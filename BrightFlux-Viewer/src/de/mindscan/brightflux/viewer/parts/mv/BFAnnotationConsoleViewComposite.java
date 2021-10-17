@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.wb.swt.SWTResourceManager;
 
@@ -58,10 +59,12 @@ import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
+import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
+import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 
@@ -85,6 +88,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private Button btnEnableAnnotations;
 
+    private Shell shell;
+
     /**
      * Create the composite.
      * @param parent
@@ -92,6 +97,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
      */
     public BFAnnotationConsoleViewComposite( Composite parent, int style ) {
         super( parent, style );
+
+        shell = parent.getShell();
+
         createContent();
     }
 
@@ -209,8 +217,12 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         btnSaveAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BFCommand command = DataFrameCommandFactory.saveAnnotationFataFrame( logAnalysisFrame, null );
-                dispatchCommand( command );
+                String header = "Save Annotation File.";
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
+                    BFCommand command = DataFrameCommandFactory.saveAnnotationFataFrame( logAnalysisFrame, p );
+                    dispatchCommand( command );
+                } );
+
             }
         } );
         btnSaveAnnotations.setText( "Save Annotations ..." );
