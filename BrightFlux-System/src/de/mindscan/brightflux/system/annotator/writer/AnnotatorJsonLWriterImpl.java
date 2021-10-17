@@ -27,9 +27,11 @@ package de.mindscan.brightflux.system.annotator.writer;
 
 import java.lang.reflect.Type;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -37,7 +39,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFColumnInfo;
 
 /**
  * 
@@ -55,12 +59,42 @@ public class AnnotatorJsonLWriterImpl {
 
     public void writeFile( DataFrame annotatorDataFrame, Path targetFilePath ) {
         // we put a header line into the .bfjsonl file...
-
-        Collection<String> columnNames = annotatorDataFrame.getColumnNames();
-
         Gson gson = new GsonBuilder().create();
 
-        // we will save that as a json-lines file.
+        // we will save some of the column / dataframe information as for the dataframe speaking.
+
+        // --------------------- DATAFRAMEINFO ------------------        
+
+        // TODO: this info should be used to rebuild the dataframe layout.
+        // TODO: refactor this to the core components
+        Map<String, Object> dataframeInfo = new LinkedHashMap<>();
+
+        Collection<DataFrameColumn<?>> columns = annotatorDataFrame.getColumns();
+
+        List<BFDFColumnInfo> columnInfoList = new ArrayList<>();
+
+        // DO we need this?
+        for (DataFrameColumn<?> dataFrameColumn : columns) {
+            columnInfoList.add( new BFDFColumnInfo( dataFrameColumn.getColumnName(), dataFrameColumn.getColumnType() ) );
+        }
+
+        // TODO: version info of the file
+        // TODO: version info of the data frame 
+
+        dataframeInfo.put( "name", annotatorDataFrame.getName() );
+        dataframeInfo.put( "title", annotatorDataFrame.getTitle() );
+        dataframeInfo.put( "gen", annotatorDataFrame.getDataFrameGeneration() );
+        dataframeInfo.put( "uuid", annotatorDataFrame.getUuid().toString() );
+        dataframeInfo.put( "columns", columnInfoList );
+
+        // TODO: log info for the frame.
+
+        System.out.println( gson.toJson( dataframeInfo, dataType ) );
+
+        // -------------------------- DATA ----------------------
+        Collection<String> columnNames = annotatorDataFrame.getColumnNames();
+
+        // we will save that data as a json-lines file.
         Iterator<DataFrameRow> rowIterator = annotatorDataFrame.rowIterator();
 
         while (rowIterator.hasNext()) {
