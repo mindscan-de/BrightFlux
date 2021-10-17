@@ -29,16 +29,23 @@ package de.mindscan.brightflux.dataframes.writer;
  * 
  */
 public class DataFrameWriterFactory {
+
+    public static final String CSV_WRITER = "csv";
+    public static final String H5_WRITER = "h5";
+    public static final String BRIGHTFLUX_JSONLINES_WRITER = "bfdfjsonlines";
+
     public static DataFrameWriter create( String writerType ) {
         switch (writerType.toLowerCase()) {
-            case "csv":
+            case CSV_WRITER:
                 return new DataFrameWriterCSVImpl();
-            case "h5":
+            case H5_WRITER:
                 return new DataFrameWriterH5Impl();
             case "log":
                 return new DataFrameWriterLogImpl();
             case "bfdfjson":
                 return new DataFrameWriterBFDFJsonImpl();
+            case BRIGHTFLUX_JSONLINES_WRITER:
+                return new DataFrameWriterBFDFJsonLinesImpl();
             default:
                 throw new IllegalArgumentException( "This writer Type is not supported." );
         }
