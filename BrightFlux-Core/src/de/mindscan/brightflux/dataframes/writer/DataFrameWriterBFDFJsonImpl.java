@@ -62,9 +62,8 @@ public class DataFrameWriterBFDFJsonImpl implements DataFrameWriter {
     private List<BFDFColumnInfo> processColumnInformation( Collection<DataFrameColumn<?>> columns ) {
         List<BFDFColumnInfo> columnInfoList = new ArrayList<>();
 
-        // DO we need this?
         for (DataFrameColumn<?> dataFrameColumn : columns) {
-            columnInfoList.add( new BFDFColumnInfo( dataFrameColumn.getColumnName(), dataFrameColumn.getColumnType() ) );
+            columnInfoList.add( new BFDFColumnInfo( dataFrameColumn.getColumnName(), dataFrameColumn.getColumnType(), dataFrameColumn.getColumnValueType() ) );
         }
 
         return columnInfoList;

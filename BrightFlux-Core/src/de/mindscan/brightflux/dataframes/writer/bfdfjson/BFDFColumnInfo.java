@@ -31,14 +31,15 @@ package de.mindscan.brightflux.dataframes.writer.bfdfjson;
 public class BFDFColumnInfo {
     private String name;
     private String cType;
-    // private String vType;
+    private String vType;
 
     /**
      * 
      */
-    public BFDFColumnInfo( String name, String cType ) {
+    public BFDFColumnInfo( String name, String cType, String vType ) {
         this.name = name;
         this.cType = cType;
+        this.vType = vType;
     }
 
     /**
@@ -46,6 +47,13 @@ public class BFDFColumnInfo {
      */
     public String getCType() {
         return cType;
+    }
+
+    /**
+     * @return the vType
+     */
+    public String getVType() {
+        return vType;
     }
 
     /**
