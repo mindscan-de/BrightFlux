@@ -107,7 +107,6 @@ public class DataFrameWriterBFDFJsonLinesImpl implements DataFrameWriter {
             }
         }
         catch (Exception e) {
-            // TODO: handle exception
         }
     }
 

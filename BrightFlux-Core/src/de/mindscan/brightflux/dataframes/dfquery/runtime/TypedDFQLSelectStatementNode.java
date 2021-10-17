@@ -81,7 +81,6 @@ public class TypedDFQLSelectStatementNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
         return null;
     }
 }

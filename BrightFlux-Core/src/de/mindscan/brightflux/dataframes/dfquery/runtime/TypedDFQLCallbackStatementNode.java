@@ -54,7 +54,6 @@ public class TypedDFQLCallbackStatementNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -63,7 +62,6 @@ public class TypedDFQLCallbackStatementNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
         return null;
     }
 

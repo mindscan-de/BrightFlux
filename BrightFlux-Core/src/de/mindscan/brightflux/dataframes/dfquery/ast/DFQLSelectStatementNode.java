@@ -95,7 +95,6 @@ public class DFQLSelectStatementNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -140,12 +140,9 @@ public class DataFrameQueryLanguageEngine {
 
         if (node instanceof DFQLSelectStatementNode) {
             DFQLNode selectedColumns = transformAST( ((DFQLSelectStatementNode) node).getDataframeColumns(), df );
-
-            // TODO table selection
-
             DFQLNode transformedWhere = transformAST( ((DFQLSelectStatementNode) node).getWhereClause(), df );
 
-            // TODO table selection
+            // TODO transform AST of the table selection
             return new TypedDFQLSelectStatementNode( selectedColumns, new ArrayList<>(), transformedWhere );
         }
         else if (node instanceof DFQLCallbackStatementNode) {
@@ -203,7 +200,6 @@ public class DataFrameQueryLanguageEngine {
             return newApplyNode;
         }
 
-        // TODO repackage String, number
         return node;
     }
 
