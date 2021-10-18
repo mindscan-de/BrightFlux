@@ -219,7 +219,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void widgetSelected( SelectionEvent e ) {
                 String header = "Save Annotation File.";
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
-                    BFCommand command = DataFrameCommandFactory.saveAnnotationFataFrame( logAnalysisFrame, p );
+                    BFCommand command = DataFrameCommandFactory.saveAnnotationDataFrame( logAnalysisFrame, p );
                     dispatchCommand( command );
                 } );
 

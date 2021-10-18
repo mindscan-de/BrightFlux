@@ -105,7 +105,7 @@ public class DataFrameCommandFactory {
         return new CreateAnnoationDataFrameCommand();
     }
 
-    public static BFCommand saveAnnotationFataFrame( DataFrame annotationDataFrame, Path targetFilePath ) {
+    public static BFCommand saveAnnotationDataFrame( DataFrame annotationDataFrame, Path targetFilePath ) {
         return new SaveAnnotationDataFrameCommand( annotationDataFrame, targetFilePath );
     }
 
