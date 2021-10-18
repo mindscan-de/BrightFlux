@@ -30,13 +30,23 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
+import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
+import de.mindscan.brightflux.dataframes.columns.SparseColumn;
+import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFColumnInfo;
 import de.mindscan.brightflux.dataframes.writer.bfdfjson.JsonLinesDataFrameInfo;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -66,12 +76,25 @@ public class IngestBFDataFrameJsonLines {
             }
 
             JsonLinesDataFrameInfo dataFrameInfo = gson.fromJson( firstLine.trim(), dataFrameInfoType );
+            List<BFDFColumnInfo> uncompiledColumns = dataFrameInfo.getColumns();
 
-            // Build column names
-            // build columns from it
+            // --- Compile columns ---
+
+            List<DataFrameColumn<?>> compiledColumns = new LinkedList<>();
+            List<String> columnNames = new LinkedList<>();
+            Map<String, DataFrameColumn<?>> columnMap = new HashMap<>();
+
+            for (BFDFColumnInfo bfdfColumnInfo : uncompiledColumns) {
+                DataFrameColumn<?> compiledColumn = DataFrameColumnFactory.createColumnForType( bfdfColumnInfo.getName(), bfdfColumnInfo.getCType() );
+                compiledColumns.add( compiledColumn );
+                columnNames.add( bfdfColumnInfo.getName() );
+                columnMap.put( bfdfColumnInfo.getName(), compiledColumn );
+            }
+
+            // --- Compile data ---
 
             String dataRowLine;
-            while ((dataRowLine = br.readLine()) != null) {
+            for (dataRowLine = br.readLine(); dataRowLine != null; dataRowLine = br.readLine()) {
                 // process the line
                 if (dataRowLine.trim().isBlank()) {
                     break;
@@ -84,6 +107,25 @@ public class IngestBFDataFrameJsonLines {
                 // after that we read each "row" and add data to it, according to the index. 
                 // for the start we will support Sparse_Columns only.
 
+                int idx = (Integer) dataRow.get( DataFrameSpecialColumns.INDEX_COLUMN_NAME );
+                // int org_idx = (Integer) dataRow.get( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME );
+
+                for (String name : columnNames) {
+                    DataFrameColumn<?> column = columnMap.get( name );
+                    if (column instanceof SparseColumn) {
+                        if (dataRow.containsKey( name )) {
+                            Object currentValue = dataRow.get( name );
+                            column.setRaw( idx, currentValue );
+                        }
+                        else {
+                            column.setNA( idx );
+                        }
+                    }
+                    else {
+                        // throw new NotYetImplemetedException("we currently only support SparseColumns"); 
+                    }
+                }
+
                 // We do the hardcore-stuff at first here, and then we will refactor
                 // this into the right places, after we got it working.
 
@@ -91,6 +133,10 @@ public class IngestBFDataFrameJsonLines {
             }
 
             // TODO: Build the dataframe from the read columns.
+
+            DataFrameBuilder dataFrameBuilder = new DataFrameBuilder( dataFrameInfo.getName() );
+            dataFrameBuilder.addColumns( compiledColumns );
+            return dataFrameBuilder.build();
         }
         catch (IOException e) {
             // TODO Auto-generated catch block
