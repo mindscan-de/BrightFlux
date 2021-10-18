@@ -34,6 +34,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.annotator.commands.CreateAnnoationDataFrameCommand;
 import de.mindscan.brightflux.system.annotator.commands.DataFrameAnnotateRowCommand;
+import de.mindscan.brightflux.system.annotator.commands.LoadAnnotationDataFrameCommand;
 import de.mindscan.brightflux.system.annotator.commands.SaveAnnotationDataFrameCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameFilterCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCBCommand;
@@ -106,6 +107,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand saveAnnotationFataFrame( DataFrame annotationDataFrame, Path targetFilePath ) {
         return new SaveAnnotationDataFrameCommand( annotationDataFrame, targetFilePath );
+    }
+
+    public static BFCommand loadAnnotationDataFrame( Path annotationFilePath ) {
+        return new LoadAnnotationDataFrameCommand( annotationFilePath );
     }
 
     public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
