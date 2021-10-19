@@ -49,6 +49,7 @@ import de.mindscan.brightflux.system.commands.recipes.RecipeSaveCommand;
 import de.mindscan.brightflux.system.highlighter.commands.CreateHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameClearHighlightRowCommand;
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
+import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
 
 /**
@@ -123,6 +124,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand saveHighlightDataFrame( DataFrame highlightDataFrame, Path targetFilePath ) {
         return new SaveHighlightDataFrameCommand( highlightDataFrame, targetFilePath );
+    }
+
+    public static BFCommand loadHighlightDataFrame( Path highlightFilePath ) {
+        return new LoadHighlightDataFrameCommand( highlightFilePath );
     }
 
     public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex, String color ) {
