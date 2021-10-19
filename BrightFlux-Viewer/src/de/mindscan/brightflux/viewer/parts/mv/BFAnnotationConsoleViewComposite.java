@@ -208,6 +208,12 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         btnLoadAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
+                String header = "Load Annotation File.";
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
+                    BFCommand command = DataFrameCommandFactory.loadAnnotationDataFrame( p );
+                    dispatchCommand( command );
+                } );
+
             }
         } );
         btnLoadAnnotations.setText( "Load Annotations ..." );
