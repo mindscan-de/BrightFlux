@@ -83,25 +83,33 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Support for the original row index (in a derived frame)
   * "select *" will copy the original index
 * Annotate log messages
-  * (runtime feature only / no persistence yet) - annotate line of a dataframe or one of its child dataframes
-  * (runtime feature only / no persistence yet) - annotations are global over different (related) dataframes
-  * (runtime feature only / no persistence yet) - create a simple report from the annotations
-  * (runtime feature only / no persistence yet) - use report snippets for annotations
+  * annotate line of a dataframe or one of its child dataframes
+  * annotations are global over different (related) dataframes
+  * create a simple report from the annotations
+  * use report snippets for annotations
+  * save current annotations to annotation file - this feature is just temporary
+  * load current annotations from annotation file - this feature is just temporary
+* Highlight log messages
+  * colorize line of a dataframe or one of its child/parent dataframes 
+  * save highlight file - this feature is just temporary and will be embedded into the loganalysis project file
+  * load highlight file - this feature is just temporary and will be embedded into the loganalysis project file
+  * colorization of a line of a dataframe via DFQL
 * Show dataframe hierarchy for the current selected dataframe
+
+Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
+right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
+they become good enough. I decided to skip these re-writes and re-implementations until becomming absolutely 
+neccessary. And also, sometimes, if you give it some more time, you will come up with a better idea or even
+a better solution. Therefore giving it some time to mature, saves a lot of effort in the long run.
+
+This whole thing is going through a permanent dogfooding phase.
 
 ## Planned Features
 
-Some of the planned features are: 
+Some of the planned features are: (I will have to sort and reprioritize this... That is getting out of hand...)
 
-* Annotate Logmessages
-  * save annotations to an analysis project file or at least in a .bfannotation file
-  * load annotations from analyis project file for a file or at least in a .bfannotation file
 * Treat logs like data frames and use transformations on columns
-  * save the transformations and dataframe configuration to an analysis project file
-* Support original Index
-  *  copy the original index in a derived dataframe 
-* Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
-* reindex "__idx" row on dataframe filtering and dataframe column selection
+  * [LAPF] save the transformations and dataframe configuration to an analysis project file
 * Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
   * DataSource Tokenizer for Dataframe Columns  
 * Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
@@ -124,17 +132,34 @@ Some of the planned features are:
   * where does this message come from in the code and annotate this message with a software component / swim-lane
 * transform logs from one system (source) to the other - e.g. recovery mode if one of the systems stopped logging but the other system was receiving the logs as well and logged them
   * reconstruct logs
+
+Log-Analysis-Project-File
   
+* [LAPF] Annotate Logmessages
+  * [LAPF] save annotations to an analysis project file
+  * [LAPF] load annotations from analyis project file for a file
+  
+DataFrame Core Stuff  
+
+* [DFCORE] Support original Index
+  * [DFCORE] copy the original index in a derived dataframe 
+* [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
+* [DFCORE] reindex "__idx" row on dataframe filtering and dataframe column selection
+
+Startup 
   
 * Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
 
 
-* Have different annotation frames / highlight frames for each base document.
+* Have different annotation frames / highlight frames for each base document and combine via strategy...
 
 
 * UI/UX
   * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
-  * Copy current selected row to clipboard  
+  * Copy current selected row to clipboard
+  * Load favorite recipes directly into context menu, should be depending on the data frame columns.
+  * add Markers to annotation dataframe
+  * add Videotimestamp annotations to annotation dataframe
   
 
 * Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
@@ -159,3 +184,4 @@ Some of the planned features are:
 
 * combine that system with the CheapLithium system (decision gag/decisiontree) for automated decisions based on the content of log files for automated log file analysis
 * combine that system with the FuriousIron code search system
+
