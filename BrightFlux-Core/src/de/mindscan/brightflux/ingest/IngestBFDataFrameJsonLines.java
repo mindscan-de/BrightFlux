@@ -46,12 +46,13 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
 import de.mindscan.brightflux.dataframes.columns.SparseColumn;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
 import de.mindscan.brightflux.dataframes.writer.bfdfjson.BFDFColumnInfo;
 import de.mindscan.brightflux.dataframes.writer.bfdfjson.JsonLinesDataFrameInfo;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
- * 
+ * TODO: This class needs to be rewritten later using a proper solution for the Gson problem outlined below.
  */
 public class IngestBFDataFrameJsonLines {
 
@@ -93,6 +94,9 @@ public class IngestBFDataFrameJsonLines {
 
             // --- Compile data ---
 
+            // actually we want to be aware of the Types in the column, such that the columnvalues are not double by default, but have the proper type
+            // new GsonBuilder().register...
+
             String dataRowLine;
             for (dataRowLine = br.readLine(); dataRowLine != null; dataRowLine = br.readLine()) {
                 // process the line
@@ -100,6 +104,16 @@ public class IngestBFDataFrameJsonLines {
                     break;
                 }
 
+                // The Map Type has a shortcoming ... Because we don't have a proper prototype in java for
+                // a dataframe, GSON uses the javascript object notation specification as the truth - Numbers
+                // are treated as of Double-Type
+
+                // That means, that if we load data, what looks to us as an integer, it is handled as a Double value,
+                // That also has some unexpected limitations, Long values lose precision, that makes things a bit
+                // harder. As for now speaking, gson might be good enough, but probably must be replaced by a
+                // strategy which knows the columnname and its type to parse the JSON data in the correct target 
+                // type. We must either change the implementation which we use for reading JSON files, or we
+                // register some special reader, which can deal with the right targettypes according to the columns.
                 LinkedHashMap<String, Object> dataRow = gson.fromJson( dataRowLine.trim(), dataFrameDataRowType );
 
                 // append this row, depending on the columntype....
@@ -107,7 +121,7 @@ public class IngestBFDataFrameJsonLines {
                 // after that we read each "row" and add data to it, according to the index. 
                 // for the start we will support Sparse_Columns only.
 
-                int idx = (Integer) dataRow.get( DataFrameSpecialColumns.INDEX_COLUMN_NAME );
+                int idx = gsonHack_DoubeToInt( (Double) dataRow.get( DataFrameSpecialColumns.INDEX_COLUMN_NAME ) );
                 // int org_idx = (Integer) dataRow.get( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME );
 
                 for (String name : columnNames) {
@@ -115,7 +129,30 @@ public class IngestBFDataFrameJsonLines {
                     if (column instanceof SparseColumn) {
                         if (dataRow.containsKey( name )) {
                             Object currentValue = dataRow.get( name );
-                            column.setRaw( idx, currentValue );
+
+                            // This is 
+                            if (currentValue instanceof Double) {
+                                Double doubleValue = (Double) currentValue;
+                                String columnValueType = column.getColumnValueType();
+
+                                switch (columnValueType) {
+                                    case ColumnValueTypes.COLUMN_TYPE_INT:
+                                        column.setRaw( idx, gsonHack_DoubeToInt( doubleValue ) );
+                                        break;
+                                    case ColumnValueTypes.COLUMN_TYPE_FLOAT:
+                                        column.setRaw( idx, gsonHack_DoubeToFloat( doubleValue ) );
+                                        break;
+                                    case ColumnValueTypes.COLUMN_TYPE_DOUBLE:
+                                        column.setRaw( idx, doubleValue );
+                                        break;
+                                    default:
+                                        throw new NotYetImplemetedException(
+                                                        "either lose precision or implement another solution for column valuetype='" + columnValueType + "'" );
+                                }
+                            }
+                            else {
+                                column.setRaw( idx, currentValue );
+                            }
                         }
                         else {
                             column.setNA( idx );
@@ -132,8 +169,6 @@ public class IngestBFDataFrameJsonLines {
                 // decide if we appendNA to it...
             }
 
-            // TODO: Build the dataframe from the read columns.
-
             DataFrameBuilder dataFrameBuilder = new DataFrameBuilder( dataFrameInfo.getName() );
             dataFrameBuilder.addColumns( compiledColumns );
             return dataFrameBuilder.build();
@@ -145,4 +180,13 @@ public class IngestBFDataFrameJsonLines {
 
         throw new NotYetImplemetedException();
     }
+
+    private int gsonHack_DoubeToInt( Double double1 ) {
+        return double1.intValue();
+    }
+
+    private float gsonHack_DoubeToFloat( Double double1 ) {
+        return double1.floatValue();
+    }
+
 }
