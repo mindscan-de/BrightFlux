@@ -317,6 +317,20 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmSaveHighlights.setText( "Save Highlights ..." );
 
+        MenuItem mntmLoadHighlights = new MenuItem( menu_1, SWT.NONE );
+        mntmLoadHighlights.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                String header = "Load Highlights File.";
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, header, FileDescriptions.BF_HIGHLIGHT, p -> {
+                    BFCommand command = DataFrameCommandFactory.loadHighlightDataFrame( p );
+                    dispatchCommand( command );
+                } );
+
+            }
+        } );
+        mntmLoadHighlights.setText( "Load Highlights ..." );
+
         MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
         mntmRefreshTableContent.addSelectionListener( new SelectionAdapter() {
             @Override
