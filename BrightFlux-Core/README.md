@@ -4,26 +4,26 @@ This is project will host the core code for data ingestion, data processing, dat
 
 ## Idea
 
-Provide some performant access to the logdata to analyze, using filters and selections. Because this is meant 
-to be working in a readonly mode on data, I want to at least support some kind of project file. That helps to 
-access and process the data in a desired way. I also want to create an index, and reformat the data and store 
-this reformatted data partitioned. 
+Provide some convenient access to log data to analyze, using filters and selections. Because this is meant 
+to be working in a readonly mode on data, I want to support some kind of project file at least. That helps
+to access and process the data in a desired way. I also want to create an index, and reformat the data and 
+store this reformatted data partitioned. 
 
 So this code is going to contain most of the data processing. Higher order usage of the core components will
-be found in different projects (e.g. Framework and System).
+be shifted to different projects (e.g. Framework and System).
 
 ## What this project is not right now.
 
-I won't claim this being the most performant code... and honestly I don't care enough for raw performance 
+I won't claim this being the most performing code... and honestly I don't care enough for raw performance 
 right now. Maybe I will consider that later, if the project is still interesting enough for me or others.
 I regard everything here in this project to be a POC.
 
 I will implement a limited DataFrame library for this project. I definitely shouldn't do it, but anyway 
 it's interesting to do such things. This DataFrame library can either evolve into a relational database
-or might be extended in such a way, that it works large logs, such as logs which are Gigabytes in size.
+or might be extended in such a way, that it works for large logs, such as logs with GigaBytes in size.
 
-But as for now speaking, this is tightly coupled and part of the log analysis project. Maybe it will be 
-rewritten with a higher performance target in mind in some future.
+As for now speaking, this core component is tightly coupled and part of the log analysis project. Maybe
+it will be rewritten with a higher performance target in mind - in some future.
 
 * Maybe use the HDF5 format to load and store the column data of the dataframe (Problem full HDF5 stack is completely out of reach. Probably I can implement some very simple write routines. But the documentation and the HDF5 feature set is quite large. I will keep that out of scope for now. 
 * Idea is to reuse all the already developed features and also a high performance reader and writer is appreciated
@@ -83,13 +83,14 @@ Currently supported operations are like these:
   - create a new dataframe with a sub-selection of columns 'col1' and 'col2' from dataframe 'df' but keep all rows
 * "select 'col1' from df where (df.'col2'>1)" 
   - create a new dataframe with a sub-selection of columns  'col1' from dataframe 'df' but keep all rows, where the value of the column 'col2' is greater than 1;
+* "select * from df where (df.'mystringcolumn'.contains("666"))
 
 The selection and the test predicate are compiled into a use of the following API calls:
  
 * df.select(ColumnSelector/ColumnPredicate).where(RowSelector/RowPredicate);
 
-To implement the comparisons more easily we use the Java-Comparator contract. We can implement gt, ge, lt, le, neq, eq 
-by comparisons with the zero value and abstract from here.
+To implement the comparisons more easily we use the Java-Comparator contract. We implemented gt, ge, lt, le, neq, eq 
+by comparisons with the zero value and abstracted from here.
 
 String columns can now be selected using StringEvaluationRowFilterPredicates like 'contains', 'endswith' and 'startswith'
 the equals contract works on String based columns as well as the gt, ge, lt and le contract. (But without locale support)
@@ -97,8 +98,7 @@ the equals contract works on String based columns as well as the gt, ge, lt and 
 We support logical combinations of row filter predicates 'and', 'or', 'eq', 'neq'(xor), also we can negate a rowFilterPredicate.
 
 TODO: 
-* The predicates for contains, endswith and startswith are currently not accessible through the external DSL 
-* Also the unary not operator is not supported.
+* The unary not operator is not supported.
 
 TODO:
 * between
@@ -106,9 +106,9 @@ TODO:
 * compare values of two columns
 * string implementation ( matches, ignorecase-operations)
 * nand, nor
+* arithmetic calculations ? in the select statement?
   
-
-TODO
+TODO:
 * In case of exactly one predicate affecting exactly one column, a column-wise approach would be much more efficient to iterate over and to filter  
 
 ## Data Frames - I/O
