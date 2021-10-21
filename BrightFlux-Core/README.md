@@ -98,7 +98,7 @@ the equals contract works on String based columns as well as the gt, ge, lt and 
 We support logical combinations of row filter predicates 'and', 'or', 'eq', 'neq'(xor), also we can negate a rowFilterPredicate.
 
 TODO: 
-* The unary not operator is not supported.
+* The unary not operator is not supported in dfql
 
 TODO:
 * between
@@ -107,9 +107,12 @@ TODO:
 * string implementation ( matches, ignorecase-operations)
 * nand, nor
 * arithmetic calculations ? in the select statement?
-  
+
 TODO:
-* In case of exactly one predicate affecting exactly one column, a column-wise approach would be much more efficient to iterate over and to filter  
+* In case of exactly one predicate affecting exactly one column, a column-wise approach would be much more efficient to iterate over and to filter
+
+TODO: 
+* Improve the type system, for the columns and their data conversion and data parsing
 
 ## Data Frames - I/O
 
