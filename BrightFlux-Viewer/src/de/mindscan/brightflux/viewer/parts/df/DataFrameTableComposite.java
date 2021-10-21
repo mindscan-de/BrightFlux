@@ -132,25 +132,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_DataFrame = new Menu( mntmDataframe );
         mntmDataframe.setMenu( menu_DataFrame );
 
-        MenuItem mntmJournal = new MenuItem( menu_DataFrame, SWT.CASCADE );
-        mntmJournal.setText( "Journal" );
-
-        Menu menu_4 = new Menu( mntmJournal );
-        mntmJournal.setMenu( menu_4 );
-
-        MenuItem mntmSaveAsRecipe = new MenuItem( menu_4, SWT.NONE );
-        mntmSaveAsRecipe.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
-                                FileDescriptions.BFRECIPE, //
-                                path -> {
-                                    saveRecipe( ingestedDF, path );
-                                } );
-            }
-        } );
-        mntmSaveAsRecipe.setText( "Save As Recipe ..." );
-
         MenuItem mntmSaveToFile = new MenuItem( menu_DataFrame, SWT.NONE );
         mntmSaveToFile.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -211,6 +192,19 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmApplyRecipe.setText( "Apply Recipe ..." );
+
+        MenuItem mntmSaveAsRecipe = new MenuItem( menu_3, SWT.NONE );
+        mntmSaveAsRecipe.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
+                                FileDescriptions.BFRECIPE, //
+                                path -> {
+                                    saveRecipe( ingestedDF, path );
+                                } );
+            }
+        } );
+        mntmSaveAsRecipe.setText( "Save As Recipe ..." );
 
         MenuItem mntmHighlighter = new MenuItem( menu, SWT.CASCADE );
         mntmHighlighter.setText( "Highlighter" );
