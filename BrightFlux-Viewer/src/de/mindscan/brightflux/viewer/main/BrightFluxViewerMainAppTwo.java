@@ -72,6 +72,9 @@ public class BrightFluxViewerMainAppTwo {
 
             // TODO: Implement a startup component, such that some of the components can be initialized before
             //       first usage, (e.g. annotation, highlight, QueryCallbacks, project registry, system services,  ....)
+            // 
+            // initialize the favorite recipes and provide them in a tree structure, which is then used for the
+            // dataframe view.
 
             BrightFluxViewerMainAppTwo window = new BrightFluxViewerMainAppTwo();
             window.open();
