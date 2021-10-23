@@ -174,38 +174,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmFilterText.setText( "Filter Text ..." );
 
-        MenuItem mntmRecipe = new MenuItem( menu, SWT.CASCADE );
-        mntmRecipe.setText( "Recipe" );
-
-        Menu menu_3 = new Menu( mntmRecipe );
-        mntmRecipe.setMenu( menu_3 );
-
-        MenuItem mntmApplyRecipe = new MenuItem( menu_3, SWT.NONE );
-        mntmApplyRecipe.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Select Recipe to Execute", //
-                                FileDescriptions.BFRECIPE, //
-                                path -> {
-                                    applyRecipe( ingestedDF, path );
-                                } );
-            }
-        } );
-        mntmApplyRecipe.setText( "Apply Recipe ..." );
-
-        MenuItem mntmSaveAsRecipe = new MenuItem( menu_3, SWT.NONE );
-        mntmSaveAsRecipe.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
-                                FileDescriptions.BFRECIPE, //
-                                path -> {
-                                    saveRecipe( ingestedDF, path );
-                                } );
-            }
-        } );
-        mntmSaveAsRecipe.setText( "Save As Recipe ..." );
-
         MenuItem mntmHighlighter = new MenuItem( menu, SWT.CASCADE );
         mntmHighlighter.setText( "Highlighter" );
 
@@ -324,6 +292,46 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmLoadHighlights.setText( "Load Highlights ..." );
+
+        MenuItem mntmRecipe = new MenuItem( menu, SWT.CASCADE );
+        mntmRecipe.setText( "Recipe" );
+
+        Menu menu_3 = new Menu( mntmRecipe );
+        mntmRecipe.setMenu( menu_3 );
+
+        MenuItem mntmApplyRecipe = new MenuItem( menu_3, SWT.NONE );
+        mntmApplyRecipe.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, "Select Recipe to Execute", //
+                                FileDescriptions.BFRECIPE, //
+                                path -> {
+                                    applyRecipe( ingestedDF, path );
+                                } );
+            }
+        } );
+        mntmApplyRecipe.setText( "Apply Recipe ..." );
+
+        MenuItem mntmSaveAsRecipe = new MenuItem( menu_3, SWT.NONE );
+        mntmSaveAsRecipe.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, "Save Recipe", //
+                                FileDescriptions.BFRECIPE, //
+                                path -> {
+                                    saveRecipe( ingestedDF, path );
+                                } );
+            }
+        } );
+        mntmSaveAsRecipe.setText( "Save As Recipe ..." );
+
+        // start Favorites Menu ... maybe add to the Recipe Menu...
+        MenuItem mntmRecipeFavorites = new MenuItem( menu, SWT.CASCADE );
+        mntmRecipeFavorites.setText( "Recipe Favorites" );
+
+        Menu menu_4 = new Menu( mntmRecipeFavorites );
+        mntmRecipeFavorites.setMenu( menu_4 );
+        // end Favorites Menu
 
         MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
         mntmRefreshTableContent.addSelectionListener( new SelectionAdapter() {
