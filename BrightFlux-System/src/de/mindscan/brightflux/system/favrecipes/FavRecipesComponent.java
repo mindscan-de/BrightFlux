@@ -79,20 +79,20 @@ public class FavRecipesComponent {
         }
 
         // register all parents as intermediate nodes
-        registerParentalNodeAsIntermediateNodes( key );
+        registerNodeAndParentsAsIntermediateNodes( calculateParent( key ) );
 
         // set leaf node path
         favoriteRecipes.put( key, pathToRecipe );
     }
 
-    private void registerParentalNodeAsIntermediateNodes( String key ) {
+    private void registerNodeAndParentsAsIntermediateNodes( String key ) {
         if (ROOT.equals( key ) || checkKeyIsInterMediateNode( key )) {
             return;
         }
 
         intermediateNodes.add( key );
 
-        registerParentalNodeAsIntermediateNodes( calculateParent( key ) );
+        registerNodeAndParentsAsIntermediateNodes( calculateParent( key ) );
     }
 
     private boolean checkKeyIsInterMediateNode( String key ) {
