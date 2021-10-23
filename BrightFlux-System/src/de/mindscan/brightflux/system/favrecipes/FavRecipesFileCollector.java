@@ -56,7 +56,6 @@ public class FavRecipesFileCollector {
                             .collect( Collectors.toList() );
 
             for (Path file : files) {
-                System.out.println( "Found a recipe. '" + file.toString() + "'" );
                 String fileName = file.getFileName().toString();
 
                 String[] splitFileName = fileName.split( "\\.bfrecipe" );

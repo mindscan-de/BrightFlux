@@ -25,6 +25,10 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -41,6 +45,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesFileCollector;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
@@ -66,6 +72,17 @@ public class BrightFluxViewerMainAppTwo {
      */
     public static void main( String[] args ) {
         try {
+
+            FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+            FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
+
+            String currentDirectory = System.getProperty( "user.dir" );
+            Path favRecipesPath = Paths.get( currentDirectory, "favrecipes" );
+            favRecipesCollector.collect( favRecipesPath );
+
+            List<String> intermediateNodes = favRecipesComponent.getAllIntermediateNodes();
+            System.out.println( intermediateNodes );
+
             // TODO: load some configuration from file
             // TODO: set the current configuration (e.g. the window size)
             // TODO: the configuration an be distributed with configuration events
