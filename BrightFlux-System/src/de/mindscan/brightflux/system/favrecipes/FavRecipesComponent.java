@@ -37,7 +37,7 @@ import java.util.TreeSet;
 public class FavRecipesComponent {
 
     private final static String ROOT = "";
-    private final static String SEPARATOR = "::";
+    private final static String PATH_SEPARATOR = "::";
 
     /**
      * favoriteRecipes only contains leaf-nodes of the tree
@@ -69,11 +69,43 @@ public class FavRecipesComponent {
         if (checkKeyParentIsLeaf( key )) {
             throw new IllegalArgumentException( "" );
         }
+
+        if (checkKeyIsInterMediateNode( key )) {
+            throw new IllegalArgumentException( "" );
+        }
+
+        // register all parents as intermediate nodes
+        registerParentalNodeAsIntermediateNodes( key );
+
+        // set leaf node path
         favoriteRecipes.put( key, pathToRecipe );
     }
 
+    private void registerParentalNodeAsIntermediateNodes( String key ) {
+        if (ROOT.equals( key ) || checkKeyIsInterMediateNode( key )) {
+            return;
+        }
+
+        intermediateNodes.add( key );
+
+        registerParentalNodeAsIntermediateNodes( calculateParent( key ) );
+    }
+
+    private boolean checkKeyIsInterMediateNode( String key ) {
+        return intermediateNodes.contains( key );
+    }
+
     private boolean checkKeyParentIsLeaf( String key ) {
-        return favoriteRecipes.containsKey( calculateParent( key ) );
+        String parentKey = calculateParent( key );
+        if (ROOT.equals( parentKey )) {
+            return false;
+        }
+
+        if (favoriteRecipes.containsKey( parentKey )) {
+            return true;
+        }
+
+        return checkKeyParentIsLeaf( parentKey );
     }
 
     private String calculateParent( String key ) {
@@ -81,8 +113,7 @@ public class FavRecipesComponent {
             return ROOT;
         }
 
-        String[] splitKey = key.split( SEPARATOR );
-
+        String[] splitKey = key.split( PATH_SEPARATOR );
         if (splitKey.length == 1) {
             return ROOT;
         }
@@ -92,7 +123,7 @@ public class FavRecipesComponent {
             newSplitKey[i] = splitKey[i];
         }
 
-        return String.join( SEPARATOR, newSplitKey );
+        return String.join( PATH_SEPARATOR, newSplitKey );
     }
 
 }

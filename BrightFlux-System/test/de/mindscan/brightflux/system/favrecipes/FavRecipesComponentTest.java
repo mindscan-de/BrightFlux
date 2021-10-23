@@ -102,6 +102,22 @@ public class FavRecipesComponentTest {
     }
 
     @Test
+    public void testAddFavorite_AddSThirdLayerPathAddIntermediateNodeAsLeafNode_throwsIllegalArgumentException() throws Exception {
+        // arrange
+        FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+        Path a_a_aPath = Mockito.mock( Path.class, "a_a_aPath" );
+        Path aPath = Mockito.mock( Path.class, "aPath" );
+
+        // act
+        favRecipesComponent.addFavorite( "a::a::a", a_a_aPath );
+
+        // assert
+        assertThrows( IllegalArgumentException.class, () -> {
+            favRecipesComponent.addFavorite( "a", aPath );
+        } );
+    }
+
+    @Test
     public void testAddFavorite_AddFirstLayerPathAddCollidingPrefixNodeAsLeafNode_throwsIllegalArgumentException() throws Exception {
         // arrange
         FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
@@ -114,6 +130,22 @@ public class FavRecipesComponentTest {
         // assert
         assertThrows( IllegalArgumentException.class, () -> {
             favRecipesComponent.addFavorite( "a::a", a_aPath );
+        } );
+    }
+
+    @Test
+    public void testAddFavorite_AddFirstLayerPathAddCollidingPrefixFhirdLevelNodeAsLeafNode_throwsIllegalArgumentException() throws Exception {
+        // arrange
+        FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+        Path a_aPath = Mockito.mock( Path.class, "a_aPath" );
+        Path aPath = Mockito.mock( Path.class, "aPath" );
+
+        // act
+        favRecipesComponent.addFavorite( "a", aPath );
+
+        // assert
+        assertThrows( IllegalArgumentException.class, () -> {
+            favRecipesComponent.addFavorite( "a::a::a", a_aPath );
         } );
     }
 
