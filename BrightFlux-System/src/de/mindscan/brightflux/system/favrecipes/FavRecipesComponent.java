@@ -122,12 +122,7 @@ public class FavRecipesComponent {
             return ROOT;
         }
 
-        String[] newSplitKey = new String[splitKey.length - 1];
-        for (int i = 0; i < newSplitKey.length; i++) {
-            newSplitKey[i] = splitKey[i];
-        }
-
-        return buildKey( newSplitKey );
+        return buildParentKey( splitKey );
     }
 
     public String[] splitKey( String key ) {
@@ -138,9 +133,22 @@ public class FavRecipesComponent {
         return String.join( PATH_SEPARATOR, splitKey );
     }
 
+    private String buildParentKey( String[] splitKey ) {
+        String[] newSplitKey = new String[splitKey.length - 1];
+        for (int i = 0; i < newSplitKey.length; i++) {
+            newSplitKey[i] = splitKey[i];
+        }
+
+        return buildKey( newSplitKey );
+    }
+
     // To build the menu structure
     public List<String> getAllIntermediateNodes() {
         return intermediateNodes.stream().collect( Collectors.toList() );
+    }
+
+    public List<String> getAllLeafNodes() {
+        return favoriteRecipes.keySet().stream().collect( Collectors.toList() );
     }
 
 }
