@@ -73,7 +73,7 @@ public class FavRecipesFileCollector {
                     String key = favoriteRecipes.buildKey( target );
                     favoriteRecipes.addFavorite( key, file );
                 }
-                catch (Exception e) {
+                catch (IllegalArgumentException e) {
                     System.out.println( "ERROR Favorites Recipes. " + file.toString() + " ignored, because this violates Naming conventions." );
                     e.printStackTrace();
                 }
