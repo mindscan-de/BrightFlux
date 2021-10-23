@@ -113,7 +113,7 @@ public class FavRecipesComponent {
             return ROOT;
         }
 
-        String[] splitKey = key.split( PATH_SEPARATOR );
+        String[] splitKey = splitKey( key );
         if (splitKey.length == 1) {
             return ROOT;
         }
@@ -123,7 +123,15 @@ public class FavRecipesComponent {
             newSplitKey[i] = splitKey[i];
         }
 
-        return String.join( PATH_SEPARATOR, newSplitKey );
+        return buildKey( newSplitKey );
+    }
+
+    public String[] splitKey( String key ) {
+        return key.split( PATH_SEPARATOR );
+    }
+
+    public String buildKey( String[] splitKey ) {
+        return String.join( PATH_SEPARATOR, splitKey );
     }
 
 }
