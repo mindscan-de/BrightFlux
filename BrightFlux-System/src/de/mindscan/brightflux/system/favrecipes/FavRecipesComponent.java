@@ -27,17 +27,27 @@ package de.mindscan.brightflux.system.favrecipes;
 
 import java.nio.file.Path;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * This component detects all recipes in a favorites folder and collect these 
  */
 public class FavRecipesComponent {
 
+    private final static String ROOT = "";
+    private final static String SEPARATOR = "::";
+
     /**
      * favoriteRecipes only contains leaf-nodes of the tree
      */
     private Map<String, Path> favoriteRecipes = new TreeMap<>();
+
+    /**
+     * this contains the Nodeset of non recipes.
+     */
+    private Set<String> intermediateNodes = new TreeSet<>();
 
     /**
      * 
@@ -55,9 +65,34 @@ public class FavRecipesComponent {
     }
 
     public void addFavorite( String key, Path pathToRecipe ) {
-
-        // TODO: only put recipes in when the key parent is no leaf node
+        // only put recipes in when the parent key is no leaf node
+        if (checkKeyParentIsLeaf( key )) {
+            throw new IllegalArgumentException( "" );
+        }
         favoriteRecipes.put( key, pathToRecipe );
+    }
+
+    private boolean checkKeyParentIsLeaf( String key ) {
+        return favoriteRecipes.containsKey( calculateParent( key ) );
+    }
+
+    private String calculateParent( String key ) {
+        if (key.isEmpty()) {
+            return ROOT;
+        }
+
+        String[] splitKey = key.split( SEPARATOR );
+
+        if (splitKey.length == 1) {
+            return ROOT;
+        }
+
+        String[] newSplitKey = new String[splitKey.length - 1];
+        for (int i = 0; i < newSplitKey.length; i++) {
+            newSplitKey[i] = splitKey[i];
+        }
+
+        return String.join( SEPARATOR, newSplitKey );
     }
 
 }

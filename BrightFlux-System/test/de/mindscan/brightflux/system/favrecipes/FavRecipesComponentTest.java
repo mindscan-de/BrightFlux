@@ -101,4 +101,20 @@ public class FavRecipesComponentTest {
         } );
     }
 
+    @Test
+    public void testAddFavorite_AddFirstLayerPathAddCollidingPrefixNodeAsLeafNode_throwsIllegalArgumentException() throws Exception {
+        // arrange
+        FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+        Path a_aPath = Mockito.mock( Path.class, "a_aPath" );
+        Path aPath = Mockito.mock( Path.class, "aPath" );
+
+        // act
+        favRecipesComponent.addFavorite( "a", aPath );
+
+        // assert
+        assertThrows( IllegalArgumentException.class, () -> {
+            favRecipesComponent.addFavorite( "a::a", a_aPath );
+        } );
+    }
+
 }
