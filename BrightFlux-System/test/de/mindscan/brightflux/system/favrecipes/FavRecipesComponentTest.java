@@ -137,7 +137,7 @@ public class FavRecipesComponentTest {
     public void testAddFavorite_AddFirstLayerPathAddCollidingPrefixFhirdLevelNodeAsLeafNode_throwsIllegalArgumentException() throws Exception {
         // arrange
         FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
-        Path a_aPath = Mockito.mock( Path.class, "a_aPath" );
+        Path a_a_aPath = Mockito.mock( Path.class, "a_a_aPath" );
         Path aPath = Mockito.mock( Path.class, "aPath" );
 
         // act
@@ -145,7 +145,7 @@ public class FavRecipesComponentTest {
 
         // assert
         assertThrows( IllegalArgumentException.class, () -> {
-            favRecipesComponent.addFavorite( "a::a::a", a_aPath );
+            favRecipesComponent.addFavorite( "a::a::a", a_a_aPath );
         } );
     }
 

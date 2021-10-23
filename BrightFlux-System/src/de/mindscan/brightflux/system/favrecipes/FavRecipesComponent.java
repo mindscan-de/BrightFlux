@@ -26,10 +26,12 @@
 package de.mindscan.brightflux.system.favrecipes;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 /**
  * This component detects all recipes in a favorites folder and collect these 
@@ -67,11 +69,13 @@ public class FavRecipesComponent {
     public void addFavorite( String key, Path pathToRecipe ) {
         // only put recipes in when the parent key is no leaf node
         if (checkKeyParentIsLeaf( key )) {
-            throw new IllegalArgumentException( "" );
+            throw new IllegalArgumentException(
+                            "A parent of given key '" + key + "' is already a Leaf Node. Try renaming this recipe: " + pathToRecipe.toString() );
         }
 
         if (checkKeyIsInterMediateNode( key )) {
-            throw new IllegalArgumentException( "" );
+            throw new IllegalArgumentException(
+                            "This key '" + key + "' is part of another registered recipe. Try renaming this recipe: " + pathToRecipe.toString() );
         }
 
         // register all parents as intermediate nodes
@@ -132,6 +136,11 @@ public class FavRecipesComponent {
 
     public String buildKey( String[] splitKey ) {
         return String.join( PATH_SEPARATOR, splitKey );
+    }
+
+    // To build the menu structure
+    public List<String> getAllIntermediateNodes() {
+        return intermediateNodes.stream().collect( Collectors.toList() );
     }
 
 }
