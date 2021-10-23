@@ -142,11 +142,12 @@ public class FavRecipesComponent {
         return buildKey( newSplitKey );
     }
 
-    // To build the menu structure
+    // To build the cascading menu structure
     public List<String> getAllIntermediateNodes() {
         return intermediateNodes.stream().collect( Collectors.toList() );
     }
 
+    // To build the menu item structure
     public List<String> getAllLeafNodes() {
         return favoriteRecipes.keySet().stream().collect( Collectors.toList() );
     }
