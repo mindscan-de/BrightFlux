@@ -34,6 +34,9 @@ import java.util.TreeMap;
  */
 public class FavRecipesComponent {
 
+    /**
+     * favoriteRecipes only contains leaf-nodes of the tree
+     */
     private Map<String, Path> favoriteRecipes = new TreeMap<>();
 
     /**
@@ -51,7 +54,10 @@ public class FavRecipesComponent {
         return favoriteRecipes.containsKey( key );
     }
 
-    public void addFavorite( String key, Path favoriteRecipePath ) {
+    public void addFavorite( String key, Path pathToRecipe ) {
 
+        // TODO: only put recipes in when the key parent is no leaf node
+        favoriteRecipes.put( key, pathToRecipe );
     }
+
 }
