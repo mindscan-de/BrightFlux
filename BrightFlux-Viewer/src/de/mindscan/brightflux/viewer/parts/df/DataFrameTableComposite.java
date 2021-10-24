@@ -75,6 +75,26 @@ import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
  */
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
 
+    /**
+     * 
+     */
+    private final class PathSelectionAdapter extends SelectionAdapter {
+
+        private String key;
+
+        /**
+         * 
+         */
+        public PathSelectionAdapter( String key ) {
+            this.key = key;
+        }
+
+        public void widgetSelected( SelectionEvent e ) {
+            applyFavoriteRecipe( key );
+        }
+
+    }
+
     private Table table;
 
     private ProjectRegistry projectRegistry;
@@ -198,6 +218,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmEnableFeature.setText( "Enable Feature" );
 
+        new MenuItem( menu_1, SWT.SEPARATOR );
+
         MenuItem mntmHighlightYellow = new MenuItem( menu_1, SWT.NONE );
         mntmHighlightYellow.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -268,6 +290,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmHighlightNone.setText( "Highlight Clear" );
 
+        new MenuItem( menu_1, SWT.SEPARATOR );
+
         MenuItem mntmSaveHighlights = new MenuItem( menu_1, SWT.NONE );
         mntmSaveHighlights.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -331,16 +355,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmSaveAsRecipe.setText( "Save As Recipe ..." );
 
-        // start Favorites Menu ... maybe add to the Recipe Menu...
-        MenuItem mntmRecipeFavorites = new MenuItem( menu, SWT.CASCADE );
-        mntmRecipeFavorites.setText( "Recipe Favorites" );
+        new MenuItem( menu_3, SWT.SEPARATOR );
 
-        Menu menu_4 = new Menu( mntmRecipeFavorites );
-        mntmRecipeFavorites.setMenu( menu_4 );
+        // start Favorites Menu ... Append to the Recipe Menu...
+        appendFavoriteRecipeShortcutMenus( SystemServices.getInstance(), menu_3 );
+        appendFavoriteRecipeShortcutItems( SystemServices.getInstance() );
 
-        appendFavoriteRecipeShortcutMenus( SystemServices.getInstance(), menu_4 );
-        // appendFavoriteRecipeShortcutItems()
-        // end Favorites Menu
+        new MenuItem( menu, SWT.SEPARATOR );
 
         MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
         mntmRefreshTableContent.addSelectionListener( new SelectionAdapter() {
@@ -512,4 +533,39 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
+    private void appendFavoriteRecipeShortcutItems( SystemServices systemServices ) {
+
+        FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
+
+        if (favRecipeService == null) {
+            return;
+        }
+
+        for (String favoriteRecipeKey : favRecipeService.getAllLeafNodes()) {
+            String parentKey = FavRecipesKeyUtils.calculateParent( favoriteRecipeKey );
+            if (parentKey == null) {
+                parentKey = "";
+            }
+            Menu parentMenu = favoriteMenus.get( parentKey );
+
+            // Build the menu for the correct parentMenu
+            MenuItem menuItem = new MenuItem( parentMenu, SWT.NONE );
+
+            SelectionAdapter selectionAdapter = new PathSelectionAdapter( favoriteRecipeKey );
+            menuItem.addSelectionListener( selectionAdapter );
+
+            menuItem.setText( FavRecipesKeyUtils.calculateName( favoriteRecipeKey ) );
+
+        }
+
+    }
+
+    public void applyFavoriteRecipe( String key ) {
+        SystemServices systemServices = SystemServices.getInstance();
+        FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
+
+        Path favoriteRecipePath = favRecipeService.getFavorite( key );
+
+        applyRecipe( ingestedDF, favoriteRecipePath );
+    }
 }
