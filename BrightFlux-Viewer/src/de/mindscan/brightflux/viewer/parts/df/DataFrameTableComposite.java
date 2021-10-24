@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.parts.df;
 
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.IInputValidator;
@@ -60,9 +61,12 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
@@ -84,6 +88,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private HighlighterComponent highlighterComponent;
 
     protected DataFrameRow currentSelectedRow;
+
+    private Map<String, Menu> favoriteMenus = new HashMap<>();
 
     /**
      * Create the composite.
@@ -331,6 +337,9 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
         Menu menu_4 = new Menu( mntmRecipeFavorites );
         mntmRecipeFavorites.setMenu( menu_4 );
+
+        appendFavoriteRecipeShortcutMenus( SystemServices.getInstance(), menu_4 );
+        // appendFavoriteRecipeShortcutItems()
         // end Favorites Menu
 
         MenuItem mntmRefreshTableContent = new MenuItem( menu, SWT.NONE );
@@ -473,4 +482,34 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     public void setHighlighterComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
     }
+
+    private void appendFavoriteRecipeShortcutMenus( SystemServices systemServices, Menu menu ) {
+        favoriteMenus.put( "", menu );
+
+        FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
+
+        if (favRecipeService == null) {
+            return;
+        }
+
+        for (String favoriteRecipeKey : favRecipeService.getAllIntermediateNodes()) {
+            // select the menu because of the parent key:
+            String parentKey = FavRecipesKeyUtils.calculateParent( favoriteRecipeKey );
+            if (parentKey == null) {
+                parentKey = "";
+            }
+            Menu parentMenu = favoriteMenus.get( parentKey );
+
+            // Build the menu for the correct parentMenu
+            MenuItem menuItem = new MenuItem( parentMenu, SWT.CASCADE );
+            menuItem.setText( FavRecipesKeyUtils.calculateName( favoriteRecipeKey ) );
+
+            Menu subMenu = new Menu( menuItem );
+            menuItem.setMenu( subMenu );
+
+            // register created the new menu for the current favoriteRecipeKey
+            favoriteMenus.put( favoriteRecipeKey, subMenu );
+        }
+    }
+
 }
