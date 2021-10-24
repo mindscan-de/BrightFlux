@@ -1,0 +1,9 @@
+{
+  "recipeEntries": [
+    {
+      "timestamp": 0,
+      "entryType": "ROWCALLBACK",
+      "logMessage": "ROWCALLBACK highlight_pink FROM df"
+    }
+  ]
+}
