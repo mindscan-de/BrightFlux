@@ -39,8 +39,6 @@ import java.util.stream.Collectors;
 public class FavRecipesComponent {
 
     private final static String ROOT = "";
-    private final static String PATH_SEPARATOR = "::";
-
     /**
      * favoriteRecipes only contains leaf-nodes of the tree
      */
@@ -79,7 +77,7 @@ public class FavRecipesComponent {
         }
 
         // register all parents as intermediate nodes
-        registerNodeAndParentsAsIntermediateNodes( calculateParent( key ) );
+        registerNodeAndParentsAsIntermediateNodes( FavRecipesKeyUtils.calculateParent( key ) );
 
         // set leaf node path
         favoriteRecipes.put( key, pathToRecipe );
@@ -92,7 +90,7 @@ public class FavRecipesComponent {
 
         intermediateNodes.add( key );
 
-        registerNodeAndParentsAsIntermediateNodes( calculateParent( key ) );
+        registerNodeAndParentsAsIntermediateNodes( FavRecipesKeyUtils.calculateParent( key ) );
     }
 
     private boolean checkKeyIsInterMediateNode( String key ) {
@@ -100,7 +98,7 @@ public class FavRecipesComponent {
     }
 
     private boolean checkKeyParentIsLeaf( String key ) {
-        String parentKey = calculateParent( key );
+        String parentKey = FavRecipesKeyUtils.calculateParent( key );
         if (ROOT.equals( parentKey )) {
             return false;
         }
@@ -110,36 +108,6 @@ public class FavRecipesComponent {
         }
 
         return checkKeyParentIsLeaf( parentKey );
-    }
-
-    private String calculateParent( String key ) {
-        if (key.isEmpty()) {
-            return ROOT;
-        }
-
-        String[] splitKey = splitKey( key );
-        if (splitKey.length == 1) {
-            return ROOT;
-        }
-
-        return buildParentKey( splitKey );
-    }
-
-    public String[] splitKey( String key ) {
-        return key.split( PATH_SEPARATOR );
-    }
-
-    public String buildKey( String[] splitKey ) {
-        return String.join( PATH_SEPARATOR, splitKey );
-    }
-
-    private String buildParentKey( String[] splitKey ) {
-        String[] newSplitKey = new String[splitKey.length - 1];
-        for (int i = 0; i < newSplitKey.length; i++) {
-            newSplitKey[i] = splitKey[i];
-        }
-
-        return buildKey( newSplitKey );
     }
 
     // To build the cascading menu structure

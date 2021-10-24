@@ -69,7 +69,7 @@ public class FavRecipesFileCollector {
                 }
 
                 try {
-                    String key = favoriteRecipes.buildKey( target );
+                    String key = FavRecipesKeyUtils.buildKey( target );
                     favoriteRecipes.addFavorite( key, file );
                 }
                 catch (IllegalArgumentException e) {
