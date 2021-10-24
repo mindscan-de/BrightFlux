@@ -63,4 +63,12 @@ public class FavRecipesKeyUtils {
         return buildParentKey( splitKey );
     }
 
+    public static String calculateName( String key ) {
+        if (key.isEmpty()) {
+            return ROOT;
+        }
+
+        String[] splitKey = splitKey( key );
+        return splitKey[splitKey.length - 1];
+    }
 }
