@@ -95,6 +95,8 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * load highlight file - this feature is just temporary and will be embedded into the loganalysis project file
   * colorization of a line of a dataframe via DFQL
 * Show dataframe hierarchy for the current selected dataframe
+* Provide favorite recipes directly into context menu
+
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
@@ -157,7 +159,6 @@ Startup
 * UI/UX
   * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
   * Copy current selected row to clipboard
-  * Load favorite recipes directly into context menu, should be depending on the data frame columns.
   * add Markers to annotation dataframe
   * add Videotimestamp annotations to annotation dataframe
   
