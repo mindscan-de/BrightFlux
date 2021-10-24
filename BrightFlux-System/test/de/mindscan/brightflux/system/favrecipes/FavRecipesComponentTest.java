@@ -223,4 +223,36 @@ public class FavRecipesComponentTest {
         assertThat( result, containsInAnyOrder( "a", "a::a" ) );
     }
 
+    @Test
+    public void testGetAllIntermediateNodes_TwoLevelThreeItemsSplitAtLevelOne_ContainsThreeIntermediateNodes() throws Exception {
+        // arrange
+        FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+        Path a_a_aPath = Mockito.mock( Path.class, "a_a_aPath" );
+        Path a_b_aPath = Mockito.mock( Path.class, "a_b_aPath" );
+        favRecipesComponent.addFavorite( "a::a::a", a_a_aPath );
+        favRecipesComponent.addFavorite( "a::b::a", a_b_aPath );
+
+        // act
+        List<String> result = favRecipesComponent.getAllIntermediateNodes();
+
+        // assert
+        assertThat( result, containsInAnyOrder( "a", "a::a", "a::b" ) );
+    }
+
+    @Test
+    public void testGetAllIntermediateNodes_TwoLevelThreeItemsSplitAtLevelTwo_ContainsThreeIntermediateNodes() throws Exception {
+        // arrange
+        FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+        Path a_a_aPath = Mockito.mock( Path.class, "a_a_aPath" );
+        Path a_a_bPath = Mockito.mock( Path.class, "a_a_bPath" );
+        favRecipesComponent.addFavorite( "a::a::a", a_a_aPath );
+        favRecipesComponent.addFavorite( "a::a::b", a_a_bPath );
+
+        // act
+        List<String> result = favRecipesComponent.getAllIntermediateNodes();
+
+        // assert
+        assertThat( result, containsInAnyOrder( "a", "a::a" ) );
+    }
+
 }
