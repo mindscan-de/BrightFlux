@@ -49,6 +49,7 @@ import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesFileCollector;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
@@ -73,13 +74,18 @@ public class BrightFluxViewerMainAppTwo {
     public static void main( String[] args ) {
         try {
 
-            FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
-            FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
+            // STARTUP : System Services
+            SystemServices systemServices = SystemServices.getInstance();
 
+            // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
             String currentDirectory = System.getProperty( "user.dir" );
             Path favRecipesPath = Paths.get( currentDirectory, "favrecipes" );
+            FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
+            FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
             favRecipesCollector.collect( favRecipesPath );
+            systemServices.setFavRecipeServices( favRecipesComponent );
 
+            // some debug...
             List<String> intermediateNodes = favRecipesComponent.getAllIntermediateNodes();
             System.out.println( intermediateNodes );
 

@@ -25,11 +25,15 @@
  */
 package de.mindscan.brightflux.system.services;
 
+import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+
 /**
  * As much as I dislike these Singletons, these are actually mockable and configurable objects in 
  * terms of unit tests speaking.
  */
 public class SystemServices {
+
+    private FavRecipesComponent favRecipesServices;
 
     private static class SystemServicesHolder {
         private static SystemServices instance = new SystemServices();
@@ -40,6 +44,15 @@ public class SystemServices {
     }
 
     private SystemServices() {
+    }
+
+    // 
+    public void setFavRecipeServices( FavRecipesComponent favRecipesServices ) {
+        this.favRecipesServices = favRecipesServices;
+    }
+
+    public FavRecipesComponent getFavRecipesServices() {
+        return favRecipesServices;
     }
 
     // AnnotationService
