@@ -115,7 +115,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFAbstractDataFrameEvent) {
                     DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
-                    if ("logAnalysisFrame".equals( frameToAnnotate.getName() )) {
+                    if (AnnotatorComponent.ANNOTATION_DATAFRAME_NAME.equals( frameToAnnotate.getName() )) {
                         // copy reference for the loganalysis frame
                         BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
                     }

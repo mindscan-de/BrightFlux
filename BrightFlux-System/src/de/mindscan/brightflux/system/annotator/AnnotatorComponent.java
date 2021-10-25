@@ -116,9 +116,8 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFAbstractDataFrameEvent) {
                     DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
-                    if ("logAnalysisFrame".equals( frameToAnnotate.getName() )) {
+                    if (ANNOTATION_DATAFRAME_NAME.equals( frameToAnnotate.getName() )) {
                         AnnotatorComponent.this.logAnalysisFrame = frameToAnnotate;
-                        System.out.println( "Found the annotator dataframe" );
                     }
                 }
             }
