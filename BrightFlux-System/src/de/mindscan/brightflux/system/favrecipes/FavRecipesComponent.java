@@ -103,7 +103,7 @@ public class FavRecipesComponent {
             return false;
         }
 
-        if (favoriteRecipes.containsKey( parentKey )) {
+        if (isFavorite( parentKey )) {
             return true;
         }
 
