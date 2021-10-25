@@ -26,9 +26,11 @@
 package de.mindscan.brightflux.viewer.parts.df;
 
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -68,6 +70,7 @@ import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
@@ -373,7 +376,9 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmCopytoclipboard.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: copy current selected row to clipboard
+                String rowValue = Arrays.stream( currentSelectedRow.getAll() ).map( v -> String.valueOf( v ) ).collect( Collectors.joining( "\t" ) );
+                BFCommand command = UICommandFactory.copyToClipboard( parentShell, rowValue );
+                dispatchCommand( command );
             }
         } );
         mntmCopytoclipboard.setText( "Copy Row to Clipboard" );
