@@ -82,9 +82,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
         private String key;
 
-        /**
-         * 
-         */
         public PathSelectionAdapter( String key ) {
             this.key = key;
         }
