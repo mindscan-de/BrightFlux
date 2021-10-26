@@ -96,6 +96,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * colorization of a line of a dataframe via DFQL
 * Show dataframe hierarchy for the current selected dataframe
 * Provide favorite recipes directly into context menu
+* Copy current selected row to clipboard
 
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -108,81 +109,135 @@ This whole thing is going through a permanent dogfooding phase.
 
 ## Planned Features
 
+### Unclassified
+
 Some of the planned features are: (I will have to sort and reprioritize this... That is getting out of hand...)
 
-* Treat logs like data frames and use transformations on columns
-  * [LAPF] save the transformations and dataframe configuration to an analysis project file
-* Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
-  * DataSource Tokenizer for Dataframe Columns  
-* Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
-  * use of templates for creating a report
-* Create Sequence-Diagrams from Log messages / log-dataframes
-* Create Activity-Diagrams from Log messages / log-dataframes
-* Have swim lanes for different Components
-  * save swim lane configuration into an analysis project file
 * have multiple views / diagram options for the same logs to understand particular system behavior
 * Export the analysis result in short form
-* Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
 * Using recipes for reproducing some analysis on a second log
   * using labeling techniques to mark suspicious occurrences and make them available for machine learning training
   * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threshold
   * NER for log messages
-* some dictionary or knowledge base articles for certain messages to provide context
 * add links and options to use a code search engine and log search engine for the messages
   * did we see that message more often, but we never thought about it before
   * since what version of the system we see that message
   * where does this message come from in the code and annotate this message with a software component / swim-lane
-* transform logs from one system (source) to the other - e.g. recovery mode if one of the systems stopped logging but the other system was receiving the logs as well and logged them
-  * reconstruct logs
 
-Log-Analysis-Project-File
-  
-* [LAPF] Annotate Logmessages
-  * [LAPF] save annotations to an analysis project file
-  * [LAPF] load annotations from analyis project file for a file
-  
-DataFrame Core Stuff  
 
+* UI/UX
+  * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
+  * add Markers to annotation dataframe
+  * add Videotimestamp annotations to annotation dataframe
+
+
+* Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
+* provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
+* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
+
+
+* Machine Learning
+  * "Fraud detection" - Predict next line and evaluate, how much the next line was expected... If not expected -> Found Anomaly
+  * Extract / Train / Predict / Model Update / ML Model Server
+
+
+### Next
+
+DataFrame-Core-Ingest
+* [DFINGEST] Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
+  * [DFINGEST] DataSource Tokenizer for Dataframe Columns  
+* [DFINGEST] ingest inner encodings of data in certain columns of the database in case, using selectors (SQL-Like) and then a format/parser description  
+
+
+DataFrame-Core
 * [DFCORE] Support original Index
   * [DFCORE] copy the original index in a derived dataframe 
 * [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
 * [DFCORE] reindex "__idx" row on dataframe filtering and dataframe column selection
 
-Startup 
-  
-* Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
+
+### Later
+
+Log-Analysis-Project-File
+* Introduce Project Files
+* Treat logs like data frames and use transformations on columns
+  * [LAPF] save the transformations and dataframe configuration to an analysis project file
+* [LAPF] Logmessage Annotations
+  * [LAPF] save annotations to an analysis project file
+  * [LAPF] load annotations from analyis project file for a file
 
 
+Swim lanes
+* Swimlanes are simply select statements
+* Have swim lanes for different Components
+  * save swim lane configuration into an analysis project file
+
+
+Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
 
 
-* UI/UX
-  * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
-  * Copy current selected row to clipboard
-  * add Markers to annotation dataframe
-  * add Videotimestamp annotations to annotation dataframe
-  
-
-* Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
-* identify same events for different log sources (e.g. in case they are connected) and correlate logs to each other using very different log formats.
-* provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
-* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
+DFQL
+* Suppport unary NOT operator
 
 
-* indexing dataframes column wise for future search operations
+Application-Startup
+* Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
+* Provide a script or configuration for the application startup.
+
+Reporting
+* Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
+  * use of templates for creating a report
 
 
-* Ingest text files into table oriented dataframes
-  * use json file based - format and parser description 
-* ingest binary files into table oriented dataframes
-  * use json file based - format and parser description 
-* ingest inner encodings of data in certain columns of the database in case, using selectors (SQL-Like) and then a format/parser description
+### Even Later
 
-  
+Exporters
+* Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
+
+
+Decision Tree Analysis
+* combine that system with the CheapLithium system (decision gag/decisiontree) for automated decisions based on the content of log files for automated log file analysis
+
+
+Search Engine Support
+* combine that system with the FuriousIron code search system
+
+
+Generic text File Readers
+* The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
+  * Ingest text files into table oriented dataframes
+    * use json file based - format and parser description 
+
+
+Generic Binary File Readers
+* The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
+  * ingest binary files into table oriented dataframes
+    * use json file based - format and parser description 
+
+
+UML Image Generator
+* Create Sequence-Diagrams from Log messages / log-dataframes
+* Create Activity-Diagrams from Log messages / log-dataframes
+
+
+Support DLT-Files
+* Reverse-Engineer the DLT-Format - (See Genivi DLT-Viewer)
+
+
+### Never?
+
+Client Server / Windowed Data-Retrieval
 * use a client server approach for the dataframe processing vs presentation and maybe for performance
 
 
+Internal Search Engine to search in Dataframe-Columns
+* indexing dataframes column wise for future search operations
 
-* combine that system with the CheapLithium system (decision gag/decisiontree) for automated decisions based on the content of log files for automated log file analysis
-* combine that system with the FuriousIron code search system
 
+* transform logs from one system (source) to the other - e.g. recovery mode if one of the systems stopped logging but the other system was receiving the logs as well and logged them
+  * reconstruct logs
+* identify same events for different log sources (e.g. in case they are connected) and correlate logs to each other using very different log formats.
+
+
+* some dictionary or knowledge base articles for certain messages to provide context
