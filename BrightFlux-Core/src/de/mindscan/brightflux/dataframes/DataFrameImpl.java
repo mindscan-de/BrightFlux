@@ -54,6 +54,12 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * redevelop it once i figured out, what I really need as a minimum viable product.
  * 
  * This whole code is garbage right now. But at least it should work for a prototype.
+ * 
+ * Check if we need this:
+ * - remove/delete data frame column
+ * - rename data frame column
+ * - replace data frame column
+ *
  */
 public class DataFrameImpl implements DataFrame {
 
@@ -187,7 +193,7 @@ public class DataFrameImpl implements DataFrame {
                 };
             }
 
-            // TODO: we need to redindex the __idx column each time.... (it actually is not that simple ....
+            // TODO: we need to reindex the __idx column each time.... (it actually is not that simple ....
             //       for some time it might be still okay to iterate over the original columnindex... but this is quite a stretch... and a hack.
             // TODO: iterate over the __idx column next... replace this current implementation.
             return new Iterator<DataFrameRow>() {
@@ -323,10 +329,6 @@ public class DataFrameImpl implements DataFrame {
         return column.get( rowIndex );
     }
 
-    // TODO? is that needed? remove/delete data frame column
-    // TODO? is that needed? rename data frame column
-    // TODO? is that needed? replace data frame column
-
     @Override
     public DataFrame head() {
         return head( DEFAULT_HEAD_ROW_COUNT );
@@ -380,7 +382,9 @@ public class DataFrameImpl implements DataFrame {
      */
     @Override
     public Collection<DataFrameRow> getRows() {
-        // TODO maybe we have to work around this... for sparse frames
+        // TODO we have to work around this... for sparse frames
+        // another idea is to use the __idx column as the source of truth of the iterator - this will work in case 
+        // that __idx is reindexed... on operations.
         return getRows( 0, size );
     }
 
@@ -422,7 +426,7 @@ public class DataFrameImpl implements DataFrame {
     }
 
     private void initRows( Collection<DataFrameRow> otherDFRows, DataFrameColumn<?>[] otherDFColumns ) {
-        // TODO: make sure the dataframe is empty
+        // TODO: make sure the dataframe is empty?
 
         // so first we need to create clones of the DataFrameColumns without the values.
         for (DataFrameColumn<?> otherColumn : otherDFColumns) {
