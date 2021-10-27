@@ -131,14 +131,9 @@ Some of the planned features are: (I will have to sort and reprioritize this... 
   * add Videotimestamp annotations to annotation dataframe
 
 
-* Support log correlation and videos, e.g. identify timestamps in video and correlate them to logs
 * provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
 * sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
 
-
-* Machine Learning
-  * "Fraud detection" - Predict next line and evaluate, how much the next line was expected... If not expected -> Found Anomaly
-  * Extract / Train / Predict / Model Update / ML Model Server
 
 
 ### Next
@@ -175,6 +170,7 @@ Swim lanes
 
 Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
+* Support log correlation for videos, e.g. identify timestamps in video and correlate them to logs
 
 
 DFQL
@@ -223,6 +219,13 @@ UML Image Generator
 
 Support DLT-Files
 * Reverse-Engineer the DLT-Format - (See Genivi DLT-Viewer)
+
+
+* Machine Learning and Pattern recognition and Anomality Detection on Log-Data 
+  * We need Column-Ingest processing to clean up the data / separate the data from metainformation e.g. Filename, methodname, line of southside implementation
+  * "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found Anomaly
+  * Extract / Train / Predict / Classification / Model Update / ML Model Server
+
 
 
 ### Never?
