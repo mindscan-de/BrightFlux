@@ -627,13 +627,7 @@ public class DataFrameImpl implements DataFrame {
         return rowIndex;
     }
 
-//    // column-names
-//    // columns
-//    // rows
-//
 //    // how about calculated columns (eg. uncorrected time, synced time?)
-//    // each dataframe has an implicit or explicit id-column (which can serve as a primary key)
-//    // they can be numbered, but they can also be sparse integers (e.g. position of a start of a line in a file)
 
     // #####################################################################################################
     // Do the write operations here as a service of this API or let the consumer of this data frame find out 
