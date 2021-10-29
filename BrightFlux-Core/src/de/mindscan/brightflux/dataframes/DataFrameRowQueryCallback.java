@@ -26,18 +26,14 @@
 package de.mindscan.brightflux.dataframes;
 
 /**
- * Instead of filtering a dataframe, we might want to do something special for
- * each row matching a row predicate. E.g. we want to highlight rows according
- * to a matching predicate.
+ * Instead of filtering a dataframe, we might want to apply something special
+ * on each row matching a certain row predicate. E.g. we want to highlight rows
+ * according to a matching predicate.
  * 
  * We have to provide a callback to the query operation. A DataFrameQueryCallback
  * implements the operation we want to perform on each row.
  * 
- * That's basically the idea. 
- * 
- * TODO: I currently have no idea to perform that query well, such that the 
- *       QueryCallback can be handled like a plugin. Maybe it will be handled
- *       in the recipe-Command  
+ * That's basically the idea for this interface. 
  */
 public interface DataFrameRowQueryCallback {
 
