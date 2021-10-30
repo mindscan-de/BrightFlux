@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
 
 public class DataFrameColumnFactoryTest {
 
@@ -27,6 +28,30 @@ public class DataFrameColumnFactoryTest {
 
         // assert
         assertThat( result, is( instanceOf( expectedColumnType ) ) );
+    }
+
+    @ParameterizedTest
+    @MethodSource( "provideColumnTypeColumnType" )
+    public void testCreateColumnForTypeString_givenColumnType_reportsSameOrEquivalentColumnType( String type, String expectedColumnType ) throws Exception {
+        // arrange
+
+        // act
+        String result = DataFrameColumnFactory.createColumnForType( type ).getColumnType();
+
+        // assert
+        assertThat( result, is( expectedColumnType ) );
+    }
+
+    @ParameterizedTest
+    @MethodSource( "provideColumnTypeColumnValueType" )
+    public void testCreateColumnForTypeString_givenColumnType_reportsSameOrEquivalentCalueType( String type, String expectedValueType ) throws Exception {
+        // arrange
+
+        // act
+        String result = DataFrameColumnFactory.createColumnForType( type ).getColumnValueType();
+
+        // assert
+        assertThat( result, is( expectedValueType ) );
     }
 
     @ParameterizedTest
@@ -100,9 +125,35 @@ public class DataFrameColumnFactoryTest {
                         Arguments.of( ColumnTypes.COLUMN_TYPE_BOOLEAN, BooleanColumn.class ), //
                         Arguments.of( ColumnTypes.COLUMN_TYPE_STRING, StringColumn.class ), //
                         Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_STRING, SparseStringColumn.class ), //
-                        Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_INT, SparseIntegerColumn.class )
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_INT, SparseIntegerColumn.class ) );
+    }
 
-        );
+    private static Stream<Arguments> provideColumnTypeColumnType() {
+        return Stream.of( //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_INT, ColumnTypes.COLUMN_TYPE_INT ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_INTEGER, ColumnTypes.COLUMN_TYPE_INT ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_LONG, ColumnTypes.COLUMN_TYPE_LONG ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_FLOAT, ColumnTypes.COLUMN_TYPE_FLOAT ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_DOUBLE, ColumnTypes.COLUMN_TYPE_DOUBLE ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_BOOL, ColumnTypes.COLUMN_TYPE_BOOL ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_BOOLEAN, ColumnTypes.COLUMN_TYPE_BOOL ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_STRING, ColumnTypes.COLUMN_TYPE_STRING ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_STRING, ColumnTypes.COLUMN_TYPE_SPARSE_STRING ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_INT, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) );
+    }
+
+    private static Stream<Arguments> provideColumnTypeColumnValueType() {
+        return Stream.of( //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_INT, ColumnValueTypes.COLUMN_TYPE_INT ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_INTEGER, ColumnValueTypes.COLUMN_TYPE_INT ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_LONG, ColumnValueTypes.COLUMN_TYPE_LONG ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_FLOAT, ColumnValueTypes.COLUMN_TYPE_FLOAT ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_DOUBLE, ColumnValueTypes.COLUMN_TYPE_DOUBLE ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_BOOL, ColumnValueTypes.COLUMN_TYPE_BOOL ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_BOOLEAN, ColumnValueTypes.COLUMN_TYPE_BOOL ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_STRING, ColumnValueTypes.COLUMN_TYPE_STRING ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_STRING, ColumnValueTypes.COLUMN_TYPE_STRING ), //
+                        Arguments.of( ColumnTypes.COLUMN_TYPE_SPARSE_INT, ColumnValueTypes.COLUMN_TYPE_INT ) );
     }
 
 }
