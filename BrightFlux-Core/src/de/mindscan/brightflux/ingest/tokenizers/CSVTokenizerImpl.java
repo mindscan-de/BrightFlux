@@ -132,7 +132,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
     /** 
      * {@inheritDoc}
      */
-    @Override
     public Iterator<DataToken> tokenize( String inputString ) {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
