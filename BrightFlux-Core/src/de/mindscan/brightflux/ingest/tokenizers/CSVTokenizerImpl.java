@@ -125,8 +125,39 @@ public class CSVTokenizerImpl implements DataTokenizer {
      * {@inheritDoc}
      */
     @Override
-    public Iterator<DataToken> tokenize( DataSourceV2Impl dataSourceV2Impl ) {
-        return tokenize( dataSourceV2Impl.provideInputAsString() );
+    public Iterator<DataToken> tokenize( DataSourceV2 dataSource ) {
+        // this is good enough for now.
+        ArrayList<DataToken> tokens = new ArrayList<DataToken>();
+
+        // TODO: refactor this that the DataSourceV2Impl 
+        data.resetTokenPositions();
+        data.setInputString( dataSource.provideInputAsString() );
+
+        while (data.isTokenStartBeforeInputEnd()) {
+            data.prepareNextToken();
+
+            Class<? extends DataToken> currentTokenType = consumeToken( data );
+
+            if (isValidTokenType( currentTokenType )) {
+                tokens.add( createToken( currentTokenType, data ) );
+            }
+            else {
+                System.out.println( "could not process string (" + data.getTokenStart() + ";" + data.getTokenEnd() + ")" );
+
+                for (int i = data.getTokenStart(); i < data.getTokenEnd(); i++) {
+                    System.out.println( "0x" + Integer.toString( i, 16 ) );
+                }
+                // ignore that unknown "token"....
+            }
+
+            // ---------------------
+            // Advance to next token
+            // ---------------------            
+
+            data.advanceToNextToken();
+        }
+
+        return tokens.iterator();
     }
 
     /** 
