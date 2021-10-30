@@ -64,12 +64,13 @@ public class IngestEngine {
         DataFrame newDataFrame = buildCompiledDataFrame( config, compiledDataFrameColumns );
 
         // TODO: use a serializer in dfquery to generate this journal entry, so the parser and serializer are synchronous to each other 
+        // Actually depending on what we configured we might have a different situation, e.g if we ingested from a another dataframe
         newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, "LOAD '" + config.getIngestInputPath() + "' as df" );
         return newDataFrame;
     }
 
     private static Iterator<DataToken> executeTokenizeStrategy( JobConfiguration config, DataTokenizer tokenizer ) {
-        // TODO: depending on the configuration we might want to setup the dataSource slightly better... whatever thia means.
+        // TODO: depending on the configuration we might want to setup the dataSource slightly better... whatever this means.
         // * for files we set the input using the ingestInputPath
         // * for dataframe columns we might want to setup a completely different input provider.
 
