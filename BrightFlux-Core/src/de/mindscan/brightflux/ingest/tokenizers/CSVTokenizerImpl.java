@@ -141,11 +141,14 @@ public class CSVTokenizerImpl implements DataTokenizer {
                 tokens.add( createToken( currentTokenType, data ) );
             }
             else {
-                System.out.println( "could not process string (" + data.getTokenStart() + ";" + data.getTokenEnd() + ")" );
+                int tokenStart = data.getTokenStart();
+                int tokenEnd = data.getTokenEnd();
 
-                for (int i = data.getTokenStart(); i < data.getTokenEnd(); i++) {
-                    // TODO: fix this and actually output the tokendata....
-                    System.out.println( "0x" + Integer.toString( i, 16 ) );
+                System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
+
+                String tokenString = data.getTokenString();
+                for (int i = tokenStart; i < tokenEnd; i++) {
+                    System.out.println( "0x" + Integer.toString( i, 16 ) + ": 0x" + Integer.toString( tokenString.charAt( i - tokenStart ), 16 ) );
                 }
                 // ignore that unknown "token"....
             }
