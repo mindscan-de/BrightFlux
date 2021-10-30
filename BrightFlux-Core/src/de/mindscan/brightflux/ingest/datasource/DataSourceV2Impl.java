@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
 
 /**
  * This is currently a collection of random datasource providing mechanisms. I want to collect them in a proper place 
@@ -47,6 +48,15 @@ public class DataSourceV2Impl implements DataSourceV2 {
     @Override
     public DataSource getInputDataSource() {
         return null;
+    }
+
+    @Override
+    public InputStringDataSourceImpl getAsInputStringDataSource() {
+        InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
+        stringInputSource.resetTokenPositions();
+        stringInputSource.setInputString( provideInputAsStringForFilePath() );
+
+        return stringInputSource;
     }
 
     /**

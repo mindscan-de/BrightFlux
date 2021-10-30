@@ -130,9 +130,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        // TODO: refactor this that the DataSourceV2Impl 
-        data.resetTokenPositions();
-        data.setInputString( dataSource.provideInputAsString() );
+        data = dataSource.getAsInputStringDataSource();
 
         while (data.isTokenStartBeforeInputEnd()) {
             data.prepareNextToken();
@@ -146,6 +144,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
                 System.out.println( "could not process string (" + data.getTokenStart() + ";" + data.getTokenEnd() + ")" );
 
                 for (int i = data.getTokenStart(); i < data.getTokenEnd(); i++) {
+                    // TODO: fix this and actually output the tokendata....
                     System.out.println( "0x" + Integer.toString( i, 16 ) );
                 }
                 // ignore that unknown "token"....
@@ -165,7 +164,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
      * {@inheritDoc}
      */
     public Iterator<DataToken> tokenize( String inputString ) {
-        // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
         data.resetTokenPositions();
@@ -183,6 +181,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
                 System.out.println( "could not process string (" + data.getTokenStart() + ";" + data.getTokenEnd() + ")" );
 
                 for (int i = data.getTokenStart(); i < data.getTokenEnd(); i++) {
+                    // TODO: fix this and actually output the tokendata....                    
                     System.out.println( "0x" + Integer.toString( i, 16 ) );
                 }
                 // ignore that unknown "token"....

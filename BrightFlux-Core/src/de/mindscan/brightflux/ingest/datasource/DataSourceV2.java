@@ -27,6 +27,8 @@ package de.mindscan.brightflux.ingest.datasource;
 
 import java.nio.file.Path;
 
+import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
+
 /**
  * 
  */
@@ -41,4 +43,6 @@ public interface DataSourceV2 {
     String provideInputAsString();
 
     Path getIngestInputPath();
+
+    InputStringDataSourceImpl getAsInputStringDataSource();
 }
