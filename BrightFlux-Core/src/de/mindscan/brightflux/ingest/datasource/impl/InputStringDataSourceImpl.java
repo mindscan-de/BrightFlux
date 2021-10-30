@@ -23,22 +23,22 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.ingest.tokenizers;
+package de.mindscan.brightflux.ingest.datasource.impl;
 
 import de.mindscan.brightflux.ingest.datasource.DataSource;
 
 /**
  */
-public class DataSourceCsvStringImpl implements DataSource {
+public class InputStringDataSourceImpl implements DataSource {
 
     private int tokenStart;
     private int tokenEnd;
     private String inputString;
 
-    public DataSourceCsvStringImpl() {
+    public InputStringDataSourceImpl() {
     }
 
-    public DataSourceCsvStringImpl( String inputString ) {
+    public InputStringDataSourceImpl( String inputString ) {
         this.inputString = inputString;
     }
 
@@ -71,7 +71,7 @@ public class DataSourceCsvStringImpl implements DataSource {
         return tokenEnd < inputString.length();
     }
 
-    void advanceToNextToken() {
+    public void advanceToNextToken() {
         tokenStart = tokenEnd;
     }
 
@@ -80,7 +80,7 @@ public class DataSourceCsvStringImpl implements DataSource {
         tokenEnd++;
     }
 
-    void prepareNextToken() {
+    public void prepareNextToken() {
         tokenEnd = tokenStart + 1;
     }
 

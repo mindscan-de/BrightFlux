@@ -32,6 +32,7 @@ import java.util.function.Predicate;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.datasource.DataSource;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
+import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
@@ -74,7 +75,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
     @SuppressWarnings( "unused" )
     private int maxColumnCount;
 
-    private DataSourceCsvStringImpl data = new DataSourceCsvStringImpl();
+    private InputStringDataSourceImpl data = new InputStringDataSourceImpl();
 
     /**
      * @param columnSeparator
