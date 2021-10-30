@@ -200,7 +200,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         if (isColumnSeparator( charAtTokenStart )) {
             currentTokenType = ColumnSeparatorToken.class;
         }
-        else if (isStartOfLineSeparator( charAtTokenStart )) {
+        else if (CSVTokenizerTerminals.isStartOfLineSeparator( charAtTokenStart )) {
             currentTokenType = consumeLineSeparator( data );
         }
         // TODO: add whitespace consumer here?
@@ -293,16 +293,11 @@ public class CSVTokenizerImpl implements DataTokenizer {
     }
 
     private boolean isLineOrColumnSeparator( char nextChar ) {
-        return isStartOfLineSeparator( nextChar ) || isColumnSeparator( nextChar );
+        return CSVTokenizerTerminals.isStartOfLineSeparator( nextChar ) || isColumnSeparator( nextChar );
     }
 
     private boolean isColumnSeparator( char currentChar ) {
         return this.columnSeparator.equals( Character.toString( currentChar ) );
-    }
-
-    private boolean isStartOfLineSeparator( char currentChar ) {
-        // Firstmenge of this.lineSeparator
-        return currentChar == '\n' || currentChar == '\r';
     }
 
     // Idea Area: 
