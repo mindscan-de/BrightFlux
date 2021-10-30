@@ -28,14 +28,14 @@ package de.mindscan.brightflux.ingest.tokenizers;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.ingest.DataToken;
-import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
 
 /**
  * 
  */
 public interface DataTokenizer {
 
-    Iterator<DataToken> tokenize( DataSourceV2Impl dataSource );
+    Iterator<DataToken> tokenize( DataSourceV2 dataSource );
 
     boolean isStringBased();
 
