@@ -69,36 +69,14 @@ public class IngestEngine {
     }
 
     private static Iterator<DataToken> executeTokenizeStrategy( JobConfiguration config, DataTokenizer tokenizer ) {
-        // Tokenizer tells, it is a text file based strategy
-        if (tokenizer.isStringBased()) {
-            // TODO: from config determine which kind of input pipeline to select...
-            // TODO: Actually we should not know how the tokenizer is doing his job... We should not use this information here to do the "right" thing
+        // TODO: depending on the configuration we might want to setup the dataSource slightly better... whatever thia means.
+        // * for files we set the input using the ingestInputPath
+        // * for dataframe columns we might want to setup a completely different input provider.
 
-            // Reminder:
-            // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
-            // should be part of the pipeline configuration and be plugable
+        DataSourceV2Impl newDataSource = new DataSourceV2Impl();
+        newDataSource.setInput( config.getIngestInputPath() );
 
-            DataSourceV2Impl dataSourceV2Impl = new DataSourceV2Impl();
-            dataSourceV2Impl.setInput( config.getIngestInputPath() );
-
-            return tokenizer.tokenize( dataSourceV2Impl );
-        }
-
-        // Tokenizer tells, it is a binary file based strategy
-        if (tokenizer.isBinaryBased()) {
-
-            // TODO: how do we want to manage this? 
-            // We have some kind of skipstream on a binary format and then have a consumer
-//            ArrayList<DataToken> result = new ArrayList<DataToken>();
-//            return result.iterator();
-
-            DataSourceV2Impl dataSourceV2Impl = new DataSourceV2Impl();
-            dataSourceV2Impl.setInput( config.getIngestInputPath() );
-
-            return tokenizer.tokenize( dataSourceV2Impl );
-        }
-
-        throw new IllegalArgumentException( "Illegal tokenizer strategy encoded." );
+        return tokenizer.tokenize( newDataSource );
     }
 
     private static DataFrame buildCompiledDataFrame( JobConfiguration config, List<DataFrameColumn<?>> compiledDataFrameColumns ) {
