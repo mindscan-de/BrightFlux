@@ -31,6 +31,7 @@ import java.util.function.Predicate;
 
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.datasource.DataSource;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
@@ -129,6 +130,14 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // TODO also we don't care what the source actually is, only how we want to consume this data, and whether the source can provide the data the desired way.
         // TODO: the datasource can announce its capabilities and the tokenizer may use the source according to its capabilities.
         return null;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Iterator<DataToken> tokenize( DataSourceV2Impl dataSourceV2Impl ) {
+        return tokenize( dataSourceV2Impl.provideInputAsString() );
     }
 
     /** 

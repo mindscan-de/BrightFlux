@@ -25,9 +25,6 @@
  */
 package de.mindscan.brightflux.ingest;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,6 +33,7 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
@@ -73,12 +71,17 @@ public class IngestEngine {
     private static Iterator<DataToken> executeTokenizeStrategy( JobConfiguration config, DataTokenizer tokenizer ) {
         // Tokenizer tells, it is a text file based strategy
         if (tokenizer.isStringBased()) {
+            // TODO: from config determine which kind of input pipeline to select...
+            // TODO: Actually we should not know how the tokenizer is doing his job... We should not use this information here to do the "right" thing
+
+            // Reminder:
             // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
             // should be part of the pipeline configuration and be plugable
 
-            // TODO: tokenizer should not work on a fully processed string
-            String inputString = readAllLinesFromFile( config.getIngestInputPath() );
-            return tokenizer.tokenize( inputString );
+            DataSourceV2Impl dataSourceV2Impl = new DataSourceV2Impl();
+            dataSourceV2Impl.setInput( config.getIngestInputPath() );
+
+            return tokenizer.tokenize( dataSourceV2Impl );
         }
 
         // Tokenizer tells, it is a binary file based strategy
@@ -89,7 +92,10 @@ public class IngestEngine {
 //            ArrayList<DataToken> result = new ArrayList<DataToken>();
 //            return result.iterator();
 
-            return tokenizer.tokenize( config.getIngestInputPath().toAbsolutePath().toString() );
+            DataSourceV2Impl dataSourceV2Impl = new DataSourceV2Impl();
+            dataSourceV2Impl.setInput( config.getIngestInputPath() );
+
+            return tokenizer.tokenize( dataSourceV2Impl );
         }
 
         throw new IllegalArgumentException( "Illegal tokenizer strategy encoded." );
@@ -103,19 +109,6 @@ public class IngestEngine {
         }
 
         return dfBuilder.build();
-    }
-
-    // TODO: rework this...
-    static String readAllLinesFromFile( Path path ) {
-        try {
-            List<String> allLines = Files.readAllLines( path );
-            return String.join( "\n", allLines );
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "";
     }
 
 }

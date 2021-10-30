@@ -23,32 +23,22 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.ingest.tokenizers;
+package de.mindscan.brightflux.ingest.datasource;
 
-import java.util.Iterator;
-
-import de.mindscan.brightflux.ingest.DataToken;
-import de.mindscan.brightflux.ingest.datasource.DataSource;
-import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
+import java.nio.file.Path;
 
 /**
  * 
  */
-public interface DataTokenizer {
+public interface DataSourceV2 {
 
-    // TODO: rework the string idea, because it won't work well on binary datafiles or big files, with different UTF encodings.
+    DataSource getXXXTokenizerDataSource();
 
-    // This is just a simple interface, where we rely on a fully loaded string content which we intent to tokenize.
-    // But actually we should have some kind of stream or generator, wich provides only as much logfilecontent as 
-    // needed. We also might introduce a prepared Source,  
-    Iterator<DataToken> tokenize( String inputString );
+    DataSource getInputDataSource();
 
-    Iterator<DataToken> tokenize( DataSource input );
+    void setInput( Path ingestInputPath );
 
-    Iterator<DataToken> tokenize( DataSourceV2Impl dataSourceV2Impl );
+    String provideInputAsString();
 
-    boolean isStringBased();
-
-    boolean isBinaryBased();
-
+    Path getIngestInputPath();
 }
