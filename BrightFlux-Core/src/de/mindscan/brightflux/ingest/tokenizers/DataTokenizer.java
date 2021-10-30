@@ -35,7 +35,7 @@ import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
  */
 public interface DataTokenizer {
 
-    Iterator<DataToken> tokenize( DataSourceV2Impl dataSourceV2Impl );
+    Iterator<DataToken> tokenize( DataSourceV2Impl dataSource );
 
     boolean isStringBased();
 
