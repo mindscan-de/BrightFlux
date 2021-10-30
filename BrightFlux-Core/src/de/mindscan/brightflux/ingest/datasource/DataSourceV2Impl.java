@@ -40,6 +40,7 @@ import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
 public class DataSourceV2Impl implements DataSourceV2 {
 
     private Path ingestInputPath;
+    private String inputString;
     private String method;
 
     /** 
@@ -52,11 +53,22 @@ public class DataSourceV2Impl implements DataSourceV2 {
 
     @Override
     public InputStringDataSourceImpl getAsInputStringDataSource() {
-        InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
-        stringInputSource.resetTokenPositions();
-        stringInputSource.setInputString( provideInputAsStringForFilePath() );
-
-        return stringInputSource;
+        switch (method) {
+            case "filePath": {
+                InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
+                stringInputSource.resetTokenPositions();
+                stringInputSource.setInputString( provideInputAsStringForFilePath() );
+                return stringInputSource;
+            }
+            case "inputString": {
+                InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
+                stringInputSource.resetTokenPositions();
+                stringInputSource.setInputString( inputString );
+                return stringInputSource;
+            }
+            default:
+                throw new NotYetImplemetedException();
+        }
     }
 
     /**
@@ -68,25 +80,18 @@ public class DataSourceV2Impl implements DataSourceV2 {
         this.method = "filePath";
     }
 
+    @Override
+    public void setInput( String inputString ) {
+        this.inputString = inputString;
+        this.method = "inputString";
+    }
+
     /**
      * @return the ingestInputPath
      */
     @Override
     public Path getIngestInputPath() {
         return ingestInputPath;
-    }
-
-    // TODO: getInputProvider()
-    @Override
-    public String provideInputAsString() {
-        switch (method) {
-            case "filePath":
-                return provideInputAsStringForFilePath();
-            default:
-                break;
-        }
-
-        throw new NotYetImplemetedException();
     }
 
     /**

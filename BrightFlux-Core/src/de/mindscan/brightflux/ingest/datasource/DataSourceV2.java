@@ -40,9 +40,10 @@ public interface DataSourceV2 {
 
     void setInput( Path ingestInputPath );
 
-    String provideInputAsString();
+    void setInput( String inputString );
 
     Path getIngestInputPath();
 
     InputStringDataSourceImpl getAsInputStringDataSource();
+
 }
