@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.ingest.datasource.impl;
 
+import java.util.function.Predicate;
+
 import de.mindscan.brightflux.ingest.datasource.DataSource;
 
 /**
@@ -95,6 +97,20 @@ public class InputStringDataSourceImpl implements DataSource {
 
     public int getTokenEnd() {
         return tokenEnd;
+    }
+
+    @Override
+    public void incrementTokenEndWhile( Predicate<Character> object ) {
+        while (isTokenEndBeforeInputEnd() && object.test( charAtTokenEnd() )) {
+            incrementTokenEnd();
+        }
+    }
+
+    @Override
+    public void incrementTokenEndWhileNot( Predicate<Character> object ) {
+        while (isTokenEndBeforeInputEnd() && !object.test( charAtTokenEnd() )) {
+            incrementTokenEnd();
+        }
     }
 
 }

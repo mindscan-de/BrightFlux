@@ -27,7 +27,6 @@ package de.mindscan.brightflux.ingest.tokenizers;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.function.Predicate;
 
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.datasource.DataSource;
@@ -214,7 +213,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         char firstChar = data.charAtTokenStart();
 
         if (CSVTokenizerTerminals.isStartOfQuote( firstChar )) {
-            incrementTokenEndWhileNot( data, c -> c == firstChar );
+            data.incrementTokenEndWhileNot( c -> c == firstChar );
         }
 
         if (!data.isTokenEndBeforeInputEnd()) {
@@ -229,7 +228,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
 
     private Class<? extends DataToken> consumeIdentifier( DataSource data ) {
         if (CSVTokenizerTerminals.isStartOfIdentifier( data.charAtTokenStart() )) {
-            incrementTokenEndWhile( data, CSVTokenizerTerminals::isPartOfIdentifier );
+            data.incrementTokenEndWhile( CSVTokenizerTerminals::isPartOfIdentifier );
         }
 
         // End of input reached, we declare this an identifier
@@ -241,13 +240,13 @@ public class CSVTokenizerImpl implements DataTokenizer {
             return IdentifierToken.class;
         }
 
-        incrementTokenEndWhileNot( data, this::isLineOrColumnSeparator );
+        data.incrementTokenEndWhileNot( this::isLineOrColumnSeparator );
 
         return TextToken.class;
     }
 
     private Class<NumberToken> consumeNumber( DataSource data ) {
-        incrementTokenEndWhile( data, CSVTokenizerTerminals::isDigitOrFraction );
+        data.incrementTokenEndWhile( CSVTokenizerTerminals::isDigitOrFraction );
 
         return NumberToken.class;
     }
@@ -270,20 +269,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
         }
 
         return LineSeparatorToken.class;
-    }
-
-    // TODO: This is some tokenizer level logic... This should not be part of the data source.
-    void incrementTokenEndWhile( DataSource data, Predicate<Character> object ) {
-        while (data.isTokenEndBeforeInputEnd() && object.test( data.charAtTokenEnd() )) {
-            data.incrementTokenEnd();
-        }
-    }
-
-    // TODO: This is some tokenizer level logic... This should not be part of the data source.    
-    void incrementTokenEndWhileNot( DataSource data, Predicate<Character> object ) {
-        while (data.isTokenEndBeforeInputEnd() && !object.test( data.charAtTokenEnd() )) {
-            data.incrementTokenEnd();
-        }
     }
 
     private boolean isLineOrColumnSeparator( char nextChar ) {

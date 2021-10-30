@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.ingest.datasource;
 
+import java.util.function.Predicate;
+
 /**
  * We want different kind of datasources
  * 
@@ -49,5 +51,9 @@ public interface DataSource {
     void incrementTokenEnd();
 
     String getTokenString();
+
+    void incrementTokenEndWhileNot( Predicate<Character> object );
+
+    void incrementTokenEndWhile( Predicate<Character> object );
 
 }
