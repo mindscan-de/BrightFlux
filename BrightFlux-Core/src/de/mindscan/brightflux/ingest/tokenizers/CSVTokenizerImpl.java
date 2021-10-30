@@ -160,43 +160,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return tokens.iterator();
     }
 
-    /** 
-     * {@inheritDoc}
-     */
-    public Iterator<DataToken> tokenize( String inputString ) {
-        ArrayList<DataToken> tokens = new ArrayList<DataToken>();
-
-        data.resetTokenPositions();
-        data.setInputString( inputString );
-
-        while (data.isTokenStartBeforeInputEnd()) {
-            data.prepareNextToken();
-
-            Class<? extends DataToken> currentTokenType = consumeToken( data );
-
-            if (isValidTokenType( currentTokenType )) {
-                tokens.add( createToken( currentTokenType, data ) );
-            }
-            else {
-                System.out.println( "could not process string (" + data.getTokenStart() + ";" + data.getTokenEnd() + ")" );
-
-                for (int i = data.getTokenStart(); i < data.getTokenEnd(); i++) {
-                    // TODO: fix this and actually output the tokendata....                    
-                    System.out.println( "0x" + Integer.toString( i, 16 ) );
-                }
-                // ignore that unknown "token"....
-            }
-
-            // ---------------------
-            // Advance to next token
-            // ---------------------            
-
-            data.advanceToNextToken();
-        }
-
-        return tokens.iterator();
-    }
-
     private boolean isValidTokenType( Class<? extends DataToken> currentTokenType ) {
         return currentTokenType != null;
     }

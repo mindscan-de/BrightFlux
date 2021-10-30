@@ -14,6 +14,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.ingest.DataToken;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.NumberToken;
 
@@ -25,7 +26,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "" ) );
 
         // assert
         assertThat( toList( result ), empty() );
@@ -37,7 +38,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "1" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "1" ) );
 
         // assert
         assertThat( toList( result ), not( empty() ) );
@@ -49,7 +50,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "1" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "1" ) );
 
         // assert
         assertThat( toList( result ), hasSize( 1 ) );
@@ -61,7 +62,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "12" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "12" ) );
 
         // assert
         assertThat( toList( result ), hasSize( 1 ) );
@@ -73,7 +74,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "123" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "123" ) );
 
         // assert
         assertThat( toList( result ), hasSize( 1 ) );
@@ -85,7 +86,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "," );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "," ) );
 
         // assert
         assertThat( toList( result ), hasSize( 1 ) );
@@ -98,7 +99,7 @@ public class CSVTokenizerImplTest {
         tokenizer.setColumnSeparator( ";" );
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( ";" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( ";" ) );
 
         // assert
         assertThat( toList( result ), hasSize( 1 ) );
@@ -111,7 +112,7 @@ public class CSVTokenizerImplTest {
         tokenizer.setColumnSeparator( ";" );
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( ";" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( ";" ) );
 
         // assert
         assertThat( toList( result ).get( 0 ), equalTo( ColumnSeparatorToken.create() ) );
@@ -123,7 +124,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "," );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "," ) );
 
         // assert
         assertThat( toList( result ).get( 0 ), equalTo( ColumnSeparatorToken.create() ) );
@@ -135,7 +136,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "123,321" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "123,321" ) );
 
         // assert
         assertThat( toList( result ), hasSize( 3 ) );
@@ -147,7 +148,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "123,321" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "123,321" ) );
 
         // assert
         assertThat( toList( result ).get( 0 ), instanceOf( NumberToken.class ) );
@@ -159,7 +160,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "123,321" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "123,321" ) );
 
         // assert
         assertThat( toList( result ).get( 1 ), instanceOf( ColumnSeparatorToken.class ) );
@@ -171,7 +172,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "123,321" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "123,321" ) );
 
         // assert
         assertThat( toList( result ).get( 2 ), instanceOf( NumberToken.class ) );
@@ -183,7 +184,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "age,sex,cp,trtbps,chol,fbs,restecg,thalachh,exng,oldpeak,slp,caa,thall,output" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "age,sex,cp,trtbps,chol,fbs,restecg,thalachh,exng,oldpeak,slp,caa,thall,output" ) );
 
         // assert
         int __14_COLUMNS_IDENTIFIER = 14;
@@ -198,7 +199,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "col1,col2\n1,2\n3,4\n5,6" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "col1,col2\n1,2\n3,4\n5,6" ) );
 
         // assert
         int __2_COLUMNS_IDENTIFIER = 2;
@@ -215,7 +216,7 @@ public class CSVTokenizerImplTest {
         CSVTokenizerImpl tokenizer = new CSVTokenizerImpl();
 
         // act
-        Iterator<DataToken> result = tokenizer.tokenize( "Argentina,Area harvested,Asparagus,1961,ha,450" );
+        Iterator<DataToken> result = tokenizer.tokenize( asDataSource( "Argentina,Area harvested,Asparagus,1961,ha,450" ) );
 
         // assert
         assertThat( toList( result ), hasSize( 11 ) );
@@ -225,6 +226,12 @@ public class CSVTokenizerImplTest {
         ArrayList<DataToken> result = new ArrayList<DataToken>();
         iterator.forEachRemaining( result::add );
         return result;
+    }
+
+    private DataSourceV2Impl asDataSource( String inputString ) {
+        DataSourceV2Impl datasource = new DataSourceV2Impl();
+        datasource.setInput( inputString );
+        return datasource;
     }
 
 }
