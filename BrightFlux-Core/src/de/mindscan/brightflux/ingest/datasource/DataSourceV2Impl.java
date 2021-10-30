@@ -57,7 +57,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
             case "filePath": {
                 InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
                 stringInputSource.resetTokenPositions();
-                stringInputSource.setInputString( provideInputAsStringForFilePath() );
+                stringInputSource.setInputString( readAllLinesFromFile( ingestInputPath ) );
                 return stringInputSource;
             }
             case "inputString": {
@@ -92,15 +92,6 @@ public class DataSourceV2Impl implements DataSourceV2 {
     @Override
     public Path getIngestInputPath() {
         return ingestInputPath;
-    }
-
-    /**
-     * @return
-     */
-    private String provideInputAsStringForFilePath() {
-        String inputString = readAllLinesFromFile( ingestInputPath );
-
-        return inputString;
     }
 
     private static String readAllLinesFromFile( Path path ) {
