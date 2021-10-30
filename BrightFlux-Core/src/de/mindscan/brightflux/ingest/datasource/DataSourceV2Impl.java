@@ -46,7 +46,6 @@ public class DataSourceV2Impl implements DataSourceV2 {
      */
     @Override
     public DataSource getInputDataSource() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -89,7 +88,6 @@ public class DataSourceV2Impl implements DataSourceV2 {
         return inputString;
     }
 
-    // TODO: rework this...
     private static String readAllLinesFromFile( Path path ) {
         try {
             List<String> allLines = Files.readAllLines( path );
@@ -107,7 +105,6 @@ public class DataSourceV2Impl implements DataSourceV2 {
      */
     @Override
     public DataSource getXXXTokenizerDataSource() {
-        // TODO Auto-generated method stub
         return null;
     }
 
