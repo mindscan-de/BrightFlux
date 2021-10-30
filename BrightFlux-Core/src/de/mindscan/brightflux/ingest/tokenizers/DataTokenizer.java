@@ -28,7 +28,6 @@ package de.mindscan.brightflux.ingest.tokenizers;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.ingest.DataToken;
-import de.mindscan.brightflux.ingest.datasource.DataSource;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
 
 /**
@@ -42,8 +41,6 @@ public interface DataTokenizer {
     // But actually we should have some kind of stream or generator, wich provides only as much logfilecontent as 
     // needed. We also might introduce a prepared Source,  
     Iterator<DataToken> tokenize( String inputString );
-
-    Iterator<DataToken> tokenize( DataSource input );
 
     Iterator<DataToken> tokenize( DataSourceV2Impl dataSourceV2Impl );
 
