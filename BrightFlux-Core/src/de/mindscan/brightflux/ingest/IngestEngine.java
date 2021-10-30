@@ -33,6 +33,7 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2Impl;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
@@ -74,7 +75,7 @@ public class IngestEngine {
         // * for files we set the input using the ingestInputPath
         // * for dataframe columns we might want to setup a completely different input provider.
 
-        DataSourceV2Impl newDataSource = new DataSourceV2Impl();
+        DataSourceV2 newDataSource = new DataSourceV2Impl();
         newDataSource.setInput( config.getIngestInputPath() );
 
         return tokenizer.tokenize( newDataSource );
