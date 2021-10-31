@@ -113,12 +113,6 @@ This whole thing is going through a permanent dogfooding phase.
 
 Some of the planned features are: (I will have to sort and reprioritize this... That is getting out of hand...)
 
-* have multiple views / diagram options for the same logs to understand particular system behavior
-* Export the analysis result in short form
-* Using recipes for reproducing some analysis on a second log
-  * using labeling techniques to mark suspicious occurrences and make them available for machine learning training
-  * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threshold
-  * NER for log messages
 * add links and options to use a code search engine and log search engine for the messages
   * did we see that message more often, but we never thought about it before
   * since what version of the system we see that message
@@ -129,11 +123,6 @@ Some of the planned features are: (I will have to sort and reprioritize this... 
   * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
   * add Markers to annotation dataframe
   * add Videotimestamp annotations to annotation dataframe
-
-
-* provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
-* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
-
 
 
 ### Next
@@ -173,6 +162,10 @@ Annotation and Highlights Improvements
 * Support log correlation for videos, e.g. identify timestamps in video and correlate them to logs
 
 
+Videotimestamp Annotations
+* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
+
+
 DFQL
 * Suppport unary NOT operator
 
@@ -180,6 +173,7 @@ DFQL
 Application-Startup
 * Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
 * Provide a script or configuration for the application startup.
+
 
 Reporting
 * Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
@@ -215,17 +209,29 @@ Generic Binary File Readers
 UML Image Generator
 * Create Sequence-Diagrams from Log messages / log-dataframes
 * Create Activity-Diagrams from Log messages / log-dataframes
+* have multiple views / diagram options for the same logs to understand particular system behavior
 
 
 Support DLT-Files
 * Reverse-Engineer the DLT-Format - (See Genivi DLT-Viewer)
 
 
-* Machine Learning and Pattern recognition and Anomality Detection on Log-Data 
-  * We need Column-Ingest processing to clean up the data / separate the data from metainformation e.g. Filename, methodname, line of southside implementation
-  * "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found Anomaly
-  * Extract / Train / Predict / Classification / Model Update / ML Model Server
+Machine Learning and Pattern recognition and Anomality Detection on Log-Data 
+* We need Column-Ingest processing to clean up the data / separate the data from metainformation e.g. Filename, methodname, line of southside implementation
+* "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found Anomaly
+* Extract / Train / Predict / Classification / Model Update / ML Model Server
+  * using labeling techniques to mark suspicious occurrences and make them available for machine learning training
+  * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threshold
+* NER for log messages
 
+
+Support Calculations between Rows or Rows
+* provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
+
+
+Export the analysis result in short form
+* Document / Documentype / technical vs manager form
+* Project file
 
 
 ### Never?
