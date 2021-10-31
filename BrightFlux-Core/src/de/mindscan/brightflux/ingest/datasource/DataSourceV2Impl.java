@@ -50,16 +50,10 @@ public class DataSourceV2Impl implements DataSourceV2 {
     public DataSourceLexer getAsStringBackedDataSourceLexer() {
         switch (method) {
             case METHOD_FILE_PATH: {
-                DataSourceLexer lexer = new StringBackedDataSourceLexer();
-                lexer.resetTokenPositions();
-                lexer.setInputString( readAllLinesFromFile( ingestInputPath ) );
-                return lexer;
+                return new StringBackedDataSourceLexer( readAllLinesFromFile( ingestInputPath ) );
             }
             case METHOD_INPUT_STRING: {
-                DataSourceLexer lexer = new StringBackedDataSourceLexer();
-                lexer.resetTokenPositions();
-                lexer.setInputString( inputString );
-                return lexer;
+                return new StringBackedDataSourceLexer( inputString );
             }
             default:
                 throw new NotYetImplemetedException();
