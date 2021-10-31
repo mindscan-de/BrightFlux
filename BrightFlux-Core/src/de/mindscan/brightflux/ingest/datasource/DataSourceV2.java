@@ -27,7 +27,7 @@ package de.mindscan.brightflux.ingest.datasource;
 
 import java.nio.file.Path;
 
-import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
+import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer;
 
 /**
  * We want different kind of datasources
@@ -42,16 +42,12 @@ import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
  */
 public interface DataSourceV2 {
 
-    DataSourceLexer getXXXTokenizerDataSource();
-
-    DataSourceLexer getInputDataSource();
-
     void setInput( Path ingestInputPath );
 
     void setInput( String inputString );
 
     Path getIngestInputPath();
 
-    InputStringDataSourceImpl getAsInputStringDataSource();
+    StringBackedDataSourceLexer getAsStringBackedDataSourceLexer();
 
 }

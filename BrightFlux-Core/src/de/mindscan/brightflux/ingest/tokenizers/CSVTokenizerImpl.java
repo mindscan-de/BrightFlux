@@ -31,7 +31,7 @@ import java.util.Iterator;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.datasource.DataSourceLexer;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
-import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
+import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
@@ -127,23 +127,23 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        InputStringDataSourceImpl data = dataSource.getAsInputStringDataSource();
+        StringBackedDataSourceLexer lexer = dataSource.getAsStringBackedDataSourceLexer();
 
-        while (data.isTokenStartBeforeInputEnd()) {
-            data.prepareNextToken();
+        while (lexer.isTokenStartBeforeInputEnd()) {
+            lexer.prepareNextToken();
 
-            Class<? extends DataToken> currentTokenType = consumeToken( data );
+            Class<? extends DataToken> currentTokenType = consumeToken( lexer );
 
             if (isValidTokenType( currentTokenType )) {
-                tokens.add( createToken( currentTokenType, data ) );
+                tokens.add( createToken( currentTokenType, lexer ) );
             }
             else {
-                int tokenStart = data.getTokenStart();
-                int tokenEnd = data.getTokenEnd();
+                int tokenStart = lexer.getTokenStart();
+                int tokenEnd = lexer.getTokenEnd();
 
                 System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
 
-                String tokenString = data.getTokenString();
+                String tokenString = lexer.getTokenString();
                 for (int i = tokenStart; i < tokenEnd; i++) {
                     System.out.println( "0x" + Integer.toString( i, 16 ) + ": 0x" + Integer.toString( tokenString.charAt( i - tokenStart ), 16 ) );
                 }
@@ -154,7 +154,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             // Advance to next token
             // ---------------------            
 
-            data.advanceToNextToken();
+            lexer.advanceToNextToken();
         }
 
         return tokens.iterator();
@@ -164,9 +164,9 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType != null;
     }
 
-    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSourceLexer data ) {
+    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSourceLexer lexer ) {
 
-        String valueString = data.getTokenString();
+        String valueString = lexer.getTokenString();
 
         if (currentTokenType.equals( QuotedTextToken.class )) {
 
@@ -183,8 +183,8 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return TokenUtils.createToken( currentTokenType, valueString );
     }
 
-    private Class<? extends DataToken> consumeToken( DataSourceLexer data ) {
-        char charAtTokenStart = data.charAtTokenStart();
+    private Class<? extends DataToken> consumeToken( DataSourceLexer lexer ) {
+        char charAtTokenStart = lexer.charAtTokenStart();
 
         Class<? extends DataToken> currentTokenType = null;
 
@@ -192,66 +192,66 @@ public class CSVTokenizerImpl implements DataTokenizer {
             currentTokenType = ColumnSeparatorToken.class;
         }
         else if (CSVTokenizerTerminals.isStartOfLineSeparator( charAtTokenStart )) {
-            currentTokenType = consumeLineSeparator( data );
+            currentTokenType = consumeLineSeparator( lexer );
         }
         // TODO: add whitespace consumer here?
         else if (CSVTokenizerTerminals.isStartOfQuote( charAtTokenStart )) {
-            currentTokenType = consumeQuotedText( data );
+            currentTokenType = consumeQuotedText( lexer );
         }
         else if (CSVTokenizerTerminals.isDigit( charAtTokenStart )) {
-            currentTokenType = consumeNumber( data );
+            currentTokenType = consumeNumber( lexer );
         }
         else if (CSVTokenizerTerminals.isStartOfIdentifier( charAtTokenStart )) {
-            currentTokenType = consumeIdentifier( data );
+            currentTokenType = consumeIdentifier( lexer );
         }
         return currentTokenType;
     }
 
-    private Class<? extends DataToken> consumeQuotedText( DataSourceLexer data ) {
-        char firstChar = data.charAtTokenStart();
+    private Class<? extends DataToken> consumeQuotedText( DataSourceLexer lexer ) {
+        char firstChar = lexer.charAtTokenStart();
 
         if (CSVTokenizerTerminals.isStartOfQuote( firstChar )) {
-            data.incrementTokenEndWhileNot( c -> c == firstChar );
+            lexer.incrementTokenEndWhileNot( c -> c == firstChar );
         }
 
-        if (!data.isTokenEndBeforeInputEnd()) {
+        if (!lexer.isTokenEndBeforeInputEnd()) {
             return QuotedTextToken.class;
         }
 
         // we increment here because we found the first char again.
-        data.incrementTokenEnd();
+        lexer.incrementTokenEnd();
 
         return QuotedTextToken.class;
     }
 
-    private Class<? extends DataToken> consumeIdentifier( DataSourceLexer data ) {
-        if (CSVTokenizerTerminals.isStartOfIdentifier( data.charAtTokenStart() )) {
-            data.incrementTokenEndWhile( CSVTokenizerTerminals::isPartOfIdentifier );
+    private Class<? extends DataToken> consumeIdentifier( DataSourceLexer lexer ) {
+        if (CSVTokenizerTerminals.isStartOfIdentifier( lexer.charAtTokenStart() )) {
+            lexer.incrementTokenEndWhile( CSVTokenizerTerminals::isPartOfIdentifier );
         }
 
         // End of input reached, we declare this an identifier
-        if (!data.isTokenEndBeforeInputEnd()) {
+        if (!lexer.isTokenEndBeforeInputEnd()) {
             return IdentifierToken.class;
         }
 
-        if (isLineOrColumnSeparator( data.charAtTokenEnd() )) {
+        if (isLineOrColumnSeparator( lexer.charAtTokenEnd() )) {
             return IdentifierToken.class;
         }
 
-        data.incrementTokenEndWhileNot( this::isLineOrColumnSeparator );
+        lexer.incrementTokenEndWhileNot( this::isLineOrColumnSeparator );
 
         return TextToken.class;
     }
 
-    private Class<NumberToken> consumeNumber( DataSourceLexer data ) {
-        data.incrementTokenEndWhile( CSVTokenizerTerminals::isDigitOrFraction );
+    private Class<NumberToken> consumeNumber( DataSourceLexer lexer ) {
+        lexer.incrementTokenEndWhile( CSVTokenizerTerminals::isDigitOrFraction );
 
         return NumberToken.class;
     }
 
-    private Class<? extends DataToken> consumeLineSeparator( DataSourceLexer data ) {
-        char firstChar = data.charAtTokenStart();
-        char secondChar = data.charAtTokenEnd();
+    private Class<? extends DataToken> consumeLineSeparator( DataSourceLexer lexer ) {
+        char firstChar = lexer.charAtTokenStart();
+        char secondChar = lexer.charAtTokenEnd();
         if (firstChar == _0X0A_LINEFEED) {
             // Unix, Linux, Android, macOS, AmigaOS, BSD, ....
         }
@@ -259,7 +259,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
             if (secondChar == _0X0A_LINEFEED) {
                 // windows, DOS,OS/2, CP/M, TOS (Atari) Ordering and 
                 // consume second part of the full new line
-                data.incrementTokenEnd();
+                lexer.incrementTokenEnd();
             }
             else {
                 // Mac OS Classic, Apple II, C64

@@ -31,7 +31,7 @@ import java.nio.file.Path;
 import java.util.List;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
-import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
+import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer;
 
 /**
  * This is currently a collection of random datasource providing mechanisms. I want to collect them in a proper place 
@@ -43,28 +43,20 @@ public class DataSourceV2Impl implements DataSourceV2 {
     private String inputString;
     private String method;
 
-    /** 
-     * {@inheritDoc}
-     */
     @Override
-    public DataSourceLexer getInputDataSource() {
-        return null;
-    }
-
-    @Override
-    public InputStringDataSourceImpl getAsInputStringDataSource() {
+    public StringBackedDataSourceLexer getAsStringBackedDataSourceLexer() {
         switch (method) {
             case "filePath": {
-                InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
-                stringInputSource.resetTokenPositions();
-                stringInputSource.setInputString( readAllLinesFromFile( ingestInputPath ) );
-                return stringInputSource;
+                StringBackedDataSourceLexer lexer = new StringBackedDataSourceLexer();
+                lexer.resetTokenPositions();
+                lexer.setInputString( readAllLinesFromFile( ingestInputPath ) );
+                return lexer;
             }
             case "inputString": {
-                InputStringDataSourceImpl stringInputSource = new InputStringDataSourceImpl();
-                stringInputSource.resetTokenPositions();
-                stringInputSource.setInputString( inputString );
-                return stringInputSource;
+                StringBackedDataSourceLexer lexer = new StringBackedDataSourceLexer();
+                lexer.resetTokenPositions();
+                lexer.setInputString( inputString );
+                return lexer;
             }
             default:
                 throw new NotYetImplemetedException();
@@ -104,14 +96,6 @@ public class DataSourceV2Impl implements DataSourceV2 {
         }
 
         return "";
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public DataSourceLexer getXXXTokenizerDataSource() {
-        return null;
     }
 
 }

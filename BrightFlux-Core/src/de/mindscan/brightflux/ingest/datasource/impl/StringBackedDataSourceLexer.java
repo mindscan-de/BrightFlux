@@ -32,16 +32,16 @@ import de.mindscan.brightflux.ingest.datasource.DataSourceLexer;
 /**
  * Actually, this might be a good idea to rename this class, because while reviewing it, it looks more like a Lexer.
  */
-public class InputStringDataSourceImpl implements DataSourceLexer {
+public class StringBackedDataSourceLexer implements DataSourceLexer {
 
     private int tokenStart;
     private int tokenEnd;
     private String inputString;
 
-    public InputStringDataSourceImpl() {
+    public StringBackedDataSourceLexer() {
     }
 
-    public InputStringDataSourceImpl( String inputString ) {
+    public StringBackedDataSourceLexer( String inputString ) {
         this.inputString = inputString;
     }
 
