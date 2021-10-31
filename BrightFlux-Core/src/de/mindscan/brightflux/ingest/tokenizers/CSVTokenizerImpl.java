@@ -74,8 +74,6 @@ public class CSVTokenizerImpl implements DataTokenizer {
     @SuppressWarnings( "unused" )
     private int maxColumnCount;
 
-    private InputStringDataSourceImpl data = new InputStringDataSourceImpl();
-
     /**
      * @param columnSeparator
      */
@@ -129,7 +127,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        data = dataSource.getAsInputStringDataSource();
+        InputStringDataSourceImpl data = dataSource.getAsInputStringDataSource();
 
         while (data.isTokenStartBeforeInputEnd()) {
             data.prepareNextToken();
