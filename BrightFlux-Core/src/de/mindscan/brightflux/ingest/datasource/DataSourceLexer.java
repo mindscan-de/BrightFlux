@@ -28,17 +28,9 @@ package de.mindscan.brightflux.ingest.datasource;
 import java.util.function.Predicate;
 
 /**
- * We want different kind of datasources
  * 
- * - e.g. Textfiles
- * - e.g. Rawfiles
- * - e.g. NetworkdataStream
- * - e.g. Columns of a dataframe.
- * - e.g. or an InputStream
- * 
- * these can all be datasources.
  */
-public interface DataSource {
+public interface DataSourceLexer {
 
     char charAtTokenEnd();
 

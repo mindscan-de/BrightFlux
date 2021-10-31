@@ -47,7 +47,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
      * {@inheritDoc}
      */
     @Override
-    public DataSource getInputDataSource() {
+    public DataSourceLexer getInputDataSource() {
         return null;
     }
 
@@ -110,7 +110,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
      * {@inheritDoc}
      */
     @Override
-    public DataSource getXXXTokenizerDataSource() {
+    public DataSourceLexer getXXXTokenizerDataSource() {
         return null;
     }
 

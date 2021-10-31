@@ -30,13 +30,21 @@ import java.nio.file.Path;
 import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
 
 /**
+ * We want different kind of datasources
  * 
+ * - e.g. Textfiles
+ * - e.g. Rawfiles
+ * - e.g. NetworkdataStream
+ * - e.g. Columns of a dataframe.
+ * - e.g. or an InputStream
+ * 
+ * these can all be datasources.
  */
 public interface DataSourceV2 {
 
-    DataSource getXXXTokenizerDataSource();
+    DataSourceLexer getXXXTokenizerDataSource();
 
-    DataSource getInputDataSource();
+    DataSourceLexer getInputDataSource();
 
     void setInput( Path ingestInputPath );
 

@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import de.mindscan.brightflux.ingest.DataToken;
-import de.mindscan.brightflux.ingest.datasource.DataSource;
+import de.mindscan.brightflux.ingest.datasource.DataSourceLexer;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
 import de.mindscan.brightflux.ingest.datasource.impl.InputStringDataSourceImpl;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
@@ -164,7 +164,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType != null;
     }
 
-    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSource data ) {
+    private DataToken createToken( Class<? extends DataToken> currentTokenType, DataSourceLexer data ) {
 
         String valueString = data.getTokenString();
 
@@ -183,7 +183,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return TokenUtils.createToken( currentTokenType, valueString );
     }
 
-    private Class<? extends DataToken> consumeToken( DataSource data ) {
+    private Class<? extends DataToken> consumeToken( DataSourceLexer data ) {
         char charAtTokenStart = data.charAtTokenStart();
 
         Class<? extends DataToken> currentTokenType = null;
@@ -207,7 +207,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return currentTokenType;
     }
 
-    private Class<? extends DataToken> consumeQuotedText( DataSource data ) {
+    private Class<? extends DataToken> consumeQuotedText( DataSourceLexer data ) {
         char firstChar = data.charAtTokenStart();
 
         if (CSVTokenizerTerminals.isStartOfQuote( firstChar )) {
@@ -224,7 +224,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return QuotedTextToken.class;
     }
 
-    private Class<? extends DataToken> consumeIdentifier( DataSource data ) {
+    private Class<? extends DataToken> consumeIdentifier( DataSourceLexer data ) {
         if (CSVTokenizerTerminals.isStartOfIdentifier( data.charAtTokenStart() )) {
             data.incrementTokenEndWhile( CSVTokenizerTerminals::isPartOfIdentifier );
         }
@@ -243,13 +243,13 @@ public class CSVTokenizerImpl implements DataTokenizer {
         return TextToken.class;
     }
 
-    private Class<NumberToken> consumeNumber( DataSource data ) {
+    private Class<NumberToken> consumeNumber( DataSourceLexer data ) {
         data.incrementTokenEndWhile( CSVTokenizerTerminals::isDigitOrFraction );
 
         return NumberToken.class;
     }
 
-    private Class<? extends DataToken> consumeLineSeparator( DataSource data ) {
+    private Class<? extends DataToken> consumeLineSeparator( DataSourceLexer data ) {
         char firstChar = data.charAtTokenStart();
         char secondChar = data.charAtTokenEnd();
         if (firstChar == _0X0A_LINEFEED) {

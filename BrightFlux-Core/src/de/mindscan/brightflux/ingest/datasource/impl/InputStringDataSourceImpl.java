@@ -27,11 +27,12 @@ package de.mindscan.brightflux.ingest.datasource.impl;
 
 import java.util.function.Predicate;
 
-import de.mindscan.brightflux.ingest.datasource.DataSource;
+import de.mindscan.brightflux.ingest.datasource.DataSourceLexer;
 
 /**
+ * Actually, this might be a good idea to rename this class, because while reviewing it, it looks more like a Lexer.
  */
-public class InputStringDataSourceImpl implements DataSource {
+public class InputStringDataSourceImpl implements DataSourceLexer {
 
     private int tokenStart;
     private int tokenEnd;
