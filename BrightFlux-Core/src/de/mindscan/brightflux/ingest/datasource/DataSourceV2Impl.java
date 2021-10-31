@@ -39,21 +39,24 @@ import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer
  */
 public class DataSourceV2Impl implements DataSourceV2 {
 
+    private static final String METHOD_INPUT_STRING = "inputString";
+    private static final String METHOD_FILE_PATH = "filePath";
+
     private Path ingestInputPath;
     private String inputString;
     private String method;
 
     @Override
-    public StringBackedDataSourceLexer getAsStringBackedDataSourceLexer() {
+    public DataSourceLexer getAsStringBackedDataSourceLexer() {
         switch (method) {
-            case "filePath": {
-                StringBackedDataSourceLexer lexer = new StringBackedDataSourceLexer();
+            case METHOD_FILE_PATH: {
+                DataSourceLexer lexer = new StringBackedDataSourceLexer();
                 lexer.resetTokenPositions();
                 lexer.setInputString( readAllLinesFromFile( ingestInputPath ) );
                 return lexer;
             }
-            case "inputString": {
-                StringBackedDataSourceLexer lexer = new StringBackedDataSourceLexer();
+            case METHOD_INPUT_STRING: {
+                DataSourceLexer lexer = new StringBackedDataSourceLexer();
                 lexer.resetTokenPositions();
                 lexer.setInputString( inputString );
                 return lexer;
@@ -69,13 +72,13 @@ public class DataSourceV2Impl implements DataSourceV2 {
     @Override
     public void setInput( Path ingestInputPath ) {
         this.ingestInputPath = ingestInputPath;
-        this.method = "filePath";
+        this.method = METHOD_FILE_PATH;
     }
 
     @Override
     public void setInput( String inputString ) {
         this.inputString = inputString;
-        this.method = "inputString";
+        this.method = METHOD_INPUT_STRING;
     }
 
     /**

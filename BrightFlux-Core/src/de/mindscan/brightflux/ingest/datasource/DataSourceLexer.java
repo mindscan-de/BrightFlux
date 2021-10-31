@@ -48,4 +48,16 @@ public interface DataSourceLexer {
 
     void incrementTokenEndWhile( Predicate<Character> object );
 
+    int getTokenEnd();
+
+    int getTokenStart();
+
+    void prepareNextToken();
+
+    void setInputString( String inputString );
+
+    void resetTokenPositions();
+
+    void advanceToNextToken();
+
 }

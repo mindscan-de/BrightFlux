@@ -31,7 +31,6 @@ import java.util.Iterator;
 import de.mindscan.brightflux.ingest.DataToken;
 import de.mindscan.brightflux.ingest.datasource.DataSourceLexer;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
-import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.IdentifierToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
@@ -127,7 +126,7 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        StringBackedDataSourceLexer lexer = dataSource.getAsStringBackedDataSourceLexer();
+        DataSourceLexer lexer = dataSource.getAsStringBackedDataSourceLexer();
 
         while (lexer.isTokenStartBeforeInputEnd()) {
             lexer.prepareNextToken();

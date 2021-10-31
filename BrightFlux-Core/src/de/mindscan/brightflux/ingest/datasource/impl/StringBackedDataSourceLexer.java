@@ -45,11 +45,13 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
         this.inputString = inputString;
     }
 
+    @Override
     public void resetTokenPositions() {
         tokenStart = 0;
         tokenEnd = 0;
     }
 
+    @Override
     public void setInputString( String inputString ) {
         this.inputString = inputString;
     }
@@ -74,6 +76,7 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
         return tokenEnd < inputString.length();
     }
 
+    @Override
     public void advanceToNextToken() {
         tokenStart = tokenEnd;
     }
@@ -83,6 +86,7 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
         tokenEnd++;
     }
 
+    @Override
     public void prepareNextToken() {
         tokenEnd = tokenStart + 1;
     }
@@ -92,10 +96,12 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
         return inputString.substring( tokenStart, tokenEnd );
     }
 
+    @Override
     public int getTokenStart() {
         return tokenStart;
     }
 
+    @Override
     public int getTokenEnd() {
         return tokenEnd;
     }
