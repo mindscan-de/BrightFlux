@@ -54,8 +54,6 @@ public interface DataSourceLexer {
 
     void prepareNextToken();
 
-    void setInputString( String inputString );
-
     void resetTokenPositions();
 
     void advanceToNextToken();

@@ -43,6 +43,7 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
 
     public StringBackedDataSourceLexer( String inputString ) {
         this.inputString = inputString;
+        resetTokenPositions();
     }
 
     @Override
@@ -51,7 +52,6 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
         tokenEnd = 0;
     }
 
-    @Override
     public void setInputString( String inputString ) {
         this.inputString = inputString;
     }
