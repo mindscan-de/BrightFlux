@@ -30,7 +30,7 @@ import java.util.function.Predicate;
 /**
  * 
  */
-public interface DataSourceLexer {
+public interface DataSourceLexer extends AutoCloseable {
 
     char charAtTokenEnd();
 

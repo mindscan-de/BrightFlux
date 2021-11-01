@@ -126,34 +126,37 @@ public class CSVTokenizerImpl implements DataTokenizer {
         // this is good enough for now.
         ArrayList<DataToken> tokens = new ArrayList<DataToken>();
 
-        DataSourceLexer lexer = dataSource.getAsStringBackedDataSourceLexer();
+        try (DataSourceLexer lexer = dataSource.getAsStringBackedDataSourceLexer()) {
+            while (lexer.isTokenStartBeforeInputEnd()) {
+                lexer.prepareNextToken();
 
-        while (lexer.isTokenStartBeforeInputEnd()) {
-            lexer.prepareNextToken();
+                Class<? extends DataToken> currentTokenType = consumeToken( lexer );
 
-            Class<? extends DataToken> currentTokenType = consumeToken( lexer );
-
-            if (isValidTokenType( currentTokenType )) {
-                tokens.add( createToken( currentTokenType, lexer ) );
-            }
-            else {
-                int tokenStart = lexer.getTokenStart();
-                int tokenEnd = lexer.getTokenEnd();
-
-                System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
-
-                String tokenString = lexer.getTokenString();
-                for (int i = tokenStart; i < tokenEnd; i++) {
-                    System.out.println( "0x" + Integer.toString( i, 16 ) + ": 0x" + Integer.toString( tokenString.charAt( i - tokenStart ), 16 ) );
+                if (isValidTokenType( currentTokenType )) {
+                    tokens.add( createToken( currentTokenType, lexer ) );
                 }
-                // ignore that unknown "token"....
+                else {
+                    int tokenStart = lexer.getTokenStart();
+                    int tokenEnd = lexer.getTokenEnd();
+
+                    System.out.println( "could not process string (" + tokenStart + ";" + tokenEnd + ")" );
+
+                    String tokenString = lexer.getTokenString();
+                    for (int i = tokenStart; i < tokenEnd; i++) {
+                        System.out.println( "0x" + Integer.toString( i, 16 ) + ": 0x" + Integer.toString( tokenString.charAt( i - tokenStart ), 16 ) );
+                    }
+                    // ignore that unknown "token"....
+                }
+
+                // ---------------------
+                // Advance to next token
+                // ---------------------            
+
+                lexer.advanceToNextToken();
             }
-
-            // ---------------------
-            // Advance to next token
-            // ---------------------            
-
-            lexer.advanceToNextToken();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
         return tokens.iterator();

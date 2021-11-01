@@ -120,4 +120,11 @@ public class StringBackedDataSourceLexer implements DataSourceLexer {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void close() throws Exception {
+    }
+
 }
