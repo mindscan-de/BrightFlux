@@ -113,12 +113,6 @@ This whole thing is going through a permanent dogfooding phase.
 
 Some of the planned features are: (I will have to sort and reprioritize this... That is getting out of hand...)
 
-* add links and options to use a code search engine and log search engine for the messages
-  * did we see that message more often, but we never thought about it before
-  * since what version of the system we see that message
-  * where does this message come from in the code and annotate this message with a software component / swim-lane
-
-
 * UI/UX
   * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
   * add Markers to annotation dataframe
@@ -225,7 +219,7 @@ Machine Learning and Pattern recognition and Anomality Detection on Log-Data
 * NER for log messages
 
 
-Support Calculations between Rows or Rows
+Support Calculations between Rows or Columns
 * provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
 
 
@@ -250,3 +244,9 @@ Internal Search Engine to search in Dataframe-Columns
 
 
 * some dictionary or knowledge base articles for certain messages to provide context
+
+
+* add links and options to use a code search engine and log search engine for the messages
+  * did we see that message more often, but we never thought about it before
+  * since what version of the system we see that message
+  * where does this message come from in the code and annotate this message with a software component / swim-lane
