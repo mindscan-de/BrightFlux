@@ -27,6 +27,8 @@ package de.mindscan.brightflux.ingest.datasource;
 
 import java.nio.file.Path;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+
 /**
  * We want different kind of datasources
  * 
@@ -43,6 +45,8 @@ public interface DataSourceV2 {
     void setInput( Path ingestInputPath );
 
     void setInput( String inputString );
+
+    void setInput( DataFrame df, String[] transferColumns, String inputColumn );
 
     Path getIngestInputPath();
 

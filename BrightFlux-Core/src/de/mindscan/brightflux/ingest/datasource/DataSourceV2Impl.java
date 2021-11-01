@@ -30,6 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer;
 
@@ -41,6 +42,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
 
     private static final String METHOD_INPUT_STRING = "inputString";
     private static final String METHOD_FILE_PATH = "filePath";
+    private static final String METHOD_DATAFRAME = "dataFrame";
 
     private Path ingestInputPath;
     private String inputString;
@@ -50,11 +52,18 @@ public class DataSourceV2Impl implements DataSourceV2 {
     public DataSourceLexer getAsStringBackedDataSourceLexer() {
         switch (method) {
             case METHOD_FILE_PATH: {
+                // TODO: provide a file backed DataSourceLexer / INputStream / BufferedINputStream - DataSourceLexe
+                // There should be a lexer for (text based) inputs from files.
                 return new StringBackedDataSourceLexer( readAllLinesFromFile( ingestInputPath ) );
             }
             case METHOD_INPUT_STRING: {
                 return new StringBackedDataSourceLexer( inputString );
             }
+            case METHOD_DATAFRAME: {
+                // TODO: a Data frame source would be totally fine.
+                throw new NotYetImplemetedException( "Implement a DataSourceLexer for DataFrames" );
+            }
+
             default:
                 throw new NotYetImplemetedException();
         }
@@ -73,6 +82,13 @@ public class DataSourceV2Impl implements DataSourceV2 {
     public void setInput( String inputString ) {
         this.inputString = inputString;
         this.method = METHOD_INPUT_STRING;
+    }
+
+    @Override
+    public void setInput( DataFrame df, String[] transferColumns, String inputColumn ) {
+        // TODO: copy some of the transferColumns
+        // at least the SpecialColumns should be taken over by default
+        this.method = METHOD_DATAFRAME;
     }
 
     /**
