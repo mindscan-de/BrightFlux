@@ -109,14 +109,14 @@ This whole thing is going through a permanent dogfooding phase.
 
 ## Planned Features
 
+The "planned features" are not planned actually to be implemented, but they are more of a kind of ideas and put
+into some personally reasonable order. Some of these ideas will be dropped some reordered, delayed or sometimes
+also implemented. The most active topics will be the ones mentioned in the "Next" sub section, these are topics 
+I want to address rather sooner than later.
+
 ### Unclassified
 
-Some of the planned features are: (I will have to sort and reprioritize this... That is getting out of hand...)
-
-* UI/UX
-  * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
-  * add Markers to annotation dataframe
-  * add Videotimestamp annotations to annotation dataframe
+* This list is currently empty
 
 
 ### Next
@@ -124,7 +124,7 @@ Some of the planned features are: (I will have to sort and reprioritize this... 
 DataFrame-Core-Ingest
 * [DFINGEST] Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
   * [DFINGEST] DataSource Tokenizer for Dataframe Columns  
-* [DFINGEST] ingest inner encodings of data in certain columns of the database in case, using selectors (SQL-Like) and then a format/parser description  
+* [DFINGEST] ingest inner encodings of data in certain columns of the dataframe in case, using selectors (SQL-Like) and then a format/parser description  
 
 
 DataFrame-Core
@@ -158,6 +158,13 @@ Annotation and Highlights Improvements
 
 Videotimestamp Annotations
 * sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
+* add Videotimestamp annotations to annotation dataframe
+* add Markers to annotation dataframe
+
+
+UI/UX
+* provide left(show icons and boxes for annotated lines, direct synchronized windowed ruler ) and right ruler 
+  (overview ruler which is showing the color bars and clickable fullscale positions)
 
 
 DFQL
@@ -226,6 +233,10 @@ Support Calculations between Rows or Columns
 Export the analysis result in short form
 * Document / Documentype / technical vs manager form
 * Project file
+
+
+* UI/UX
+  * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
 
 
 ### Never?
