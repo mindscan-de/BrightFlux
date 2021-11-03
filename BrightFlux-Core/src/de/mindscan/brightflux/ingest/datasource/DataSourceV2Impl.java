@@ -32,6 +32,7 @@ import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.ingest.datasource.impl.DataFrameBackedDataSourceLexer;
 import de.mindscan.brightflux.ingest.datasource.impl.StringBackedDataSourceLexer;
 
 /**
@@ -47,6 +48,8 @@ public class DataSourceV2Impl implements DataSourceV2 {
     private Path ingestInputPath;
     private String inputString;
     private String method;
+    private DataFrame df;
+    private String inputColumn;
 
     @Override
     public DataSourceLexer getAsStringBackedDataSourceLexer() {
@@ -60,8 +63,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
                 return new StringBackedDataSourceLexer( inputString );
             }
             case METHOD_DATAFRAME: {
-                // TODO: a Data frame source would be totally fine.
-                throw new NotYetImplemetedException( "Implement a DataSourceLexer for DataFrames" );
+                return new DataFrameBackedDataSourceLexer( df, inputColumn );
             }
 
             default:
@@ -88,6 +90,9 @@ public class DataSourceV2Impl implements DataSourceV2 {
     public void setInput( DataFrame df, String[] transferColumns, String inputColumn ) {
         // TODO: copy some of the transferColumns
         // at least the SpecialColumns should be taken over by default
+        this.df = df;
+        this.inputColumn = inputColumn;
+
         this.method = METHOD_DATAFRAME;
     }
 

@@ -25,14 +25,33 @@
  */
 package de.mindscan.brightflux.ingest.datasource.impl;
 
+import java.util.Iterator;
 import java.util.function.Predicate;
 
-import de.mindscan.brightflux.ingest.datasource.DataSourceLexer;
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.ingest.datasource.DataSourceLexerRowMode;
 
 /**
  * TODO: try a very simple conversion for the datasource lexer...
  */
-public class DataFrameBackedDataSourceLexer implements DataSourceLexer {
+public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
+
+    private DataFrame df;
+    private String inputColumn;
+
+    private Iterator<DataFrameRow> currentDataRows;
+    private DataFrameRow currentRow;
+
+    public DataFrameBackedDataSourceLexer( DataFrame df, String inputColumn ) {
+        this.df = df;
+        this.inputColumn = inputColumn;
+
+        this.resetRow();
+
+        throw new NotYetImplemetedException( "Implement a DataSourceLexer for DataFrames" );
+    }
 
     /** 
      * {@inheritDoc}
@@ -157,6 +176,53 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexer {
     @Override
     public void close() throws Exception {
         // intentionally left empty, because no extra resource is acquired, but we may 
+    }
+
+    // ---------------------------------------
+    // Special Mode for RowDataBased
+    // ---------------------------------------
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void resetRow() {
+        this.currentDataRows = df.rowIterator();
+
+        prepareCurrentDataRow();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void advanceToNextRow() {
+        this.currentRow = currentDataRows.next();
+
+        // reset token position for the current row
+        this.resetTokenPositions();
+
+        prepareCurrentDataRow();
+
+        // read the text for the current row 
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * 
+     */
+    private void prepareCurrentDataRow() {
+
+    }
+
+    /** 
+     * {@inheritDoc}
+     * @return 
+     */
+    @Override
+    public boolean hasNextRow() {
+        return currentDataRows.hasNext();
     }
 
 }
