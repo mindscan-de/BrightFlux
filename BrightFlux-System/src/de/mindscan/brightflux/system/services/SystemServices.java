@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.system.services;
 
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 
 /**
  * As much as I dislike these Singletons, these are actually mockable and configurable objects in 
@@ -34,6 +35,7 @@ import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 public class SystemServices {
 
     private FavRecipesComponent favRecipesServices;
+    private VideoAnnotatorComponent videoAnnotatorService;
 
     private static class SystemServicesHolder {
         private static SystemServices instance = new SystemServices();
@@ -53,6 +55,14 @@ public class SystemServices {
 
     public FavRecipesComponent getFavRecipesServices() {
         return favRecipesServices;
+    }
+
+    public void setVideoAnnotationService( VideoAnnotatorComponent videoAnnotatorService ) {
+        this.videoAnnotatorService = videoAnnotatorService;
+    }
+
+    public VideoAnnotatorComponent getVideoAnnotatorService() {
+        return videoAnnotatorService;
     }
 
     // AnnotationService
