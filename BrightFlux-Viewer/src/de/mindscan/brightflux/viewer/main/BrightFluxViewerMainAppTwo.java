@@ -78,6 +78,10 @@ public class BrightFluxViewerMainAppTwo {
             // STARTUP : System Services
             SystemServices systemServices = SystemServices.getInstance();
 
+            // STARTUP : Configurationfiles
+            // TODO: load some configuration from file
+            // TODO: set the current configuration (e.g. the window size)
+
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
             String currentDirectory = System.getProperty( "user.dir" );
             Path favRecipesPath = Paths.get( currentDirectory, "favrecipes" );
@@ -86,17 +90,16 @@ public class BrightFluxViewerMainAppTwo {
             favRecipesCollector.collect( favRecipesPath );
             systemServices.setFavRecipeServices( favRecipesComponent );
 
-            // STARTUP : Register Video Annotator Service
+            // STARTUP : Register Video Annotation Service
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
             systemServices.setVideoAnnotationService( videoAnnotatorComponent );
 
             // some debug...
             List<String> intermediateNodes = favRecipesComponent.getAllIntermediateNodes();
+            System.out.println( "Intermediate nodes for favorite recipes" );
             System.out.println( intermediateNodes );
 
-            // TODO: load some configuration from file
-            // TODO: set the current configuration (e.g. the window size)
-            // TODO: the configuration an be distributed with configuration events
+            // TODO: the configuration can be distributed with configuration events -> or with a 
 
             // TODO: Implement a startup component, such that some of the components can be initialized before
             //       first usage, (e.g. annotation, highlight, QueryCallbacks, project registry, system services,  ....)
