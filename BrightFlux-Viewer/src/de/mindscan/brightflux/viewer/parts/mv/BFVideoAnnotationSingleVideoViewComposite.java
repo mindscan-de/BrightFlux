@@ -89,8 +89,10 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
 
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
+        // TODO: here we will have a dataframe containing the timestamps and texts...
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
 
+        // TODO: here we will have a list of phrases useful for the analysis process.
         Composite composite_2 = new Composite( sashForm_1, SWT.NONE );
         sashForm_1.setWeights( new int[] { 1, 1 } );
         sashForm.setWeights( new int[] { 1, 1 } );
