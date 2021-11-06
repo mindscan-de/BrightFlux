@@ -73,7 +73,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         this.projectRegistry.registerParticipant( appLog );
         this.projectRegistry.registerParticipant( appQueryTerminal );
         this.projectRegistry.registerParticipant( textAnnotationsComposite );
-
+        this.projectRegistry.registerParticipant( videoAnnotationsComposite );
     }
 
     private void buildLayout() {
