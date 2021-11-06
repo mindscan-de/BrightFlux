@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts.mv;
 
+import java.nio.file.Path;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -36,14 +38,23 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
+import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import swing2swt.layout.BorderLayout;
 
 /**
  * 
  */
 public class BFVideoAnnotationViewComposite extends Composite implements ProjectRegistryParticipant {
+
+    private ProjectRegistry projectRegistry;
+    private CTabFolder videoObjectTabFolder;
 
     /**
      * Create the composite.
@@ -62,6 +73,9 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         addVideoButton.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( parent.getShell(), "Select Video", FileDescriptions.ANY, path -> {
+                    addVideoToProject( path );
+                } );
             }
         } );
         addVideoButton.setText( "Add Video ..." );
@@ -80,9 +94,9 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         composite_1.setLayoutData( BorderLayout.CENTER );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        CTabFolder tabFolder = new CTabFolder( composite_1, SWT.BORDER );
-        tabFolder.setTabPosition( SWT.BOTTOM );
-        tabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
+        videoObjectTabFolder = new CTabFolder( composite_1, SWT.BORDER );
+        videoObjectTabFolder.setTabPosition( SWT.BOTTOM );
+        videoObjectTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
 
     }
 
@@ -91,7 +105,32 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
+        this.projectRegistry = projectRegistry;
+
+        // registerCreatedVideoAnnotationVideoObject();
+
+        BFEventListener listener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                // TODO: add the videoObject to tabfolder
+            }
+        };
+
+        // projectRegistry.getEventDispatcher().registerEventListener( eventType, listener );
+    }
+
+    /**
+     * @param path
+     */
+    protected void addVideoToProject( Path path ) {
+        // TODO we need to add processing on how long this video is.
+        // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
+        // send some command to the annotation component... / with the annotation component
+        if (this.projectRegistry != null) {
+            // TODO: build the command to add the video to the current project.
+            BFCommand command = null;
+            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 
     @Override
