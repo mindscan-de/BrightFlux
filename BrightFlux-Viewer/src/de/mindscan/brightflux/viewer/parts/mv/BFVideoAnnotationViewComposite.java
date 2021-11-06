@@ -67,7 +67,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
         Composite composite = new Composite( this, SWT.NONE );
         composite.setLayoutData( BorderLayout.NORTH );
-        composite.setLayout( new GridLayout( 2, false ) );
+        composite.setLayout( new GridLayout( 5, false ) );
 
         Button addVideoButton = new Button( composite, SWT.NONE );
         addVideoButton.addSelectionListener( new SelectionAdapter() {
@@ -81,10 +81,15 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         addVideoButton.setText( "Add Video ..." );
         addVideoButton.setBounds( 0, 0, 85, 23 );
 
+        Button btnGenerateAndCopy = new Button( composite, SWT.NONE );
+        btnGenerateAndCopy.setText( "Generate Report" );
+
+        Label label = new Label( composite, SWT.NONE );
+        label.setText( "...." );
+
         Button btnLoadVideoAnnotations = new Button( composite, SWT.NONE );
         btnLoadVideoAnnotations.setText( "Load Video Annotations ..." );
         btnLoadVideoAnnotations.setBounds( 0, 0, 120, 23 );
-        new Label( composite, SWT.NONE );
 
         Button btnSaveVideoAnnotations = new Button( composite, SWT.NONE );
         btnSaveVideoAnnotations.setText( "Save Video Annotations ..." );
