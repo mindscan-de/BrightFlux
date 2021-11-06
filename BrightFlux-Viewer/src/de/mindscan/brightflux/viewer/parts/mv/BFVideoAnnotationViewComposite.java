@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -38,7 +39,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
-import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -128,14 +128,33 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
      * @param path
      */
     protected void addVideoToProject( Path path ) {
-        // TODO we need to add processing on how long this video is.
+        // TODO we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
         if (this.projectRegistry != null) {
             // TODO: build the command to add the video to the current project.
-            BFCommand command = null;
-            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+            // BFCommand command = null;
+            // this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+
+            // TODO: actually this should be called by the event listener...
+            addVideoObjectTab( path.getFileName().toString() );
         }
+    }
+
+    private void addVideoObjectTab( String name ) {
+        CTabItem item = addTabItem( this.videoObjectTabFolder, name );
+        videoObjectTabFolder.setSelection( item );
+    }
+
+    private CTabItem addTabItem( CTabFolder tabFolder, String name ) {
+        CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
+        tbtmNewItem.setShowClose( true );
+        tbtmNewItem.setText( name );
+
+        BFVideoAnnotationSingleVideoViewComposite composite = new BFVideoAnnotationSingleVideoViewComposite( tabFolder, SWT.NONE );
+        tbtmNewItem.setControl( composite );
+
+        return tbtmNewItem;
     }
 
     @Override
