@@ -38,6 +38,7 @@ import de.mindscan.brightflux.viewer.parts.mv.BFAnnotationConsoleViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppConsoleViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFAppLogViewComposite;
 import de.mindscan.brightflux.viewer.parts.mv.BFDataFrameQueryTerminalViewComposite;
+import de.mindscan.brightflux.viewer.parts.mv.BFVideoAnnotationViewComposite;
 
 /**
  * 
@@ -47,7 +48,8 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
     private BFAppLogViewComposite appLog;
     private BFAppConsoleViewComposite appConsole;
     private BFDataFrameQueryTerminalViewComposite appQueryTerminal;
-    private BFAnnotationConsoleViewComposite annotationsComposite;
+    private BFAnnotationConsoleViewComposite textAnnotationsComposite;
+    private BFVideoAnnotationViewComposite videoAnnotationsComposite;
 
     /**
      * Create the composite.
@@ -70,7 +72,7 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         this.projectRegistry.registerParticipant( appConsole );
         this.projectRegistry.registerParticipant( appLog );
         this.projectRegistry.registerParticipant( appQueryTerminal );
-        this.projectRegistry.registerParticipant( annotationsComposite );
+        this.projectRegistry.registerParticipant( textAnnotationsComposite );
 
     }
 
@@ -96,10 +98,15 @@ public class MultiViewComposite extends Composite implements ProjectRegistryPart
         appQueryTerminal = new BFDataFrameQueryTerminalViewComposite( tabFolder, SWT.NONE );
         tbtmQueryTerminal.setControl( appQueryTerminal );
 
-        CTabItem tbtmAnnotations = new CTabItem( tabFolder, SWT.NONE );
-        tbtmAnnotations.setText( "Annotations" );
-        annotationsComposite = new BFAnnotationConsoleViewComposite( tabFolder, SWT.NONE );
-        tbtmAnnotations.setControl( annotationsComposite );
+        CTabItem tbtmTextAnnotations = new CTabItem( tabFolder, SWT.NONE );
+        tbtmTextAnnotations.setText( "Text Annotations" );
+        textAnnotationsComposite = new BFAnnotationConsoleViewComposite( tabFolder, SWT.NONE );
+        tbtmTextAnnotations.setControl( textAnnotationsComposite );
+
+        CTabItem tbtmVideoAnnotations = new CTabItem( tabFolder, SWT.NONE );
+        tbtmVideoAnnotations.setText( "Video Annotations" );
+        videoAnnotationsComposite = new BFVideoAnnotationViewComposite( tabFolder, SWT.NONE );
+        tbtmVideoAnnotations.setControl( videoAnnotationsComposite );
 
         tabFolder.setSelection( tbtmQueryTerminal );
     }
