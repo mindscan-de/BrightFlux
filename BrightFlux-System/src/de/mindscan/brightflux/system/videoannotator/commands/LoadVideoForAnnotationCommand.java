@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObjectFactory;
 
@@ -53,7 +53,7 @@ public class LoadVideoForAnnotationCommand implements BFCommand {
         // TODO Create a Event using a factory.
         VideoAnnotatorVideoObject videoObject = VideoAnnotatorVideoObjectFactory.createVideoObject( videoObjectPath );
 
-        eventConsumer.accept( DataFrameCommandFactory.createVideoObjectEvent( videoObject ) );
+        eventConsumer.accept( BFEventFactory.createVideoObjectEvent( videoObject ) );
     }
 
 }
