@@ -154,6 +154,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setShowClose( true );
         tbtmNewItem.setText( videoObject.getSimpleName() );
+        tbtmNewItem.setToolTipText( videoObject.getVideoObjectPath().toString() );
 
         BFVideoAnnotationSingleVideoViewComposite composite = new BFVideoAnnotationSingleVideoViewComposite( tabFolder, SWT.NONE );
         composite.setVideoObject( videoObject );
