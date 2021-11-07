@@ -146,16 +146,17 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     private void addVideoObjectTab( VideoAnnotatorVideoObject videoObject ) {
-        CTabItem item = addTabItem( this.videoObjectTabFolder, videoObject.getSimpleName() );
+        CTabItem item = addTabItem( this.videoObjectTabFolder, videoObject );
         videoObjectTabFolder.setSelection( item );
     }
 
-    private CTabItem addTabItem( CTabFolder tabFolder, String name ) {
+    private CTabItem addTabItem( CTabFolder tabFolder, VideoAnnotatorVideoObject videoObject ) {
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setShowClose( true );
-        tbtmNewItem.setText( name );
+        tbtmNewItem.setText( videoObject.getSimpleName() );
 
         BFVideoAnnotationSingleVideoViewComposite composite = new BFVideoAnnotationSingleVideoViewComposite( tabFolder, SWT.NONE );
+        composite.setVideoObject( videoObject );
         tbtmNewItem.setControl( composite );
 
         return tbtmNewItem;

@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -44,6 +45,7 @@ import swing2swt.layout.BorderLayout;
 public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
     private Text currentVideoDuration;
     private Text currentVideoPosition;
+    private VideoAnnotatorVideoObject videoObject;
 
     /**
      * Create the composite.
@@ -99,8 +101,19 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
 
     }
 
+    /**
+     * @param videoObject
+     */
+    public void setVideoObject( VideoAnnotatorVideoObject videoObject ) {
+        this.videoObject = videoObject;
+
+        // TODO: update the visual components which present the data of the videoObject
+        // TODO: VideoDuration etc. 
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
     }
+
 }
