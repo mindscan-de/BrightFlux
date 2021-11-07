@@ -124,6 +124,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
 
         // --- Update Visual Components ---
         setVideoDuration( this.videoObject.getVideoDurationInSeconds() );
+        setVideoPosition( 0 );
     }
 
     private void setVideoDuration( int videoDurationInSeconds ) {
