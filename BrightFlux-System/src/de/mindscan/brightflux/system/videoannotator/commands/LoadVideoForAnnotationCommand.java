@@ -53,7 +53,7 @@ public class LoadVideoForAnnotationCommand implements BFCommand {
         // TODO Create a Event using a factory.
         VideoAnnotatorVideoObject videoObject = VideoAnnotatorVideoObjectFactory.createVideoObject( videoObjectPath );
 
-        eventConsumer.accept( BFEventFactory.createVideoObjectEvent( videoObject ) );
+        eventConsumer.accept( BFEventFactory.videoObjectCreatedEvent( videoObject ) );
     }
 
 }

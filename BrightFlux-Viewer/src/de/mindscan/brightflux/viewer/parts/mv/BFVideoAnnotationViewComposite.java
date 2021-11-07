@@ -39,12 +39,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
+import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotatonVideoObjectCreatedEvent;
+import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import swing2swt.layout.BorderLayout;
 
@@ -112,16 +117,18 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        // registerCreatedVideoAnnotationVideoObject();
-
         BFEventListener listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                // TODO: add the videoObject to tabfolder
+                if (event instanceof VideoAnnotatonVideoObjectCreatedEvent) {
+                    VideoAnnotatorVideoObject videoObject = ((VideoAnnotatonVideoObjectCreatedEvent) event).getVideoObject();
+
+                    addVideoObjectTab( videoObject );
+                }
             }
         };
 
-        // projectRegistry.getEventDispatcher().registerEventListener( eventType, listener );
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.VideoAnnotationVideoObjectCreated, listener );
     }
 
     /**
@@ -132,17 +139,14 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
         if (this.projectRegistry != null) {
-            // TODO: build the command to add the video to the current project.
-            // BFCommand command = null;
-            // this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+            BFCommand command = DataFrameCommandFactory.loadVideoForAnnotation( path );
 
-            // TODO: actually this should be called by the event listener...
-            addVideoObjectTab( path.getFileName().toString() );
+            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
 
-    private void addVideoObjectTab( String name ) {
-        CTabItem item = addTabItem( this.videoObjectTabFolder, name );
+    private void addVideoObjectTab( VideoAnnotatorVideoObject videoObject ) {
+        CTabItem item = addTabItem( this.videoObjectTabFolder, videoObject.getSimpleName() );
         videoObjectTabFolder.setSelection( item );
     }
 

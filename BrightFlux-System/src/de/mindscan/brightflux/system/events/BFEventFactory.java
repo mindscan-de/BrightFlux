@@ -98,7 +98,7 @@ public class BFEventFactory {
         return new DataFrameClearHighlightRowEvent( inputDataFrame, row );
     }
 
-    public static BFEvent createVideoObjectEvent( VideoAnnotatorVideoObject videoObject ) {
+    public static BFEvent videoObjectCreatedEvent( VideoAnnotatorVideoObject videoObject ) {
         return new VideoAnnotatonVideoObjectCreatedEvent( videoObject );
     }
 
