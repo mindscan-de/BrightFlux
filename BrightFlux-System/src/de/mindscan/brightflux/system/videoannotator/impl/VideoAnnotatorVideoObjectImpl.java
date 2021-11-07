@@ -62,4 +62,9 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     public DataFrame getVideoAnnotationDataFrame() {
         return videoAnnotationDataFrame;
     }
+
+    @Override
+    public String getSimpleName() {
+        return videoObjectPath.getFileName().toString();
+    }
 }

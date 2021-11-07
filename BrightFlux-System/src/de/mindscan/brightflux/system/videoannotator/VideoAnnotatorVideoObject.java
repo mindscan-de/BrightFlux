@@ -40,4 +40,6 @@ public interface VideoAnnotatorVideoObject {
 
     int getVideoDurationInSeconds();
 
+    String getSimpleName();
+
 }
