@@ -32,6 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.annotator.commands.CreateAnnoationDataFrameCommand;
 import de.mindscan.brightflux.system.annotator.commands.DataFrameAnnotateRowCommand;
 import de.mindscan.brightflux.system.annotator.commands.LoadAnnotationDataFrameCommand;
@@ -51,6 +52,8 @@ import de.mindscan.brightflux.system.highlighter.commands.DataFrameClearHighligh
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
 import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotatonVideoObjectCreatedEvent;
 
 /**
  * This class provides commands around DataFrames 
@@ -140,6 +143,11 @@ public class DataFrameCommandFactory {
 
     public static BFCommand expandFile( Path filePath ) {
         return new ExpandProprietaryZipStreamCommand( filePath );
+    }
+
+    public static BFEvent createVideoObjectEvent( VideoAnnotatorVideoObject videoObject ) {
+        BFEvent event = new VideoAnnotatonVideoObjectCreatedEvent( videoObject );
+        return event;
     }
 
 }
