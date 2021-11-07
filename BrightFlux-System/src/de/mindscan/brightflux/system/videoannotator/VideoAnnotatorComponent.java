@@ -28,8 +28,12 @@ package de.mindscan.brightflux.system.videoannotator;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotatonVideoObjectCreatedEvent;
 
 /**
  * 
@@ -39,6 +43,8 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
     public static final String ANNOTATION_COLUMN_NAME = "videoAnnotation";
 
     private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
+
+    private ProjectRegistry projectRegistry;
 
     // TODO how do we want to address the different videoAnnotationDataframes 
 
@@ -51,8 +57,22 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO: register annotation events
-        // TODO: register catching video dataframes
+        this.projectRegistry = projectRegistry;
+
+        registerVideoObjectCreatedHandler();
+    }
+
+    private void registerVideoObjectCreatedHandler() {
+        BFEventListener createdVideoObjectListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof VideoAnnotatonVideoObjectCreatedEvent) {
+                    VideoAnnotatorVideoObject videoObject = ((VideoAnnotatonVideoObjectCreatedEvent) event).getVideoObject();
+                    videoAnnotationVideoObjects.add( videoObject );
+                }
+            }
+        };
+        this.projectRegistry.getEventDispatcher().registerEventListener( VideoAnnotatonVideoObjectCreatedEvent.class, createdVideoObjectListener );
     }
 
     public List<VideoAnnotatorVideoObject> getVideoAnnotationVideoObjects() {
