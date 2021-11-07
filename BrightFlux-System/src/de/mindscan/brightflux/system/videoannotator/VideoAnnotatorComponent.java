@@ -28,7 +28,6 @@ package de.mindscan.brightflux.system.videoannotator;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 
@@ -37,7 +36,9 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
  */
 public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
-    private List<DataFrame> videoAnnotationDataFrames;
+    public static final String ANNOTATION_COLUMN_NAME = "videoAnnotation";
+
+    private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
 
     // TODO how do we want to address the different videoAnnotationDataframes 
 
@@ -45,16 +46,16 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
      * 
      */
     public VideoAnnotatorComponent() {
-        this.videoAnnotationDataFrames = new LinkedList<>();
+        this.videoAnnotationVideoObjects = new LinkedList<>();
     }
 
-    /** 
-     * {@inheritDoc}
-     */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         // TODO: register annotation events
-        // TODO: register catching video datadataframes
+        // TODO: register catching video dataframes
     }
 
+    public List<VideoAnnotatorVideoObject> getVideoAnnotationVideoObjects() {
+        return videoAnnotationVideoObjects;
+    }
 }
