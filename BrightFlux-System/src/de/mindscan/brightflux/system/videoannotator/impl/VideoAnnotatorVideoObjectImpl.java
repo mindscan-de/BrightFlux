@@ -39,7 +39,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
     // Da wo die video datei liegt.
     private Path videoObjectPath;
-    private int videoDurationInSeconds = 0;
+    private int videoDurationInSeconds = 120;
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath ) {
         this.videoAnnotationDataFrame = df;

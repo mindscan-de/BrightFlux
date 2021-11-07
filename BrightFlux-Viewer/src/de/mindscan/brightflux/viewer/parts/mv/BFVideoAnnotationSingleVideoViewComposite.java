@@ -28,6 +28,8 @@ package de.mindscan.brightflux.viewer.parts.mv;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -46,6 +48,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
     private Text currentVideoDuration;
     private Text currentVideoPosition;
     private VideoAnnotatorVideoObject videoObject;
+    private Slider videoPositionSlider;
 
     /**
      * Create the composite.
@@ -63,20 +66,29 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         Label lblVideoDuration = new Label( leftComposite, SWT.NONE );
         lblVideoDuration.setText( "Video Duration" );
 
-        currentVideoDuration = new Text( leftComposite, SWT.BORDER | SWT.READ_ONLY );
+        currentVideoDuration = new Text( leftComposite, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER );
         currentVideoDuration.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
 
         Label lblCurrentPosition = new Label( leftComposite, SWT.NONE );
         lblCurrentPosition.setText( "Current Position" );
 
-        currentVideoPosition = new Text( leftComposite, SWT.BORDER | SWT.READ_ONLY );
+        currentVideoPosition = new Text( leftComposite, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER );
         currentVideoPosition.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
+        currentVideoPosition.setText( "00:00" );
 
         Composite bottomComposite = new Composite( this, SWT.NONE );
         bottomComposite.setLayoutData( BorderLayout.SOUTH );
         bottomComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Slider slider = new Slider( bottomComposite, SWT.NONE );
+        videoPositionSlider = new Slider( bottomComposite, SWT.NONE );
+        videoPositionSlider.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                setVideoPosition( videoPositionSlider.getSelection() );
+            }
+        } );
+        videoPositionSlider.setMinimum( 0 );
+        videoPositionSlider.setMaximum( 60 );
 
         Composite centerComposite = new Composite( this, SWT.NONE );
         centerComposite.setLayoutData( BorderLayout.CENTER );
@@ -109,6 +121,29 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
 
         // TODO: update the visual components which present the data of the videoObject
         // TODO: VideoDuration etc. 
+
+        // --- Update Visual Components ---
+        setVideoDuration( this.videoObject.getVideoDurationInSeconds() );
+    }
+
+    private void setVideoDuration( int videoDurationInSeconds ) {
+        currentVideoDuration.setText( convertSecondsToTimeString( videoDurationInSeconds ) );
+
+        videoPositionSlider.setIncrement( 1 );
+        videoPositionSlider.setMinimum( 0 );
+        videoPositionSlider.setThumb( 10 );
+        videoPositionSlider.setMaximum( videoDurationInSeconds + videoPositionSlider.getThumb() );
+    }
+
+    private void setVideoPosition( int videoPositionInSeconds ) {
+        currentVideoPosition.setText( convertSecondsToTimeString( videoPositionInSeconds ) );
+    }
+
+    private String convertSecondsToTimeString( int videoDurationInSeconds ) {
+        int seconds = videoDurationInSeconds % 60;
+        int minutes = (videoDurationInSeconds / 60) % 60;
+
+        return "%02d:%02d".formatted( minutes, seconds );
     }
 
     @Override
