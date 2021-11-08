@@ -71,12 +71,12 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     }
 
     @Override
-    public boolean isTextPresentForTimestamp( int timestamp ) {
+    public boolean isAnnotationPresentForTimestamp( int timestamp ) {
         return videoAnnotationDataFrame.isPresent( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp );
     }
 
     @Override
-    public void setTextForTimestamp( int timestamp, String annotation ) {
+    public void setAnnotationForTimestamp( int timestamp, String annotation ) {
         if (annotation != null && !annotation.isBlank()) {
             videoAnnotationDataFrame.setAt( DataFrameSpecialColumns.INDEX_COLUMN_NAME, timestamp, timestamp );
             videoAnnotationDataFrame.setAt( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp, annotation );
@@ -89,7 +89,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     }
 
     @Override
-    public String getTextForTimestamp( int timestamp ) {
+    public String getAnnotationForTimestamp( int timestamp ) {
         if (videoAnnotationDataFrame.isPresent( DataFrameSpecialColumns.INDEX_COLUMN_NAME, timestamp )) {
             if (videoAnnotationDataFrame.isPresent( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp )) {
                 return String.valueOf( videoAnnotationDataFrame.getAt( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp ) );

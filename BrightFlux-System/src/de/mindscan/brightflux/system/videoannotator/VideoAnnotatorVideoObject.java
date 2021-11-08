@@ -42,10 +42,10 @@ public interface VideoAnnotatorVideoObject {
 
     String getSimpleName();
 
-    String getTextForTimestamp( int timestamp );
+    String getAnnotationForTimestamp( int timestamp );
 
-    void setTextForTimestamp( int timestamp, String annotation );
+    void setAnnotationForTimestamp( int timestamp, String annotation );
 
-    boolean isTextPresentForTimestamp( int timestamp );
+    boolean isAnnotationPresentForTimestamp( int timestamp );
 
 }

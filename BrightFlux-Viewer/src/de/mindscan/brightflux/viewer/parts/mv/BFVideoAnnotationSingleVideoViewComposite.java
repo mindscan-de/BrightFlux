@@ -105,7 +105,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         currentVideoTimestampAnnotation = new StyledText( composite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL );
         currentVideoTimestampAnnotation.addModifyListener( new ModifyListener() {
             public void modifyText( ModifyEvent e ) {
-                updateAnnotation();
+                updateAnnotationInVideoObject();
             }
         } );
         currentVideoTimestampAnnotation.setTopMargin( 3 );
@@ -148,17 +148,17 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         currentVideoPosition.setText( convertSecondsToTimeString( videoPositionInSeconds ) );
 
         if (videoObject != null) {
-            currentVideoTimestampAnnotation.setText( videoObject.getTextForTimestamp( videoPositionInSeconds ) );
+            currentVideoTimestampAnnotation.setText( videoObject.getAnnotationForTimestamp( videoPositionInSeconds ) );
         }
         else {
             currentVideoTimestampAnnotation.setText( "" );
         }
     }
 
-    private void updateAnnotation() {
+    private void updateAnnotationInVideoObject() {
         int currentTimestamp = videoPositionSlider.getSelection();
         if (this.videoObject != null) {
-            this.videoObject.setTextForTimestamp( currentTimestamp, currentVideoTimestampAnnotation.getText() );
+            this.videoObject.setAnnotationForTimestamp( currentTimestamp, currentVideoTimestampAnnotation.getText() );
         }
     }
 
