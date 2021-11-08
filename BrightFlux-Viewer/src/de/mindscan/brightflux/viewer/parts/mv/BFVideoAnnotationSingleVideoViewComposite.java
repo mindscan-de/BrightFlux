@@ -28,6 +28,8 @@ package de.mindscan.brightflux.viewer.parts.mv;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -100,7 +102,16 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         Composite composite = new Composite( sashForm, SWT.NONE );
         composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        currentVideoTimestampAnnotation = new StyledText( composite, SWT.BORDER );
+        currentVideoTimestampAnnotation = new StyledText( composite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL );
+        currentVideoTimestampAnnotation.addModifyListener( new ModifyListener() {
+            public void modifyText( ModifyEvent e ) {
+                updateAnnotation();
+            }
+        } );
+        currentVideoTimestampAnnotation.setTopMargin( 3 );
+        currentVideoTimestampAnnotation.setRightMargin( 3 );
+        currentVideoTimestampAnnotation.setLeftMargin( 3 );
+        currentVideoTimestampAnnotation.setBottomMargin( 3 );
 
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
@@ -110,7 +121,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         // TODO: here we will have a list of phrases useful for the analysis process.
         Composite composite_2 = new Composite( sashForm_1, SWT.NONE );
         sashForm_1.setWeights( new int[] { 1, 1 } );
-        sashForm.setWeights( new int[] { 1, 1 } );
+        sashForm.setWeights( new int[] { 105, 176 } );
 
     }
 
@@ -145,6 +156,13 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         }
         else {
             currentVideoTimestampAnnotation.setText( "" );
+        }
+    }
+
+    private void updateAnnotation() {
+        int currentTimestamp = videoPositionSlider.getSelection();
+        if (this.videoObject != null) {
+            this.videoObject.setTextForTimestamp( currentTimestamp, currentVideoTimestampAnnotation.getText() );
         }
     }
 
