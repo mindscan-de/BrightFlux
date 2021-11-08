@@ -131,10 +131,6 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
     public void setVideoObject( VideoAnnotatorVideoObject videoObject ) {
         this.videoObject = videoObject;
 
-        // TODO: update the visual components which present the data of the videoObject
-        // TODO: VideoDuration etc. 
-
-        // --- Update Visual Components ---
         setVideoDuration( this.videoObject.getVideoDurationInSeconds() );
         setVideoPosition( 0 );
     }
