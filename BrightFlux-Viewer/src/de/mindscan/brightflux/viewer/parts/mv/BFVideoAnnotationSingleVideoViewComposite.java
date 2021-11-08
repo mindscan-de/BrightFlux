@@ -49,6 +49,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
     private Text currentVideoPosition;
     private VideoAnnotatorVideoObject videoObject;
     private Slider videoPositionSlider;
+    private StyledText currentVideoTimestampAnnotation;
 
     /**
      * Create the composite.
@@ -99,7 +100,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         Composite composite = new Composite( sashForm, SWT.NONE );
         composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        StyledText currentVideoTimestampStyledText = new StyledText( composite, SWT.BORDER );
+        currentVideoTimestampAnnotation = new StyledText( composite, SWT.BORDER );
 
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
@@ -138,6 +139,13 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
 
     private void setVideoPosition( int videoPositionInSeconds ) {
         currentVideoPosition.setText( convertSecondsToTimeString( videoPositionInSeconds ) );
+
+        if (videoObject != null) {
+            currentVideoTimestampAnnotation.setText( videoObject.getTextForTimestamp( videoPositionInSeconds ) );
+        }
+        else {
+            currentVideoTimestampAnnotation.setText( "" );
+        }
     }
 
     private String convertSecondsToTimeString( int videoDurationInSeconds ) {
