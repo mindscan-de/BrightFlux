@@ -33,6 +33,8 @@ import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -78,9 +80,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private Table table;
 
     private DataFrame currentSelectedDataFrame = null;
+    private DataFrameRow currentSelectedDataFrameRow = null;
     private DataFrame logAnalysisFrame = null;
-    private int previouslySelectedIndex = -1;
-    private Object previouslySelectedItem = null;
 
     private StyledText annotatedStyledText;
 
@@ -110,57 +111,61 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
+        registerAnnotationDataFrameCreatedEvent( projectRegistry );
+        registerDataFrameSelectedEvent( projectRegistry );
+        registerDataFrameRowSelectionEvent( projectRegistry );
+    }
+
+    private void registerAnnotationDataFrameCreatedEvent( ProjectRegistry projectRegistry ) {
         BFEventListener annotationDfCreatedListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFAbstractDataFrameEvent) {
                     DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
                     if (AnnotatorComponent.ANNOTATION_DATAFRAME_NAME.equals( frameToAnnotate.getName() )) {
-                        // copy reference for the loganalysis frame
                         BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
+                        BFAnnotationConsoleViewComposite.this.currentSelectedDataFrameRow = null;
                     }
                 }
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameCreated, annotationDfCreatedListener );
+    }
 
+    private void registerDataFrameSelectedEvent( ProjectRegistry projectRegistry ) {
         // current Selected Dataframe, not nice yet, but for proof of concept
         BFEventListenerAdapter listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                // TODO: Actually when switching the dataframe, we should save the previous annotation input  
-
                 BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
                 currentSelectedDataFrame = dataFrameEvent.getDataFrame();
+                currentSelectedDataFrameRow = null;
 
-                // Update View? Show name of selected DataFrame, 
-                // because the Terminal will be sensitive to the selected frame in the MainProjectComposite
+                // TODO: calculcate row selection if any...
+                DataFrameRow calculatedSelectedRow = currentSelectedDataFrameRow;
 
-                // TODO: Actually we should load the annotation text input content according to the new frame, and also clear the previouslySelectedIndex
+                prepareCurrentAnnotation( calculatedSelectedRow );
+
+                currentSelectedDataFrameRow = calculatedSelectedRow;
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
+    }
 
+    private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry ) {
         // row selection...
         BFEventListener dataFrameRowSelectionListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 DataFrameRowSelectedEvent x = (DataFrameRowSelectedEvent) event;
 
-                int rowIndex = x.getSelectedIndex();
                 Object rowItem = x.getSelectedItem();
 
-                if ((rowIndex != previouslySelectedIndex) || (rowItem != previouslySelectedItem)) {
-                    // we want to update the content of the annotations by reading the text field
-                    savePreviousAnnotation( previouslySelectedIndex, previouslySelectedItem );
+                // prevent the modify handler to issue a write command
+                currentSelectedDataFrameRow = null;
 
-                    // we update the text field with the previously written annotation. 
-                    prepareCurrentAnnotation( rowIndex, rowItem );
-
-                    previouslySelectedIndex = rowIndex;
-                    previouslySelectedItem = rowItem;
-                }
-
+                prepareCurrentAnnotation( rowItem );
+                currentSelectedDataFrameRow = (DataFrameRow) rowItem;
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, dataFrameRowSelectionListener );
@@ -270,6 +275,11 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         composite_4.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         annotatedStyledText = new StyledText( composite_4, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL );
+        annotatedStyledText.addModifyListener( new ModifyListener() {
+            public void modifyText( ModifyEvent e ) {
+                updateModifiedAnnotationForDataFrame();
+            }
+        } );
         annotatedStyledText.setLeftMargin( 3 );
         annotatedStyledText.setBottomMargin( 3 );
         annotatedStyledText.setTopMargin( 3 );
@@ -288,26 +298,24 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         annotatedStyledText.setText( newText );
     }
 
-    private void savePreviousAnnotation( int previousSelectedRowIndex, Object previousItem ) {
-        if (isDataFrameValid()) {
-            if (previousSelectedRowIndex != -1) {
-                String newText = annotatedStyledText.getText();
-                DataFrameRow x = (DataFrameRow) previousItem;
+    private void updateModifiedAnnotationForDataFrame() {
+        if (isDataFrameValid() && isCurrentDataFrameRowValid()) {
+            String newText = annotatedStyledText.getText();
 
-                /**
-                 * TODO: We will use the current SelectedDataFrame as a reference for the annotations. It 
-                 * is the responsibility of the annotator backend to figure out, which dataframe to store 
-                 * these annotations in and to pick the correct annotation dataframe according the the 
-                 * current selectedDataFrame.
-                 */
-                BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, x.getOriginalRowIndex(), newText );
-                projectRegistry.getCommandDispatcher().dispatchCommand( command );
-            }
+//          /**
+//          * TODO: We will use the current SelectedDataFrame as a reference for the annotations. It 
+//          * is the responsibility of the annotator backend to figure out, which dataframe to store 
+//          * these annotations in and to pick the correct annotation dataframe according the the 
+//          * current selectedDataFrame.
+//          */
+
+            BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, currentSelectedDataFrameRow.getOriginalRowIndex(), newText );
+            projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
 
-    private void prepareCurrentAnnotation( int newRowIndex, Object rowItem ) {
-        if (isDataFrameValid()) {
+    private void prepareCurrentAnnotation( Object rowItem ) {
+        if (isDataFrameValid() && rowItem != null) {
             int originalRowIndex = ((DataFrameRow) rowItem).getOriginalRowIndex();
             if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
                 String previousAnnotation = (String) logAnalysisFrame.getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
@@ -317,10 +325,17 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 annotatedStyledText.setText( "" );
             }
         }
+        else {
+            annotatedStyledText.setText( "" );
+        }
     }
 
     private boolean isDataFrameValid() {
         return logAnalysisFrame != null;
+    }
+
+    private boolean isCurrentDataFrameRowValid() {
+        return currentSelectedDataFrameRow != null;
     }
 
     private void buildReport( DataFrame currentSelectedDF, DataFrame logAnalysisDF ) {
