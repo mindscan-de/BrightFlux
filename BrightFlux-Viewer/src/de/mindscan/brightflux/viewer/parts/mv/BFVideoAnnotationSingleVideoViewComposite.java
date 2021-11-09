@@ -169,6 +169,19 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         return "%02d:%02d".formatted( minutes, seconds );
     }
 
+    public void closeVideoObject() {
+        this.setVisible( false );
+
+        if (videoObject != null) {
+            // TODO: remove the videoObject from the VideoAnnotationComponent
+            // TODO: DispatchCommand? DispatchEvent VideoObjectClosedEvent
+
+            // kill reference to VideoAnnotation here.
+            videoObject = null;
+        }
+
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components

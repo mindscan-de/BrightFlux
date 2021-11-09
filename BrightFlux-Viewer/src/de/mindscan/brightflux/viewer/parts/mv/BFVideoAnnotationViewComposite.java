@@ -30,6 +30,8 @@ import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
+import org.eclipse.swt.custom.CTabFolderEvent;
 import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -37,6 +39,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
@@ -108,6 +111,18 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         videoObjectTabFolder = new CTabFolder( composite_1, SWT.BORDER );
+        videoObjectTabFolder.addCTabFolder2Listener( new CTabFolder2Adapter() {
+            @Override
+            public void close( CTabFolderEvent event ) {
+                if (event.item instanceof CTabItem) {
+                    Control control = ((CTabItem) event.item).getControl();
+                    if (control instanceof BFVideoAnnotationSingleVideoViewComposite) {
+                        ((BFVideoAnnotationSingleVideoViewComposite) control).closeVideoObject();
+                    }
+                }
+                super.close( event );
+            }
+        } );
         videoObjectTabFolder.setTabPosition( SWT.BOTTOM );
         videoObjectTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
 
