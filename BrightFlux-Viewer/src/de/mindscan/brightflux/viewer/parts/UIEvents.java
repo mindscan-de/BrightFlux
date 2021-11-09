@@ -28,6 +28,7 @@ package de.mindscan.brightflux.viewer.parts;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRequestSelectEvent;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 import de.mindscan.brightflux.viewer.uievents.DataFrameSelectedEvent;
+import de.mindscan.brightflux.viewer.uievents.VideoObjectRequestSelectEvent;
 
 /**
  * 
@@ -42,4 +43,8 @@ public class UIEvents {
 
     // Request event, for a data frame to be selected in the UI
     public final static Class<?> DataFrameRequestSelectEvent = DataFrameRequestSelectEvent.class;
+
+    // Request event, for a video object to be selected in the UI
+    public final static Class<?> VideoObjectRequestSelectEvent = VideoObjectRequestSelectEvent.class;
+
 }

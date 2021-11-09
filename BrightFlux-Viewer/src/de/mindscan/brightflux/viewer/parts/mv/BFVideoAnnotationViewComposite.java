@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import java.nio.file.Path;
+import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -50,7 +51,9 @@ import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotatonVideoObjectCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
+import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -117,6 +120,11 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
+        registerVideoObjectCreatedEvent( projectRegistry );
+        registerVideoObjectSelectRequestEvent( projectRegistry );
+    }
+
+    private void registerVideoObjectCreatedEvent( ProjectRegistry projectRegistry ) {
         BFEventListener listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -129,6 +137,18 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         };
 
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.VideoAnnotationVideoObjectCreated, listener );
+    }
+
+    private void registerVideoObjectSelectRequestEvent( ProjectRegistry projectRegistry ) {
+        BFEventListener listener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                UUID requestedUUID = ((UUIDRequestEvent) event).getRequestedUUID();
+                requestVideoObjectSelection( requestedUUID );
+            }
+        };
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.VideoObjectRequestSelectEvent, listener );
     }
 
     /**
@@ -161,6 +181,11 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         tbtmNewItem.setControl( composite );
 
         return tbtmNewItem;
+    }
+
+    private void requestVideoObjectSelection( UUID requestedUUID ) {
+        // TODO Implement the video Object selection, search for uuid and then activate the tab if not yet activated.
+
     }
 
     @Override
