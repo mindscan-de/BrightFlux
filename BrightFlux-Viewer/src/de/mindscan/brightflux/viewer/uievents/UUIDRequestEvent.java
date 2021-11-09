@@ -27,20 +27,11 @@ package de.mindscan.brightflux.viewer.uievents;
 
 import java.util.UUID;
 
-import de.mindscan.brightflux.viewer.uievents.impl.UUIDRequestEventBase;
-
 /**
  * 
  */
-public class DataFrameRequestSelectEvent extends UUIDRequestEventBase implements UIBFEvent {
+public interface UUIDRequestEvent {
 
-    public DataFrameRequestSelectEvent( UUID requestedDataFrameUUID ) {
-        super( requestedDataFrameUUID );
+    UUID getRequestedUUID();
 
-    }
-
-    @Override
-    public String getBFEventMessage() {
-        return String.format( "Request that DataFrame '%s' is selected.", getRequestedUUID().toString() );
-    }
 }
