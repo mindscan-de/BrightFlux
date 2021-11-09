@@ -302,12 +302,12 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         if (isDataFrameValid() && isCurrentDataFrameRowValid()) {
             String newText = annotatedStyledText.getText();
 
-//          /**
-//          * TODO: We will use the current SelectedDataFrame as a reference for the annotations. It 
-//          * is the responsibility of the annotator backend to figure out, which dataframe to store 
-//          * these annotations in and to pick the correct annotation dataframe according the the 
-//          * current selectedDataFrame.
-//          */
+            /**
+            * TODO: We will use the current SelectedDataFrame as a reference for the annotations. It 
+            * is the responsibility of the annotator backend to figure out, which dataframe to store 
+            * these annotations in and to pick the correct annotation dataframe according the the 
+            * current selectedDataFrame.
+            */
 
             BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, currentSelectedDataFrameRow.getOriginalRowIndex(), newText );
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
