@@ -27,12 +27,13 @@ package de.mindscan.brightflux.viewer.uievents.impl;
 
 import java.util.UUID;
 
+import de.mindscan.brightflux.viewer.uievents.UIBFEvent;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
 
 /**
  * 
  */
-public class UUIDRequestEventBase implements UUIDRequestEvent {
+public abstract class UUIDRequestEventBase implements UUIDRequestEvent, UIBFEvent {
 
     private UUID requestedUUID;
 
