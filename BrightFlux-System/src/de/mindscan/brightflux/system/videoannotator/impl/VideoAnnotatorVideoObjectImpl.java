@@ -87,7 +87,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     }
 
     @Override
-    public UUID geUUID() {
+    public UUID getUUID() {
         return videoObjectUUID;
     }
 

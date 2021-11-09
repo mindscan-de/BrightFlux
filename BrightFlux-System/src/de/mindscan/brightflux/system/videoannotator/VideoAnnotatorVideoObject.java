@@ -49,6 +49,6 @@ public interface VideoAnnotatorVideoObject {
 
     boolean isAnnotationPresentForTimestamp( int timestamp );
 
-    UUID geUUID();
+    UUID getUUID();
 
 }
