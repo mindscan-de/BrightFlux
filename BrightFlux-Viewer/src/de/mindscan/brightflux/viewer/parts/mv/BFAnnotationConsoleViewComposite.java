@@ -256,7 +256,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         } );
 
         listViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        list.setItems( ReportGeneratorSnippets.getSnippets() );
+        list.setItems( ReportGeneratorSnippets.getFrameAnnotationSnippets() );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
         SashForm sashForm_2 = new SashForm( sashForm, SWT.NONE );

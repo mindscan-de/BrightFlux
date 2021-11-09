@@ -30,8 +30,8 @@ package de.mindscan.brightflux.system.reportgenerator;
  */
 public class ReportGeneratorSnippets {
 
-    // We should read these snippets from a configuration file, such that it can be modified and adapted.
-    private final static String[] SNIPPETS = new String[] { //
+    // We should read these snippets from a configuration file, such that it can be modified and adapted w/o compiling
+    private final static String[] DATAFRAME_ANNOTATION_SNIPPETS = new String[] { //
                     "h4. Preliminary Analysis\n\n", //
                     "h5. Reading the Logs\n\n", //
                     ".", //
@@ -40,7 +40,19 @@ public class ReportGeneratorSnippets {
                     "This opens the 'XYZ' view ...", //
     };
 
-    public static String[] getSnippets() {
-        return SNIPPETS;
+    // TODO: read the snippets from configuration file from disk, such that it can be modified and adapted w/o compiling
+    private static final String[] VIDEO_OBJECT_SNIPPETS = new String[] { //
+                    "Tester clicks on home button", //
+                    "HomeScreen opens (*SYNC*)", //
+                    "View XYZ opens", //
+                    "Time changes from X to Y", //
+    };
+
+    public static String[] getFrameAnnotationSnippets() {
+        return DATAFRAME_ANNOTATION_SNIPPETS;
+    }
+
+    public static String[] getVideoObjectAnnotationSnippets() {
+        return VIDEO_OBJECT_SNIPPETS;
     }
 }
