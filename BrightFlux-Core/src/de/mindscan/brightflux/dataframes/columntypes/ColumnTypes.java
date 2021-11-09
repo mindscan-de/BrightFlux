@@ -56,5 +56,6 @@ public class ColumnTypes {
     public static final String COLUMN_TYPE_STRING = "string";
     public static final String COLUMN_TYPE_SPARSE_STRING = "s_string";
     public static final String COLUMN_TYPE_SPARSE_INT = "s_int";
+    public static final String COLUMN_TYPE_SPARSE_LONG = "s_long";
 
 }

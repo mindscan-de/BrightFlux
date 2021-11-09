@@ -53,6 +53,8 @@ public class DataFrameColumnFactory {
                 return new SparseStringColumn();
             case ColumnTypes.COLUMN_TYPE_SPARSE_INT:
                 return new SparseIntegerColumn();
+            case ColumnTypes.COLUMN_TYPE_SPARSE_LONG:
+                return new SparseLongColumn();
             default:
                 throw new IllegalArgumentException();
         }
@@ -80,6 +82,8 @@ public class DataFrameColumnFactory {
                 return new SparseStringColumn( columnName );
             case ColumnTypes.COLUMN_TYPE_SPARSE_INT:
                 return new SparseIntegerColumn( columnName );
+            case ColumnTypes.COLUMN_TYPE_SPARSE_LONG:
+                return new SparseLongColumn( columnName );
 
             default:
                 throw new IllegalArgumentException( "Unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
