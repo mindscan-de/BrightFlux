@@ -339,6 +339,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void buildReport( DataFrame currentSelectedDF, DataFrame logAnalysisDF ) {
+        // TODO replace this direct use of the RepoerGeneratorImpl class.
         ReportGeneratorImpl generator = new ReportGeneratorImpl();
 
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();

@@ -49,6 +49,7 @@ import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesFileCollector;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
@@ -93,6 +94,10 @@ public class BrightFluxViewerMainAppTwo {
             // STARTUP : Register Video Annotation Service
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
             systemServices.setVideoAnnotationService( videoAnnotatorComponent );
+
+            // STARTUP : Register Report Generator Service
+            ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
+            systemServices.setReportGeneratorService( reportGeneratorService );
 
             // some debug...
             List<String> intermediateNodes = favRecipesComponent.getAllIntermediateNodes();
