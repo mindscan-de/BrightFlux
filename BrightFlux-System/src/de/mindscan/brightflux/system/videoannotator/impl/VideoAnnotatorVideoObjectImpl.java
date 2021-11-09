@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.system.videoannotator.impl;
 
 import java.nio.file.Path;
+import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
@@ -39,15 +40,30 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
     private DataFrame videoAnnotationDataFrame;
 
-    // Da wo die video datei liegt.
+    /**
+     * Path to the file on local disk.
+     */
     private Path videoObjectPath;
     private int videoDurationInSeconds = 120;
+
+    private UUID videoObjectUUID;
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath ) {
         this.videoAnnotationDataFrame = df;
         this.videoObjectPath = videoObjectPath;
 
+        this.videoObjectUUID = UUID.randomUUID();
+
         // TODO VideoDurationInSeconds
+    }
+
+    public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath, UUID uuid ) {
+        this.videoAnnotationDataFrame = df;
+        this.videoObjectPath = videoObjectPath;
+        this.videoObjectUUID = uuid;
+
+        // TODO VideoDurationInSeconds
+
     }
 
     @Override
@@ -68,6 +84,11 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     @Override
     public String getSimpleName() {
         return videoObjectPath.getFileName().toString();
+    }
+
+    @Override
+    public UUID geUUID() {
+        return videoObjectUUID;
     }
 
     @Override

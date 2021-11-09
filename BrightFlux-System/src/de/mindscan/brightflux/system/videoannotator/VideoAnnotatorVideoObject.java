@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.system.videoannotator;
 
 import java.nio.file.Path;
+import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 
@@ -47,5 +48,7 @@ public interface VideoAnnotatorVideoObject {
     void setAnnotationForTimestamp( int timestamp, String annotation );
 
     boolean isAnnotationPresentForTimestamp( int timestamp );
+
+    UUID geUUID();
 
 }
