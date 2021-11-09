@@ -67,11 +67,11 @@ layer of abstraction. Doing such things too early will cause more harm then good
 ## So what's implemented right now?
 
 * Proof of Concept to build a row and column dataset from csv (and some proprietary log) files
-* Load a file (tokenize, parse and compile the data) - ingest a file as a dataframe
+* Load a file (tokenize, parse and compile the data) - ingest a file as a data frame
 * Filter Rows (log message lines) and Select Columns (parts of a log message line)
 * Support recipes
-  * save recipes - A dataframe tracks the applied transformations, the applied transformations can be saved
-  * apply recipes - Dataframe canbe modified by selecting and applying a recipe
+  * save recipes - A data frame tracks the applied transformations, the applied transformations can be saved
+  * apply recipes - data frame can be modified by selecting and applying a recipe
 * A limited DataFrame Query Language is implemented
   * contains, startswith, endswith
   * eq, neq, gt, ge. lt, le
@@ -79,31 +79,33 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * ROWCALLBACK -> do operation for each row matching the WHERE-CLAUSE
   * SELECT
 * A limited GUI is implemented
-* Export the dataframe as a CSV file
+* Export the data frame as a CSV file
 * Support for the original row index (in a derived frame)
   * "select *" will copy the original index
 * Annotate log messages
-  * annotate line of a dataframe or one of its child dataframes
-  * annotations are global over different (related) dataframes
+  * annotate line of a data frame or one of its child data frames
+  * annotations are global over different (related) data frames
   * create a simple report from the annotations
   * use report snippets for annotations
   * save current annotations to annotation file - this feature is just temporary
   * load current annotations from annotation file - this feature is just temporary
 * Highlight log messages
-  * colorize line of a dataframe or one of its child/parent dataframes 
-  * save highlight file - this feature is just temporary and will be embedded into the loganalysis project file
-  * load highlight file - this feature is just temporary and will be embedded into the loganalysis project file
-  * colorization of a line of a dataframe via DFQL
-* Show dataframe hierarchy for the current selected dataframe
+  * colorize line of a data frame or one of its child/parent data frames 
+  * save highlight file - this feature is just temporary and will be embedded into the log analysis project file
+  * load highlight file - this feature is just temporary and will be embedded into the log analysis project file
+  * colorization of a line of a data frame via DFQL
+* Show data frame hierarchy for the current selected data frame
 * Provide favorite recipes directly into context menu
 * Copy current selected row to clipboard
+* Annotate video Objects
+  * "open a video" and annotate each second of a video using a slider to navigate in video time
 
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
-they become good enough. I decided to skip these re-writes and re-implementations until becomming absolutely 
-neccessary. And also, sometimes, if you give it some more time, you will come up with a better idea or even
-a better solution. Therefore giving it some time to mature, saves a lot of effort in the long run.
+they become good enough. I decided to skip these re-writes and re-implementations until becoming absolutely 
+necessary. And also, sometimes, if you give it some more time, you will come up with a better idea or even a
+better solution. Therefore giving it some time to mature, saves a lot of effort in the long run.
 
 This whole thing is going through a permanent dogfooding phase.
 
@@ -122,16 +124,16 @@ I want to address rather sooner than later.
 ### Next
 
 DataFrame-Core-Ingest
-* [DFINGEST] Decoders for inner structures again into dataframes - e.g. Zooming into the dataframes / e.g. Level of detail and then study a single aspect across the whole log
-  * [DFINGEST] DataSource Tokenizer for Dataframe Columns  
-* [DFINGEST] ingest inner encodings of data in certain columns of the dataframe in case, using selectors (SQL-Like) and then a format/parser description  
+* [DFINGEST] Decoders for inner structures again into data frames - e.g. Zooming into the data frames / e.g. Level of detail and then study a single aspect across the whole log
+  * [DFINGEST] DataSource tokenizer for data frame Columns  
+* [DFINGEST] ingest inner encodings of data in certain columns of the data frame in case, using selectors (SQL-Like) and then a format/parser description  
 
 
 DataFrame-Core
 * [DFCORE] Support original Index
-  * [DFCORE] copy the original index in a derived dataframe 
+  * [DFCORE] copy the original index in a derived data frame 
 * [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
-* [DFCORE] reindex "__idx" row on dataframe filtering and dataframe column selection
+* [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection
 
 
 ### Later
@@ -139,15 +141,15 @@ DataFrame-Core
 Log-Analysis-Project-File
 * Introduce Project Files
 * Treat logs like data frames and use transformations on columns
-  * [LAPF] save the transformations and dataframe configuration to an analysis project file
-* [LAPF] Logmessage Annotations
+  * [LAPF] save the transformations and data frame configuration to an analysis project file
+* [LAPF] log message Annotations
   * [LAPF] save annotations to an analysis project file
-  * [LAPF] load annotations from analyis project file for a file
+  * [LAPF] load annotations from analysis project file for a file
 
 
 Swim lanes
-* Swimlanes are simply select statements
-* Have swim lanes for different Components
+* swim lanes simply are actually a select statement
+* have swim lanes for different Components
   * save swim lane configuration into an analysis project file
 
 
@@ -156,19 +158,24 @@ Annotation and Highlights Improvements
 * Support log correlation for videos, e.g. identify timestamps in video and correlate them to logs
 
 
-Videotimestamp Annotations
-* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this timestamp
-* add Videotimestamp annotations to annotation dataframe
-* add Markers to annotation dataframe
+Video time stamp Annotations
+* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this time stamp
+* add Markers to annotation data frame
+* combine with individual data frames
+* save video annotations to disk
+* load video annotations from disk
+* provide default texts, which can be used to annotate timestamps
+* generate a report for all available video objects
+* load video also loads parallel video annotation file
 
 
 UI/UX
 * provide left(show icons and boxes for annotated lines, direct synchronized windowed ruler ) and right ruler 
-  (overview ruler which is showing the color bars and clickable fullscale positions)
+  (overview ruler which is showing the color bars and click-able fullscale positions)
 
 
 DFQL
-* Suppport unary NOT operator
+* Support unary NOT operator
 
 
 Application-Startup
@@ -188,7 +195,7 @@ Exporters
 
 
 Decision Tree Analysis
-* combine that system with the CheapLithium system (decision gag/decisiontree) for automated decisions based on the content of log files for automated log file analysis
+* combine that system with the CheapLithium system (decision gag/decision tree) for automated decisions based on the content of log files for automated log file analysis
 
 
 Search Engine Support
@@ -197,29 +204,25 @@ Search Engine Support
 
 Generic text File Readers
 * The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
-  * Ingest text files into table oriented dataframes
-    * use json file based - format and parser description 
+  * Ingest text files into table oriented data frames
+    * use .json file based (configured) - format and parser description 
 
 
 Generic Binary File Readers
 * The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
-  * ingest binary files into table oriented dataframes
+  * ingest binary files into table oriented data frames
     * use json file based - format and parser description 
 
 
 UML Image Generator
-* Create Sequence-Diagrams from Log messages / log-dataframes
-* Create Activity-Diagrams from Log messages / log-dataframes
+* Create Sequence-Diagrams from Log messages / log data frames
+* Create Activity-Diagrams from Log messages / log data frames
 * have multiple views / diagram options for the same logs to understand particular system behavior
 
 
-Support DLT-Files
-* Reverse-Engineer the DLT-Format - (See Genivi DLT-Viewer)
-
-
-Machine Learning and Pattern recognition and Anomality Detection on Log-Data 
-* We need Column-Ingest processing to clean up the data / separate the data from metainformation e.g. Filename, methodname, line of southside implementation
-* "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found Anomaly
+Machine Learning and Pattern recognition and anomaly Detection on Log-Data 
+* We need Column-Ingest processing to clean up the data / separate the data from meta information e.g. Filename, method name, line of implementation
+* "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found an anomaly
 * Extract / Train / Predict / Classification / Model Update / ML Model Server
   * using labeling techniques to mark suspicious occurrences and make them available for machine learning training
   * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threshold
@@ -231,22 +234,30 @@ Support Calculations between Rows or Columns
 
 
 Export the analysis result in short form
-* Document / Documentype / technical vs manager form
+* Document / document type / technical vs manager form
 * Project file
 
 
-* UI/UX
-  * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
+UI/UX
+* save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
+  
+  
+Report Generator
+* improve report generator with
+  * templates
+  * variables
+  * conversion functions
+  * blocks
 
 
 ### Never?
 
 Client Server / Windowed Data-Retrieval
-* use a client server approach for the dataframe processing vs presentation and maybe for performance
+* use a client server approach for the data frame processing vs presentation and maybe for performance
 
 
-Internal Search Engine to search in Dataframe-Columns
-* indexing dataframes column wise for future search operations
+Internal Search Engine to search in data frame columns
+* indexing data frames column wise for future search operations
 
 
 * transform logs from one system (source) to the other - e.g. recovery mode if one of the systems stopped logging but the other system was receiving the logs as well and logged them
