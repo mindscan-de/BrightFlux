@@ -51,8 +51,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
-import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotatonVideoObjectCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -143,8 +143,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         BFEventListener listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                if (event instanceof VideoAnnotatonVideoObjectCreatedEvent) {
-                    VideoAnnotatorVideoObject videoObject = ((VideoAnnotatonVideoObjectCreatedEvent) event).getVideoObject();
+                if (event instanceof BFVideoObjectEvent) {
+                    VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
 
                     addVideoObjectTab( videoObject );
                 }
