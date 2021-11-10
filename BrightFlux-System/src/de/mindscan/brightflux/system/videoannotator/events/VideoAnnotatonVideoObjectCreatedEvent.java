@@ -31,15 +31,13 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 /**
  * 
  */
-public class VideoAnnotatonVideoObjectCreatedEvent implements BFEvent {
-
-    private VideoAnnotatorVideoObject videoObject;
+public class VideoAnnotatonVideoObjectCreatedEvent extends BFAbstractVideoObjectEvent implements BFEvent {
 
     /**
-     * @param videoObject2
+     * @param videoObject
      */
     public VideoAnnotatonVideoObjectCreatedEvent( VideoAnnotatorVideoObject videoObject ) {
-        this.videoObject = videoObject;
+        super( videoObject );
     }
 
     /** 
@@ -48,13 +46,6 @@ public class VideoAnnotatonVideoObjectCreatedEvent implements BFEvent {
     @Override
     public String getBFEventMessage() {
         return "Annotation video object created.";
-    }
-
-    /**
-     * @return the videoObject
-     */
-    public VideoAnnotatorVideoObject getVideoObject() {
-        return videoObject;
     }
 
 }

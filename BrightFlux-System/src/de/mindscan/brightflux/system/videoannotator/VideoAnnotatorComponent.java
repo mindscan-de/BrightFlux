@@ -66,8 +66,8 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         BFEventListener createdVideoObjectListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
-                if (event instanceof VideoAnnotatonVideoObjectCreatedEvent) {
-                    VideoAnnotatorVideoObject videoObject = ((VideoAnnotatonVideoObjectCreatedEvent) event).getVideoObject();
+                if (event instanceof BFVideoObjectEvent) {
+                    VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
                     videoAnnotationVideoObjects.add( videoObject );
                 }
             }
