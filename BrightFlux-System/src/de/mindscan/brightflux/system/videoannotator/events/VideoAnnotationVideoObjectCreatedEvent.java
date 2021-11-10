@@ -30,12 +30,12 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 /**
  * 
  */
-public class VideoAnnotatonVideoObjectCreatedEvent extends BFAbstractVideoObjectEvent {
+public class VideoAnnotationVideoObjectCreatedEvent extends BFAbstractVideoObjectEvent {
 
     /**
      * @param videoObject
      */
-    public VideoAnnotatonVideoObjectCreatedEvent( VideoAnnotatorVideoObject videoObject ) {
+    public VideoAnnotationVideoObjectCreatedEvent( VideoAnnotatorVideoObject videoObject ) {
         super( videoObject );
     }
 

@@ -33,7 +33,8 @@ import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotatonVideoObjectCreatedEvent;
+import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
+import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 
 /**
  * 
@@ -60,6 +61,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         this.projectRegistry = projectRegistry;
 
         registerVideoObjectCreatedHandler();
+        registerVideoObjectClosedHandler();
     }
 
     private void registerVideoObjectCreatedHandler() {
@@ -72,7 +74,21 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
                 }
             }
         };
-        this.projectRegistry.getEventDispatcher().registerEventListener( VideoAnnotatonVideoObjectCreatedEvent.class, createdVideoObjectListener );
+        this.projectRegistry.getEventDispatcher().registerEventListener( VideoAnnotationVideoObjectCreatedEvent.class, createdVideoObjectListener );
+    }
+
+    private void registerVideoObjectClosedHandler() {
+        BFEventListener closedVideoObjectListener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof BFVideoObjectEvent) {
+                    VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
+                    videoAnnotationVideoObjects.add( videoObject );
+                }
+            }
+        };
+        this.projectRegistry.getEventDispatcher().registerEventListener( VideoAnnotationVideoObjectClosedEvent.class, closedVideoObjectListener );
+
     }
 
     public List<VideoAnnotatorVideoObject> getVideoAnnotationVideoObjects() {
