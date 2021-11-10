@@ -25,13 +25,12 @@
  */
 package de.mindscan.brightflux.system.videoannotator.events;
 
-import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 
 /**
  * 
  */
-public class VideoAnnotatonVideoObjectCreatedEvent extends BFAbstractVideoObjectEvent implements BFEvent {
+public class VideoAnnotatonVideoObjectCreatedEvent extends BFAbstractVideoObjectEvent {
 
     /**
      * @param videoObject
@@ -45,7 +44,7 @@ public class VideoAnnotatonVideoObjectCreatedEvent extends BFAbstractVideoObject
      */
     @Override
     public String getBFEventMessage() {
-        return "Annotation video object created.";
+        return "Video annotation - video object created.";
     }
 
 }
