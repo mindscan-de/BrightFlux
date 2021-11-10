@@ -83,7 +83,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFVideoObjectEvent) {
                     VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
-                    videoAnnotationVideoObjects.add( videoObject );
+                    videoAnnotationVideoObjects.remove( videoObject );
                 }
             }
         };
