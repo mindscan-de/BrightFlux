@@ -40,18 +40,21 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import swing2swt.layout.BorderLayout;
 
 /**
  * 
  */
-public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
+public class BFVideoAnnotationSingleVideoViewComposite extends Composite implements ProjectRegistryParticipant {
     private Text currentVideoDuration;
     private Text currentVideoPosition;
     private VideoAnnotatorVideoObject videoObject;
     private Slider videoPositionSlider;
     private StyledText currentVideoTimestampAnnotation;
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the composite.
@@ -125,6 +128,14 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
 
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+    }
+
     /**
      * @param videoObject
      */
@@ -175,6 +186,8 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite {
         if (videoObject != null) {
             // TODO: remove the videoObject from the VideoAnnotationComponent
             // TODO: DispatchCommand? DispatchEvent VideoObjectClosedEvent
+            // where does the project reference come from?
+            // projectRegistry.getEventDispatcher().dispatchEvent( event );
 
             // kill reference to VideoAnnotation here.
             videoObject = null;

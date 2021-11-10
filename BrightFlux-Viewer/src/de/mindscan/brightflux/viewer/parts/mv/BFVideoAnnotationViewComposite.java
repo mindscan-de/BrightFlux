@@ -192,6 +192,10 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         tbtmNewItem.setToolTipText( videoObject.getVideoObjectPath().toString() );
 
         BFVideoAnnotationSingleVideoViewComposite composite = new BFVideoAnnotationSingleVideoViewComposite( tabFolder, SWT.NONE );
+
+        // TODO: the other mechanism won't finish the registration process... That trigger would have to be done manually...
+        ((ProjectRegistryParticipant) composite).setProjectRegistry( projectRegistry );
+
         composite.setVideoObject( videoObject );
         tbtmNewItem.setControl( composite );
 
