@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Text;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import swing2swt.layout.BorderLayout;
 
@@ -184,15 +185,9 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         this.setVisible( false );
 
         if (videoObject != null) {
-            // TODO: remove the videoObject from the VideoAnnotationComponent
-            // TODO: DispatchCommand? DispatchEvent VideoObjectClosedEvent
-            // where does the project reference come from?
-            // projectRegistry.getEventDispatcher().dispatchEvent( event );
-
-            // kill reference to VideoAnnotation here.
+            projectRegistry.getEventDispatcher().dispatchEvent( BFEventFactory.videoObjectClosedEvent( videoObject ) );
             videoObject = null;
         }
-
     }
 
     @Override
