@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -57,7 +56,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
@@ -113,7 +111,6 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
                 VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
                 List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects = videoAnnotatorService.getVideoAnnotationVideoObjects();
 
-                // TODO: create a report for each videoAnnotationVideoObject in the list and then concatenate it
                 String report = buildFullVideoAnnoationReport( videoAnnotationVideoObjects );
 
                 projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( getShell(), report ) );
@@ -230,7 +227,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
         BFVideoAnnotationSingleVideoViewComposite composite = new BFVideoAnnotationSingleVideoViewComposite( tabFolder, SWT.NONE );
 
-        // TODO: the other mechanism won't finish the registration process... That trigger would have to be done manually...
+        // the other mechanism won't finish the registration process... That trigger would have to be done manually...
         ((ProjectRegistryParticipant) composite).setProjectRegistry( projectRegistry );
 
         composite.setVideoObject( videoObject );
@@ -249,24 +246,35 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
             return "";
         }
 
-        List<String> collectedReports = videoAnnotationVideoObjects.stream().map( this::buildSingleVideoAnnotationReport ).collect( Collectors.toList() );
-
-        // TODO: now build another report from smaller reports.
+        // TODO: use the generator and a template.
         // ReportGeneratorImpl generator = new ReportGeneratorImpl();
-        // Use a different templatefor this...
 
-        return "video report...";
+        StringBuilder sb = new StringBuilder();
+
+        // build another report from smaller reports.
+        for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
+            String partialReport = buildSingleVideoAnnotationReport( videoAnnotatorVideoObject );
+
+            // Use a different template for this...
+            // TODO: use the generator
+            if (!partialReport.isBlank()) {
+                sb.append( "h5. Analysis of [^" ).append( videoAnnotatorVideoObject.getSimpleName() ).append( "]\n\n" );
+                sb.append( "The video length is:\n" );
+                sb.append( partialReport );
+                sb.append( "\n" );
+            }
+        }
+
+        return sb.toString();
     }
 
-    /**
-     * @param videoObject
-     * @return
-     */
     private String buildSingleVideoAnnotationReport( VideoAnnotatorVideoObject videoObject ) {
-        ReportGeneratorImpl generator = new ReportGeneratorImpl();
+        // TODO: use the generator and a template / template block to build the real report...
+        // ReportGeneratorImpl generator = new ReportGeneratorImpl();
         DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
 
-        // TODO build report for each available datarow...
+        StringBuilder sb = new StringBuilder();
+
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
         while (currentDFRowsIterator.hasNext()) {
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
@@ -274,10 +282,13 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
             int timestampInSeconds = (Integer) dataFrameRow.get( TIMESTAMP_COLUMN_NAME );
             String timstamp = VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds );
             String annotationContent = String.valueOf( dataFrameRow.get( ANNOTATION_COLUMN_NAME ) );
+            // TODO: we need also the referenced data-rows, so we can align the timestamps to a dataframe, containing different timstamps 
 
+            // TODO: use a named template here instead, also use the report generator
+            sb.append( "* " ).append( timstamp ).append( " (video time): " ).append( annotationContent ).append( "\n" );
         }
 
-        return "Single report";
+        return sb.toString();
     }
 
     @Override
