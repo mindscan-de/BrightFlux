@@ -59,6 +59,7 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
 import swing2swt.layout.BorderLayout;
 
@@ -103,7 +104,9 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
                 List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects = videoAnnotatorService.getVideoAnnotationVideoObjects();
 
                 // TODO: create a report for each videoAnnotationVideoObject in the list and then concatenate it
-                // TODO: create a UI command to copy the full report content to the clipboard 
+                String report = buildVideoAnnoationReport( videoAnnotationVideoObjects );
+
+                projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( getShell(), report ) );
             }
         } );
         btnGenerateAndCopy.setText( "Generate Report" );
@@ -191,10 +194,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.VideoObjectRequestSelectEvent, listener );
     }
 
-    /**
-     * @param path
-     */
-    protected void addVideoToProject( Path path ) {
+    private void addVideoToProject( Path path ) {
         // TODO we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
@@ -232,6 +232,14 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     private void requestVideoObjectSelection( UUID requestedUUID ) {
         // TODO Implement the video Object selection, search for uuid and then activate the tab if not yet activated.
 
+    }
+
+    private String buildVideoAnnoationReport( List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
+        if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
+            return "";
+        }
+
+        return "video report...";
     }
 
     @Override
