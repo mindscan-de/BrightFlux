@@ -69,8 +69,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFVideoObjectEvent) {
-                    VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
-                    videoAnnotationVideoObjects.add( videoObject );
+                    registerVideoObject( ((BFVideoObjectEvent) event).getVideoObject() );
                 }
             }
         };
@@ -82,8 +81,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof BFVideoObjectEvent) {
-                    VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
-                    videoAnnotationVideoObjects.remove( videoObject );
+                    unregisterVideoObject( ((BFVideoObjectEvent) event).getVideoObject() );
                 }
             }
         };
@@ -93,5 +91,13 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     public List<VideoAnnotatorVideoObject> getVideoAnnotationVideoObjects() {
         return videoAnnotationVideoObjects;
+    }
+
+    private void registerVideoObject( VideoAnnotatorVideoObject videoObject ) {
+        videoAnnotationVideoObjects.add( videoObject );
+    }
+
+    private void unregisterVideoObject( VideoAnnotatorVideoObject videoObject ) {
+        videoAnnotationVideoObjects.remove( videoObject );
     }
 }
