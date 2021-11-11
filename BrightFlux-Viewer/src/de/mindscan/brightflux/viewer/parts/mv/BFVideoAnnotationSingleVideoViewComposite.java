@@ -43,6 +43,7 @@ import org.eclipse.swt.widgets.Text;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import swing2swt.layout.BorderLayout;
 
@@ -148,7 +149,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     }
 
     private void setVideoDuration( int videoDurationInSeconds ) {
-        currentVideoDuration.setText( convertSecondsToTimeString( videoDurationInSeconds ) );
+        currentVideoDuration.setText( VideoAnnotatorUtils.convertSecondsToTimeString( videoDurationInSeconds ) );
 
         videoPositionSlider.setIncrement( 1 );
         videoPositionSlider.setMinimum( 0 );
@@ -157,7 +158,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     }
 
     private void setVideoPosition( int videoPositionInSeconds ) {
-        currentVideoPosition.setText( convertSecondsToTimeString( videoPositionInSeconds ) );
+        currentVideoPosition.setText( VideoAnnotatorUtils.convertSecondsToTimeString( videoPositionInSeconds ) );
 
         if (videoObject != null) {
             currentVideoTimestampAnnotation.setText( videoObject.getAnnotationForTimestamp( videoPositionInSeconds ) );
@@ -172,13 +173,6 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (this.videoObject != null) {
             this.videoObject.setAnnotationForTimestamp( currentTimestamp, currentVideoTimestampAnnotation.getText() );
         }
-    }
-
-    private String convertSecondsToTimeString( int videoDurationInSeconds ) {
-        int seconds = videoDurationInSeconds % 60;
-        int minutes = (videoDurationInSeconds / 60) % 60;
-
-        return "%02d:%02d".formatted( minutes, seconds );
     }
 
     public void closeVideoObject() {
