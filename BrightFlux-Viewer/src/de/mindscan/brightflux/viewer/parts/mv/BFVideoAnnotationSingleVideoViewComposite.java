@@ -128,9 +128,9 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
         // TODO: here we will have a dataframe containing the timestamps and texts...
+        // TODO: and a double click on an item will navigate to this timestamp position
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
 
-        // TODO: here we will have a list of phrases useful for the analysis process.
         Composite composite_2 = new Composite( sashForm_1, SWT.NONE );
         composite_2.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
