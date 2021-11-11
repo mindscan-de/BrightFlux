@@ -25,11 +25,15 @@
  */
 package de.mindscan.brightflux.viewer.parts.mv;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
@@ -37,12 +41,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import swing2swt.layout.BorderLayout;
@@ -125,9 +132,37 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
 
         // TODO: here we will have a list of phrases useful for the analysis process.
         Composite composite_2 = new Composite( sashForm_1, SWT.NONE );
+        composite_2.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        ListViewer listViewer = new ListViewer( composite_2, SWT.BORDER | SWT.V_SCROLL );
+        List list = listViewer.getList();
+        list.setFont( SWTResourceManager.getFont( "Courier New", 9, SWT.NORMAL ) );
+        list.addMouseListener( new MouseAdapter() {
+            @Override
+            public void mouseDoubleClick( MouseEvent e ) {
+                String[] selection = ((List) e.getSource()).getSelection();
+                if (selection != null && selection.length > 0) {
+                    appendCurrentVideoAnnotatedTextField( selection[0] );
+                }
+            }
+        } );
+        listViewer.setContentProvider( ArrayContentProvider.getInstance() );
+        list.setItems( ReportGeneratorSnippets.getVideoObjectAnnotationSnippets() );
+
         sashForm_1.setWeights( new int[] { 1, 1 } );
         sashForm.setWeights( new int[] { 105, 176 } );
 
+    }
+
+    private void appendCurrentVideoAnnotatedTextField( String stringToAppend ) {
+        String currentAnnotation = currentVideoTimestampAnnotation.getText();
+
+        if (currentAnnotation == null) {
+            currentVideoTimestampAnnotation.setText( stringToAppend );
+        }
+        else {
+            currentVideoTimestampAnnotation.setText( currentAnnotation + stringToAppend );
+        }
     }
 
     /** 
@@ -188,5 +223,4 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
     }
-
 }
