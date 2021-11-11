@@ -26,8 +26,10 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import java.nio.file.Path;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
@@ -44,6 +46,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
@@ -52,9 +57,11 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -67,6 +74,9 @@ import swing2swt.layout.BorderLayout;
  * 
  */
 public class BFVideoAnnotationViewComposite extends Composite implements ProjectRegistryParticipant {
+
+    private static final String ANNOTATION_COLUMN_NAME = VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME;
+    private static final String TIMESTAMP_COLUMN_NAME = DataFrameSpecialColumns.INDEX_COLUMN_NAME;
 
     private ProjectRegistry projectRegistry;
     private CTabFolder videoObjectTabFolder;
@@ -104,7 +114,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
                 List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects = videoAnnotatorService.getVideoAnnotationVideoObjects();
 
                 // TODO: create a report for each videoAnnotationVideoObject in the list and then concatenate it
-                String report = buildVideoAnnoationReport( videoAnnotationVideoObjects );
+                String report = buildFullVideoAnnoationReport( videoAnnotationVideoObjects );
 
                 projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( getShell(), report ) );
             }
@@ -234,12 +244,40 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
     }
 
-    private String buildVideoAnnoationReport( List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
+    private String buildFullVideoAnnoationReport( List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
             return "";
         }
 
+        List<String> collectedReports = videoAnnotationVideoObjects.stream().map( this::buildSingleVideoAnnotationReport ).collect( Collectors.toList() );
+
+        // TODO: now build another report from smaller reports.
+        // ReportGeneratorImpl generator = new ReportGeneratorImpl();
+        // Use a different templatefor this...
+
         return "video report...";
+    }
+
+    /**
+     * @param videoObject
+     * @return
+     */
+    private String buildSingleVideoAnnotationReport( VideoAnnotatorVideoObject videoObject ) {
+        ReportGeneratorImpl generator = new ReportGeneratorImpl();
+        DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
+
+        // TODO build report for each available datarow...
+        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
+        while (currentDFRowsIterator.hasNext()) {
+            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
+
+            int timestampInSeconds = (Integer) dataFrameRow.get( TIMESTAMP_COLUMN_NAME );
+            String timstamp = VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds );
+            String annotationContent = String.valueOf( dataFrameRow.get( ANNOTATION_COLUMN_NAME ) );
+
+        }
+
+        return "Single report";
     }
 
     @Override
