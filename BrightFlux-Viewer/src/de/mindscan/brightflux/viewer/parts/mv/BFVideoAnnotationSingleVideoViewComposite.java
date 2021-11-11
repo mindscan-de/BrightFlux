@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts.mv;
 
+import java.util.UUID;
+
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
@@ -217,6 +219,10 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
             projectRegistry.getEventDispatcher().dispatchEvent( BFEventFactory.videoObjectClosedEvent( videoObject ) );
             videoObject = null;
         }
+    }
+
+    public UUID getVideoObjectUUID() {
+        return videoObject.getUUID();
     }
 
     @Override

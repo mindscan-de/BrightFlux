@@ -237,10 +237,40 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     private void requestVideoObjectSelection( UUID requestedUUID ) {
-        // TODO Implement the video Object selection, search for uuid and then activate the tab if not yet activated.
+        if (requestedUUID == null) {
+            return;
+        }
 
+        CTabItem[] items = videoObjectTabFolder.getItems();
+        if (items == null) {
+            return;
+        }
+
+        for (int i = 0; i < items.length; i++) {
+            if (selectIfRequestedUuidMatches( requestedUUID, items[i] )) {
+                return;
+            }
+        }
     }
 
+    private boolean selectIfRequestedUuidMatches( UUID requestedUUID, CTabItem cTabItem ) {
+        Control currentControl = cTabItem.getControl();
+
+        if (!(currentControl instanceof BFVideoAnnotationSingleVideoViewComposite)) {
+            return false;
+        }
+
+        BFVideoAnnotationSingleVideoViewComposite singleVideoViewComposite = (BFVideoAnnotationSingleVideoViewComposite) currentControl;
+
+        if (requestedUUID.equals( singleVideoViewComposite.getVideoObjectUUID() )) {
+            videoObjectTabFolder.setSelection( cTabItem );
+            return true;
+        }
+
+        return false;
+    }
+
+    // TODO: refactor and extract this to system
     private String buildFullVideoAnnoationReport( List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
             return "";
@@ -268,6 +298,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         return sb.toString();
     }
 
+    // TODO: refactor and extract this to system
     private String buildSingleVideoAnnotationReport( VideoAnnotatorVideoObject videoObject ) {
         // TODO: use the generator and a template / template block to build the real report...
         // ReportGeneratorImpl generator = new ReportGeneratorImpl();
