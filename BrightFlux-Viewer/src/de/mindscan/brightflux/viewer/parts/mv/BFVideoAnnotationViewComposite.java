@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.swt.SWT;
@@ -51,7 +52,9 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -93,16 +96,38 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         addVideoButton.setBounds( 0, 0, 85, 23 );
 
         Button btnGenerateAndCopy = new Button( composite, SWT.NONE );
+        btnGenerateAndCopy.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
+                List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects = videoAnnotatorService.getVideoAnnotationVideoObjects();
+
+                // TODO: create a report for each videoAnnotationVideoObject in the list and then concatenate it
+                // TODO: create a UI command to copy the full report content to the clipboard 
+            }
+        } );
         btnGenerateAndCopy.setText( "Generate Report" );
 
         Label label = new Label( composite, SWT.NONE );
         label.setText( "...." );
 
         Button btnLoadVideoAnnotations = new Button( composite, SWT.NONE );
+        btnLoadVideoAnnotations.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: load a videoAnnotion
+            }
+        } );
         btnLoadVideoAnnotations.setText( "Load Video Annotations ..." );
         btnLoadVideoAnnotations.setBounds( 0, 0, 120, 23 );
 
         Button btnSaveVideoAnnotations = new Button( composite, SWT.NONE );
+        btnSaveVideoAnnotations.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: save all video annotations
+            }
+        } );
         btnSaveVideoAnnotations.setText( "Save Video Annotations ..." );
         btnSaveVideoAnnotations.setBounds( 0, 0, 121, 23 );
 
@@ -173,7 +198,9 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         // TODO we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
+
         if (this.projectRegistry != null) {
+            // TODO: find, whether there is a special annotation file in parallel to the video.
             BFCommand command = DataFrameCommandFactory.loadVideoForAnnotation( path );
 
             this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
