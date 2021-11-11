@@ -185,8 +185,9 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         }
 
         CTabItem[] items = mainTabFolder.getItems();
-        if (items == null)
+        if (items == null) {
             return;
+        }
 
         for (int i = 0; i < items.length; i++) {
             if (selectIfRequestedUuidMatches( requestedUUID, items[i] )) {
