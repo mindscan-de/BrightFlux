@@ -31,6 +31,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.writer.DataFrameOutputStreamWriter;
 import de.mindscan.brightflux.dataframes.writer.DataFrameWriterBFDFJsonLinesImpl;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotationWriter;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
@@ -40,7 +41,7 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
  */
 public class VideoAnnotationWriterImpl implements VideoAnnotationWriter {
 
-    private DataFrameWriterBFDFJsonLinesImpl dataframeWriterDelegate = new DataFrameWriterBFDFJsonLinesImpl();
+    private DataFrameOutputStreamWriter dataframeWriterDelegate = new DataFrameWriterBFDFJsonLinesImpl();
 
     public VideoAnnotationWriterImpl() {
         // intentionally left blank.
