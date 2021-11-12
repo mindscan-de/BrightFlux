@@ -54,4 +54,7 @@ public class FileDescriptions {
                     new String[] { "*.highlight.bf_jsonl" }, //
                     new String[] { "Brightflux anotation file (*.highlight.bf_jsonl)" } );
 
+    public final static FileDescription BF_VIDEO_ANNOTATION = new FileDescription( //
+                    new String[] { "*.video.bf_jsonl" }, //
+                    new String[] { "Brightflux video anotation file (*.video.bf_jsonl)" } );
 }

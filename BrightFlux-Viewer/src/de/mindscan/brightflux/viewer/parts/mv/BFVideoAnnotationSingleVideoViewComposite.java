@@ -225,6 +225,10 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         return videoObject.getUUID();
     }
 
+    public VideoAnnotatorVideoObject getVideoObject() {
+        return videoObject;
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components

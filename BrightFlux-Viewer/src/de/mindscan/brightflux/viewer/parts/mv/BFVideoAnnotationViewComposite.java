@@ -61,6 +61,7 @@ import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.system.videoannotator.io.VideoAnnotationWriterImpl;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -135,7 +136,16 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         btnSaveVideoAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: save all video annotations
+                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parent.getShell(), "Save File...", FileDescriptions.BF_VIDEO_ANNOTATION, path -> {
+                    // get the videoObject data from current selected Frame
+                    Control tabitem = videoObjectTabFolder.getSelection().getControl();
+                    if (tabitem instanceof BFVideoAnnotationSingleVideoViewComposite) {
+                        VideoAnnotatorVideoObject videoObject = ((BFVideoAnnotationSingleVideoViewComposite) tabitem).getVideoObject();
+                        VideoAnnotationWriterImpl videoAnnotationWriter = new VideoAnnotationWriterImpl();
+                        videoAnnotationWriter.writeToFile( videoObject, path );
+                    }
+                } );
+
             }
         } );
         btnSaveVideoAnnotations.setText( "Save Video Annotations ..." );

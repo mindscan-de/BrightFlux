@@ -59,7 +59,7 @@ public class VideoAnnotationWriterImpl implements VideoAnnotationWriter {
             }
 
             // we put a header line into the .bf_jsonl file...
-            Gson gson = new GsonBuilder().create();
+            Gson gson = new GsonBuilder().registerTypeHierarchyAdapter( Path.class, new BFGsonPathConverter() ).create();
 
             try (OutputStream outputFile = Files.newOutputStream( outputPath, StandardOpenOption.TRUNCATE_EXISTING );) {
 
