@@ -34,46 +34,37 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 
 /**
- * TODO: Zur Darstellung in der Table sollte das Dataset nach zeit numerisch sortierbar sein, ... ato de ... 
+ * 
  */
 public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject {
 
     private DataFrame videoAnnotationDataFrame;
-
-    /**
-     * Path to the file on local disk.
-     */
-    private Path videoObjectPath;
-    private int videoDurationInSeconds = 120;
-
-    private UUID videoObjectUUID;
+    private VideoAnnotatorVideoObjectMetaData metaData;
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath ) {
         this.videoAnnotationDataFrame = df;
-        this.videoObjectPath = videoObjectPath;
 
-        this.videoObjectUUID = UUID.randomUUID();
+        int videoDurationInSeconds = 600;
 
-        // TODO VideoDurationInSeconds
+        this.metaData = new VideoAnnotatorVideoObjectMetaData( videoObjectPath, videoDurationInSeconds );
     }
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath, UUID uuid ) {
         this.videoAnnotationDataFrame = df;
-        this.videoObjectPath = videoObjectPath;
-        this.videoObjectUUID = uuid;
 
-        // TODO VideoDurationInSeconds
+        int videoDurationInSeconds = 600;
 
+        this.metaData = new VideoAnnotatorVideoObjectMetaData( videoObjectPath, videoDurationInSeconds, uuid );
     }
 
     @Override
     public int getVideoDurationInSeconds() {
-        return videoDurationInSeconds;
+        return metaData.getVideoDurationInSeconds();
     }
 
     @Override
     public Path getVideoObjectPath() {
-        return videoObjectPath;
+        return metaData.getVideoObjectPath();
     }
 
     @Override
@@ -83,12 +74,12 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
     @Override
     public String getSimpleName() {
-        return videoObjectPath.getFileName().toString();
+        return metaData.getVideoObjectPath().getFileName().toString();
     }
 
     @Override
     public UUID getUUID() {
-        return videoObjectUUID;
+        return metaData.getVideoObjectUUID();
     }
 
     @Override
