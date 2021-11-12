@@ -109,4 +109,11 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
         }
         return "";
     }
+
+    /**
+     * @return the metaData
+     */
+    public VideoAnnotatorVideoObjectMetaData getMetaData() {
+        return metaData;
+    }
 }

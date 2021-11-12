@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectMetaData;
 
 /**
  * 
@@ -51,4 +52,5 @@ public interface VideoAnnotatorVideoObject {
 
     UUID getUUID();
 
+    VideoAnnotatorVideoObjectMetaData getMetaData();
 }

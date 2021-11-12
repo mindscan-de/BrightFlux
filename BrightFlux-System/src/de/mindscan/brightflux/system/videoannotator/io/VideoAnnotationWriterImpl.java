@@ -30,11 +30,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.writer.DataFrameOutputStreamWriter;
 import de.mindscan.brightflux.dataframes.writer.DataFrameWriterBFDFJsonLinesImpl;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotationWriter;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectMetaData;
 
 /**
  * 
@@ -54,9 +58,16 @@ public class VideoAnnotationWriterImpl implements VideoAnnotationWriter {
                 Files.createFile( outputPath );
             }
 
+            // we put a header line into the .bf_jsonl file...
+            Gson gson = new GsonBuilder().create();
+
             try (OutputStream outputFile = Files.newOutputStream( outputPath, StandardOpenOption.TRUNCATE_EXISTING );) {
 
                 // write the videoObject information as header + "\n"
+                VideoAnnotatorVideoObjectMetaData metaData = videoObject.getMetaData();
+
+                String metaDataString = gson.toJson( metaData ) + "\n";
+                outputFile.write( metaDataString.getBytes() );
 
                 // write the internal dataframe to the output stream
                 DataFrame df = videoObject.getVideoAnnotationDataFrame();
