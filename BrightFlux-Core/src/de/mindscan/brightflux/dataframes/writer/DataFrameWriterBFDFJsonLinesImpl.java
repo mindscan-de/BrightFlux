@@ -47,7 +47,7 @@ import de.mindscan.brightflux.dataframes.writer.bfdfjson.JsonLinesDataFrameInfo;
 /**
  * 
  */
-public class DataFrameWriterBFDFJsonLinesImpl implements DataFrameWriter {
+public class DataFrameWriterBFDFJsonLinesImpl implements DataFrameWriter, DataFrameOutputStreamWriter {
 
     private Type dataFrameInfoType = new TypeToken<JsonLinesDataFrameInfo>() {
     }.getType();
@@ -81,6 +81,7 @@ public class DataFrameWriterBFDFJsonLinesImpl implements DataFrameWriter {
         }
     }
 
+    @Override
     public void writeToOutputStream( DataFrame df, OutputStream outputFile ) throws IOException {
         // we put a header line into the .bf_jsonl file...
         Gson gson = new GsonBuilder().create();
