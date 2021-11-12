@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes.writer;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
@@ -73,41 +74,44 @@ public class DataFrameWriterBFDFJsonLinesImpl implements DataFrameWriter {
             }
 
             try (OutputStream outputFile = Files.newOutputStream( outputPath, StandardOpenOption.TRUNCATE_EXISTING );) {
-
-                // we put a header line into the .bf_jsonl file...
-                Gson gson = new GsonBuilder().create();
-
-                // --------------------- DATAFRAMEINFO ------------------   
-
-                JsonLinesDataFrameInfo dataFrameInfo = new JsonLinesDataFrameInfo();
-                dataFrameInfo.initWithDataFrame( df );
-
-                String jsonString = gson.toJson( dataFrameInfo, dataFrameInfoType ) + "\n";
-                outputFile.write( jsonString.getBytes() );
-
-                // -------------------------- DATA ----------------------
-                Collection<String> columnNames = df.getColumnNames();
-
-                // we will save that as a json-lines file.
-                Iterator<DataFrameRow> rowIterator = df.rowIterator();
-
-                while (rowIterator.hasNext()) {
-                    DataFrameRow dataFrameRow = (DataFrameRow) rowIterator.next();
-
-                    Map<String, Object> rowMap = new LinkedHashMap<>();
-                    for (String columnName : columnNames) {
-                        rowMap.put( columnName, dataFrameRow.get( columnName ) );
-                    }
-
-                    String jsonData = gson.toJson( rowMap, dataFrameDataRowType ) + "\n";
-                    outputFile.write( jsonData.getBytes() );
-                }
-
-                outputFile.flush();
+                writeToOutputStream( df, outputFile );
             }
         }
         catch (Exception e) {
         }
+    }
+
+    public void writeToOutputStream( DataFrame df, OutputStream outputFile ) throws IOException {
+        // we put a header line into the .bf_jsonl file...
+        Gson gson = new GsonBuilder().create();
+
+        // --------------------- DATAFRAMEINFO ------------------   
+
+        JsonLinesDataFrameInfo dataFrameInfo = new JsonLinesDataFrameInfo();
+        dataFrameInfo.initWithDataFrame( df );
+
+        String jsonString = gson.toJson( dataFrameInfo, dataFrameInfoType ) + "\n";
+        outputFile.write( jsonString.getBytes() );
+
+        // -------------------------- DATA ----------------------
+        Collection<String> columnNames = df.getColumnNames();
+
+        // we will save that as a json-lines file.
+        Iterator<DataFrameRow> rowIterator = df.rowIterator();
+
+        while (rowIterator.hasNext()) {
+            DataFrameRow dataFrameRow = (DataFrameRow) rowIterator.next();
+
+            Map<String, Object> rowMap = new LinkedHashMap<>();
+            for (String columnName : columnNames) {
+                rowMap.put( columnName, dataFrameRow.get( columnName ) );
+            }
+
+            String jsonData = gson.toJson( rowMap, dataFrameDataRowType ) + "\n";
+            outputFile.write( jsonData.getBytes() );
+        }
+
+        outputFile.flush();
     }
 
 }
