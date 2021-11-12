@@ -101,6 +101,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * "open a video" and annotate each second of a video using a slider to navigate in video time
   * generate a simple (hard-coded) report for all available video objects
   * use default texts, which can be used to annotate timestamps
+  * save video annotations to disk
 
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -164,7 +165,6 @@ Video time stamp Annotations
 * sync log message with video, e.g. select a log entry and then show the content of the video at exactly this time stamp
 * add Markers to annotation data frame
 * combine video object references with individual data frames (from MainProjectView)
-* save video annotations to disk
 * load video annotations from disk
 * load video also loads parallel video annotation file
 
