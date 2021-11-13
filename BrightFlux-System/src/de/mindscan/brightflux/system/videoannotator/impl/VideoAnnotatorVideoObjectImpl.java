@@ -57,6 +57,11 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
         this.metaData = new VideoAnnotatorVideoObjectMetaData( videoObjectPath, videoDurationInSeconds, uuid );
     }
 
+    public VideoAnnotatorVideoObjectImpl( DataFrame df, VideoAnnotatorVideoObjectMetaData metaData ) {
+        this.videoAnnotationDataFrame = df;
+        this.metaData = metaData;
+    }
+
     @Override
     public int getVideoDurationInSeconds() {
         return metaData.getVideoDurationInSeconds();
