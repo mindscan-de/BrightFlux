@@ -102,7 +102,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * generate a simple (hard-coded) report for all available video objects
   * use default texts, which can be used to annotate timestamps
   * save video annotations to disk
-
+  * load video annotations from disk
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
@@ -165,7 +165,6 @@ Video time stamp Annotations
 * sync log message with video, e.g. select a log entry and then show the content of the video at exactly this time stamp
 * add Markers to annotation data frame
 * combine video object references with individual data frames (from MainProjectView)
-* load video annotations from disk
 * load video also loads parallel video annotation file
 
 
@@ -233,16 +232,14 @@ Export the analysis result in short form
 * Project file
 
 
-UI/UX (est 1.5 kLOC)
+UI/UX (est. 1.5 kLOC)
 * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
 
 
 UI/UX (est. 8-10 kLOC)
 * provide left(show icons and boxes for annotated lines, direct synchronized windowed ruler ) and right ruler 
   (overview ruler which is showing the color bars and click-able fullscale positions)
-
-
-  
+ 
   
 Report Generator
 * improve report generator with
