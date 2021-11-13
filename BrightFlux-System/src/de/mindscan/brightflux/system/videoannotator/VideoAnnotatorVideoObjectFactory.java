@@ -38,8 +38,8 @@ import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObje
  */
 public class VideoAnnotatorVideoObjectFactory {
 
-    public static VideoAnnotatorVideoObject createVideoObject( Path videoObjectPath ) {
-        String filename = videoObjectPath.getFileName().toString();
+    public static VideoAnnotatorVideoObject createVideoObject( Path videoPath ) {
+        String filename = videoPath.getFileName().toString();
     
         DataFrame df = new DataFrameBuilder( filename ) //
                         .addColumn( DataFrameSpecialColumns.INDEX_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) //
@@ -50,7 +50,7 @@ public class VideoAnnotatorVideoObjectFactory {
                         .addColumn( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_STRING ) //
                         .build();
     
-        VideoAnnotatorVideoObject videoObject = new VideoAnnotatorVideoObjectImpl( df, videoObjectPath );
+        VideoAnnotatorVideoObject videoObject = new VideoAnnotatorVideoObjectImpl( df, videoPath );
         return videoObject;
     }
 
