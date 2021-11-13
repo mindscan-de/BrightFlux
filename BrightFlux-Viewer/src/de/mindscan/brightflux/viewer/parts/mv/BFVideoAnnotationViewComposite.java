@@ -126,7 +126,11 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         btnLoadVideoAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: load a videoAnnotion
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( parent.getShell(), "Select Video Annotation", FileDescriptions.BF_VIDEO_ANNOTATION,
+                                path -> {
+                                    loadVideoAnnotationsToProject( path );
+                                } );
+
             }
         } );
         btnLoadVideoAnnotations.setText( "Load Video Annotations ..." );
@@ -209,6 +213,13 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         };
 
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.VideoObjectRequestSelectEvent, listener );
+    }
+
+    private void loadVideoAnnotationsToProject( Path path ) {
+        if (this.projectRegistry != null) {
+            BFCommand command = DataFrameCommandFactory.loadVideoAnnotationFromFile( path );
+            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 
     private void addVideoToProject( Path path ) {
