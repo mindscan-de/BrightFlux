@@ -38,7 +38,6 @@ import de.mindscan.brightflux.dataframes.writer.DataFrameOutputStreamWriter;
 import de.mindscan.brightflux.dataframes.writer.DataFrameWriterBFDFJsonLinesImpl;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotationWriter;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
-import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectMetaData;
 
 /**
  * 
@@ -58,23 +57,21 @@ public class VideoAnnotationWriterImpl implements VideoAnnotationWriter {
                 Files.createFile( outputPath );
             }
 
-            // we put a header line into the .bf_jsonl file...
             Gson gson = new GsonBuilder().registerTypeHierarchyAdapter( Path.class, new BFGSonPathSerializer() ).create();
 
             try (OutputStream outputFile = Files.newOutputStream( outputPath, StandardOpenOption.TRUNCATE_EXISTING );) {
 
-                // write the videoObject information as header + "\n"
-                VideoAnnotatorVideoObjectMetaData metaData = videoObject.getMetaData();
-
-                String metaDataString = gson.toJson( metaData ) + "\n";
+                // write the videoObject information as header
+                String metaDataString = gson.toJson( videoObject.getMetaData() ) + "\n";
                 outputFile.write( metaDataString.getBytes() );
 
-                // write the internal dataframe to the output stream
+                // write the internal data frame to the output stream
                 DataFrame df = videoObject.getVideoAnnotationDataFrame();
                 dataframeWriterDelegate.writeToOutputStream( df, outputFile );
             }
         }
         catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
