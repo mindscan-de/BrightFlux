@@ -36,7 +36,7 @@ import com.google.gson.JsonSerializer;
 /**
  * 
  */
-public class BFGSonPathSerializer implements JsonSerializer<Path> {
+public class BFGsonPathSerializer implements JsonSerializer<Path> {
 
     /** 
      * {@inheritDoc}

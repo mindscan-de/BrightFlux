@@ -57,7 +57,7 @@ public class VideoAnnotationWriterImpl implements VideoAnnotationWriter {
                 Files.createFile( outputPath );
             }
 
-            Gson gson = new GsonBuilder().registerTypeHierarchyAdapter( Path.class, new BFGSonPathSerializer() ).create();
+            Gson gson = new GsonBuilder().registerTypeHierarchyAdapter( Path.class, new BFGsonPathSerializer() ).create();
 
             try (OutputStream outputFile = Files.newOutputStream( outputPath, StandardOpenOption.TRUNCATE_EXISTING );) {
 
