@@ -169,16 +169,11 @@ Video time stamp Annotations
 * load video also loads parallel video annotation file
 
 
-UI/UX
-* provide left(show icons and boxes for annotated lines, direct synchronized windowed ruler ) and right ruler 
-  (overview ruler which is showing the color bars and click-able fullscale positions)
-
-
 DFQL
 * Support unary NOT operator
 
 
-Application-Startup
+Application-Startup (est. 6 kLOC)
 * Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
 * Provide a script or configuration for the application startup.
 
@@ -238,8 +233,15 @@ Export the analysis result in short form
 * Project file
 
 
-UI/UX
+UI/UX (est 1.5 kLOC)
 * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
+
+
+UI/UX (est. 8-10 kLOC)
+* provide left(show icons and boxes for annotated lines, direct synchronized windowed ruler ) and right ruler 
+  (overview ruler which is showing the color bars and click-able fullscale positions)
+
+
   
   
 Report Generator
