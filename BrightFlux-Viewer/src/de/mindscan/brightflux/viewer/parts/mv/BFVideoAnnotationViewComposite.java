@@ -61,7 +61,6 @@ import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
-import de.mindscan.brightflux.system.videoannotator.io.VideoAnnotationWriterImpl;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -145,8 +144,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
                     Control tabitem = videoObjectTabFolder.getSelection().getControl();
                     if (tabitem instanceof BFVideoAnnotationSingleVideoViewComposite) {
                         VideoAnnotatorVideoObject videoObject = ((BFVideoAnnotationSingleVideoViewComposite) tabitem).getVideoObject();
-                        VideoAnnotationWriterImpl videoAnnotationWriter = new VideoAnnotationWriterImpl();
-                        videoAnnotationWriter.writeToFile( videoObject, path );
+
+                        saveVideoAnnotation( path, videoObject );
                     }
                 } );
 
@@ -216,10 +215,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     private void loadVideoAnnotationsToProject( Path path ) {
-        if (this.projectRegistry != null) {
-            BFCommand command = DataFrameCommandFactory.loadVideoAnnotationFromFile( path );
-            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
-        }
+        BFCommand command = DataFrameCommandFactory.loadVideoAnnotationFromFile( path );
+        dispatchCommand( command );
     }
 
     private void addVideoToProject( Path path ) {
@@ -227,10 +224,18 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
 
-        if (this.projectRegistry != null) {
-            // TODO: find, whether there is a special annotation file in parallel to the video.
-            BFCommand command = DataFrameCommandFactory.loadVideoForAnnotation( path );
+        // TODO: find, whether there is a special annotation file in parallel to the video.
+        BFCommand command = DataFrameCommandFactory.loadVideoForAnnotation( path );
+        dispatchCommand( command );
+    }
 
+    private void saveVideoAnnotation( Path path, VideoAnnotatorVideoObject videoObject ) {
+        BFCommand command = DataFrameCommandFactory.saveVideoAnnotationToFile( videoObject, path );
+        dispatchCommand( command );
+    }
+
+    private void dispatchCommand( BFCommand command ) {
+        if (this.projectRegistry != null) {
             this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
