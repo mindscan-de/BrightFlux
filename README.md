@@ -182,6 +182,13 @@ Reporting
   * use of templates for creating a report
 
 
+UI/UX
+* Configuration System
+  * provide PreferenceStore
+  * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
+  * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
+  
+
 ### Even Later
 
 Exporters
