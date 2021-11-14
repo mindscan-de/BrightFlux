@@ -23,25 +23,37 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.reportgenerator;
+package de.mindscan.brightflux.system.videoannotator.preferences;
 
 /**
- * 
+ * TODO: this will be refactored into something which is more dynamic but currently supplies the "better" infrastructure  
  */
-public class ReportGeneratorSnippets {
+public class VideoAnnotatorPreferenceData {
 
-    // We should read these snippets from a configuration file, such that it can be modified and adapted w/o compiling
-    private final static String[] DATAFRAME_ANNOTATION_SNIPPETS = new String[] { //
-                    "h4. Preliminary Analysis\n\n", //
-                    "h5. Reading the Logs\n\n", //
-                    ".", //
-                    "..", //
-                    "The tester clicks ...", //
-                    "This opens the 'XYZ' view ...", //
+    // TODO: read the snippets from configuration file from disk, such that it can be modified and adapted w/o compiling
+    private static final String[] VIDEO_OBJECT_SNIPPETS = new String[] { //
+                    "Tester clicks on home button", //
+                    "HomeScreen opens (*SYNC*)", //
+                    "View XYZ opens", //
+                    "Time changes from X to Y", //
     };
 
-    public static String[] getFrameAnnotationSnippets() {
-        return DATAFRAME_ANNOTATION_SNIPPETS;
+    // Todo: isMap, isAtomic 
+    public boolean isArray( String key ) {
+        switch (key) {
+            case VideoAnnotatorPreferenceKeys.VIDEO_OBJECT_SNIPPETS_KEY:
+                return true;
+            default:
+                return false;
+        }
     }
 
+    public Object[] getArray( String key ) {
+        switch (key) {
+            case VideoAnnotatorPreferenceKeys.VIDEO_OBJECT_SNIPPETS_KEY:
+                return VIDEO_OBJECT_SNIPPETS;
+            default:
+                return new Object[0];
+        }
+    }
 }

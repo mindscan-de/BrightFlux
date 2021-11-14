@@ -51,9 +51,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventFactory;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
+import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -66,6 +67,8 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     private Slider videoPositionSlider;
     private StyledText currentVideoTimestampAnnotation;
     private ProjectRegistry projectRegistry;
+
+    private VideoAnnotatorPreferenceData preferences = new VideoAnnotatorPreferenceData();
 
     /**
      * Create the composite.
@@ -149,7 +152,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
             }
         } );
         listViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        list.setItems( ReportGeneratorSnippets.getVideoObjectAnnotationSnippets() );
+        list.setItems( (String[]) preferences.getArray( VideoAnnotatorPreferenceKeys.VIDEO_OBJECT_SNIPPETS_KEY ) );
 
         sashForm_1.setWeights( new int[] { 1, 1 } );
         sashForm.setWeights( new int[] { 105, 176 } );

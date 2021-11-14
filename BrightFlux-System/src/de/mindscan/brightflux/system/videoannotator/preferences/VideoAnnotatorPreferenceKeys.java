@@ -23,25 +23,12 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.reportgenerator;
+package de.mindscan.brightflux.system.videoannotator.preferences;
 
 /**
  * 
  */
-public class ReportGeneratorSnippets {
+public class VideoAnnotatorPreferenceKeys {
 
-    // We should read these snippets from a configuration file, such that it can be modified and adapted w/o compiling
-    private final static String[] DATAFRAME_ANNOTATION_SNIPPETS = new String[] { //
-                    "h4. Preliminary Analysis\n\n", //
-                    "h5. Reading the Logs\n\n", //
-                    ".", //
-                    "..", //
-                    "The tester clicks ...", //
-                    "This opens the 'XYZ' view ...", //
-    };
-
-    public static String[] getFrameAnnotationSnippets() {
-        return DATAFRAME_ANNOTATION_SNIPPETS;
-    }
-
+    public static final String VIDEO_OBJECT_SNIPPETS_KEY = "de.mindscan.brightflux.videoannotator.defaultSnippets";
 }
