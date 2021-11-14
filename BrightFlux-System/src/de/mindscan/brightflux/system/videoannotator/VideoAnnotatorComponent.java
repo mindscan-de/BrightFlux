@@ -32,11 +32,8 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
-import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 
@@ -70,24 +67,21 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     private void registerVideoObjectCreatedHandler() {
-        BFEventListener createdVideoObjectListener = new BFEventListenerAdapter() {
+        VideoObjectEventListenerAdapter createdVideoObjectListener = new VideoObjectEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFVideoObjectEvent) {
-                    registerVideoObject( ((BFVideoObjectEvent) event).getVideoObject() );
-                }
+            public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
+                registerVideoObject( videoObject );
+
             }
         };
         this.projectRegistry.getEventDispatcher().registerEventListener( VideoAnnotationVideoObjectCreatedEvent.class, createdVideoObjectListener );
     }
 
     private void registerVideoObjectClosedHandler() {
-        BFEventListener closedVideoObjectListener = new BFEventListenerAdapter() {
+        VideoObjectEventListenerAdapter closedVideoObjectListener = new VideoObjectEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFVideoObjectEvent) {
-                    unregisterVideoObject( ((BFVideoObjectEvent) event).getVideoObject() );
-                }
+            public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
+                unregisterVideoObject( videoObject );
             }
         };
         this.projectRegistry.getEventDispatcher().registerEventListener( VideoAnnotationVideoObjectClosedEvent.class, closedVideoObjectListener );
