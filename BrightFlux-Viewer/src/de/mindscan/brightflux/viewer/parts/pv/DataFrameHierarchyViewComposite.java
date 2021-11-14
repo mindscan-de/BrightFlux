@@ -48,6 +48,7 @@ import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -92,15 +93,11 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
 
     private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
         // Register to close event, so we can mark the hierarchy, that the frame is closed in the hierarchy. 
-        BFEventListener closedListener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter closedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFDataFrameEvent) {
-                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
-
-                    dfHierarchy.removeNode( dfEvent.getDataFrame() );
-                    updateDataframeTree( dfHierarchy );
-                }
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                dfHierarchy.removeNode( event.getDataFrame() );
+                updateDataframeTree( dfHierarchy );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameClosed, closedListener );
@@ -126,30 +123,22 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private void registerDataFrameLoadedListener( ProjectRegistry projectRegistry ) {
         // register to (load events)
         // these do not contain a hierarchy
-        BFEventListener loadedListener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter loadedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFDataFrameEvent) {
-                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
-
-                    dfHierarchy.addRootNode( dfEvent.getDataFrame() );
-                    updateDataframeTree( dfHierarchy );
-                }
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                dfHierarchy.addRootNode( event.getDataFrame() );
+                updateDataframeTree( dfHierarchy );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
     }
 
     private void registerDataFrameSelectedListener( ProjectRegistry projectRegistry2 ) {
-        BFEventListener selectedListener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter selectedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFDataFrameEvent) {
-                    BFDataFrameEvent dfEvent = (BFDataFrameEvent) event;
-
-                    currentSelectedID = dfEvent.getDataFrame().getUuid();
-                    updateDataframeTree( dfHierarchy );
-                }
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                currentSelectedID = event.getDataFrame().getUuid();
+                updateDataframeTree( dfHierarchy );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, selectedListener );
