@@ -26,8 +26,6 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import java.nio.file.Path;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 import org.eclipse.swt.SWT;
@@ -45,8 +43,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
-import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
@@ -58,7 +54,6 @@ import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -71,9 +66,6 @@ import swing2swt.layout.BorderLayout;
  * 
  */
 public class BFVideoAnnotationViewComposite extends Composite implements ProjectRegistryParticipant {
-
-    private static final String ANNOTATION_COLUMN_NAME = VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME;
-    private static final String TIMESTAMP_COLUMN_NAME = VideoAnnotatorComponent.TIMESTAMP_COLUMN_NAME;
 
     private ProjectRegistry projectRegistry;
     private CTabFolder videoObjectTabFolder;
@@ -108,9 +100,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
-                List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects = videoAnnotatorService.getVideoAnnotationVideoObjects();
-
-                String report = buildFullVideoAnnoationReport( videoAnnotationVideoObjects );
+                String report = videoAnnotatorService.createFullReport();
 
                 projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( getShell(), report ) );
             }
@@ -293,58 +283,6 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         }
 
         return false;
-    }
-
-    // TODO: refactor and extract this to system
-    private String buildFullVideoAnnoationReport( List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
-        if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
-            return "";
-        }
-
-        // TODO: use the generator and a template.
-        // ReportGeneratorImpl generator = new ReportGeneratorImpl();
-
-        StringBuilder sb = new StringBuilder();
-
-        // build another report from smaller reports.
-        for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
-            String partialReport = buildSingleVideoAnnotationReport( videoAnnotatorVideoObject );
-
-            // Use a different template for this...
-            // TODO: use the generator
-            if (!partialReport.isBlank()) {
-                sb.append( "h5. Analysis of [^" ).append( videoAnnotatorVideoObject.getSimpleName() ).append( "]\n\n" );
-                sb.append( "The video length is:\n" );
-                sb.append( partialReport );
-                sb.append( "\n" );
-            }
-        }
-
-        return sb.toString();
-    }
-
-    // TODO: refactor and extract this to system
-    private String buildSingleVideoAnnotationReport( VideoAnnotatorVideoObject videoObject ) {
-        // TODO: use the generator and a template / template block to build the real report...
-        // ReportGeneratorImpl generator = new ReportGeneratorImpl();
-        DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
-
-        StringBuilder sb = new StringBuilder();
-
-        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
-        while (currentDFRowsIterator.hasNext()) {
-            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-
-            int timestampInSeconds = (Integer) dataFrameRow.get( TIMESTAMP_COLUMN_NAME );
-            String timstamp = VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds );
-            String annotationContent = String.valueOf( dataFrameRow.get( ANNOTATION_COLUMN_NAME ) );
-            // TODO: we need also the referenced data-rows, so we can align the timestamps to a dataframe, containing different timstamps 
-
-            // TODO: use a named template here instead, also use the report generator
-            sb.append( "* " ).append( timstamp ).append( " (video time): " ).append( annotationContent ).append( "\n" );
-        }
-
-        return sb.toString();
     }
 
     @Override
