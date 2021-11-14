@@ -85,16 +85,14 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                DataFrame dataFrame = event.getDataFrame();
-                addDataFrameTab( dataFrame );
+                addDataFrameTab( event.getDataFrame() );
             }
         } );
 
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                DataFrame dataFrame = event.getDataFrame();
-                addDataFrameTab( dataFrame );
+                addDataFrameTab( event.getDataFrame() );
             }
         } );
 
