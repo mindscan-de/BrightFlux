@@ -37,12 +37,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 
 /**
@@ -108,11 +106,10 @@ public class DataFrameColumnViewComposite extends Composite implements ProjectRe
         this.projectRegistry = projectRegistry;
 
         if (this.projectRegistry != null) {
-            BFEventListener listener = new BFEventListenerAdapter() {
+            DataFrameEventListenerAdapter listener = new DataFrameEventListenerAdapter() {
                 @Override
-                public void handleEvent( BFEvent event ) {
-                    DataFrame selectedDataFrame = ((BFDataFrameEvent) event).getDataFrame();
-                    setCurrentDataFrame( selectedDataFrame );
+                public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                    setCurrentDataFrame( event.getDataFrame() );
                 }
             };
             this.projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );

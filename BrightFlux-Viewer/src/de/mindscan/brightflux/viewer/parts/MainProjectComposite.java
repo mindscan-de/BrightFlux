@@ -44,6 +44,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
@@ -81,20 +82,18 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     }
 
     private void registerEvents( ProjectRegistry projectRegistry ) {
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, new BFEventListenerAdapter() {
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                BFDataFrameEvent loaded = (BFDataFrameEvent) event;
-                DataFrame dataFrame = loaded.getDataFrame();
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                DataFrame dataFrame = event.getDataFrame();
                 addDataFrameTab( dataFrame );
             }
         } );
 
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, new BFEventListenerAdapter() {
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                BFDataFrameEvent loaded = (BFDataFrameEvent) event;
-                DataFrame dataFrame = loaded.getDataFrame();
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                DataFrame dataFrame = event.getDataFrame();
                 addDataFrameTab( dataFrame );
             }
         } );

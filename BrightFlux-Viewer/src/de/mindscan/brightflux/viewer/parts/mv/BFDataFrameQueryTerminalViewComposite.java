@@ -49,12 +49,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
-import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 
@@ -199,11 +198,10 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        BFEventListenerAdapter listener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter listener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
-                currentSelectedDataFrame = dataFrameEvent.getDataFrame();
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                currentSelectedDataFrame = event.getDataFrame();
 
                 // Update View? Show name of selected DataFrame, 
                 // because the Terminal will be sensitive to the selected frame in the MainProjectComposite

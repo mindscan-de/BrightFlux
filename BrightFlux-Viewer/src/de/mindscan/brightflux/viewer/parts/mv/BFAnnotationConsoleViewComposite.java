@@ -60,7 +60,7 @@ import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
@@ -117,15 +117,13 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void registerAnnotationDataFrameCreatedEvent( ProjectRegistry projectRegistry ) {
-        BFEventListener annotationDfCreatedListener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter annotationDfCreatedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFAbstractDataFrameEvent) {
-                    DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
-                    if (AnnotatorComponent.ANNOTATION_DATAFRAME_NAME.equals( frameToAnnotate.getName() )) {
-                        BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
-                        BFAnnotationConsoleViewComposite.this.currentSelectedDataFrameRow = null;
-                    }
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                DataFrame frameToAnnotate = event.getDataFrame();
+                if (AnnotatorComponent.ANNOTATION_DATAFRAME_NAME.equals( frameToAnnotate.getName() )) {
+                    BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
+                    BFAnnotationConsoleViewComposite.this.currentSelectedDataFrameRow = null;
                 }
             }
         };
@@ -134,11 +132,10 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private void registerDataFrameSelectedEvent( ProjectRegistry projectRegistry ) {
         // current Selected Dataframe, not nice yet, but for proof of concept
-        BFEventListenerAdapter listener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter listener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                BFDataFrameEvent dataFrameEvent = ((BFDataFrameEvent) event);
-                currentSelectedDataFrame = dataFrameEvent.getDataFrame();
+            public void handleDataFrameEvent( BFDataFrameEvent event ) {
+                currentSelectedDataFrame = event.getDataFrame();
                 currentSelectedDataFrameRow = null;
 
                 // TODO: calculcate row selection if any...
