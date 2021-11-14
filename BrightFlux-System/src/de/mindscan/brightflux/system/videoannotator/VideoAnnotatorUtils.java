@@ -31,10 +31,17 @@ package de.mindscan.brightflux.system.videoannotator;
 public class VideoAnnotatorUtils {
 
     public static String convertSecondsToTimeString( int videoDurationInSeconds ) {
+
         int seconds = videoDurationInSeconds % 60;
         int minutes = (videoDurationInSeconds / 60) % 60;
-    
-        return "%02d:%02d".formatted( minutes, seconds );
+
+        if (videoDurationInSeconds < 3600) {
+            return "%02d:%02d".formatted( minutes, seconds );
+        }
+        else {
+            int hours = (videoDurationInSeconds / 3600);
+            return "%02d:%02d:%02d".formatted( hours, minutes, seconds );
+        }
     }
 
 }
