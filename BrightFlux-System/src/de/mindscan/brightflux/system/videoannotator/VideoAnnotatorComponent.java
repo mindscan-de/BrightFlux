@@ -28,6 +28,7 @@ package de.mindscan.brightflux.system.videoannotator;
 import java.util.LinkedList;
 import java.util.List;
 
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -42,6 +43,7 @@ import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoO
 public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     public static final String ANNOTATION_COLUMN_NAME = "videoAnnotation";
+    public static final String TIMESTAMP_COLUMN_NAME = DataFrameSpecialColumns.INDEX_COLUMN_NAME;
 
     private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
 

@@ -47,7 +47,6 @@ import org.eclipse.swt.widgets.Label;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
-import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
@@ -74,7 +73,7 @@ import swing2swt.layout.BorderLayout;
 public class BFVideoAnnotationViewComposite extends Composite implements ProjectRegistryParticipant {
 
     private static final String ANNOTATION_COLUMN_NAME = VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME;
-    private static final String TIMESTAMP_COLUMN_NAME = DataFrameSpecialColumns.INDEX_COLUMN_NAME;
+    private static final String TIMESTAMP_COLUMN_NAME = VideoAnnotatorComponent.TIMESTAMP_COLUMN_NAME;
 
     private ProjectRegistry projectRegistry;
     private CTabFolder videoObjectTabFolder;
