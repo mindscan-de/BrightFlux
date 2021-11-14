@@ -30,5 +30,5 @@ package de.mindscan.brightflux.viewer.uievents;
  */
 public interface UUIDRequestEventListener {
 
-    void handleUUIDRequest( UUIDRequestEvent event );
+    void handleUUIDRequestEvent( UUIDRequestEvent event );
 }

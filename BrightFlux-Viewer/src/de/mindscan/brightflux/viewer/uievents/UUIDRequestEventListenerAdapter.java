@@ -31,13 +31,13 @@ import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 /**
  * 
  */
-public class UUIDReuestEventListenerAdapter extends BFEventListenerAdapter implements UUIDRequestEventListener {
+public class UUIDRequestEventListenerAdapter extends BFEventListenerAdapter implements UUIDRequestEventListener {
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void handleUUIDRequest( UUIDRequestEvent event ) {
+    public void handleUUIDRequestEvent( UUIDRequestEvent event ) {
     }
 
     /** 
@@ -46,7 +46,7 @@ public class UUIDReuestEventListenerAdapter extends BFEventListenerAdapter imple
     @Override
     public final void handleEvent( BFEvent event ) {
         if (event instanceof UUIDRequestEvent) {
-            handleUUIDRequest( ((UUIDRequestEvent) event) );
+            handleUUIDRequestEvent( ((UUIDRequestEvent) event) );
         }
     }
 
