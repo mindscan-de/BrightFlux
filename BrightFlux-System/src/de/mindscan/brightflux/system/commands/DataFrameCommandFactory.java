@@ -51,8 +51,10 @@ import de.mindscan.brightflux.system.highlighter.commands.DataFrameClearHighligh
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
 import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoForAnnotationCommand;
+import de.mindscan.brightflux.system.videoannotator.commands.SaveVideoAnnotationToFileCommand;
 
 /**
  * This class provides commands around DataFrames 
@@ -150,6 +152,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand loadVideoAnnotationFromFile( Path videoAnnotationPath ) {
         return new LoadVideoAnnotationFromFileCommand( videoAnnotationPath );
+    }
+
+    public static BFCommand saveVideoAnnotationToFile( VideoAnnotatorVideoObject videoObject, Path videoAnnotationTargetPath ) {
+        return new SaveVideoAnnotationToFileCommand( videoObject, videoAnnotationTargetPath );
     }
 
 }
