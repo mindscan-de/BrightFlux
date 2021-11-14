@@ -39,16 +39,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFDataFrameEvent;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
+import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 
 /**
  * 
@@ -96,11 +95,10 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
             }
         } );
 
-        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRequestSelectEvent, new BFEventListenerAdapter() {
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRequestSelectEvent, new UUIDRequestEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                UUID requestedUUID = ((UUIDRequestEvent) event).getRequestedUUID();
-                requestDataFrameSelection( requestedUUID );
+            public void handleUUIDRequestEvent( UUIDRequestEvent event ) {
+                requestDataFrameSelection( event.getRequestedUUID() );
             }
         } );
     }

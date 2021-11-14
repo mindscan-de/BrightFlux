@@ -44,12 +44,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
-import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
@@ -60,6 +57,7 @@ import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
+import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -188,11 +186,10 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     private void registerVideoObjectSelectRequestEvent( ProjectRegistry projectRegistry ) {
-        BFEventListener listener = new BFEventListenerAdapter() {
+        UUIDRequestEventListenerAdapter listener = new UUIDRequestEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                UUID requestedUUID = ((UUIDRequestEvent) event).getRequestedUUID();
-                requestVideoObjectSelection( requestedUUID );
+            public void handleUUIDRequestEvent( UUIDRequestEvent event ) {
+                requestVideoObjectSelection( event.getRequestedUUID() );
             }
         };
 
