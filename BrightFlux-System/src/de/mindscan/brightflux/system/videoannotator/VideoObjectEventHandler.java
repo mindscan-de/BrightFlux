@@ -28,7 +28,7 @@ package de.mindscan.brightflux.system.videoannotator;
 /**
  * 
  */
-public interface VideoObjectEventListener {
+public interface VideoObjectEventHandler {
 
     void handleEvent( VideoAnnotatorVideoObject videoObject );
 

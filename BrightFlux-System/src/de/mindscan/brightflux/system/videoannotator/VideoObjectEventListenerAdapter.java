@@ -31,7 +31,7 @@ import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 /**
  * 
  */
-public class VideoObjectEventListenerAdapter extends BFEventListenerAdapter implements VideoObjectEventListener {
+public class VideoObjectEventListenerAdapter extends BFEventListenerAdapter implements VideoObjectEventHandler {
 
     @Override
     public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
