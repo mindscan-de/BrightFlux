@@ -27,7 +27,7 @@ package de.mindscan.brightflux.system.videoannotator.events;
 
 import de.mindscan.brightflux.system.events.BFAbstractEvent;
 import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 

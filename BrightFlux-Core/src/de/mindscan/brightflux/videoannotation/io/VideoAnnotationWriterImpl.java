@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.io;
+package de.mindscan.brightflux.videoannotation.io;
 
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -36,8 +36,8 @@ import com.google.gson.GsonBuilder;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.writer.DataFrameOutputStreamWriter;
 import de.mindscan.brightflux.dataframes.writer.DataFrameWriterBFDFJsonLinesImpl;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotationWriter;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.videoannotation.VideoAnnotationWriter;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 

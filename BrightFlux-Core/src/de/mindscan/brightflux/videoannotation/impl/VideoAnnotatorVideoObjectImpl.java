@@ -23,15 +23,15 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.impl;
+package de.mindscan.brightflux.videoannotation.impl;
 
 import java.nio.file.Path;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.videoannotation.VideoAnnotationColumns;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 
@@ -89,27 +89,27 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
     @Override
     public boolean isAnnotationPresentForTimestamp( int timestamp ) {
-        return videoAnnotationDataFrame.isPresent( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp );
+        return videoAnnotationDataFrame.isPresent( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME, timestamp );
     }
 
     @Override
     public void setAnnotationForTimestamp( int timestamp, String annotation ) {
         if (annotation != null && !annotation.isBlank()) {
             videoAnnotationDataFrame.setAt( DataFrameSpecialColumns.INDEX_COLUMN_NAME, timestamp, timestamp );
-            videoAnnotationDataFrame.setAt( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp, annotation );
+            videoAnnotationDataFrame.setAt( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME, timestamp, annotation );
         }
         else {
             // clear that row - but beware if we add more information to this row... 
             videoAnnotationDataFrame.setNA( DataFrameSpecialColumns.INDEX_COLUMN_NAME, timestamp );
-            videoAnnotationDataFrame.setNA( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp );
+            videoAnnotationDataFrame.setNA( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME, timestamp );
         }
     }
 
     @Override
     public String getAnnotationForTimestamp( int timestamp ) {
         if (videoAnnotationDataFrame.isPresent( DataFrameSpecialColumns.INDEX_COLUMN_NAME, timestamp )) {
-            if (videoAnnotationDataFrame.isPresent( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp )) {
-                return String.valueOf( videoAnnotationDataFrame.getAt( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, timestamp ) );
+            if (videoAnnotationDataFrame.isPresent( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME, timestamp )) {
+                return String.valueOf( videoAnnotationDataFrame.getAt( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME, timestamp ) );
             }
         }
         return "";

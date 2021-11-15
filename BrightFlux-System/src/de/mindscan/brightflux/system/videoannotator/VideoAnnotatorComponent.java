@@ -31,19 +31,17 @@ import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
-import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
+import de.mindscan.brightflux.videoannotation.VideoAnnotationColumns;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 
  */
 public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
-
-    public static final String ANNOTATION_COLUMN_NAME = "videoAnnotation";
-    public static final String TIMESTAMP_COLUMN_NAME = DataFrameSpecialColumns.INDEX_COLUMN_NAME;
 
     private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
 
@@ -142,9 +140,9 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         while (currentDFRowsIterator.hasNext()) {
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
 
-            int timestampInSeconds = (Integer) dataFrameRow.get( TIMESTAMP_COLUMN_NAME );
+            int timestampInSeconds = (Integer) dataFrameRow.get( VideoAnnotationColumns.TIMESTAMP_COLUMN_NAME );
             String timstamp = VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds );
-            String annotationContent = String.valueOf( dataFrameRow.get( ANNOTATION_COLUMN_NAME ) );
+            String annotationContent = String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) );
             // TODO: we need also the referenced data-rows, so we can align the timestamps to a dataframe, containing different timstamps 
 
             // TODO: use a named template here instead, also use the report generator

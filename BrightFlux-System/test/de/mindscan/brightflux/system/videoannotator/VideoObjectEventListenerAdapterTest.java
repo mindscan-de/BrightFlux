@@ -8,7 +8,8 @@ import org.mockito.Mockito;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
-import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectImpl;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.videoannotation.impl.VideoAnnotatorVideoObjectImpl;
 
 public class VideoObjectEventListenerAdapterTest {
 

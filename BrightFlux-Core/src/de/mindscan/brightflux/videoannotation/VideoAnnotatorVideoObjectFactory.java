@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.videoannotation;
 
 import java.nio.file.Path;
 
@@ -31,7 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
-import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectImpl;
+import de.mindscan.brightflux.videoannotation.impl.VideoAnnotatorVideoObjectImpl;
 
 /**
  * 
@@ -47,7 +47,7 @@ public class VideoAnnotatorVideoObjectFactory {
                         .addColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) //
                         // TODO: 64bit Timestamps / referenced Dataframe UUID? / referenced datacolumn?
                         // 
-                        .addColumn( VideoAnnotatorComponent.ANNOTATION_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_STRING ) //
+                        .addColumn( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_STRING ) //
                         .build();
     
         VideoAnnotatorVideoObject videoObject = new VideoAnnotatorVideoObjectImpl( df, videoPath );

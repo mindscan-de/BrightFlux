@@ -23,15 +23,28 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.videoannotation.io;
 
+import java.lang.reflect.Type;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
 
 /**
  * 
  */
-public interface VideoAnnotationWriter {
+public class BFGsonPathDeserializer implements JsonDeserializer<Path> {
 
-    void writeToFile( VideoAnnotatorVideoObject videoObject, Path outputPath );
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Path deserialize( JsonElement json, Type typeOfT, JsonDeserializationContext context ) throws JsonParseException {
+        return Paths.get( json.getAsString() );
+    }
 
 }

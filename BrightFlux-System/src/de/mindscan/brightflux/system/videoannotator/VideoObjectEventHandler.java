@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.system.videoannotator;
 
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+
 /**
  * 
  */

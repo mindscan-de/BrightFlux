@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.io;
+package de.mindscan.brightflux.videoannotation.io;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,9 +37,9 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.writer.bfdfjson.JsonLinesDataFrameInfo;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.IngestBFDataFrameJsonLines;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
-import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectImpl;
-import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectMetaData;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.videoannotation.impl.VideoAnnotatorVideoObjectImpl;
+import de.mindscan.brightflux.videoannotation.impl.VideoAnnotatorVideoObjectMetaData;
 
 /**
  * 

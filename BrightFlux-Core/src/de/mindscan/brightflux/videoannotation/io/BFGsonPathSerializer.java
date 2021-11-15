@@ -23,34 +23,28 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.videoannotation.io;
 
+import java.lang.reflect.Type;
 import java.nio.file.Path;
-import java.util.UUID;
 
-import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.system.videoannotator.impl.VideoAnnotatorVideoObjectMetaData;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 /**
  * 
  */
-public interface VideoAnnotatorVideoObject {
+public class BFGsonPathSerializer implements JsonSerializer<Path> {
 
-    DataFrame getVideoAnnotationDataFrame();
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public JsonElement serialize( Path src, Type typeOfSrc, JsonSerializationContext context ) {
+        String absolutePath = src.toAbsolutePath().toString();
+        return new JsonPrimitive( absolutePath );
+    }
 
-    Path getVideoObjectPath();
-
-    int getVideoDurationInSeconds();
-
-    String getSimpleName();
-
-    String getAnnotationForTimestamp( int timestamp );
-
-    void setAnnotationForTimestamp( int timestamp, String annotation );
-
-    boolean isAnnotationPresentForTimestamp( int timestamp );
-
-    UUID getUUID();
-
-    VideoAnnotatorVideoObjectMetaData getMetaData();
 }

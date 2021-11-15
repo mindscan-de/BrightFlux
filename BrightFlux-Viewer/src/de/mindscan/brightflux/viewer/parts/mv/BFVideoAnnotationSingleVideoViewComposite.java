@@ -52,9 +52,9 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 import swing2swt.layout.BorderLayout;
 
 /**

@@ -31,8 +31,8 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventFactory;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorVideoObject;
-import de.mindscan.brightflux.system.videoannotator.io.VideoAnnotationReaderImpl;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.videoannotation.io.VideoAnnotationReaderImpl;
 
 /**
  * 
