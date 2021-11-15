@@ -62,7 +62,7 @@ public class VideoObjectEventListenerAdapterTest {
     @Test
     public void testHandleEventVideoAnnotatorVideoObject_EventIsOfBFVideoObjectEventType_expectOneInvocation() throws Exception {
         // arrange
-        BFVideoObjectEvent bfVideoObjectEvent = Mockito.mock( BFVideoObjectEvent.class, "nullEvent" );
+        BFVideoObjectEvent bfVideoObjectEvent = Mockito.mock( BFVideoObjectEvent.class, "bfVideoObjectEvent" );
 
         VideoObjectEventListenerAdapter adapter = new VideoObjectEventListenerAdapter();
         VideoObjectEventListenerAdapter adapterSpy = Mockito.spy( adapter );
