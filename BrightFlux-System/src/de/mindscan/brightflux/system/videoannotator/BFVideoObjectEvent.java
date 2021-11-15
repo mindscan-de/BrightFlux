@@ -25,10 +25,12 @@
  */
 package de.mindscan.brightflux.system.videoannotator;
 
+import de.mindscan.brightflux.framework.events.BFEvent;
+
 /**
  * 
  */
-public interface BFVideoObjectEvent {
+public interface BFVideoObjectEvent extends BFEvent {
 
     /**
      * @return the videoObject
