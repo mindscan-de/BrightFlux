@@ -30,27 +30,30 @@ import java.util.function.Predicate;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.datasource.DataSourceLexerRowMode;
 
 /**
- * TODO: try a very simple conversion for the datasource lexer...
+ * This lexer treats each datarow as a new line and at the end of the row it will do something? (create a newLineToken?)
+ * 
+ * This lexer will convert a column of a dataframe into basically a sequence of Stringbased Lexers until the end of the frames is reached...
+ * 
+ * TODO: try a very simple conversion for the datasource lexer... Only one input column can be defined for the lexer at a time.
  */
 public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
 
     private DataFrame df;
     private String inputColumn;
 
-    private Iterator<DataFrameRow> currentDataRows;
+    private Iterator<DataFrameRow> currentDataRowIterator;
     private DataFrameRow currentRow;
+    private StringBackedDataSourceLexer currentRowLexer;
 
     public DataFrameBackedDataSourceLexer( DataFrame df, String inputColumn ) {
         this.df = df;
         this.inputColumn = inputColumn;
 
+        // we start at first row of the dataFrame
         this.resetRow();
-
-        throw new NotYetImplemetedException( "Implement a DataSourceLexer for DataFrames" );
     }
 
     /** 
@@ -58,8 +61,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public char charAtTokenEnd() {
-        // TODO Auto-generated method stub
-        return 0;
+        return currentRowLexer.charAtTokenEnd();
     }
 
     /** 
@@ -67,8 +69,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public char charAtTokenStart() {
-        // TODO Auto-generated method stub
-        return 0;
+        return currentRowLexer.charAtTokenStart();
     }
 
     /** 
@@ -76,8 +77,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public boolean isTokenEndBeforeInputEnd() {
-        // TODO Auto-generated method stub
-        return false;
+        return currentRowLexer.isTokenEndBeforeInputEnd();
     }
 
     /** 
@@ -85,8 +85,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public boolean isTokenStartBeforeInputEnd() {
-        // TODO Auto-generated method stub
-        return false;
+        return currentRowLexer.isTokenStartBeforeInputEnd();
     }
 
     /** 
@@ -94,8 +93,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public void incrementTokenEnd() {
-        // TODO Auto-generated method stub
-
+        currentRowLexer.incrementTokenEnd();
     }
 
     /** 
@@ -103,26 +101,23 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public String getTokenString() {
-        // TODO Auto-generated method stub
-        return null;
+        return currentRowLexer.getTokenString();
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void incrementTokenEndWhileNot( Predicate<Character> object ) {
-        // TODO Auto-generated method stub
-
+    public void incrementTokenEndWhileNot( Predicate<Character> predicate ) {
+        currentRowLexer.incrementTokenEndWhileNot( predicate );
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void incrementTokenEndWhile( Predicate<Character> object ) {
-        // TODO Auto-generated method stub
-
+    public void incrementTokenEndWhile( Predicate<Character> predicate ) {
+        currentRowLexer.incrementTokenEndWhile( predicate );
     }
 
     /** 
@@ -130,8 +125,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public int getTokenEnd() {
-        // TODO Auto-generated method stub
-        return 0;
+        return currentRowLexer.getTokenEnd();
     }
 
     /** 
@@ -139,8 +133,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public int getTokenStart() {
-        // TODO Auto-generated method stub
-        return 0;
+        return currentRowLexer.getTokenStart();
     }
 
     /** 
@@ -148,8 +141,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public void prepareNextToken() {
-        // TODO Auto-generated method stub
-
+        currentRowLexer.prepareNextToken();
     }
 
     /** 
@@ -166,8 +158,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public void advanceToNextToken() {
-        // TODO Auto-generated method stub
-
+        currentRowLexer.advanceToNextToken();
     }
 
     /** 
@@ -176,6 +167,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
     @Override
     public void close() throws Exception {
         // intentionally left empty, because no extra resource is acquired, but we may 
+        // somehow close the iterator... or just stop it..
     }
 
     // ---------------------------------------
@@ -187,7 +179,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public void resetRow() {
-        this.currentDataRows = df.rowIterator();
+        this.currentDataRowIterator = df.rowIterator();
 
         prepareCurrentDataRow();
     }
@@ -197,7 +189,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public void advanceToNextRow() {
-        this.currentRow = currentDataRows.next();
+        this.currentRow = currentDataRowIterator.next();
 
         // reset token position for the current row
         this.resetTokenPositions();
@@ -213,7 +205,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      * 
      */
     private void prepareCurrentDataRow() {
-
+        this.currentRowLexer = new StringBackedDataSourceLexer( String.valueOf( this.currentRow.get( inputColumn ) ) );
     }
 
     /** 
@@ -222,7 +214,7 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public boolean hasNextRow() {
-        return currentDataRows.hasNext();
+        return currentDataRowIterator.hasNext();
     }
 
 }
