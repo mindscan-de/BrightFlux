@@ -217,4 +217,9 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
         return currentDataRowIterator.hasNext();
     }
 
+    // Access to out of column data
+    // This will support to getting tokens from columns, e.g. we want to access "__org_idx" and other columns. 
+    public Object getColumnValueRaw( String columnName ) {
+        return this.currentRow.get( columnName );
+    }
 }
