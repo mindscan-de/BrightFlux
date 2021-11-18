@@ -180,8 +180,6 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
     @Override
     public void resetRow() {
         this.currentDataRowIterator = df.rowIterator();
-
-        prepareCurrentDataRow();
     }
 
     /** 
