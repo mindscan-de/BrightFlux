@@ -180,8 +180,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_2 = new Menu( mntmFilters );
         mntmFilters.setMenu( menu_2 );
 
-        MenuItem mntmFilterText = new MenuItem( menu_2, SWT.NONE );
-        mntmFilterText.addSelectionListener( new SelectionAdapter() {
+        MenuItem mntmFilterContainsText = new MenuItem( menu_2, SWT.NONE );
+        mntmFilterContainsText.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 IInputValidator validator = new IInputValidator() {
@@ -201,7 +201,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 }
             }
         } );
-        mntmFilterText.setText( "Filter Text ..." );
+        mntmFilterContainsText.setText( "Contains Text ..." );
+
+        MenuItem mntmFilterNotContainsText = new MenuItem( menu_2, SWT.NONE );
+        mntmFilterNotContainsText.setText( "Not Contains Text ..." );
 
         MenuItem mntmHighlighter = new MenuItem( menu, SWT.CASCADE );
         mntmHighlighter.setText( "Highlighter" );
