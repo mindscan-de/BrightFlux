@@ -27,6 +27,7 @@ package de.mindscan.brightflux.ingest.engine;
 
 import java.nio.file.Path;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
@@ -40,6 +41,10 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
  * 
  */
 public class JobConfiguration {
+
+    private static final String MODE_DATAFRAME = "dataframe";
+    private static final String MODE_PATH = "path";
+
     public DataTokenizerFactory tokenizerFactoryInstance;
     public DataFrameParserFactory parserFactoryInstance;
     public DataFrameCompilerFactory compilerFactoryInstance;
@@ -47,6 +52,10 @@ public class JobConfiguration {
     private String tokenizerConfiguration;
     private String dataFrameName;
     private Path ingestInputPath;
+    private DataFrame ingestDataFrame;
+    private String ingestMode;
+    private String[] transferColumns;
+    private String ingestDataFrameInputColumnName;
 
     /**
      * 
@@ -90,6 +99,7 @@ public class JobConfiguration {
      * @param path
      */
     public void setIngestInputFilePath( Path ingestInputPath ) {
+        this.ingestMode = MODE_PATH;
         this.ingestInputPath = ingestInputPath;
     }
 
@@ -98,6 +108,41 @@ public class JobConfiguration {
      */
     public Path getIngestInputPath() {
         return ingestInputPath;
+    }
+
+    public void setIngestInputDataFrame( DataFrame ingestDataFrame, String[] transferColumns, String ingestDataFrameInputColumnName ) {
+        this.ingestMode = MODE_DATAFRAME;
+        this.ingestDataFrame = ingestDataFrame;
+        this.transferColumns = transferColumns;
+        this.ingestDataFrameInputColumnName = ingestDataFrameInputColumnName;
+    }
+
+    public String getIngestMode() {
+        return ingestMode;
+    }
+
+    // dataframe mode only
+    public DataFrame getIngestDataFrame() {
+        if (!MODE_DATAFRAME.equals( getIngestMode() )) {
+            throw new IllegalArgumentException( "Only usable in data frame ingestion mode." );
+        }
+        return ingestDataFrame;
+    }
+
+    // dataframe mode only
+    public String[] getTransferColumns() {
+        if (!MODE_DATAFRAME.equals( getIngestMode() )) {
+            throw new IllegalArgumentException( "Only usable in data frame ingestion mode." );
+        }
+        return transferColumns;
+    }
+
+    // dataframe mode only
+    public String getIngestDataFrameInputColumnName() {
+        if (!MODE_DATAFRAME.equals( getIngestMode() )) {
+            throw new IllegalArgumentException( "Only usable in data frame ingestion mode." );
+        }
+        return ingestDataFrameInputColumnName;
     }
 
 }
