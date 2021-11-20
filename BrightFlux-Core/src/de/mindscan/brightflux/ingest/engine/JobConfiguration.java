@@ -28,7 +28,10 @@ package de.mindscan.brightflux.ingest.engine;
 import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
+import de.mindscan.brightflux.ingest.datasource.DataSourceV2Factory;
 import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 
@@ -43,8 +46,8 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
  */
 public class JobConfiguration {
 
-    private static final String MODE_DATAFRAME = "dataframe";
-    private static final String MODE_PATH = "path";
+    public static final String MODE_DATAFRAME = "dataframe";
+    public static final String MODE_PATH = "path";
 
     public DataTokenizerFactory tokenizerFactoryInstance;
     public DataFrameParserFactory parserFactoryInstance;
@@ -144,6 +147,17 @@ public class JobConfiguration {
             throw new IllegalArgumentException( "Only usable in data frame ingestion mode." );
         }
         return ingestDataFrameInputColumnName;
+    }
+
+    public DataSourceV2 getDataSource() {
+        switch (this.getIngestMode()) {
+            case MODE_DATAFRAME:
+                return DataSourceV2Factory.createDataSourceV2( ingestDataFrame, transferColumns, ingestDataFrameInputColumnName );
+            case MODE_PATH:
+                return DataSourceV2Factory.createDataSourceV2( ingestInputPath );
+            default:
+                throw new NotYetImplemetedException();
+        }
     }
 
 }
