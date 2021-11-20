@@ -39,6 +39,7 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
         // path and such should be part of the Ingest pipeline configuration, also the input (file, network, mqtt, etc)
         // should be part of the pipeline configuration and be plugable
  * 
+ * TODO: maybe add a get operation for DataSourceV2 / Factory  
  */
 public class JobConfiguration {
 
