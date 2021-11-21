@@ -92,7 +92,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
         // TODO: copy some of the transferColumns
         // at least the SpecialColumns should be taken over by default
         this.df = df;
-        this.transferColumns = transferColumns;
+        this.transferColumns = transferColumns != null ? transferColumns : new String[0];
         this.inputColumn = inputColumn;
 
         this.method = METHOD_DATAFRAME;
