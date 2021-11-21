@@ -103,6 +103,9 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * use default texts, which can be used to annotate timestamps
   * save video annotations to disk
   * load video annotations from disk
+  
+* Proprietary Support - non published - proof of concept
+  * DataSource tokenizer based on a data frame and a hard-coded predefined/selected column which is further tokenized
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
@@ -127,9 +130,8 @@ I want to address rather sooner than later.
 ### Next
 
 DataFrame-Core-Ingest
-* [DFINGEST] Decoders for inner structures again into data frames - e.g. Zooming into the data frames / e.g. Level of detail and then study a single aspect across the whole log
-  * [DFINGEST] DataSource tokenizer for data frame Columns  
-* [DFINGEST] ingest inner encodings of data in certain columns of the data frame in case, using selectors (SQL-Like) and then a format/parser description  
+* [DFINGEST] also support transfer mode, when tokenizing inner structures
+* [DFINGEST] also correctly log DataFrameActions that a dataframe was created by tokenization (track full Recipe)
 
 
 DataFrame-Core
@@ -150,12 +152,6 @@ Log-Analysis-Project-File
   * [LAPF] load annotations from analysis project file for a file
 
 
-Swim lanes
-* swim lanes simply are actually a select statement
-* have swim lanes for different Components
-  * save swim lane configuration into an analysis project file
-
-
 Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
 * Support log correlation for videos, e.g. identify timestamps in video and correlate them to logs
@@ -170,6 +166,8 @@ Video time stamp Annotations
 
 DFQL
 * Support unary NOT operator
+* Support tokenizing via DFQL
+* Support recipes which contain tokenized dataframes, such that recipes can be replayed and are creating a tokenized dataframe
 
 
 Application-Startup (est. 6 kLOC)
@@ -190,6 +188,12 @@ UI/UX
   
 
 ### Even Later
+
+Swim lanes
+* swim lanes simply are actually a select statement
+* have swim lanes for different Components
+  * save swim lane configuration into an analysis project file
+
 
 Exporters
 * Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
