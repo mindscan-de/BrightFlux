@@ -103,9 +103,6 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * use default texts, which can be used to annotate timestamps
   * save video annotations to disk
   * load video annotations from disk
-  
-* Proprietary Support - non published - proof of concept
-  * DataSource tokenizer based on a data frame and a hard-coded predefined/selected column which is further tokenized
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
@@ -114,6 +111,15 @@ necessary. And also, sometimes, if you give it some more time, you will come up 
 better solution. Therefore giving it some time to mature, saves a lot of effort in the long run.
 
 This whole thing is going through a permanent dogfooding phase.
+
+
+## So what's not included but implemented?
+
+* Non published - proof of concept - tokenize binary log file
+* Non published - proof of concept - tokenize from data frame
+  * DataSource tokenizer based on a data frame and a hard-coded predefined/selected column which is further tokenized
+  * This can also copy content (column values) of the parent data frame to the new tokenized frame.
+
 
 ## Planned Features
 
@@ -130,7 +136,6 @@ I want to address rather sooner than later.
 ### Next
 
 DataFrame-Core-Ingest
-* [DFINGEST] also support transfer mode, when tokenizing inner structures
 * [DFINGEST] also correctly log DataFrameActions that a dataframe was created by tokenization (track full Recipe)
 
 
