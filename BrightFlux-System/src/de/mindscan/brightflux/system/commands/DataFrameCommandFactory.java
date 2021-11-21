@@ -41,6 +41,7 @@ import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCBCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameSelectAndFilterCommand;
 import de.mindscan.brightflux.system.commands.ingest.IngestCommand;
+import de.mindscan.brightflux.system.commands.ingest.IngestSpecialHXX;
 import de.mindscan.brightflux.system.commands.ingest.IngestSpecialRAW;
 import de.mindscan.brightflux.system.commands.io.ExpandProprietaryZipStreamCommand;
 import de.mindscan.brightflux.system.commands.io.SaveAsCSVCommand;
@@ -72,6 +73,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand ingestSpecialRaw( Path filePath ) {
         return new IngestSpecialRAW( filePath );
+    }
+
+    public static BFCommand ingestSpecialHXX( DataFrame inputDataFrame, String inputColumn ) {
+        return new IngestSpecialHXX( inputDataFrame, inputColumn );
     }
 
     public static BFCommand filterDataFrame( DataFrame inputDataFrame, DataFrameRowFilterPredicate predicate ) {
