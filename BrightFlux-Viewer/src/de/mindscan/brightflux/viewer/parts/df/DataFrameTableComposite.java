@@ -78,6 +78,9 @@ import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
  */
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
 
+    // this is not good enough yet, because some operations should be dependend on the columns...
+    private static final String HARDCODED_H2_MSG = "h2.msg";
+
     /**
      * 
      */
@@ -172,6 +175,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmSaveToFile.setText( "Save As CSV ..." );
 
         MenuItem mntmTokenizeAsHxx = new MenuItem( menu_DataFrame, SWT.NONE );
+        mntmTokenizeAsHxx.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                tokenizeAsHXX( ingestedDF, HARDCODED_H2_MSG );
+            }
+        } );
         mntmTokenizeAsHxx.setText( "Tokenize as HXX" );
 
         MenuItem mntmFilters = new MenuItem( menu, SWT.CASCADE );
@@ -467,9 +476,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     protected void applyValueFilter( DataFrame dataFrame, String value ) {
-        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( "h2.msg", value );
+        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( HARDCODED_H2_MSG, value );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
+    }
 
+    protected void tokenizeAsHXX( DataFrame ingestedDF2, String inputColumn ) {
+        dispatchCommand( DataFrameCommandFactory.ingestSpecialHXX( ingestedDF2, inputColumn ) );
     }
 
     private void selectDataFrameRow( int rowIndex, Object rowData ) {
