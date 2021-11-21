@@ -220,7 +220,7 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
             if (destinationColumn instanceof IntegerColumn) {
                 IntegerColumn intColumn = (IntegerColumn) destinationColumn;
                 if (rowValue.startsWith( "0x" )) {
-                    intColumn.append( Integer.parseInt( rowValue.substring( "0x".length() ), 16 ) );
+                    intColumn.append( Integer.parseUnsignedInt( rowValue.substring( "0x".length() ), 16 ) );
                 }
                 else {
                     intColumn.append( Integer.parseInt( rowValue ) );
@@ -229,7 +229,7 @@ public class DataFrameCompilerImpl implements DataFrameCompiler {
             else if (destinationColumn instanceof LongColumn) {
                 LongColumn longColumn = (LongColumn) destinationColumn;
                 if (rowValue.startsWith( "0x" )) {
-                    longColumn.append( Long.parseLong( rowValue.substring( "0x".length() ), 16 ) );
+                    longColumn.append( Long.parseUnsignedLong( rowValue.substring( "0x".length() ), 16 ) );
                 }
                 else {
                     longColumn.append( Long.parseLong( rowValue ) );
