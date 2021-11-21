@@ -174,6 +174,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmSaveToFile.setText( "Save As CSV ..." );
 
+        new MenuItem( menu_DataFrame, SWT.SEPARATOR );
+
         MenuItem mntmTokenizeAsHxx = new MenuItem( menu_DataFrame, SWT.NONE );
         mntmTokenizeAsHxx.addSelectionListener( new SelectionAdapter() {
             @Override
