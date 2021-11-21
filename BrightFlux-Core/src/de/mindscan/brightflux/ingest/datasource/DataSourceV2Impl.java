@@ -50,6 +50,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
     private String method;
     private DataFrame df;
     private String inputColumn;
+    private String[] transferColumns;
 
     @Override
     public DataSourceLexer getAsStringBackedDataSourceLexer() {
@@ -63,7 +64,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
                 return new StringBackedDataSourceLexer( inputString );
             }
             case METHOD_DATAFRAME: {
-                return new DataFrameBackedDataSourceLexer( df, inputColumn );
+                return new DataFrameBackedDataSourceLexer( df, inputColumn, transferColumns );
             }
 
             default:
@@ -91,6 +92,7 @@ public class DataSourceV2Impl implements DataSourceV2 {
         // TODO: copy some of the transferColumns
         // at least the SpecialColumns should be taken over by default
         this.df = df;
+        this.transferColumns = transferColumns;
         this.inputColumn = inputColumn;
 
         this.method = METHOD_DATAFRAME;

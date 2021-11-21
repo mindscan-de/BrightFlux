@@ -38,4 +38,10 @@ public interface DataSourceLexerRowMode extends DataSourceLexer {
 
     boolean hasNextRow();
 
+    String getColumnType( String columnName );
+
+    String[] getTransferColumnNames();
+
+    Object getColumnValueRaw( String columnName );
+
 }

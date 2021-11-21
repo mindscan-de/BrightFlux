@@ -47,10 +47,12 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
     private Iterator<DataFrameRow> currentDataRowIterator;
     private DataFrameRow currentRow;
     private StringBackedDataSourceLexer currentRowLexer;
+    private String[] transferColumns;
 
-    public DataFrameBackedDataSourceLexer( DataFrame df, String inputColumn ) {
+    public DataFrameBackedDataSourceLexer( DataFrame df, String inputColumn, String[] transferColumns ) {
         this.df = df;
         this.inputColumn = inputColumn;
+        this.transferColumns = transferColumns;
 
         // we start at first row of the dataFrame
         this.resetRow();
@@ -217,7 +219,18 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
 
     // Access to out of column data
     // This will support to getting tokens from columns, e.g. we want to access "__org_idx" and other columns. 
+    @Override
     public Object getColumnValueRaw( String columnName ) {
         return this.currentRow.get( columnName );
+    }
+
+    @Override
+    public String[] getTransferColumnNames() {
+        return transferColumns;
+    }
+
+    @Override
+    public String getColumnType( String columnName ) {
+        return df.getColumn( columnName ).getColumnType();
     }
 }
