@@ -208,7 +208,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 if (inputresult == InputDialog.OK) {
                     String value = inputDialog.getValue();
                     if (value != null && !value.isBlank()) {
-                        applyValueFilter( ingestedDF, value, HARDCODED_H2_MSG );
+                        applyContainsValueFilter( ingestedDF, value, HARDCODED_H2_MSG );
                     }
                 }
             }
@@ -216,6 +216,26 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmFilterContainsText.setText( "h2.msg contains Text ..." );
 
         MenuItem mntmFilterNotContainsText = new MenuItem( menu_2, SWT.NONE );
+        mntmFilterNotContainsText.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                IInputValidator validator = new IInputValidator() {
+                    @Override
+                    public String isValid( String newText ) {
+                        return null;
+                    }
+                };
+                InputDialog inputDialog = new InputDialog( parentShell, "Text", "Text used for filter.", "", validator );
+                int inputresult = inputDialog.open();
+
+                if (inputresult == InputDialog.OK) {
+                    String value = inputDialog.getValue();
+                    if (value != null && !value.isBlank()) {
+                        applyNotContainsValueFilter( ingestedDF, value, HARDCODED_H2_MSG );
+                    }
+                }
+            }
+        } );
         mntmFilterNotContainsText.setText( "h2.msg not contains Text ..." );
 
         new MenuItem( menu_2, SWT.SEPARATOR );
@@ -236,7 +256,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 if (inputresult == InputDialog.OK) {
                     String value = inputDialog.getValue();
                     if (value != null && !value.isBlank()) {
-                        applyValueFilter( ingestedDF, value, HARDCODED_HXX_MSG );
+                        applyContainsValueFilter( ingestedDF, value, HARDCODED_HXX_MSG );
                     }
                 }
             }
@@ -244,6 +264,26 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         mntmHxxmsgContainsText.setText( "hxx.msg contains Text ..." );
 
         MenuItem mntmHxxmsgNotContains = new MenuItem( menu_2, SWT.NONE );
+        mntmHxxmsgNotContains.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                IInputValidator validator = new IInputValidator() {
+                    @Override
+                    public String isValid( String newText ) {
+                        return null;
+                    }
+                };
+                InputDialog inputDialog = new InputDialog( parentShell, "Text", "Text used for filter.", "", validator );
+                int inputresult = inputDialog.open();
+
+                if (inputresult == InputDialog.OK) {
+                    String value = inputDialog.getValue();
+                    if (value != null && !value.isBlank()) {
+                        applyNotContainsValueFilter( ingestedDF, value, HARDCODED_HXX_MSG );
+                    }
+                }
+            }
+        } );
         mntmHxxmsgNotContains.setText( "hxx.msg not contains Text ..." );
 
         MenuItem mntmHighlighter = new MenuItem( menu, SWT.CASCADE );
@@ -506,8 +546,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
-    protected void applyValueFilter( DataFrame dataFrame, String value, String columnName ) {
+    protected void applyContainsValueFilter( DataFrame dataFrame, String value, String columnName ) {
         DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( columnName, value );
+        dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
+    }
+
+    protected void applyNotContainsValueFilter( DataFrame dataFrame, String value, String columnName ) {
+        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.not( DataFrameRowFilterPredicateFactory.containsStr( columnName, value ) );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
     }
 
