@@ -113,7 +113,11 @@ better solution. Therefore giving it some time to mature, saves a lot of effort 
 This whole thing is going through a permanent dogfooding phase.
 
 
-## So what's not included but implemented?
+## So what's implemented but not included?
+
+Some of the code is kept proprietary for multiple reasons: One is - I develop this as a very personal tool.
+This tool doesn't have to be any better than this. Second is - Things are still not yet good enough for a 
+proper abstraction.
 
 * Non published - proof of concept - tokenize binary log file
 * Non published - proof of concept - tokenize from data frame
@@ -146,6 +150,10 @@ DataFrame-Core
 * [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection
 
 
+DFQL
+* [DFQL] Support unary NOT operator in predicates
+
+
 ### Later
 
 Log-Analysis-Project-File
@@ -170,7 +178,6 @@ Video time stamp Annotations
 
 
 DFQL
-* Support unary NOT operator
 * Support tokenizing via DFQL
 * Support recipes which contain tokenized dataframes, such that recipes can be replayed and are creating a tokenized dataframe
 
@@ -183,6 +190,7 @@ Application-Startup (est. 6 kLOC)
 Reporting
 * Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
+  * also detect different DataFrame Types and use different report templates for different Dataframe types
 
 
 UI/UX
@@ -198,10 +206,6 @@ Swim lanes
 * swim lanes simply are actually a select statement
 * have swim lanes for different Components
   * save swim lane configuration into an analysis project file
-
-
-Exporters
-* Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
 
 
 Decision Tree Analysis
@@ -266,6 +270,11 @@ Report Generator
 
 
 ### Never?
+
+
+Exporters
+* Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
+
 
 Client Server / Windowed Data-Retrieval
 * use a client server approach for the data frame processing vs presentation and maybe for performance
