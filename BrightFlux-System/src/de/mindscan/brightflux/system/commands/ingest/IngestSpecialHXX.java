@@ -28,6 +28,7 @@ package de.mindscan.brightflux.system.commands.ingest;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.ingest.IngestEngine;
@@ -48,6 +49,9 @@ import de.mindscan.brightflux.system.events.BFEventFactory;
  */
 public class IngestSpecialHXX implements BFCommand {
 
+    private static final String HARDCODED_ORIGINAL_INDEX_COLUMN_NAME = DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME;
+    private static final String HARDCODED_H1_TS = "h1.ts";
+
     private DataFrame contentDataFrame;
     private String sourceColumn;
     private String[] transferColumns;
@@ -55,10 +59,12 @@ public class IngestSpecialHXX implements BFCommand {
     /**
      * 
      */
-    public IngestSpecialHXX( DataFrame contentDataFrame, String sourceColumn, String[] transferColumns ) {
+    public IngestSpecialHXX( DataFrame contentDataFrame, String sourceColumn ) {
         this.contentDataFrame = contentDataFrame;
         this.sourceColumn = sourceColumn;
-        this.transferColumns = transferColumns;
+        // this command can only be applied to files loaded with the SpecialRAWTokenizer, 
+        // this are Columnnames depending on the other SpecialRAWTokenizer   
+        this.transferColumns = new String[] { HARDCODED_ORIGINAL_INDEX_COLUMN_NAME, HARDCODED_H1_TS };
     }
 
     /** 

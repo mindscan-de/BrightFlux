@@ -56,7 +56,6 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
-import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -80,8 +79,6 @@ import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
 
     // this is not good enough yet, because some operations should be dependend on the columns...
-    private static final String HARDCODED_ORIGINAL_INDEX_COLUMN_NAME = DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME;
-    private static final String HARDCODED_H1_TS = "h1.ts";
     private static final String HARDCODED_H2_MSG = "h2.msg";
     private static final String HARDCODED_HXX_MSG = "hxx.msg";
 
@@ -515,8 +512,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     protected void tokenizeAsHXX( DataFrame ingestedDF2, String inputColumn ) {
-        dispatchCommand( DataFrameCommandFactory.ingestSpecialHXX( ingestedDF2, inputColumn,
-                        new String[] { HARDCODED_ORIGINAL_INDEX_COLUMN_NAME, HARDCODED_H1_TS } ) );
+        dispatchCommand( DataFrameCommandFactory.ingestSpecialHXX( ingestedDF2, inputColumn ) );
     }
 
     private void selectDataFrameRow( int rowIndex, Object rowData ) {
