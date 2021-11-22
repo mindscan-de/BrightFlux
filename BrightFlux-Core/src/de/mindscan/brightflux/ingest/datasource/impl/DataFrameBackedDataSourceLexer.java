@@ -233,4 +233,12 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
     public String getColumnType( String columnName ) {
         return df.getColumn( columnName ).getColumnType();
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getColumnValueType( String columnName ) {
+        return df.getColumn( columnName ).getColumnValueType();
+    }
 }
