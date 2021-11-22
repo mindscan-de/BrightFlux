@@ -75,8 +75,8 @@ public class DataFrameCommandFactory {
         return new IngestSpecialRAW( filePath );
     }
 
-    public static BFCommand ingestSpecialHXX( DataFrame inputDataFrame, String inputColumn ) {
-        return new IngestSpecialHXX( inputDataFrame, inputColumn );
+    public static BFCommand ingestSpecialHXX( DataFrame inputDataFrame, String inputColumn, String[] transferColumns ) {
+        return new IngestSpecialHXX( inputDataFrame, inputColumn, transferColumns );
     }
 
     public static BFCommand filterDataFrame( DataFrame inputDataFrame, DataFrameRowFilterPredicate predicate ) {

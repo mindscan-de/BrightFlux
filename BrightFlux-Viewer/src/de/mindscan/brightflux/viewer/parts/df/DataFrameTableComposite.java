@@ -56,6 +56,7 @@ import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.filterpredicate.DataFrameRowFilterPredicateFactory;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -79,7 +80,10 @@ import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
 
     // this is not good enough yet, because some operations should be dependend on the columns...
+    private static final String HARDCODED_ORIGINAL_INDEX_COLUMN_NAME = DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME;
+    private static final String HARDCODED_H1_TS = "h1.ts";
     private static final String HARDCODED_H2_MSG = "h2.msg";
+    private static final String HARDCODED_HXX_MSG = "hxx.msg";
 
     /**
      * 
@@ -207,15 +211,43 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 if (inputresult == InputDialog.OK) {
                     String value = inputDialog.getValue();
                     if (value != null && !value.isBlank()) {
-                        applyValueFilter( ingestedDF, value );
+                        applyValueFilter( ingestedDF, value, HARDCODED_H2_MSG );
                     }
                 }
             }
         } );
-        mntmFilterContainsText.setText( "Contains Text ..." );
+        mntmFilterContainsText.setText( "h2.msg contains Text ..." );
 
         MenuItem mntmFilterNotContainsText = new MenuItem( menu_2, SWT.NONE );
-        mntmFilterNotContainsText.setText( "Not Contains Text ..." );
+        mntmFilterNotContainsText.setText( "h2.msg not contains Text ..." );
+
+        new MenuItem( menu_2, SWT.SEPARATOR );
+
+        MenuItem mntmHxxmsgContainsText = new MenuItem( menu_2, SWT.NONE );
+        mntmHxxmsgContainsText.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                IInputValidator validator = new IInputValidator() {
+                    @Override
+                    public String isValid( String newText ) {
+                        return null;
+                    }
+                };
+                InputDialog inputDialog = new InputDialog( parentShell, "Text", "Text used for filter.", "", validator );
+                int inputresult = inputDialog.open();
+
+                if (inputresult == InputDialog.OK) {
+                    String value = inputDialog.getValue();
+                    if (value != null && !value.isBlank()) {
+                        applyValueFilter( ingestedDF, value, HARDCODED_HXX_MSG );
+                    }
+                }
+            }
+        } );
+        mntmHxxmsgContainsText.setText( "hxx.msg contains Text ..." );
+
+        MenuItem mntmHxxmsgNotContains = new MenuItem( menu_2, SWT.NONE );
+        mntmHxxmsgNotContains.setText( "hxx.msg not contains Text ..." );
 
         MenuItem mntmHighlighter = new MenuItem( menu, SWT.CASCADE );
         mntmHighlighter.setText( "Highlighter" );
@@ -477,13 +509,14 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
-    protected void applyValueFilter( DataFrame dataFrame, String value ) {
-        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( HARDCODED_H2_MSG, value );
+    protected void applyValueFilter( DataFrame dataFrame, String value, String columnName ) {
+        DataFrameRowFilterPredicate predicate = DataFrameRowFilterPredicateFactory.containsStr( columnName, value );
         dispatchCommand( DataFrameCommandFactory.filterDataFrame( dataFrame, predicate ) );
     }
 
     protected void tokenizeAsHXX( DataFrame ingestedDF2, String inputColumn ) {
-        dispatchCommand( DataFrameCommandFactory.ingestSpecialHXX( ingestedDF2, inputColumn ) );
+        dispatchCommand( DataFrameCommandFactory.ingestSpecialHXX( ingestedDF2, inputColumn,
+                        new String[] { HARDCODED_ORIGINAL_INDEX_COLUMN_NAME, HARDCODED_H1_TS } ) );
     }
 
     private void selectDataFrameRow( int rowIndex, Object rowData ) {

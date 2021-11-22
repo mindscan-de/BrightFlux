@@ -50,13 +50,15 @@ public class IngestSpecialHXX implements BFCommand {
 
     private DataFrame contentDataFrame;
     private String sourceColumn;
+    private String[] transferColumns;
 
     /**
      * 
      */
-    public IngestSpecialHXX( DataFrame contentDataFrame, String sourceColumn ) {
+    public IngestSpecialHXX( DataFrame contentDataFrame, String sourceColumn, String[] transferColumns ) {
         this.contentDataFrame = contentDataFrame;
         this.sourceColumn = sourceColumn;
+        this.transferColumns = transferColumns;
     }
 
     /** 
@@ -70,7 +72,7 @@ public class IngestSpecialHXX implements BFCommand {
 
         config2.setTokenizerConfiguration( "de.mindscan.brightflux.ingest.tokenizers.SpecialHXXTokenizerImpl" );
         config2.setDataFrameName( "HXX: " + contentDataFrame.getTitle() );
-        config2.setIngestInputDataFrame( this.contentDataFrame, new String[0], this.sourceColumn );
+        config2.setIngestInputDataFrame( this.contentDataFrame, this.transferColumns, this.sourceColumn );
 
         DataFrame compileHmiDataFrame = IngestEngine.execute( config2 );
         eventConsumer.accept( BFEventFactory.dataframeCreated( compileHmiDataFrame, contentDataFrame ) );
