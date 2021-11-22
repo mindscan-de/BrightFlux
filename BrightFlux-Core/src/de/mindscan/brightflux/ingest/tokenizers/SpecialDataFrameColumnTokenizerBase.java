@@ -129,7 +129,9 @@ public abstract class SpecialDataFrameColumnTokenizerBase implements DataTokeniz
         String[] transferColumnNames = rowModeLexer.getTransferColumnNames();
         if (transferColumnNames != null) {
             for (String columnName : transferColumnNames) {
-                // TODO: convert columnType to DataTokenType and store for transfer use. 
+
+                // TODO: convert columnValueType to DataTokenType and store for transfer use -> add in interface and provide translation service 
+
                 allColumns.add( InternalTokenizerColumnDescription.create( columnName, rowModeLexer.getColumnType( columnName ), 0, 0 ) );
             }
         }
