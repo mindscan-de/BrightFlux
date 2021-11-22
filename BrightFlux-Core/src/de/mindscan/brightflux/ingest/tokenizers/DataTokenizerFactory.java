@@ -59,6 +59,7 @@ public class DataTokenizerFactory {
             ClassLoader classLoader = this.getClass().getClassLoader();
             Class<?> loadedClass = classLoader.loadClass( tokenizerType );
 
+            // TODO: check if superclass is registered as a DataTokenizer....
             // and check if it implements DataTokenizer
             Class<?>[] interfaces = loadedClass.getInterfaces();
             if (Arrays.asList( interfaces ).contains( DataTokenizer.class )) {
