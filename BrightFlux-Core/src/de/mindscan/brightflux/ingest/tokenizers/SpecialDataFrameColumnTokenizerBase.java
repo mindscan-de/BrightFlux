@@ -37,7 +37,6 @@ import de.mindscan.brightflux.ingest.datasource.DataSourceLexerRowMode;
 import de.mindscan.brightflux.ingest.datasource.DataSourceV2;
 import de.mindscan.brightflux.ingest.token.ColumnSeparatorToken;
 import de.mindscan.brightflux.ingest.token.LineSeparatorToken;
-import de.mindscan.brightflux.ingest.token.NumberToken;
 
 /**
  * This is a good enough tokenizer base, which should be reusable for different data frame column backed 
@@ -45,6 +44,9 @@ import de.mindscan.brightflux.ingest.token.NumberToken;
  * multiple columns from it.
  */
 public abstract class SpecialDataFrameColumnTokenizerBase implements DataTokenizer {
+
+    @SuppressWarnings( "unchecked" )
+    private Class<? extends DataToken>[] transferDataTokenClasses = (Class<? extends DataToken>[]) new Class[0];
 
     /**
      * 
@@ -89,17 +91,17 @@ public abstract class SpecialDataFrameColumnTokenizerBase implements DataTokeniz
         generateHeaderTokens( resultTokens::add, rowModeLexer );
 
         String[] transferColumn = rowModeLexer.getTransferColumnNames();
-        boolean hasTransferColumn = transferColumn.length > 0;
+        int transferColumnsLength = transferColumn.length;
+        boolean hasTransferColumn = transferColumnsLength > 0;
 
         while (rowModeLexer.hasNextRow()) {
             // we start with the new row
             rowModeLexer.advanceToNextRow();
 
             if (hasTransferColumn) {
-                for (String string : transferColumn) {
-                    // TODO: the correct Type / Tokentype must be inferred... (Must only be calculated once)
-                    // Currently we just assume we only transfer numeric columns....
-                    resultTokens.add( TokenUtils.createToken( NumberToken.class, String.valueOf( rowModeLexer.getColumnValueRaw( string ) ) ) );
+                for (int i = 0; i < transferColumnsLength; i++) {
+                    resultTokens.add( TokenUtils.createToken( transferDataTokenClasses[i],
+                                    String.valueOf( rowModeLexer.getColumnValueRaw( transferColumn[i] ) ) ) );
                     resultTokens.add( TokenUtils.createToken( ColumnSeparatorToken.class, "" ) );
                 }
             }
@@ -123,17 +125,24 @@ public abstract class SpecialDataFrameColumnTokenizerBase implements DataTokeniz
         ColumnUtils.exportAllColumnHeaderData( allColumns, consumer );
     }
 
+    @SuppressWarnings( "unchecked" )
     private Collection<InternalTokenizerColumnDescription> getDataFrameTransferColumnsDescription( DataSourceLexerRowMode rowModeLexer ) {
         ArrayList<InternalTokenizerColumnDescription> allColumns = new ArrayList<>();
+        ArrayList<Class<? extends DataToken>> allTokenClasses = new ArrayList<>();
 
         String[] transferColumnNames = rowModeLexer.getTransferColumnNames();
         if (transferColumnNames != null) {
+            // process column type
             for (String columnName : transferColumnNames) {
-
-                // TODO: convert columnValueType to DataTokenType and store for transfer use -> add in interface and provide translation service 
-
                 allColumns.add( InternalTokenizerColumnDescription.create( columnName, rowModeLexer.getColumnType( columnName ), 0, 0 ) );
             }
+
+            // process column value type
+            for (String columnName : transferColumnNames) {
+                allTokenClasses.add( TokenTypeConverter.getTokenTypeForValueType( rowModeLexer.getColumnValueType( columnName ) ) );
+            }
+
+            this.transferDataTokenClasses = allTokenClasses.toArray( new Class[allTokenClasses.size()] );
         }
 
         return allColumns;
