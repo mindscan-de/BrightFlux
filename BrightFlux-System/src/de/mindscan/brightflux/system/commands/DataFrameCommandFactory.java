@@ -31,7 +31,6 @@ import java.util.Map;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
-import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.annotator.commands.CreateAnnoationDataFrameCommand;
 import de.mindscan.brightflux.system.annotator.commands.DataFrameAnnotateRowCommand;
@@ -62,9 +61,6 @@ import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
  * This class provides commands around DataFrames 
  */
 public class DataFrameCommandFactory {
-
-    private static final String HARDCODED_ORIGINAL_INDEX_COLUMN_NAME = DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME;
-    private static final String HARDCODED_H1_TS = "h1.ts";
 
     /**
      * This method will create an {@link IngestCommand} which when executed will provide a DataFrame.
