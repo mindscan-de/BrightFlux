@@ -78,6 +78,9 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * &&, ||
   * ROWCALLBACK -> do operation for each row matching the WHERE-CLAUSE
   * SELECT
+  * NOT 
+    - very simple mode only the top node can contain a single NOT statement yet
+	- will be extended if i require it.
 * A limited GUI is implemented
 * Export the data frame as a CSV file
 * Support for the original row index (in a derived frame)
@@ -140,7 +143,7 @@ I want to address rather sooner than later.
 ### Next
 
 DataFrame-Core-Ingest
-* [DFINGEST] also correctly log DataFrameActions that a dataframe was created by tokenization (track full Recipe)
+* [DFINGEST] also correctly log DataFrameActions that a data frame was created by tokenization (track full Recipe)
 
 
 DataFrame-Core
@@ -148,10 +151,6 @@ DataFrame-Core
   * [DFCORE] copy the original index in a derived data frame 
 * [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
 * [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection
-
-
-DFQL
-* [DFQL] Support unary NOT operator in predicates
 
 
 ### Later
@@ -177,11 +176,6 @@ Video time stamp Annotations
 * load video also loads parallel video annotation file
 
 
-DFQL
-* Support tokenizing via DFQL
-* Support recipes which contain tokenized dataframes, such that recipes can be replayed and are creating a tokenized dataframe
-
-
 Application-Startup (est. 6 kLOC)
 * Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
 * Provide a script or configuration for the application startup.
@@ -190,7 +184,7 @@ Application-Startup (est. 6 kLOC)
 Reporting
 * Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
-  * also detect different DataFrame Types and use different report templates for different Dataframe types
+  * also detect different DataFrame types and use different report templates for different DataFrame types
 
 
 UI/UX
@@ -206,6 +200,11 @@ Swim lanes
 * swim lanes simply are actually a select statement
 * have swim lanes for different Components
   * save swim lane configuration into an analysis project file
+  
+  
+DFQL
+* Support tokenizing via DFQL
+* Support recipes which contain tokenized data frames, such that recipes can be replayed and are creating a tokenized data frame
 
 
 Decision Tree Analysis
