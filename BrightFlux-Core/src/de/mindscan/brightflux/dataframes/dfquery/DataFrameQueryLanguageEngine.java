@@ -45,6 +45,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
@@ -181,6 +182,12 @@ public class DataFrameQueryLanguageEngine {
             DFQLNode newRight = transformAST( oldRight, df );
 
             return new DFQLBinaryOperatorNode( ((DFQLBinaryOperatorNode) node).getOperation(), newLeft, newRight );
+        }
+        else if (node instanceof DFQLUnaryOperatorNode) {
+            DFQLNode oldPost = ((DFQLUnaryOperatorNode) node).getPost();
+            DFQLNode newPost = transformAST( oldPost, df );
+
+            return new DFQLUnaryOperatorNode( ((DFQLUnaryOperatorNode) node).getOperation(), newPost );
         }
         else if (node instanceof DFQLListNode) {
             DFQLListNode newList = new DFQLListNode();

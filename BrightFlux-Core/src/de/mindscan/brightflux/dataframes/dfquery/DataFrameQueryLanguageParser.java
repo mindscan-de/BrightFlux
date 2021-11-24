@@ -39,6 +39,8 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenType;
@@ -200,6 +202,11 @@ public class DataFrameQueryLanguageParser {
         if (tryAndConsumeAsString( "(" )) {
             mustCloseParenthesis = true;
             current = parseExpression();
+        }
+        else if (tryAndAcceptToken( DFQLTokens.KEYWORD_NOT )) {
+            DFQLToken operator = tokens.last();
+            DFQLNode post = parseExpression();
+            current = new DFQLUnaryOperatorNode( DFQLUnaryOperatorType.asType( operator.getValue() ), post );
         }
         else {
             current = parseMemberSelectionInvocation();

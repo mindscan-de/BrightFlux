@@ -40,6 +40,8 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLValueNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
@@ -79,6 +81,10 @@ public class RowFilterPredicateCompileStrategy {
             return compile_DFQLBinaryOperatorNode( (DFQLBinaryOperatorNode) node );
         }
 
+        if (node instanceof DFQLUnaryOperatorNode) {
+            return compile_DFQLUnaryOperatorNode( (DFQLUnaryOperatorNode) node );
+        }
+
         if (node instanceof DFQLApplyNode) {
             return compile_DFQLApplyNode( (DFQLApplyNode) node );
         }
@@ -88,6 +94,20 @@ public class RowFilterPredicateCompileStrategy {
 
     private DataFrameRowFilterPredicate compile_TypedDFQLSelectStatementNode( TypedDFQLSelectStatementNode typedDFQLSelectStatementNode ) {
         return compile( typedDFQLSelectStatementNode.getWhereClauseNode() );
+    }
+
+    private DataFrameRowFilterPredicate compile_DFQLUnaryOperatorNode( DFQLUnaryOperatorNode unaryNode ) {
+        DFQLUnaryOperatorType operation = unaryNode.getOperation();
+
+        DFQLNode postNode = unaryNode.getPost();
+
+        switch (operation) {
+            case NOT:
+                DataFrameRowFilterPredicate postNodeCompiled = compile( postNode );
+                return DataFrameRowFilterPredicateFactory.not( postNodeCompiled );
+            default:
+                throw new NotYetImplemetedException( "This unary operation is not supported: " + operation.name() );
+        }
     }
 
     private DataFrameRowFilterPredicate compile_DFQLBinaryOperatorNode( DFQLBinaryOperatorNode binaryNode ) {
