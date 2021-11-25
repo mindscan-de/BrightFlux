@@ -31,7 +31,7 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 /**
  * 
  */
-public class DataFrameEventListenerAdapter extends BFEventListenerAdapter implements DataFrameEventListener {
+public class DataFrameEventListenerAdapter extends BFEventListenerAdapter implements DataFrameEventHandler {
 
     @Override
     public void handleDataFrameEvent( BFDataFrameEvent event ) {

@@ -28,6 +28,6 @@ package de.mindscan.brightflux.system.events;
 /**
  * 
  */
-public interface DataFrameEventListener {
+public interface DataFrameEventHandler {
     void handleDataFrameEvent( BFDataFrameEvent event );
 }
