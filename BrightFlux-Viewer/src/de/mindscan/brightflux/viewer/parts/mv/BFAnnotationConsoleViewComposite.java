@@ -53,7 +53,6 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
@@ -151,7 +150,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry ) {
         // row selection...
-        BFEventListener dataFrameRowSelectionListener = new BFEventListenerAdapter() {
+        BFEventListenerAdapter dataFrameRowSelectionListener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
                 DataFrameRowSelectedEvent x = (DataFrameRowSelectedEvent) event;
