@@ -32,6 +32,6 @@ import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
  */
 public interface VideoObjectEventHandler {
 
-    void handleEvent( VideoAnnotatorVideoObject videoObject );
+    void handleVdideoObject( VideoAnnotatorVideoObject videoObject );
 
 }

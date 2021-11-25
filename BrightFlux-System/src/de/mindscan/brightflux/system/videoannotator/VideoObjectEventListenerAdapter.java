@@ -35,7 +35,7 @@ import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 public class VideoObjectEventListenerAdapter extends BFEventListenerAdapter implements VideoObjectEventHandler {
 
     @Override
-    public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
+    public void handleVdideoObject( VideoAnnotatorVideoObject videoObject ) {
     }
 
     @Override
@@ -43,7 +43,7 @@ public class VideoObjectEventListenerAdapter extends BFEventListenerAdapter impl
         if (event instanceof BFVideoObjectEvent) {
             VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
 
-            handleEvent( videoObject );
+            handleVdideoObject( videoObject );
         }
     }
 

@@ -177,7 +177,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     private void registerVideoObjectCreatedEvent( ProjectRegistry projectRegistry ) {
         VideoObjectEventListenerAdapter listener = new VideoObjectEventListenerAdapter() {
             @Override
-            public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
+            public void handleVdideoObject( VideoAnnotatorVideoObject videoObject ) {
                 addVideoObjectTab( videoObject );
             }
         };

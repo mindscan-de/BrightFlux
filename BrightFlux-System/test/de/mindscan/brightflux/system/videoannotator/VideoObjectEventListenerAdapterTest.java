@@ -26,7 +26,7 @@ public class VideoObjectEventListenerAdapterTest {
         adapterSpy.handleEvent( videoObjectEvent );
 
         // assert
-        Mockito.verify( adapterSpy, times( 1 ) ).handleEvent( object2 );
+        Mockito.verify( adapterSpy, times( 1 ) ).handleVdideoObject( object2 );
     }
 
     @Test
@@ -42,7 +42,7 @@ public class VideoObjectEventListenerAdapterTest {
         adapterSpy.handleEvent( videoObjectEvent );
 
         // assert
-        Mockito.verify( adapterSpy, times( 1 ) ).handleEvent( object2 );
+        Mockito.verify( adapterSpy, times( 1 ) ).handleVdideoObject( object2 );
     }
 
     @Test
@@ -57,7 +57,7 @@ public class VideoObjectEventListenerAdapterTest {
         adapterSpy.handleEvent( nullEvent );
 
         // assert
-        Mockito.verify( adapterSpy, Mockito.never() ).handleEvent( Mockito.any( VideoAnnotatorVideoObject.class ) );
+        Mockito.verify( adapterSpy, Mockito.never() ).handleVdideoObject( Mockito.any( VideoAnnotatorVideoObject.class ) );
     }
 
     @Test
@@ -72,7 +72,7 @@ public class VideoObjectEventListenerAdapterTest {
         adapterSpy.handleEvent( bfVideoObjectEvent );
 
         // assert
-        Mockito.verify( adapterSpy, Mockito.times( 1 ) ).handleEvent( Mockito.any( VideoAnnotatorVideoObject.class ) );
+        Mockito.verify( adapterSpy, Mockito.times( 1 ) ).handleVdideoObject( Mockito.any( VideoAnnotatorVideoObject.class ) );
     }
 
 }

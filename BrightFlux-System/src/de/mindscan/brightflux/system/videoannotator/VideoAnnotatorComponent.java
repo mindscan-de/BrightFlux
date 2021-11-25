@@ -67,7 +67,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
     private void registerVideoObjectCreatedHandler() {
         VideoObjectEventListenerAdapter createdVideoObjectListener = new VideoObjectEventListenerAdapter() {
             @Override
-            public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
+            public void handleVdideoObject( VideoAnnotatorVideoObject videoObject ) {
                 registerVideoObject( videoObject );
 
             }
@@ -78,7 +78,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
     private void registerVideoObjectClosedHandler() {
         VideoObjectEventListenerAdapter closedVideoObjectListener = new VideoObjectEventListenerAdapter() {
             @Override
-            public void handleEvent( VideoAnnotatorVideoObject videoObject ) {
+            public void handleVdideoObject( VideoAnnotatorVideoObject videoObject ) {
                 unregisterVideoObject( videoObject );
             }
         };
