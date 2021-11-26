@@ -52,12 +52,10 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
-import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
@@ -66,7 +64,7 @@ import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
-import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
 
 /**
  * 
@@ -146,18 +144,13 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry ) {
         // row selection...
-        BFEventListenerAdapter dataFrameRowSelectionListener = new BFEventListenerAdapter() {
+        DataFrameRowSelectedListenerAdapter dataFrameRowSelectionListener = new DataFrameRowSelectedListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                DataFrameRowSelectedEvent x = (DataFrameRowSelectedEvent) event;
-
-                Object rowItem = x.getSelectedItem();
-
+            public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
                 // prevent the modify handler to issue a write command
                 currentSelectedDataFrameRow = null;
-
-                prepareCurrentAnnotation( rowItem );
-                currentSelectedDataFrameRow = (DataFrameRow) rowItem;
+                prepareCurrentAnnotation( selectedRow );
+                currentSelectedDataFrameRow = (DataFrameRow) selectedRow;
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, dataFrameRowSelectionListener );
