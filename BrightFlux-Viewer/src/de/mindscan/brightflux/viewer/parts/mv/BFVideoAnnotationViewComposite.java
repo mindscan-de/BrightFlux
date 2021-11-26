@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -84,9 +85,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         addVideoButton.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.openRegularFileAndConsumePath( parent.getShell(), "Select Video", FileDescriptions.ANY, path -> {
-                    addVideoToProject( path );
-                } );
+                executeIntentAddVideo( parent.getShell() );
             }
         } );
         addVideoButton.setText( "Add Video ..." );
@@ -96,10 +95,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         btnGenerateAndCopy.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
-                String report = videoAnnotatorService.createFullReport();
-
-                projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( getShell(), report ) );
+                executeIntentCopyToClipboardVideoAnnotationReport( parent.getShell() );
             }
         } );
         btnGenerateAndCopy.setText( "Generate Report" );
@@ -111,11 +107,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         btnLoadVideoAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.openRegularFileAndConsumePath( parent.getShell(), "Select Video Annotation", FileDescriptions.BF_VIDEO_ANNOTATION,
-                                path -> {
-                                    loadVideoAnnotationsToProject( path );
-                                } );
-
+                executeIntentLoadVideoAnnotation( parent.getShell() );
             }
         } );
         btnLoadVideoAnnotations.setText( "Load Video Annotations ..." );
@@ -125,16 +117,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         btnSaveVideoAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                BrightFluxFileDialogs.saveRegularFileAndConsumePath( parent.getShell(), "Save File...", FileDescriptions.BF_VIDEO_ANNOTATION, path -> {
-                    // get the videoObject data from current selected Frame
-                    Control tabitem = videoObjectTabFolder.getSelection().getControl();
-                    if (tabitem instanceof BFVideoAnnotationSingleVideoViewComposite) {
-                        VideoAnnotatorVideoObject videoObject = ((BFVideoAnnotationSingleVideoViewComposite) tabitem).getVideoObject();
-
-                        saveVideoAnnotation( path, videoObject );
-                    }
-                } );
-
+                executeIntentSaveVideoAnnotation( parent.getShell() );
             }
         } );
         btnSaveVideoAnnotations.setText( "Save Video Annotations ..." );
@@ -195,32 +178,6 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.VideoObjectRequestSelectEvent, listener );
     }
 
-    private void loadVideoAnnotationsToProject( Path path ) {
-        BFCommand command = DataFrameCommandFactory.loadVideoAnnotationFromFile( path );
-        dispatchCommand( command );
-    }
-
-    private void addVideoToProject( Path path ) {
-        // TODO we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
-        // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
-        // send some command to the annotation component... / with the annotation component
-
-        // TODO: find, whether there is a special annotation file in parallel to the video.
-        BFCommand command = DataFrameCommandFactory.loadVideoForAnnotation( path );
-        dispatchCommand( command );
-    }
-
-    private void saveVideoAnnotation( Path path, VideoAnnotatorVideoObject videoObject ) {
-        BFCommand command = DataFrameCommandFactory.saveVideoAnnotationToFile( videoObject, path );
-        dispatchCommand( command );
-    }
-
-    private void dispatchCommand( BFCommand command ) {
-        if (this.projectRegistry != null) {
-            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
-        }
-    }
-
     private void addVideoObjectTab( VideoAnnotatorVideoObject videoObject ) {
         CTabItem item = addTabItem( this.videoObjectTabFolder, videoObject );
         videoObjectTabFolder.setSelection( item );
@@ -275,6 +232,56 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         }
 
         return false;
+    }
+
+    public void executeIntentAddVideo( Shell shell ) {
+        BrightFluxFileDialogs.openRegularFileAndConsumePath( shell, "Select Video", FileDescriptions.ANY, path -> {
+            addVideoToProject( path );
+        } );
+    }
+
+    private void addVideoToProject( Path path ) {
+        // TODO we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
+        // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
+        // send some command to the annotation component... / with the annotation component
+
+        // TODO: find, whether there is a special annotation file in parallel to the video.
+        dispatchCommand( DataFrameCommandFactory.loadVideoForAnnotation( path ) );
+    }
+
+    public void executeIntentLoadVideoAnnotation( Shell shell ) {
+        BrightFluxFileDialogs.openRegularFileAndConsumePath( shell, "Select Video Annotation", FileDescriptions.BF_VIDEO_ANNOTATION, path -> {
+            dispatchCommand( DataFrameCommandFactory.loadVideoAnnotationFromFile( path ) );
+        } );
+    }
+
+    public void executeIntentCopyToClipboardVideoAnnotationReport( Shell shell ) {
+        VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
+        String report = videoAnnotatorService.createFullReport();
+
+        dispatchCommand( UICommandFactory.copyToClipboard( shell, report ) );
+    }
+
+    public void executeIntentSaveVideoAnnotation( Shell shell ) {
+        BrightFluxFileDialogs.saveRegularFileAndConsumePath( shell, "Save File...", FileDescriptions.BF_VIDEO_ANNOTATION, path -> {
+            // get the videoObject data from current selected Frame
+            Control tabitem = videoObjectTabFolder.getSelection().getControl();
+            if (tabitem instanceof BFVideoAnnotationSingleVideoViewComposite) {
+                VideoAnnotatorVideoObject videoObject = ((BFVideoAnnotationSingleVideoViewComposite) tabitem).getVideoObject();
+
+                saveVideoAnnotation( path, videoObject );
+            }
+        } );
+    }
+
+    private void saveVideoAnnotation( Path path, VideoAnnotatorVideoObject videoObject ) {
+        dispatchCommand( DataFrameCommandFactory.saveVideoAnnotationToFile( videoObject, path ) );
+    }
+
+    private void dispatchCommand( BFCommand command ) {
+        if (this.projectRegistry != null) {
+            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 
     @Override
