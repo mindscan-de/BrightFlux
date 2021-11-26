@@ -25,10 +25,12 @@
  */
 package de.mindscan.brightflux.viewer.uievents;
 
+import java.util.UUID;
+
 /**
  * 
  */
 public interface UUIDRequestEventListener {
 
-    void handleUUIDRequestEvent( UUIDRequestEvent event );
+    void handleUUIDRequest( UUID requestedUUID );
 }

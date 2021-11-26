@@ -56,7 +56,6 @@ import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
-import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 import swing2swt.layout.BorderLayout;
 
@@ -188,8 +187,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     private void registerVideoObjectSelectRequestEvent( ProjectRegistry projectRegistry ) {
         UUIDRequestEventListenerAdapter listener = new UUIDRequestEventListenerAdapter() {
             @Override
-            public void handleUUIDRequestEvent( UUIDRequestEvent event ) {
-                requestVideoObjectSelection( event.getRequestedUUID() );
+            public void handleUUIDRequest( UUID requestedUUID ) {
+                requestVideoObjectSelection( requestedUUID );
             }
         };
 

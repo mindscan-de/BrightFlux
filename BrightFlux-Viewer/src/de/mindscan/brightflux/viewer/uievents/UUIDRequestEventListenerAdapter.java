@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.uievents;
 
+import java.util.UUID;
+
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 
@@ -37,7 +39,7 @@ public class UUIDRequestEventListenerAdapter extends BFEventListenerAdapter impl
      * {@inheritDoc}
      */
     @Override
-    public void handleUUIDRequestEvent( UUIDRequestEvent event ) {
+    public void handleUUIDRequest( UUID requestedUUID ) {
     }
 
     /** 
@@ -46,7 +48,7 @@ public class UUIDRequestEventListenerAdapter extends BFEventListenerAdapter impl
     @Override
     public final void handleEvent( BFEvent event ) {
         if (event instanceof UUIDRequestEvent) {
-            handleUUIDRequestEvent( ((UUIDRequestEvent) event) );
+            handleUUIDRequest( ((UUIDRequestEvent) event).getRequestedUUID() );
         }
     }
 

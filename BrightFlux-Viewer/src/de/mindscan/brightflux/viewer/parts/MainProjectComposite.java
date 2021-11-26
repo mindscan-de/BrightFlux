@@ -45,7 +45,6 @@ import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
-import de.mindscan.brightflux.viewer.uievents.UUIDRequestEvent;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 
 /**
@@ -96,8 +95,8 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRequestSelectEvent, new UUIDRequestEventListenerAdapter() {
             @Override
-            public void handleUUIDRequestEvent( UUIDRequestEvent event ) {
-                requestDataFrameSelection( event.getRequestedUUID() );
+            public void handleUUIDRequest( UUID requestedUUID ) {
+                requestDataFrameSelection( requestedUUID );
             }
         } );
     }
