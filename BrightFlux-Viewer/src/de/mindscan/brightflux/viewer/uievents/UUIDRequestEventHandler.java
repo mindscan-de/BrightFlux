@@ -30,7 +30,7 @@ import java.util.UUID;
 /**
  * 
  */
-public interface UUIDRequestEventListener {
+public interface UUIDRequestEventHandler {
 
     void handleUUIDRequest( UUID requestedUUID );
 }

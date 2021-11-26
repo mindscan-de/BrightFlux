@@ -33,7 +33,7 @@ import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 /**
  * 
  */
-public class UUIDRequestEventListenerAdapter extends BFEventListenerAdapter implements UUIDRequestEventListener {
+public class UUIDRequestEventListenerAdapter extends BFEventListenerAdapter implements UUIDRequestEventHandler {
 
     /** 
      * {@inheritDoc}
