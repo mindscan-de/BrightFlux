@@ -37,7 +37,7 @@ import de.mindscan.brightflux.system.annotator.events.AnnotationDataFrameCreated
 import de.mindscan.brightflux.system.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.annotator.writer.AnnotatorJsonLWriterImpl;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -111,14 +111,11 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     private void registerAnnotationDFCreateEvent( ProjectRegistry projectRegistry ) {
-        BFEventListener dfCreatedListener = new BFEventListenerAdapter() {
+        DataFrameEventListenerAdapter dfCreatedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFAbstractDataFrameEvent) {
-                    DataFrame frameToAnnotate = ((BFAbstractDataFrameEvent) event).getDataFrame();
-                    if (ANNOTATION_DATAFRAME_NAME.equals( frameToAnnotate.getName() )) {
-                        AnnotatorComponent.this.logAnalysisFrame = frameToAnnotate;
-                    }
+            public void handleDataFrame( DataFrame dataFrame ) {
+                if (ANNOTATION_DATAFRAME_NAME.equals( dataFrame.getName() )) {
+                    AnnotatorComponent.this.logAnalysisFrame = dataFrame;
                 }
             }
         };
