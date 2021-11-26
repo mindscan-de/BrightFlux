@@ -25,9 +25,11 @@
  */
 package de.mindscan.brightflux.system.events;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+
 /**
  * 
  */
 public interface DataFrameEventHandler {
-    void handleDataFrameEvent( BFDataFrameEvent event );
+    void handleDataFrame( DataFrame dataFrame );
 }

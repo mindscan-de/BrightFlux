@@ -41,7 +41,6 @@ import org.eclipse.swt.widgets.Control;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
@@ -83,15 +82,15 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
     private void registerEvents( ProjectRegistry projectRegistry ) {
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, new DataFrameEventListenerAdapter() {
             @Override
-            public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                addDataFrameTab( event.getDataFrame() );
+            public void handleDataFrame( DataFrame dataFrame ) {
+                addDataFrameTab( dataFrame );
             }
         } );
 
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, new DataFrameEventListenerAdapter() {
             @Override
-            public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                addDataFrameTab( event.getDataFrame() );
+            public void handleDataFrame( DataFrame dataFrame ) {
+                addDataFrameTab( dataFrame );
             }
         } );
 

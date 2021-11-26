@@ -39,17 +39,15 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
-import de.mindscan.brightflux.system.events.BFDataFrameEvent;
-import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.events.DataFrameCreatedEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
-import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
@@ -95,8 +93,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         // Register to close event, so we can mark the hierarchy, that the frame is closed in the hierarchy. 
         DataFrameEventListenerAdapter closedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                dfHierarchy.removeNode( event.getDataFrame() );
+            public void handleDataFrame( DataFrame dataFrame ) {
+                dfHierarchy.removeNode( dataFrame );
                 updateDataframeTree( dfHierarchy );
             }
         };
@@ -106,18 +104,15 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private void registerDataFrameCreatedListener( ProjectRegistry projectRegistry ) {
         // register to (create event / created from a parent frame)
         // these contain a hierarchy
-        BFEventListener createdListener = new BFEventListenerAdapter() {
+        DataFrameCreatedEventListenerAdapter createdListener = new DataFrameCreatedEventListenerAdapter() {
             @Override
-            public void handleEvent( BFEvent event ) {
-                if (event instanceof BFDataFrameEvent) {
-                    DataFrameCreatedEvent dfEvent = (DataFrameCreatedEvent) event;
-
-                    dfHierarchy.addLeafNode( dfEvent.getDataFrame(), UUID.fromString( dfEvent.getParentDataFrameUUID() ) );
-                    updateDataframeTree( dfHierarchy );
-                }
+            public void handleDataFrameCreated( DataFrame dataFrame, String parentUUID ) {
+                dfHierarchy.addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
+                updateDataframeTree( dfHierarchy );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
+
     }
 
     private void registerDataFrameLoadedListener( ProjectRegistry projectRegistry ) {
@@ -125,8 +120,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         // these do not contain a hierarchy
         DataFrameEventListenerAdapter loadedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                dfHierarchy.addRootNode( event.getDataFrame() );
+            public void handleDataFrame( DataFrame dataFrame ) {
+                dfHierarchy.addRootNode( dataFrame );
                 updateDataframeTree( dfHierarchy );
             }
         };
@@ -136,8 +131,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     private void registerDataFrameSelectedListener( ProjectRegistry projectRegistry2 ) {
         DataFrameEventListenerAdapter selectedListener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                currentSelectedID = event.getDataFrame().getUuid();
+            public void handleDataFrame( DataFrame dataFrame ) {
+                currentSelectedID = dataFrame.getUuid();
                 updateDataframeTree( dfHierarchy );
             }
         };

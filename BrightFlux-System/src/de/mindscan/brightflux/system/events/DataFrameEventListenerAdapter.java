@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.system.events;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 
@@ -34,13 +35,13 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 public class DataFrameEventListenerAdapter extends BFEventListenerAdapter implements DataFrameEventHandler {
 
     @Override
-    public void handleDataFrameEvent( BFDataFrameEvent event ) {
+    public void handleDataFrame( DataFrame dataFrame ) {
     }
 
     @Override
     public final void handleEvent( BFEvent event ) {
         if (event instanceof BFAbstractDataFrameEvent) {
-            handleDataFrameEvent( ((BFAbstractDataFrameEvent) event) );
+            handleDataFrame( ((BFAbstractDataFrameEvent) event).getDataFrame() );
         }
     }
 

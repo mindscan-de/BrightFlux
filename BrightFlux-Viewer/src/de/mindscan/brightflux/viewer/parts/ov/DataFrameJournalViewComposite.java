@@ -39,7 +39,6 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 
@@ -112,8 +111,8 @@ public class DataFrameJournalViewComposite extends Composite implements ProjectR
         if (this.projectRegistry != null) {
             DataFrameEventListenerAdapter listener = new DataFrameEventListenerAdapter() {
                 @Override
-                public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                    setCurrentDataFrame( event.getDataFrame() );
+                public void handleDataFrame( DataFrame dataFrame ) {
+                    setCurrentDataFrame( dataFrame );
                 }
             };
             this.projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );

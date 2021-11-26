@@ -52,7 +52,6 @@ import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
-import de.mindscan.brightflux.system.events.BFDataFrameEvent;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -200,8 +199,8 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
 
         DataFrameEventListenerAdapter listener = new DataFrameEventListenerAdapter() {
             @Override
-            public void handleDataFrameEvent( BFDataFrameEvent event ) {
-                currentSelectedDataFrame = event.getDataFrame();
+            public void handleDataFrame( DataFrame dataFrame ) {
+                currentSelectedDataFrame = dataFrame;
 
                 // Update View? Show name of selected DataFrame, 
                 // because the Terminal will be sensitive to the selected frame in the MainProjectComposite
