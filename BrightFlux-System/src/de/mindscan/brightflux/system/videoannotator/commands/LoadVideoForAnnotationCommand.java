@@ -55,7 +55,7 @@ public class LoadVideoForAnnotationCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         VideoAnnotatorVideoObject videoObject = VideoAnnotatorVideoObjectFactory.createVideoObject( videoObjectPath );
 
-        videoObject.setVideoDurationInSeconds( (int) Math.round( videoObjectInfo.getDuration() ) );
+        videoObject.setVideoDurationInSeconds( (int) Math.floor( videoObjectInfo.getDuration() ) );
 
         eventConsumer.accept( BFEventFactory.videoObjectCreatedEvent( videoObject ) );
     }
