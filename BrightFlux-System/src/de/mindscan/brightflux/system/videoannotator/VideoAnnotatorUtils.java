@@ -48,12 +48,11 @@ public class VideoAnnotatorUtils {
         }
     }
 
-    public static VideoObjectInformaton getVideoObjectInformation( Path ffprobeLocation, Path videoObjectPath ) {
+    public static VideoObjectInformation getVideoObjectInformation( Path ffprobeLocation, Path videoObjectPath ) {
         FFProbeQuery query = new FFProbeQuery( ffprobeLocation );
-        VideoObjectInformaton info;
+
         try {
-            info = query.retrieveFormatInfo( videoObjectPath );
-            return info;
+            return query.retrieveFormatInfo( videoObjectPath );
         }
         catch (Exception e) {
             e.printStackTrace();

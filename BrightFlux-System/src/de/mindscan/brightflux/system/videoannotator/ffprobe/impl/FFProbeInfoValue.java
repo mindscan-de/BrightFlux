@@ -28,12 +28,12 @@ package de.mindscan.brightflux.system.videoannotator.ffprobe.impl;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import de.mindscan.brightflux.system.videoannotator.VideoObjectInformaton;
+import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
 
 /**
  * 
  */
-public class FFProbeInfoValue implements VideoObjectInformaton {
+public class FFProbeInfoValue implements VideoObjectInformation {
 
     private ArrayList<TreeMap<String, Object>> programs = new ArrayList<>();
     private ArrayList<FFProbeInfoStream> streams = new ArrayList<>();

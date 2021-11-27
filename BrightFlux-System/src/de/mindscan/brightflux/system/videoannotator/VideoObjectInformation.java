@@ -28,7 +28,7 @@ package de.mindscan.brightflux.system.videoannotator;
 /**
  * 
  */
-public interface VideoObjectInformaton {
+public interface VideoObjectInformation {
 
     int getHeight();
 
