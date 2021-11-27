@@ -73,4 +73,8 @@ public class VideoAnnotatorVideoObjectMetaData {
         return videoObjectPath;
     }
 
+    public void setVideoDurationInSeconds( int durationInSeconds ) {
+        this.videoDurationInSeconds = durationInSeconds;
+    }
+
 }

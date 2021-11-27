@@ -53,4 +53,6 @@ public interface VideoAnnotatorVideoObject {
     UUID getUUID();
 
     VideoAnnotatorVideoObjectMetaData getMetaData();
+
+    void setVideoDurationInSeconds( int durationInSeconds );
 }

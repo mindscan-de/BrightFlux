@@ -68,6 +68,11 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     }
 
     @Override
+    public void setVideoDurationInSeconds( int durationInSeconds ) {
+        metaData.setVideoDurationInSeconds( durationInSeconds );
+    }
+
+    @Override
     public Path getVideoObjectPath() {
         return metaData.getVideoObjectPath();
     }
