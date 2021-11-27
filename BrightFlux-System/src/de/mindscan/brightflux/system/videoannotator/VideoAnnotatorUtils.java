@@ -25,6 +25,10 @@
  */
 package de.mindscan.brightflux.system.videoannotator;
 
+import java.nio.file.Path;
+
+import de.mindscan.brightflux.system.videoannotator.ffprobe.FFProbeQuery;
+
 /**
  * 
  */
@@ -42,6 +46,21 @@ public class VideoAnnotatorUtils {
             int hours = (videoDurationInSeconds / 3600);
             return "%02d:%02d:%02d".formatted( hours, minutes, seconds );
         }
+    }
+
+    public static VideoObjectInformaton getVideoObjectInformation( Path ffprobeLocation, Path videoObjectPath ) {
+        FFProbeQuery query = new FFProbeQuery( ffprobeLocation );
+        VideoObjectInformaton info;
+        try {
+            info = query.retrieveFormatInfo( videoObjectPath );
+            return info;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // This should be some dummy videoSized Object....
+        return null;
     }
 
 }
