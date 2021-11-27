@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.eclipse.swt.SWT;
@@ -51,7 +52,9 @@ import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoObjectEventListenerAdapter;
+import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -67,6 +70,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
     private ProjectRegistry projectRegistry;
     private CTabFolder videoObjectTabFolder;
+    private Path ffprobeLocation = Paths.get( "D:\\Temp\\ffmpeg\\ffprobe.exe" );
 
     /**
      * Create the composite.
@@ -241,12 +245,14 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     private void addVideoToProject( Path path ) {
-        // TODO we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
+        // we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
+        VideoObjectInformation videoObjectInformation = VideoAnnotatorUtils.getVideoObjectInformation( ffprobeLocation, path );
+
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
 
         // TODO: find, whether there is a special annotation file in parallel to the video.
-        dispatchCommand( DataFrameCommandFactory.loadVideoForAnnotation( path ) );
+        dispatchCommand( DataFrameCommandFactory.loadVideoForAnnotation( path, videoObjectInformation ) );
     }
 
     public void executeIntentLoadVideoAnnotation( Shell shell ) {
