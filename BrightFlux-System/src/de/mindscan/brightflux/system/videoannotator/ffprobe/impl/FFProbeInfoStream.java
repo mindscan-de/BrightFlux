@@ -39,4 +39,11 @@ public class FFProbeInfoStream {
     private String avg_frame_rate;
     private int nb_frames;
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
 }

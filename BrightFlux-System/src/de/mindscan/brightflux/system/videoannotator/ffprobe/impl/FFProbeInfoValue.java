@@ -28,23 +28,30 @@ package de.mindscan.brightflux.system.videoannotator.ffprobe.impl;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import de.mindscan.brightflux.system.videoannotator.VideoObjectInformaton;
+
 /**
  * 
  */
-public class FFProbeInfoValue {
+public class FFProbeInfoValue implements VideoObjectInformaton {
 
-    private ArrayList<TreeMap<String, String>> programs = new ArrayList<>();
+    private ArrayList<TreeMap<String, Object>> programs = new ArrayList<>();
     private ArrayList<FFProbeInfoStream> streams = new ArrayList<>();
     private FFProbeInfoFormat format = new FFProbeInfoFormat();
 
-    /**
-     * 
-     */
     public double getDuration() {
         return format.getDuration();
     }
 
     public long getSize() {
         return format.getSize();
+    }
+
+    public int getWidth() {
+        return streams.get( 0 ).getWidth();
+    }
+
+    public int getHeight() {
+        return streams.get( 0 ).getHeight();
     }
 }
