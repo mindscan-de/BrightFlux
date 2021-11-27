@@ -23,39 +23,19 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.ffprobe.impl;
-
-import java.util.ArrayList;
-import java.util.TreeMap;
-
-import de.mindscan.brightflux.system.videoannotator.VideoObjectInformaton;
+package de.mindscan.brightflux.system.videoannotator;
 
 /**
  * 
  */
-public class FFProbeInfoValue implements VideoObjectInformaton {
+public interface VideoObjectInformaton {
 
-    private ArrayList<TreeMap<String, Object>> programs = new ArrayList<>();
-    private ArrayList<FFProbeInfoStream> streams = new ArrayList<>();
-    private FFProbeInfoFormat format = new FFProbeInfoFormat();
+    int getHeight();
 
-    @Override
-    public double getDuration() {
-        return format.getDuration();
-    }
+    int getWidth();
 
-    @Override
-    public long getSize() {
-        return format.getSize();
-    }
+    long getSize();
 
-    @Override
-    public int getWidth() {
-        return streams.get( 0 ).getWidth();
-    }
+    double getDuration();
 
-    @Override
-    public int getHeight() {
-        return streams.get( 0 ).getHeight();
-    }
 }
