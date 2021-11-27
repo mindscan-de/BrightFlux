@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.viewer.parts.mv;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 import org.eclipse.swt.SWT;
@@ -70,7 +69,6 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
     private ProjectRegistry projectRegistry;
     private CTabFolder videoObjectTabFolder;
-    private Path ffprobeLocation = Paths.get( "D:\\Temp\\ffmpeg\\ffprobe.exe" );
 
     /**
      * Create the composite.
@@ -246,7 +244,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
     private void addVideoToProject( Path path ) {
         // we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
-        VideoObjectInformation videoObjectInformation = VideoAnnotatorUtils.getVideoObjectInformation( ffprobeLocation, path );
+        VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
+        VideoObjectInformation videoObjectInformation = VideoAnnotatorUtils.getVideoObjectInformation( videoAnnotatorService.getFFProbePath(), path );
 
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
         // send some command to the annotation component... / with the annotation component
