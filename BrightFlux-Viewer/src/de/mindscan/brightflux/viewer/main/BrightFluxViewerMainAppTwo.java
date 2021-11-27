@@ -92,7 +92,9 @@ public class BrightFluxViewerMainAppTwo {
             systemServices.setFavRecipeServices( favRecipesComponent );
 
             // STARTUP : Register Video Annotation Service
+            Path ffprobePath = Paths.get( currentDirectory, "ffprobe.exe" );
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
+            videoAnnotatorComponent.setFFProbePath( ffprobePath );
             systemServices.setVideoAnnotationService( videoAnnotatorComponent );
 
             // STARTUP : Register Report Generator Service

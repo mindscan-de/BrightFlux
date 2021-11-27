@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.system.videoannotator;
 
+import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +47,8 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
     private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
 
     private ProjectRegistry projectRegistry;
+
+    private Path ffprobePath;
 
     // TODO how do we want to address the different videoAnnotationDataframes 
 
@@ -150,6 +153,14 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         }
 
         return sb.toString();
+    }
+
+    public void setFFProbePath( Path ffprobePath ) {
+        this.ffprobePath = ffprobePath;
+    }
+
+    public Path getFFProbePath() {
+        return ffprobePath;
     }
 
 }
