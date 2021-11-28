@@ -101,6 +101,17 @@ public class RecipeExecuteCommand implements BFCommand {
                             currentDataFrame = currentDataFrame.queryCB( query, callbacks );
                             break;
                         }
+                        case TOKENIZE: {
+                            String query = msg;
+                            //currentDataFrame =
+
+                            NotYetImplemetedException nyi = new NotYetImplemetedException( "The general tokenizer is not implemented yet." );
+                            // only print the message instead of throwing it, because we want the recipes to contain this tokenizing info, 
+                            // even though we can't execute it right now. 
+                            nyi.printStackTrace();
+
+                            break;
+                        }
                         default:
                             throw new NotYetImplemetedException();
                     }

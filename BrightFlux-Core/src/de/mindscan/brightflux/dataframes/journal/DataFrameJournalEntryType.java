@@ -32,16 +32,19 @@ package de.mindscan.brightflux.dataframes.journal;
  */
 public enum DataFrameJournalEntryType {
 
+    // This is a load data frame operation
     LOAD,
 
+    // This is a row and column filter
     SELECT_WHERE,
 
+    // This is a callback on selection of rows - usually will not change the data frame
     ROWCALLBACK,
 
-    // TODO: use a column of a data frame and tokenize it using a different dataframe tokenizer on it
-    // TOKENIZE,
+    // This will create a new data frame by using a column of a data frame and tokenize its content using a different data frame tokenizer on it
+    TOKENIZE,
 
-    // TODO: use multiple columns to join multiple dataframes on existing and nonnull values PK / FK relationship
+    // TODO: use multiple columns to join multiple data frames on existing and non-null values PK / FK relationship
     // INNER_JOIN,
 
     // TODO: use multiple also support null values on the join operation
