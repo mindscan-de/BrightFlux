@@ -31,7 +31,6 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
-import de.mindscan.brightflux.dataframes.DataFrameJournal;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
@@ -73,7 +72,6 @@ public class IngestEngine {
         // 
         switch (config.getIngestMode()) {
             case JobConfiguration.MODE_DATAFRAME:
-                // copy the previous DataFrameHistory
                 newDataFrame.appendJournal( config.getIngestDataFrame().getJournal() );
                 newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, config.getOperationAsDFQLStatement() );
                 break;
