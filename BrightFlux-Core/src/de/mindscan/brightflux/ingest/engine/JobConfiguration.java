@@ -160,4 +160,18 @@ public class JobConfiguration {
         }
     }
 
+    /**
+     * 
+     */
+    public String getOperationAsDFQLStatement() {
+        switch (this.getIngestMode()) {
+            case MODE_PATH:
+                return "LOAD '" + getIngestInputPath() + "' as df";
+            case MODE_DATAFRAME:
+                return "XXX TODO";
+            default:
+                throw new NotYetImplemetedException( "Could not retrieve the DFQLStatement for this ingest job configuration" );
+        }
+    }
+
 }

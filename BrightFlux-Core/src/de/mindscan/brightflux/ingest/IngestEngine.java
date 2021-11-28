@@ -75,14 +75,10 @@ public class IngestEngine {
                 // copy the previous DataFrameHistory
                 DataFrameJournal journal = config.getIngestDataFrame().getJournal();
                 newDataFrame.appendJournal( journal.getJournalEntries() );
-
-                // also add new tokenize entry
-                // TODO ask the Job Configuration to come up with a generated DFQL-statement
-                newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, "XXX TODO" );
+                newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, config.getOperationAsDFQLStatement() );
                 break;
             case JobConfiguration.MODE_PATH:
-                // TODO ask the Job Configuration to come up with a generated DFQL-statement
-                newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, "LOAD '" + config.getIngestInputPath() + "' as df" );
+                newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, config.getOperationAsDFQLStatement() );
                 break;
             default:
                 throw new NotYetImplemetedException( "imlement this mode...." );
