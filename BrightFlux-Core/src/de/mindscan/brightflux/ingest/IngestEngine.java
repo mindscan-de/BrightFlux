@@ -31,7 +31,9 @@ import java.util.List;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
+import de.mindscan.brightflux.dataframes.DataFrameJournal;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
@@ -60,11 +62,31 @@ public class IngestEngine {
         List<DataFrameColumn<DataToken>> parsedDataFrameColumns = dfParser.parse( tokens );
         List<DataFrameColumn<?>> compiledDataFrameColumns = dfCompiler.compileDataFrameColumns( parsedDataFrameColumns );
 
-        DataFrame newDataFrame = buildCompiledDataFrame( config, compiledDataFrameColumns );
+        DataFrame newDataFrame = updateDataFrameJournal( config, buildCompiledDataFrame( config, compiledDataFrameColumns ) );
 
-        // TODO: use a serializer in dfquery to generate this journal entry, so the parser and serializer are synchronous to each other 
-        // Actually depending on what we configured we might have a different situation, e.g if we ingested from a another dataframe
-        newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, "LOAD '" + config.getIngestInputPath() + "' as df" );
+        return newDataFrame;
+    }
+
+    public static DataFrame updateDataFrameJournal( JobConfiguration config, DataFrame newDataFrame ) {
+
+        // TODO: refactor this to the right place.... WHERE ? No IDEA yet.
+        switch (config.getIngestMode()) {
+            case JobConfiguration.MODE_DATAFRAME:
+                // copy the previous DataFrameHistory
+                DataFrameJournal journal = config.getIngestDataFrame().getJournal();
+                newDataFrame.appendJournal( journal.getJournalEntries() );
+
+                // also add new tokenize entry
+                // TODO ask the Job Configuration to come up with a generated DFQL-statement
+                newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, "XXX TODO" );
+                break;
+            case JobConfiguration.MODE_PATH:
+                // TODO ask the Job Configuration to come up with a generated DFQL-statement
+                newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, "LOAD '" + config.getIngestInputPath() + "' as df" );
+                break;
+            default:
+                throw new NotYetImplemetedException( "imlement this mode...." );
+        }
         return newDataFrame;
     }
 
