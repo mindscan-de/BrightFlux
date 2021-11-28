@@ -26,6 +26,8 @@
 package de.mindscan.brightflux.ingest.engine;
 
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -168,10 +170,19 @@ public class JobConfiguration {
             case MODE_PATH:
                 return "LOAD '" + getIngestInputPath() + "' as df";
             case MODE_DATAFRAME:
-                return "XXX TODO";
+                // SELECT df.'', df.'' TOKENIZE df.'columnname' USING '' FROM df;
+                String allTransferColumns = Arrays.stream( transferColumns ).map( this::columnConverter ).collect( Collectors.joining( ", " ) );
+                return "SELECT " + allTransferColumns + // 
+                                " TOKENIZE " + columnConverter( ingestDataFrameInputColumnName ) + //
+                                " USING 'XXX' from df";
+
             default:
                 throw new NotYetImplemetedException( "Could not retrieve the DFQLStatement for this ingest job configuration" );
         }
+    }
+
+    private String columnConverter( String columnName ) {
+        return "df.'" + columnName + "'";
     }
 
 }
