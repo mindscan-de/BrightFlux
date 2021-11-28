@@ -40,11 +40,11 @@ public class VideoAnnotatorUtils {
         int minutes = (videoDurationInSeconds / 60) % 60;
 
         if (videoDurationInSeconds < 3600) {
-            return "%02d:%02d".formatted( minutes, seconds );
+            return String.format( "%02d:%02d", minutes, seconds );
         }
         else {
             int hours = (videoDurationInSeconds / 3600);
-            return "%02d:%02d:%02d".formatted( hours, minutes, seconds );
+            return String.format( "%02d:%02d:%02d", hours, minutes, seconds );
         }
     }
 
