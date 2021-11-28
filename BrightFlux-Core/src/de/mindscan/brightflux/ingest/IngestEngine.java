@@ -74,8 +74,7 @@ public class IngestEngine {
         switch (config.getIngestMode()) {
             case JobConfiguration.MODE_DATAFRAME:
                 // copy the previous DataFrameHistory
-                DataFrameJournal journal = config.getIngestDataFrame().getJournal();
-                newDataFrame.appendJournal( journal.getJournalEntries() );
+                newDataFrame.appendJournal( config.getIngestDataFrame().getJournal() );
                 newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, config.getOperationAsDFQLStatement() );
                 break;
             case JobConfiguration.MODE_PATH:

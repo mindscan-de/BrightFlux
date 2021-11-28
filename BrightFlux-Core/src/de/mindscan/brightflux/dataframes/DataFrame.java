@@ -105,6 +105,8 @@ public interface DataFrame {
 
     void appendJournal( Collection<DataFrameJournalEntry> dataFrameJournalEntries );
 
+    void appendJournal( DataFrameJournal otherJournal );
+
     DataFrameJournal getJournal();
 
     DataFrame inheritNewDataFrame();

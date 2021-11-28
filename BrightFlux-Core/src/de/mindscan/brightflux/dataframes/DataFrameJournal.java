@@ -77,6 +77,10 @@ public class DataFrameJournal {
         journal.addAll( entries );
     }
 
+    public void addAllJournalEntries( DataFrameJournal otherJournal ) {
+        journal.addAll( otherJournal.getJournalEntries() );
+    }
+
     public static DataFrameJournalEntry createEntry( DataFrameJournalEntryType entryType, String message ) {
         return new DataFrameJournalEntry( entryType, message );
     }

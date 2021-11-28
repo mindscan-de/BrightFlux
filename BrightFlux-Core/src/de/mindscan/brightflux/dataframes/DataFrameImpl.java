@@ -552,6 +552,11 @@ public class DataFrameImpl implements DataFrame {
         dataFrameJournal.addAllJournalEntries( dataFrameJournalEntries );
     }
 
+    @Override
+    public void appendJournal( DataFrameJournal otherJournal ) {
+        dataFrameJournal.addAllJournalEntries( otherJournal );
+    }
+
     /** 
      * {@inheritDoc}
      */
@@ -569,7 +574,7 @@ public class DataFrameImpl implements DataFrame {
         inheritedDataFrame.dataFrameGeneration = this.dataFrameGeneration + 1;
 
         // add the current journal to the new DataFrame, because the new dataframe inherits from this dataframe
-        inheritedDataFrame.appendJournal( this.getJournal().getJournalEntries() );
+        inheritedDataFrame.appendJournal( this.getJournal() );
 
         return inheritedDataFrame;
     }
