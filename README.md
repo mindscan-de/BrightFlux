@@ -150,6 +150,16 @@ DataFrame-Core
 * [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection
 
 
+Startup and EarlyPersistence
+* Implement an Early Persistence module, which can then be used to start the other components (used for initial configurations)
+
+
+UI/UX
+* Configuration System
+  * provide PreferenceStore
+  * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
+
+
 ### Later
 
 Log-Analysis-Project-File
@@ -186,8 +196,6 @@ Reporting
 
 UI/UX
 * Configuration System
-  * provide PreferenceStore
-  * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
   * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
   
 
