@@ -68,8 +68,9 @@ public class IngestEngine {
     }
 
     public static DataFrame updateDataFrameJournal( JobConfiguration config, DataFrame newDataFrame ) {
-
-        // TODO: refactor this to the right place.... WHERE ? No IDEA yet.
+        // TODO: refactor this to the right place.... Actually we work on config, that means we might want to move things to JobConfiguration to add the journal
+        // on the other hand, a configobject should not do this...
+        // 
         switch (config.getIngestMode()) {
             case JobConfiguration.MODE_DATAFRAME:
                 // copy the previous DataFrameHistory
