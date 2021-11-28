@@ -126,6 +126,7 @@ proper abstraction.
 * Non published - proof of concept - tokenize from data frame
   * DataSource tokenizer based on a data frame and a hard-coded predefined/selected column which is further tokenized
   * This can also copy content (column values) of the parent data frame to the new tokenized frame.
+  * also correctly log DataFrameActions that a data frame was created by tokenization (track full Recipe)
 
 
 ## Planned Features
@@ -141,10 +142,6 @@ I want to address rather sooner than later.
 
 
 ### Next
-
-DataFrame-Core-Ingest
-* [DFINGEST] also correctly log DataFrameActions that a data frame was created by tokenization (track full Recipe)
-
 
 DataFrame-Core
 * [DFCORE] Support original Index
