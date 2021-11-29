@@ -45,6 +45,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
+import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesFileCollector;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
@@ -79,7 +80,11 @@ public class BrightFluxViewerMainAppTwo {
             // STARTUP : System Services
             SystemServices systemServices = SystemServices.getInstance();
 
-            // STARTUP : Configurationfiles
+            // STARTUP : Early Persistence data (avoid hard coded dependencies)
+            EarlyPersistenceComponent earlyPersistence = new EarlyPersistenceComponent();
+            earlyPersistence.initEarlyPersistence();
+            systemServices.setEarlyPersistence( earlyPersistence );
+
             // TODO: load some configuration from file
             // TODO: set the current configuration (e.g. the window size)
 

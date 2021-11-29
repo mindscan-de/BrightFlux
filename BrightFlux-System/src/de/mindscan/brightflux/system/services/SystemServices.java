@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.system.services;
 
+import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
@@ -38,6 +39,7 @@ public class SystemServices {
     private FavRecipesComponent favRecipesServices;
     private VideoAnnotatorComponent videoAnnotatorService;
     private ReportGeneratorComponent reportGeneratorService;
+    private EarlyPersistenceComponent earlyPersistenceService;
 
     private static class SystemServicesHolder {
         private static SystemServices instance = new SystemServices();
@@ -73,6 +75,10 @@ public class SystemServices {
 
     public ReportGeneratorComponent getReportGeneratorService() {
         return reportGeneratorService;
+    }
+
+    public void setEarlyPersistence( EarlyPersistenceComponent earlyPersistence ) {
+        this.earlyPersistenceService = earlyPersistence;
     }
 
     // AnnotationService
