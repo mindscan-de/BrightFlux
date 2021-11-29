@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.eclipse.swt.SWT;
@@ -66,6 +64,7 @@ public class BrightFluxViewerMainAppTwo {
 
     // TODO refactor constant this to the right place
     public static final String FAVORITE_RECIPES_DIRECTORY_KEY = "favorites.recipes.dir";
+    public static final String FFPROBE_PATH_KEY = "ffprobe.path";
 
     protected Shell shellBFViewerMainApp;
     private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
@@ -98,10 +97,8 @@ public class BrightFluxViewerMainAppTwo {
             systemServices.setFavRecipeServices( favRecipesComponent );
 
             // STARTUP : Register Video Annotation Service
-            String currentDirectory = System.getProperty( "user.dir" );
-            Path ffprobePath = Paths.get( currentDirectory, "ffprobe.exe" );
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
-            videoAnnotatorComponent.setFFProbePath( ffprobePath );
+            videoAnnotatorComponent.setFFProbePath( earlyPersistence.getPropertyAsPath( FFPROBE_PATH_KEY ) );
             systemServices.setVideoAnnotationService( videoAnnotatorComponent );
 
             // STARTUP : Register Report Generator Service
