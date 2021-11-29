@@ -87,17 +87,22 @@ public class BrightFluxViewerMainAppTwo {
             earlyPersistence.initEarlyPersistence();
             systemServices.setEarlyPersistence( earlyPersistence );
 
-            // TODO: load some configuration from file
-            // TODO: set the current configuration (e.g. the window size)
+            // TODO: get early startup configuration from early persistence configuration, start components as bundles 
 
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
             FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
             FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
+            // TODO 
+            // - set a fully configured persistence module instead, where the component can do everything in its own
+            // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
             favRecipesCollector.collect( earlyPersistence.getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
             systemServices.setFavRecipeServices( favRecipesComponent );
 
             // STARTUP : Register Video Annotation Service
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
+            // TODO 
+            // - set a fully configured persistence module instead, where the component can do everything in its own
+            // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
             videoAnnotatorComponent.setFFProbePath( earlyPersistence.getPropertyAsPath( FFPROBE_PATH_KEY ) );
             systemServices.setVideoAnnotationService( videoAnnotatorComponent );
 
