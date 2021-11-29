@@ -38,7 +38,7 @@ import java.util.stream.Collectors;
  */
 public class FavRecipesComponent {
 
-    private final static String ROOT = "";
+    private static final String ROOT = "";
     /**
      * favoriteRecipes only contains leaf-nodes of the tree
      */

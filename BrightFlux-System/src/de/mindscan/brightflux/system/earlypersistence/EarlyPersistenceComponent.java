@@ -41,6 +41,7 @@ public class EarlyPersistenceComponent {
     private static final String EARLY_PERSISTENCE_FILENAME = "early.persistence.ini";
 
     private Path currentDirectory;
+    private Properties earlyProperties;
 
     public EarlyPersistenceComponent() {
         this.currentDirectory = Paths.get( System.getProperty( "user.dir", "." ) );
@@ -55,10 +56,30 @@ public class EarlyPersistenceComponent {
 
             // TODO: evaluate the content of each Property entry and create a MAP for Path or String values.
             // lets see what we have to come up with...
+            setEarlyProperties( p );
         }
         catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setEarlyProperties( Properties p ) {
+        earlyProperties = p;
+    }
+
+    public boolean containsKey( String key ) {
+        return earlyProperties.containsKey( key );
+    }
+
+    public Path getPropertyAsPath( String key ) {
+        String value = earlyProperties.getProperty( key ).trim();
+        if (value.startsWith( "{{user.dir}}/" )) {
+            return this.currentDirectory.resolve( value.substring( "{{user.dir}}/".length() ) );
+        }
+        else {
+            return Paths.get( value );
+        }
+
     }
 
     public Path getCurrentDirectory() {

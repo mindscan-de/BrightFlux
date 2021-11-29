@@ -64,6 +64,9 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
  */
 public class BrightFluxViewerMainAppTwo {
 
+    // TODO refactor constant this to the right place
+    public static final String FAVORITE_RECIPES_DIRECTORY_KEY = "favorites.recipes.dir";
+
     protected Shell shellBFViewerMainApp;
     private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
 
@@ -89,14 +92,13 @@ public class BrightFluxViewerMainAppTwo {
             // TODO: set the current configuration (e.g. the window size)
 
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
-            String currentDirectory = System.getProperty( "user.dir" );
-            Path favRecipesPath = Paths.get( currentDirectory, "favrecipes" );
             FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
             FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
-            favRecipesCollector.collect( favRecipesPath );
+            favRecipesCollector.collect( earlyPersistence.getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
             systemServices.setFavRecipeServices( favRecipesComponent );
 
             // STARTUP : Register Video Annotation Service
+            String currentDirectory = System.getProperty( "user.dir" );
             Path ffprobePath = Paths.get( currentDirectory, "ffprobe.exe" );
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
             videoAnnotatorComponent.setFFProbePath( ffprobePath );
