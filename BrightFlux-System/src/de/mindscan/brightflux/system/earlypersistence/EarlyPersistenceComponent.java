@@ -32,7 +32,9 @@ import java.nio.file.Paths;
 import java.util.Properties;
 
 /**
- * 
+ * TODO: we want for each component maybe its own configuration file. But we want to provide an index, where to find
+ *       these component configuration files. The early persistence file may not have a property editor, and will be
+ *       read only for the first implementations 
  */
 public class EarlyPersistenceComponent {
 
