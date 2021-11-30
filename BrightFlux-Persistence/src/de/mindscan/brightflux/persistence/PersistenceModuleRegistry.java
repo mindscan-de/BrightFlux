@@ -25,16 +25,30 @@
  */
 package de.mindscan.brightflux.persistence;
 
+import java.nio.file.Path;
+
 /**
  * 
  */
 public class PersistenceModuleRegistry {
 
+    private Path persistenceBasePath;
+
+    /**
+     * @param persistenceBasePath Base path of the persistence data - registry and module data.
+     */
+    public PersistenceModuleRegistry( Path persistenceBasePath ) {
+        this.persistenceBasePath = persistenceBasePath;
+    }
+
     public PersistenceModule getPersistenceModule( int persistenceId ) {
+        // either create+load or get PersistenceModule from Runtime
         return null;
     }
 
     public PersistenceModule getPersistenceModule( String persistenceNamespaceName ) {
+        // either create+load or get PersistenceModule from Runtime
         return null;
     }
+
 }
