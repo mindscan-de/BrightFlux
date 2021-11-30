@@ -28,13 +28,8 @@ package de.mindscan.brightflux.persistence;
 /**
  * 
  */
-public interface PersistenceModule {
+public interface PersistenceValueUpdateListener {
 
-    int getNamespaceId();
-
-    String getNamespaceName();
-
-    // void addPersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
-    // void removePersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
-    // void clearPersistenceValueUpdateListeners();
+    // or maybe implement an update event.
+    void persistenceValueUpdated( String persistenceKey, Object oldValue, Object newValue );
 }
