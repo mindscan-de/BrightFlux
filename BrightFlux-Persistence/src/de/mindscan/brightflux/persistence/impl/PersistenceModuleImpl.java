@@ -84,11 +84,19 @@ public class PersistenceModuleImpl implements PersistenceModule {
     }
 
     public int getIntValue( String key ) {
-        return ((Integer) currentPersistenceData.get( key )).intValue();
+        if (currentPersistenceData.containsKey( key )) {
+            return ((Integer) currentPersistenceData.get( key )).intValue();
+        }
+
+        return ((Integer) defaultPersistenceData.get( key )).intValue();
     }
 
     public void setIntValue( String key, int newValue ) {
         currentPersistenceData.put( key, Integer.valueOf( newValue ) );
+    }
+
+    public void setDefaultIntValue( String key, int defaultValue ) {
+        defaultPersistenceData.put( key, Integer.valueOf( defaultValue ) );
     }
 
     public long getLongValue( String key ) {

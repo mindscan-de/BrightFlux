@@ -72,12 +72,53 @@ public class PersistenceModuleImplTest {
     public void testSetIntValue_EarlyUISetIntWidth800_WidthToBe800() throws Exception {
         // arrange
         PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
-        module.setIntValue( "width", 800 );
 
         // act
-        int result = module.getIntValue( "width" );
+        module.setIntValue( "width", 800 );
 
         // assert
+        int result = module.getIntValue( "width" );
+        assertThat( result, equalTo( 800 ) );
+    }
+
+    @Test
+    public void testSetDefaultIntValue_EarlyUISetDefaultIntWidth1920_getDefaultValue1920() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+
+        // act
+        module.setDefaultIntValue( "width", 1920 );
+
+        // assert
+        int result = module.getIntValue( "width" );
+        assertThat( result, equalTo( 1920 ) );
+    }
+
+    @Test
+    public void testSetDefaultIntValue_EarlyUISetDifferentWidth800_returnsValue800() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+
+        // act
+        module.setDefaultIntValue( "width", 1920 );
+        module.setIntValue( "width", 800 );
+
+        // assert
+        int result = module.getIntValue( "width" );
+        assertThat( result, equalTo( 800 ) );
+    }
+
+    @Test
+    public void testSetDefaultIntValue_EarlyUISetDifferentWidth800DefaultOrder_returnsValue800CurrentValueWinsOverDefaultValue() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+
+        // act
+        module.setIntValue( "width", 800 );
+        module.setDefaultIntValue( "width", 1920 );
+
+        // assert
+        int result = module.getIntValue( "width" );
         assertThat( result, equalTo( 800 ) );
     }
 
