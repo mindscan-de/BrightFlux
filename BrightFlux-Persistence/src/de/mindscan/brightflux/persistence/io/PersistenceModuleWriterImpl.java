@@ -25,9 +25,20 @@
  */
 package de.mindscan.brightflux.persistence.io;
 
+import de.mindscan.brightflux.persistence.PersistenceModule;
+
 /**
  * Writes a persistence Module state to disk.
  */
 public class PersistenceModuleWriterImpl {
 
+    public void savePersistenceModuleData( PersistenceModule module ) {
+        // TODO: i want an iterator for each value
+
+        // TODO: then we want to save default Values and their types
+        // TODO: then we want to save current values
+
+        // TODO: we want to know where we can create the files.
+        // TODO: we also want to save the data as long as the data is unmodified
+    }
 }
