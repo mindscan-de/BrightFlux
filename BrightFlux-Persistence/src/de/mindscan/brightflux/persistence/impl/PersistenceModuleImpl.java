@@ -75,6 +75,7 @@ public class PersistenceModuleImpl implements PersistenceModule {
 //
 //    }
 
+    @Override
     public int getIntValue( String key ) {
         if (currentPersistenceData.containsKey( key )) {
             return ((Integer) currentPersistenceData.get( key )).intValue();
@@ -83,10 +84,12 @@ public class PersistenceModuleImpl implements PersistenceModule {
         return ((Integer) defaultPersistenceData.get( key )).intValue();
     }
 
+    @Override
     public void setIntValue( String key, int newValue ) {
         currentPersistenceData.put( key, Integer.valueOf( newValue ) );
     }
 
+    @Override
     public void setDefaultIntValue( String key, int defaultValue ) {
         defaultPersistenceData.put( key, Integer.valueOf( defaultValue ) );
     }

@@ -34,7 +34,14 @@ public interface PersistenceModule {
 
     String getNamespaceName();
 
+    int getIntValue( String key );
+
+    void setIntValue( String key, int newValue );
+
+    void setDefaultIntValue( String key, int defaultValue );
+
     // void addPersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
     // void removePersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
     // void clearPersistenceValueUpdateListeners();
+
 }
