@@ -32,13 +32,23 @@ import de.mindscan.brightflux.persistence.PersistenceModule;
  */
 public class PersistenceModuleImpl implements PersistenceModule {
 
+    private int namespaceId;
+    private String namespaceName;
+
+    /**
+     * 
+     */
+    public PersistenceModuleImpl( int namespaceId, String namespaceName ) {
+        this.namespaceId = namespaceId;
+        this.namespaceName = namespaceName;
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public int getNamespaceId() {
-        // TODO Auto-generated method stub
-        return 0;
+        return namespaceId;
     }
 
     /** 
@@ -46,8 +56,7 @@ public class PersistenceModuleImpl implements PersistenceModule {
      */
     @Override
     public String getNamespaceName() {
-        // TODO Auto-generated method stub
-        return null;
+        return namespaceName;
     }
 
 }
