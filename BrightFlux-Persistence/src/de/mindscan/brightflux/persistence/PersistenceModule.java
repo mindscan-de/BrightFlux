@@ -34,11 +34,15 @@ public interface PersistenceModule {
 
     String getNamespaceName();
 
-    int getIntValue( String key );
+    void resetToDefault( String key );
+
+    void resetAllToDefault();
+
+    void setDefaultIntValue( String key, int defaultValue );
 
     void setIntValue( String key, int newValue );
 
-    void setDefaultIntValue( String key, int defaultValue );
+    int getIntValue( String key );
 
     // void addPersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
     // void removePersistenceValueUpdateListener( PersistenceValueUpdateListener listener );

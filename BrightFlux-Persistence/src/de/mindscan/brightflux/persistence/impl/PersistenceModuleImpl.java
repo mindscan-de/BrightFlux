@@ -96,6 +96,18 @@ public class PersistenceModuleImpl implements PersistenceModule {
         defaultPersistenceData.put( key, Integer.valueOf( defaultValue ) );
     }
 
+    @Override
+    public void resetToDefault( String key ) {
+        if (currentPersistenceData.containsKey( key )) {
+            currentPersistenceData.remove( key );
+        }
+    }
+
+    @Override
+    public void resetAllToDefault() {
+        currentPersistenceData.clear();
+    }
+
     // TODO LATER
 
     public String getStringValue( String key ) {

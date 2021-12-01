@@ -122,4 +122,34 @@ public class PersistenceModuleImplTest {
         assertThat( result, equalTo( 800 ) );
     }
 
+    @Test
+    public void testResetToDefault_EarlyUISetDifferentWidth800DefaultOrder_returnsDefaultValueAfterReset() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+        module.setDefaultIntValue( "width", 1920 );
+        module.setIntValue( "width", 800 );
+
+        // act
+        module.resetToDefault( "width" );
+
+        // assert
+        int result = module.getIntValue( "width" );
+        assertThat( result, equalTo( 1920 ) );
+    }
+
+    @Test
+    public void testResetAllToDefault_EarlyUISetDifferentWidth800DefaultOrder_returnsDefaultValueAfterReset() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+        module.setDefaultIntValue( "width", 1920 );
+        module.setIntValue( "width", 800 );
+
+        // act
+        module.resetAllToDefault();
+
+        // assert
+        int result = module.getIntValue( "width" );
+        assertThat( result, equalTo( 1920 ) );
+    }
+
 }
