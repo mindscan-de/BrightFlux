@@ -38,6 +38,8 @@ public class PersistenceModuleImpl implements PersistenceModule {
     private int namespaceId;
     private String namespaceName;
 
+    // TODO: maybe we want to set and register the type information too...
+
     private Map<String, Object> currentPersistenceData = new LinkedHashMap<>();
     private Map<String, Object> defaultPersistenceData = new LinkedHashMap<>();
 
