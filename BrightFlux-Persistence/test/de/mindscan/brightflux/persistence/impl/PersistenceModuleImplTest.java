@@ -55,4 +55,30 @@ public class PersistenceModuleImplTest {
         assertThat( result, equalTo( "annotator" ) );
     }
 
+    @Test
+    public void testSetIntValue_EarlyUISetIntWidthZero_WidthToBeZero() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+        module.setIntValue( "width", 0 );
+
+        // act
+        int result = module.getIntValue( "width" );
+
+        // assert
+        assertThat( result, equalTo( 0 ) );
+    }
+
+    @Test
+    public void testSetIntValue_EarlyUISetIntWidth800_WidthToBe800() throws Exception {
+        // arrange
+        PersistenceModuleImpl module = new PersistenceModuleImpl( 0x100, "early.ui" );
+        module.setIntValue( "width", 800 );
+
+        // act
+        int result = module.getIntValue( "width" );
+
+        // assert
+        assertThat( result, equalTo( 800 ) );
+    }
+
 }

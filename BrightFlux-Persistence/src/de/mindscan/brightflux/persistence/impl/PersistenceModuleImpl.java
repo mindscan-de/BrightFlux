@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.persistence.impl;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
 /**
@@ -34,6 +37,9 @@ public class PersistenceModuleImpl implements PersistenceModule {
 
     private int namespaceId;
     private String namespaceName;
+
+    private Map<String, Object> currentPersistenceData = new LinkedHashMap<>();
+    private Map<String, Object> defaultPersistenceData = new LinkedHashMap<>();
 
     /**
      * 
@@ -59,4 +65,37 @@ public class PersistenceModuleImpl implements PersistenceModule {
         return namespaceName;
     }
 
+    // --------------------------
+
+//    public Object getObjectValue( String key ) {
+//        return null;
+//    }
+//
+//    public void setObjectValue( String key, Object newValue ) {
+//
+//    }
+
+    public String getStringValue( String key ) {
+        return null;
+    }
+
+    public void setStringValue( String key, String newValue ) {
+        // TODO:        
+    }
+
+    public int getIntValue( String key ) {
+        return ((Integer) currentPersistenceData.get( key )).intValue();
+    }
+
+    public void setIntValue( String key, int newValue ) {
+        currentPersistenceData.put( key, Integer.valueOf( newValue ) );
+    }
+
+    public long getLongValue( String key ) {
+        return 0L;
+    }
+
+    public void setLongValue( String key, long newValue ) {
+        // TODO:
+    }
 }
