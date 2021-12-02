@@ -60,6 +60,7 @@ import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedHandler;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 import swing2swt.layout.BorderLayout;
@@ -179,8 +180,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         }
 
         Control control = currentSelectedSingleVideoObject.getControl();
-        if (control instanceof BFVideoAnnotationSingleVideoViewComposite) {
-            // TODO: delegate to the selected singleVideoComposite
+        if (control instanceof DataFrameRowSelectedHandler) {
+            ((DataFrameRowSelectedHandler) control).handleDataFrameRowSelected( selectedRow );
         }
     }
 
