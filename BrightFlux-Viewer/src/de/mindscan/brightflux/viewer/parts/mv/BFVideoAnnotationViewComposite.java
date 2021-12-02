@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
@@ -59,6 +60,7 @@ import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 import swing2swt.layout.BorderLayout;
 
@@ -156,6 +158,18 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
         registerVideoObjectCreatedEvent( projectRegistry );
         registerVideoObjectSelectRequestEvent( projectRegistry );
+        registerDataFrameRowSelectionEvent( projectRegistry );
+    }
+
+    private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry2 ) {
+        DataFrameRowSelectedListenerAdapter listener = new DataFrameRowSelectedListenerAdapter() {
+            @Override
+            public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
+                // TODO: delegate this Event to the current selected SingleVideoComposite
+            }
+        };
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, listener );
     }
 
     private void registerVideoObjectCreatedEvent( ProjectRegistry projectRegistry ) {
