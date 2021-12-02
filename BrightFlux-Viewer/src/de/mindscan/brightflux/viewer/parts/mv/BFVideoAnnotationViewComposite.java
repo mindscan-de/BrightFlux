@@ -165,11 +165,23 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         DataFrameRowSelectedListenerAdapter listener = new DataFrameRowSelectedListenerAdapter() {
             @Override
             public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
-                // TODO: delegate this Event to the current selected SingleVideoComposite
+                delegateDataFrameRowSelectionToCurrentVideoTab( selectedRow );
             }
         };
 
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, listener );
+    }
+
+    protected void delegateDataFrameRowSelectionToCurrentVideoTab( DataFrameRow selectedRow ) {
+        CTabItem currentSelectedSingleVideoObject = videoObjectTabFolder.getSelection();
+        if (currentSelectedSingleVideoObject == null) {
+            return;
+        }
+
+        Control control = currentSelectedSingleVideoObject.getControl();
+        if (control instanceof BFVideoAnnotationSingleVideoViewComposite) {
+            // TODO: delegate to the selected singleVideoComposite
+        }
     }
 
     private void registerVideoObjectCreatedEvent( ProjectRegistry projectRegistry ) {
