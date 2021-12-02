@@ -15,7 +15,7 @@ ain't broken.
 
 I'm sick of all the f..king "log file viewers" out there, because they lack the features and the usability from
 different perspectives which serve the software developers, software-engineers and system-engineers point of
-view. For some reason software developers have forgot to serve themselves and their future selves.
+view. For some reason software developers have forgotten to serve themselves and their future selves.
 
 Since some time I'm often analyzing bugs and issues using log files (think of post-mortem analysis). Think
 of the kind of errors, where it must be determined what happened across many domains and across the system.
@@ -280,7 +280,7 @@ Rebuild the Event-Pattern and Command-Pattern
 
 
 Exporters
-* Export dataframes as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
+* Export data frames as h5-files (HDF5), so it can be used in multiple ways (e.g. some proof of concept works as well as machine learning)
 
 
 Client Server / Windowed Data-Retrieval
