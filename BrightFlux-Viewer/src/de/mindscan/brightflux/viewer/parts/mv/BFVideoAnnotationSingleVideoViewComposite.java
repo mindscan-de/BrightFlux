@@ -291,7 +291,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (btnLinkDataframe.getSelection()) {
             System.out.println( "handle the data frame row ts: " + selectedRow.get( "h1.ts" ) );
 
-            // TODO Build the link command with this dataframe 
+            // TODO Build the link command with this selected data frame row
 
             // disable the Linking mode after receiving a selection event
             btnLinkDataframe.setSelection( false );
@@ -306,6 +306,5 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
             btnSyncToFrame.setSelection( false );
         }
         btnSyncToFrame.setEnabled( enabled );
-
     }
 }
