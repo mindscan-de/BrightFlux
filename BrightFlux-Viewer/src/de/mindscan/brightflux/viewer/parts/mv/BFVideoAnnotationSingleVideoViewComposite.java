@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Slider;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.BFEventFactory;
@@ -56,12 +57,13 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedHandler;
 import swing2swt.layout.BorderLayout;
 
 /**
  * 
  */
-public class BFVideoAnnotationSingleVideoViewComposite extends Composite implements ProjectRegistryParticipant {
+public class BFVideoAnnotationSingleVideoViewComposite extends Composite implements ProjectRegistryParticipant, DataFrameRowSelectedHandler {
     private Text currentVideoDuration;
     private Text currentVideoPosition;
     private VideoAnnotatorVideoObject videoObject;
@@ -131,6 +133,9 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
             public void widgetSelected( SelectionEvent e ) {
                 // TODO: clear all time references in a video
                 // This must send a command to clear the current videoObject
+
+                // disable the sync button
+                enableSyncButton( false );
             }
         } );
         btnClearReferences.setText( "Clear References" );
@@ -278,7 +283,29 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         // Disable the check that prevents subclassing of SWT components
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
+        if (btnLinkDataframe.getSelection()) {
+            System.out.println( "handle the data frame row ts: " + selectedRow.get( "h1.ts" ) );
+
+            // TODO Build the link command with this dataframe 
+
+            // disable the Linking mode after receiving a selection event
+            btnLinkDataframe.setSelection( false );
+
+            // enable the sync button, after we have it linked with a videoObject
+            enableSyncButton( true );
+        }
+    }
+
     private void enableSyncButton( boolean enabled ) {
+        if (!enabled) {
+            btnSyncToFrame.setSelection( false );
+        }
         btnSyncToFrame.setEnabled( enabled );
+
     }
 }
