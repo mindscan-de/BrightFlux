@@ -41,6 +41,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -69,6 +70,9 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     private ProjectRegistry projectRegistry;
 
     private VideoAnnotatorPreferenceData preferences = new VideoAnnotatorPreferenceData();
+    private Button btnSyncToFrame;
+    // TODO: have a boolean flag, whether we are currently in a link listener Mode / if yes, we want to disable the link listener mode after the job of linking is finished.
+    private Button btnLinkDataframe;
 
     /**
      * Create the composite.
@@ -95,6 +99,41 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         currentVideoPosition = new Text( leftComposite, SWT.BORDER | SWT.READ_ONLY | SWT.CENTER );
         currentVideoPosition.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
         currentVideoPosition.setText( "00:00" );
+        new Label( leftComposite, SWT.NONE );
+
+        btnSyncToFrame = new Button( leftComposite, SWT.TOGGLE );
+        btnSyncToFrame.setEnabled( false );
+        btnSyncToFrame.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // set the syncmode, if set/pressed, then the selection update will fire a locate request to the current selected dataframe.
+            }
+        } );
+        btnSyncToFrame.setToolTipText( "Send Position to current selected Dataframe (only works if at least one refernce is present)" );
+        btnSyncToFrame.setText( "Sync to Frame" );
+        new Label( leftComposite, SWT.NONE );
+
+        btnLinkDataframe = new Button( leftComposite, SWT.TOGGLE );
+        btnLinkDataframe.setToolTipText( "After pressing this button select a DataFrameRow" );
+        btnLinkDataframe.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // we listen to selection event, 
+                // and if in listener/link mode, we create a new command, to link the retrieved 
+                // then we can clear the selection
+            }
+        } );
+        btnLinkDataframe.setText( "Link as Reference" );
+
+        Button btnClearReferences = new Button( leftComposite, SWT.NONE );
+        btnClearReferences.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: clear all time references in a video
+                // This must send a command to clear the current videoObject
+            }
+        } );
+        btnClearReferences.setText( "Clear References" );
 
         Composite bottomComposite = new Composite( this, SWT.NONE );
         bottomComposite.setLayoutData( BorderLayout.SOUTH );
@@ -202,6 +241,8 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
 
         if (videoObject != null) {
             currentVideoTimestampAnnotation.setText( videoObject.getAnnotationForTimestamp( videoPositionInSeconds ) );
+
+            // TODO: if sync is enabled, we want to send a new Command to find a particular element.... 
         }
         else {
             currentVideoTimestampAnnotation.setText( "" );
@@ -235,5 +276,9 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
+    }
+
+    private void enableSyncButton( boolean enabled ) {
+        btnSyncToFrame.setEnabled( enabled );
     }
 }
