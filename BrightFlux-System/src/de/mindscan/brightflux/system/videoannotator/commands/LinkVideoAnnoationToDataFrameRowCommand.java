@@ -73,10 +73,11 @@ public class LinkVideoAnnoationToDataFrameRowCommand implements BFCommand {
             // TODO: check if column exists in dataFrameRow -> continue 
             // then
             // * add reference Point
-            if (linkedDataFrameRow.get( columnName ) != null) {
+            Object columnValue;
+            if ((columnValue = linkedDataFrameRow.getOrDefault( columnName, null )) != null) {
 
                 // Add reference point
-                long referenceTimestamp = (Long) linkedDataFrameRow.get( columnName );
+                long referenceTimestamp = (Long) columnValue;
                 addReferencePoint( videoPositionInSec, columnName, referenceTimestamp );
 
                 // TODO: (Quick hack. 
@@ -96,8 +97,11 @@ public class LinkVideoAnnoationToDataFrameRowCommand implements BFCommand {
         }
     }
 
-    private void addReferencePoint( long videoPositionInSec2, String columnName, long referenceTimestamp ) {
-        // TODO implement a method to add reference points to the videoObject time stamp.
+    private void addReferencePoint( long videoPosition, String columnName, long referenceTimestamp ) {
+        System.out.println( "-------------------------------------------" );
+        System.out.println( "Linking videoPosition: " + videoPosition );
+        System.out.println( "Linking columName: " + columnName );
+        System.out.println( "Linking timestamp: " + referenceTimestamp );
     }
 
 }
