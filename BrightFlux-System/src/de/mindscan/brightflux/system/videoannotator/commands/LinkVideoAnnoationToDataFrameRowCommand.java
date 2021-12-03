@@ -102,6 +102,8 @@ public class LinkVideoAnnoationToDataFrameRowCommand implements BFCommand {
         System.out.println( "Linking videoPosition: " + videoPosition );
         System.out.println( "Linking columName: " + columnName );
         System.out.println( "Linking timestamp: " + referenceTimestamp );
+
+        videoObject.registerTimestampForColumn( videoPosition, columnName, referenceTimestamp );
     }
 
 }
