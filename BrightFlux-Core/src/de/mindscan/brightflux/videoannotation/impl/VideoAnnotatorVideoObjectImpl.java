@@ -155,6 +155,6 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     }
 
     private long videoPositionAt( int i, String columnName ) {
-        return proofOfConceptPrediction.get( columnName + "." + i );
+        return proofOfConceptPrediction.getOrDefault( columnName + "." + i, 0L );
     }
 }
