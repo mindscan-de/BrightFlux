@@ -249,7 +249,12 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (videoObject != null) {
             currentVideoTimestampAnnotation.setText( videoObject.getAnnotationForTimestamp( videoPositionInSeconds ) );
 
-            // TODO: if sync is enabled, we want to send a new Command to find a particular element.... 
+            if (btnSyncToFrame.getSelection()) {
+                long predictedTimestamp = videoObject.predictTimestampForColumn( videoPositionInSeconds, "h1.ts" );
+                System.out.println( "predicted Timestamp for locate =" + predictedTimestamp );
+
+                // TODO: if sync is enabled, we want to send a new Command to find the best timestamp location a particular element.... in the current selected dataframe
+            }
         }
         else {
             currentVideoTimestampAnnotation.setText( "" );
