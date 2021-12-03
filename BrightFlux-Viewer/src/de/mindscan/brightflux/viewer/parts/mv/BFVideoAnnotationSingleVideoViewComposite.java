@@ -59,6 +59,7 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedHandler;
 import swing2swt.layout.BorderLayout;
 
@@ -251,9 +252,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
 
             if (btnSyncToFrame.getSelection()) {
                 long predictedTimestamp = videoObject.predictTimestampForColumn( videoPositionInSeconds, "h1.ts" );
-                System.out.println( "predicted Timestamp for locate =" + predictedTimestamp );
-
-                // TODO: if sync is enabled, we want to send a new Command to find the best timestamp location a particular element.... in the current selected dataframe
+                dispatchCommand( UICommandFactory.locatePredictedTimestampForColumn( "h1.ts", predictedTimestamp ) );
             }
         }
         else {

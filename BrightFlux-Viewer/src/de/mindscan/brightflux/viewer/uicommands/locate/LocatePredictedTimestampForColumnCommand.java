@@ -23,24 +23,38 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.uicommands;
+package de.mindscan.brightflux.viewer.uicommands.locate;
 
-import org.eclipse.swt.widgets.Shell;
+import java.util.function.Consumer;
 
-import de.mindscan.brightflux.viewer.uicommands.dnd.CopyTextToClipBoardCommand;
-import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnCommand;
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
 
 /**
  * 
  */
-public class UICommandFactory {
+public class LocatePredictedTimestampForColumnCommand implements UIBFCommand {
 
-    public static UIBFCommand copyToClipboard( Shell shell, String report ) {
-        return new CopyTextToClipBoardCommand( shell, report );
+    private String column;
+    private long predictedTimestamp;
+
+    /**
+     * 
+     */
+    public LocatePredictedTimestampForColumnCommand( String column, long predictedTimestamp ) {
+        this.column = column;
+        this.predictedTimestamp = predictedTimestamp;
     }
 
-    public static UIBFCommand locatePredictedTimestampForColumn( String columnName, long predictedTimestamp ) {
-        return new LocatePredictedTimestampForColumnCommand( columnName, predictedTimestamp );
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void execute( Consumer<BFEvent> eventConsumer ) {
+        System.out.println( "predicted Timestamp for locate " + column + "=" + predictedTimestamp );
+
+        // TODO dispatch a LocateTimestampForCurrentDataFrameRequestedEvent 
+
     }
 
 }
