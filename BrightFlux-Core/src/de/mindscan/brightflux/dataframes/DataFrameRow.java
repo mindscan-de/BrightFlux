@@ -30,13 +30,15 @@ package de.mindscan.brightflux.dataframes;
  */
 public interface DataFrameRow {
 
-    public Object get( int columnIndex );
+    Object get( int columnIndex );
 
-    public Object get( String columnName );
+    Object get( String columnName );
 
-    public Object[] getAll();
+    Object getOrDefault( String columnName, Object defaultValue );
 
-    public int getSize();
+    Object[] getAll();
+
+    int getSize();
 
     /**
      * This method returns the type of the column referenced by the given columnName. This type is needed to provide
@@ -45,7 +47,7 @@ public interface DataFrameRow {
      * @param columnName Name of the column
      * @return the type of the column
      */
-    public Object getValueType( String columnName );
+    Object getValueType( String columnName );
 
     /**
      * This method will invoke the correct compareToRaw-operation of the columnName 
@@ -53,7 +55,7 @@ public interface DataFrameRow {
      * @param convertedPredicateValue a value which is assignable to the type of the column identified by the columnname
      * @return 0 if rowValue is equal to convertedPredicateValue, 1 if convertedPredicateValue is bigger than rowvalue
      */
-    public int compareToRaw( String columnName, Object convertedPredicateValue );
+    int compareToRaw( String columnName, Object convertedPredicateValue );
 
     /**
      * Current Rowindex in the filtered / unfiltered dataset.

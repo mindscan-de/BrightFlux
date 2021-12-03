@@ -51,6 +51,10 @@ public class DataFrameRowImpl implements DataFrameRow {
         return df.getAt( columnName, this.rowIndex );
     }
 
+    public Object getOrDefault( String columnName, Object defaultValue ) {
+        return df.hasColumn( columnName ) ? df.getAt( columnName, this.rowIndex ) : defaultValue;
+    }
+
     public int getSize() {
         return maxCols;
     }
