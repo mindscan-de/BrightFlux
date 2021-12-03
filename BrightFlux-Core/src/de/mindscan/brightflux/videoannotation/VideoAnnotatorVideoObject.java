@@ -55,4 +55,8 @@ public interface VideoAnnotatorVideoObject {
     VideoAnnotatorVideoObjectMetaData getMetaData();
 
     void setVideoDurationInSeconds( int durationInSeconds );
+
+    void registerTimestampForColumn( long videoPosition, String columnName, long referenceTimestamp );
+
+    long predictTimestampForColumn( long videoPosition, String columnName );
 }

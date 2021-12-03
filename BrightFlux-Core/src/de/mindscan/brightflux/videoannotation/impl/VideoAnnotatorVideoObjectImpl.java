@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.videoannotation.impl;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -40,6 +41,8 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
     private DataFrame videoAnnotationDataFrame;
     private VideoAnnotatorVideoObjectMetaData metaData;
+
+    private HashMap<String, Long> proofOfConceptPrediction = new HashMap<>();
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath ) {
         this.videoAnnotationDataFrame = df;
@@ -125,5 +128,33 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
      */
     public VideoAnnotatorVideoObjectMetaData getMetaData() {
         return metaData;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void registerTimestampForColumn( long videoPosition, String columnName, long referenceTimestamp ) {
+        proofOfConceptPrediction.put( columnName + "." + videoPosition, Long.valueOf( referenceTimestamp ) );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public long predictTimestampForColumn( long videoPosition, String columnName ) {
+
+        int videoLength = this.getVideoDurationInSeconds();
+
+        long tsStart = videoPositionAt( 0, columnName );
+        long tsEnd = videoPositionAt( videoLength, columnName ) + 1;
+
+        long predicted = tsStart + (((tsEnd - tsStart) * videoPosition) / Math.max( (long) videoLength, 1L ));
+
+        return predicted;
+    }
+
+    private long videoPositionAt( int i, String columnName ) {
+        return proofOfConceptPrediction.get( columnName + "." + i );
     }
 }
