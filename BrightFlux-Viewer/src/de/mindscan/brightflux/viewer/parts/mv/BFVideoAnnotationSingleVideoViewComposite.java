@@ -50,8 +50,10 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
@@ -148,7 +150,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         videoPositionSlider.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                setVideoPosition( videoPositionSlider.getSelection() );
+                setVideoPosition( getVideoSelectionPositionFromSlider() );
             }
         } );
         videoPositionSlider.setMinimum( 0 );
@@ -255,10 +257,14 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     }
 
     private void updateAnnotationInVideoObject() {
-        int currentTimestamp = videoPositionSlider.getSelection();
+        int currentTimestamp = getVideoSelectionPositionFromSlider();
         if (this.videoObject != null) {
             this.videoObject.setAnnotationForTimestamp( currentTimestamp, currentVideoTimestampAnnotation.getText() );
         }
+    }
+
+    public int getVideoSelectionPositionFromSlider() {
+        return videoPositionSlider.getSelection();
     }
 
     public void closeVideoObject() {
@@ -291,13 +297,28 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (btnLinkDataframe.getSelection()) {
             System.out.println( "handle the data frame row ts: " + selectedRow.get( "h1.ts" ) );
 
-            // TODO Build the link command with this selected data frame row
+            // we need the current position from the slider
+            // we need the current videoObject
+            // we need the columns we want to focus on (ask the user via GUI?)
+            // we need the selected Row to do this.
+
+            dispatchCommand( //
+                            DataFrameCommandFactory.linkVideoAnnotationToDataFrame( // 
+                                            this.getVideoSelectionPositionFromSlider(), videoObject,
+                                            // TODO: The hard coded value should be asked from user or from previous selections, for this data frame type...
+                                            new String[] { "h1.ts", "hxx.ts" }, selectedRow ) );
 
             // disable the Linking mode after receiving a selection event
             btnLinkDataframe.setSelection( false );
 
             // enable the sync button, after we have it linked with a videoObject
             enableSyncButton( true );
+        }
+    }
+
+    public void dispatchCommand( BFCommand command ) {
+        if (projectRegistry != null) {
+            this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
 

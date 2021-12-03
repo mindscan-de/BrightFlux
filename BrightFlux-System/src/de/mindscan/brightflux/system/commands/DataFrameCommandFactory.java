@@ -29,6 +29,7 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
@@ -53,6 +54,7 @@ import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowC
 import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
+import de.mindscan.brightflux.system.videoannotator.commands.LinkVideoAnnoationToDataFrameRowCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoForAnnotationCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.SaveVideoAnnotationToFileCommand;
@@ -154,6 +156,11 @@ public class DataFrameCommandFactory {
 
     public static BFCommand loadVideoForAnnotation( Path videoObjectPath, VideoObjectInformation videoObjectInfo ) {
         return new LoadVideoForAnnotationCommand( videoObjectPath, videoObjectInfo );
+    }
+
+    public static BFCommand linkVideoAnnotationToDataFrame( int videoPosInSeconds, VideoAnnotatorVideoObject videoObject, String[] linkedColumns,
+                    DataFrameRow linkedDataFrameRow ) {
+        return new LinkVideoAnnoationToDataFrameRowCommand( videoPosInSeconds, videoObject, linkedColumns, linkedDataFrameRow );
     }
 
     public static BFCommand loadVideoAnnotationFromFile( Path videoAnnotationPath ) {
