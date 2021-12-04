@@ -30,5 +30,5 @@ package de.mindscan.brightflux.viewer.uievents;
  */
 public interface LocatePredictedTimestampRequestedHandler {
 
-    void handleLocatePredictedTimestamp( String columnName, long timstamp );
+    void handleLocatePredictedTimestamp( String columnName, long timestamp );
 }
