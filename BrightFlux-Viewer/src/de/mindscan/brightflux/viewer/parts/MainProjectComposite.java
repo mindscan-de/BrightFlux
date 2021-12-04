@@ -44,6 +44,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
+import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedHandler;
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedListenerAdapter;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
@@ -104,10 +105,23 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.LocatePredictedTimstampEvent,
                         new LocatePredictedTimestampRequestedListenerAdapter() {
                             @Override
-                            public void handleLocatePredictedTimestamp( String columnName, long timstamp ) {
+                            public void handleLocatePredictedTimestamp( String columnName, long timestamp ) {
                                 // TODO: delegate request to the current selected DataFrameTable Composite...
+                                delegateLocatePredictedTimestampToCurrentDataFrameTab( columnName, timestamp );
                             };
                         } );
+    }
+
+    protected void delegateLocatePredictedTimestampToCurrentDataFrameTab( String columnName, long timestamp ) {
+        CTabItem currentSelectedDataFrameTab = mainTabFolder.getSelection();
+        if (currentSelectedDataFrameTab == null) {
+            return;
+        }
+
+        Control control = currentSelectedDataFrameTab.getControl();
+        if (control instanceof LocatePredictedTimestampRequestedHandler) {
+            ((LocatePredictedTimestampRequestedHandler) control).handleLocatePredictedTimestamp( columnName, timestamp );
+        }
     }
 
     private void registerHighlighter( ProjectRegistry projectRegistry ) {
