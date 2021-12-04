@@ -71,12 +71,13 @@ import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
+import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedHandler;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
- * TODO: provide a catalog of recipes and build a filter/recipe menu from it
+ * 
  */
-public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant {
+public class DataFrameTableComposite extends Composite implements ProjectRegistryParticipant, LocatePredictedTimestampRequestedHandler {
 
     // this is not good enough yet, because some operations should be dependend on the columns...
     private static final String HARDCODED_H2_MSG = "h2.msg";
@@ -532,6 +533,16 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void handleLocatePredictedTimestamp( String columnName, long timstamp ) {
+        // TODO: Implement the locate index feature in UI
+        // TODO: use currentDataFrame, to locate the "insert" position in the given ColumnName
+        // TODO: now somehow scroll such that index position is in the visible range. 
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
@@ -656,7 +667,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     }
 
-    public void applyFavoriteRecipe( String key ) {
+    private void applyFavoriteRecipe( String key ) {
         SystemServices systemServices = SystemServices.getInstance();
         FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
 
