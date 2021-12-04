@@ -37,7 +37,7 @@ public class LocatePredictedTimestampRequestedListenerAdapter extends BFEventLis
      * {@inheritDoc}
      */
     @Override
-    public void handleLocatePredictedTimestampRequested( String columnName, long timstamp ) {
+    public void handleLocatePredictedTimestamp( String columnName, long timstamp ) {
         // intentionally left blank.
     }
 
@@ -49,7 +49,7 @@ public class LocatePredictedTimestampRequestedListenerAdapter extends BFEventLis
         if (event instanceof LocatePredictedTimestampRequestedEvent) {
             LocatePredictedTimestampRequestedEvent locateEvent = (LocatePredictedTimestampRequestedEvent) event;
 
-            handleLocatePredictedTimestampRequested( locateEvent.getColumnName(), locateEvent.getTimestamp() );
+            handleLocatePredictedTimestamp( locateEvent.getColumnName(), locateEvent.getTimestamp() );
         }
     }
 
