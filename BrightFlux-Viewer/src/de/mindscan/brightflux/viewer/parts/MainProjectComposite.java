@@ -44,6 +44,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
+import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedListenerAdapter;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
 
@@ -99,6 +100,14 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                 requestDataFrameSelection( requestedUUID );
             }
         } );
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.LocatePredictedTimstampEvent,
+                        new LocatePredictedTimestampRequestedListenerAdapter() {
+                            @Override
+                            public void handleLocatePredictedTimestamp( String columnName, long timstamp ) {
+                                // TODO: delegate request to the current selected DataFrameTable Composite...
+                            };
+                        } );
     }
 
     private void registerHighlighter( ProjectRegistry projectRegistry ) {
