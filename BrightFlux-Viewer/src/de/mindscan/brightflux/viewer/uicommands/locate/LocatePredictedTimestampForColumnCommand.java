@@ -29,6 +29,7 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
+import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
  * 
@@ -53,8 +54,7 @@ public class LocatePredictedTimestampForColumnCommand implements UIBFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         System.out.println( "predicted Timestamp for locate " + column + "=" + predictedTimestamp );
 
-        // TODO dispatch a LocateTimestampForCurrentDataFrameRequestedEvent 
-
+        eventConsumer.accept( UIEventFactory.locatePredictedTimestampRequested( column, predictedTimestamp ) );
     }
 
 }
