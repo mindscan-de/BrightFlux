@@ -46,4 +46,8 @@ public class UIEventFactory {
     public static BFEvent dataFrameSelectionRequest( UUID uuidToSelect ) {
         return new DataFrameRequestSelectEvent( uuidToSelect );
     }
+
+    public static BFEvent locatePredictedTimestampRequested( String column, long timestamp ) {
+        return new LocatePredictedTimestampRequestedEvent( column, timestamp );
+    }
 }
