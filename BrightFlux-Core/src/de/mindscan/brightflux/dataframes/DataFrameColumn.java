@@ -34,45 +34,48 @@ public interface DataFrameColumn<T> {
     // Extend the column 
     // -----------------------------------------
 
-    public abstract void append( T element );
+    void append( T element );
 
-    public abstract void appendRaw( Object element );
+    void appendRaw( Object element );
 
-    public abstract void appendNA();
+    void appendNA();
 
     // -----------------------------------------
     // Column wise functions
     // -----------------------------------------
 
-    public abstract int getSize();
+    int getSize();
 
-    public abstract boolean isEmpty();
+    boolean isEmpty();
 
-    public abstract void setColumnName( String columnName );
+    void setColumnName( String columnName );
 
-    public abstract String getColumnName();
+    String getColumnName();
 
-    public abstract String getColumnType();
+    String getColumnType();
 
-    public abstract String getColumnValueType();
+    String getColumnValueType();
 
-    public abstract DataFrameColumn<T> cloneColumnEmpty();
+    DataFrameColumn<T> cloneColumnEmpty();
 
     // return the values of this column
-    public abstract T[] toArray();
+    T[] toArray();
 
     // -----------------------------------------
     // Element wise access get / set / isPresent
     // -----------------------------------------    
 
-    public abstract boolean isPresent( int index );
+    boolean isPresent( int index );
 
-    public abstract T get( int index );
+    T get( int index );
 
-    public abstract void set( int index, T element );
+    void set( int index, T element );
 
-    public abstract void setNA( int index );
+    void setNA( int index );
 
-    public abstract void setRaw( int index, Object element );
+    void setRaw( int index, Object element );
+
+    // TODO: 
+    // int findInsertRaw( String columnName, Object element );
 
 }
