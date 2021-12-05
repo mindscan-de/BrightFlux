@@ -35,7 +35,7 @@ import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.dataframes.selection.DataFrameColumnSelection;
 
 /**
- * 
+ * TODO: split that interface into smaller ones?
  */
 public interface DataFrame {
 
@@ -74,6 +74,8 @@ public interface DataFrame {
     void setNA( int columnIndex, int rowIndex );
 
     void setNA( String columnName, int rowIndex );
+
+    int predictRowIndex( String columnName, Object value );
 
     DataFrame head();
 
