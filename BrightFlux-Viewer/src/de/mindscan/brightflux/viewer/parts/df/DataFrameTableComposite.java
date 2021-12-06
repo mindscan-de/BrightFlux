@@ -537,10 +537,12 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
      * {@inheritDoc}
      */
     @Override
-    public void handleLocatePredictedTimestamp( String columnName, long timstamp ) {
+    public void handleLocatePredictedTimestamp( String columnName, long timestamp ) {
         // TODO: Implement the locate index feature in UI
         // TODO: use currentDataFrame, to locate the "insert" position in the given ColumnName
-        // TODO: now somehow scroll such that index position is in the visible range. 
+        // TODO: now somehow scroll such that index position is in the visible range.
+        int predictedRow = this.ingestedDF.predictRowIndex( columnName, Long.valueOf( timestamp ) );
+        System.out.println( "predicted Row = " + predictedRow );
     }
 
     @Override

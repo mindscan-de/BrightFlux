@@ -639,10 +639,12 @@ public class DataFrameImpl implements DataFrame {
     public int predictRowIndex( String columnName, Object value ) {
         // Actually instead of predict row index, we look for the insert position without inserting something.
         // he idea is to use a particular column and a particular value for this column, and binary search until we found the element where the insert should go.
-        // probably it is the best if such a "search" operation is part of the column. for a binary search on a column, the whole column must be sorted in ascending. order. 
+        // probably it is the best if such a "search" operation is part of the column. for a binary search on a column, the whole column must be sorted in ascending. order.
+
+        return columnsMap.get( columnName ).findInsertRowIndexRaw( columnName, value );
 
         // TODO Auto-generated method stub
-        throw new NotYetImplemetedException( "implement predict Row index feature" );
+        // throw new NotYetImplemetedException( "implement predict Row index feature" );
 
         // -1 if row can't be predicted. 
         // return -1;

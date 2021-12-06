@@ -130,6 +130,10 @@ public abstract class SimpleColumn<T> extends DataFrameColumnBase<T> {
             return -1;
         }
 
+        if (element == null) {
+            return -1;
+        }
+
         int index = Arrays.binarySearch( columnValues, (T) element, comparator );
         return Math.abs( index );
     }
