@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import java.util.Comparator;
+
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
@@ -73,4 +75,11 @@ public class LongColumn extends SimpleNumberColumn<Long> {
         return ColumnValueTypes.COLUMN_TYPE_LONG;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    protected Comparator<? super Long> getComparator() {
+        return Comparator.naturalOrder();
+    }
 }

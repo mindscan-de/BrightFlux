@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import java.util.Comparator;
+
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
@@ -70,5 +72,13 @@ public class DoubleColumn extends SimpleColumn<Double> {
     @Override
     public String getColumnValueType() {
         return ColumnValueTypes.COLUMN_TYPE_DOUBLE;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    protected Comparator<? super Double> getComparator() {
+        return Comparator.naturalOrder();
     }
 }

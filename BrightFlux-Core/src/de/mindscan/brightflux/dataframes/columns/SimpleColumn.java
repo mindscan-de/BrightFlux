@@ -27,6 +27,7 @@ package de.mindscan.brightflux.dataframes.columns;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -118,4 +119,23 @@ public abstract class SimpleColumn<T> extends DataFrameColumnBase<T> {
         // TODO: implement this, such that we can override the value at acertain position.
         throw new NotYetImplemetedException( "'setNa' is not yet implemented in SimpleColumn" );
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int findInsertRowIndexRaw( String columnName, Object element ) {
+        Comparator<? super T> comparator = this.getComparator();
+        if (comparator == null) {
+            return -1;
+        }
+
+        int index = Arrays.binarySearch( columnValues, (T) element, comparator );
+        return Math.abs( index );
+    }
+
+    /**
+     * @return
+     */
+    protected abstract Comparator<? super T> getComparator();
 }

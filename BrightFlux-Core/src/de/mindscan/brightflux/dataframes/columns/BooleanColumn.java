@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
+import java.util.Comparator;
+
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
@@ -72,4 +74,19 @@ public class BooleanColumn extends SimpleColumn<Boolean> {
         return ColumnValueTypes.COLUMN_TYPE_BOOL;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int findInsertRowIndexRaw( String columnName, Object element ) {
+        return -1;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    protected Comparator<? super Boolean> getComparator() {
+        return Comparator.naturalOrder();
+    }
 }

@@ -76,6 +76,6 @@ public interface DataFrameColumn<T> {
     void setRaw( int index, Object element );
 
     // TODO: 
-    // int findInsertRaw( String columnName, Object element );
+    int findInsertRowIndexRaw( String columnName, Object element );
 
 }

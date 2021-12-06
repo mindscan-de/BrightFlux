@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.ingest.columns;
 
+import java.util.Comparator;
+
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columns.SimpleColumn;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -83,6 +85,22 @@ public class DataTokenColumn extends SimpleColumn<DataToken> {
     @Override
     public String getColumnValueType() {
         throw new NotYetImplemetedException( "Currently do not support columnValueTtype for datatoken columns" );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int findInsertRowIndexRaw( String columnName, Object element ) {
+        return -1;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    protected Comparator<? super DataToken> getComparator() {
+        return null;
     }
 
 }

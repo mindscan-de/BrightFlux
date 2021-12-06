@@ -127,4 +127,11 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
         return ((T[]) columnValues.values().toArray());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int findInsertRowIndexRaw( String columnName, Object element ) {
+        return -1;
+    }
 }

@@ -41,4 +41,5 @@ public abstract class SimpleNumberColumn<T extends Number> extends SimpleColumn<
     public SimpleNumberColumn( String columnName, T[] columnValues ) {
         super( columnName, columnValues );
     }
+
 }
