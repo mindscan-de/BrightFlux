@@ -543,6 +543,9 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         // TODO: now somehow scroll such that index position is in the visible range.
         int predictedRow = this.ingestedDF.predictRowIndex( columnName, Long.valueOf( timestamp ) );
         System.out.println( "predicted Row = " + predictedRow );
+
+        tableViewer.getTable().setSelection( predictedRow );
+        tableViewer.getTable().showSelection();
     }
 
     @Override
