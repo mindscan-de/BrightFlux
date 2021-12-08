@@ -106,6 +106,9 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * use default texts, which can be used to annotate timestamps
   * save video annotations to disk
   * load video annotations from disk
+  * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
+  * sync video position from video slider to log position and locate nearest following time stamp in data frame
+  
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
@@ -160,6 +163,12 @@ UI/UX
   * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
 
 
+Video time stamp Annotations
+* save sync positions to video annotation files
+* load sync positions from video annotation files
+
+
+
 ### Later
 
 Log-Analysis-Project-File
@@ -177,10 +186,11 @@ Annotation and Highlights Improvements
 
 
 Video time stamp Annotations
-* sync log message with video, e.g. select a log entry and then show the content of the video at exactly this time stamp
 * add Markers to annotation data frame
-* combine video object references with individual data frames (from MainProjectView)
 * load video also loads parallel video annotation file
+* show video frame content of the video at exactly a selected time stamp
+* sync from data frame to current video and locate position.
+* provide more accurate time stamps e.g. 0.1s 0.25s granularity (maybe on a frame number basis, i mean we know the number of frames, we know the frames per seconds, but the video player must be more precise then and show the frame numbers)
 
 
 Application-Startup (est. 6 kLOC)
