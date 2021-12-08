@@ -91,9 +91,9 @@ public class VideoAnnotatorVideoObjectMetaData {
         referenceTimestamps.clear();
     }
 
-    public long videoPositionAt( int i, String columnName ) {
+    public long videoPositionAt( long videoPosition, String columnName ) {
         if (referenceTimestamps.containsKey( columnName )) {
-            return referenceTimestamps.get( columnName ).getOrDefault( i, 0L );
+            return referenceTimestamps.get( columnName ).getOrDefault( videoPosition, 0L );
         }
         return 0L;
     }
