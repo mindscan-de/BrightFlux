@@ -53,11 +53,11 @@ public class VideoAnnotationReaderImpl {
         Gson gson = new GsonBuilder().registerTypeHierarchyAdapter( Path.class, new BFGsonPathDeserializer() ).create();
 
         try (BufferedReader br = Files.newBufferedReader( path )) {
-            // todo read videoAnnotation meta information
+            // read videoAnnotation meta information
             VideoAnnotatorVideoObjectMetaData metaData = readJsonLinesVideoAnnotationMetadata( gson, br );
 
-            // todo: change format and read 
-            VideoAnnotatorVideoObjectRefTimestampData refTimestampData = new VideoAnnotatorVideoObjectRefTimestampData();
+            // read videoAnnotation reference time stamps  
+            VideoAnnotatorVideoObjectRefTimestampData refTimestampData = readJsonLinesVideoAnnotationTimestamps( gson, br );
 
             // read dataframe description
             JsonLinesDataFrameInfo dataFrameInfo = ingestDataFrameDelegate.readJsonLinesDataFrameInfo( gson, br );
@@ -73,6 +73,16 @@ public class VideoAnnotationReaderImpl {
 
         throw new NotYetImplemetedException();
 
+    }
+
+    public VideoAnnotatorVideoObjectRefTimestampData readJsonLinesVideoAnnotationTimestamps( Gson gson, BufferedReader br ) throws IOException {
+        String videoAnnotationMetaDataLine = br.readLine();
+
+        if (videoAnnotationMetaDataLine == null) {
+            throw new NotYetImplemetedException( "Video Timestamps are missing" );
+        }
+
+        return gson.fromJson( videoAnnotationMetaDataLine.trim(), VideoAnnotatorVideoObjectRefTimestampData.class );
     }
 
     private VideoAnnotatorVideoObjectMetaData readJsonLinesVideoAnnotationMetadata( Gson gson, BufferedReader br ) throws IOException {

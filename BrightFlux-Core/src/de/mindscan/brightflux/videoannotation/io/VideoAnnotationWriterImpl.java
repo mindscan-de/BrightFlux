@@ -65,6 +65,10 @@ public class VideoAnnotationWriterImpl implements VideoAnnotationWriter {
                 String metaDataString = gson.toJson( videoObject.getMetaData() ) + "\n";
                 outputFile.write( metaDataString.getBytes() );
 
+                // write reference time stamp data 
+                String referenceTimestampData = gson.toJson( videoObject.getRefTimestampData() ) + "\n";
+                outputFile.write( referenceTimestampData.getBytes() );
+
                 // write the internal data frame to the output stream
                 DataFrame df = videoObject.getVideoAnnotationDataFrame();
                 dataframeWriterDelegate.writeToOutputStream( df, outputFile );
