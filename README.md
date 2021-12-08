@@ -108,6 +108,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * load video annotations from disk
   * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
   * sync video position from video slider to log position and locate nearest following time stamp in data frame
+  * save sync positions to video annotation files as meta data
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -164,9 +165,7 @@ UI/UX
 
 
 Video time stamp Annotations
-* save sync positions to video annotation files
 * load sync positions from video annotation files
-
 
 
 ### Later
