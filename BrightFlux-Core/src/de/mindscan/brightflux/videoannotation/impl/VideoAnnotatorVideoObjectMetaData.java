@@ -51,6 +51,8 @@ public class VideoAnnotatorVideoObjectMetaData {
     private UUID videoObjectUUID;
 
     /**
+     * TODO: review if this data should be transferred into another class, which is specialized on ReferenceInformation
+     * 
      * Map of Map which contains the meta data, first level contains the Columnname, and second level is from video position to reference time stamp
      */
     private TreeMap<String, TreeMap<Long, Long>> referenceTimestamps = new TreeMap<>();
