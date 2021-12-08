@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.videoannotation.impl;
 
 import java.nio.file.Path;
-import java.util.TreeMap;
 import java.util.UUID;
 
 /**
@@ -49,13 +48,6 @@ public class VideoAnnotatorVideoObjectMetaData {
      * UUID of the Video Object Identifier - will be used to address the videos in the application or storage
      */
     private UUID videoObjectUUID;
-
-    /**
-     * TODO: review if this data should be transferred into another class, which is specialized on ReferenceInformation
-     * 
-     * Map of Map which contains the meta data, first level contains the Columnname, and second level is from video position to reference time stamp
-     */
-    private TreeMap<String, TreeMap<Long, Long>> referenceTimestamps = new TreeMap<>();
 
     // ----
 
@@ -83,21 +75,6 @@ public class VideoAnnotatorVideoObjectMetaData {
 
     public void setVideoDurationInSeconds( int durationInSeconds ) {
         this.videoDurationInSeconds = durationInSeconds;
-    }
-
-    public void registerReferenceTimestampForColumn( long videoPosition, String columnName, long referenceTimestamp ) {
-        referenceTimestamps.computeIfAbsent( columnName, k -> new TreeMap<Long, Long>() ).put( videoPosition, referenceTimestamp );
-    }
-
-    public void clearReferenceTimestamps() {
-        referenceTimestamps.clear();
-    }
-
-    public long videoPositionAt( long videoPosition, String columnName ) {
-        if (referenceTimestamps.containsKey( columnName )) {
-            return referenceTimestamps.get( columnName ).getOrDefault( videoPosition, 0L );
-        }
-        return 0L;
     }
 
 }

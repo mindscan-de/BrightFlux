@@ -39,7 +39,8 @@ import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject {
 
     private DataFrame videoAnnotationDataFrame;
-    private VideoAnnotatorVideoObjectMetaData metaData;
+    private final VideoAnnotatorVideoObjectMetaData metaData;
+    private final VideoAnnotatorVideoObjectRefTimestampData refTimestampData;
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath ) {
         this.videoAnnotationDataFrame = df;
@@ -47,6 +48,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
         int videoDurationInSeconds = 600;
 
         this.metaData = new VideoAnnotatorVideoObjectMetaData( videoObjectPath, videoDurationInSeconds );
+        this.refTimestampData = new VideoAnnotatorVideoObjectRefTimestampData();
     }
 
     public VideoAnnotatorVideoObjectImpl( DataFrame df, Path videoObjectPath, UUID uuid ) {
@@ -55,11 +57,14 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
         int videoDurationInSeconds = 600;
 
         this.metaData = new VideoAnnotatorVideoObjectMetaData( videoObjectPath, videoDurationInSeconds, uuid );
+        this.refTimestampData = new VideoAnnotatorVideoObjectRefTimestampData();
     }
 
-    public VideoAnnotatorVideoObjectImpl( DataFrame df, VideoAnnotatorVideoObjectMetaData metaData ) {
+    public VideoAnnotatorVideoObjectImpl( DataFrame df, VideoAnnotatorVideoObjectMetaData metaData,
+                    VideoAnnotatorVideoObjectRefTimestampData refTimestampData ) {
         this.videoAnnotationDataFrame = df;
         this.metaData = metaData;
+        this.refTimestampData = refTimestampData;
     }
 
     @Override
@@ -127,17 +132,24 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
         return metaData;
     }
 
+    /**
+     * @return the refTimestamps
+     */
+    public VideoAnnotatorVideoObjectRefTimestampData getRefTimestampData() {
+        return refTimestampData;
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public void registerReferenceTimestampForColumn( long videoPosition, String columnName, long referenceTimestamp ) {
-        metaData.registerReferenceTimestampForColumn( videoPosition, columnName, referenceTimestamp );
+        refTimestampData.registerReferenceTimestampForColumn( videoPosition, columnName, referenceTimestamp );
     }
 
     @Override
     public void clearReferenceTimestamps() {
-        metaData.clearReferenceTimestamps();
+        refTimestampData.clearReferenceTimestamps();
     }
 
     /** 
@@ -148,8 +160,8 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
         int videoLength = this.getVideoDurationInSeconds();
 
-        long tsStart = metaData.videoPositionAt( 0, columnName );
-        long tsEnd = metaData.videoPositionAt( videoLength, columnName ) + 1;
+        long tsStart = refTimestampData.videoPositionAt( 0, columnName );
+        long tsEnd = refTimestampData.videoPositionAt( videoLength, columnName ) + 1;
 
         long predicted = tsStart + (((tsEnd - tsStart) * videoPosition) / Math.max( (long) videoLength, 1L ));
 
