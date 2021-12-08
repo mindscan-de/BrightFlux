@@ -30,6 +30,7 @@ import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.videoannotation.impl.VideoAnnotatorVideoObjectMetaData;
+import de.mindscan.brightflux.videoannotation.impl.VideoAnnotatorVideoObjectRefTimestampData;
 
 /**
  * 
@@ -61,4 +62,9 @@ public interface VideoAnnotatorVideoObject {
     void clearReferenceTimestamps();
 
     long predictTimestampForColumn( long videoPosition, String columnName );
+
+    /**
+     * @return
+     */
+    VideoAnnotatorVideoObjectRefTimestampData getRefTimestampData();
 }

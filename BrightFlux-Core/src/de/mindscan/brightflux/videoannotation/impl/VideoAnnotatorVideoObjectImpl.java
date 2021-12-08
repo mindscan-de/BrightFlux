@@ -128,6 +128,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     /**
      * @return the metaData
      */
+    @Override
     public VideoAnnotatorVideoObjectMetaData getMetaData() {
         return metaData;
     }
@@ -135,6 +136,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
     /**
      * @return the refTimestamps
      */
+    @Override
     public VideoAnnotatorVideoObjectRefTimestampData getRefTimestampData() {
         return refTimestampData;
     }
