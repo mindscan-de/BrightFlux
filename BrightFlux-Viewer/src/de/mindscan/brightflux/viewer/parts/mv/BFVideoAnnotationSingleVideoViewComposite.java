@@ -134,10 +134,9 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         btnClearReferences.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: clear all time references in a video
-                // This must send a command to clear the current videoObject
+                dispatchCommand( DataFrameCommandFactory.unlinkVideoAnnotationFromDataFrame( videoObject ) );
 
-                // disable the sync button
+                // disable the ui part sync button
                 enableSyncButton( false );
             }
         } );
