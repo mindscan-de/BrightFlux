@@ -134,8 +134,13 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
      * {@inheritDoc}
      */
     @Override
-    public void registerTimestampForColumn( long videoPosition, String columnName, long referenceTimestamp ) {
+    public void registerReferenceTimestampForColumn( long videoPosition, String columnName, long referenceTimestamp ) {
         proofOfConceptPrediction.put( columnName + "." + videoPosition, Long.valueOf( referenceTimestamp ) );
+    }
+
+    @Override
+    public void clearReferenceTimestamps() {
+        proofOfConceptPrediction.clear();
     }
 
     /** 
