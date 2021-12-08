@@ -58,6 +58,7 @@ import de.mindscan.brightflux.system.videoannotator.commands.LinkVideoAnnoationT
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoForAnnotationCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.SaveVideoAnnotationToFileCommand;
+import de.mindscan.brightflux.system.videoannotator.commands.UnlinkVideoAnnotationToDataFrameRowsCommand;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
@@ -161,6 +162,10 @@ public class DataFrameCommandFactory {
     public static BFCommand linkVideoAnnotationToDataFrame( int videoPosInSeconds, VideoAnnotatorVideoObject videoObject, String[] linkedColumns,
                     DataFrameRow linkedDataFrameRow ) {
         return new LinkVideoAnnoationToDataFrameRowCommand( videoPosInSeconds, videoObject, linkedColumns, linkedDataFrameRow );
+    }
+
+    public static BFCommand unlinkVideoAnnotationFromDataFrame( VideoAnnotatorVideoObject videoObject ) {
+        return new UnlinkVideoAnnotationToDataFrameRowsCommand( videoObject );
     }
 
     public static BFCommand loadVideoAnnotationFromFile( Path videoAnnotationPath ) {
