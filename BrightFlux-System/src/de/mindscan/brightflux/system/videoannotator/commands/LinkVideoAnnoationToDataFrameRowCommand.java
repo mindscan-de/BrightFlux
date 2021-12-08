@@ -37,9 +37,7 @@ import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
  */
 public class LinkVideoAnnoationToDataFrameRowCommand implements BFCommand {
 
-    /**
-     * 
-     */
+    // TODO: trash this hardcoded  information/depedency.
     private static final long SECOND_IN_NANOSECONDS = 1000000000L;
     private VideoAnnotatorVideoObject videoObject;
     private DataFrameRow linkedDataFrameRow;
