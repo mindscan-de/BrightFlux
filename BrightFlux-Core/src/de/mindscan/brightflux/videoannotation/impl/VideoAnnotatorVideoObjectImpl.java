@@ -162,6 +162,7 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
 
         int videoLength = this.getVideoDurationInSeconds();
 
+        // TODO: refactor this to the ref timestamp data class
         long tsStart = refTimestampData.videoPositionAt( 0, columnName );
         long tsEnd = refTimestampData.videoPositionAt( videoLength, columnName ) + 1;
 
