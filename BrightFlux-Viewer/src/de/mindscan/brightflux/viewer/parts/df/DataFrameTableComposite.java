@@ -130,7 +130,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void buildLayout() {
-        tableViewer = new TableViewer( this, SWT.BORDER | SWT.FULL_SELECTION );
+        tableViewer = new TableViewer( this, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL );
+        tableViewer.setUseHashlookup( true );
         table = tableViewer.getTable();
         table.addSelectionListener( new SelectionAdapter() {
             @Override
