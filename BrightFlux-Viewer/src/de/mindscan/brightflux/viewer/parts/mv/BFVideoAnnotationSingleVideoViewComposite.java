@@ -137,7 +137,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
                 dispatchCommand( DataFrameCommandFactory.unlinkVideoAnnotationFromDataFrame( videoObject ) );
 
                 // disable the ui part sync button
-                enableSyncButton( false );
+                enableSyncButton( videoObject.isColumnPredictable( "h1.ts" ) );
             }
         } );
         btnClearReferences.setText( "Clear References" );
@@ -249,7 +249,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (videoObject != null) {
             currentVideoTimestampAnnotation.setText( videoObject.getAnnotationForTimestamp( videoPositionInSeconds ) );
 
-            if (btnSyncToFrame.getSelection()) {
+            if (videoObject.isColumnPredictable( "h1.ts" ) && btnSyncToFrame.getSelection()) {
                 long predictedTimestamp = videoObject.predictTimestampForColumn( videoPositionInSeconds, "h1.ts" );
                 dispatchCommand( UICommandFactory.locatePredictedTimestampForColumn( "h1.ts", predictedTimestamp ) );
             }
@@ -315,7 +315,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
             btnLinkDataframe.setSelection( false );
 
             // enable the sync button, after we have it linked with a videoObject
-            enableSyncButton( true );
+            enableSyncButton( videoObject.isColumnPredictable( "h1.ts" ) );
         }
     }
 
