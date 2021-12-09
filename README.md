@@ -106,9 +106,11 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * use default texts, which can be used to annotate timestamps
   * save video annotations to disk
   * load video annotations from disk
+  * sync video position from video slider to log position and locate nearest following time stamp in data frame  
+* Annotate video Timestamps
   * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
-  * sync video position from video slider to log position and locate nearest following time stamp in data frame
-  * save sync positions to video annotation files as meta data
+  * save sync positions to video annotation files as extra reference data
+  * load sync positions from video annotation files with reference data (sync also works after load)  
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -164,10 +166,6 @@ UI/UX
   * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
 
 
-Video time stamp Annotations
-* load sync positions from video annotation files
-
-
 ### Later
 
 Log-Analysis-Project-File
@@ -181,15 +179,7 @@ Log-Analysis-Project-File
 
 Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
-* Support log correlation for videos, e.g. identify timestamps in video and correlate them to logs
-
-
-Video time stamp Annotations
-* add Markers to annotation data frame
-* load video also loads parallel video annotation file
-* show video frame content of the video at exactly a selected time stamp
-* sync from data frame to current video and locate position.
-* provide more accurate time stamps e.g. 0.1s 0.25s granularity (maybe on a frame number basis, i mean we know the number of frames, we know the frames per seconds, but the video player must be more precise then and show the frame numbers)
+* Support log correlation for videos, e.g. identify time stamps in video and correlate them to logs
 
 
 Application-Startup (est. 6 kLOC)
@@ -284,6 +274,15 @@ Report Generator
 
 Rebuild the Event-Pattern and Command-Pattern
 * I think o be able to decouple all the code from each other (compile-wise) i want this system to transition to an Intent-based-System (such that menu entries are provided by visualization intents, requests, broadcast-requests, broadcast events, 1:1 communication using intents and futures, subscriptions and promises). And each plugin can state which intents it subscribes to. So that you can have the command factory and the intent to create a command in the plugin which provides the functionality. And the Buttons and such only fire intents and show menu items providing intents.
+
+
+Video time stamp Annotations
+* add Markers to annotation data frame (ATTN: requires rulers to make it more usable)
+* load video also loads parallel video annotation file (UX? Later)
+* show video frame content of the video at exactly a selected time stamp (FFMPEG / extract nearest Frame?)
+* sync from data frame to current video and locate position. (MAYBE) 
+* provide more accurate time stamps e.g. 0.1s 0.25s granularity (maybe on a frame number basis, i mean we know the number of frames, we know the frames per seconds, but the video player must be more precise then and show the frame numbers)
+
 
 ### Never?
 
