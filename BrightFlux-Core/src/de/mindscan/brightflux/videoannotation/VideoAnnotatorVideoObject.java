@@ -64,4 +64,6 @@ public interface VideoAnnotatorVideoObject {
     long predictTimestampForColumn( long videoPosition, String columnName );
 
     VideoAnnotatorVideoObjectRefTimestampData getRefTimestampData();
+
+    boolean isColumnPredictable( String columnName );
 }

@@ -59,4 +59,11 @@ public class VideoAnnotatorVideoObjectRefTimestampData {
         return 0L;
     }
 
+    public boolean isColumnPredictable( String columnName ) {
+        if (referenceTimestamps.containsKey( columnName )) {
+            return referenceTimestamps.get( columnName ).size() >= 2;
+        }
+        return false;
+    }
+
 }

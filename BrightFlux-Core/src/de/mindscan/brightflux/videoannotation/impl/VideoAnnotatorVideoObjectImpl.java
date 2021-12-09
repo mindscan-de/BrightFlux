@@ -158,6 +158,14 @@ public class VideoAnnotatorVideoObjectImpl implements VideoAnnotatorVideoObject 
      * {@inheritDoc}
      */
     @Override
+    public boolean isColumnPredictable( String columnName ) {
+        return refTimestampData.isColumnPredictable( columnName );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public long predictTimestampForColumn( long videoPosition, String columnName ) {
 
         int videoLength = this.getVideoDurationInSeconds();
