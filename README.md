@@ -168,13 +168,13 @@ UI/UX
 
 ### Later
 
-Log-Analysis-Project-File
-* Introduce Project Files
+Log-Analysis-Case-File
+* Introduce Project Files / "Case"
 * Treat logs like data frames and use transformations on columns
-  * [LAPF] save the transformations and data frame configuration to an analysis project file
-* [LAPF] log message Annotations
-  * [LAPF] save annotations to an analysis project file
-  * [LAPF] load annotations from analysis project file for a file
+  * [LACF] save the transformations and data frame configuration to an analysis case file
+* [LACF] log message Annotations
+  * [LACF] save annotations to an analysis case file
+  * [LACF] load annotations from analysis case file for a file
 
 
 Annotation and Highlights Improvements
