@@ -38,11 +38,35 @@ public interface PersistenceModule {
 
     void resetAllToDefault();
 
+    // ---
+    // int
+    // ---    
+
     void setDefaultIntValue( String key, int defaultValue );
 
     void setIntValue( String key, int newValue );
 
     int getIntValue( String key );
+
+    // ------
+    // String
+    // ------
+
+    void setDefaultStringValue( String key, String defaultValue );
+
+    void setStringValue( String key, String newValue );
+
+    String getStringValue( String key );
+
+    // ----
+    // long
+    // ----
+
+    long getLongValue( String key );
+
+    void setLongValue( String key, long newValue );
+
+    void setDefaultLongValue( String key, long defaultValue );
 
     // void addPersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
     // void removePersistenceValueUpdateListener( PersistenceValueUpdateListener listener );

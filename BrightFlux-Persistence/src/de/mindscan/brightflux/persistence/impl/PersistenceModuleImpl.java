@@ -77,6 +77,8 @@ public class PersistenceModuleImpl implements PersistenceModule {
 //
 //    }
 
+    // int values
+
     @Override
     public int getIntValue( String key ) {
         if (currentPersistenceData.containsKey( key )) {
@@ -96,6 +98,8 @@ public class PersistenceModuleImpl implements PersistenceModule {
         defaultPersistenceData.put( key, Integer.valueOf( defaultValue ) );
     }
 
+    // Reset operations
+
     @Override
     public void resetToDefault( String key ) {
         if (currentPersistenceData.containsKey( key )) {
@@ -108,21 +112,42 @@ public class PersistenceModuleImpl implements PersistenceModule {
         currentPersistenceData.clear();
     }
 
-    // TODO LATER
+    // String values
 
+    @Override
     public String getStringValue( String key ) {
-        return null;
+        if (currentPersistenceData.containsKey( key )) {
+            return ((String) currentPersistenceData.get( key ));
+        }
+        return ((String) defaultPersistenceData.get( key ));
     }
 
+    @Override
     public void setStringValue( String key, String newValue ) {
-        // TODO:        
+        currentPersistenceData.put( key, newValue );
     }
 
+    @Override
+    public void setDefaultStringValue( String key, String defaultValue ) {
+        defaultPersistenceData.put( key, defaultValue.intern() );
+    }
+
+    // long values
+    @Override
     public long getLongValue( String key ) {
-        return 0L;
+        if (currentPersistenceData.containsKey( key )) {
+            return ((Long) currentPersistenceData.get( key )).longValue();
+        }
+        return ((Long) defaultPersistenceData.get( key )).longValue();
     }
 
+    @Override
     public void setLongValue( String key, long newValue ) {
-        // TODO:
+        currentPersistenceData.put( key, Long.valueOf( newValue ) );
+    }
+
+    @Override
+    public void setDefaultLongValue( String key, long defaultValue ) {
+        defaultPersistenceData.put( key, Long.valueOf( defaultValue ) );
     }
 }
