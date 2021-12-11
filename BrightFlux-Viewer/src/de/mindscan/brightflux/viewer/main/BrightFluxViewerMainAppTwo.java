@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
-import java.util.List;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -44,8 +42,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
-import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
-import de.mindscan.brightflux.system.favrecipes.FavRecipesFileCollector;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
@@ -63,7 +60,6 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 public class BrightFluxViewerMainAppTwo {
 
     // TODO refactor constant this to the right place
-    public static final String FAVORITE_RECIPES_DIRECTORY_KEY = "favorites.recipes.dir";
     public static final String FFPROBE_PATH_KEY = "ffprobe.path";
 
     protected Shell shellBFViewerMainApp;
@@ -90,13 +86,8 @@ public class BrightFluxViewerMainAppTwo {
             // TODO: get early startup configuration from early persistence configuration, start components as bundles 
 
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
-            FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
-            FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
-            // TODO 
-            // - set a fully configured persistence module instead, where the component can do everything in its own
-            // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
-            favRecipesCollector.collect( earlyPersistence.getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
-            systemServices.setFavRecipeServices( favRecipesComponent );
+            FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
+            favrecipesActivator.start( systemServices );
 
             // STARTUP : Register Video Annotation Service
             VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
@@ -109,11 +100,6 @@ public class BrightFluxViewerMainAppTwo {
             // STARTUP : Register Report Generator Service
             ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
             systemServices.setReportGeneratorService( reportGeneratorService );
-
-            // some debug...
-            List<String> intermediateNodes = favRecipesComponent.getAllIntermediateNodes();
-            System.out.println( "Intermediate nodes for favorite recipes" );
-            System.out.println( intermediateNodes );
 
             // TODO: the configuration can be distributed with configuration events -> or with a 
 
