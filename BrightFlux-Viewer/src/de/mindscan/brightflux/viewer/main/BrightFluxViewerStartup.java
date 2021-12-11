@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.system.annotator.AnnotatorActivator;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
@@ -79,6 +80,18 @@ public class BrightFluxViewerStartup {
 
         // TODO: the configuration can be distributed with configuration events -> or with a 
 
+        // STARTUP : Complete Project Participant registration
+        finishProjectParticipantRegistration( systemServices );
+    }
+
+    public void finishProjectParticipantRegistration( SystemServices systemServices ) {
+        // Complete the Registration of the Startup-Items Startup-Steps
+        if (systemServices.getProjectRegistry() != null) {
+            systemServices.getProjectRegistry().completeParticipantRegistration();
+        }
+        else {
+            throw new NotYetImplemetedException( "Startup could not complete, because project registry is not available." );
+        }
     }
 
 }
