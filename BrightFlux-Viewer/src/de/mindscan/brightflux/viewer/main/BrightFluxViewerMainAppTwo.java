@@ -39,7 +39,7 @@ import org.eclipse.swt.widgets.Shell;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
-import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
+import de.mindscan.brightflux.system.annotator.AnnotatorActivator;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
@@ -62,9 +62,6 @@ public class BrightFluxViewerMainAppTwo {
     protected Shell shellBFViewerMainApp;
     private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
 
-    // Business Level code / component.
-    private AnnotatorComponent annotatorComponent = new AnnotatorComponent();
-
     /**
      * Launch the application.
      * @param args
@@ -85,6 +82,10 @@ public class BrightFluxViewerMainAppTwo {
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
             FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
             favrecipesActivator.start( systemServices );
+
+            // STARTUP : Register Annotator Service
+            AnnotatorActivator annotatorActivator = new AnnotatorActivator();
+            annotatorActivator.start( systemServices );
 
             // STARTUP : Register Video Annotation Service
             VideoAnnotatorActivator videoAnnotatorActivator = new VideoAnnotatorActivator();
@@ -170,8 +171,7 @@ public class BrightFluxViewerMainAppTwo {
         projectRegistry.registerParticipant( outlineViewComposite );
 
         // init some business logic comes here too
-        projectRegistry.registerParticipant( annotatorComponent );
-        // Don't like it...
+        projectRegistry.registerParticipant( SystemServices.getInstance().getAnnotatorService() );
         projectRegistry.registerParticipant( SystemServices.getInstance().getVideoAnnotatorService() );
 
         HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
