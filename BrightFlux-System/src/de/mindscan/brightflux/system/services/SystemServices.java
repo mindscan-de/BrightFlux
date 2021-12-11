@@ -81,6 +81,10 @@ public class SystemServices {
         this.earlyPersistenceService = earlyPersistence;
     }
 
+    public EarlyPersistenceComponent getEarlyPersistence() {
+        return earlyPersistenceService;
+    }
+
     // AnnotationService
     // we want an annotation service
 
