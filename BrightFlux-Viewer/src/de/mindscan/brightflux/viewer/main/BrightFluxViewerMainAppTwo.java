@@ -174,6 +174,7 @@ public class BrightFluxViewerMainAppTwo {
         projectRegistry.registerParticipant( SystemServices.getInstance().getAnnotatorService() );
         projectRegistry.registerParticipant( SystemServices.getInstance().getVideoAnnotatorService() );
 
+        // TODO refactor this to some startup component.
         HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
 
         projectRegistry.completeParticipantRegistration();
