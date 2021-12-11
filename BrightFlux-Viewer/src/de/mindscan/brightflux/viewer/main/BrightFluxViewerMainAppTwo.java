@@ -41,7 +41,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
-import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
+import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
@@ -76,11 +76,11 @@ public class BrightFluxViewerMainAppTwo {
             SystemServices systemServices = SystemServices.getInstance();
 
             // STARTUP : Early Persistence data (avoid hard coded dependencies)
-            EarlyPersistenceComponent earlyPersistence = new EarlyPersistenceComponent();
-            earlyPersistence.initEarlyPersistence();
-            systemServices.setEarlyPersistence( earlyPersistence );
+            EarlyPersistenceActivator earlyPersistenceActivator = new EarlyPersistenceActivator();
+            earlyPersistenceActivator.start( systemServices );
 
-            // TODO: get early startup configuration from early persistence configuration, start components as bundles 
+            // TODO: get early startup configuration from early persistence configuration 
+            // TODO: start these components as bundles 
 
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
             FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
