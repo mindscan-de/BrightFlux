@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.system.services;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
@@ -38,13 +41,7 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
  */
 public class SystemServices {
 
-    private ProjectRegistry projectRegistry;
-
-    private FavRecipesComponent favRecipesServices;
-    private VideoAnnotatorComponent videoAnnotatorService;
-    private ReportGeneratorComponent reportGeneratorService;
-    private EarlyPersistenceComponent earlyPersistenceService;
-    private AnnotatorComponent annotatorComponentService;
+    private Map<Class<?>, Object> registeredServices = new HashMap<>();
 
     private static class SystemServicesHolder {
         private static SystemServices instance = new SystemServices();
@@ -59,62 +56,65 @@ public class SystemServices {
 
     // 
     public void setFavRecipeServices( FavRecipesComponent favRecipesServices ) {
-        this.favRecipesServices = favRecipesServices;
+        registerService( FavRecipesComponent.class, favRecipesServices );
     }
 
     public FavRecipesComponent getFavRecipesServices() {
-        return favRecipesServices;
+        return getService( FavRecipesComponent.class );
     }
 
     public void setVideoAnnotationService( VideoAnnotatorComponent videoAnnotatorService ) {
-        this.videoAnnotatorService = videoAnnotatorService;
+        registerService( VideoAnnotatorComponent.class, videoAnnotatorService );
     }
 
     public VideoAnnotatorComponent getVideoAnnotatorService() {
-        return videoAnnotatorService;
+        return getService( VideoAnnotatorComponent.class );
     }
 
     public void setReportGeneratorService( ReportGeneratorComponent reportGeneratorService ) {
-        this.reportGeneratorService = reportGeneratorService;
+        registerService( ReportGeneratorComponent.class, reportGeneratorService );
     }
 
     public ReportGeneratorComponent getReportGeneratorService() {
-        return reportGeneratorService;
+        return getService( ReportGeneratorComponent.class );
     }
 
     public void setEarlyPersistence( EarlyPersistenceComponent earlyPersistence ) {
-        this.earlyPersistenceService = earlyPersistence;
+        registerService( EarlyPersistenceComponent.class, earlyPersistence );
     }
 
     public EarlyPersistenceComponent getEarlyPersistence() {
-        return earlyPersistenceService;
+        return getService( EarlyPersistenceComponent.class );
     }
 
     public void setAnnotatorService( AnnotatorComponent annotatorComponent ) {
-        this.annotatorComponentService = annotatorComponent;
+        registerService( AnnotatorComponent.class, annotatorComponent );
     }
 
     public AnnotatorComponent getAnnotatorService() {
-        return annotatorComponentService;
+        return getService( AnnotatorComponent.class );
     }
 
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        this.projectRegistry = projectRegistry;
+        registerService( ProjectRegistry.class, projectRegistry );
     }
 
     public ProjectRegistry getProjectRegistry() {
-        return projectRegistry;
+        return getService( ProjectRegistry.class );
     }
 
-    // AnnotationService
-    // we want an annotation service
+    // replacement implementation  for the direct setters.
 
-    // HighlightService
-    // we want an highlight service
+    private <T> T getService( Class<T> clazz ) {
+        return (T) registeredServices.get( clazz );
+    }
+
+    public void registerService( Class<?> clazz, Object instance ) {
+        // TODO: some checks
+        registeredServices.put( clazz, instance );
+    }
 
     // MarkerService
     // we want a marker service
 
-    // ProjectRegistryService
-    // we want the project registry service
 }
