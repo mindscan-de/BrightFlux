@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.system.videoannotator;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -49,6 +51,13 @@ public class VideoAnnotatorActivator {
         videoAnnotatorComponent.setFFProbePath( earlyPersistence.getPropertyAsPath( FFPROBE_PATH_KEY ) );
         systemServices.setVideoAnnotationService( videoAnnotatorComponent );
 
+        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
+        if (projectRegistry != null) {
+            projectRegistry.registerParticipant( videoAnnotatorComponent );
+        }
+        else {
+            throw new NotYetImplemetedException( "VideoAnnotatorActivator precondiftion not staisfied." );
+        }
     }
 
 }
