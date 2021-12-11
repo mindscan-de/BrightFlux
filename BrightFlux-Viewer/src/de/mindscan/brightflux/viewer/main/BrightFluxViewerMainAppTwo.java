@@ -196,8 +196,7 @@ public class BrightFluxViewerMainAppTwo {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
                                 FileDescriptions.CSV, //
                                 path -> {
-                                    BFCommand ingestCommand = DataFrameCommandFactory.ingestFile( path );
-                                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                                    dispatchCommand( DataFrameCommandFactory.ingestFile( path ) );
                                 } );
             }
         } );
@@ -210,8 +209,7 @@ public class BrightFluxViewerMainAppTwo {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
                                 FileDescriptions.RAW_ANY, //
                                 path -> {
-                                    BFCommand ingestCommand = DataFrameCommandFactory.ingestSpecialRaw( path );
-                                    projectRegistry.getCommandDispatcher().dispatchCommand( ingestCommand );
+                                    dispatchCommand( DataFrameCommandFactory.ingestSpecialRaw( path ) );
                                 } );
             }
         } );
@@ -253,11 +251,16 @@ public class BrightFluxViewerMainAppTwo {
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
                                 FileDescriptions.ANY, //
                                 path -> {
-                                    BFCommand expandCommand = DataFrameCommandFactory.expandFile( path );
-                                    projectRegistry.getCommandDispatcher().dispatchCommand( expandCommand );
+                                    dispatchCommand( DataFrameCommandFactory.expandFile( path ) );
                                 } );
             }
         } );
         mntmExtract.setText( "Extract..." );
+    }
+
+    public void dispatchCommand( BFCommand command ) {
+        if (projectRegistry != null) {
+            projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 }
