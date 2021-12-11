@@ -190,7 +190,6 @@ public class BrightFluxViewerMainAppTwo {
         projectRegistry.registerParticipant( outlineViewComposite );
 
         // init some business logic comes here too
-        projectRegistry.registerParticipant( SystemServices.getInstance().getAnnotatorService() );
         projectRegistry.registerParticipant( SystemServices.getInstance().getVideoAnnotatorService() );
 
         projectRegistry.completeParticipantRegistration();
