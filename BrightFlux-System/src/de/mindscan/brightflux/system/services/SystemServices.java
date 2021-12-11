@@ -105,7 +105,9 @@ public class SystemServices {
 
     // replacement implementation  for the direct setters.
 
+    @SuppressWarnings( "unchecked" )
     private <T> T getService( Class<T> clazz ) {
+        // TODO: check whether this is assignable...
         return (T) registeredServices.get( clazz );
     }
 
