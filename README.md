@@ -160,6 +160,10 @@ Startup and EarlyPersistence
 * Implement an Early Persistence module, which can then be used to start the other components (used for initial configurations)
 
 
+Startup
+* Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
+
+
 UI/UX
 * Configuration System
   * provide PreferenceStore
@@ -183,7 +187,6 @@ Annotation and Highlights Improvements
 
 
 Application-Startup (est. 6 kLOC)
-* Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
 * Provide a script or configuration for the application startup.
 
 
