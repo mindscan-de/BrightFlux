@@ -45,6 +45,7 @@ import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
+import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorActivator;
@@ -60,7 +61,7 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 public class BrightFluxViewerMainAppTwo {
 
     protected Shell shellBFViewerMainApp;
-    private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
+    private ProjectRegistry projectRegistry;
 
     /**
      * Launch the application.
@@ -77,7 +78,11 @@ public class BrightFluxViewerMainAppTwo {
             earlyPersistenceActivator.start( systemServices );
 
             // TODO: get early startup configuration from early persistence configuration 
-            // TODO: start these components as bundles 
+            // TODO: start these components as bundles
+
+            // STARTUP : Startup the Project registry 
+            ProjectRegistryActivator projectRegistryActivator = new ProjectRegistryActivator();
+            projectRegistryActivator.start( systemServices );
 
             // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
             FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
@@ -115,6 +120,8 @@ public class BrightFluxViewerMainAppTwo {
      * Open the window.
      */
     public void open() {
+        projectRegistry = getProjectRegistry();
+
         Display display = Display.getDefault();
         createContents();
         shellBFViewerMainApp.open();
@@ -129,6 +136,14 @@ public class BrightFluxViewerMainAppTwo {
                 ex.printStackTrace();
             }
         }
+    }
+
+    private ProjectRegistry getProjectRegistry() {
+        ProjectRegistry registry = SystemServices.getInstance().getProjectRegistry();
+
+        projectRegistry = registry != null ? registry : new ProjectRegistryImpl();
+
+        return projectRegistry;
     }
 
     /**

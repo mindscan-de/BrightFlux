@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.system.services;
 
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
@@ -36,6 +37,8 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
  * terms of unit tests speaking.
  */
 public class SystemServices {
+
+    private ProjectRegistry projectRegistry;
 
     private FavRecipesComponent favRecipesServices;
     private VideoAnnotatorComponent videoAnnotatorService;
@@ -93,6 +96,14 @@ public class SystemServices {
 
     public AnnotatorComponent getAnnotatorService() {
         return annotatorComponentService;
+    }
+
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+    }
+
+    public ProjectRegistry getProjectRegistry() {
+        return projectRegistry;
     }
 
     // AnnotationService
