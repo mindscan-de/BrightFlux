@@ -47,7 +47,7 @@ import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorActivator;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
@@ -58,9 +58,6 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
  * 
  */
 public class BrightFluxViewerMainAppTwo {
-
-    // TODO refactor constant this to the right place
-    public static final String FFPROBE_PATH_KEY = "ffprobe.path";
 
     protected Shell shellBFViewerMainApp;
     private ProjectRegistry projectRegistry = new ProjectRegistryImpl();
@@ -90,12 +87,8 @@ public class BrightFluxViewerMainAppTwo {
             favrecipesActivator.start( systemServices );
 
             // STARTUP : Register Video Annotation Service
-            VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
-            // TODO 
-            // - set a fully configured persistence module instead, where the component can do everything in its own
-            // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
-            videoAnnotatorComponent.setFFProbePath( earlyPersistence.getPropertyAsPath( FFPROBE_PATH_KEY ) );
-            systemServices.setVideoAnnotationService( videoAnnotatorComponent );
+            VideoAnnotatorActivator videoAnnotatorActivator = new VideoAnnotatorActivator();
+            videoAnnotatorActivator.start( systemServices );
 
             // STARTUP : Register Report Generator Service
             ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
