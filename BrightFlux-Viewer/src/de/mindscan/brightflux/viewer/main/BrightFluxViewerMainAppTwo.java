@@ -39,16 +39,9 @@ import org.eclipse.swt.widgets.Shell;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
-import de.mindscan.brightflux.system.annotator.AnnotatorActivator;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
-import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
-import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
-import de.mindscan.brightflux.system.highlighter.HighlighterActivator;
-import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
 import de.mindscan.brightflux.system.services.SystemServices;
-import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorActivator;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
@@ -69,48 +62,8 @@ public class BrightFluxViewerMainAppTwo {
      */
     public static void main( String[] args ) {
         try {
-
-            // STARTUP : System Services
-            SystemServices systemServices = SystemServices.getInstance();
-
-            // STARTUP : Early Persistence data (avoid hard coded dependencies)
-            EarlyPersistenceActivator earlyPersistenceActivator = new EarlyPersistenceActivator();
-            earlyPersistenceActivator.start( systemServices );
-
-            // TODO: get early startup configuration from early persistence configuration 
-            // TODO: start these configured components as individual bundles
-
-            // STARTUP : Startup the Project registry 
-            ProjectRegistryActivator projectRegistryActivator = new ProjectRegistryActivator();
-            projectRegistryActivator.start( systemServices );
-
-            // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
-            FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
-            favrecipesActivator.start( systemServices );
-
-            // STARTUP : Register Annotator Service
-            AnnotatorActivator annotatorActivator = new AnnotatorActivator();
-            annotatorActivator.start( systemServices );
-
-            // STARTUP : Register Video Annotation Service
-            VideoAnnotatorActivator videoAnnotatorActivator = new VideoAnnotatorActivator();
-            videoAnnotatorActivator.start( systemServices );
-
-            // STARTUP : Register Highlighter Annototor
-            HighlighterActivator highlighterActivator = new HighlighterActivator();
-            highlighterActivator.start( systemServices );
-
-            // STARTUP : Register Report Generator Service
-            ReportGeneratorActivator reportGeneratorActivator = new ReportGeneratorActivator();
-            reportGeneratorActivator.start( systemServices );
-
-            // TODO: the configuration can be distributed with configuration events -> or with a 
-
-            // TODO: Implement a startup component, such that some of the components can be initialized before
-            //       first usage, (e.g. annotation, highlight, QueryCallbacks, project registry, system services,  ....)
-            // 
-            // initialize the favorite recipes and provide them in a tree structure, which is then used for the
-            // dataframe view.
+            BrightFluxViewerStartup startup = new BrightFluxViewerStartup();
+            startup.start();
 
             BrightFluxViewerMainAppTwo window = new BrightFluxViewerMainAppTwo();
             window.open();
@@ -124,7 +77,7 @@ public class BrightFluxViewerMainAppTwo {
      * Open the window.
      */
     public void open() {
-        projectRegistry = getProjectRegistry();
+        projectRegistry = getProjectRegistryInstance();
 
         Display display = Display.getDefault();
         createContents();
@@ -142,7 +95,7 @@ public class BrightFluxViewerMainAppTwo {
         }
     }
 
-    private ProjectRegistry getProjectRegistry() {
+    private ProjectRegistry getProjectRegistryInstance() {
         ProjectRegistry registry = SystemServices.getInstance().getProjectRegistry();
 
         projectRegistry = registry != null ? registry : new ProjectRegistryImpl();
