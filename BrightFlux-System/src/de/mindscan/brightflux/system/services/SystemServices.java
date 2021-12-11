@@ -54,17 +54,12 @@ public class SystemServices {
     private SystemServices() {
     }
 
-    // 
-    public void setFavRecipeServices( FavRecipesComponent favRecipesServices ) {
-        registerService( FavRecipesComponent.class, favRecipesServices );
-    }
-
     public FavRecipesComponent getFavRecipesServices() {
         return getService( FavRecipesComponent.class );
     }
 
     public void setVideoAnnotationService( VideoAnnotatorComponent videoAnnotatorService ) {
-        registerService( VideoAnnotatorComponent.class, videoAnnotatorService );
+        registerService( videoAnnotatorService, VideoAnnotatorComponent.class );
     }
 
     public VideoAnnotatorComponent getVideoAnnotatorService() {
@@ -72,7 +67,7 @@ public class SystemServices {
     }
 
     public void setReportGeneratorService( ReportGeneratorComponent reportGeneratorService ) {
-        registerService( ReportGeneratorComponent.class, reportGeneratorService );
+        registerService( reportGeneratorService, ReportGeneratorComponent.class );
     }
 
     public ReportGeneratorComponent getReportGeneratorService() {
@@ -80,7 +75,7 @@ public class SystemServices {
     }
 
     public void setEarlyPersistence( EarlyPersistenceComponent earlyPersistence ) {
-        registerService( EarlyPersistenceComponent.class, earlyPersistence );
+        registerService( earlyPersistence, EarlyPersistenceComponent.class );
     }
 
     public EarlyPersistenceComponent getEarlyPersistence() {
@@ -88,7 +83,7 @@ public class SystemServices {
     }
 
     public void setAnnotatorService( AnnotatorComponent annotatorComponent ) {
-        registerService( AnnotatorComponent.class, annotatorComponent );
+        registerService( annotatorComponent, AnnotatorComponent.class );
     }
 
     public AnnotatorComponent getAnnotatorService() {
@@ -96,7 +91,7 @@ public class SystemServices {
     }
 
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        registerService( ProjectRegistry.class, projectRegistry );
+        registerService( projectRegistry, ProjectRegistry.class );
     }
 
     public ProjectRegistry getProjectRegistry() {
@@ -111,9 +106,9 @@ public class SystemServices {
         return (T) registeredServices.get( clazz );
     }
 
-    public void registerService( Class<?> clazz, Object instance ) {
+    public void registerService( Object serviceInstance, Class<?> serviceClazz ) {
         // TODO: some checks
-        registeredServices.put( clazz, instance );
+        registeredServices.put( serviceClazz, serviceInstance );
     }
 
     // MarkerService

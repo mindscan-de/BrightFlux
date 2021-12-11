@@ -51,7 +51,7 @@ public class FavRecipesActivator {
         // - set a fully configured persistence module instead, where the component can do everything in its own
         // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
         favRecipesCollector.collect( earlyPersistence.getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
-        systemServices.setFavRecipeServices( favRecipesComponent );
+        systemServices.registerService( favRecipesComponent, FavRecipesComponent.class );
 
         // TODO: remove this if not needed any more...
         printDebugIntermediateNodes( favRecipesComponent );
