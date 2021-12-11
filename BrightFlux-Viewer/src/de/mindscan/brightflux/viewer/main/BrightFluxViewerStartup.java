@@ -41,7 +41,13 @@ import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorActivator;
 public class BrightFluxViewerStartup {
 
     /**
+     * TODO: 
      * 
+     * refactor this, to retrieve the startup configuration from early Persistence and then execute the 
+     * startup configuration. But for now this is quite good enough. Also I want to registerServices and
+     * getServices using Interfaces instead of specialized setters and getters in the systemServices to 
+     * be able to have a plugin system. 
+     *   
      */
     public void start() {
         // STARTUP : System Services
