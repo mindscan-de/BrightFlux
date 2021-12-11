@@ -44,7 +44,7 @@ import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
-import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
+import de.mindscan.brightflux.system.highlighter.HighlighterActivator;
 import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
 import de.mindscan.brightflux.system.services.SystemServices;
@@ -78,7 +78,7 @@ public class BrightFluxViewerMainAppTwo {
             earlyPersistenceActivator.start( systemServices );
 
             // TODO: get early startup configuration from early persistence configuration 
-            // TODO: start these components as bundles
+            // TODO: start these configured components as individual bundles
 
             // STARTUP : Startup the Project registry 
             ProjectRegistryActivator projectRegistryActivator = new ProjectRegistryActivator();
@@ -95,6 +95,10 @@ public class BrightFluxViewerMainAppTwo {
             // STARTUP : Register Video Annotation Service
             VideoAnnotatorActivator videoAnnotatorActivator = new VideoAnnotatorActivator();
             videoAnnotatorActivator.start( systemServices );
+
+            // STARTUP : Register Highlighter Annototor
+            HighlighterActivator highlighterActivator = new HighlighterActivator();
+            highlighterActivator.start( systemServices );
 
             // STARTUP : Register Report Generator Service
             ReportGeneratorActivator reportGeneratorActivator = new ReportGeneratorActivator();
@@ -188,9 +192,6 @@ public class BrightFluxViewerMainAppTwo {
         // init some business logic comes here too
         projectRegistry.registerParticipant( SystemServices.getInstance().getAnnotatorService() );
         projectRegistry.registerParticipant( SystemServices.getInstance().getVideoAnnotatorService() );
-
-        // TODO refactor this to some startup component.
-        HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
 
         projectRegistry.completeParticipantRegistration();
     }
