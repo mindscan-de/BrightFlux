@@ -45,7 +45,7 @@ import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorActivator;
 import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
@@ -91,8 +91,8 @@ public class BrightFluxViewerMainAppTwo {
             videoAnnotatorActivator.start( systemServices );
 
             // STARTUP : Register Report Generator Service
-            ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
-            systemServices.setReportGeneratorService( reportGeneratorService );
+            ReportGeneratorActivator reportGeneratorActivator = new ReportGeneratorActivator();
+            reportGeneratorActivator.start( systemServices );
 
             // TODO: the configuration can be distributed with configuration events -> or with a 
 
