@@ -32,10 +32,6 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
-import de.mindscan.brightflux.system.annotator.commands.CreateAnnoationDataFrameCommand;
-import de.mindscan.brightflux.system.annotator.commands.DataFrameAnnotateRowCommand;
-import de.mindscan.brightflux.system.annotator.commands.LoadAnnotationDataFrameCommand;
-import de.mindscan.brightflux.system.annotator.commands.SaveAnnotationDataFrameCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameFilterCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCBCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
@@ -100,22 +96,6 @@ public class DataFrameCommandFactory {
 
     public static BFCommand saveCSV( DataFrame inputDataFrame, Path targetFile ) {
         return new SaveAsCSVCommand( inputDataFrame, targetFile );
-    }
-
-    public static BFCommand createSparseDataFrame() {
-        return new CreateAnnoationDataFrameCommand();
-    }
-
-    public static BFCommand saveAnnotationDataFrame( DataFrame annotationDataFrame, Path targetFilePath ) {
-        return new SaveAnnotationDataFrameCommand( annotationDataFrame, targetFilePath );
-    }
-
-    public static BFCommand loadAnnotationDataFrame( Path annotationFilePath ) {
-        return new LoadAnnotationDataFrameCommand( annotationFilePath );
-    }
-
-    public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
-        return new DataFrameAnnotateRowCommand( inputDataFrame, rowIndex, annotation );
     }
 
     public static BFCommand expandFile( Path filePath ) {

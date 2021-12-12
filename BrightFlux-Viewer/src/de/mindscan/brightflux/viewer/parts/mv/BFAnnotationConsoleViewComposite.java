@@ -54,8 +54,8 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.annotator.AnnotatorCommandFactory;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
-import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
@@ -200,7 +200,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void widgetSelected( SelectionEvent e ) {
                 String header = "Load Annotation File.";
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
-                    BFCommand command = DataFrameCommandFactory.loadAnnotationDataFrame( p );
+                    BFCommand command = AnnotatorCommandFactory.loadAnnotationDataFrame( p );
                     dispatchCommand( command );
                 } );
 
@@ -215,7 +215,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void widgetSelected( SelectionEvent e ) {
                 String header = "Save Annotation File.";
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
-                    BFCommand command = DataFrameCommandFactory.saveAnnotationDataFrame( logAnalysisFrame, p );
+                    BFCommand command = AnnotatorCommandFactory.saveAnnotationDataFrame( logAnalysisFrame, p );
                     dispatchCommand( command );
                 } );
 
@@ -294,7 +294,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             * current selectedDataFrame.
             */
 
-            BFCommand command = DataFrameCommandFactory.annotateRow( currentSelectedDataFrame, currentSelectedDataFrameRow.getOriginalRowIndex(), newText );
+            BFCommand command = AnnotatorCommandFactory.annotateRow( currentSelectedDataFrame, currentSelectedDataFrameRow.getOriginalRowIndex(), newText );
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
     }
@@ -344,7 +344,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void createAnnotationDataFrame() {
-        dispatchCommand( DataFrameCommandFactory.createSparseDataFrame() );
+        dispatchCommand( AnnotatorCommandFactory.createSparseDataFrame() );
     }
 
     private void dispatchCommand( BFCommand command ) {
