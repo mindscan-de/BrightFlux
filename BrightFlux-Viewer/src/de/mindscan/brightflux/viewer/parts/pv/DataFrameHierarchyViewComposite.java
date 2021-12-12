@@ -44,11 +44,12 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyEventListenerAdapter;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
-import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 import de.mindscan.brightflux.system.events.DataFrameCreatedEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
@@ -60,9 +61,7 @@ import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 public class DataFrameHierarchyViewComposite extends Composite implements ProjectRegistryParticipant {
 
     private ProjectRegistry projectRegistry;
-    // TODO refactor this initialization and the logic to a proper component. Idea is to inform the ViewComposite
-    //      about state changes in the built hierarchy. so hat the tree can then be updated, instead of doing the logic here.
-    private DataFrameHierarchy dfHierarchy = new DataFrameHierarchyImpl();
+    private DataFrameHierarchyComponent dfHierarchyComponent;
     private TreeViewer treeViewer;
     protected UUID currentSelectedID;
 
@@ -73,6 +72,8 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
      */
     public DataFrameHierarchyViewComposite( Composite parent, int style ) {
         super( parent, style );
+
+        this.dfHierarchyComponent = SystemServices.getInstance().getService( DataFrameHierarchyComponent.class );
 
         buildLayout();
 
@@ -112,9 +113,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
                 // business logic
-                dfHierarchy.removeNode( dataFrame );
+                dfHierarchyComponent.getDataframeHierarchy().removeNode( dataFrame );
                 // view logic
-                updateDataframeTree( dfHierarchy );
+                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameClosed, closedListener );
@@ -127,9 +128,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             @Override
             public void handleDataFrameCreated( DataFrame dataFrame, String parentUUID ) {
                 // business logic                
-                dfHierarchy.addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
+                dfHierarchyComponent.getDataframeHierarchy().addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
                 // view logic                
-                updateDataframeTree( dfHierarchy );
+                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
@@ -143,9 +144,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
                 // business logic                
-                dfHierarchy.addRootNode( dataFrame );
+                dfHierarchyComponent.getDataframeHierarchy().addRootNode( dataFrame );
                 // view logic                
-                updateDataframeTree( dfHierarchy );
+                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
@@ -156,7 +157,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
                 currentSelectedID = dataFrame.getUuid();
-                updateDataframeTree( dfHierarchy );
+                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, selectedListener );
@@ -200,7 +201,7 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         trclmnUuid.setText( "uuid" );
         treeViewerUUIDColumn.setLabelProvider( new DataFrameHierarchyTreeColumnLabelProvider( DataFrameHierarchyTreeColumnLabelProvider.DF_UUID ) );
 
-        treeViewer.setInput( dfHierarchy );
+        treeViewer.setInput( dfHierarchyComponent.getDataframeHierarchy() );
 
     }
 
