@@ -39,8 +39,13 @@ public class HighlighterActivator {
      */
     public void start( SystemServices systemServices ) {
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
+
+        HighlighterComponent highlighterComponent = new HighlighterComponent();
+        systemServices.setHiglighterService( highlighterComponent );
+
         if (projectRegistry != null) {
             HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
+            highlighterComponent.setProjectRegistry( projectRegistry );
         }
         else {
             throw new NotYetImplemetedException( "HighlighterActivator preconditions not satisfied." );

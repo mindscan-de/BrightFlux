@@ -32,6 +32,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 
@@ -96,6 +97,14 @@ public class SystemServices {
 
     public ProjectRegistry getProjectRegistry() {
         return getService( ProjectRegistry.class );
+    }
+
+    public void setHiglighterService( HighlighterComponent component ) {
+        registerService( component, HighlighterComponent.class );
+    }
+
+    public HighlighterComponent getHighlighterComponent() {
+        return getService( HighlighterComponent.class );
     }
 
     // replacement implementation  for the direct setters.
