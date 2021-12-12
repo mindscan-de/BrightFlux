@@ -54,8 +54,7 @@ import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
- * TODO refactor: extract Dataframe hierarchy business logic to dataframehierarchy component and only do the viewing 
- *                parts here.
+ * 
  */
 public class DataFrameHierarchyViewComposite extends Composite implements ProjectRegistryParticipant {
 
@@ -160,11 +159,11 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         // Disable the check that prevents subclassing of SWT components
     }
 
-    private void updateDataframeTree( DataFrameHierarchy dfHierarchy2 ) {
+    private void updateDataframeTree( DataFrameHierarchy dfHierarchy ) {
         treeViewer.refresh();
 
         if (currentSelectedID != null) {
-            DataFrameHierarchyNode selectedNode = dfHierarchy2.getNodeByUUID( currentSelectedID );
+            DataFrameHierarchyNode selectedNode = dfHierarchy.getNodeByUUID( currentSelectedID );
             if (selectedNode != null) {
                 treeViewer.expandToLevel( selectedNode, TreeViewer.ALL_LEVELS );
                 treeViewer.setSelection( new StructuredSelection( selectedNode ) );
