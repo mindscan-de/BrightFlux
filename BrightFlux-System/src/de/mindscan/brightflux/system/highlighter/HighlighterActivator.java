@@ -38,14 +38,16 @@ public class HighlighterActivator {
      * @param systemServices
      */
     public void start( SystemServices systemServices ) {
-        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
-
         HighlighterComponent highlighterComponent = new HighlighterComponent();
         systemServices.setHiglighterService( highlighterComponent );
 
+        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
         if (projectRegistry != null) {
             HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
             highlighterComponent.setProjectRegistry( projectRegistry );
+
+            // TODO: also initialize the default Highlighter frame, such that it can be requested by the different
+            //       consumers of this component
         }
         else {
             throw new NotYetImplemetedException( "HighlighterActivator preconditions not satisfied." );
