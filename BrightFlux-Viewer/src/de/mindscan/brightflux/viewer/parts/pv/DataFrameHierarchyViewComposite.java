@@ -44,6 +44,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyEventListenerAdapter;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 import de.mindscan.brightflux.system.events.DataFrameCreatedEventListenerAdapter;
@@ -90,6 +91,19 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
 
         // register to the UIDataFrameSelectionEvent
         registerDataFrameSelectedListener( this.projectRegistry );
+
+        // register to DataFrameHierarchy Events
+        registerDataFrameHierarchyUpdatedListener( this.projectRegistry );
+    }
+
+    private void registerDataFrameHierarchyUpdatedListener( ProjectRegistry projectRegistry2 ) {
+        DataFrameHierarchyEventListenerAdapter updatedListener = new DataFrameHierarchyEventListenerAdapter() {
+            @Override
+            public void handleDataFrameHierarchy( DataFrameHierarchy dfHierarchy ) {
+                updateDataframeTree( dfHierarchy );
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameHierarchyUpdated, updatedListener );
     }
 
     private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
