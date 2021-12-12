@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.main;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.system.annotator.AnnotatorActivator;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyActivator;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.highlighter.HighlighterActivator;
@@ -63,6 +64,10 @@ public class BrightFluxViewerStartup {
         // STARTUP : Startup the Project registry 
         ProjectRegistryActivator projectRegistryActivator = new ProjectRegistryActivator();
         projectRegistryActivator.start( systemServices );
+
+        // STARTUP : register Dataframe Hierarchy 
+        DataFrameHierarchyActivator dataFrameHierarchyActivator = new DataFrameHierarchyActivator();
+        dataFrameHierarchyActivator.start( systemServices );
 
         // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
         FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
