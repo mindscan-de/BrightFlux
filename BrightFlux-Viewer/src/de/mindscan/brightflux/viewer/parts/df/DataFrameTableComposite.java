@@ -67,6 +67,7 @@ import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
+import de.mindscan.brightflux.system.highlighter.HighlighterCommandFactory;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -299,7 +300,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
-                    BFCommand command = DataFrameCommandFactory.createHighlightDataFrame();
+                    BFCommand command = HighlighterCommandFactory.createHighlightDataFrame();
                     dispatchCommand( command );
                 }
             }
@@ -371,7 +372,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                     DataFrameRow rowData = (DataFrameRow) e.item.getData();
                     int rowIndex = rowData.getOriginalRowIndex();
 
-                    BFCommand command = DataFrameCommandFactory.clearHighlightRow( ingestedDF, rowIndex );
+                    BFCommand command = HighlighterCommandFactory.clearHighlightRow( ingestedDF, rowIndex );
                     dispatchCommand( command );
                 }
             }
@@ -388,7 +389,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( parentShell, header, FileDescriptions.BF_HIGHLIGHT, p -> {
                     if (highlighterComponent != null) {
                         if (highlighterComponent.getLogHighlightFrame() != null) {
-                            BFCommand command = DataFrameCommandFactory.saveHighlightDataFrame( highlighterComponent.getLogHighlightFrame(), p );
+                            BFCommand command = HighlighterCommandFactory.saveHighlightDataFrame( highlighterComponent.getLogHighlightFrame(), p );
                             dispatchCommand( command );
                         }
                     }
@@ -403,7 +404,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
                 String header = "Load Highlights File.";
                 BrightFluxFileDialogs.openRegularFileAndConsumePath( parentShell, header, FileDescriptions.BF_HIGHLIGHT, p -> {
-                    BFCommand command = DataFrameCommandFactory.loadHighlightDataFrame( p );
+                    BFCommand command = HighlighterCommandFactory.loadHighlightDataFrame( p );
                     dispatchCommand( command );
                 } );
 
@@ -596,7 +597,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     private void highlightRow( DataFrameRow currentSelectedRow, String color ) {
         if (currentSelectedRow != null) {
-            BFCommand command = DataFrameCommandFactory.highlightRow( ingestedDF, currentSelectedRow.getOriginalRowIndex(), color );
+            BFCommand command = HighlighterCommandFactory.highlightRow( ingestedDF, currentSelectedRow.getOriginalRowIndex(), color );
             dispatchCommand( command );
         }
     }

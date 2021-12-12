@@ -32,7 +32,6 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 
 /**
  * 
@@ -66,7 +65,7 @@ public class HighlighterCallbacks {
         DataFrameRowQueryCallback highlightRed = new DataFrameRowQueryCallback() {
             @Override
             public void apply( DataFrameRow row ) {
-                BFCommand highlightRedCommand = DataFrameCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "red" );
+                BFCommand highlightRedCommand = HighlighterCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "red" );
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightRedCommand );
             }
         };
@@ -77,7 +76,7 @@ public class HighlighterCallbacks {
         DataFrameRowQueryCallback highlightGreen = new DataFrameRowQueryCallback() {
             @Override
             public void apply( DataFrameRow row ) {
-                BFCommand highlightGreenCommand = DataFrameCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "green" );
+                BFCommand highlightGreenCommand = HighlighterCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "green" );
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightGreenCommand );
             }
         };
@@ -88,7 +87,7 @@ public class HighlighterCallbacks {
         DataFrameRowQueryCallback highlightBlue = new DataFrameRowQueryCallback() {
             @Override
             public void apply( DataFrameRow row ) {
-                BFCommand highlightBlueCommand = DataFrameCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "blue" );
+                BFCommand highlightBlueCommand = HighlighterCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "blue" );
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightBlueCommand );
             }
         };
@@ -99,7 +98,7 @@ public class HighlighterCallbacks {
         DataFrameRowQueryCallback highlightPink = new DataFrameRowQueryCallback() {
             @Override
             public void apply( DataFrameRow row ) {
-                BFCommand highlightPinkCommand = DataFrameCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "pink" );
+                BFCommand highlightPinkCommand = HighlighterCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "pink" );
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightPinkCommand );
             }
         };
@@ -110,7 +109,7 @@ public class HighlighterCallbacks {
         DataFrameRowQueryCallback highlightYellow = new DataFrameRowQueryCallback() {
             @Override
             public void apply( DataFrameRow row ) {
-                BFCommand highlightYellowCommand = DataFrameCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "yellow" );
+                BFCommand highlightYellowCommand = HighlighterCommandFactory.highlightRow( row.getDataFrameInternal(), row.getOriginalRowIndex(), "yellow" );
                 projectRegistry.getCommandDispatcher().dispatchCommand( highlightYellowCommand );
             }
         };

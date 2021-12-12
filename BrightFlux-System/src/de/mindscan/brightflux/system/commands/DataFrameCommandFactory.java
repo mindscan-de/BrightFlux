@@ -47,11 +47,6 @@ import de.mindscan.brightflux.system.commands.io.ExpandProprietaryZipStreamComma
 import de.mindscan.brightflux.system.commands.io.SaveAsCSVCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeExecuteCommand;
 import de.mindscan.brightflux.system.commands.recipes.RecipeSaveCommand;
-import de.mindscan.brightflux.system.highlighter.commands.CreateHighlightDataFrameCommand;
-import de.mindscan.brightflux.system.highlighter.commands.DataFrameClearHighlightRowCommand;
-import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
-import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
-import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
 
 /**
  * This class provides commands around DataFrames 
@@ -121,26 +116,6 @@ public class DataFrameCommandFactory {
 
     public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
         return new DataFrameAnnotateRowCommand( inputDataFrame, rowIndex, annotation );
-    }
-
-    public static BFCommand createHighlightDataFrame() {
-        return new CreateHighlightDataFrameCommand();
-    }
-
-    public static BFCommand saveHighlightDataFrame( DataFrame highlightDataFrame, Path targetFilePath ) {
-        return new SaveHighlightDataFrameCommand( highlightDataFrame, targetFilePath );
-    }
-
-    public static BFCommand loadHighlightDataFrame( Path highlightFilePath ) {
-        return new LoadHighlightDataFrameCommand( highlightFilePath );
-    }
-
-    public static BFCommand highlightRow( DataFrame inputDataFrame, int rowIndex, String color ) {
-        return new DataFrameHighlightRowCommand( inputDataFrame, rowIndex, color );
-    }
-
-    public static BFCommand clearHighlightRow( DataFrame ingestedDF, int rowIndex ) {
-        return new DataFrameClearHighlightRowCommand( ingestedDF, rowIndex );
     }
 
     public static BFCommand expandFile( Path filePath ) {
