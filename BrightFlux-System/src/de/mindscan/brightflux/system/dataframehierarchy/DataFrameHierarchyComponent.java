@@ -25,9 +25,18 @@
  */
 package de.mindscan.brightflux.system.dataframehierarchy;
 
+import java.util.UUID;
+
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.dataframehierarchy.events.DataFrameHierarchyUpdatedEvent;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
+import de.mindscan.brightflux.system.events.DataFrameCreatedEventListenerAdapter;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameClosedEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
+import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 
 /**
  * 
@@ -51,6 +60,49 @@ public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
+
+        registerDataFrameCreatedListener( this.projectRegistry );
+        registerDataFrameLoadedListener( this.projectRegistry );
+        registerDataFrameClosedListener( this.projectRegistry );
+    }
+
+    private void registerDataFrameCreatedListener( ProjectRegistry projectRegistry ) {
+        // register to (create events / created from a parent frame) -  these do contain a hierarchy
+        DataFrameCreatedEventListenerAdapter createdListener = new DataFrameCreatedEventListenerAdapter() {
+            @Override
+            public void handleDataFrameCreated( DataFrame dataFrame, String parentUUID ) {
+                dataframeHierarchy.addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
+
+                projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameHierarchyUpdatedEvent( dataframeHierarchy ) );
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameCreatedEvent.class, createdListener );
+    }
+
+    private void registerDataFrameLoadedListener( ProjectRegistry projectRegistry ) {
+        // register to (load events) -  these do not contain a hierarchy
+        DataFrameEventListenerAdapter loadedListener = new DataFrameEventListenerAdapter() {
+            @Override
+            public void handleDataFrame( DataFrame dataFrame ) {
+                dataframeHierarchy.addRootNode( dataFrame );
+
+                projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameHierarchyUpdatedEvent( dataframeHierarchy ) );
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameLoadedEvent.class, loadedListener );
+    }
+
+    private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
+        // Register to close event, so we can mark the hierarchy, that the frame is closed in the hierarchy. 
+        DataFrameEventListenerAdapter closedListener = new DataFrameEventListenerAdapter() {
+            @Override
+            public void handleDataFrame( DataFrame dataFrame ) {
+                dataframeHierarchy.removeNode( dataFrame );
+
+                projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameHierarchyUpdatedEvent( dataframeHierarchy ) );
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( DataFrameClosedEvent.class, closedListener );
     }
 
     /**

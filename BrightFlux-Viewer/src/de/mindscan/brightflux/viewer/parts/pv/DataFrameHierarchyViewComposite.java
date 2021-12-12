@@ -47,7 +47,6 @@ import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyEventListenerAdapter;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
-import de.mindscan.brightflux.system.events.DataFrameCreatedEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
@@ -86,10 +85,6 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        registerDataFrameCreatedListener( this.projectRegistry );
-        registerDataFrameLoadedListener( this.projectRegistry );
-        registerDataFrameClosedListener( this.projectRegistry );
-
         // register to the UIDataFrameSelectionEvent
         registerDataFrameSelectedListener( this.projectRegistry );
 
@@ -105,51 +100,6 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameHierarchyUpdated, updatedListener );
-    }
-
-    private void registerDataFrameClosedListener( ProjectRegistry projectRegistry2 ) {
-        // Register to close event, so we can mark the hierarchy, that the frame is closed in the hierarchy. 
-        DataFrameEventListenerAdapter closedListener = new DataFrameEventListenerAdapter() {
-            @Override
-            public void handleDataFrame( DataFrame dataFrame ) {
-                // business logic
-                dfHierarchyComponent.getDataframeHierarchy().removeNode( dataFrame );
-                // view logic
-                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
-            }
-        };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameClosed, closedListener );
-    }
-
-    private void registerDataFrameCreatedListener( ProjectRegistry projectRegistry ) {
-        // register to (create event / created from a parent frame)
-        // these contain a hierarchy
-        DataFrameCreatedEventListenerAdapter createdListener = new DataFrameCreatedEventListenerAdapter() {
-            @Override
-            public void handleDataFrameCreated( DataFrame dataFrame, String parentUUID ) {
-                // business logic                
-                dfHierarchyComponent.getDataframeHierarchy().addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
-                // view logic                
-                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
-            }
-        };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameCreated, createdListener );
-
-    }
-
-    private void registerDataFrameLoadedListener( ProjectRegistry projectRegistry ) {
-        // register to (load events)
-        // these do not contain a hierarchy
-        DataFrameEventListenerAdapter loadedListener = new DataFrameEventListenerAdapter() {
-            @Override
-            public void handleDataFrame( DataFrame dataFrame ) {
-                // business logic                
-                dfHierarchyComponent.getDataframeHierarchy().addRootNode( dataFrame );
-                // view logic                
-                updateDataframeTree( dfHierarchyComponent.getDataframeHierarchy() );
-            }
-        };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.DataFrameLoaded, loadedListener );
     }
 
     private void registerDataFrameSelectedListener( ProjectRegistry projectRegistry2 ) {
