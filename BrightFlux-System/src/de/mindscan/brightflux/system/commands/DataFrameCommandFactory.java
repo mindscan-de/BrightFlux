@@ -29,7 +29,6 @@ import java.nio.file.Path;
 import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowFilterPredicate;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
@@ -53,13 +52,6 @@ import de.mindscan.brightflux.system.highlighter.commands.DataFrameClearHighligh
 import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
 import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
 import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
-import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
-import de.mindscan.brightflux.system.videoannotator.commands.LinkVideoAnnoationToDataFrameRowCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoForAnnotationCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.SaveVideoAnnotationToFileCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.UnlinkVideoAnnotationToDataFrameRowsCommand;
-import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * This class provides commands around DataFrames 
@@ -153,27 +145,6 @@ public class DataFrameCommandFactory {
 
     public static BFCommand expandFile( Path filePath ) {
         return new ExpandProprietaryZipStreamCommand( filePath );
-    }
-
-    public static BFCommand loadVideoForAnnotation( Path videoObjectPath, VideoObjectInformation videoObjectInfo ) {
-        return new LoadVideoForAnnotationCommand( videoObjectPath, videoObjectInfo );
-    }
-
-    public static BFCommand linkVideoAnnotationToDataFrame( int videoPosInSeconds, VideoAnnotatorVideoObject videoObject, String[] linkedColumns,
-                    DataFrameRow linkedDataFrameRow ) {
-        return new LinkVideoAnnoationToDataFrameRowCommand( videoPosInSeconds, videoObject, linkedColumns, linkedDataFrameRow );
-    }
-
-    public static BFCommand unlinkVideoAnnotationFromDataFrame( VideoAnnotatorVideoObject videoObject ) {
-        return new UnlinkVideoAnnotationToDataFrameRowsCommand( videoObject );
-    }
-
-    public static BFCommand loadVideoAnnotationFromFile( Path videoAnnotationPath ) {
-        return new LoadVideoAnnotationFromFileCommand( videoAnnotationPath );
-    }
-
-    public static BFCommand saveVideoAnnotationToFile( VideoAnnotatorVideoObject videoObject, Path videoAnnotationTargetPath ) {
-        return new SaveVideoAnnotationToFileCommand( videoObject, videoAnnotationTargetPath );
     }
 
 }

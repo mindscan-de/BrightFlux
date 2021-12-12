@@ -48,9 +48,9 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorCommandFactory;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.VideoObjectEventListenerAdapter;
@@ -278,12 +278,12 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         // send some command to the annotation component... / with the annotation component
 
         // TODO: find, whether there is a special annotation file in parallel to the video.
-        dispatchCommand( DataFrameCommandFactory.loadVideoForAnnotation( path, videoObjectInformation ) );
+        dispatchCommand( VideoAnnotatorCommandFactory.loadVideoForAnnotation( path, videoObjectInformation ) );
     }
 
     public void executeIntentLoadVideoAnnotation( Shell shell ) {
         BrightFluxFileDialogs.openRegularFileAndConsumePath( shell, "Select Video Annotation", FileDescriptions.BF_VIDEO_ANNOTATION, path -> {
-            dispatchCommand( DataFrameCommandFactory.loadVideoAnnotationFromFile( path ) );
+            dispatchCommand( VideoAnnotatorCommandFactory.loadVideoAnnotationFromFile( path ) );
         } );
     }
 
@@ -307,7 +307,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     private void saveVideoAnnotation( Path path, VideoAnnotatorVideoObject videoObject ) {
-        dispatchCommand( DataFrameCommandFactory.saveVideoAnnotationToFile( videoObject, path ) );
+        dispatchCommand( VideoAnnotatorCommandFactory.saveVideoAnnotationToFile( videoObject, path ) );
     }
 
     private void dispatchCommand( BFCommand command ) {

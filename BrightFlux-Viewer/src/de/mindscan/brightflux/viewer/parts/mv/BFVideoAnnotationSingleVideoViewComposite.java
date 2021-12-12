@@ -53,8 +53,8 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorCommandFactory;
 import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
@@ -134,7 +134,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         btnClearReferences.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                dispatchCommand( DataFrameCommandFactory.unlinkVideoAnnotationFromDataFrame( videoObject ) );
+                dispatchCommand( VideoAnnotatorCommandFactory.unlinkVideoAnnotationFromDataFrame( videoObject ) );
 
                 // disable the ui part sync button
                 enableSyncButton( videoObject.isColumnPredictable( "h1.ts" ) || videoObject.isColumnPredictable( "hxx.ts" ) );
@@ -310,7 +310,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
             // we need the selected Row to do this.
 
             dispatchCommand( //
-                            DataFrameCommandFactory.linkVideoAnnotationToDataFrame( // 
+                            VideoAnnotatorCommandFactory.linkVideoAnnotationToDataFrame( // 
                                             this.getVideoSelectionPositionFromSlider(), videoObject,
                                             // TODO: The hard coded value should be asked from user or from previous selections, for this data frame type...
                                             new String[] { "h1.ts", "hxx.ts" }, selectedRow ) );
