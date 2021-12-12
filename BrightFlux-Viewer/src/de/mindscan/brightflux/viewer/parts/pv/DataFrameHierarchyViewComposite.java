@@ -53,11 +53,14 @@ import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
- * 
+ * TODO refactor: extract Dataframe hierarchy business logic to dataframehierarchy component and only do the viewing 
+ *                parts here.
  */
 public class DataFrameHierarchyViewComposite extends Composite implements ProjectRegistryParticipant {
 
     private ProjectRegistry projectRegistry;
+    // TODO refactor this initialization and the logic to a proper component. Idea is to inform the ViewComposite
+    //      about state changes in the built hierarchy. so hat the tree can then be updated, instead of doing the logic here.
     private DataFrameHierarchy dfHierarchy = new DataFrameHierarchyImpl();
     private TreeViewer treeViewer;
     protected UUID currentSelectedID;
@@ -94,7 +97,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         DataFrameEventListenerAdapter closedListener = new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
+                // business logic
                 dfHierarchy.removeNode( dataFrame );
+                // view logic
                 updateDataframeTree( dfHierarchy );
             }
         };
@@ -107,7 +112,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         DataFrameCreatedEventListenerAdapter createdListener = new DataFrameCreatedEventListenerAdapter() {
             @Override
             public void handleDataFrameCreated( DataFrame dataFrame, String parentUUID ) {
+                // business logic                
                 dfHierarchy.addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
+                // view logic                
                 updateDataframeTree( dfHierarchy );
             }
         };
@@ -121,7 +128,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         DataFrameEventListenerAdapter loadedListener = new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
+                // business logic                
                 dfHierarchy.addRootNode( dataFrame );
+                // view logic                
                 updateDataframeTree( dfHierarchy );
             }
         };
