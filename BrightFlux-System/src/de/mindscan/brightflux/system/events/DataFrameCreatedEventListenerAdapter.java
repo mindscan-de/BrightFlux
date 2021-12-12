@@ -45,7 +45,7 @@ public class DataFrameCreatedEventListenerAdapter extends BFEventListenerAdapter
      * {@inheritDoc}
      */
     @Override
-    public void handleEvent( BFEvent event ) {
+    public final void handleEvent( BFEvent event ) {
         if (event instanceof BFDataFrameEvent) {
             DataFrameCreatedEvent dfEvent = (DataFrameCreatedEvent) event;
             handleDataFrameCreated( dfEvent.getDataFrame(), dfEvent.getParentDataFrameUUID() );

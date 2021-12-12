@@ -36,22 +36,6 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 public interface DataFrameHierarchy {
 
     /**
-     * @param dataFrame
-     * @param parentUUID 
-     */
-    void addLeafNode( DataFrame dataFrame, UUID parentUUID );
-
-    /**
-     * @param dataFrame
-     */
-    void addRootNode( DataFrame dataFrame );
-
-    /**
-     * @param dataFrame
-     */
-    void removeNode( DataFrame dataFrame );
-
-    /**
      * 
      */
     List<DataFrameHierarchyNode> getRootNodes();
@@ -61,6 +45,10 @@ public interface DataFrameHierarchy {
      */
     List<DataFrameHierarchyNode> getChildren( DataFrameHierarchyNode parentElement );
 
+    /**
+     * @param parentElement
+     * @return
+     */
     boolean hasChildren( DataFrameHierarchyNode parentElement );
 
     /**
@@ -73,5 +61,28 @@ public interface DataFrameHierarchy {
      * @param currentSelectedID
      */
     DataFrameHierarchyNode getNodeByUUID( UUID currentSelectedID );
+
+    // --------
+    // OBSOLETE
+    // --------    
+
+    // TODO: remove this from the Interface - Interface after refactoring exposes too much
+    /**
+     * @param dataFrame
+     * @param parentUUID 
+     */
+    void addLeafNode( DataFrame dataFrame, UUID parentUUID );
+
+    // TODO: remove this from the Interface - Interface after refactoring exposes too much
+    /**
+     * @param dataFrame
+     */
+    void addRootNode( DataFrame dataFrame );
+
+    // TODO: remove this from the Interface - Interface after refactoring exposes too much
+    /**
+     * @param dataFrame
+     */
+    void removeNode( DataFrame dataFrame );
 
 }
