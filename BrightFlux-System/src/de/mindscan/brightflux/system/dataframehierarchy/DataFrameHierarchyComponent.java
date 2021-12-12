@@ -25,28 +25,39 @@
  */
 package de.mindscan.brightflux.system.dataframehierarchy;
 
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 
 /**
  * 
  */
-public class DataFrameHierarchyActivator {
+public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
 
-    public void start( SystemServices systemServices ) {
-        DataFrameHierarchyComponent component = new DataFrameHierarchyComponent();
+    private DataFrameHierarchyImpl dataframeHierarchy;
 
-        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
-        if (projectRegistry != null) {
-            component.setProjectRegistry( projectRegistry );
+    private ProjectRegistry projectRegistry;
 
-            // now register as system component.
-            systemServices.registerService( component, DataFrameHierarchyComponent.class );
-        }
-        else {
-            throw new NotYetImplemetedException( "DataFrameHierarchyActivator - ProjectRegistry dependency not satisfied." );
-        }
-
+    /**
+     * 
+     */
+    public DataFrameHierarchyComponent() {
+        dataframeHierarchy = new DataFrameHierarchyImpl();
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+    }
+
+    /**
+     * @return the dataframeHierarchy
+     */
+    public DataFrameHierarchy getDataframeHierarchy() {
+        return dataframeHierarchy;
+    }
+
 }
