@@ -55,6 +55,13 @@ public class SystemServices {
     private SystemServices() {
     }
 
+    // --------------------------------------------------------------------------
+    // TODO get rid of the direct getters and setters, this is too much coupling.
+    //      this was/is useful for rapid prototyping the whole thing. Now that we
+    //      can see how this thing is used, we can do he proper abstractions from
+    //      working code.
+    // --------------------------------------------------------------------------    
+
     public FavRecipesComponent getFavRecipesServices() {
         return getService( FavRecipesComponent.class );
     }
@@ -107,17 +114,27 @@ public class SystemServices {
         return getService( HighlighterComponent.class );
     }
 
-    // replacement implementation  for the direct setters.
+    // ---------------------------------------------------------------
+    // replacement implementation  for the direct setters and getters.
+    // ---------------------------------------------------------------    
 
     @SuppressWarnings( "unchecked" )
-    private <T> T getService( Class<T> clazz ) {
+    public <T> T getService( Class<T> serviceClazz ) {
         // TODO: check whether this is assignable...
-        return (T) registeredServices.get( clazz );
+        return (T) registeredServices.get( serviceClazz );
     }
 
-    public void registerService( Object serviceInstance, Class<?> serviceClazz ) {
+    public <T> void registerService( Object serviceInstance, Class<T> serviceClazz ) {
         // TODO: some checks
         registeredServices.put( serviceClazz, serviceInstance );
+    }
+
+    public <T> boolean isServiceAvailable( Class<T> serviceClazz ) {
+        return registeredServices.containsKey( serviceClazz );
+    }
+
+    public <T> boolean isServiceValid( Class<T> serviceClazz ) {
+        return registeredServices.containsKey( serviceClazz ) && (registeredServices.get( serviceClazz ) != null);
     }
 
     // MarkerService
