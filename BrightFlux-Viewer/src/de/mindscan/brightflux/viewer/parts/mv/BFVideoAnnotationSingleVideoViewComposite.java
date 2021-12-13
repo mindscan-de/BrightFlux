@@ -55,7 +55,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorCommandFactory;
 import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorUtils;
-import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotatorEventsFactory;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceData;
 import de.mindscan.brightflux.system.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
@@ -278,7 +278,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         this.setVisible( false );
 
         if (videoObject != null) {
-            projectRegistry.getEventDispatcher().dispatchEvent( BFEventFactory.videoObjectClosedEvent( videoObject ) );
+            projectRegistry.getEventDispatcher().dispatchEvent( VideoAnnotatorEventsFactory.videoObjectClosedEvent( videoObject ) );
             videoObject = null;
         }
     }

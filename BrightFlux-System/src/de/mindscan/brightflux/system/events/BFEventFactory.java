@@ -38,9 +38,6 @@ import de.mindscan.brightflux.system.events.recipes.RecipeSaveResultEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
-import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
-import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
-import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 
@@ -97,13 +94,5 @@ public class BFEventFactory {
 
     public static BFEvent clearHighlightDataFrameRow( DataFrame inputDataFrame, int row ) {
         return new DataFrameClearHighlightRowEvent( inputDataFrame, row );
-    }
-
-    public static BFEvent videoObjectCreatedEvent( VideoAnnotatorVideoObject videoObject ) {
-        return new VideoAnnotationVideoObjectCreatedEvent( videoObject );
-    }
-
-    public static BFEvent videoObjectClosedEvent( VideoAnnotatorVideoObject videoObject ) {
-        return new VideoAnnotationVideoObjectClosedEvent( videoObject );
     }
 }
