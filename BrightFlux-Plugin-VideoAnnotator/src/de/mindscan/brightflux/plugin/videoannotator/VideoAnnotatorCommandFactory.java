@@ -29,12 +29,12 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.plugin.videoannotator.commands.LinkVideoAnnoationToDataFrameRowCommand;
+import de.mindscan.brightflux.plugin.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
+import de.mindscan.brightflux.plugin.videoannotator.commands.LoadVideoForAnnotationCommand;
+import de.mindscan.brightflux.plugin.videoannotator.commands.SaveVideoAnnotationToFileCommand;
+import de.mindscan.brightflux.plugin.videoannotator.commands.UnlinkVideoAnnotationToDataFrameRowsCommand;
 import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
-import de.mindscan.brightflux.system.videoannotator.commands.LinkVideoAnnoationToDataFrameRowCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoForAnnotationCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.SaveVideoAnnotationToFileCommand;
-import de.mindscan.brightflux.system.videoannotator.commands.UnlinkVideoAnnotationToDataFrameRowsCommand;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**

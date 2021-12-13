@@ -23,27 +23,27 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.commands;
+package de.mindscan.brightflux.plugin.videoannotator.commands;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
-import de.mindscan.brightflux.videoannotation.io.VideoAnnotationWriterImpl;
+import de.mindscan.brightflux.videoannotation.io.VideoAnnotationReaderImpl;
 
 /**
  * 
  */
-public class SaveVideoAnnotationToFileCommand implements BFCommand {
+public class LoadVideoAnnotationFromFileCommand implements BFCommand {
 
-    private VideoAnnotatorVideoObject videoObject;
-    private Path targetPath;
+    private Path videoAnnotationPath;
 
-    public SaveVideoAnnotationToFileCommand( VideoAnnotatorVideoObject videoObject, Path targetPath ) {
-        this.videoObject = videoObject;
-        this.targetPath = targetPath;
+    public LoadVideoAnnotationFromFileCommand( Path videoAnnotationPath ) {
+        this.videoAnnotationPath = videoAnnotationPath;
+
     }
 
     /** 
@@ -51,10 +51,11 @@ public class SaveVideoAnnotationToFileCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        VideoAnnotationWriterImpl videoAnnotationWriter = new VideoAnnotationWriterImpl();
-        videoAnnotationWriter.writeToFile( videoObject, targetPath );
+        VideoAnnotationReaderImpl reader = new VideoAnnotationReaderImpl();
+        VideoAnnotatorVideoObject videoObject = reader.loadAnnotationAsVideoObject( videoAnnotationPath );
 
-        // TODO: do we need an event right here, right now?
+        // TODO: Should be a videoObjectLoadedEvent? - later
+        eventConsumer.accept( BFEventFactory.videoObjectCreatedEvent( videoObject ) );
     }
 
 }
