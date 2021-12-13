@@ -1,4 +1,4 @@
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.plugin.videoannotator;
 
 import static org.mockito.Mockito.times;
 
@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;

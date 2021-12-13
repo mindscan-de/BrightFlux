@@ -23,43 +23,30 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.plugin.videoannotator;
 
-import java.nio.file.Path;
-
-import de.mindscan.brightflux.system.videoannotator.ffprobe.FFProbeQuery;
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;
+import de.mindscan.brightflux.system.videoannotator.VideoObjectEventHandler;
+import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 
  */
-public class VideoAnnotatorUtils {
+public class VideoObjectEventListenerAdapter extends BFEventListenerAdapter implements VideoObjectEventHandler {
 
-    public static String convertSecondsToTimeString( int videoDurationInSeconds ) {
-
-        int seconds = videoDurationInSeconds % 60;
-        int minutes = (videoDurationInSeconds / 60) % 60;
-
-        if (videoDurationInSeconds < 3600) {
-            return String.format( "%02d:%02d", minutes, seconds );
-        }
-        else {
-            int hours = (videoDurationInSeconds / 3600);
-            return String.format( "%02d:%02d:%02d", hours, minutes, seconds );
-        }
+    @Override
+    public void handleVdideoObject( VideoAnnotatorVideoObject videoObject ) {
     }
 
-    public static VideoObjectInformation getVideoObjectInformation( Path ffprobeLocation, Path videoObjectPath ) {
-        FFProbeQuery query = new FFProbeQuery( ffprobeLocation );
+    @Override
+    public final void handleEvent( BFEvent event ) {
+        if (event instanceof BFVideoObjectEvent) {
+            VideoAnnotatorVideoObject videoObject = ((BFVideoObjectEvent) event).getVideoObject();
 
-        try {
-            return query.retrieveFormatInfo( videoObjectPath );
+            handleVdideoObject( videoObject );
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // This should be some dummy videoSized Object....
-        return null;
     }
 
 }
