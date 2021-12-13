@@ -72,6 +72,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
     private ProjectRegistry projectRegistry;
     private CTabFolder videoObjectTabFolder;
+    private VideoAnnotatorComponent videoAnnotatorService;
 
     /**
      * Create the composite.
@@ -80,6 +81,9 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
      */
     public BFVideoAnnotationViewComposite( Composite parent, int style ) {
         super( parent, style );
+
+        this.videoAnnotatorService = SystemServices.getInstance().getService( VideoAnnotatorComponent.class );
+
         setLayout( new BorderLayout( 0, 0 ) );
 
         Composite composite = new Composite( this, SWT.NONE );
@@ -271,7 +275,6 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
     private void addVideoToProject( Path path ) {
         // we need to add processing on how long this video is - maybe we have to ask vlc or ffmpeg for this...
-        VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
         VideoObjectInformation videoObjectInformation = VideoAnnotatorUtils.getVideoObjectInformation( videoAnnotatorService.getFFProbePath(), path );
 
         // This will create a new special video configuration for the current selected (most parent) file.... / and for each video configuration there is 
@@ -288,7 +291,6 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     public void executeIntentCopyToClipboardVideoAnnotationReport( Shell shell ) {
-        VideoAnnotatorComponent videoAnnotatorService = SystemServices.getInstance().getVideoAnnotatorService();
         String report = videoAnnotatorService.createFullReport();
 
         dispatchCommand( UICommandFactory.copyToClipboard( shell, report ) );

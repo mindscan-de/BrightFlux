@@ -49,7 +49,7 @@ public class VideoAnnotatorActivator {
         // - set a fully configured persistence module instead, where the component can do everything in its own
         // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
         videoAnnotatorComponent.setFFProbePath( earlyPersistence.getPropertyAsPath( FFPROBE_PATH_KEY ) );
-        systemServices.setVideoAnnotationService( videoAnnotatorComponent );
+        systemServices.registerService( videoAnnotatorComponent, VideoAnnotatorComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
         if (projectRegistry != null) {
