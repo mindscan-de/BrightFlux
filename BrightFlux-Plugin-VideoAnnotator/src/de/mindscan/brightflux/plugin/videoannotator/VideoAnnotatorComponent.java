@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.plugin.videoannotator;
 
 import java.nio.file.Path;
 import java.util.Iterator;
@@ -34,6 +34,8 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.videoannotator.VideoAnnotatorUtils;
+import de.mindscan.brightflux.system.videoannotator.VideoObjectEventListenerAdapter;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 import de.mindscan.brightflux.videoannotation.VideoAnnotationColumns;

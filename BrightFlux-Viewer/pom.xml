@@ -21,12 +21,29 @@
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
 		
-		<!-- BrightFlux-Framework -->	
+		<!-- BrightFlux-System -->	
 		<dependency>
 			<groupId>de.mindscan.brightflux</groupId>
 			<artifactId>BrightFlux-System</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
+		
+		
+		<!-- Internal Plugins -->
+		<!-- BrightFlux-Plugin-Annotator -->	
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-VideoAnnotator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
+		<!-- BrightFlux-Plugin-Annotator -->	
+<!-- 		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-Annotator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency> 
+-->
+		
 	
 		<!-- SWT/JFace -->
 		<!-- https://mvnrepository.com/artifact/org.eclipse.platform/org.eclipse.swt.win32.win32.x86_64 -->

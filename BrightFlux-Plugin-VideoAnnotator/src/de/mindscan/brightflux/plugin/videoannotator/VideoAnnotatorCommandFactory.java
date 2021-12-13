@@ -23,12 +23,13 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
+package de.mindscan.brightflux.plugin.videoannotator;
 
 import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
 import de.mindscan.brightflux.system.videoannotator.commands.LinkVideoAnnoationToDataFrameRowCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoAnnotationFromFileCommand;
 import de.mindscan.brightflux.system.videoannotator.commands.LoadVideoForAnnotationCommand;
