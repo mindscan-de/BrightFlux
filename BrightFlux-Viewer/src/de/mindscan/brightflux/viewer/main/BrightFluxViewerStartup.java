@@ -26,12 +26,12 @@
 package de.mindscan.brightflux.viewer.main;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.plugin.highlighter.HighlighterActivator;
 import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorActivator;
 import de.mindscan.brightflux.system.annotator.AnnotatorActivator;
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyActivator;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
-import de.mindscan.brightflux.system.highlighter.HighlighterActivator;
 import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
 import de.mindscan.brightflux.system.services.SystemServices;
