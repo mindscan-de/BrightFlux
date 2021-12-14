@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.plugin.videoannotator;
+package de.mindscan.brightflux.plugin.videoannotator.utils;
 
 import java.nio.file.Path;
 
