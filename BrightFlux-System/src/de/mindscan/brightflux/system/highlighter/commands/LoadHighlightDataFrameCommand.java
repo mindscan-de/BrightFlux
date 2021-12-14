@@ -32,7 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.ingest.IngestBFDataFrameJsonLines;
-import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class LoadHighlightDataFrameCommand implements BFCommand {
         IngestBFDataFrameJsonLines ingest = new IngestBFDataFrameJsonLines();
         DataFrame highlightDataFrame = ingest.loadAsDataFrame( loadHighlightPath );
 
-        eventConsumer.accept( BFEventFactory.highlightDataframeCreated( highlightDataFrame ) );
+        eventConsumer.accept( HighlighterEventFactory.highlightDataframeCreated( highlightDataFrame ) );
     }
 
 }

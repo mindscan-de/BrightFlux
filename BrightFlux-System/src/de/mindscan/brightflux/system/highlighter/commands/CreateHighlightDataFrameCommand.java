@@ -33,8 +33,8 @@ import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
+import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
@@ -54,7 +54,7 @@ public class CreateHighlightDataFrameCommand implements BFCommand {
                         .addColumn( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_STRING )//
                         .build();
 
-        eventConsumer.accept( BFEventFactory.highlightDataframeCreated( newDataFrame ) );
+        eventConsumer.accept( HighlighterEventFactory.highlightDataframeCreated( newDataFrame ) );
 
     }
 

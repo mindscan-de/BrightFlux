@@ -23,43 +23,26 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.commands;
-
-import java.util.function.Consumer;
+package de.mindscan.brightflux.system.highlighter.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
  */
-public class DataFrameHighlightRowCommand implements BFCommand {
+public class HighlighterEventFactory {
 
-    private DataFrame inputDataFrame;
-    private int row;
-    private String color;
-
-    /**
-     * @param color 
-     * 
-     */
-    public DataFrameHighlightRowCommand( DataFrame inputDataFrame, int row, String color ) {
-        this.inputDataFrame = inputDataFrame;
-        this.row = row;
-        this.color = color;
+    public static BFEvent highlightDataframeCreated( DataFrame newDataFrame ) {
+        return new HighlighterDataFrameCreatedEvent( newDataFrame );
     }
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO Translate the row to the original Index here, because...
-        // inputDataFrame.getOriginalRowIndex( row );
+    public static BFEvent highlightDataFrameRow( DataFrame inputDataFrame, int row, String color ) {
+        return new DataFrameHighlightRowEvent( inputDataFrame, row, color );
+    }
 
-        eventConsumer.accept( HighlighterEventFactory.highlightDataFrameRow( inputDataFrame, row, color ) );
+    public static BFEvent clearHighlightDataFrameRow( DataFrame inputDataFrame, int row ) {
+        return new DataFrameClearHighlightRowEvent( inputDataFrame, row );
     }
 
 }

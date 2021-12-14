@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.events.BFEventFactory;
+import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
@@ -56,7 +56,7 @@ public class DataFrameClearHighlightRowCommand implements BFCommand {
         // TODO Translate the row to the original Index here, because...
         // inputDataFrame.getOriginalRowIndex( row );
 
-        eventConsumer.accept( BFEventFactory.clearHighlightDataFrameRow( inputDataFrame, row ) );
+        eventConsumer.accept( HighlighterEventFactory.clearHighlightDataFrameRow( inputDataFrame, row ) );
     }
 
 }
