@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.ffprobe;
+package de.mindscan.brightflux.plugin.videoannotator.ffprobe;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import de.mindscan.brightflux.system.videoannotator.ffprobe.impl.FFProbeInfoValue;
+import de.mindscan.brightflux.plugin.videoannotator.ffprobe.impl.FFProbeInfoValue;
 
 /**
  * 

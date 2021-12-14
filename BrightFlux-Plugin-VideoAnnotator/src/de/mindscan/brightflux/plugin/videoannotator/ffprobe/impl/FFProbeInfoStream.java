@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.ffprobe.impl;
+package de.mindscan.brightflux.plugin.videoannotator.ffprobe.impl;
 
 /**
  * 

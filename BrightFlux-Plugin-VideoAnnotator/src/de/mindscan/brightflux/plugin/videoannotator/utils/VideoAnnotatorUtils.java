@@ -27,8 +27,8 @@ package de.mindscan.brightflux.plugin.videoannotator.utils;
 
 import java.nio.file.Path;
 
+import de.mindscan.brightflux.plugin.videoannotator.ffprobe.FFProbeQuery;
 import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
-import de.mindscan.brightflux.system.videoannotator.ffprobe.FFProbeQuery;
 
 /**
  * 
