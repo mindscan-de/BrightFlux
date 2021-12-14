@@ -32,7 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.highlighter.HighlighterCommandFactory;
+import de.mindscan.brightflux.plugin.highlighter.commands.HighlighterCommandFactory;
 
 /**
  * 
