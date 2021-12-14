@@ -39,7 +39,7 @@ public class HighlighterActivator {
      */
     public void start( SystemServices systemServices ) {
         HighlighterComponent highlighterComponent = new HighlighterComponent();
-        systemServices.setHiglighterService( highlighterComponent );
+        systemServices.registerService( highlighterComponent, HighlighterComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
         if (projectRegistry != null) {

@@ -42,6 +42,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameTableComposite;
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedHandler;
@@ -170,7 +171,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         tbtmNewItem.setText( ingestedDFName );
 
         DataFrameTableComposite composite = new DataFrameTableComposite( tabFolder, SWT.NONE );
-        composite.setHighlighterComponent( SystemServices.getInstance().getHighlighterComponent() );
+        composite.setHighlighterComponent( SystemServices.getInstance().getService( HighlighterComponent.class ) );
         // TODO: autowire?
         composite.setProjectRegistry( projectRegistry );
         composite.setDataFrame( ingestedDF );
