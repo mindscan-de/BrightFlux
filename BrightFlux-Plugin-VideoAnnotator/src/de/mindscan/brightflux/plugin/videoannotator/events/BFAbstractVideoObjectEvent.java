@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.events;
+package de.mindscan.brightflux.plugin.videoannotator.events;
 
 import de.mindscan.brightflux.system.events.BFAbstractEvent;
 import de.mindscan.brightflux.system.videoannotator.BFVideoObjectEvent;

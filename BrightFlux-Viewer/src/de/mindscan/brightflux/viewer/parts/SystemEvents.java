@@ -28,14 +28,14 @@ package de.mindscan.brightflux.viewer.parts;
 import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
+import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
+import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 import de.mindscan.brightflux.system.annotator.events.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.dataframehierarchy.events.DataFrameHierarchyUpdatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameClosedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 import de.mindscan.brightflux.system.events.recipes.RecipeSaveResultEvent;
-import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
-import de.mindscan.brightflux.system.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 
 /**
  * This class acts as an anti corruption layer, in case of larger refactorings, of 
