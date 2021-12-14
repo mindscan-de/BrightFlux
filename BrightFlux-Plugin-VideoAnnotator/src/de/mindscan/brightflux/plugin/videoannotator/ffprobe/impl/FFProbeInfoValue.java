@@ -28,7 +28,7 @@ package de.mindscan.brightflux.plugin.videoannotator.ffprobe.impl;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
+import de.mindscan.brightflux.plugin.videoannotator.VideoObjectInformation;
 
 /**
  * 

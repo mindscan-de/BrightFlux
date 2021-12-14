@@ -23,19 +23,19 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator;
-
-import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
+package de.mindscan.brightflux.plugin.videoannotator;
 
 /**
  * 
  */
-public interface BFVideoObjectEvent extends BFEvent {
+public interface VideoObjectInformation {
 
-    /**
-     * @return the videoObject
-     */
-    VideoAnnotatorVideoObject getVideoObject();
+    int getHeight();
+
+    int getWidth();
+
+    long getSize();
+
+    double getDuration();
 
 }

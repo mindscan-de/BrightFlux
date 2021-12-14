@@ -29,7 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
-import de.mindscan.brightflux.system.videoannotator.VideoObjectInformation;
+import de.mindscan.brightflux.plugin.videoannotator.VideoObjectInformation;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
