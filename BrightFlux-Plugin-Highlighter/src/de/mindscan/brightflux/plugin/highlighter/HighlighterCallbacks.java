@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter;
+package de.mindscan.brightflux.plugin.highlighter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +32,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.highlighter.HighlighterCommandFactory;
 
 /**
  * 

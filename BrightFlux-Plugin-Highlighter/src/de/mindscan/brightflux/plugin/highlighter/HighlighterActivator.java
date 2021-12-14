@@ -27,7 +27,6 @@ package de.mindscan.brightflux.plugin.highlighter;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.highlighter.HighlighterCallbacks;
 import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.services.SystemServices;
 
