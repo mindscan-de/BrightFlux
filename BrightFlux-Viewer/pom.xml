@@ -36,6 +36,13 @@
 			<artifactId>BrightFlux-Plugin-VideoAnnotator</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
+		<!-- BrightFlux-Plugin-Highlighter -->
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-Highlighter</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
+		
 		<!-- BrightFlux-Plugin-Annotator -->	
 <!-- 		<dependency>
 			<groupId>de.mindscan.brightflux</groupId>
