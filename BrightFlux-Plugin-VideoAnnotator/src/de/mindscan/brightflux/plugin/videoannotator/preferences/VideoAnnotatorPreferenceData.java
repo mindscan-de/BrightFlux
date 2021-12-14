@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.videoannotator.preferences;
+package de.mindscan.brightflux.plugin.videoannotator.preferences;
 
 /**
  * TODO: this will be refactored into something which is more dynamic but currently supplies the "better" infrastructure  
