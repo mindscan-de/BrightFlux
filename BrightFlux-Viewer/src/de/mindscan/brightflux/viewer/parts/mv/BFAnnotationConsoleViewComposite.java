@@ -79,7 +79,6 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private DataFrame currentSelectedDataFrame = null;
     private DataFrameRow currentSelectedDataFrameRow = null;
-    private DataFrame logAnalysisFrame = null;
 
     private StyledText annotatedStyledText;
 
@@ -88,6 +87,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private Button btnEnableAnnotations;
 
     private Shell shell;
+
+    private AnnotatorComponent annotatorService = SystemServices.getInstance().getService( AnnotatorComponent.class );
 
     /**
      * Create the composite.
@@ -118,7 +119,6 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         DataFrameEventListenerAdapter annotationDfCreatedListener = new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrame( DataFrame frameToAnnotate ) {
-                BFAnnotationConsoleViewComposite.this.logAnalysisFrame = frameToAnnotate;
                 BFAnnotationConsoleViewComposite.this.currentSelectedDataFrameRow = null;
             }
         };
@@ -184,7 +184,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             @Override
             public void widgetSelected( SelectionEvent e ) {
 
-                buildReport( currentSelectedDataFrame, logAnalysisFrame );
+                buildReport( currentSelectedDataFrame, annotatorService.getLogAnalysisFrame() );
                 // Someone pressed the button.
                 // We know the analysis frame and the currentFrame, so we can actually generate a report from it...
                 // well building the report should be done elsewhere?
@@ -217,7 +217,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void widgetSelected( SelectionEvent e ) {
                 String header = "Save Annotation File.";
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
-                    BFCommand command = AnnotatorCommandFactory.saveAnnotationDataFrame( logAnalysisFrame, p );
+                    BFCommand command = AnnotatorCommandFactory.saveAnnotationDataFrame( annotatorService.getLogAnalysisFrame(), p );
                     dispatchCommand( command );
                 } );
 
@@ -304,6 +304,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private void prepareCurrentAnnotation( Object rowItem ) {
         if (isDataFrameValid() && rowItem != null) {
             int originalRowIndex = ((DataFrameRow) rowItem).getOriginalRowIndex();
+            DataFrame logAnalysisFrame = annotatorService.getLogAnalysisFrame();
+
             if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
                 String previousAnnotation = (String) logAnalysisFrame.getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
                 annotatedStyledText.setText( previousAnnotation );
@@ -318,7 +320,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private boolean isDataFrameValid() {
-        return logAnalysisFrame != null;
+        return annotatorService.isLogAnalysisFramePresent();
     }
 
     private boolean isCurrentDataFrameRowValid() {
