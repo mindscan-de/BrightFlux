@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Display;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
-import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
+import de.mindscan.brightflux.plugin.highlighter.HighlighterComponent;
 
 /**
  * TODO: the Label provider should be dependent of either configuration

@@ -33,7 +33,7 @@ import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
+import de.mindscan.brightflux.plugin.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
