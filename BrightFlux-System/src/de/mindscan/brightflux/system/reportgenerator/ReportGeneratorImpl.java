@@ -28,7 +28,7 @@ package de.mindscan.brightflux.system.reportgenerator;
 /**
  * 
  */
-public class ReportGeneratorImpl {
+public class ReportGeneratorImpl implements ReportGenerator {
 
     private static final String TEMPLATE = "%s\n\n{code}\n%s\n{code}\n\n";
     private String lastMessage = "";
@@ -36,19 +36,20 @@ public class ReportGeneratorImpl {
 
     private StringBuilder sb = new StringBuilder();
 
+    @Override
     public void startReport() {
         lastMessage = "";
         lastRows = "";
         sb = new StringBuilder();
     }
 
-    public void addAnnotationMessage( String newMessage ) {
+    private void addAnnotationMessage( String newMessage ) {
         buildPendingLines();
         lastMessage = newMessage;
         lastRows = "";
     }
 
-    public void addDataRow( String renderedDataRow ) {
+    private void addDataRow( String renderedDataRow ) {
         if (lastRows.isEmpty()) {
             lastRows = renderedDataRow;
         }
@@ -57,9 +58,15 @@ public class ReportGeneratorImpl {
         }
     }
 
+    @Override
     public String build() {
         buildPendingLines();
-        return sb.toString();
+        String report = sb.toString();
+
+        // cleanup previous state and start a new report.
+        startReport();
+
+        return report;
     }
 
     private void buildPendingLines() {
@@ -69,25 +76,26 @@ public class ReportGeneratorImpl {
         sb.append( String.format( TEMPLATE, lastMessage, lastRows ) );
     }
 
-    public boolean isOmit( String trimmed ) {
+    private boolean isOmit( String trimmed ) {
         return "..".equals( trimmed );
     }
 
-    public boolean isConnect( String trimmed ) {
+    private boolean isConnect( String trimmed ) {
         return ".".equals( trimmed );
     }
 
+    @Override
     public void appendMessageAndRow( String message, String renderedDataRowContent ) {
         String trimmed = message.trim();
         // check it is not any kind of connector or omit'tor
         if (!isConnect( trimmed ) && !isOmit( trimmed )) {
             addAnnotationMessage( message );
         }
-    
+
         if (isOmit( trimmed )) {
             addDataRow( "[..]" );
         }
-    
+
         addDataRow( renderedDataRowContent );
     }
 
