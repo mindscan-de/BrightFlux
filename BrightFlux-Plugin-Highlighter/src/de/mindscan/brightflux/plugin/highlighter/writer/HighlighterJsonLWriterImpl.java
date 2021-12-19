@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.writer;
+package de.mindscan.brightflux.plugin.highlighter.writer;
 
 import java.nio.file.Path;
 

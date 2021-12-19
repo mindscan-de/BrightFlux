@@ -33,12 +33,12 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.highlighter.writer.HighlighterJsonLWriterImpl;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
-import de.mindscan.brightflux.system.highlighter.writer.HighlighterJsonLWriterImpl;
 
 /**
  * 
