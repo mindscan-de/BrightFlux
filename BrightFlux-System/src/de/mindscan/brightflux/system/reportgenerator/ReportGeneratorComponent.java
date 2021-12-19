@@ -27,6 +27,7 @@ package de.mindscan.brightflux.system.reportgenerator;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.reportgenerator.impl.ReportGeneratorImpl;
 
 /**
  * 

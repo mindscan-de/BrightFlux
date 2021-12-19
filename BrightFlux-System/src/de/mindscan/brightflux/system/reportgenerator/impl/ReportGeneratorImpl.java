@@ -23,7 +23,9 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.reportgenerator;
+package de.mindscan.brightflux.system.reportgenerator.impl;
+
+import de.mindscan.brightflux.system.reportgenerator.ReportGenerator;
 
 /**
  * 
