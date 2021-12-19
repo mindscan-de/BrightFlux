@@ -84,7 +84,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private ProjectRegistry projectRegistry;
 
-    private Button btnEnableAnnotations;
+    private Button btnClearAnnotations;
 
     private Shell shell;
 
@@ -169,15 +169,14 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Composite composite = new Composite( sashForm_1, SWT.NONE );
         composite.setLayout( new GridLayout( 2, false ) );
 
-        btnEnableAnnotations = new Button( composite, SWT.NONE );
-        btnEnableAnnotations.addSelectionListener( new SelectionAdapter() {
+        btnClearAnnotations = new Button( composite, SWT.NONE );
+        btnClearAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 createAnnotationDataFrame();
-                btnEnableAnnotations.setEnabled( false );
             }
         } );
-        btnEnableAnnotations.setText( "Enable Annotations" );
+        btnClearAnnotations.setText( "Clear Annotations" );
 
         Button btnGenerateReport = new Button( composite, SWT.NONE );
         btnGenerateReport.addSelectionListener( new SelectionAdapter() {
