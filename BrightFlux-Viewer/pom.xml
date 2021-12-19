@@ -30,7 +30,7 @@
 		
 		
 		<!-- Internal Plugins -->
-		<!-- BrightFlux-Plugin-Annotator -->	
+		<!-- BrightFlux-Plugin-VideoAnnotator -->	
 		<dependency>
 			<groupId>de.mindscan.brightflux</groupId>
 			<artifactId>BrightFlux-Plugin-VideoAnnotator</artifactId>
