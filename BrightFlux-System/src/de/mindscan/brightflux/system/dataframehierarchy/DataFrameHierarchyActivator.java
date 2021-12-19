@@ -27,13 +27,15 @@ package de.mindscan.brightflux.system.dataframehierarchy;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
  */
-public class DataFrameHierarchyActivator {
+public class DataFrameHierarchyActivator implements StartupParticipant {
 
+    @Override
     public void start( SystemServices systemServices ) {
         DataFrameHierarchyComponent component = new DataFrameHierarchyComponent();
 

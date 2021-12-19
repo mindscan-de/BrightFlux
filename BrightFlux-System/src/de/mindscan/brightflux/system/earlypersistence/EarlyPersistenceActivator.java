@@ -25,16 +25,18 @@
  */
 package de.mindscan.brightflux.system.earlypersistence;
 
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
  */
-public class EarlyPersistenceActivator {
+public class EarlyPersistenceActivator implements StartupParticipant {
 
     /**
      * @param systemServices
      */
+    @Override
     public void start( SystemServices systemServices ) {
         EarlyPersistenceComponent earlyPersistence = new EarlyPersistenceComponent();
         earlyPersistence.initEarlyPersistence();

@@ -28,12 +28,13 @@ package de.mindscan.brightflux.system.favrecipes;
 import java.util.List;
 
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
  */
-public class FavRecipesActivator {
+public class FavRecipesActivator implements StartupParticipant {
     public static final String FAVORITE_RECIPES_DIRECTORY_KEY = "favorites.recipes.dir";
 
     public FavRecipesActivator() {
@@ -42,6 +43,7 @@ public class FavRecipesActivator {
     /**
      * @param systemServices
      */
+    @Override
     public void start( SystemServices systemServices ) {
         EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
 

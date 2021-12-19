@@ -23,27 +23,14 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.projectregistry;
-
-import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.framework.registry.ProjectRegistryImpl;
-import de.mindscan.brightflux.system.services.StartupParticipant;
-import de.mindscan.brightflux.system.services.SystemServices;
+package de.mindscan.brightflux.system.services;
 
 /**
- * 
+ * TODO We will move this to framework startup when we removed the dependencies from system services. But for now
+ *      we want to implement a proper startup.
  */
-public class ProjectRegistryActivator implements StartupParticipant {
+public interface StartupParticipant {
 
-    /**
-     * @param systemServices
-     */
-    @Override
-    public void start( SystemServices systemServices ) {
-
-        ProjectRegistry projectRegistry = new ProjectRegistryImpl();
-        systemServices.setProjectRegistry( projectRegistry );
-
-    }
+    void start( SystemServices systemservices );
 
 }

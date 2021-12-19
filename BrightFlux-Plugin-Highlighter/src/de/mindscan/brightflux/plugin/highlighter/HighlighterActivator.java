@@ -27,16 +27,18 @@ package de.mindscan.brightflux.plugin.highlighter;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
  */
-public class HighlighterActivator {
+public class HighlighterActivator implements StartupParticipant {
 
     /**
      * @param systemServices
      */
+    @Override
     public void start( SystemServices systemServices ) {
         HighlighterComponent highlighterComponent = new HighlighterComponent();
         systemServices.registerService( highlighterComponent, HighlighterComponent.class );

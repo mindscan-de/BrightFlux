@@ -27,16 +27,18 @@ package de.mindscan.brightflux.system.annotator;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
  */
-public class AnnotatorActivator {
+public class AnnotatorActivator implements StartupParticipant {
 
     /**
      * @param systemServices
      */
+    @Override
     public void start( SystemServices systemServices ) {
         AnnotatorComponent annotator = new AnnotatorComponent();
         systemServices.setAnnotatorService( annotator );

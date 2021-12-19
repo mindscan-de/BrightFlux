@@ -25,12 +25,13 @@
  */
 package de.mindscan.brightflux.system.reportgenerator;
 
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
  */
-public class ReportGeneratorActivator {
+public class ReportGeneratorActivator implements StartupParticipant {
 
     /**
      * @param systemServices
@@ -38,7 +39,6 @@ public class ReportGeneratorActivator {
     public void start( SystemServices systemServices ) {
         ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
         systemServices.setReportGeneratorService( reportGeneratorService );
-
     }
 
 }
