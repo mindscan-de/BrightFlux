@@ -71,10 +71,7 @@ public class SystemServices {
         return getService( EarlyPersistenceComponent.class );
     }
 
-    public void setAnnotatorService( AnnotatorComponent annotatorComponent ) {
-        registerService( annotatorComponent, AnnotatorComponent.class );
-    }
-
+    // TODO this is currently unused but acts as a reminder to do the correct init on components using AnnotatorComponent. 
     public AnnotatorComponent getAnnotatorService() {
         return getService( AnnotatorComponent.class );
     }

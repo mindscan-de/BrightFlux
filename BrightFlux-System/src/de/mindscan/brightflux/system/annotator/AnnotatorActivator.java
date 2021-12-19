@@ -41,14 +41,14 @@ public class AnnotatorActivator implements StartupParticipant {
     @Override
     public void start( SystemServices systemServices ) {
         AnnotatorComponent annotator = new AnnotatorComponent();
-        systemServices.setAnnotatorService( annotator );
+        systemServices.registerService( annotator, AnnotatorComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
         if (projectRegistry != null) {
             projectRegistry.registerParticipant( annotator );
         }
         else {
-            throw new NotYetImplemetedException( "AnnotatorActivator precondiftion not staisfied." );
+            throw new NotYetImplemetedException( "AnnotatorActivator precondition not staisfied." );
         }
     }
 
