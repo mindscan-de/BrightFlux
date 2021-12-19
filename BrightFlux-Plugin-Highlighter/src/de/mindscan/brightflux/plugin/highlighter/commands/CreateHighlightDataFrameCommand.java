@@ -23,43 +23,39 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.commands;
+package de.mindscan.brightflux.plugin.highlighter.commands;
 
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
+import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.system.highlighter.HighlighterComponent;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
  */
-public class DataFrameHighlightRowCommand implements BFCommand {
-
-    private DataFrame inputDataFrame;
-    private int row;
-    private String color;
-
-    /**
-     * @param color 
-     * 
-     */
-    public DataFrameHighlightRowCommand( DataFrame inputDataFrame, int row, String color ) {
-        this.inputDataFrame = inputDataFrame;
-        this.row = row;
-        this.color = color;
-    }
+public class CreateHighlightDataFrameCommand implements BFCommand {
 
     /** 
      * {@inheritDoc}
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO Translate the row to the original Index here, because...
-        // inputDataFrame.getOriginalRowIndex( row );
+        // TODO SparseXYZColumn for colorintensity...
 
-        eventConsumer.accept( HighlighterEventFactory.highlightDataFrameRow( inputDataFrame, row, color ) );
+        DataFrame newDataFrame = new DataFrameBuilder( HighlighterComponent.HIGHLIGHT_DATAFRAME_NAME )//
+                        .addColumn( DataFrameSpecialColumns.INDEX_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) // 
+                        .addColumn( DataFrameSpecialColumns.ORIGINAL_INDEX_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_INT ) // 
+                        .addColumn( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, ColumnTypes.COLUMN_TYPE_SPARSE_STRING )//
+                        .build();
+
+        eventConsumer.accept( HighlighterEventFactory.highlightDataframeCreated( newDataFrame ) );
+
     }
 
 }

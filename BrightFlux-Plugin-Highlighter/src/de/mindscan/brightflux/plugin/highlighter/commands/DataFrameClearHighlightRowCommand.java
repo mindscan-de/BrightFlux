@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.commands;
+package de.mindscan.brightflux.plugin.highlighter.commands;
 
 import java.util.function.Consumer;
 

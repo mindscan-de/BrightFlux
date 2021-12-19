@@ -29,11 +29,6 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
-import de.mindscan.brightflux.system.highlighter.commands.CreateHighlightDataFrameCommand;
-import de.mindscan.brightflux.system.highlighter.commands.DataFrameClearHighlightRowCommand;
-import de.mindscan.brightflux.system.highlighter.commands.DataFrameHighlightRowCommand;
-import de.mindscan.brightflux.system.highlighter.commands.LoadHighlightDataFrameCommand;
-import de.mindscan.brightflux.system.highlighter.commands.SaveHighlightDataFrameCommand;
 
 /**
  * 

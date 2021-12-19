@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.commands;
+package de.mindscan.brightflux.plugin.highlighter.commands;
 
 import java.nio.file.Path;
 import java.util.function.Consumer;
@@ -31,22 +31,21 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.highlighter.writer.HighlighterJsonLWriterImpl;
+import de.mindscan.brightflux.ingest.IngestBFDataFrameJsonLines;
+import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
  */
-public class SaveHighlightDataFrameCommand implements BFCommand {
+public class LoadHighlightDataFrameCommand implements BFCommand {
 
-    private DataFrame highlightDataFrame;
-    private Path targetFilePath;
+    private Path loadHighlightPath;
 
     /**
      * 
      */
-    public SaveHighlightDataFrameCommand( DataFrame highlightDataFrame, Path targetFilePath ) {
-        this.highlightDataFrame = highlightDataFrame;
-        this.targetFilePath = targetFilePath;
+    public LoadHighlightDataFrameCommand( Path loadHighlightPath ) {
+        this.loadHighlightPath = loadHighlightPath;
     }
 
     /** 
@@ -54,11 +53,10 @@ public class SaveHighlightDataFrameCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        HighlighterJsonLWriterImpl highlighterJSONLWriterImpl = new HighlighterJsonLWriterImpl();
+        IngestBFDataFrameJsonLines ingest = new IngestBFDataFrameJsonLines();
+        DataFrame highlightDataFrame = ingest.loadAsDataFrame( loadHighlightPath );
 
-        highlighterJSONLWriterImpl.writeFile( highlightDataFrame, targetFilePath );
-
-        // TODO: dispatch event, that file was saved.
+        eventConsumer.accept( HighlighterEventFactory.highlightDataframeCreated( highlightDataFrame ) );
     }
 
 }

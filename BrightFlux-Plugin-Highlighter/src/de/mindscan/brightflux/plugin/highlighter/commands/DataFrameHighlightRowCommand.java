@@ -23,29 +23,32 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.commands;
+package de.mindscan.brightflux.plugin.highlighter.commands;
 
-import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.ingest.IngestBFDataFrameJsonLines;
 import de.mindscan.brightflux.system.highlighter.events.HighlighterEventFactory;
 
 /**
  * 
  */
-public class LoadHighlightDataFrameCommand implements BFCommand {
+public class DataFrameHighlightRowCommand implements BFCommand {
 
-    private Path loadHighlightPath;
+    private DataFrame inputDataFrame;
+    private int row;
+    private String color;
 
     /**
+     * @param color 
      * 
      */
-    public LoadHighlightDataFrameCommand( Path loadHighlightPath ) {
-        this.loadHighlightPath = loadHighlightPath;
+    public DataFrameHighlightRowCommand( DataFrame inputDataFrame, int row, String color ) {
+        this.inputDataFrame = inputDataFrame;
+        this.row = row;
+        this.color = color;
     }
 
     /** 
@@ -53,10 +56,10 @@ public class LoadHighlightDataFrameCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        IngestBFDataFrameJsonLines ingest = new IngestBFDataFrameJsonLines();
-        DataFrame highlightDataFrame = ingest.loadAsDataFrame( loadHighlightPath );
+        // TODO Translate the row to the original Index here, because...
+        // inputDataFrame.getOriginalRowIndex( row );
 
-        eventConsumer.accept( HighlighterEventFactory.highlightDataframeCreated( highlightDataFrame ) );
+        eventConsumer.accept( HighlighterEventFactory.highlightDataFrameRow( inputDataFrame, row, color ) );
     }
 
 }
