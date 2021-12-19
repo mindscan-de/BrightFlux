@@ -58,8 +58,10 @@ import de.mindscan.brightflux.system.annotator.AnnotatorCommandFactory;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorImpl;
+import de.mindscan.brightflux.system.reportgenerator.ReportGenerator;
+import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -324,8 +326,10 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void buildReport( DataFrame currentSelectedDF, DataFrame logAnalysisDF ) {
-        // TODO replace this direct use of the RepoerGeneratorImpl class.
-        ReportGeneratorImpl generator = new ReportGeneratorImpl();
+        ReportGeneratorComponent generatorService = SystemServices.getInstance().getService( ReportGeneratorComponent.class );
+        ReportGenerator generator = generatorService.getReportGenerator();
+
+        generator.startReport();
 
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
         while (currentDFRowsIterator.hasNext()) {

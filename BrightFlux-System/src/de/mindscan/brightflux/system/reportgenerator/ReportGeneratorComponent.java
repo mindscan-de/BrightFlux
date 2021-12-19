@@ -33,6 +33,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
  */
 public class ReportGeneratorComponent implements ProjectRegistryParticipant {
 
+    private ReportGenerator reportGenerator = new ReportGeneratorImpl();
+
     /** 
      * {@inheritDoc}
      */
@@ -40,6 +42,13 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         // TODO Auto-generated method stub
 
+    }
+
+    /**
+     * @return the reportGenerator
+     */
+    public ReportGenerator getReportGenerator() {
+        return reportGenerator;
     }
 
 }
