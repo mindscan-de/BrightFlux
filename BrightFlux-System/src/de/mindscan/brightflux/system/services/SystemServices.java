@@ -29,7 +29,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 
@@ -69,11 +68,6 @@ public class SystemServices {
 
     public EarlyPersistenceComponent getEarlyPersistence() {
         return getService( EarlyPersistenceComponent.class );
-    }
-
-    // TODO this is currently unused but acts as a reminder to do the correct init on components using AnnotatorComponent. 
-    public AnnotatorComponent getAnnotatorService() {
-        return getService( AnnotatorComponent.class );
     }
 
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
