@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.highlighter.events;
+package de.mindscan.brightflux.plugin.highlighter.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
@@ -31,13 +31,16 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
 /**
  * 
  */
-public class HighlighterDataFrameCreatedEvent extends BFAbstractDataFrameEvent {
+public class DataFrameClearHighlightRowEvent extends BFAbstractDataFrameEvent {
+
+    private int row;
 
     /**
      * @param dataFrame
      */
-    public HighlighterDataFrameCreatedEvent( DataFrame dataFrame ) {
+    public DataFrameClearHighlightRowEvent( DataFrame dataFrame, int row ) {
         super( dataFrame );
+        this.row = row;
     }
 
     /** 
@@ -45,7 +48,13 @@ public class HighlighterDataFrameCreatedEvent extends BFAbstractDataFrameEvent {
      */
     @Override
     public String getBFEventMessage() {
-        return "Highlighter dataframe created";
+        return "Clear highlight row event";
     }
 
+    /**
+     * @return the row
+     */
+    public int getRow() {
+        return row;
+    }
 }

@@ -27,9 +27,6 @@ package de.mindscan.brightflux.plugin.highlighter.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.highlighter.events.DataFrameClearHighlightRowEvent;
-import de.mindscan.brightflux.system.highlighter.events.DataFrameHighlightRowEvent;
-import de.mindscan.brightflux.system.highlighter.events.HighlighterDataFrameCreatedEvent;
 
 /**
  * 
