@@ -32,7 +32,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
 
 /**
  * As much as I dislike these Singletons, these are actually mockable and configurable objects in 
@@ -62,14 +61,6 @@ public class SystemServices {
 
     public FavRecipesComponent getFavRecipesServices() {
         return getService( FavRecipesComponent.class );
-    }
-
-    public void setReportGeneratorService( ReportGeneratorComponent reportGeneratorService ) {
-        registerService( reportGeneratorService, ReportGeneratorComponent.class );
-    }
-
-    public ReportGeneratorComponent getReportGeneratorService() {
-        return getService( ReportGeneratorComponent.class );
     }
 
     public void setEarlyPersistence( EarlyPersistenceComponent earlyPersistence ) {

@@ -38,7 +38,7 @@ public class ReportGeneratorActivator implements StartupParticipant {
      */
     public void start( SystemServices systemServices ) {
         ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
-        systemServices.setReportGeneratorService( reportGeneratorService );
+        systemServices.registerService( reportGeneratorService, ReportGeneratorComponent.class );
     }
 
 }
