@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.main;
 
+import java.lang.reflect.InvocationTargetException;
+
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.plugin.highlighter.HighlighterActivator;
 import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorActivator;
@@ -34,6 +36,7 @@ import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
+import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
@@ -51,45 +54,47 @@ public class BrightFluxViewerStartup {
      *   
      */
     public void start() {
-        // STARTUP : System Services
+
+        // -----------------------
+        // Phase 1 : early startup
+        // -----------------------
+
+        // Prepare System Services
         SystemServices systemServices = SystemServices.getInstance();
 
-        // STARTUP : Early Persistence data (avoid hard coded dependencies)
-        EarlyPersistenceActivator earlyPersistenceActivator = new EarlyPersistenceActivator();
-        earlyPersistenceActivator.start( systemServices );
+        // Early Persistence data (avoid hard coded dependencies)
+        startActivator( EarlyPersistenceActivator.class, systemServices );
 
-        // TODO: get early startup configuration from early persistence configuration 
+        // --------------------------------------
+        // Phase 2 : other components and plugins
+        // --------------------------------------        
+        // TODO: get early startup configuration from early persistence configuration
         // TODO: start these configured components as individual bundles
 
-        // STARTUP : Startup the Project registry 
-        ProjectRegistryActivator projectRegistryActivator = new ProjectRegistryActivator();
-        projectRegistryActivator.start( systemServices );
+        // Startup the Project registry 
+        startActivator( ProjectRegistryActivator.class, systemServices );
 
-        // STARTUP : register Dataframe Hierarchy 
-        DataFrameHierarchyActivator dataFrameHierarchyActivator = new DataFrameHierarchyActivator();
-        dataFrameHierarchyActivator.start( systemServices );
+        // register Dataframe Hierarchy
+        startActivator( DataFrameHierarchyActivator.class, systemServices );
 
-        // STARTUP : Register Favorite Recipes Service + Collect Favorite Recipes
-        FavRecipesActivator favrecipesActivator = new FavRecipesActivator();
-        favrecipesActivator.start( systemServices );
+        // Register Favorite Recipes Service + Collect Favorite Recipes
+        startActivator( FavRecipesActivator.class, systemServices );
 
-        // STARTUP : Register Annotator Service
-        AnnotatorActivator annotatorActivator = new AnnotatorActivator();
-        annotatorActivator.start( systemServices );
+        // Register Annotator Service
+        startActivator( AnnotatorActivator.class, systemServices );
 
-        // STARTUP : Register Video Annotation Service
-        VideoAnnotatorActivator videoAnnotatorActivator = new VideoAnnotatorActivator();
-        videoAnnotatorActivator.start( systemServices );
+        // Register Video Annotation Service
+        startActivator( VideoAnnotatorActivator.class, systemServices );
 
-        // STARTUP : Register Highlighter Annototor
-        HighlighterActivator highlighterActivator = new HighlighterActivator();
-        highlighterActivator.start( systemServices );
+        // Register Highlighter Annototor
+        startActivator( HighlighterActivator.class, systemServices );
 
-        // STARTUP : Register Report Generator Service
-        ReportGeneratorActivator reportGeneratorActivator = new ReportGeneratorActivator();
-        reportGeneratorActivator.start( systemServices );
+        // Register Report Generator Service
+        startActivator( ReportGeneratorActivator.class, systemServices );
 
-        // TODO: the configuration can be distributed with configuration events -> or with a 
+        // -------------------------------
+        // Phase X : finish registtrations
+        // -------------------------------
 
         // STARTUP : Complete Project Participant registration
         finishProjectParticipantRegistration( systemServices );
@@ -105,4 +110,15 @@ public class BrightFluxViewerStartup {
         }
     }
 
+    private <T extends StartupParticipant> void startActivator( Class<T> clazz, SystemServices systemServices ) {
+        try {
+            T startupParticipant = clazz.getDeclaredConstructor().newInstance();
+            startupParticipant.start( systemServices );
+        }
+        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                        | SecurityException e) {
+            e.printStackTrace();
+            throw new NotYetImplemetedException( "May be we should improve on the startActivator" );
+        }
+    }
 }
