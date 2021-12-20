@@ -23,29 +23,35 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.uicommands;
+package de.mindscan.brightflux.viewer.uicommands.locate;
 
-import org.eclipse.swt.widgets.Shell;
+import java.util.function.Consumer;
 
-import de.mindscan.brightflux.viewer.uicommands.dnd.CopyTextToClipBoardCommand;
-import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnCommand;
-import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnCommandAllDataFrames;
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
+import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 
 /**
  * 
  */
-public class UICommandFactory {
+public class LocatePredictedTimestampForColumnCommandAllDataFrames implements UIBFCommand {
 
-    public static UIBFCommand copyToClipboard( Shell shell, String report ) {
-        return new CopyTextToClipBoardCommand( shell, report );
+    private String column;
+    private long locatedTimestamp;
+
+    public LocatePredictedTimestampForColumnCommandAllDataFrames( String column, long timestamp ) {
+        this.column = column;
+        this.locatedTimestamp = timestamp;
     }
 
-    public static UIBFCommand locatePredictedTimestampForColumn( String columnName, long predictedTimestamp ) {
-        return new LocatePredictedTimestampForColumnCommand( columnName, predictedTimestamp );
-    }
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void execute( Consumer<BFEvent> eventConsumer ) {
+        System.out.println( "locate timestamp for all using " + column + "=" + locatedTimestamp );
 
-    public static UIBFCommand locatePredictedTimestampForColumnAllDataframes( String columnName, long predictedTimestamp ) {
-        return new LocatePredictedTimestampForColumnCommandAllDataFrames( columnName, predictedTimestamp );
+        eventConsumer.accept( UIEventFactory.locatePredictedTimestampInAllDataframesRequested( column, locatedTimestamp ) );
     }
 
 }
