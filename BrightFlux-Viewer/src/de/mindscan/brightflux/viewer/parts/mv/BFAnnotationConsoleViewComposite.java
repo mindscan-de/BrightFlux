@@ -69,7 +69,7 @@ import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
 
 /**
- * TODO split logic here, do not have a copy of the annotation dataframe
+ * 
  */
 public class BFAnnotationConsoleViewComposite extends Composite implements ProjectRegistryParticipant {
 
