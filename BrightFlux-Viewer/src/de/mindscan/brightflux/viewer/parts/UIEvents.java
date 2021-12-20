@@ -28,7 +28,9 @@ package de.mindscan.brightflux.viewer.parts;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRequestSelectEvent;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedEvent;
 import de.mindscan.brightflux.viewer.uievents.DataFrameSelectedEvent;
+import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampAllDataframesRequestedEvent;
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedEvent;
+import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampSelectedDataframeRequestedEvent;
 import de.mindscan.brightflux.viewer.uievents.VideoObjectRequestSelectEvent;
 
 /**
@@ -50,4 +52,11 @@ public class UIEvents {
 
     // Locate Predicted Timestamp in current DataFrame in the UI
     public final static Class<?> LocatePredictedTimstampEvent = LocatePredictedTimestampRequestedEvent.class;
+
+    // Locate Predicted Timestamp in current DataFrame in the UI
+    public final static Class<?> LocatePredictedTimstampSelectedDataframeEvent = LocatePredictedTimestampSelectedDataframeRequestedEvent.class;
+
+    // Locate Predicted Timestamp in current DataFrame in the UI
+    public final static Class<?> LocatePredictedTimstampAllDataframesEvent = LocatePredictedTimestampAllDataframesRequestedEvent.class;
+
 }
