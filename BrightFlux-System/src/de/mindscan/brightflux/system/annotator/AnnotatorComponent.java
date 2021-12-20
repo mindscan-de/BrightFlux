@@ -66,7 +66,6 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
      * 
      */
     public AnnotatorComponent() {
-        // intentionally left blank
         this.logAnalysisFrame = AnnotatorUtils.createAnnotationDataFrame();
     }
 
