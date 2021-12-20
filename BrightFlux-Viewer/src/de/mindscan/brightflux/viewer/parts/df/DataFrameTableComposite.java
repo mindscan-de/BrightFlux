@@ -311,20 +311,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_1 = new Menu( mntmHighlighter );
         mntmHighlighter.setMenu( menu_1 );
 
-        MenuItem mntmClearAllHighlights = new MenuItem( menu_1, SWT.NONE );
-        mntmClearAllHighlights.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                if (projectRegistry != null) {
-                    BFCommand command = HighlighterCommandFactory.createHighlightDataFrame();
-                    dispatchCommand( command );
-                }
-            }
-        } );
-        mntmClearAllHighlights.setText( "Clear All Highlights" );
-
-        new MenuItem( menu_1, SWT.SEPARATOR );
-
         MenuItem mntmHighlightYellow = new MenuItem( menu_1, SWT.NONE );
         mntmHighlightYellow.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -394,6 +380,20 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmHighlightNone.setText( "Highlight Clear" );
+
+        new MenuItem( menu_1, SWT.SEPARATOR );
+
+        MenuItem mntmClearAllHighlights = new MenuItem( menu_1, SWT.NONE );
+        mntmClearAllHighlights.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (projectRegistry != null) {
+                    BFCommand command = HighlighterCommandFactory.createHighlightDataFrame();
+                    dispatchCommand( command );
+                }
+            }
+        } );
+        mntmClearAllHighlights.setText( "Clear All Highlights" );
 
         new MenuItem( menu_1, SWT.SEPARATOR );
 
