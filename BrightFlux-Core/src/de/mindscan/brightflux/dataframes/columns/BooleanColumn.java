@@ -78,7 +78,7 @@ public class BooleanColumn extends SimpleColumn<Boolean> {
      * {@inheritDoc}
      */
     @Override
-    public int findInsertRowIndexRaw( String columnName, Object element ) {
+    public int findInsertRowIndexRaw( Object element ) {
         return -1;
     }
 

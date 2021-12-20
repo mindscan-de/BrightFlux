@@ -91,7 +91,7 @@ public class DataTokenColumn extends SimpleColumn<DataToken> {
      * {@inheritDoc}
      */
     @Override
-    public int findInsertRowIndexRaw( String columnName, Object element ) {
+    public int findInsertRowIndexRaw( Object element ) {
         return -1;
     }
 

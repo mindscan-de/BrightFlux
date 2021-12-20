@@ -83,7 +83,7 @@ public class StringColumn extends SimpleColumn<String> {
      * {@inheritDoc}
      */
     @Override
-    public int findInsertRowIndexRaw( String columnName, Object element ) {
+    public int findInsertRowIndexRaw( Object element ) {
         return -1;
     }
 

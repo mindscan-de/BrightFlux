@@ -124,13 +124,13 @@ public abstract class SimpleColumn<T> extends DataFrameColumnBase<T> {
      * {@inheritDoc}
      */
     @Override
-    public int findInsertRowIndexRaw( String columnName, Object element ) {
-        Comparator<? super T> comparator = this.getComparator();
-        if (comparator == null) {
+    public int findInsertRowIndexRaw( Object element ) {
+        if (element == null) {
             return -1;
         }
 
-        if (element == null) {
+        Comparator<? super T> comparator = this.getComparator();
+        if (comparator == null) {
             return -1;
         }
 
