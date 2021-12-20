@@ -36,6 +36,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.plugin.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.plugin.highlighter.events.HighlighterDataFrameCreatedEvent;
+import de.mindscan.brightflux.plugin.highlighter.utils.HighlighterUtils;
 import de.mindscan.brightflux.plugin.highlighter.writer.HighlighterJsonLWriterImpl;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
@@ -57,7 +58,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
      * 
      */
     public HighlighterComponent() {
-        // intentionally left blank
+        this.logHighlightFrame = HighlighterUtils.createNewHighlightDataframe();
     }
 
     /** 
