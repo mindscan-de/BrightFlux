@@ -311,8 +311,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         Menu menu_1 = new Menu( mntmHighlighter );
         mntmHighlighter.setMenu( menu_1 );
 
-        MenuItem mntmEnableFeature = new MenuItem( menu_1, SWT.NONE );
-        mntmEnableFeature.addSelectionListener( new SelectionAdapter() {
+        MenuItem mntmClearAllHighlights = new MenuItem( menu_1, SWT.NONE );
+        mntmClearAllHighlights.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
                 if (projectRegistry != null) {
@@ -321,7 +321,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 }
             }
         } );
-        mntmEnableFeature.setText( "Enable Feature" );
+        mntmClearAllHighlights.setText( "Clear All Highlights" );
 
         new MenuItem( menu_1, SWT.SEPARATOR );
 
