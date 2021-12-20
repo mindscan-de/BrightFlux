@@ -48,6 +48,11 @@ public class UIEventFactory {
     }
 
     public static BFEvent locatePredictedTimestampRequested( String column, long timestamp ) {
-        return new LocatePredictedTimestampRequestedEvent( column, timestamp );
+        return new LocatePredictedTimestampSelectedDataframeRequestedEvent( column, timestamp );
     }
+
+    public static BFEvent locatePredictedTimestampInAllDataframesRequested( String column, long timestamp ) {
+        return new LocatePredictedTimestampAllDataframesRequestedEvent( column, timestamp );
+    }
+
 }

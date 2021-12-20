@@ -100,7 +100,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
             }
         } );
 
-        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.LocatePredictedTimstampEvent,
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.LocatePredictedTimstampSelectedDataframeEvent,
                         new LocatePredictedTimestampRequestedListenerAdapter() {
                             @Override
                             public void handleLocatePredictedTimestamp( String columnName, long timestamp ) {
@@ -108,6 +108,16 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                                 delegateLocatePredictedTimestampToCurrentDataFrameTab( columnName, timestamp );
                             };
                         } );
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.LocatePredictedTimstampAllDataframesEvent,
+                        new LocatePredictedTimestampRequestedListenerAdapter() {
+                            @Override
+                            public void handleLocatePredictedTimestamp( String columnName, long timestamp ) {
+                                // TODO: delegate request to the current selected DataFrameTable Composite...
+                                delegateLocatePredictedTimestampToAllDataFrames( columnName, timestamp );
+                            };
+                        } );
+
     }
 
     protected void delegateLocatePredictedTimestampToCurrentDataFrameTab( String columnName, long timestamp ) {
@@ -119,6 +129,20 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         Control control = currentSelectedDataFrameTab.getControl();
         if (control instanceof LocatePredictedTimestampRequestedHandler) {
             ((LocatePredictedTimestampRequestedHandler) control).handleLocatePredictedTimestamp( columnName, timestamp );
+        }
+    }
+
+    protected void delegateLocatePredictedTimestampToAllDataFrames( String columnName, long timestamp ) {
+        CTabItem[] items = mainTabFolder.getItems();
+        for (CTabItem cTabItem : items) {
+            if (cTabItem == null) {
+                continue;
+            }
+
+            Control control = cTabItem.getControl();
+            if (control instanceof LocatePredictedTimestampRequestedHandler) {
+                ((LocatePredictedTimestampRequestedHandler) control).handleLocatePredictedTimestamp( columnName, timestamp );
+            }
         }
     }
 
