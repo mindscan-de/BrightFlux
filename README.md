@@ -160,10 +160,6 @@ Startup and EarlyPersistence
 * Implement an Early Persistence module, which can then be used to start the other components (used for initial configurations)
 
 
-Startup
-* Do a real application startup, such that the components are properly initialized - instead of "enabling" features.
-
-
 UI/UX
 * Configuration System
   * provide PreferenceStore
@@ -183,7 +179,6 @@ Log-Analysis-Case-File
 
 Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
-* Support log correlation for videos, e.g. identify time stamps in video and correlate them to logs
 
 
 Application-Startup (est. 6 kLOC)
@@ -194,6 +189,12 @@ Reporting
 * Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
   * also detect different DataFrame types and use different report templates for different DataFrame types
+
+  
+Search Engine Support
+* combine that system with the FuriousIron code search system, locate logmessages in source code
+  * show FI results
+  * show FI source code
 
 
 UI/UX
@@ -216,10 +217,6 @@ DFQL
 
 Decision Tree Analysis
 * combine that system with the CheapLithium system (decision gag/decision tree) for automated decisions based on the content of log files for automated log file analysis
-
-
-Search Engine Support
-* combine that system with the FuriousIron code search system
 
 
 Generic text File Readers
@@ -285,6 +282,7 @@ Video time stamp Annotations
 * show video frame content of the video at exactly a selected time stamp (FFMPEG / extract nearest Frame?)
 * sync from data frame to current video and locate position. (MAYBE) 
 * provide more accurate time stamps e.g. 0.1s 0.25s granularity (maybe on a frame number basis, i mean we know the number of frames, we know the frames per seconds, but the video player must be more precise then and show the frame numbers)
+* Support automatic video to log correlation, e.g. identify time stamps in video and correlate them to logs by some metrics or (AI)
 
 
 ### Never?
@@ -302,15 +300,21 @@ Internal Search Engine to search in data frame columns
 * indexing data frames column wise for future search operations
 
 
+Search Engine Support for multiple search engines
+* add links and options to use a code search engine and log search engine for the messages
+  * did we see that message more often, but we never thought about it before
+  * since what version of the system we see that message
+  * where does this message come from in the code and annotate this message with a software component / swim-lane
+
+
+Unsorted Ideas
 * transform logs from one system (source) to the other - e.g. recovery mode if one of the systems stopped logging but the other system was receiving the logs as well and logged them
   * reconstruct logs
 * identify same events for different log sources (e.g. in case they are connected) and correlate logs to each other using very different log formats.
 
 
+More unsorted Ideas
 * some dictionary or knowledge base articles for certain messages to provide context
+* some kind of glossary for the hard coded values in e.g. for 'HXX' traces, what the values in this columns mean... (requires data frame views and also join operations, over different data frames)
 
 
-* add links and options to use a code search engine and log search engine for the messages
-  * did we see that message more often, but we never thought about it before
-  * since what version of the system we see that message
-  * where does this message come from in the code and annotate this message with a software component / swim-lane
