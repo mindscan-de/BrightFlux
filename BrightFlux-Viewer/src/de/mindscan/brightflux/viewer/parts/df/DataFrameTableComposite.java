@@ -83,6 +83,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     // this is not good enough yet, because some operations should be dependend on the columns...
     private static final String HARDCODED_H2_MSG = "h2.msg";
     private static final String HARDCODED_HXX_MSG = "hxx.msg";
+    private static final String HARDCODED_H1_TS = "h1.ts";
 
     /**
      * 
@@ -188,6 +189,21 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmTokenizeAsHxx.setText( "Tokenize as HXX" );
+
+        new MenuItem( menu_DataFrame, SWT.SEPARATOR );
+
+        MenuItem mntmLocateTimestampToAll = new MenuItem( menu_DataFrame, SWT.NONE );
+        mntmLocateTimestampToAll.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: shortcut here.  hardcoded values...
+                // Actually we should locate a column containing time stamps
+                // then ask the user which to take if many
+                long timestamp = ((Long) currentSelectedRow.get( HARDCODED_H1_TS )).longValue();
+                dispatchLocateAll( HARDCODED_H1_TS, timestamp );
+            }
+        } );
+        mntmLocateTimestampToAll.setText( "Locate Timestamp to All" );
 
         MenuItem mntmFilters = new MenuItem( menu, SWT.CASCADE );
         mntmFilters.setText( "Filters" );
@@ -471,6 +487,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             }
         } );
         mntmCopytoclipboard.setText( "Copy Row to Clipboard" );
+    }
+
+    protected void dispatchLocateAll( String columnName, long timestamp ) {
+        dispatchCommand( UICommandFactory.locatePredictedTimestampForColumnAllDataframes( columnName, timestamp ) );
     }
 
     public void refresh() {

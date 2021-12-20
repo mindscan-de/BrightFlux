@@ -141,7 +141,12 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
             Control control = cTabItem.getControl();
             if (control instanceof LocatePredictedTimestampRequestedHandler) {
-                ((LocatePredictedTimestampRequestedHandler) control).handleLocatePredictedTimestamp( columnName, timestamp );
+                try {
+                    ((LocatePredictedTimestampRequestedHandler) control).handleLocatePredictedTimestamp( columnName, timestamp );
+                }
+                catch (Exception e) {
+                    // ignore if control had issues locating this particular timstamp
+                }
             }
         }
     }
