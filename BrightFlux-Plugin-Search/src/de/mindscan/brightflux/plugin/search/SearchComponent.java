@@ -25,35 +25,26 @@
  */
 package de.mindscan.brightflux.plugin.search;
 
-import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
-import de.mindscan.brightflux.system.services.StartupParticipant;
-import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 
 /**
  * 
  */
-public class SearchActivator implements StartupParticipant {
+public class SearchComponent implements ProjectRegistryParticipant {
+
+    /**
+     * 
+     */
+    public SearchComponent() {
+        // TODO Auto-generated constructor stub
+    }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void start( SystemServices systemServices ) {
-        EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
-
-        SearchComponent searchComponent = new SearchComponent();
-
-        systemServices.registerService( searchComponent, SearchComponent.class );
-
-        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
-        if (projectRegistry != null) {
-            projectRegistry.registerParticipant( searchComponent );
-        }
-        else {
-            throw new NotYetImplemetedException( "VideoAnnotatorActivator precondiftion not staisfied." );
-        }
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
 
     }
 
