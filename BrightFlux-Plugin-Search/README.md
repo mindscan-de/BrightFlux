@@ -13,3 +13,5 @@ Provide access to search results of project FuriousIron-SearchBackend.
 * I want to use multiple configurable profiles, which will append the search automatically when a certain search profile is chosen/selected and a search is performed e.g. Profile "JavaImplementation" may add "language:java -unittest:true -fileext:txt"
 * The search result is a list of documents matching the search
 * a double click on a row in the search will retrieve the cached file and present it to the user
+
+In future also add retrievals for other rest interfaces, such that it can be analyzed if a certain log message has been seen before in a different log. This may require a different searchengine to retrieve these data maybe from some kind of data lake.
