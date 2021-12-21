@@ -46,10 +46,7 @@ public class HighlighterActivator implements StartupParticipant {
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
         if (projectRegistry != null) {
             HighlighterCallbacks.initializeWithProjectRegistry( projectRegistry );
-            highlighterComponent.setProjectRegistry( projectRegistry );
-
-            // TODO: also initialize the default Highlighter frame, such that it can be requested by the different
-            //       consumers of this component
+            projectRegistry.registerParticipant( highlighterComponent );
         }
         else {
             throw new NotYetImplemetedException( "HighlighterActivator preconditions not satisfied." );
