@@ -42,6 +42,13 @@
 			<artifactId>BrightFlux-Plugin-Highlighter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
+		<!-- BrightFlux-Plugin-Search -->
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-Search</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
+		
 		
 		<!-- BrightFlux-Plugin-Annotator -->	
 <!-- 		<dependency>
