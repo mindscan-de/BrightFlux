@@ -110,7 +110,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Annotate video Timestamps
   * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
   * save sync positions to video annotation files as extra reference data
-  * load sync positions from video annotation files with reference data (sync also works after load)  
+  * load sync positions from video annotation files with reference data (sync also works after load)
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -186,7 +186,7 @@ Application-Startup (est. 6 kLOC)
 
 
 Reporting
-* Help with writing up the analysis, eg. using special report templates (e.g. different formats JIRA, or else))
+* Help with writing up the analysis, e.g. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
   * also detect different DataFrame types and use different report templates for different DataFrame types
 
