@@ -159,6 +159,12 @@ DataFrame-Core
 Startup and EarlyPersistence
 * Implement an Early Persistence module, which can then be used to start the other components (used for initial configurations)
 
+  
+Search Engine Support
+* combine that system with the FuriousIron code search system, locate logmessages in source code
+  * show FI results
+  * show FI source code
+
 
 UI/UX
 * Configuration System
@@ -189,12 +195,6 @@ Reporting
 * Help with writing up the analysis, e.g. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
   * also detect different DataFrame types and use different report templates for different DataFrame types
-
-  
-Search Engine Support
-* combine that system with the FuriousIron code search system, locate logmessages in source code
-  * show FI results
-  * show FI source code
 
 
 UI/UX
