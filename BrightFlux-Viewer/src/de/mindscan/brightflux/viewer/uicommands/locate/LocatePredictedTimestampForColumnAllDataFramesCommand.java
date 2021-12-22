@@ -34,12 +34,12 @@ import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 /**
  * 
  */
-public class LocatePredictedTimestampForColumnCommandAllDataFrames implements UIBFCommand {
+public class LocatePredictedTimestampForColumnAllDataFramesCommand implements UIBFCommand {
 
     private String column;
     private long locatedTimestamp;
 
-    public LocatePredictedTimestampForColumnCommandAllDataFrames( String column, long timestamp ) {
+    public LocatePredictedTimestampForColumnAllDataFramesCommand( String column, long timestamp ) {
         this.column = column;
         this.locatedTimestamp = timestamp;
     }

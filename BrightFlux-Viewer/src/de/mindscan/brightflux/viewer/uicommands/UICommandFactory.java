@@ -28,8 +28,8 @@ package de.mindscan.brightflux.viewer.uicommands;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.viewer.uicommands.dnd.CopyTextToClipBoardCommand;
-import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnCommand;
-import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnCommandAllDataFrames;
+import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnCurrentDataFrameCommand;
+import de.mindscan.brightflux.viewer.uicommands.locate.LocatePredictedTimestampForColumnAllDataFramesCommand;
 
 /**
  * 
@@ -41,11 +41,11 @@ public class UICommandFactory {
     }
 
     public static UIBFCommand locatePredictedTimestampForColumn( String columnName, long predictedTimestamp ) {
-        return new LocatePredictedTimestampForColumnCommand( columnName, predictedTimestamp );
+        return new LocatePredictedTimestampForColumnCurrentDataFrameCommand( columnName, predictedTimestamp );
     }
 
     public static UIBFCommand locatePredictedTimestampForColumnAllDataframes( String columnName, long predictedTimestamp ) {
-        return new LocatePredictedTimestampForColumnCommandAllDataFrames( columnName, predictedTimestamp );
+        return new LocatePredictedTimestampForColumnAllDataFramesCommand( columnName, predictedTimestamp );
     }
 
 }
