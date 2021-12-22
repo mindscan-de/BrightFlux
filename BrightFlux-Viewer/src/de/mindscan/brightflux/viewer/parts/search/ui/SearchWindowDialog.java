@@ -32,10 +32,14 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
+import de.mindscan.brightflux.viewer.parts.search.SearchWindow;
+
 /**
  * 
  */
-public class SearchWindowDialog extends Dialog {
+public class SearchWindowDialog extends Dialog implements SearchWindow {
 
     protected Object result;
     protected Shell shlSearchWindow;
@@ -71,12 +75,34 @@ public class SearchWindowDialog extends Dialog {
      * Create contents of the dialog.
      */
     private void createContents() {
+        registerAtSearchUIProxyComponent();
+
         shlSearchWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.RESIZE );
         shlSearchWindow.setSize( 450, 300 );
         shlSearchWindow.setText( "Search Tools" );
         shlSearchWindow.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         SashForm sashForm = new SashForm( shlSearchWindow, SWT.NONE );
+
+    }
+
+    /**
+     * 
+     */
+    private void registerAtSearchUIProxyComponent() {
+        // TODO registration at SearchUIProxyComponent as the currentActive Search window
+        SystemServices systemServices = SystemServices.getInstance();
+        if (systemServices == null) {
+            return;
+        }
+
+        if (systemServices.isServiceAvailable( SearchUIProxyComponent.class )) {
+            SearchUIProxyComponent service = systemServices.getService( SearchUIProxyComponent.class );
+            service.registerCurrentActiveSearchWindow( this );
+        }
+        else {
+
+        }
 
     }
 }
