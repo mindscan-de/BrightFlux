@@ -48,15 +48,13 @@
 			<artifactId>BrightFlux-Plugin-Search</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
-		
-		
 		<!-- BrightFlux-Plugin-Annotator -->	
-<!-- 		<dependency>
+ 		<dependency>
 			<groupId>de.mindscan.brightflux</groupId>
 			<artifactId>BrightFlux-Plugin-Annotator</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency> 
--->
+
 		
 	
 		<!-- SWT/JFace -->

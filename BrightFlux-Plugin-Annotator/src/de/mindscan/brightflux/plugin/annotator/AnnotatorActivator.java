@@ -23,10 +23,11 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.annotator;
+package de.mindscan.brightflux.plugin.annotator;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
