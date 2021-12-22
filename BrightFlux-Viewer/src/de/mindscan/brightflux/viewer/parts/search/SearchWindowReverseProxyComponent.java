@@ -25,10 +25,25 @@
  */
 package de.mindscan.brightflux.viewer.parts.search;
 
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+
 /**
  * This is a class which will register to the search operations and will forward them if a search window is registered
  * in the case this is not opened, it will just do nothing, but we can later do this 
  */
-public class SearchWindowReverseProxyComponent {
+public class SearchWindowReverseProxyComponent implements ProjectRegistryParticipant {
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        // TODO Register for the events, so that we can avoid the registration and deregistration to the events
+    }
+
+    // TODO: implement the delegates
+
+    // register the current search window
+    // unregister the current search window
 }
