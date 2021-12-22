@@ -150,7 +150,9 @@ public class DataFrameHierarchyViewComposite extends Composite implements Projec
         trclmnUuid.setText( "uuid" );
         treeViewerUUIDColumn.setLabelProvider( new DataFrameHierarchyTreeColumnLabelProvider( DataFrameHierarchyTreeColumnLabelProvider.DF_UUID ) );
 
-        treeViewer.setInput( dfHierarchyComponent.getDataframeHierarchy() );
+        if (dfHierarchyComponent != null) {
+            treeViewer.setInput( dfHierarchyComponent.getDataframeHierarchy() );
+        }
 
     }
 
