@@ -46,6 +46,7 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
 import de.mindscan.brightflux.viewer.parts.ProjectViewComposite;
+import de.mindscan.brightflux.viewer.parts.search.ui.SearchWindowDialog;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
@@ -152,10 +153,10 @@ public class BrightFluxViewerMainAppTwo {
         MenuItem mntmFile = new MenuItem( menu, SWT.CASCADE );
         mntmFile.setText( "File" );
 
-        Menu menu_1 = new Menu( mntmFile );
-        mntmFile.setMenu( menu_1 );
+        Menu menu_file = new Menu( mntmFile );
+        mntmFile.setMenu( menu_file );
 
-        MenuItem mntmLoadFile = new MenuItem( menu_1, SWT.NONE );
+        MenuItem mntmLoadFile = new MenuItem( menu_file, SWT.NONE );
         mntmLoadFile.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
@@ -168,7 +169,7 @@ public class BrightFluxViewerMainAppTwo {
         } );
         mntmLoadFile.setText( "Load CSV File ..." );
 
-        MenuItem mntmSpecialRawOption = new MenuItem( menu_1, SWT.NONE );
+        MenuItem mntmSpecialRawOption = new MenuItem( menu_file, SWT.NONE );
         mntmSpecialRawOption.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
@@ -181,9 +182,9 @@ public class BrightFluxViewerMainAppTwo {
         } );
         mntmSpecialRawOption.setText( "Load Raw File ..." );
 
-        new MenuItem( menu_1, SWT.SEPARATOR );
+        new MenuItem( menu_file, SWT.SEPARATOR );
 
-        MenuItem mntmGarbageCollector = new MenuItem( menu_1, SWT.NONE );
+        MenuItem mntmGarbageCollector = new MenuItem( menu_file, SWT.NONE );
         mntmGarbageCollector.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
@@ -193,9 +194,9 @@ public class BrightFluxViewerMainAppTwo {
         } );
         mntmGarbageCollector.setText( "Garbage Collector (debug)" );
 
-        new MenuItem( menu_1, SWT.SEPARATOR );
+        new MenuItem( menu_file, SWT.SEPARATOR );
 
-        MenuItem mntmExit = new MenuItem( menu_1, SWT.PUSH );
+        MenuItem mntmExit = new MenuItem( menu_file, SWT.PUSH );
         mntmExit.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
@@ -204,13 +205,30 @@ public class BrightFluxViewerMainAppTwo {
         } );
         mntmExit.setText( "Exit" );
 
+        MenuItem mntmWindow = new MenuItem( menu, SWT.CASCADE );
+        mntmWindow.setText( "Window" );
+
+        Menu menu_window = new Menu( mntmWindow );
+        mntmWindow.setMenu( menu_window );
+
+        MenuItem mntmSearchTools = new MenuItem( menu_window, SWT.CHECK );
+        mntmSearchTools.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO: if not set, we open a new instance and then we must initialize
+                SearchWindowDialog searchWindow = new SearchWindowDialog( shellBFViewerMainApp, 0 );
+                searchWindow.open();
+            }
+        } );
+        mntmSearchTools.setText( "Search Tools" );
+
         MenuItem mntmTools = new MenuItem( menu, SWT.CASCADE );
         mntmTools.setText( "Tools" );
 
-        Menu menu_2 = new Menu( mntmTools );
-        mntmTools.setMenu( menu_2 );
+        Menu menu_tools = new Menu( mntmTools );
+        mntmTools.setMenu( menu_tools );
 
-        MenuItem mntmExtract = new MenuItem( menu_2, SWT.NONE );
+        MenuItem mntmExtract = new MenuItem( menu_tools, SWT.NONE );
         mntmExtract.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
@@ -222,6 +240,9 @@ public class BrightFluxViewerMainAppTwo {
             }
         } );
         mntmExtract.setText( "Extract..." );
+
+        MenuItem mntmHelp = new MenuItem( menu, SWT.NONE );
+        mntmHelp.setText( "Help" );
     }
 
     public void dispatchCommand( BFCommand command ) {
