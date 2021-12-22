@@ -32,7 +32,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
  * This is a class which will register to the search operations and will forward them if a search window is registered
  * in the case this is not opened, it will just do nothing, but we can later do this 
  */
-public class SearchWindowReverseProxyComponent implements ProjectRegistryParticipant {
+public class SearchUIProxyComponent implements ProjectRegistryParticipant {
 
     /** 
      * {@inheritDoc}
