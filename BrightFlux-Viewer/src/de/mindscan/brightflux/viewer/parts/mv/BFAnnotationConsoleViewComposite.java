@@ -54,7 +54,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.system.annotator.AnnotatorCommandFactory;
+import de.mindscan.brightflux.plugin.search.commands.AnnotatorCommandFactory;
 import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
