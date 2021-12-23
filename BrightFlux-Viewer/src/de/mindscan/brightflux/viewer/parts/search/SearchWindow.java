@@ -25,9 +25,13 @@
  */
 package de.mindscan.brightflux.viewer.parts.search;
 
+import de.mindscan.brightflux.dataframes.DataFrameRow;
+
 /**
  * 
  */
 public interface SearchWindow {
+
+    void searchRequestedRow( DataFrameRow requestedRow );
 
 }

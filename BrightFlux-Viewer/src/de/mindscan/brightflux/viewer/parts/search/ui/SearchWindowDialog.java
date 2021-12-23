@@ -25,13 +25,21 @@
  */
 package de.mindscan.brightflux.viewer.parts.search.ui;
 
+import java.util.Collection;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.parts.search.SearchWindow;
@@ -43,6 +51,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow {
 
     protected Object result;
     protected Shell shlSearchWindow;
+    private Text text;
 
     /**
      * Create the dialog.
@@ -71,6 +80,23 @@ public class SearchWindowDialog extends Dialog implements SearchWindow {
         return result;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void searchRequestedRow( DataFrameRow requestedRow ) {
+        DataFrame df = requestedRow.getDataFrameInternal();
+
+        // Locate the first Row containing a string and then set the text of the text field 
+        Collection<String> columnNames = df.getColumnNames();
+        for (String columnName : columnNames) {
+            String columnType = df.getColumn( columnName ).getColumnValueType();
+            if (ColumnValueTypes.COLUMN_TYPE_STRING.equals( columnType )) {
+                text.setText( (String) requestedRow.get( columnName ) );
+            }
+        }
+    }
+
     /**
      * Create contents of the dialog.
      */
@@ -82,7 +108,20 @@ public class SearchWindowDialog extends Dialog implements SearchWindow {
         shlSearchWindow.setText( "Search Tools" );
         shlSearchWindow.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        SashForm sashForm = new SashForm( shlSearchWindow, SWT.NONE );
+        SashForm sashForm = new SashForm( shlSearchWindow, SWT.VERTICAL );
+
+        Composite upperComposite = new Composite( sashForm, SWT.NONE );
+
+        text = new Text( upperComposite, SWT.BORDER );
+        text.setBounds( 10, 10, 363, 19 );
+
+        Composite lowerComposite = new Composite( sashForm, SWT.NONE );
+        lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        CTabFolder searchResultsTabFolder = new CTabFolder( lowerComposite, SWT.BORDER );
+        searchResultsTabFolder.setTabPosition( SWT.BOTTOM );
+        searchResultsTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
+        sashForm.setWeights( new int[] { 82, 188 } );
 
     }
 
