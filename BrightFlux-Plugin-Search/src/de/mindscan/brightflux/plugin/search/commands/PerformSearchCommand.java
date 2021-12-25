@@ -31,6 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.plugin.search.events.SearchResultDataframeCreatedEvent;
+import de.mindscan.brightflux.plugin.search.request.RestRequestService;
 import de.mindscan.brightflux.plugin.search.utils.SearchUtils;
 
 /**
@@ -56,6 +57,10 @@ public class PerformSearchCommand implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
         // TODO: do the query
+
+        RestRequestService requestService = new RestRequestService();
+
+        requestService.requestFuriousIronQueryResults( userQuery );
 
         // then create a new DataFrame containing the search results
         DataFrame searchResult = SearchUtils.buildEmptyResultDataFrame();
