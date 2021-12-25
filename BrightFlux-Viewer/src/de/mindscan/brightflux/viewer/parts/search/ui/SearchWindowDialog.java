@@ -50,6 +50,7 @@ import de.mindscan.brightflux.plugin.search.commands.SearchCommandFactory;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.parts.search.SearchWindow;
+import swing2swt.layout.BorderLayout;
 
 /**
  * 
@@ -114,11 +115,10 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         shlSearchWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
         shlSearchWindow.setSize( 450, 300 );
         shlSearchWindow.setText( "Search Tools" );
-        shlSearchWindow.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+        shlSearchWindow.setLayout( new BorderLayout( 0, 0 ) );
 
-        SashForm sashForm = new SashForm( shlSearchWindow, SWT.VERTICAL );
-
-        Composite upperComposite = new Composite( sashForm, SWT.NONE );
+        Composite upperComposite = new Composite( shlSearchWindow, SWT.NONE );
+        upperComposite.setLayoutData( BorderLayout.NORTH );
 
         text = new Text( upperComposite, SWT.BORDER );
         text.setBounds( 10, 10, 363, 19 );
@@ -143,13 +143,17 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         btnSearch.setBounds( 0, 35, 68, 23 );
         btnSearch.setText( "Search" );
 
-        Composite lowerComposite = new Composite( sashForm, SWT.NONE );
+        Composite lowerComposite = new Composite( shlSearchWindow, SWT.NONE );
+        lowerComposite.setLayoutData( BorderLayout.CENTER );
         lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        CTabFolder searchResultsTabFolder = new CTabFolder( lowerComposite, SWT.BORDER );
-        searchResultsTabFolder.setTabPosition( SWT.BOTTOM );
-        searchResultsTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
-        sashForm.setWeights( new int[] { 82, 188 } );
+        SashForm sashForm = new SashForm( lowerComposite, SWT.VERTICAL );
+
+        CTabFolder searchResultTabFolder = new CTabFolder( sashForm, SWT.BORDER | SWT.BOTTOM );
+        searchResultTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
+
+        Composite searchResultDetailsComposite = new Composite( sashForm, SWT.NONE );
+        sashForm.setWeights( new int[] { 87, 87 } );
 
     }
 
