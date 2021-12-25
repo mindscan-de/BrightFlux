@@ -46,7 +46,7 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
 import de.mindscan.brightflux.viewer.parts.ProjectViewComposite;
-import de.mindscan.brightflux.viewer.parts.search.ui.SearchWindowDialog;
+import de.mindscan.brightflux.viewer.parts.search.uicommands.SearchUICommandsFactory;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 
 /**
@@ -215,11 +215,7 @@ public class BrightFluxViewerMainAppTwo {
         mntmSearchTools.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO: if not set, we open a new instance and then we must initialize
-                SearchWindowDialog searchWindow = new SearchWindowDialog( shellBFViewerMainApp, 0 );
-                // TODO improve this using the project registry itself and then complete the registration.
-                searchWindow.setProjectRegistry( projectRegistry );
-                searchWindow.open();
+                dispatchCommand( SearchUICommandsFactory.openSearchWindow( shellBFViewerMainApp ) );
             }
         } );
         mntmSearchTools.setText( "Search Tools" );

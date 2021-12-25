@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts.search.uicommands;
 
+import org.eclipse.swt.widgets.Shell;
+
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
 
@@ -37,4 +39,9 @@ public class SearchUICommandsFactory {
     public static UIBFCommand searchDataFrameRow( DataFrameRow rowToSearch, String searchProfile ) {
         return new SearchUIDataFrameRowCommand( rowToSearch, searchProfile );
     }
+
+    public static UIBFCommand openSearchWindow( Shell parentShell ) {
+        return new OpenSearchWindowDialogCommand( parentShell );
+    }
+
 }
