@@ -67,7 +67,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
      * @param style
      */
     public SearchWindowDialog( Shell parent, int style ) {
-        super( parent, style );
+        super( parent, SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
         setText( "SWT Dialog" );
     }
 
@@ -111,7 +111,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     private void createContents() {
         registerAtSearchUIProxyComponent();
 
-        shlSearchWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.RESIZE );
+        shlSearchWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
         shlSearchWindow.setSize( 450, 300 );
         shlSearchWindow.setText( "Search Tools" );
         shlSearchWindow.setLayout( new FillLayout( SWT.HORIZONTAL ) );
