@@ -29,6 +29,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.search.events.SearchResultDataframeCreatedEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.search.uievents.SearchUIDataFrameRowRequestedEvent;
 
@@ -39,14 +40,22 @@ import de.mindscan.brightflux.viewer.parts.search.uievents.SearchUIDataFrameRowR
 public class SearchUIProxyComponent implements ProjectRegistryParticipant {
 
     private SearchWindow currentActiveSearchWindow = null;
+    private ProjectRegistry projectRegistry;
 
     /** 
      * {@inheritDoc}
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Register for the events, so that we can avoid the registration and deregistration to the events
+        this.projectRegistry = projectRegistry;
 
+        registerSearchUIDataFrameRowRequsted( projectRegistry );
+
+        // TODO: maybe we also want the detils here, and this event must be extendended to read the details...
+        registerSearchResultDataFrameCreated( projectRegistry );
+    }
+
+    public void registerSearchUIDataFrameRowRequsted( ProjectRegistry projectRegistry ) {
         BFEventListener listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -58,6 +67,25 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SearchUIDataFrameRowRequestedEvent.class, listener );
+    }
+
+    public void registerSearchResultDataFrameCreated( ProjectRegistry projectRegistry ) {
+        BFEventListener searchDFCreatedlistener = new BFEventListenerAdapter() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof SearchResultDataframeCreatedEvent) {
+                    if (currentActiveSearchWindow != null) {
+                        // TODO access the details as well..., so we can see the lines....
+                        currentActiveSearchWindow.addSearchResultDataFrame( ((SearchResultDataframeCreatedEvent) event).getDataFrame() );
+                    }
+                }
+
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SearchResultDataframeCreatedEvent.class, searchDFCreatedlistener );
     }
 
     // TODO: implement the delegates

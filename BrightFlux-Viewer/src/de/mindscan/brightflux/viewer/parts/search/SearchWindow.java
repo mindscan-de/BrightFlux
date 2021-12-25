@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.parts.search;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
@@ -33,5 +34,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 public interface SearchWindow {
 
     void searchRequestedRow( DataFrameRow requestedRow );
+
+    void addSearchResultDataFrame( DataFrame dataFrame );
 
 }

@@ -61,6 +61,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     protected Shell shlSearchWindow;
     private Text text;
     private ProjectRegistry projectRegistry;
+    private CTabFolder searchResultTabFolder;
 
     /**
      * Create the dialog.
@@ -87,23 +88,6 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
             }
         }
         return result;
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void searchRequestedRow( DataFrameRow requestedRow ) {
-        DataFrame df = requestedRow.getDataFrameInternal();
-
-        // Locate the first Row containing a string and then set the text of the text field 
-        Collection<String> columnNames = df.getColumnNames();
-        for (String columnName : columnNames) {
-            String columnType = df.getColumn( columnName ).getColumnValueType();
-            if (ColumnValueTypes.COLUMN_TYPE_STRING.equals( columnType )) {
-                text.setText( (String) requestedRow.get( columnName ) );
-            }
-        }
     }
 
     /**
@@ -149,11 +133,37 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         SashForm sashForm = new SashForm( lowerComposite, SWT.VERTICAL );
 
-        CTabFolder searchResultTabFolder = new CTabFolder( sashForm, SWT.BORDER | SWT.BOTTOM );
+        searchResultTabFolder = new CTabFolder( sashForm, SWT.BORDER | SWT.BOTTOM );
         searchResultTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
 
         Composite searchResultDetailsComposite = new Composite( sashForm, SWT.NONE );
         sashForm.setWeights( new int[] { 87, 87 } );
+
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void searchRequestedRow( DataFrameRow requestedRow ) {
+        DataFrame df = requestedRow.getDataFrameInternal();
+
+        // Locate the first Row containing a string and then set the text of the text field 
+        Collection<String> columnNames = df.getColumnNames();
+        for (String columnName : columnNames) {
+            String columnType = df.getColumn( columnName ).getColumnValueType();
+            if (ColumnValueTypes.COLUMN_TYPE_STRING.equals( columnType )) {
+                text.setText( (String) requestedRow.get( columnName ) );
+            }
+        }
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void addSearchResultDataFrame( DataFrame dataFrame ) {
+        // TODO: we need to add a dataframe to the searchresult tabfolder.
 
     }
 
@@ -193,4 +203,5 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         }
 
     }
+
 }
