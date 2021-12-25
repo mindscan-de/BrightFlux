@@ -25,8 +25,12 @@
  */
 package de.mindscan.brightflux.viewer.parts.search;
 
+import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
+import de.mindscan.brightflux.viewer.parts.search.uievents.SearchUIDataFrameRowRequestedEvent;
 
 /**
  * This is a class which will register to the search operations and will forward them if a search window is registered
@@ -42,6 +46,18 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         // TODO Register for the events, so that we can avoid the registration and deregistration to the events
+
+        BFEventListener listener = new BFEventListenerAdapter() {
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof SearchUIDataFrameRowRequestedEvent) {
+                    if (currentActiveSearchWindow != null) {
+                        currentActiveSearchWindow.searchRequestedRow( ((SearchUIDataFrameRowRequestedEvent) event).getRequestedRow() );
+                    }
+                }
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SearchUIDataFrameRowRequestedEvent.class, listener );
     }
 
     // TODO: implement the delegates

@@ -70,6 +70,7 @@ import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.parts.search.uicommands.SearchUICommandsFactory;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedHandler;
@@ -479,10 +480,15 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
                 // current selection
                 // create uicommand for search
                 // dispatch the ui command for search
+                if (currentSelectedRow != null) {
+                    dispatchCommand( SearchUICommandsFactory.searchDataFrameRow( currentSelectedRow, "default" ) );
+                }
+
                 // That will hopefully locate the search window
                 // the search window is already subscribed to the kind of events...
                 // and if not open the search window
                 // and then create the event to request the search window to prepare the search based on the current selection
+
             }
         } );
         mntmFuriousironCodeSearch.setText( "FuriousIron Search" );
