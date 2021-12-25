@@ -217,6 +217,8 @@ public class BrightFluxViewerMainAppTwo {
             public void widgetSelected( SelectionEvent e ) {
                 // TODO: if not set, we open a new instance and then we must initialize
                 SearchWindowDialog searchWindow = new SearchWindowDialog( shellBFViewerMainApp, 0 );
+                // TODO improve this using the project registry itself and then complete the registration.
+                searchWindow.setProjectRegistry( projectRegistry );
                 searchWindow.open();
             }
         } );

@@ -30,7 +30,10 @@ import java.util.Collection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -40,6 +43,10 @@ import org.eclipse.swt.widgets.Text;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
+import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.search.commands.SearchCommandFactory;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.parts.search.SearchWindow;
@@ -47,11 +54,12 @@ import de.mindscan.brightflux.viewer.parts.search.SearchWindow;
 /**
  * 
  */
-public class SearchWindowDialog extends Dialog implements SearchWindow {
+public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectRegistryParticipant {
 
     protected Object result;
     protected Shell shlSearchWindow;
     private Text text;
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the dialog.
@@ -115,6 +123,26 @@ public class SearchWindowDialog extends Dialog implements SearchWindow {
         text = new Text( upperComposite, SWT.BORDER );
         text.setBounds( 10, 10, 363, 19 );
 
+        Button btnSearch = new Button( upperComposite, SWT.NONE );
+        btnSearch.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // TODO:
+                String query = "+SharedClusterSnapshotRestore";
+
+                // TODO this may provide context e.g. filetype, language, and additionals meta labels and will be completed by the actual userquery 
+                String profileQuerySuffix = "";
+
+                // we might have to compose a query like +(userquery) +(profileQuerySuffix)
+                String fullQuery = query + " " + profileQuerySuffix;
+
+                // we use the plugin search command, which will then do the heavy lifting.
+                dispatchCommand( SearchCommandFactory.performSearch( query, profileQuerySuffix ) );
+            }
+        } );
+        btnSearch.setBounds( 0, 35, 68, 23 );
+        btnSearch.setText( "Search" );
+
         Composite lowerComposite = new Composite( sashForm, SWT.NONE );
         lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
@@ -123,6 +151,23 @@ public class SearchWindowDialog extends Dialog implements SearchWindow {
         searchResultsTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
         sashForm.setWeights( new int[] { 82, 188 } );
 
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+    }
+
+    /**
+     * @param command
+     */
+    protected void dispatchCommand( BFCommand command ) {
+        if (this.projectRegistry != null) {
+            projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
     }
 
     /**
