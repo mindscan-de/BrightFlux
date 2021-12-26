@@ -31,7 +31,7 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.annotator.writer.AnnotatorJsonLWriterImpl;
+import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
 
 /**
  * 

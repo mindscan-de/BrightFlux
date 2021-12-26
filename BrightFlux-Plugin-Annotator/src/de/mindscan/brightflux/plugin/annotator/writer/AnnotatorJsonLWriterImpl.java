@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.annotator.writer;
+package de.mindscan.brightflux.plugin.annotator.writer;
 
 import java.nio.file.Path;
 
