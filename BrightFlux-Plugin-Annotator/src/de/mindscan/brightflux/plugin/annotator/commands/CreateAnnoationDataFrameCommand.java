@@ -30,8 +30,8 @@ import java.util.function.Consumer;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.plugin.annotator.events.AnnotatorEventFactory;
 import de.mindscan.brightflux.system.annotator.utils.AnnotatorUtils;
-import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
  * 
@@ -45,7 +45,7 @@ public class CreateAnnoationDataFrameCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         DataFrame newDataFrame = AnnotatorUtils.createAnnotationDataFrame();
 
-        eventConsumer.accept( BFEventFactory.annotationDataframeCreated( newDataFrame ) );
+        eventConsumer.accept( AnnotatorEventFactory.annotationDataframeCreated( newDataFrame ) );
     }
 
 }

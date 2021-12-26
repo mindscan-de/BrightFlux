@@ -29,8 +29,6 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.annotator.events.AnnotationDataFrameCreatedEvent;
-import de.mindscan.brightflux.system.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameClosedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameCreatedEvent;
 import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
@@ -61,10 +59,6 @@ public class BFEventFactory {
         return new DataFrameCreatedEvent( dataFrame, parentDataFrame.getUuid().toString() );
     }
 
-    public static BFEvent annotationDataframeCreated( DataFrame dataFrame ) {
-        return new AnnotationDataFrameCreatedEvent( dataFrame );
-    }
-
     public static BFEvent recipeSaveSucceeded( Path targetFile ) {
         return new RecipeSaveResultEvent( targetFile, true );
     }
@@ -75,9 +69,5 @@ public class BFEventFactory {
 
     public static BFEvent recipeSaveResult( Path targetFile, boolean success ) {
         return new RecipeSaveResultEvent( targetFile, success );
-    }
-
-    public static DataFrameAnnotateRowEvent annotateDataFrameRow( DataFrame inputDataFrame, int row, String annotation ) {
-        return new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation );
     }
 }

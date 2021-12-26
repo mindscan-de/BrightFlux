@@ -23,40 +23,24 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.plugin.annotator.commands;
-
-import java.nio.file.Path;
-import java.util.function.Consumer;
+package de.mindscan.brightflux.plugin.annotator.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.ingest.IngestBFDataFrameJsonLines;
-import de.mindscan.brightflux.plugin.annotator.events.AnnotatorEventFactory;
+import de.mindscan.brightflux.system.annotator.events.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.system.annotator.events.DataFrameAnnotateRowEvent;
 
 /**
  * 
  */
-public class LoadAnnotationDataFrameCommand implements BFCommand {
+public class AnnotatorEventFactory {
 
-    private Path loadPathInfo;
-
-    /**
-     * 
-     */
-    public LoadAnnotationDataFrameCommand( Path loadPathInfo ) {
-        this.loadPathInfo = loadPathInfo;
+    public static DataFrameAnnotateRowEvent annotateDataFrameRow( DataFrame inputDataFrame, int row, String annotation ) {
+        return new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation );
     }
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void execute( Consumer<BFEvent> eventConsumer ) {
-        IngestBFDataFrameJsonLines ingest = new IngestBFDataFrameJsonLines();
-        DataFrame annotationDataFrame = ingest.loadAsDataFrame( loadPathInfo );
-
-        eventConsumer.accept( AnnotatorEventFactory.annotationDataframeCreated( annotationDataFrame ) );
+    public static BFEvent annotationDataframeCreated( DataFrame dataFrame ) {
+        return new AnnotationDataFrameCreatedEvent( dataFrame );
     }
 
 }
