@@ -63,19 +63,17 @@ public class OpenSearchWindowDialogCommand implements UIBFCommand {
             throw new NotYetImplemetedException( "" );
         }
 
-        // TODO maybe locate another open instance and show it instead.
         SearchUIProxyComponent searchUIProxyComponent = systemServices.getService( SearchUIProxyComponent.class );
         if (searchUIProxyComponent.hasCurrentActiveSearchWindow()) {
-
+            searchUIProxyComponent.focusCurrentActiveSearchWindow();
             return;
         }
-
-        // TODO: if not set, we open a new instance and then we must initialize
-        SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
-        // TODO improve this using the project registry itself and then complete the registration.
-        searchWindow.setProjectRegistry( projectRegistry );
-        searchWindow.open();
-
+        else {
+            SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
+            // TODO improve this using the project registry itself and then complete the registration.
+            searchWindow.setProjectRegistry( projectRegistry );
+            searchWindow.open();
+        }
     }
 
 }

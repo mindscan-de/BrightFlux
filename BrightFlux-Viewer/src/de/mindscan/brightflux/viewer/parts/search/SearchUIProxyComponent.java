@@ -62,6 +62,7 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
                 if (event instanceof SearchUIDataFrameRowRequestedEvent) {
                     if (currentActiveSearchWindow != null) {
                         currentActiveSearchWindow.searchRequestedRow( ((SearchUIDataFrameRowRequestedEvent) event).getRequestedRow() );
+                        currentActiveSearchWindow.bringToTop();
                     }
                 }
             }
@@ -80,6 +81,7 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
                     if (currentActiveSearchWindow != null) {
                         // TODO access the details as well..., so we can see the lines....
                         currentActiveSearchWindow.addSearchResultDataFrame( ((SearchResultDataframeCreatedEvent) event).getDataFrame() );
+                        currentActiveSearchWindow.bringToTop();
                     }
                 }
 
@@ -102,5 +104,11 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
 
     public boolean hasCurrentActiveSearchWindow() {
         return this.currentActiveSearchWindow != null;
+    }
+
+    public void focusCurrentActiveSearchWindow() {
+        if (hasCurrentActiveSearchWindow()) {
+            currentActiveSearchWindow.bringToTop();
+        }
     }
 }

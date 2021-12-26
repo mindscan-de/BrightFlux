@@ -37,4 +37,6 @@ public interface SearchWindow {
 
     void addSearchResultDataFrame( DataFrame dataFrame );
 
+    void bringToTop();
+
 }

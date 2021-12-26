@@ -244,4 +244,8 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         }
     }
 
+    @Override
+    public void bringToTop() {
+        shlSearchWindow.setFocus();
+    }
 }
