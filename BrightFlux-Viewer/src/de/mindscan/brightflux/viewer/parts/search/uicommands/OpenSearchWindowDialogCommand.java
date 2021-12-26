@@ -33,8 +33,8 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.services.SystemServices;
-import de.mindscan.brightflux.viewer.parts.search.ui.SearchWindowDialog;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
+import de.mindscan.brightflux.viewer.uiplugin.search.ui.SearchWindowDialog;
 
 /**
  * 
