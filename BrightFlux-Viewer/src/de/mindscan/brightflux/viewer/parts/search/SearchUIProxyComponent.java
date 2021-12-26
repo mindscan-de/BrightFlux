@@ -99,4 +99,8 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
     public void unregisterCurrentActiveSearchWindow() {
         this.currentActiveSearchWindow = null;
     }
+
+    public boolean hasCurrentActiveSearchWindow() {
+        return this.currentActiveSearchWindow != null;
+    }
 }

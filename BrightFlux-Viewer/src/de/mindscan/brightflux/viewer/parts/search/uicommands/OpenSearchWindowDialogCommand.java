@@ -33,6 +33,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
 import de.mindscan.brightflux.viewer.uiplugin.search.ui.SearchWindowDialog;
 
@@ -55,12 +56,19 @@ public class OpenSearchWindowDialogCommand implements UIBFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        ProjectRegistry projectRegistry = SystemServices.getInstance().getProjectRegistry();
+        SystemServices systemServices = SystemServices.getInstance();
+
+        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
         if (projectRegistry == null) {
             throw new NotYetImplemetedException( "" );
         }
 
         // TODO maybe locate another open instance and show it instead.
+        SearchUIProxyComponent searchUIProxyComponent = systemServices.getService( SearchUIProxyComponent.class );
+        if (searchUIProxyComponent.hasCurrentActiveSearchWindow()) {
+
+            return;
+        }
 
         // TODO: if not set, we open a new instance and then we must initialize
         SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
