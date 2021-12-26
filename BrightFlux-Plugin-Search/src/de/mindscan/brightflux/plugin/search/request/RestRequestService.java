@@ -37,6 +37,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultModel;
+
 /**
  * This is a first start to access the furious iron project. This kind of interface should be abstracted away, 
  * so that multiple search engines can be accessed by this search plugin.
@@ -77,10 +82,14 @@ public class RestRequestService {
 
             StringBuffer searchResultContentJsonString = retrieveHTTPResponse( connection );
 
-            System.out.println( "Result is:" );
-            System.out.println( searchResultContentJsonString.toString() );
+            SearchResultModel decodedModel = decodeResultModel( SearchResultModel.class, searchResultContentJsonString.toString() );
 
-            // TODO: decode json
+            System.out.println( "Number of results: " + decodedModel.getNumberOfQeueryResults() );
+            System.out.println( "Results calculated in (ms): " + decodedModel.getSearchTimeInMs() );
+
+            decodedModel.getQueryResultItems().stream().forEach( element -> {
+                System.out.println( element.getQueryResultSimpleFilename() );
+            } );
 
             return List.of();
         }
@@ -88,6 +97,14 @@ public class RestRequestService {
             e.printStackTrace();
             return List.of();
         }
+    }
+
+    private SearchResultModel decodeResultModel( Class<SearchResultModel> class1, String jsonString ) {
+        Gson gson = new GsonBuilder().create();
+
+        SearchResultModel fromJson = class1.cast( gson.fromJson( jsonString, SearchResultModel.class ) );
+
+        return fromJson;
     }
 
     private StringBuffer retrieveHTTPResponse( HttpURLConnection con ) throws IOException {
