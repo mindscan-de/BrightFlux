@@ -37,6 +37,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
@@ -100,6 +102,29 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         shlSearchWindow.setSize( 450, 300 );
         shlSearchWindow.setText( "Search Tools" );
         shlSearchWindow.setLayout( new BorderLayout( 0, 0 ) );
+
+        shlSearchWindow.addListener( SWT.Traverse, new Listener() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void handleEvent( Event event ) {
+                // don't close on escape key.
+                if (event.character == SWT.ESC) {
+                    event.doit = false;
+                }
+            }
+        } );
+
+        shlSearchWindow.addListener( SWT.Close, new Listener() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void handleEvent( Event event ) {
+                unregisterAtSearchUIProxyComponent();
+            }
+        } );
 
         Composite upperComposite = new Composite( shlSearchWindow, SWT.NONE );
         upperComposite.setLayoutData( BorderLayout.NORTH );
@@ -178,7 +203,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     /**
      * @param command
      */
-    protected void dispatchCommand( BFCommand command ) {
+    private void dispatchCommand( BFCommand command ) {
         if (this.projectRegistry != null) {
             projectRegistry.getCommandDispatcher().dispatchCommand( command );
         }
@@ -201,7 +226,22 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         else {
 
         }
+    }
 
+    private void unregisterAtSearchUIProxyComponent() {
+        // TODO registration at SearchUIProxyComponent as the currentActive Search window
+        SystemServices systemServices = SystemServices.getInstance();
+        if (systemServices == null) {
+            return;
+        }
+
+        if (systemServices.isServiceAvailable( SearchUIProxyComponent.class )) {
+            SearchUIProxyComponent service = systemServices.getService( SearchUIProxyComponent.class );
+            service.unregisterCurrentActiveSearchWindow();
+        }
+        else {
+
+        }
     }
 
 }
