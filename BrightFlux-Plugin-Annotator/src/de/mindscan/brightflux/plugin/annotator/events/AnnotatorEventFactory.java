@@ -27,7 +27,6 @@ package de.mindscan.brightflux.plugin.annotator.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.system.annotator.events.DataFrameAnnotateRowEvent;
 
 /**
  * 
