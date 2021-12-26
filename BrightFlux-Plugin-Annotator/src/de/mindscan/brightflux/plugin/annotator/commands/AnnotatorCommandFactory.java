@@ -31,7 +31,6 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.annotator.commands.CreateAnnoationDataFrameCommand;
 import de.mindscan.brightflux.system.annotator.commands.DataFrameAnnotateRowCommand;
-import de.mindscan.brightflux.system.annotator.commands.LoadAnnotationDataFrameCommand;
 
 /**
  * 
