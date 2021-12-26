@@ -23,13 +23,13 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.annotator.utils;
+package de.mindscan.brightflux.plugin.annotator.utils;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
-import de.mindscan.brightflux.system.annotator.AnnotatorComponent;
+import de.mindscan.brightflux.plugin.annotator.AnnotatorComponent;
 
 /**
  * 

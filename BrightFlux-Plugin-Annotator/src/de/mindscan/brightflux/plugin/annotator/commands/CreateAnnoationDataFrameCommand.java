@@ -31,7 +31,7 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.plugin.annotator.events.AnnotatorEventFactory;
-import de.mindscan.brightflux.system.annotator.utils.AnnotatorUtils;
+import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 
 /**
  * 

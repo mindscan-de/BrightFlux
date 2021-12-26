@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.annotator;
+package de.mindscan.brightflux.plugin.annotator;
 
 import java.nio.file.Path;
 
@@ -33,9 +33,9 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.system.annotator.events.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.system.annotator.events.DataFrameAnnotateRowEvent;
-import de.mindscan.brightflux.system.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.system.annotator.writer.AnnotatorJsonLWriterImpl;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
