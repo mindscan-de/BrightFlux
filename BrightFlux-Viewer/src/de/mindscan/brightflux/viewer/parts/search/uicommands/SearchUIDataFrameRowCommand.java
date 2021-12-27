@@ -29,8 +29,8 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.viewer.parts.search.uievents.SearchUIDataFrameRowRequestedEvent;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
+import de.mindscan.brightflux.viewer.uiplugin.search.events.SearchUIDataFrameRowRequestedEvent;
 
 /**
  * 

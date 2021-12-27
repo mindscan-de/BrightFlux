@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts.search.uievents;
+package de.mindscan.brightflux.viewer.uiplugin.search.events;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.events.BFEvent;

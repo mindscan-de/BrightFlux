@@ -31,8 +31,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.search.events.SearchResultDataframeCreatedEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.viewer.parts.search.uievents.SearchUIDataFrameRowRequestedEvent;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchWindow;
+import de.mindscan.brightflux.viewer.uiplugin.search.events.SearchUIDataFrameRowRequestedEvent;
 
 /**
  * This is a class which will register to the search operations and will forward them if a search window is registered
