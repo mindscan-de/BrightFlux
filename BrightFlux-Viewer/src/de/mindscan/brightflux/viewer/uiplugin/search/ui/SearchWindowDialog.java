@@ -29,12 +29,16 @@ import java.util.Collection;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabFolder2Adapter;
+import org.eclipse.swt.custom.CTabFolderEvent;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -52,6 +56,7 @@ import de.mindscan.brightflux.plugin.search.commands.SearchCommandFactory;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.parts.search.SearchWindow;
+import de.mindscan.brightflux.viewer.uiplugin.search.ui.df.SearchResultDataFrameTableComposite;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -159,6 +164,19 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         SashForm sashForm = new SashForm( lowerComposite, SWT.VERTICAL );
 
         searchResultTabFolder = new CTabFolder( sashForm, SWT.BORDER | SWT.BOTTOM );
+        searchResultTabFolder.addCTabFolder2Listener( new CTabFolder2Adapter() {
+            @Override
+            public void close( CTabFolderEvent event ) {
+                if (event.item instanceof CTabItem) {
+                    Control control = ((CTabItem) event.item).getControl();
+                    if (control instanceof SearchResultDataFrameTableComposite) {
+                        // TODO: we want co close the item and want to call its (to be implemented) closing function
+                        // we want to replace the data in the table and also hide the visibility before removal of 
+                        // the searchresults dataframe. 
+                    }
+                }
+            }
+        } );
         searchResultTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
 
         Composite searchResultDetailsComposite = new Composite( sashForm, SWT.NONE );
