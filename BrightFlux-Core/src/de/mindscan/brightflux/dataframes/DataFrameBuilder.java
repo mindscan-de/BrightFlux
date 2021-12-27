@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.OptionalInt;
+import java.util.function.Function;
 
 import de.mindscan.brightflux.dataframes.columns.DataFrameColumnFactory;
 
@@ -168,6 +169,19 @@ public class DataFrameBuilder {
         }
 
         return this;
+    }
+
+    public void addRow( Function<String, Object> columnDataRetriever ) {
+        for (DataFrameColumn<?> dataFrameColumn : columns) {
+            String columnName = dataFrameColumn.getColumnName();
+            Object value = columnDataRetriever.apply( columnName );
+            if (value == null) {
+                dataFrameColumn.appendNA();
+            }
+            else {
+                dataFrameColumn.appendRaw( value );
+            }
+        }
     }
 
 }
