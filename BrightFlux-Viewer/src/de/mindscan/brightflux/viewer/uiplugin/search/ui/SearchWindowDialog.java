@@ -180,7 +180,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         searchResultTabFolder.setSelectionBackground( Display.getCurrent().getSystemColor( SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT ) );
 
         Composite searchResultDetailsComposite = new Composite( sashForm, SWT.NONE );
-        sashForm.setWeights( new int[] { 87, 87 } );
+        sashForm.setWeights( new int[] { 70, 30 } );
 
     }
 
@@ -205,8 +205,10 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
      * {@inheritDoc}
      */
     @Override
-    public void addSearchResultDataFrame( DataFrame dataFrame ) {
-        // TODO: we need to add a dataframe to the searchresult tabfolder.
+    public void addSearchResultDataFrame( DataFrame newSearchResultDataFrame ) {
+
+        CTabItem item = addTabItem( searchResultTabFolder, newSearchResultDataFrame );
+        searchResultTabFolder.setSelection( item );
 
     }
 
@@ -265,5 +267,22 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     @Override
     public void bringToTop() {
         shlSearchWindow.setFocus();
+    }
+
+    private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame ingestedDF ) {
+        String ingestedDFName = ingestedDF.getTitle();
+
+        CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
+        tbtmNewItem.setShowClose( true );
+        tbtmNewItem.setText( ingestedDFName );
+
+        SearchResultDataFrameTableComposite composite = new SearchResultDataFrameTableComposite( tabFolder, SWT.NONE );
+
+        // composite.setProjectRegistry( projectRegistry );
+        // composite.setDataFrame( ingestedDF );
+        tbtmNewItem.setControl( composite );
+
+        return tbtmNewItem;
+
     }
 }
