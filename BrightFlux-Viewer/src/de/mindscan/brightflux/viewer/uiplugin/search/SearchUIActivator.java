@@ -23,11 +23,12 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts.search;
+package de.mindscan.brightflux.viewer.uiplugin.search;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
 
 /**
  * 
