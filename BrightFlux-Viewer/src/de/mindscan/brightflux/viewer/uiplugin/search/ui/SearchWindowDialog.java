@@ -170,9 +170,9 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
                 if (event.item instanceof CTabItem) {
                     Control control = ((CTabItem) event.item).getControl();
                     if (control instanceof SearchResultDataFrameTableComposite) {
-                        // TODO: we want co close the item and want to call its (to be implemented) closing function
-                        // we want to replace the data in the table and also hide the visibility before removal of 
-                        // the searchresults dataframe. 
+                        // ignore the visual update before closing, because it takes some time sometimes
+                        // then we want to void the referenced data
+                        ((SearchResultDataFrameTableComposite) control).closeSearchDataFrame();
                     }
                 }
             }
@@ -269,8 +269,8 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         shlSearchWindow.setFocus();
     }
 
-    private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame ingestedDF ) {
-        String ingestedDFName = ingestedDF.getTitle();
+    private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame searchResultDF ) {
+        String ingestedDFName = searchResultDF.getTitle();
 
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
         tbtmNewItem.setShowClose( true );

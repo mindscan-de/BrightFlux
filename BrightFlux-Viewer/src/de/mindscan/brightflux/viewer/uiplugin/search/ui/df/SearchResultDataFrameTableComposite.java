@@ -100,6 +100,10 @@ public class SearchResultDataFrameTableComposite extends Composite {
         mntmFoobarbaz.setMenu( menu_1 );
     }
 
+    public void closeSearchDataFrame() {
+        // TODO: setvisible(false), setinput(null) 
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
