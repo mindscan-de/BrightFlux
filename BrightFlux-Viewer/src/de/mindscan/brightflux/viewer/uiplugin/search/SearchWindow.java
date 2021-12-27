@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts.search;
+package de.mindscan.brightflux.viewer.uiplugin.search;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
