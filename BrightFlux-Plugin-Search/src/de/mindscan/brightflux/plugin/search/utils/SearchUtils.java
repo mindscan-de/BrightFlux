@@ -25,14 +25,23 @@
  */
 package de.mindscan.brightflux.plugin.search.utils;
 
+import java.util.List;
+
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
+import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultItemModel;
+import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultModel;
 
 /**
  * 
  */
 public class SearchUtils {
+
+    private static final String SEARCH_COLUMNS_FILE_PATH = "filePath";
+    private static final String SEARCH_COLUMNS_SIMPE_FILE_NAME = "simpeFileName";
+    private static final String SEARCH_COLUMNS_FILE_SIZE = "fileSize";
+    private static final String SEARCH_COLUMNS_NUMBER_OF_LINES = "numberOfLines";
 
     public static DataFrame buildEmptyResultDataFrame() {
         DataFrameBuilder dataFrameBuilder = new DataFrameBuilder();
@@ -40,9 +49,46 @@ public class SearchUtils {
         // TODO: maybe do an Object column containing URIs / URLs
         // but let's start with this one....
         return dataFrameBuilder //
-                        .addColumn( "simpeFileName", ColumnTypes.COLUMN_TYPE_STRING ) //
-                        .addColumn( "fileSize", ColumnTypes.COLUMN_TYPE_INTEGER ) //
-                        .addColumn( "numberOfLines", ColumnTypes.COLUMN_TYPE_INTEGER ) // 
-                        .addColumn( "filePath", ColumnTypes.COLUMN_TYPE_STRING ).build();
+                        .addColumn( SEARCH_COLUMNS_SIMPE_FILE_NAME, ColumnTypes.COLUMN_TYPE_STRING ) //
+                        .addColumn( SEARCH_COLUMNS_FILE_SIZE, ColumnTypes.COLUMN_TYPE_INTEGER ) //
+                        .addColumn( SEARCH_COLUMNS_NUMBER_OF_LINES, ColumnTypes.COLUMN_TYPE_INTEGER ) // 
+                        .addColumn( SEARCH_COLUMNS_FILE_PATH, ColumnTypes.COLUMN_TYPE_STRING ).build();
+    }
+
+    /**
+     * @param searchresult
+     * @return
+     */
+    public static DataFrame buildResultDataFrame( SearchResultModel searchresult ) {
+        DataFrameBuilder dataFrameBuilder = new DataFrameBuilder();
+
+        // TODO: maybe do an Object column containing URIs / URLs
+        // but let's start with this one....
+        DataFrameBuilder dataframeColumns = dataFrameBuilder //
+                        .addName( "Searchresult" ) //
+                        .addColumn( SEARCH_COLUMNS_SIMPE_FILE_NAME, ColumnTypes.COLUMN_TYPE_STRING ) //
+                        .addColumn( SEARCH_COLUMNS_FILE_SIZE, ColumnTypes.COLUMN_TYPE_LONG ) //
+                        .addColumn( SEARCH_COLUMNS_NUMBER_OF_LINES, ColumnTypes.COLUMN_TYPE_LONG ) // 
+                        .addColumn( SEARCH_COLUMNS_FILE_PATH, ColumnTypes.COLUMN_TYPE_STRING );
+
+        List<SearchResultItemModel> queryResultItems = searchresult.getQueryResultItems();
+        for (SearchResultItemModel resultItem : queryResultItems) {
+            dataframeColumns.addRow( columnname -> {
+                switch (columnname) {
+                    case SEARCH_COLUMNS_SIMPE_FILE_NAME:
+                        return resultItem.getQueryResultSimpleFilename();
+                    case SEARCH_COLUMNS_FILE_SIZE:
+                        return Long.valueOf( resultItem.getFileSize() );
+                    case SEARCH_COLUMNS_NUMBER_OF_LINES:
+                        return Long.valueOf( resultItem.getNumberOfLinesInFile() );
+                    case SEARCH_COLUMNS_FILE_PATH:
+                        return resultItem.getQueryResultFilePath();
+                    default:
+                        return null;
+                }
+            } );
+        }
+
+        return dataframeColumns.build();
     }
 }
