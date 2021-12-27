@@ -33,7 +33,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -61,7 +60,7 @@ public class RestRequestService {
         // intentionally left blank
     }
 
-    public List<String> requestFuriousIronQueryResults( String query ) {
+    public SearchResultModel requestFuriousIronQueryResults( String query ) {
         try {
             Map<String, String> parameters = new LinkedHashMap<>();
 
@@ -91,11 +90,11 @@ public class RestRequestService {
                 System.out.println( element.getQueryResultSimpleFilename() );
             } );
 
-            return List.of();
+            return decodedModel;
         }
         catch (IOException e) {
             e.printStackTrace();
-            return List.of();
+            return null;
         }
     }
 
