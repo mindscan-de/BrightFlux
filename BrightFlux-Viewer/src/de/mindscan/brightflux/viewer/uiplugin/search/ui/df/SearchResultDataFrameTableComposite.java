@@ -25,8 +25,12 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.search.ui.df;
 
+import java.util.Collection;
+
 import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -37,7 +41,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameBuilder;
+import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
+import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -47,6 +56,9 @@ public class SearchResultDataFrameTableComposite extends Composite {
     private Table table;
     private TableViewer tableViewer;
     private Composite parentShell;
+
+    private DataFrame searchResultDataFrame = new DataFrameBuilder( "(empty)" ).build();
+    private Composite lowerComposite;
 
     /**
      * Create the composite.
@@ -71,11 +83,12 @@ public class SearchResultDataFrameTableComposite extends Composite {
         btnFoo.setBounds( 10, 10, 68, 23 );
         btnFoo.setText( "Foo" );
 
-        Composite lowerComposite = new Composite( this, SWT.NONE );
+        lowerComposite = new Composite( this, SWT.NONE );
         lowerComposite.setLayoutData( BorderLayout.CENTER );
         lowerComposite.setLayout( new TableColumnLayout() );
 
         tableViewer = new TableViewer( lowerComposite, SWT.BORDER | SWT.FULL_SELECTION );
+        tableViewer.setUseHashlookup( true );
         table = tableViewer.getTable();
         table.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -101,7 +114,50 @@ public class SearchResultDataFrameTableComposite extends Composite {
     }
 
     public void closeSearchDataFrame() {
-        // TODO: setvisible(false), setinput(null) 
+        this.setVisible( false );
+
+        if (this.searchResultDataFrame != null) {
+            setDataFrame( null );
+        }
+    }
+
+    public void setDataFrame( DataFrame dataFrame ) {
+        this.searchResultDataFrame = dataFrame;
+
+        if (this.searchResultDataFrame != null) {
+            appendDataFrameColumns( searchResultDataFrame, tableViewer, lowerComposite );
+
+            tableViewer.setContentProvider( new DataFrameContentProvider() );
+            tableViewer.setInput( searchResultDataFrame );
+        }
+        else {
+            tableViewer.setContentProvider( new DataFrameContentProvider() );
+            tableViewer.setInput( null );
+        }
+    }
+
+    private void appendDataFrameColumns( DataFrame searchResultDataFrame, TableViewer tableViewer, Composite composite ) {
+        Collection<String> columnNames = searchResultDataFrame.getColumnNames();
+
+        TableColumnLayout tcl_composite = new TableColumnLayout();
+        composite.setLayout( tcl_composite );
+
+        for (final String columname : columnNames) {
+            TableViewerColumn tableViewerColumn = new TableViewerColumn( tableViewer, SWT.NONE );
+            TableColumn tableColumn = tableViewerColumn.getColumn();
+
+            // TODO: take the width from the configuration? 
+            // Settings or width of presentation?
+            tcl_composite.setColumnData( tableColumn, new ColumnPixelData( 45, true, true ) );
+            tableColumn.setText( columname );
+
+            // TODO: the labelprovider should depend on the columnype
+            // TODO: the labelprovider should depend also on a configuration for presentation,
+            //       e.g. present long-value as timstamp.
+
+            DataFrameColumnLabelProvider labelProvider = new DataFrameColumnLabelProvider( columname );
+            tableViewerColumn.setLabelProvider( labelProvider );
+        }
     }
 
     @Override
