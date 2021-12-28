@@ -70,11 +70,11 @@ import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
-import de.mindscan.brightflux.viewer.parts.search.uicommands.SearchUICommandsFactory;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedHandler;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
+import de.mindscan.brightflux.viewer.uiplugin.search.command.SearchUICommandsFactory;
 
 /**
  * 

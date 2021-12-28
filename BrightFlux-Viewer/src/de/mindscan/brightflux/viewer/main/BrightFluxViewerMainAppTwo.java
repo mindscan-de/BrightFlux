@@ -46,8 +46,8 @@ import de.mindscan.brightflux.viewer.parts.MainProjectComposite;
 import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
 import de.mindscan.brightflux.viewer.parts.ProjectViewComposite;
-import de.mindscan.brightflux.viewer.parts.search.uicommands.SearchUICommandsFactory;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uiplugin.search.command.SearchUICommandsFactory;
 
 /**
  * 
