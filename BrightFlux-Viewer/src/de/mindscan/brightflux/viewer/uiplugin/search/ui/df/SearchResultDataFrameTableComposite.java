@@ -29,6 +29,8 @@ import java.util.Collection;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -88,11 +90,17 @@ public class SearchResultDataFrameTableComposite extends Composite {
         lowerComposite.setLayout( new TableColumnLayout() );
 
         tableViewer = new TableViewer( lowerComposite, SWT.BORDER | SWT.FULL_SELECTION );
+        tableViewer.addDoubleClickListener( new IDoubleClickListener() {
+            public void doubleClick( DoubleClickEvent event ) {
+                // open the content of the file.
+            }
+        } );
         tableViewer.setUseHashlookup( true );
         table = tableViewer.getTable();
         table.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
+                // send event to show the details in lower part of the parent dialog
             }
         } );
         table.addMenuDetectListener( new MenuDetectListener() {
@@ -105,6 +113,15 @@ public class SearchResultDataFrameTableComposite extends Composite {
 
         Menu menu = new Menu( table );
         table.setMenu( menu );
+
+        MenuItem mntmEvidence = new MenuItem( menu, SWT.CASCADE );
+        mntmEvidence.setText( "Evidence" );
+
+        Menu menu_2 = new Menu( mntmEvidence );
+        mntmEvidence.setMenu( menu_2 );
+
+        MenuItem mntmAddToCase = new MenuItem( menu_2, SWT.NONE );
+        mntmAddToCase.setText( "Add To Case Evidence" );
 
         MenuItem mntmFoobarbaz = new MenuItem( menu, SWT.CASCADE );
         mntmFoobarbaz.setText( "FooBarBaz" );
