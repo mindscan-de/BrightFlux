@@ -278,7 +278,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         SearchResultDataFrameTableComposite composite = new SearchResultDataFrameTableComposite( tabFolder, SWT.NONE );
 
-        // composite.setProjectRegistry( projectRegistry );
+        composite.setProjectRegistry( projectRegistry );
         composite.setDataFrame( searchResultDF );
         tbtmNewItem.setControl( composite );
 

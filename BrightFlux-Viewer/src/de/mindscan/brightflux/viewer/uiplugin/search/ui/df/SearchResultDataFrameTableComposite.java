@@ -47,6 +47,9 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
+import de.mindscan.brightflux.framework.command.BFCommand;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.plugin.search.commands.SearchCommandFactory;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
 import swing2swt.layout.BorderLayout;
@@ -61,6 +64,7 @@ public class SearchResultDataFrameTableComposite extends Composite {
 
     private DataFrame searchResultDataFrame = new DataFrameBuilder( "(empty)" ).build();
     private Composite lowerComposite;
+    private ProjectRegistry projectRegistry;
 
     /**
      * Create the composite.
@@ -93,6 +97,12 @@ public class SearchResultDataFrameTableComposite extends Composite {
         tableViewer.addDoubleClickListener( new IDoubleClickListener() {
             public void doubleClick( DoubleClickEvent event ) {
                 // open the content of the file.
+
+                String pathInformation = "";
+                // NYI: we may or may not want to add the contentid... It is anyways calculated from the path information
+                String contentId = "";
+                BFCommand command = SearchCommandFactory.retrieveContent( pathInformation, contentId );
+                dispatchCommand( command );
             }
         } );
         tableViewer.setUseHashlookup( true );
@@ -177,8 +187,19 @@ public class SearchResultDataFrameTableComposite extends Composite {
         }
     }
 
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        this.projectRegistry = projectRegistry;
+    }
+
+    private void dispatchCommand( BFCommand command ) {
+        if (projectRegistry != null) {
+            projectRegistry.getCommandDispatcher().dispatchCommand( command );
+        }
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
     }
+
 }
