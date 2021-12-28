@@ -36,6 +36,7 @@ import de.mindscan.brightflux.plugin.search.request.RestRequestService;
  */
 public class RetrieveContentCommand implements BFCommand {
 
+    @SuppressWarnings( "unused" )
     private String contentId;
     private String pathInformation;
 

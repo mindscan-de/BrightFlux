@@ -41,6 +41,7 @@ import de.mindscan.brightflux.plugin.search.utils.SearchUtils;
 public class PerformSearchCommand implements BFCommand {
 
     private String userQuery;
+    @SuppressWarnings( "unused" )
     private String profileQuery;
 
     /**
