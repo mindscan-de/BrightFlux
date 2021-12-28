@@ -35,4 +35,8 @@ public class SearchCommandFactory {
     public static BFCommand performSearch( String userQuery, String profileQuery ) {
         return new PerformSearchCommand( userQuery, profileQuery );
     }
+
+    public static BFCommand retrieveContent( String pathInformation, String contentId ) {
+        return new RetrieveContentCommand( pathInformation );
+    }
 }
