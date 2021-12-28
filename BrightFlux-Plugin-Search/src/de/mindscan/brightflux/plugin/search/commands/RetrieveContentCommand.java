@@ -29,6 +29,7 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.plugin.search.events.SearchEventFactory;
 import de.mindscan.brightflux.plugin.search.request.RestRequestService;
 
 /**
@@ -57,8 +58,7 @@ public class RetrieveContentCommand implements BFCommand {
         String documentContents = requestService.requestFuriousIronQueryContentByPath( pathInformation );
         // requestService.requestFuriousIronQueryContentById( contentId );
 
-        // TODO build the 
-        // eventConsumer.accept( ) ;
+        eventConsumer.accept( SearchEventFactory.cachedDocumentLoaded( documentContents, pathInformation ) );
     }
 
 }
