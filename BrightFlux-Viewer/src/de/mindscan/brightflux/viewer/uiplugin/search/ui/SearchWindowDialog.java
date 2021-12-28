@@ -89,6 +89,12 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         shlSearchWindow.open();
         shlSearchWindow.layout();
         Display display = getParent().getDisplay();
+
+        // TODO: either the command becomes a worker thread, or we have to ban it into a thread, which can be aborted.
+        // TODO: maybe this should be the reason to assign the execution of commands to their special worker/threads.
+        // or we clarify this at a command, and implement a command which is starting a background task, so this can 
+        // be run safely outside?
+        // or is there any other way to do it correctly?
         while (!shlSearchWindow.isDisposed()) {
             if (!display.readAndDispatch()) {
                 display.sleep();
