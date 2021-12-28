@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts.search.uicommands;
+package de.mindscan.brightflux.viewer.uiplugin.search.command;
 
 import java.util.function.Consumer;
 

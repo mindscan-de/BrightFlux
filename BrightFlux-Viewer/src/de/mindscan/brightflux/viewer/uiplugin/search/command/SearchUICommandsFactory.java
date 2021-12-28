@@ -29,7 +29,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.viewer.parts.search.uicommands.OpenSearchWindowDialogCommand;
-import de.mindscan.brightflux.viewer.parts.search.uicommands.SearchUIDataFrameRowCommand;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
 
 /**
