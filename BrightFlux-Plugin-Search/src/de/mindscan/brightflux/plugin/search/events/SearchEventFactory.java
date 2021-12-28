@@ -23,47 +23,22 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.plugin.search.commands;
-
-import java.util.function.Consumer;
+package de.mindscan.brightflux.plugin.search.events;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
-import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultModel;
-import de.mindscan.brightflux.plugin.search.events.SearchEventFactory;
-import de.mindscan.brightflux.plugin.search.request.RestRequestService;
-import de.mindscan.brightflux.plugin.search.utils.SearchUtils;
 
 /**
  * 
  */
-public class PerformSearchCommand implements BFCommand {
+public class SearchEventFactory {
 
-    private String userQuery;
-    @SuppressWarnings( "unused" )
-    private String profileQuery;
-
-    /**
-     * @param userQuery
-     * @param profileQuery
-     */
-    public PerformSearchCommand( String userQuery, String profileQuery ) {
-        this.userQuery = userQuery;
-        this.profileQuery = profileQuery;
+    public static BFEvent searchResultDataframeCreated( DataFrame queryResultDataFrame ) {
+        return new SearchResultDataframeCreatedEvent( queryResultDataFrame );
     }
 
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void execute( Consumer<BFEvent> eventConsumer ) {
-        RestRequestService requestService = new RestRequestService();
-
-        SearchResultModel queryResult = requestService.requestFuriousIronQueryResults( userQuery );
-        DataFrame queryResultDataFrame = SearchUtils.buildResultDataFrame( queryResult );
-
-        eventConsumer.accept( SearchEventFactory.searchResultDataframeCreated( queryResultDataFrame ) );
+    public static BFEvent cachedDocumentLoaded( String documentContent, String path ) {
+        return new SearchResultCachedDocumentLoadedEvent( documentContent, path );
     }
 
 }
