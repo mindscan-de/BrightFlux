@@ -66,11 +66,11 @@ public class OpenSearchWindowDialogCommand implements UIBFCommand {
         SearchUIProxyComponent searchUIProxyComponent = systemServices.getService( SearchUIProxyComponent.class );
         if (searchUIProxyComponent.hasCurrentActiveSearchWindow()) {
             searchUIProxyComponent.focusCurrentActiveSearchWindow();
-            return;
         }
         else {
             SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
-            // TODO improve this using the project registry itself and then complete the registration.
+            // register the project registry. 
+            // TODO: Actually the SearchWindow should do this?
             searchWindow.setProjectRegistry( projectRegistry );
             searchWindow.open();
         }
