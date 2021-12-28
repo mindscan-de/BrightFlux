@@ -31,6 +31,7 @@ import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
@@ -47,9 +48,11 @@ import org.eclipse.swt.widgets.TableColumn;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameBuilder;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.plugin.search.commands.SearchCommandFactory;
+import de.mindscan.brightflux.plugin.search.utils.SearchDFColumns;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameColumnLabelProvider;
 import de.mindscan.brightflux.viewer.parts.df.DataFrameContentProvider;
 import swing2swt.layout.BorderLayout;
@@ -96,13 +99,15 @@ public class SearchResultDataFrameTableComposite extends Composite {
         tableViewer = new TableViewer( lowerComposite, SWT.BORDER | SWT.FULL_SELECTION );
         tableViewer.addDoubleClickListener( new IDoubleClickListener() {
             public void doubleClick( DoubleClickEvent event ) {
-                // open the content of the file.
+                // retrieve (and then open) the content of the file.
+                IStructuredSelection structuredSelection = tableViewer.getStructuredSelection();
+                DataFrameRow fristSelectedDataFrameRow = (DataFrameRow) structuredSelection.getFirstElement();
 
-                String pathInformation = "";
-                // NYI: we may or may not want to add the contentid... It is anyways calculated from the path information
-                String contentId = "";
-                BFCommand command = SearchCommandFactory.retrieveContent( pathInformation, contentId );
-                dispatchCommand( command );
+                if (fristSelectedDataFrameRow != null) {
+                    String pathInformation = String.valueOf( fristSelectedDataFrameRow.get( SearchDFColumns.FILE_PATH ) );
+                    // The ContentId is not yet supported/ not yet implemented
+                    dispatchCommand( SearchCommandFactory.retrieveContent( pathInformation, "" ) );
+                }
             }
         } );
         tableViewer.setUseHashlookup( true );
