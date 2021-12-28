@@ -33,7 +33,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
  */
 public class AnnotatorEventFactory {
 
-    public static DataFrameAnnotateRowEvent annotateDataFrameRow( DataFrame inputDataFrame, int row, String annotation ) {
+    public static BFEvent annotateDataFrameRow( DataFrame inputDataFrame, int row, String annotation ) {
         return new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation );
     }
 
