@@ -30,9 +30,9 @@ package de.mindscan.brightflux.plugin.search.utils;
  */
 public class SearchDFColumns {
 
-    public static final String SEARCH_COLUMNS_FILE_PATH = "filePath";
-    public static final String SEARCH_COLUMNS_SIMPE_FILE_NAME = "simpeFileName";
-    public static final String SEARCH_COLUMNS_FILE_SIZE = "fileSize";
-    public static final String SEARCH_COLUMNS_NUMBER_OF_LINES = "numberOfLines";
+    public static final String FILE_PATH = "filePath";
+    public static final String SIMPE_FILE_NAME = "simpeFileName";
+    public static final String FILE_SIZE = "fileSize";
+    public static final String NUMBER_OF_LINES = "numberOfLines";
 
 }

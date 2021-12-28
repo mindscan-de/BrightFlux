@@ -44,10 +44,10 @@ public class SearchUtils {
         // TODO: maybe do an Object column containing URIs / URLs
         // but let's start with this one....
         return dataFrameBuilder //
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_SIMPE_FILE_NAME, ColumnTypes.COLUMN_TYPE_STRING ) //
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_FILE_SIZE, ColumnTypes.COLUMN_TYPE_INTEGER ) //
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_NUMBER_OF_LINES, ColumnTypes.COLUMN_TYPE_INTEGER ) // 
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_FILE_PATH, ColumnTypes.COLUMN_TYPE_STRING ).build();
+                        .addColumn( SearchDFColumns.SIMPE_FILE_NAME, ColumnTypes.COLUMN_TYPE_STRING ) //
+                        .addColumn( SearchDFColumns.FILE_SIZE, ColumnTypes.COLUMN_TYPE_INTEGER ) //
+                        .addColumn( SearchDFColumns.NUMBER_OF_LINES, ColumnTypes.COLUMN_TYPE_INTEGER ) // 
+                        .addColumn( SearchDFColumns.FILE_PATH, ColumnTypes.COLUMN_TYPE_STRING ).build();
     }
 
     /**
@@ -61,22 +61,22 @@ public class SearchUtils {
         // but let's start with this one....
         DataFrameBuilder dataframeColumns = dataFrameBuilder //
                         .addName( "Searchresult" ) //
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_SIMPE_FILE_NAME, ColumnTypes.COLUMN_TYPE_STRING ) //
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_FILE_SIZE, ColumnTypes.COLUMN_TYPE_LONG ) //
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_NUMBER_OF_LINES, ColumnTypes.COLUMN_TYPE_LONG ) // 
-                        .addColumn( SearchDFColumns.SEARCH_COLUMNS_FILE_PATH, ColumnTypes.COLUMN_TYPE_STRING );
+                        .addColumn( SearchDFColumns.SIMPE_FILE_NAME, ColumnTypes.COLUMN_TYPE_STRING ) //
+                        .addColumn( SearchDFColumns.FILE_SIZE, ColumnTypes.COLUMN_TYPE_LONG ) //
+                        .addColumn( SearchDFColumns.NUMBER_OF_LINES, ColumnTypes.COLUMN_TYPE_LONG ) // 
+                        .addColumn( SearchDFColumns.FILE_PATH, ColumnTypes.COLUMN_TYPE_STRING );
 
         List<SearchResultItemModel> queryResultItems = searchresult.getQueryResultItems();
         for (SearchResultItemModel resultItem : queryResultItems) {
             dataframeColumns.addRow( columnname -> {
                 switch (columnname) {
-                    case SearchDFColumns.SEARCH_COLUMNS_SIMPE_FILE_NAME:
+                    case SearchDFColumns.SIMPE_FILE_NAME:
                         return resultItem.getQueryResultSimpleFilename();
-                    case SearchDFColumns.SEARCH_COLUMNS_FILE_SIZE:
+                    case SearchDFColumns.FILE_SIZE:
                         return Long.valueOf( resultItem.getFileSize() );
-                    case SearchDFColumns.SEARCH_COLUMNS_NUMBER_OF_LINES:
+                    case SearchDFColumns.NUMBER_OF_LINES:
                         return Long.valueOf( resultItem.getNumberOfLinesInFile() );
-                    case SearchDFColumns.SEARCH_COLUMNS_FILE_PATH:
+                    case SearchDFColumns.FILE_PATH:
                         return resultItem.getQueryResultFilePath();
                     default:
                         return null;
