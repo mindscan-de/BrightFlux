@@ -98,6 +98,14 @@ public class RestRequestService {
         }
     }
 
+    /**
+     * @param pathInformation
+     */
+    public void requestFuriousIronQueryContentByPath( String pathInformation ) {
+        // TODO Auto-generated method stub
+
+    }
+
     private SearchResultModel decodeResultModel( Class<SearchResultModel> class1, String jsonString ) {
         Gson gson = new GsonBuilder().create();
 
