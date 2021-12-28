@@ -53,8 +53,9 @@ public class RetrieveContentCommand implements BFCommand {
     public void execute( Consumer<BFEvent> eventConsumer ) {
         RestRequestService requestService = new RestRequestService();
 
-        requestService.requestFuriousIronQueryContentByPath( pathInformation );
+        String documentContents = requestService.requestFuriousIronQueryContentByPath( pathInformation );
         // requestService.requestFuriousIronQueryContentById( contentId );
+
         // TODO build the 
         // eventConsumer.accept( ) ;
     }

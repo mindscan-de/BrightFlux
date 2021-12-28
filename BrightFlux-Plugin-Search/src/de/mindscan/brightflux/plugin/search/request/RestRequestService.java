@@ -51,7 +51,8 @@ import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultMode
 public class RestRequestService {
 
     public final static String SERVER = "http://localhost:8000/";
-    public final static String REST = "SearchBackend/rest/search/result?";
+    public final static String REST_SEARCH_RESULT = "SearchBackend/rest/search/result?";
+    public final static String REST_RETRIEVE_CONTENT = "SearchBackend/rest/cached/content?";
 
     /**
      * 
@@ -62,17 +63,14 @@ public class RestRequestService {
 
     public SearchResultModel requestFuriousIronQueryResults( String query ) {
         try {
+            // System.out.println( "Query is = '" + query + "'" );
+
             Map<String, String> parameters = new LinkedHashMap<>();
-
-            System.out.println( "Query is = '" + query + "'" );
-
             parameters.put( "q", query );
 
-            String parameterString = parameters.entrySet().stream() //
-                            .map( entry -> entry.getKey() + "=" + URLEncoder.encode( entry.getValue(), StandardCharsets.UTF_8 ) ) //
-                            .collect( Collectors.joining( "&" ) );
+            String parameterString = buildGetParameterString( parameters );
 
-            URL url = new URL( SERVER + REST + parameterString );
+            URL url = new URL( SERVER + REST_SEARCH_RESULT + parameterString );
 
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod( "GET" );
@@ -83,12 +81,12 @@ public class RestRequestService {
 
             SearchResultModel decodedModel = decodeResultModel( SearchResultModel.class, searchResultContentJsonString.toString() );
 
-            System.out.println( "Number of results: " + decodedModel.getNumberOfQeueryResults() );
-            System.out.println( "Results calculated in (ms): " + decodedModel.getSearchTimeInMs() );
+            // System.out.println( "Number of results: " + decodedModel.getNumberOfQeueryResults() );
+            // System.out.println( "Results calculated in (ms): " + decodedModel.getSearchTimeInMs() );
 
-            decodedModel.getQueryResultItems().stream().forEach( element -> {
-                System.out.println( element.getQueryResultSimpleFilename() );
-            } );
+            // decodedModel.getQueryResultItems().stream().forEach( element -> {
+            //    System.out.println( element.getQueryResultSimpleFilename() );
+            // } );
 
             return decodedModel;
         }
@@ -98,12 +96,38 @@ public class RestRequestService {
         }
     }
 
-    /**
-     * @param pathInformation
-     */
-    public void requestFuriousIronQueryContentByPath( String pathInformation ) {
-        // TODO Auto-generated method stub
+    public String requestFuriousIronQueryContentByPath( String pathInformation ) {
+        try {
+            System.out.println( "Requested Path is = '" + pathInformation + "'" );
 
+            Map<String, String> parameters = new LinkedHashMap<>();
+            parameters.put( "p", pathInformation );
+
+            String parameterString = buildGetParameterString( parameters );
+
+            URL url = new URL( SERVER + REST_RETRIEVE_CONTENT + parameterString );
+
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod( "GET" );
+
+            connection.setRequestProperty( "Content-Type", "text/plain" );
+
+            StringBuffer searchResultContentJsonString = retrieveHTTPResponse( connection );
+
+            return searchResultContentJsonString.toString();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }
+
+    private String buildGetParameterString( Map<String, String> parameters ) {
+        String parameterString = parameters.entrySet().stream() //
+                        .map( entry -> entry.getKey() + "=" + URLEncoder.encode( entry.getValue(), StandardCharsets.UTF_8 ) ) //
+                        .collect( Collectors.joining( "&" ) );
+        return parameterString;
     }
 
     private SearchResultModel decodeResultModel( Class<SearchResultModel> class1, String jsonString ) {
