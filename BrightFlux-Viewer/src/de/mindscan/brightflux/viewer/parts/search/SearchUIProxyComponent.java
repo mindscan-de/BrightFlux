@@ -29,6 +29,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.search.events.SearchResultCachedDocumentLoadedEvent;
 import de.mindscan.brightflux.plugin.search.events.SearchResultDataframeCreatedEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchWindow;
@@ -51,12 +52,14 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
         this.projectRegistry = projectRegistry;
 
         registerSearchUIDataFrameRowRequsted( projectRegistry );
-
-        // TODO: maybe we also want the detils here, and this event must be extendended to read the details...
         registerSearchResultDataFrameCreated( projectRegistry );
+        // TODO: move this to somewhere appropriate, 
+        // currently this is okay to be hee, but "code evidence" should be handled by either the main program 
+        // or a plugin specializing on code annotations.
+        registerSearchResultCachedDocumentLoaded( projectRegistry );
     }
 
-    public void registerSearchUIDataFrameRowRequsted( ProjectRegistry projectRegistry ) {
+    private void registerSearchUIDataFrameRowRequsted( ProjectRegistry projectRegistry ) {
         BFEventListener listener = new BFEventListenerAdapter() {
             @Override
             public void handleEvent( BFEvent event ) {
@@ -71,7 +74,7 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
         projectRegistry.getEventDispatcher().registerEventListener( SearchUIDataFrameRowRequestedEvent.class, listener );
     }
 
-    public void registerSearchResultDataFrameCreated( ProjectRegistry projectRegistry ) {
+    private void registerSearchResultDataFrameCreated( ProjectRegistry projectRegistry ) {
         BFEventListener searchDFCreatedlistener = new BFEventListenerAdapter() {
             /** 
              * {@inheritDoc}
@@ -89,6 +92,30 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
             }
         };
         projectRegistry.getEventDispatcher().registerEventListener( SearchResultDataframeCreatedEvent.class, searchDFCreatedlistener );
+    }
+
+    /**
+     * @param projectRegistry2
+     */
+    private void registerSearchResultCachedDocumentLoaded( ProjectRegistry projectRegistry2 ) {
+        BFEventListener cachedDocumentListener = new BFEventListenerAdapter() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof SearchResultCachedDocumentLoadedEvent) {
+                    SearchResultCachedDocumentLoadedEvent cachedDocumentEvent = (SearchResultCachedDocumentLoadedEvent) event;
+
+                    System.out.println( "===============================================================" );
+                    System.out.println( "---------------------------------------------------------------" );
+                    System.out.println( cachedDocumentEvent.getPathOfDocument() );
+                    System.out.println( "---------------------------------------------------------------" );
+                    System.out.println( cachedDocumentEvent.getCachedDocumentContent() );
+                }
+            }
+        };
+        projectRegistry.getEventDispatcher().registerEventListener( SearchResultCachedDocumentLoadedEvent.class, cachedDocumentListener );
     }
 
     // TODO: implement the delegates
