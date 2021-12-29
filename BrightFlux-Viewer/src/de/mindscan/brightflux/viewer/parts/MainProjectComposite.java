@@ -192,6 +192,14 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
         mainTabFolder.setSelection( item );
     }
 
+//    // TODO: we want to also present code in the mainproject composite
+//    private void addTextTab() {
+//        // TODO build an abstraction, which works for dataframe tabs as well as text tabs, such that the right 
+//        // events are published and handled. 
+//        CTabItem item = addTabItem( mainTabFolder, codeInfo );
+//        mainTabFolder.setSelection( item );
+//    }
+
     private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame ingestedDF ) {
         String ingestedDFName = ingestedDF.getTitle();
 
