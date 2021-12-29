@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.parts.search;
+package de.mindscan.brightflux.viewer.uiplugin.search;
 
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
@@ -32,7 +32,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.search.events.SearchResultCachedDocumentLoadedEvent;
 import de.mindscan.brightflux.plugin.search.events.SearchResultDataframeCreatedEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.viewer.uiplugin.search.SearchWindow;
 import de.mindscan.brightflux.viewer.uiplugin.search.events.SearchUIDataFrameRowRequestedEvent;
 
 /**

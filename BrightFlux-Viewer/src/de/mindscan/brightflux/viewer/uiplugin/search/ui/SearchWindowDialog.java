@@ -54,7 +54,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.search.commands.SearchCommandFactory;
 import de.mindscan.brightflux.system.services.SystemServices;
-import de.mindscan.brightflux.viewer.parts.search.SearchUIProxyComponent;
+import de.mindscan.brightflux.viewer.uiplugin.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchWindow;
 import de.mindscan.brightflux.viewer.uiplugin.search.ui.df.SearchResultDataFrameTableComposite;
 import swing2swt.layout.BorderLayout;
