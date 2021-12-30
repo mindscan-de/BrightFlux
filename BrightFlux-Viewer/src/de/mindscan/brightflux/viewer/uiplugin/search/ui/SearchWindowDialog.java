@@ -35,13 +35,20 @@ import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.TraverseEvent;
+import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -145,31 +152,32 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         Composite composite = new Composite( upperComposite, SWT.NONE );
         composite.setLayout( new BorderLayout( 0, 0 ) );
 
-        Button btnSearch = new Button( composite, SWT.NONE );
-        btnSearch.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
+        Composite composite_m = new Composite( composite, SWT.NONE );
+        composite_m.setLayoutData( BorderLayout.CENTER );
+        composite_m.setLayout( new GridLayout( 2, false ) );
+        new Label( composite_m, SWT.NONE );
 
-                String query = text.getText().trim();
-                //"+SharedClusterSnapshotRestore";
+        Label lblPrevisousSearches = new Label( composite_m, SWT.NONE );
+        lblPrevisousSearches.setText( "Previsous Searches" );
+        new Label( composite_m, SWT.NONE );
 
-                // TODO this may provide context e.g. filetype, language, and additionals meta labels and will be completed by the actual userquery 
-                String profileQuerySuffix = "";
-
-                // we might have to compose a query like +(userquery) +(profileQuerySuffix)
-                String fullQuery = query + " " + profileQuerySuffix;
-
-                // we use the plugin search command, which will then do the heavy lifting.
-                dispatchCommand( SearchCommandFactory.performSearch( query, profileQuerySuffix ) );
-            }
-        } );
-        btnSearch.setText( "Search" );
+        List list = new List( composite_m, SWT.BORDER );
+        GridData gd_list = new GridData( SWT.LEFT, SWT.CENTER, false, false, 1, 1 );
+        gd_list.widthHint = 175;
+        list.setLayoutData( gd_list );
 
         Composite composite_1 = new Composite( composite, SWT.NONE );
         composite_1.setLayoutData( BorderLayout.NORTH );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         text = new Text( composite_1, SWT.BORDER );
+        text.addTraverseListener( new TraverseListener() {
+            public void keyTraversed( TraverseEvent e ) {
+                if (e.detail == SWT.TRAVERSE_RETURN) {
+                    executeSearch();
+                }
+            }
+        } );
         text.setFont( SWTResourceManager.getFont( "Courier New", 12, SWT.NORMAL ) );
 
         Composite composite_2 = new Composite( composite, SWT.NONE );
@@ -177,9 +185,27 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         Composite composite_3 = new Composite( composite, SWT.NONE );
         composite_3.setLayoutData( BorderLayout.EAST );
+        composite_3.setLayout( new GridLayout( 1, false ) );
 
-        Composite composite_4 = new Composite( composite, SWT.NONE );
-        composite_4.setLayoutData( BorderLayout.WEST );
+        Label lblNewLabel = new Label( composite_3, SWT.NONE );
+        lblNewLabel.setBounds( 0, 0, 49, 13 );
+        lblNewLabel.setText( "New Label" );
+
+        Combo combo = new Combo( composite_3, SWT.NONE );
+        combo.setBounds( 0, 0, 92, 21 );
+
+        Composite composite_left = new Composite( composite, SWT.NONE );
+        composite_left.setLayoutData( BorderLayout.WEST );
+        composite_left.setLayout( new GridLayout( 1, false ) );
+
+        Button btnSearch = new Button( composite_left, SWT.NONE );
+        btnSearch.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                executeSearch();
+            }
+        } );
+        btnSearch.setText( "Search Code" );
 
         Composite lowerComposite = new Composite( shlSearchWindow, SWT.NONE );
         lowerComposite.setLayoutData( BorderLayout.CENTER );
@@ -206,6 +232,20 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         Composite searchResultDetailsComposite = new Composite( sashForm, SWT.NONE );
         sashForm.setWeights( new int[] { 70, 30 } );
 
+    }
+
+    private void executeSearch() {
+        String query = text.getText().trim();
+        //"+SharedClusterSnapshotRestore";
+
+        // TODO this may provide context e.g. filetype, language, and additionals meta labels and will be completed by the actual userquery 
+        String profileQuerySuffix = "";
+
+        // we might have to compose a query like +(userquery) +(profileQuerySuffix)
+        String fullQuery = query + " " + profileQuerySuffix;
+
+        // we use the plugin search command, which will then do the heavy lifting.
+        dispatchCommand( SearchCommandFactory.performSearch( query, profileQuerySuffix ) );
     }
 
     /** 
@@ -309,4 +349,5 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         return tbtmNewItem;
 
     }
+
 }
