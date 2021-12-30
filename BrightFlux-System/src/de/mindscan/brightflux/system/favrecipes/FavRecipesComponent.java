@@ -33,12 +33,14 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import de.mindscan.brightflux.framework.util.function.TriConsumer;
+
 /**
  * This component detects all recipes in a favorites folder and collect these 
  */
 public class FavRecipesComponent {
 
-    private static final String ROOT = "";
+    public static final String ROOT = FavRecipesKeyUtils.ROOT;
     /**
      * favoriteRecipes only contains leaf-nodes of the tree
      */
@@ -115,9 +117,33 @@ public class FavRecipesComponent {
         return intermediateNodes.stream().collect( Collectors.toList() );
     }
 
+    public void forAllIntermediateNodes( TriConsumer<String, String, String> triConsumer ) {
+        for (String favoriteRecipeKey : intermediateNodes) {
+            String parentKey = FavRecipesKeyUtils.calculateParent( favoriteRecipeKey );
+            if (parentKey == null) {
+                parentKey = ROOT;
+            }
+            String menuName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
+
+            triConsumer.apply( favoriteRecipeKey, menuName, parentKey );
+        }
+    }
+
     // To build the menu item structure
     public List<String> getAllLeafNodes() {
         return favoriteRecipes.keySet().stream().collect( Collectors.toList() );
+    }
+
+    public void forAllLeafNodes( TriConsumer<String, String, String> triConsumer ) {
+        for (String favoriteRecipeKey : favoriteRecipes.keySet()) {
+            String parentKey = FavRecipesKeyUtils.calculateParent( favoriteRecipeKey );
+            if (parentKey == null) {
+                parentKey = ROOT;
+            }
+            String recipeName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
+
+            triConsumer.apply( favoriteRecipeKey, recipeName, parentKey );
+        }
     }
 
 }
