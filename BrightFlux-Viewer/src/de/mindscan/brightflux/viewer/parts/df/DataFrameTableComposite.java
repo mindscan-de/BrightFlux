@@ -67,7 +67,6 @@ import de.mindscan.brightflux.plugin.highlighter.commands.HighlighterCommandFact
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
-import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
@@ -674,71 +673,49 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     }
 
     private void appendFavoriteRecipeShortcutMenus( SystemServices systemServices, Menu menu ) {
-        favoriteMenus.put( "", menu );
+        favoriteMenus.put( FavRecipesComponent.ROOT, menu );
 
-        FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
+        FavRecipesComponent favRecipeService = systemServices.getService( FavRecipesComponent.class );
 
-        if (favRecipeService == null) {
-            return;
-        }
-
-        for (String favoriteRecipeKey : favRecipeService.getAllIntermediateNodes()) {
-            // select the menu because of the parent key:
-            String parentKey = FavRecipesKeyUtils.calculateParent( favoriteRecipeKey );
-            if (parentKey == null) {
-                parentKey = "";
-            }
-            String menuName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
-
-            Menu parentMenu = favoriteMenus.get( parentKey );
-
-            // Build the menu for the correct parentMenu
-            MenuItem menuItem = new MenuItem( parentMenu, SWT.CASCADE );
-            menuItem.setText( menuName );
-
-            Menu subMenu = new Menu( menuItem );
-            menuItem.setMenu( subMenu );
-
-            // register created the new menu for the current favoriteRecipeKey
-            favoriteMenus.put( favoriteRecipeKey, subMenu );
+        if (favRecipeService != null) {
+            favRecipeService.forAllIntermediateNodes( this::buildCascadingMenu );
         }
     }
 
+    private void buildCascadingMenu( String favoriteRecipeKey, String menuName, String parentKey ) {
+        MenuItem menuItem = new MenuItem( favoriteMenus.get( parentKey ), SWT.CASCADE );
+        menuItem.setText( menuName );
+
+        Menu subMenu = new Menu( menuItem );
+        menuItem.setMenu( subMenu );
+
+        // register created the new menu for the current favoriteRecipeKey
+        favoriteMenus.put( favoriteRecipeKey, subMenu );
+    }
+
     private void appendFavoriteRecipeShortcutItems( SystemServices systemServices ) {
+        FavRecipesComponent favRecipeService = systemServices.getService( FavRecipesComponent.class );
 
-        FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
-
-        if (favRecipeService == null) {
-            return;
+        if (favRecipeService != null) {
+            favRecipeService.forAllLeafNodes( this::buildFinalMenuItem );
         }
+    }
 
-        for (String favoriteRecipeKey : favRecipeService.getAllLeafNodes()) {
-            String parentKey = FavRecipesKeyUtils.calculateParent( favoriteRecipeKey );
-            if (parentKey == null) {
-                parentKey = "";
-            }
-            String recipeName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
+    private void buildFinalMenuItem( String favoriteRecipeKey, String recipeName, String parentKey ) {
+        MenuItem menuItem = new MenuItem( favoriteMenus.get( parentKey ), SWT.NONE );
 
-            // TODO: do that as a consumer of 3 strings
-            Menu parentMenu = favoriteMenus.get( parentKey );
-
-            // Build the menu for the correct parentMenu
-            MenuItem menuItem = new MenuItem( parentMenu, SWT.NONE );
-
-            SelectionAdapter selectionAdapter = new PathSelectionAdapter( favoriteRecipeKey );
-            menuItem.addSelectionListener( selectionAdapter );
-
-            menuItem.setText( recipeName );
-        }
-
+        SelectionAdapter selectionAdapter = new PathSelectionAdapter( favoriteRecipeKey );
+        menuItem.addSelectionListener( selectionAdapter );
+        menuItem.setText( recipeName );
     }
 
     private void applyFavoriteRecipe( String key ) {
         SystemServices systemServices = SystemServices.getInstance();
-        FavRecipesComponent favRecipeService = systemServices.getFavRecipesServices();
+        FavRecipesComponent favRecipeService = systemServices.getService( FavRecipesComponent.class );
 
-        Path favoriteRecipePath = favRecipeService.getFavorite( key );
-
-        applyRecipe( ingestedDF, favoriteRecipePath );
+        if (favRecipeService != null) {
+            Path favoriteRecipePath = favRecipeService.getFavorite( key );
+            applyRecipe( ingestedDF, favoriteRecipePath );
+        }
     }
 }
