@@ -688,11 +688,13 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             if (parentKey == null) {
                 parentKey = "";
             }
+            String menuName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
+
             Menu parentMenu = favoriteMenus.get( parentKey );
 
             // Build the menu for the correct parentMenu
             MenuItem menuItem = new MenuItem( parentMenu, SWT.CASCADE );
-            menuItem.setText( FavRecipesKeyUtils.calculateName( favoriteRecipeKey ) );
+            menuItem.setText( menuName );
 
             Menu subMenu = new Menu( menuItem );
             menuItem.setMenu( subMenu );
@@ -715,6 +717,9 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             if (parentKey == null) {
                 parentKey = "";
             }
+            String recipeName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
+
+            // TODO: do that as a consumer of 3 strings
             Menu parentMenu = favoriteMenus.get( parentKey );
 
             // Build the menu for the correct parentMenu
@@ -723,8 +728,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             SelectionAdapter selectionAdapter = new PathSelectionAdapter( favoriteRecipeKey );
             menuItem.addSelectionListener( selectionAdapter );
 
-            menuItem.setText( FavRecipesKeyUtils.calculateName( favoriteRecipeKey ) );
-
+            menuItem.setText( recipeName );
         }
 
     }
