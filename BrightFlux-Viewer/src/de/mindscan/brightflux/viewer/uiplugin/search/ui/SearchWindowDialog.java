@@ -45,6 +45,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
@@ -139,16 +140,18 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         Composite upperComposite = new Composite( shlSearchWindow, SWT.NONE );
         upperComposite.setLayoutData( BorderLayout.NORTH );
+        upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        text = new Text( upperComposite, SWT.BORDER );
-        text.setBounds( 10, 10, 363, 19 );
+        Composite composite = new Composite( upperComposite, SWT.NONE );
+        composite.setLayout( new BorderLayout( 0, 0 ) );
 
-        Button btnSearch = new Button( upperComposite, SWT.NONE );
+        Button btnSearch = new Button( composite, SWT.NONE );
         btnSearch.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                // TODO:
-                String query = "+SharedClusterSnapshotRestore";
+
+                String query = text.getText().trim();
+                //"+SharedClusterSnapshotRestore";
 
                 // TODO this may provide context e.g. filetype, language, and additionals meta labels and will be completed by the actual userquery 
                 String profileQuerySuffix = "";
@@ -160,8 +163,23 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
                 dispatchCommand( SearchCommandFactory.performSearch( query, profileQuerySuffix ) );
             }
         } );
-        btnSearch.setBounds( 0, 35, 68, 23 );
         btnSearch.setText( "Search" );
+
+        Composite composite_1 = new Composite( composite, SWT.NONE );
+        composite_1.setLayoutData( BorderLayout.NORTH );
+        composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        text = new Text( composite_1, SWT.BORDER );
+        text.setFont( SWTResourceManager.getFont( "Courier New", 12, SWT.NORMAL ) );
+
+        Composite composite_2 = new Composite( composite, SWT.NONE );
+        composite_2.setLayoutData( BorderLayout.SOUTH );
+
+        Composite composite_3 = new Composite( composite, SWT.NONE );
+        composite_3.setLayoutData( BorderLayout.EAST );
+
+        Composite composite_4 = new Composite( composite, SWT.NONE );
+        composite_4.setLayoutData( BorderLayout.WEST );
 
         Composite lowerComposite = new Composite( shlSearchWindow, SWT.NONE );
         lowerComposite.setLayoutData( BorderLayout.CENTER );
