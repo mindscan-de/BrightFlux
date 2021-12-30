@@ -23,11 +23,13 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.favrecipes;
+package de.mindscan.brightflux.plugin.favrecipes;
 
 import java.util.List;
 
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesFileCollector;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
