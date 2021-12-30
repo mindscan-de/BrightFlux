@@ -30,7 +30,6 @@ import java.util.Map;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
-import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 
 /**
  * As much as I dislike these Singletons, these are actually mockable and configurable objects in 
@@ -57,10 +56,6 @@ public class SystemServices {
     //      can see how this thing is used, we can do he proper abstractions from
     //      working code.
     // --------------------------------------------------------------------------    
-
-    public FavRecipesComponent getFavRecipesServices() {
-        return getService( FavRecipesComponent.class );
-    }
 
     public void setEarlyPersistence( EarlyPersistenceComponent earlyPersistence ) {
         registerService( earlyPersistence, EarlyPersistenceComponent.class );
