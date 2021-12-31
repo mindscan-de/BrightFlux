@@ -39,7 +39,7 @@ import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -87,10 +87,7 @@ public class SearchResultDataFrameTableComposite extends Composite {
 
         Composite upperComposite = new Composite( this, SWT.NONE );
         upperComposite.setLayoutData( BorderLayout.NORTH );
-
-        Button btnFoo = new Button( upperComposite, SWT.NONE );
-        btnFoo.setBounds( 10, 10, 68, 23 );
-        btnFoo.setText( "Foo" );
+        upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         lowerComposite = new Composite( this, SWT.NONE );
         lowerComposite.setLayoutData( BorderLayout.CENTER );
