@@ -25,15 +25,23 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.search.ui.document;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import swing2swt.layout.BorderLayout;
 
 /**
  * 
  */
 public class SearchResultCachedDocumentComposite extends Composite implements ProjectRegistryParticipant {
+
+    private StyledText documentContentStyledText;
 
     /**
      * Create the composite.
@@ -42,6 +50,26 @@ public class SearchResultCachedDocumentComposite extends Composite implements Pr
      */
     public SearchResultCachedDocumentComposite( Composite parent, int style ) {
         super( parent, style );
+        setLayout( new BorderLayout( 0, 0 ) );
+
+        Composite composite_ruler_left = new Composite( this, SWT.NONE );
+        composite_ruler_left.setLayoutData( BorderLayout.WEST );
+        composite_ruler_left.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Button btnLines = new Button( composite_ruler_left, SWT.CHECK );
+
+        Composite composite_ruler_right = new Composite( this, SWT.NONE );
+        composite_ruler_right.setLayoutData( BorderLayout.EAST );
+        composite_ruler_right.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Button btnCheckButton = new Button( composite_ruler_right, SWT.CHECK );
+
+        Composite composite = new Composite( this, SWT.NONE );
+        composite.setLayoutData( BorderLayout.CENTER );
+        composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        documentContentStyledText = new StyledText( composite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL );
+        documentContentStyledText.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
 
     }
 
@@ -63,8 +91,6 @@ public class SearchResultCachedDocumentComposite extends Composite implements Pr
      * @param cachedDocumentContent
      */
     public void setDocumentContent( String cachedDocumentContent ) {
-        // TODO Auto-generated method stub
-
+        documentContentStyledText.setText( cachedDocumentContent );
     }
-
 }
