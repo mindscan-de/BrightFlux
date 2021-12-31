@@ -125,7 +125,7 @@ public class FavRecipesComponent {
             }
             String menuName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
 
-            triConsumer.apply( favoriteRecipeKey, menuName, parentKey );
+            triConsumer.accept( favoriteRecipeKey, menuName, parentKey );
         }
     }
 
@@ -142,7 +142,7 @@ public class FavRecipesComponent {
             }
             String recipeName = FavRecipesKeyUtils.calculateName( favoriteRecipeKey );
 
-            triConsumer.apply( favoriteRecipeKey, recipeName, parentKey );
+            triConsumer.accept( favoriteRecipeKey, recipeName, parentKey );
         }
     }
 

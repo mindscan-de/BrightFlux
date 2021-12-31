@@ -31,7 +31,7 @@ package de.mindscan.brightflux.framework.util.function;
 @FunctionalInterface
 public interface TriConsumer<A, B, C> {
 
-    void apply( A a, B b, C c );
+    void accept( A a, B b, C c );
 
     // default void TriConsumer<A,B,C>
 
