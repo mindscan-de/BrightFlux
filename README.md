@@ -111,6 +111,8 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
   * save sync positions to video annotation files as extra reference data
   * load sync positions from video annotation files with reference data (sync also works after load)
+* Select a message for search with FuriousIron; search using FuriousIron Backend
+  * open search tools, show list of files (no file details yet)
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -153,7 +155,7 @@ DataFrame-Core
 * [DFCORE] Support original Index
   * [DFCORE] copy the original index in a derived data frame 
 * [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
-* [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection
+* [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this row)
 
 
 Startup and EarlyPersistence
@@ -161,9 +163,7 @@ Startup and EarlyPersistence
 
   
 Search Engine Support
-* combine that system with the FuriousIron code search system, locate logmessages in source code
-  * show FI results
-  * show FI source code
+* show source code for 'evidence'
 
 
 UI/UX
@@ -174,7 +174,7 @@ UI/UX
 
 ### Later
 
-Log-Analysis-Case-File
+Log-Analysis-Case-File / introduce evidence collector
 * Introduce Project Files / "Case"
 * Treat logs like data frames and use transformations on columns
   * [LACF] save the transformations and data frame configuration to an analysis case file
@@ -201,6 +201,12 @@ UI/UX
 * Configuration System
   * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
   
+
+Search Engine Support
+* implement search configurable profiles such as "project a", "project b", "only source", "only json", "lnguage java", "language python","only tests", "no tests"
+* combine profiles to new profiles / have orthogonal profiles
+* better filter options for search in backend - improve to distill metadata search from file search, and use caching for both of them.
+
 
 ### Even Later
 
@@ -270,6 +276,8 @@ Report Generator
   * variables
   * conversion functions
   * blocks
+* executive reports / executive summaries
+* technical reports
 
 
 Rebuild the Event-Pattern and Command-Pattern
@@ -285,7 +293,17 @@ Video time stamp Annotations
 * Support automatic video to log correlation, e.g. identify time stamps in video and correlate them to logs by some metrics or (AI)
 
 
+Code/Textfile Annotator
+* annotate code with findings
+  * add and highlight code also.
+  * integrate and collate all findings to a report
+
+
 ### Never?
+
+
+CodeAnalysis
+* Highlight source code
 
 
 Exporters
