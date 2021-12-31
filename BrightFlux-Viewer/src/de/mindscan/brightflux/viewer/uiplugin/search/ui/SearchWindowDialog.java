@@ -65,6 +65,7 @@ import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchWindow;
 import de.mindscan.brightflux.viewer.uiplugin.search.ui.df.SearchResultDataFrameTableComposite;
+import de.mindscan.brightflux.viewer.uiplugin.search.ui.document.SearchResultCachedDocumentComposite;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -270,7 +271,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
      */
     @Override
     public void addSearchResultDataFrame( DataFrame newSearchResultDataFrame ) {
-        CTabItem item = addTabItem( searchResultTabFolder, newSearchResultDataFrame );
+        CTabItem item = buildDataFrameTabItem( searchResultTabFolder, newSearchResultDataFrame );
         searchResultTabFolder.setSelection( item );
     }
 
@@ -279,7 +280,8 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
      */
     @Override
     public void addSearchResultCachedFile( String pathOfDocument, String cachedDocumentContent ) {
-        // TODO Implement a composite containing the document content.
+        CTabItem item = buildDocumentTabItem( searchResultTabFolder, cachedDocumentContent );
+        searchResultTabFolder.setSelection( item );
     }
 
     /** 
@@ -339,7 +341,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         shlSearchWindow.setFocus();
     }
 
-    private CTabItem addTabItem( CTabFolder tabFolder, final DataFrame searchResultDF ) {
+    private CTabItem buildDataFrameTabItem( CTabFolder tabFolder, final DataFrame searchResultDF ) {
         String ingestedDFName = searchResultDF.getTitle();
 
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
@@ -353,7 +355,23 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         tbtmNewItem.setControl( composite );
 
         return tbtmNewItem;
+    }
 
+    private CTabItem buildDocumentTabItem( CTabFolder tabFolder, String cachedDocumentContent ) {
+        // TODO: implement prooper information about the tab item, like name, path etc.
+        String documentName = "(document name nyi)";
+
+        CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );
+        tbtmNewItem.setShowClose( true );
+        tbtmNewItem.setText( documentName );
+
+        SearchResultCachedDocumentComposite composite = new SearchResultCachedDocumentComposite( tabFolder, SWT.NONE );
+
+        composite.setProjectRegistry( projectRegistry );
+        composite.setDocumentContent( cachedDocumentContent );
+        tbtmNewItem.setControl( composite );
+
+        return tbtmNewItem;
     }
 
 }

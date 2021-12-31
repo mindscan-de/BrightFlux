@@ -27,10 +27,13 @@ package de.mindscan.brightflux.viewer.uiplugin.search.ui.document;
 
 import org.eclipse.swt.widgets.Composite;
 
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+
 /**
  * 
  */
-public class SearchResultCachedDocumentComposite extends Composite {
+public class SearchResultCachedDocumentComposite extends Composite implements ProjectRegistryParticipant {
 
     /**
      * Create the composite.
@@ -45,6 +48,23 @@ public class SearchResultCachedDocumentComposite extends Composite {
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
+    }
+
+    /**
+     * @param projectRegistry
+     */
+    @Override
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * @param cachedDocumentContent
+     */
+    public void setDocumentContent( String cachedDocumentContent ) {
+        // TODO Auto-generated method stub
+
     }
 
 }
