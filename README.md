@@ -209,6 +209,11 @@ Search Engine Support
 * better filter options for search in backend - improve to distill metadata search from file search, and use caching for both of them.
 
 
+DFQL
+* Support tokenizing via DFQL
+* Support recipes which contain tokenized data frames, such that recipes can be replayed and are creating a tokenized data frame
+
+
 ### Even Later
 
 Swim lanes
@@ -217,15 +222,6 @@ Swim lanes
   * save swim lane configuration into an analysis project file
   
   
-DFQL
-* Support tokenizing via DFQL
-* Support recipes which contain tokenized data frames, such that recipes can be replayed and are creating a tokenized data frame
-
-
-Decision Tree Analysis
-* combine that system with the CheapLithium system (decision gag/decision tree) for automated decisions based on the content of log files for automated log file analysis
-
-
 Generic text File Readers
 * The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
   * Ingest text files into table oriented data frames
@@ -283,6 +279,7 @@ Report Generator
 
 Rebuild the Event-Pattern and Command-Pattern
 * I think o be able to decouple all the code from each other (compile-wise) i want this system to transition to an Intent-based-System (such that menu entries are provided by visualization intents, requests, broadcast-requests, broadcast events, 1:1 communication using intents and futures, subscriptions and promises). And each plugin can state which intents it subscribes to. So that you can have the command factory and the intent to create a command in the plugin which provides the functionality. And the Buttons and such only fire intents and show menu items providing intents.
+* Worker threads / introduce background tasks. Background command with a marker interface?
 
 
 Video time stamp Annotations
@@ -300,11 +297,11 @@ Code/Textfile Annotator
   * integrate and collate all findings to a report
 
 
+Decision Tree Analysis
+* combine that system with the CheapLithium system (decision gag/decision tree) for automated decisions based on the content of log files for automated log file analysis
+
+
 ### Never?
-
-
-CodeAnalysis
-* Highlight source code
 
 
 Exporters
