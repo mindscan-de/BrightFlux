@@ -38,7 +38,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TraverseEvent;
 import org.eclipse.swt.events.TraverseListener;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
@@ -48,10 +47,8 @@ import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -67,6 +64,7 @@ import de.mindscan.brightflux.viewer.uiplugin.search.SearchWindow;
 import de.mindscan.brightflux.viewer.uiplugin.search.ui.df.SearchResultDataFrameTableComposite;
 import de.mindscan.brightflux.viewer.uiplugin.search.ui.document.SearchResultCachedDocumentComposite;
 import swing2swt.layout.BorderLayout;
+import swing2swt.layout.FlowLayout;
 
 /**
  * 
@@ -75,7 +73,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
     protected Object result;
     protected Shell shlSearchWindow;
-    private Text text;
+    private Combo queryTextComboBox;
     private ProjectRegistry projectRegistry;
     private CTabFolder searchResultTabFolder;
 
@@ -155,34 +153,25 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         Composite composite_m = new Composite( composite, SWT.NONE );
         composite_m.setLayoutData( BorderLayout.CENTER );
-        composite_m.setLayout( new GridLayout( 2, false ) );
-        new Label( composite_m, SWT.NONE );
-
-        Label lblPrevisousSearches = new Label( composite_m, SWT.NONE );
-        lblPrevisousSearches.setText( "Previsous Searches" );
-        new Label( composite_m, SWT.NONE );
-
-        List list = new List( composite_m, SWT.BORDER );
-        GridData gd_list = new GridData( SWT.LEFT, SWT.CENTER, false, false, 1, 1 );
-        gd_list.widthHint = 175;
-        list.setLayoutData( gd_list );
+        composite_m.setLayout( null );
 
         Composite composite_1 = new Composite( composite, SWT.NONE );
         composite_1.setLayoutData( BorderLayout.NORTH );
         composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        text = new Text( composite_1, SWT.BORDER );
-        text.addTraverseListener( new TraverseListener() {
+        queryTextComboBox = new Combo( composite_1, SWT.BORDER );
+        queryTextComboBox.addTraverseListener( new TraverseListener() {
             public void keyTraversed( TraverseEvent e ) {
                 if (e.detail == SWT.TRAVERSE_RETURN) {
                     executeSearch();
                 }
             }
         } );
-        text.setFont( SWTResourceManager.getFont( "Courier New", 12, SWT.NORMAL ) );
+        queryTextComboBox.setFont( SWTResourceManager.getFont( "Courier New", 12, SWT.NORMAL ) );
 
         Composite composite_2 = new Composite( composite, SWT.NONE );
         composite_2.setLayoutData( BorderLayout.SOUTH );
+        composite_2.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Composite composite_3 = new Composite( composite, SWT.NONE );
         composite_3.setLayoutData( BorderLayout.EAST );
@@ -190,14 +179,14 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         Label lblNewLabel = new Label( composite_3, SWT.NONE );
         lblNewLabel.setBounds( 0, 0, 49, 13 );
-        lblNewLabel.setText( "New Label" );
+        lblNewLabel.setText( "Search Profile" );
 
         Combo combo = new Combo( composite_3, SWT.NONE );
         combo.setBounds( 0, 0, 92, 21 );
 
         Composite composite_left = new Composite( composite, SWT.NONE );
         composite_left.setLayoutData( BorderLayout.WEST );
-        composite_left.setLayout( new GridLayout( 1, false ) );
+        composite_left.setLayout( new FlowLayout( FlowLayout.CENTER, 5, 5 ) );
 
         Button btnSearch = new Button( composite_left, SWT.NONE );
         btnSearch.addSelectionListener( new SelectionAdapter() {
@@ -236,7 +225,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     }
 
     private void executeSearch() {
-        String query = text.getText().trim();
+        String query = queryTextComboBox.getText().trim();
         //"+SharedClusterSnapshotRestore";
 
         // TODO this may provide context e.g. filetype, language, and additionals meta labels and will be completed by the actual userquery 
@@ -261,7 +250,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         for (String columnName : columnNames) {
             String columnType = df.getColumn( columnName ).getColumnValueType();
             if (ColumnValueTypes.COLUMN_TYPE_STRING.equals( columnType )) {
-                text.setText( (String) requestedRow.get( columnName ) );
+                queryTextComboBox.setText( (String) requestedRow.get( columnName ) );
             }
         }
     }
