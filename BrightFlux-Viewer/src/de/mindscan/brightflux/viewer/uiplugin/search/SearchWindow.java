@@ -39,4 +39,6 @@ public interface SearchWindow {
 
     void bringToTop();
 
+    void addSearchResultCachedFile( String pathOfDocument, String cachedDocumentContent );
+
 }

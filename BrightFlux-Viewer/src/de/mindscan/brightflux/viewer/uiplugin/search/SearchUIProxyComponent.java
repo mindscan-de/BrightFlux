@@ -106,6 +106,13 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
                 if (event instanceof SearchResultCachedDocumentLoadedEvent) {
                     SearchResultCachedDocumentLoadedEvent cachedDocumentEvent = (SearchResultCachedDocumentLoadedEvent) event;
 
+                    if (currentActiveSearchWindow != null) {
+                        currentActiveSearchWindow.addSearchResultCachedFile( cachedDocumentEvent.getPathOfDocument(),
+                                        cachedDocumentEvent.getCachedDocumentContent() );
+                        currentActiveSearchWindow.bringToTop();
+                    }
+
+                    // TODO: remove these files.
                     System.out.println( "===============================================================" );
                     System.out.println( "---------------------------------------------------------------" );
                     System.out.println( cachedDocumentEvent.getPathOfDocument() );

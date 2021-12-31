@@ -270,10 +270,16 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
      */
     @Override
     public void addSearchResultDataFrame( DataFrame newSearchResultDataFrame ) {
-
         CTabItem item = addTabItem( searchResultTabFolder, newSearchResultDataFrame );
         searchResultTabFolder.setSelection( item );
+    }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void addSearchResultCachedFile( String pathOfDocument, String cachedDocumentContent ) {
+        // TODO Implement a composite containing the document content.
     }
 
     /** 
