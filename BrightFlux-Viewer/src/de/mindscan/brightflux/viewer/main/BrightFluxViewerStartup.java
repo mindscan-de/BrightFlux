@@ -29,11 +29,11 @@ import java.lang.reflect.InvocationTargetException;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.plugin.annotator.AnnotatorActivator;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyActivator;
 import de.mindscan.brightflux.plugin.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.plugin.highlighter.HighlighterActivator;
 import de.mindscan.brightflux.plugin.search.SearchActivator;
 import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorActivator;
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyActivator;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceActivator;
 import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
