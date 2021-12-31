@@ -163,7 +163,8 @@ Startup and EarlyPersistence
 
   
 Search Engine Support
-* show source code for 'evidence'
+* show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
+* also fix problem with non windows cr/lf construction.
 
 
 UI/UX
