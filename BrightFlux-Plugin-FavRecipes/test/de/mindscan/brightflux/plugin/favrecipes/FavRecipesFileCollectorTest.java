@@ -1,9 +1,11 @@
-package de.mindscan.brightflux.system.favrecipes;
+package de.mindscan.brightflux.plugin.favrecipes;
 
 import java.nio.file.Paths;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 
 public class FavRecipesFileCollectorTest {
 

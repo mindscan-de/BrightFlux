@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.favrecipes;
+package de.mindscan.brightflux.plugin.favrecipes;
 
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
@@ -31,6 +31,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 
 /**
  * Actually it is a file crawler
