@@ -13,10 +13,10 @@ public class FavRecipesFileCollectorTest {
     public void testCollect() throws Exception {
         // arrange
         FavRecipesComponent recipesComponent = new FavRecipesComponent();
-        FavRecipesFileCollector collector = new FavRecipesFileCollector( recipesComponent );
+        FavRecipesFileCollector collector = new FavRecipesFileCollector();
 
         // act
-        collector.collect( Paths.get( "..\\Brightflux-Viewer\\favrecipes" ) );
+        collector.collect( recipesComponent::addFavorite, Paths.get( "..\\Brightflux-Viewer\\favrecipes" ) );
 
         // assert
         // cpxuas
@@ -27,10 +27,10 @@ public class FavRecipesFileCollectorTest {
     public void testCollect_extractIntermediateNodes() throws Exception {
         // arrange
         FavRecipesComponent recipesComponent = new FavRecipesComponent();
-        FavRecipesFileCollector collector = new FavRecipesFileCollector( recipesComponent );
+        FavRecipesFileCollector collector = new FavRecipesFileCollector();
 
         // act
-        collector.collect( Paths.get( "..\\Brightflux-Viewer\\favrecipes" ) );
+        collector.collect( recipesComponent::addFavorite, Paths.get( "..\\Brightflux-Viewer\\favrecipes" ) );
 
         // assert
         List<String> allIntermediateNodes = recipesComponent.getAllIntermediateNodes();
@@ -44,10 +44,10 @@ public class FavRecipesFileCollectorTest {
     public void testCollect_extractLeafNodes() throws Exception {
         // arrange
         FavRecipesComponent recipesComponent = new FavRecipesComponent();
-        FavRecipesFileCollector collector = new FavRecipesFileCollector( recipesComponent );
+        FavRecipesFileCollector collector = new FavRecipesFileCollector();
 
         // act
-        collector.collect( Paths.get( "..\\Brightflux-Viewer\\favrecipes" ) );
+        collector.collect( recipesComponent::addFavorite, Paths.get( "..\\Brightflux-Viewer\\favrecipes" ) );
 
         // assert
         List<String> allIntermediateNodes = recipesComponent.getAllLeafNodes();

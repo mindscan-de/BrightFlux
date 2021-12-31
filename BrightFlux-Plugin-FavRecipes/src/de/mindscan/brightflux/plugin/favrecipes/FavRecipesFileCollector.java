@@ -30,26 +30,24 @@ import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
 import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 
 /**
- * Actually it is a file crawler
+ * 
  */
 public class FavRecipesFileCollector {
-
-    private FavRecipesComponent favoriteRecipes;
 
     /**
      * 
      */
-    public FavRecipesFileCollector( FavRecipesComponent favoriteRecipes ) {
-        this.favoriteRecipes = favoriteRecipes;
+    public FavRecipesFileCollector() {
+        // intentionally left blank
     }
 
-    public void collect( Path directory ) {
+    public void collect( BiConsumer<String, Path> collector, Path directory ) {
         try {
             FileVisitOption options = FileVisitOption.FOLLOW_LINKS;
 
@@ -73,10 +71,11 @@ public class FavRecipesFileCollector {
 
                 try {
                     String key = FavRecipesKeyUtils.buildKey( target );
-                    favoriteRecipes.addFavorite( key, file );
+                    // favoriteRecipes.addFavorite( key, file );
+                    collector.accept( key, file );
                 }
                 catch (IllegalArgumentException e) {
-                    System.out.println( "ERROR Favorites Recipes. " + file.toString() + " ignored, because this violates Naming conventions." );
+                    System.out.println( "ERROR Favorites Recipes. " + file.toString() + " ignored, because this file violates Naming conventions." );
                     e.printStackTrace();
                 }
             }

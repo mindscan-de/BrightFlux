@@ -49,11 +49,11 @@ public class FavRecipesActivator implements StartupParticipant {
         EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
 
         FavRecipesComponent favRecipesComponent = new FavRecipesComponent();
-        FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector( favRecipesComponent );
+        FavRecipesFileCollector favRecipesCollector = new FavRecipesFileCollector();
         // TODO 
         // - set a fully configured persistence module instead, where the component can do everything in its own
         // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
-        favRecipesCollector.collect( earlyPersistence.getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
+        favRecipesCollector.collect( favRecipesComponent::addFavorite, earlyPersistence.getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
         systemServices.registerService( favRecipesComponent, FavRecipesComponent.class );
 
         // TODO: remove this if not needed any more...
