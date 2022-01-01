@@ -23,13 +23,14 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.dataframehierarchy;
+package de.mindscan.brightflux.plugin.dataframehierarchy;
 
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
 import de.mindscan.brightflux.system.dataframehierarchy.events.DataFrameHierarchyUpdatedEvent;
 import de.mindscan.brightflux.system.dataframehierarchy.impl.DataFrameHierarchyImpl;
 import de.mindscan.brightflux.system.events.DataFrameCreatedEventListenerAdapter;
