@@ -48,8 +48,16 @@ public interface DataFrameHierarchyNode {
     UUID getParentDataFrameUUID();
 
     /**
+     * returns the root UUId for this DataFrameHierarchyNode 
+     * @return   
+     */
+    UUID getRootParentDataFrameUUID();
+
+    /**
      * @return the parentNode
      */
     DataFrameHierarchyNode getParentNode();
+
+    boolean isRootNode();
 
 }

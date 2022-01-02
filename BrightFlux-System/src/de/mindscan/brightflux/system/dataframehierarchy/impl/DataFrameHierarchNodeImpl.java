@@ -65,11 +65,35 @@ public class DataFrameHierarchNodeImpl implements DataFrameHierarchyNode {
      */
     @Override
     public UUID getParentDataFrameUUID() {
-        if (parentNode == null) {
+        if (isRootNode()) {
             return null;
         }
 
         return parentNode.getDataFrameUUID();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public UUID getRootParentDataFrameUUID() {
+        // TODO: maybe need to implement other way (setter getter) in case of breaks in hierarchy due to closing dataframes
+
+        DataFrameHierarchyNode tempParentNode = parentNode;
+
+        while (!tempParentNode.isRootNode()) {
+            tempParentNode = tempParentNode.getParentNode();
+        }
+
+        return tempParentNode.getDataFrameUUID();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isRootNode() {
+        return parentNode == null;
     }
 
     /**
