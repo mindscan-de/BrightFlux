@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
-import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
-
 /**
  * 
  */
