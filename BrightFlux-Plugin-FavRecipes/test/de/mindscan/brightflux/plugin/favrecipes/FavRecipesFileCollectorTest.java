@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import de.mindscan.brightflux.system.favrecipes.FavRecipesComponent;
-
 public class FavRecipesFileCollectorTest {
 
     @Test

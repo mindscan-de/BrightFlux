@@ -1,4 +1,4 @@
-package de.mindscan.brightflux.system.favrecipes;
+package de.mindscan.brightflux.plugin.favrecipes;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

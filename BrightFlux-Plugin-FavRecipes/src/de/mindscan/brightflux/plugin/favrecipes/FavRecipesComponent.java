@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.favrecipes;
+package de.mindscan.brightflux.plugin.favrecipes;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -34,6 +34,7 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.framework.util.function.TriConsumer;
+import de.mindscan.brightflux.system.favrecipes.FavRecipesKeyUtils;
 
 /**
  * This component detects all recipes in a favorites folder and collect these 
