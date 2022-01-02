@@ -242,6 +242,10 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         } );
 
         listViewer.setContentProvider( ArrayContentProvider.getInstance() );
+
+        // TODO: remove this hardcoded dependency from UI Code to ReportGeneratorSnippets, 
+        //       - they are not a particular feature of the ReportGenerator anyways
+        // Replace this with a lookup in the AnnotationPersistence, which loads these values from file / directory.
         list.setItems( ReportGeneratorSnippets.getFrameAnnotationSnippets() );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
