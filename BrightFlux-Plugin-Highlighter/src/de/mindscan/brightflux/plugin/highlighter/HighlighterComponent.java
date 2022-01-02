@@ -52,6 +52,9 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
     public static final String HIGHLIGHT_COLOR_VALUE_COLUMN_NAME = "colorValue";
     public static final String HIGHLIGHT_COLOR_INTENSITY_COLUMN_NAME = "colorIntensity";
 
+    // TODO: we actually need more than one highlighter Dataframe, for each root dataframe, 
+    //       we need another highlighter dataframe. or use a single frame, and annotate the
+    //       rows with the UUID of the dataframe.
     private DataFrame logHighlightFrame = null;
 
     /**
@@ -97,6 +100,8 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
             @Override
             public void handleEvent( BFEvent event ) {
                 if (event instanceof DataFrameHighlightRowEvent) {
+                    // TODO highlight the correct dataframe hierarchy, either by single highlighter frame or multiple
+
                     // DataFrame dataframe = ((DataFrameHighlightRowEvent) event).getDataFrame();
                     if (logHighlightFrame != null) {
                         String color = ((DataFrameHighlightRowEvent) event).getColor();
@@ -131,10 +136,12 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
      * @return the logHighlightFrame
      */
     public DataFrame getLogHighlightFrame() {
+        // TODO: get loghighlightframe for given the UUID not assume there is only one.  
         return logHighlightFrame;
     }
 
     // TODO: basic idea on how to save the highlighter dataframe... 
+    // TODO: use the UUID of the frame to write the correct colorization / highlights to disk for selected dataframe 
     public void saveHighlightFrame( Path highlightFilePath ) {
         HighlighterJsonLWriterImpl highlighterJSONLWriterImpl = new HighlighterJsonLWriterImpl();
 
