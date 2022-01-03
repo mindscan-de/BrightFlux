@@ -86,4 +86,8 @@ public class EarlyPersistenceComponent {
         return currentDirectory;
     }
 
+    public BasePersistenceModule getBasePersistenceModule( String persistenceNamespace ) {
+        return null;
+    }
+
 }
