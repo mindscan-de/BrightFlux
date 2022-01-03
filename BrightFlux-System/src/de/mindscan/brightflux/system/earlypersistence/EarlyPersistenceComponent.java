@@ -31,6 +31,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
+import de.mindscan.brightflux.persistence.PersistenceModule;
+import de.mindscan.brightflux.persistence.PersistenceModuleRegistry;
+
 /**
  * TODO: we want for each component maybe its own configuration file. But we want to provide an index, where to find
  *       these component configuration files. The early persistence file may not have a property editor, and will be
@@ -41,6 +44,7 @@ public class EarlyPersistenceComponent {
     private static final String EARLY_PERSISTENCE_FILENAME = "early.persistence.ini";
 
     private Path currentDirectory;
+    private Path persistenceDirectory;
     private Properties earlyProperties;
 
     public EarlyPersistenceComponent() {
@@ -87,7 +91,8 @@ public class EarlyPersistenceComponent {
     }
 
     public BasePersistenceModule getBasePersistenceModule( String persistenceNamespace ) {
-        return null;
+        PersistenceModule persistenceModule = new PersistenceModuleRegistry( persistenceDirectory ).getPersistenceModule( persistenceNamespace );
+        return new BasePersistenceModuleImpl( persistenceModule );
     }
 
 }
