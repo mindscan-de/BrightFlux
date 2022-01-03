@@ -25,10 +25,21 @@
  */
 package de.mindscan.brightflux.plugin.annotator.persistence;
 
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
+
 /**
  * 
  */
 public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModule {
+
+    private BasePersistenceModule persistenceModule;
+
+    /**
+     * @param persistenceModule
+     */
+    public AnnotatorPersistenceModuleImpl( BasePersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
+    }
 
     // TODO: uses a base Persisence to retrieve data, so it gets some kind of base functions and then build on this base function the higher order persistence.
 }
