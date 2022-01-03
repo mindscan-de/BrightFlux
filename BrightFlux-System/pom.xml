@@ -23,6 +23,12 @@
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
 		
+		<!-- BrightFlux-Persistence -->	
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Persistence</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
 		
   
   

@@ -25,9 +25,11 @@
  */
 package de.mindscan.brightflux.system.earlypersistence;
 
+import de.mindscan.brightflux.persistence.PersistenceModule;
+
 /**
  * 
  */
-public interface BasePersistenceModule {
+public interface BasePersistenceModule extends PersistenceModule {
 
 }
