@@ -62,6 +62,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     public static final String ANNOTATION_DATAFRAME_NAME = "logAnalysisFrame";
 
     private DataFrame logAnalysisFrame = null;
+    private AnnotatorPersistenceModule persistenceModule;
 
     /**
      * 
@@ -148,13 +149,12 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         }
     }
 
-    // TODO: provide access to the AnnotatorPersstenceModule instance.
     public AnnotatorPersistenceModule getPersistenceModule() {
-        return null;
+        return persistenceModule;
     }
 
     public void setPersistenceModule( AnnotatorPersistenceModule persistenceModule ) {
-
+        this.persistenceModule = persistenceModule;
     }
 
 }
