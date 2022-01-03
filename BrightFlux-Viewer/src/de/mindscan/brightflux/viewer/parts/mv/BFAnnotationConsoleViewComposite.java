@@ -60,7 +60,6 @@ import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.reportgenerator.ReportGenerator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorComponent;
-import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorSnippets;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
@@ -242,11 +241,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         } );
 
         listViewer.setContentProvider( ArrayContentProvider.getInstance() );
-
-        // TODO: remove this hardcoded dependency from UI Code to ReportGeneratorSnippets, 
-        //       - they are not a particular feature of the ReportGenerator anyways
-        // Replace this with a lookup in the AnnotationPersistence, which loads these values from file / directory.
-        list.setItems( ReportGeneratorSnippets.getFrameAnnotationSnippets() );
+        list.setItems( annotatorService.getPersistenceModule().getFrameAnnotationSnippets() );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
         SashForm sashForm_2 = new SashForm( sashForm, SWT.NONE );

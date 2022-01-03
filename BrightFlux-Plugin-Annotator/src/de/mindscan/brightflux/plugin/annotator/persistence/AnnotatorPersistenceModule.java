@@ -30,4 +30,9 @@ package de.mindscan.brightflux.plugin.annotator.persistence;
  */
 public interface AnnotatorPersistenceModule {
 
+    /**
+     * @return
+     */
+    String[] getFrameAnnotationSnippets();
+
 }
