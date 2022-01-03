@@ -27,6 +27,9 @@ package de.mindscan.brightflux.plugin.annotator;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
+import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModuleImpl;
+import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -41,6 +44,13 @@ public class AnnotatorActivator implements StartupParticipant {
     @Override
     public void start( SystemServices systemServices ) {
         AnnotatorComponent annotator = new AnnotatorComponent();
+
+        EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
+        // earlyPersistence.getBasePersistenceModule( "annotator-plugin" );
+
+        AnnotatorPersistenceModule persistenceModule = new AnnotatorPersistenceModuleImpl();
+        annotator.setPersistenceModule( persistenceModule );
+
         systemServices.registerService( annotator, AnnotatorComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
