@@ -35,7 +35,7 @@ import de.mindscan.brightflux.ingest.IngestBFDataFrameJsonLines;
 import de.mindscan.brightflux.plugin.highlighter.events.HighlighterEventFactory;
 
 /**
- * 
+ * TODO: load for which given dataframe / uuid / root id.
  */
 public class LoadHighlightDataFrameCommand implements BFCommand {
 
