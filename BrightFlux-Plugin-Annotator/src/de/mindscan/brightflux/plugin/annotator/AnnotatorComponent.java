@@ -35,6 +35,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.annotator.events.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
+import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
@@ -145,6 +146,15 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
             annotatorJsonLWriterImpl.writeFile( logAnalysisFrame, annotationFilePath );
         }
+    }
+
+    // TODO: provide access to the AnnotatorPersstenceModule instance.
+    public AnnotatorPersistenceModule getPersistenceModule() {
+        return null;
+    }
+
+    public void setPersistenceModule( AnnotatorPersistenceModule persistenceModule ) {
+
     }
 
 }
