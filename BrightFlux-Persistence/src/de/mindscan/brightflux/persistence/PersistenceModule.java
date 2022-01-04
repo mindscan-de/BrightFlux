@@ -58,6 +58,10 @@ public interface PersistenceModule {
 
     String getStringValue( String key );
 
+    // TODO: setDefaultStringArrayValue
+
+    String[] getStringArrayValue( String key );
+
     // ----
     // long
     // ----

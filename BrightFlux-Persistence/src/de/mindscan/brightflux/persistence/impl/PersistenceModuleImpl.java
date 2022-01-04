@@ -132,6 +132,15 @@ public class PersistenceModuleImpl implements PersistenceModule {
         defaultPersistenceData.put( key, defaultValue.intern() );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getStringArrayValue( String key ) {
+        // TODO: implement a reading algorithm to build a String array from single Strings
+        return new String[0];
+    }
+
     // long values
     @Override
     public long getLongValue( String key ) {
