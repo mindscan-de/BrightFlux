@@ -58,12 +58,12 @@ public class PersistenceModuleRegistry {
         }
 
         // load and initialize if not present...
-        PersistenceModule persistenceModule = createModuleInsance( persistenceNamespaceName );
+        PersistenceModule persistenceModule = createModuleInsance( persistenceBasePath, persistenceNamespaceName );
         persistenceModules.put( persistenceNamespaceName, persistenceModule );
         return persistenceModule;
     }
 
-    public static PersistenceModule createModuleInsance( String persistenceNamespaceName ) {
+    public static PersistenceModule createModuleInsance( Path persistenceBasePath2, String persistenceNamespaceName ) {
         // either create+load or get PersistenceModule from Runtime
         return new PersistenceModuleImpl( 0, persistenceNamespaceName );
     }
