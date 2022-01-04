@@ -103,4 +103,9 @@ public class BasePersistenceModuleImpl implements BasePersistenceModule {
         persistenceModule.setDefaultLongValue( key, defaultValue );
     }
 
+    @Override
+    public String[] getStringArrayValue( String key ) {
+        return persistenceModule.getStringArrayValue( key );
+    }
+
 }
