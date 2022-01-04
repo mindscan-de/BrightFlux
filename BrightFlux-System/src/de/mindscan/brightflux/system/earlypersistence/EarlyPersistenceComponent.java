@@ -31,7 +31,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import de.mindscan.brightflux.persistence.PersistenceModule;
 import de.mindscan.brightflux.persistence.PersistenceModuleRegistry;
 
 /**
@@ -45,6 +44,7 @@ public class EarlyPersistenceComponent {
 
     private Path currentDirectory;
     private Properties earlyProperties;
+    private PersistenceModuleRegistry persistenceModuleRegistry;
 
     public EarlyPersistenceComponent() {
         this.currentDirectory = Paths.get( System.getProperty( "user.dir", "." ) );
@@ -68,6 +68,9 @@ public class EarlyPersistenceComponent {
 
     private void setEarlyProperties( Properties p ) {
         earlyProperties = p;
+
+        // maybe split this as an initialization after 
+        persistenceModuleRegistry = new PersistenceModuleRegistry( getPropertyAsPath( "persistence.dir" ) );
     }
 
     public boolean containsKey( String key ) {
@@ -90,7 +93,6 @@ public class EarlyPersistenceComponent {
     }
 
     public BasePersistenceModule getBasePersistenceModule( String persistenceNamespace ) {
-        PersistenceModuleRegistry persistenceModuleRegistry = new PersistenceModuleRegistry( getPropertyAsPath( "persistence.dir" ) );
         return new BasePersistenceModuleImpl( persistenceModuleRegistry.getPersistenceModule( persistenceNamespace ) );
     }
 
