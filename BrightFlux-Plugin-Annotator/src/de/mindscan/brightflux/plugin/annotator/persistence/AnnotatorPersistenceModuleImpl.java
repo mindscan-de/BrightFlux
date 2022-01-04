@@ -32,6 +32,8 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
  */
 public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModule {
 
+    public final static String ANNOTATOR_PLUGIN_SNIPPETS_KEY = "annotator.snippets";
+
     private BasePersistenceModule persistenceModule;
 
     /**
@@ -46,7 +48,8 @@ public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModul
      */
     @Override
     public String[] getFrameAnnotationSnippets() {
-        // TODO Auto-generated method stub
+        String[] result = persistenceModule.getStringArrayValue( ANNOTATOR_PLUGIN_SNIPPETS_KEY );
+
         // actually use the persistence Module to get this data.
         return new String[] { //
                         "h4. Preliminary Analysis\n\n", //
