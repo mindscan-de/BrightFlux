@@ -53,7 +53,7 @@ public class PersistenceModuleRegistry {
         PersistenceModuleImpl persistenceModuleImpl = new PersistenceModuleImpl( 0, persistenceNamespaceName );
 
         // either create+load or get PersistenceModule from Runtime
-        return null;
+        return persistenceModuleImpl;
     }
 
 }
