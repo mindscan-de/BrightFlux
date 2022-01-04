@@ -44,7 +44,6 @@ public class EarlyPersistenceComponent {
     private static final String EARLY_PERSISTENCE_FILENAME = "early.persistence.ini";
 
     private Path currentDirectory;
-    private Path persistenceDirectory;
     private Properties earlyProperties;
 
     public EarlyPersistenceComponent() {
@@ -91,8 +90,8 @@ public class EarlyPersistenceComponent {
     }
 
     public BasePersistenceModule getBasePersistenceModule( String persistenceNamespace ) {
-        PersistenceModule persistenceModule = new PersistenceModuleRegistry( persistenceDirectory ).getPersistenceModule( persistenceNamespace );
-        return new BasePersistenceModuleImpl( persistenceModule );
+        PersistenceModuleRegistry persistenceModuleRegistry = new PersistenceModuleRegistry( getPropertyAsPath( "persistence.dir" ) );
+        return new BasePersistenceModuleImpl( persistenceModuleRegistry.getPersistenceModule( persistenceNamespace ) );
     }
 
 }
