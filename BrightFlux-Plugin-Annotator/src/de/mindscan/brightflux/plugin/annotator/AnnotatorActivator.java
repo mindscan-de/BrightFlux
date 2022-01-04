@@ -39,6 +39,8 @@ import de.mindscan.brightflux.system.services.SystemServices;
  */
 public class AnnotatorActivator implements StartupParticipant {
 
+    private static final String ANNOTATOR_PLUGIN_PERSISTENCE = "annotator-plugin";
+
     /**
      * @param systemServices
      */
@@ -47,7 +49,7 @@ public class AnnotatorActivator implements StartupParticipant {
         AnnotatorComponent annotator = new AnnotatorComponent();
 
         EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
-        BasePersistenceModule annotatorBasePersistenceModule = earlyPersistence.getBasePersistenceModule( "annotator-plugin" );
+        BasePersistenceModule annotatorBasePersistenceModule = earlyPersistence.getBasePersistenceModule( ANNOTATOR_PLUGIN_PERSISTENCE );
 
         AnnotatorPersistenceModule persistenceModule = new AnnotatorPersistenceModuleImpl( annotatorBasePersistenceModule );
         annotator.setPersistenceModule( persistenceModule );
