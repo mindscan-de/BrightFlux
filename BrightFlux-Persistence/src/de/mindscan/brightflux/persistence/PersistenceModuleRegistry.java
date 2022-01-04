@@ -27,6 +27,8 @@ package de.mindscan.brightflux.persistence;
 
 import java.nio.file.Path;
 
+import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
+
 /**
  * 
  */
@@ -47,6 +49,9 @@ public class PersistenceModuleRegistry {
     }
 
     public PersistenceModule getPersistenceModule( String persistenceNamespaceName ) {
+        // TODO: load if not present...
+        PersistenceModuleImpl persistenceModuleImpl = new PersistenceModuleImpl( 0, persistenceNamespaceName );
+
         // either create+load or get PersistenceModule from Runtime
         return null;
     }
