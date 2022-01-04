@@ -26,6 +26,8 @@
 package de.mindscan.brightflux.persistence;
 
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
 
@@ -35,12 +37,14 @@ import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
 public class PersistenceModuleRegistry {
 
     private Path persistenceBasePath;
+    private Map<String, PersistenceModule> persistenceModules;
 
     /**
      * @param persistenceBasePath Base path of the persistence data - registry and module data.
      */
     public PersistenceModuleRegistry( Path persistenceBasePath ) {
         this.persistenceBasePath = persistenceBasePath;
+        this.persistenceModules = new LinkedHashMap<>();
     }
 
     public PersistenceModule getPersistenceModule( int persistenceId ) {
@@ -49,11 +53,19 @@ public class PersistenceModuleRegistry {
     }
 
     public PersistenceModule getPersistenceModule( String persistenceNamespaceName ) {
-        // TODO: load if not present...
-        PersistenceModuleImpl persistenceModuleImpl = new PersistenceModuleImpl( 0, persistenceNamespaceName );
+        if (persistenceModules.containsKey( persistenceNamespaceName )) {
+            return persistenceModules.get( persistenceNamespaceName );
+        }
 
+        // load and initialize if not present...
+        PersistenceModule persistenceModule = createModuleInsance( persistenceNamespaceName );
+        persistenceModules.put( persistenceNamespaceName, persistenceModule );
+        return persistenceModule;
+    }
+
+    public static PersistenceModule createModuleInsance( String persistenceNamespaceName ) {
         // either create+load or get PersistenceModule from Runtime
-        return persistenceModuleImpl;
+        return new PersistenceModuleImpl( 0, persistenceNamespaceName );
     }
 
 }
