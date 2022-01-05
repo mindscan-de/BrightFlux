@@ -29,8 +29,6 @@ import java.nio.file.Path;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
-
 /**
  * 
  */
@@ -58,14 +56,9 @@ public class PersistenceModuleRegistry {
         }
 
         // load and initialize if not present...
-        PersistenceModule persistenceModule = createModuleInsance( persistenceBasePath, persistenceNamespaceName );
+        PersistenceModule persistenceModule = PersistenceModuleFactory.createModuleInstance( persistenceBasePath, persistenceNamespaceName );
         persistenceModules.put( persistenceNamespaceName, persistenceModule );
         return persistenceModule;
-    }
-
-    public static PersistenceModule createModuleInsance( Path persistenceBasePath2, String persistenceNamespaceName ) {
-        // either create+load or get PersistenceModule from Runtime
-        return new PersistenceModuleImpl( 0, persistenceNamespaceName );
     }
 
 }

@@ -25,9 +25,18 @@
  */
 package de.mindscan.brightflux.persistence;
 
+import java.nio.file.Path;
+
+import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
+
 /**
  * This will create initialized instances of PersistenceModule Implementations
  */
 public class PersistenceModuleFactory {
+
+    public static PersistenceModule createModuleInstance( Path persistenceBasePath2, String persistenceNamespaceName ) {
+        // either create+load or get PersistenceModule from Runtime
+        return new PersistenceModuleImpl( 0, persistenceNamespaceName );
+    }
 
 }
