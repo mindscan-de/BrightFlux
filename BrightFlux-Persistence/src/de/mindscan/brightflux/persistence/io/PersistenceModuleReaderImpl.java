@@ -25,9 +25,41 @@
  */
 package de.mindscan.brightflux.persistence.io;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Properties;
+
+import de.mindscan.brightflux.persistence.PersistenceModule;
+
 /**
  * 
  */
 public class PersistenceModuleReaderImpl {
 
+    /**
+     * 
+     */
+    public PersistenceModuleReaderImpl() {
+    }
+
+    public void loadFile( PersistenceModule persistenceModule, Path fullpath ) {
+
+        Properties properties = new Properties();
+        try (FileInputStream fis = new FileInputStream( fullpath.toFile() )) {
+            properties.load( fis );
+
+            for (String entry : properties.stringPropertyNames()) {
+                System.out.println( String.valueOf( entry ) );
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

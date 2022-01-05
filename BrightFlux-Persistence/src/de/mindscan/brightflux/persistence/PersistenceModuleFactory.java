@@ -28,6 +28,7 @@ package de.mindscan.brightflux.persistence;
 import java.nio.file.Path;
 
 import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
+import de.mindscan.brightflux.persistence.io.PersistenceModuleReaderImpl;
 
 /**
  * This will create initialized instances of PersistenceModule Implementations
@@ -35,8 +36,15 @@ import de.mindscan.brightflux.persistence.impl.PersistenceModuleImpl;
 public class PersistenceModuleFactory {
 
     public static PersistenceModule createModuleInstance( Path persistenceBasePath2, String persistenceNamespaceName ) {
+        Path fullFilePath = persistenceBasePath2.resolve( persistenceNamespaceName + ".persisted" );
+
         // either create+load or get PersistenceModule from Runtime
-        return new PersistenceModuleImpl( 0, persistenceNamespaceName );
+        PersistenceModuleImpl persistenceModule = new PersistenceModuleImpl( 0, persistenceNamespaceName );
+
+        PersistenceModuleReaderImpl reader = new PersistenceModuleReaderImpl();
+        reader.loadFile( persistenceModule, fullFilePath );
+
+        return persistenceModule;
     }
 
 }
