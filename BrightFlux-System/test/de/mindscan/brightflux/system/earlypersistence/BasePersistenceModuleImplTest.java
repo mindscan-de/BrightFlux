@@ -18,7 +18,7 @@ public class BasePersistenceModuleImplTest {
     @Test
     public void testGetStringArrayValue() throws Exception {
         // arrange
-        Path path = Paths.get( "../BrightFlus-Viewer/persistence" );
+        Path path = Paths.get( "../BrightFlux-Viewer/persistence" );
         String namespace = "annotator-plugin";
 
         PersistenceModule persistenceModule = PersistenceModuleFactory.createModuleInstance( path, namespace );
