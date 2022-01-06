@@ -35,10 +35,16 @@ So the main thing the BrightFlux-Persistence provides is
 
 * This component should be a first class citizen in a preference page concept in the future
 
-* such a Component would allow to skip the use of too many hard coded values in the source code, like path information and default texts 
+* such a Component would allow to skip the use of too many hard coded values in the source code, like path information and default texts
 
-## Current state of this Component
+## MVP
 
-Nothing is actually implemented right now. 
+The minimal viable product should just provide the most simple functionality. It doesn't need to be fancy at the 
+first time and we can adapt and update the current implementation of the persistence. Only  this component knows
+about the way how it is actually stored, loaded and processed. 
 
-##
+## Current state for this Component
+
+* load a "persisted" file for a given name space
+** process string array and provide string array data  
+
