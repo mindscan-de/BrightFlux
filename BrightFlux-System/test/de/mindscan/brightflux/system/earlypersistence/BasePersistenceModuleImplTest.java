@@ -28,7 +28,8 @@ public class BasePersistenceModuleImplTest {
         List<String> result = Arrays.asList( basePersistence.getStringArrayValue( "annotator.snippets" ) );
 
         // assert
-        assertThat( result, containsInAnyOrder( "ddd" ) );
+        assertThat( result, containsInAnyOrder( "h4. Preliminary Analysis\n\n", "h5. Reading the Logs\n\n", ".", "..", "The tester clicks ...",
+                        "This opens the 'XYZ' view ..." ) );
     }
 
 }
