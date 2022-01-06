@@ -29,7 +29,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
@@ -50,9 +53,15 @@ public class PersistenceModuleReaderImpl {
         try (FileInputStream fis = new FileInputStream( fullpath.toFile() )) {
             properties.load( fis );
 
-            for (String entry : properties.stringPropertyNames()) {
+            // preprocess the data?...
+
+            Set<String> allPropertyNames = properties.stringPropertyNames();
+
+            for (String entry : allPropertyNames) {
                 System.out.println( String.valueOf( entry ) );
             }
+
+            handleArrays( allPropertyNames, properties, persistenceModule );
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -61,5 +70,38 @@ public class PersistenceModuleReaderImpl {
             e.printStackTrace();
         }
 
+    }
+
+    private void handleArrays( Set<String> allPropertyNames, Properties properties, PersistenceModule persistenceModule ) {
+        List<String> allArrays = allPropertyNames.stream() //
+                        .map( keyname -> keyname.trim() )//
+                        .filter( keyname -> keyname.endsWith( "." + "array.type" ) ) //
+                        .collect( Collectors.toList() );
+
+        // we want to extract the array and its key...
+        for (String arrayKeyTypeName : allArrays) {
+            String keyBaseName = arrayKeyTypeName.substring( 0, arrayKeyTypeName.indexOf( "array.type" ) ).trim();
+
+            String arrayType = properties.getProperty( arrayKeyTypeName ).trim().toLowerCase();
+            String arrayLengthAsString = properties.getProperty( keyBaseName + "array.length" ).trim();
+            int arrayLength = Integer.valueOf( arrayLengthAsString ).intValue();
+
+            switch (arrayType) {
+                case "string":
+                    persistenceModule.setIntValue( keyBaseName + "array.length", arrayLength );
+
+                    for (int i = 0; i < arrayLength; i++) {
+                        String ithKey = keyBaseName + Integer.toString( i );
+                        String ithValue = properties.getProperty( ithKey, "" );
+                        persistenceModule.setStringValue( ithKey, ithValue );
+                    }
+                    break;
+
+                default:
+                    // unknown Type...
+                    // just ignore
+                    break;
+            }
+        }
     }
 }

@@ -137,8 +137,19 @@ public class PersistenceModuleImpl implements PersistenceModule {
      */
     @Override
     public String[] getStringArrayValue( String key ) {
-        // TODO: implement a reading algorithm to build a String array from single Strings
-        return new String[0];
+        String keyLengthName = key + ".array.length";
+        int arrayLength = getIntValue( keyLengthName );
+
+        if (arrayLength == 0) {
+            return new String[0];
+        }
+
+        String[] result = new String[arrayLength];
+        for (int i = 0; i < arrayLength; i++) {
+            result[i] = getStringValue( key + "." + Integer.toString( i ) );
+        }
+
+        return result;
     }
 
     // long values
