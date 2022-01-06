@@ -50,16 +50,7 @@ public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModul
     public String[] getFrameAnnotationSnippets() {
         String[] result = persistenceModule.getStringArrayValue( ANNOTATOR_PLUGIN_SNIPPETS_KEY );
 
-        // actually use the persistence Module to get this data.
-        return new String[] { //
-                        "h4. Preliminary Analysis\n\n", //
-                        "h5. Reading the Logs\n\n", //
-                        ".", //
-                        "..", //
-                        "The tester clicks ...", //
-                        "This opens the 'XYZ' view ...", //
-        };
-
+        return result;
     }
 
     // TODO: uses a base Persisence to retrieve data, so it gets some kind of base functions and then build on this base function the higher order persistence.
