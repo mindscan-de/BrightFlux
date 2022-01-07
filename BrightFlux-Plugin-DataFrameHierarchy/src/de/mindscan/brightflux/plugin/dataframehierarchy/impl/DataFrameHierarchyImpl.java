@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchy;
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 

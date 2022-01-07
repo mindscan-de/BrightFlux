@@ -46,7 +46,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchy;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyEventListenerAdapter;
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyNode;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.SystemEvents;

@@ -27,7 +27,7 @@ package de.mindscan.brightflux.viewer.parts.pv;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 

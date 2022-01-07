@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.dataframehierarchy;
+package de.mindscan.brightflux.plugin.dataframehierarchy;
 
 import java.util.UUID;
 

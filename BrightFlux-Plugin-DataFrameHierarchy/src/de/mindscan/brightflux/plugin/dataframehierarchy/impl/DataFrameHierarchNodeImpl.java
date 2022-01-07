@@ -27,7 +27,7 @@ package de.mindscan.brightflux.plugin.dataframehierarchy.impl;
 
 import java.util.UUID;
 
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 

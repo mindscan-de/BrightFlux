@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchyNode;
 
 /**
  * 
