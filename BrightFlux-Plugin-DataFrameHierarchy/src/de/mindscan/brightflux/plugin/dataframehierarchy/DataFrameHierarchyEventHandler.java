@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.plugin.dataframehierarchy;
 
-import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
-
 /**
  * 
  */
