@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.plugin.dataframehierarchy.events;
 
 import de.mindscan.brightflux.system.dataframehierarchy.DataFrameHierarchy;
-import de.mindscan.brightflux.system.dataframehierarchy.events.BFAbstractDataFrameHierarchyEvent;
 
 /**
  * 
