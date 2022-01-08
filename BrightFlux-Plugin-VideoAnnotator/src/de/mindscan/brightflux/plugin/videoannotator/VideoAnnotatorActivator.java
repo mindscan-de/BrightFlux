@@ -27,6 +27,9 @@ package de.mindscan.brightflux.plugin.videoannotator;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModule;
+import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModuleImpl;
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
@@ -35,6 +38,8 @@ import de.mindscan.brightflux.system.services.SystemServices;
  * 
  */
 public class VideoAnnotatorActivator implements StartupParticipant {
+
+    private static final String VIDEO_ANNOTATOR_PLUGIN_PERSISTENCE_NAMESPACE = "videoannotator-plugin";
 
     // TODO refactor constant this to the right place
     public static final String FFPROBE_PATH_KEY = "ffprobe.path";
@@ -45,6 +50,8 @@ public class VideoAnnotatorActivator implements StartupParticipant {
     @Override
     public void start( SystemServices systemServices ) {
         EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
+        BasePersistenceModule videoannotatorBasePersistenceModule = earlyPersistence.getBasePersistenceModule( VIDEO_ANNOTATOR_PLUGIN_PERSISTENCE_NAMESPACE );
+        VideoAnnotatorPersistenceModule persistenceModule = new VideoAnnotatorPersistenceModuleImpl( videoannotatorBasePersistenceModule );
 
         VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
         // TODO 
