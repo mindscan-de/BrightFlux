@@ -28,6 +28,7 @@ package de.mindscan.brightflux.plugin.search;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.search.persistence.SearchPersistenceModule;
+import de.mindscan.brightflux.plugin.search.request.RestRequestService;
 
 /**
  * 
@@ -63,6 +64,15 @@ public class SearchComponent implements ProjectRegistryParticipant {
      */
     public SearchPersistenceModule getPersistenceModule() {
         return persistenceModule;
+    }
+
+    /**
+     * @return
+     */
+    public RestRequestService getRestRequestService() {
+        // TODO we might have to initialize this properly, such that the URLS from the persistence can be used 
+        //      instead of he hard coded ones.
+        return new RestRequestService();
     }
 
 }
