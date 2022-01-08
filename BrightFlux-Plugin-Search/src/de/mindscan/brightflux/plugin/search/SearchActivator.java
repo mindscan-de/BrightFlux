@@ -30,7 +30,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.plugin.search.persistence.SearchPersistenceModule;
 import de.mindscan.brightflux.plugin.search.persistence.SearchPersistenceModuleImpl;
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
-import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -46,12 +45,11 @@ public class SearchActivator implements StartupParticipant {
      */
     @Override
     public void start( SystemServices systemServices ) {
-        EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
-        BasePersistenceModule searchBasePersistenceModule = earlyPersistence.getBasePersistenceModule( SEARCH_PLUGIN_PERSISTENCE_NAMESPACE );
+        BasePersistenceModule searchBasePersistenceModule = systemServices.getBasePersistenceModule( SEARCH_PLUGIN_PERSISTENCE_NAMESPACE );
         SearchPersistenceModule persistenceModule = new SearchPersistenceModuleImpl( searchBasePersistenceModule );
 
         SearchComponent searchComponent = new SearchComponent();
-        searchComponent.setPersistenceModule(persistenceModule);
+        searchComponent.setPersistenceModule( persistenceModule );
 
         systemServices.registerService( searchComponent, SearchComponent.class );
 

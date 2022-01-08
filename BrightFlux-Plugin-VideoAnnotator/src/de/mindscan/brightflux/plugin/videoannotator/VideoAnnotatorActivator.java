@@ -30,7 +30,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModuleImpl;
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
-import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -49,15 +48,14 @@ public class VideoAnnotatorActivator implements StartupParticipant {
      */
     @Override
     public void start( SystemServices systemServices ) {
-        EarlyPersistenceComponent earlyPersistence = systemServices.getEarlyPersistence();
-        BasePersistenceModule videoannotatorBasePersistenceModule = earlyPersistence.getBasePersistenceModule( VIDEO_ANNOTATOR_PLUGIN_PERSISTENCE_NAMESPACE );
+        BasePersistenceModule videoannotatorBasePersistenceModule = systemServices.getBasePersistenceModule( VIDEO_ANNOTATOR_PLUGIN_PERSISTENCE_NAMESPACE );
         VideoAnnotatorPersistenceModule persistenceModule = new VideoAnnotatorPersistenceModuleImpl( videoannotatorBasePersistenceModule );
 
         VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
         // TODO 
         // - set a fully configured persistence module instead, where the component can do everything in its own
         // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
-        videoAnnotatorComponent.setFFProbePath( earlyPersistence.getPropertyAsPath( FFPROBE_PATH_KEY ) );
+        videoAnnotatorComponent.setFFProbePath( systemServices.getEarlyPersistence().getPropertyAsPath( FFPROBE_PATH_KEY ) );
         systemServices.registerService( videoAnnotatorComponent, VideoAnnotatorComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();

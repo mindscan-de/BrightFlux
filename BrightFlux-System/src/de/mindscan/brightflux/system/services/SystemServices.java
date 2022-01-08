@@ -28,7 +28,9 @@ package de.mindscan.brightflux.system.services;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.earlypersistence.EarlyPersistenceComponent;
 
 /**
@@ -63,6 +65,15 @@ public class SystemServices {
 
     public EarlyPersistenceComponent getEarlyPersistence() {
         return getService( EarlyPersistenceComponent.class );
+    }
+
+    public BasePersistenceModule getBasePersistenceModule( String namespaceName ) {
+        EarlyPersistenceComponent earlyPersistence = getEarlyPersistence();
+        if (earlyPersistence != null) {
+            return earlyPersistence.getBasePersistenceModule( namespaceName );
+        }
+
+        throw new NotYetImplemetedException( "No BasePersistence is available for '" + namespaceName + "'" );
     }
 
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
