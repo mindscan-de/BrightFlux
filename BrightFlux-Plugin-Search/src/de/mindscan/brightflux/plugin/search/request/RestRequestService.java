@@ -130,10 +130,10 @@ public class RestRequestService {
         return parameterString;
     }
 
-    private SearchResultModel decodeResultModel( Class<SearchResultModel> class1, String jsonString ) {
+    private <T> T decodeResultModel( Class<T> class1, String jsonString ) {
         Gson gson = new GsonBuilder().create();
 
-        SearchResultModel fromJson = class1.cast( gson.fromJson( jsonString, SearchResultModel.class ) );
+        T fromJson = class1.cast( gson.fromJson( jsonString, class1 ) );
 
         return fromJson;
     }
