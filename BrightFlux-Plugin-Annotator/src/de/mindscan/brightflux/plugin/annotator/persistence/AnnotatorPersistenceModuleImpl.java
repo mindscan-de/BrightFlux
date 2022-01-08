@@ -32,7 +32,7 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
  */
 public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModule {
 
-    public final static String ANNOTATOR_PLUGIN_SNIPPETS_KEY = "annotator.snippets";
+    public static final String ANNOTATOR_PLUGIN_SNIPPETS_KEY = "annotator.snippets";
 
     private BasePersistenceModule persistenceModule;
 
