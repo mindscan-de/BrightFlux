@@ -25,9 +25,18 @@
  */
 package de.mindscan.brightflux.plugin.search.persistence;
 
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
+
 /**
  * 
  */
 public class SearchPersistenceModuleImpl implements SearchPersistenceModule {
+
+    /**
+     * @param searchBasePersistenceModule
+     */
+    public SearchPersistenceModuleImpl( BasePersistenceModule searchBasePersistenceModule ) {
+        // TODO Auto-generated constructor stub
+    }
 
 }

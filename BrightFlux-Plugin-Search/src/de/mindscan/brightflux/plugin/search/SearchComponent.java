@@ -27,11 +27,14 @@ package de.mindscan.brightflux.plugin.search;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.search.persistence.SearchPersistenceModule;
 
 /**
  * 
  */
 public class SearchComponent implements ProjectRegistryParticipant {
+
+    private SearchPersistenceModule persistenceModule;
 
     /**
      * 
@@ -46,6 +49,20 @@ public class SearchComponent implements ProjectRegistryParticipant {
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
 
+    }
+
+    /**
+     * @param persistenceModule
+     */
+    public void setPersistenceModule( SearchPersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
+    }
+
+    /**
+     * @return the persistenceModule
+     */
+    public SearchPersistenceModule getPersistenceModule() {
+        return persistenceModule;
     }
 
 }
