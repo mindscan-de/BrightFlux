@@ -32,11 +32,32 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
  */
 public class SearchPersistenceModuleImpl implements SearchPersistenceModule {
 
+    private static final String FURIOUS_IRON_REST_CONTENT_URL_KEY = "furious.iron.rest.content.url";
+    private static final String FURIOUS_IRON_REST_QUERY_URL_KEY = "furious.iron.rest.query.url";
+
+    private BasePersistenceModule basePersistenceModule;
+
     /**
      * @param searchBasePersistenceModule
      */
     public SearchPersistenceModuleImpl( BasePersistenceModule searchBasePersistenceModule ) {
-        // TODO Auto-generated constructor stub
+        this.basePersistenceModule = searchBasePersistenceModule;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getFuriousIronQueryURL() {
+        return basePersistenceModule.getStringValue( FURIOUS_IRON_REST_QUERY_URL_KEY );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getFuriousIronContentURL() {
+        return basePersistenceModule.getStringValue( FURIOUS_IRON_REST_CONTENT_URL_KEY );
     }
 
 }

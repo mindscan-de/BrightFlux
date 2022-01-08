@@ -30,4 +30,21 @@ package de.mindscan.brightflux.plugin.search.persistence;
  */
 public interface SearchPersistenceModule {
 
+    /**
+     * Provide the uuery URL for the code search engine (restful interface) including the "?" 
+     * which separates the parameters. This is the URL used to query for the files containing 
+     * a log message.
+     *  
+     * @return the query url
+     */
+    String getFuriousIronQueryURL();
+
+    /**
+     * Provide the query URL for the code search engine (restful interface) including the "?"
+     * which separated the parameters. This is the URL used to query for the file content of
+     * a particular result.
+     * 
+     * @return the query url
+     */
+    String getFuriousIronContentURL();
 }
