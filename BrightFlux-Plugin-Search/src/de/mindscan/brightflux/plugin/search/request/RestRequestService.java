@@ -152,6 +152,7 @@ public class RestRequestService {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 requestContent.append( inputLine );
+                requestContent.append( "\n" );
             }
         }
 
