@@ -1,0 +1,2 @@
+furious.iron.rest.query.url=http://localhost:8000/SearchBackend/rest/search/result?
+furious.iron.rest.content.url=http://localhost:8000/SearchBackend/rest/cached/content?
