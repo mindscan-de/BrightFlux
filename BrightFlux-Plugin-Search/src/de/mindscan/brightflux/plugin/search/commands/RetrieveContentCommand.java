@@ -29,8 +29,10 @@ import java.util.function.Consumer;
 
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.plugin.search.SearchComponent;
 import de.mindscan.brightflux.plugin.search.events.SearchEventFactory;
 import de.mindscan.brightflux.plugin.search.request.RestRequestService;
+import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * 
@@ -53,7 +55,8 @@ public class RetrieveContentCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        RestRequestService requestService = new RestRequestService();
+        SearchComponent service = SystemServices.getInstance().getService( SearchComponent.class );
+        RestRequestService requestService = service.getRestRequestService();
 
         String documentContents = requestService.requestFuriousIronQueryContentByPath( pathInformation );
         // requestService.requestFuriousIronQueryContentById( contentId );
