@@ -111,8 +111,9 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
   * save sync positions to video annotation files as extra reference data
   * load sync positions from video annotation files with reference data (sync also works after load)
-* Select a message for search with FuriousIron; search using FuriousIron Backend
+* Select a message for search with FuriousIron; search using FuriousIron-Backend
   * open search tools, show list of files (no file details yet)
+  * retrieve content of file from code search backend
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -155,19 +156,13 @@ DataFrame-Core
 * [DFCORE] Support original Index
   * [DFCORE] copy the original index in a derived data frame 
 * [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
-* [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this row)
+* [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
 
 
 Startup and EarlyPersistence
-* Implement an Early Persistence module, which can then be used to start the other components (used for initial configurations)
+* Implement an Early Persistence module, which can then be used to start/configure other components (used for initial configurations)
 
   
-UI/UX
-* Configuration System
-  * provide PreferenceStore
-  * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
-
-
 ### Later
 
 Log-Analysis-Case-File / introduce evidence collector
@@ -183,10 +178,6 @@ Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
 
 
-Application-Startup (est. 6 kLOC)
-* Provide a script or configuration for the application startup.
-
-
 Reporting
 * Help with writing up the analysis, e.g. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
@@ -194,8 +185,10 @@ Reporting
 
 
 UI/UX
-* Configuration System
+* Configuration System - Preferences (uses persistence - persistence is good enough for now)
   * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
+  * provide PreferenceStore
+  * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
   
 
 Search Engine Support
@@ -203,7 +196,6 @@ Search Engine Support
 * combine profiles to new profiles / have orthogonal profiles
 * better filter options for search in backend - improve to distill metadata search from file search, and use caching for both of them.
 * show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
-* also fix problem with non windows cr/lf construction.
 
 
 DFQL
