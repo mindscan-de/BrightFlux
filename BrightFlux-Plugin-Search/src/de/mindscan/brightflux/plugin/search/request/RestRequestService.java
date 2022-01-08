@@ -29,6 +29,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -40,6 +41,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultModel;
+import de.mindscan.brightflux.plugin.search.persistence.SearchPersistenceModule;
 
 /**
  * This is a first start to access the furious iron project. This kind of interface should be abstracted away, 
@@ -50,9 +52,7 @@ import de.mindscan.brightflux.plugin.search.backend.furiousiron.SearchResultMode
  */
 public class RestRequestService {
 
-    public final static String SERVER = "http://localhost:8000/";
-    public final static String REST_SEARCH_RESULT = "SearchBackend/rest/search/result?";
-    public final static String REST_RETRIEVE_CONTENT = "SearchBackend/rest/cached/content?";
+    private SearchPersistenceModule persistenceModule;
 
     /**
      * 
@@ -61,19 +61,22 @@ public class RestRequestService {
         // intentionally left blank
     }
 
+    /**
+     * @param persistenceModule
+     */
+    public void setPersistenceModule( SearchPersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
+    }
+
     public SearchResultModel requestFuriousIronQueryResults( String query ) {
         try {
             // System.out.println( "Query is = '" + query + "'" );
 
             Map<String, String> parameters = new LinkedHashMap<>();
             parameters.put( "q", query );
+            String queryURL = persistenceModule.getFuriousIronQueryURL();
 
-            String parameterString = buildGetParameterString( parameters );
-
-            URL url = new URL( SERVER + REST_SEARCH_RESULT + parameterString );
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod( "GET" );
+            HttpURLConnection connection = openConnection( queryURL, parameters, "GET" );
 
             connection.setRequestProperty( "Content-Type", "application/json" );
 
@@ -102,13 +105,9 @@ public class RestRequestService {
 
             Map<String, String> parameters = new LinkedHashMap<>();
             parameters.put( "p", pathInformation );
+            String queryURL = persistenceModule.getFuriousIronContentURL();
 
-            String parameterString = buildGetParameterString( parameters );
-
-            URL url = new URL( SERVER + REST_RETRIEVE_CONTENT + parameterString );
-
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod( "GET" );
+            HttpURLConnection connection = openConnection( queryURL, parameters, "GET" );
 
             connection.setRequestProperty( "Content-Type", "text/plain" );
 
@@ -121,6 +120,16 @@ public class RestRequestService {
             return "";
         }
 
+    }
+
+    private HttpURLConnection openConnection( String queryURL, Map<String, String> parameters, String requestMethod )
+                    throws MalformedURLException, IOException {
+        String parameterString = buildGetParameterString( parameters );
+        URL url = new URL( queryURL + parameterString );
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod( requestMethod );
+
+        return connection;
     }
 
     private String buildGetParameterString( Map<String, String> parameters ) {

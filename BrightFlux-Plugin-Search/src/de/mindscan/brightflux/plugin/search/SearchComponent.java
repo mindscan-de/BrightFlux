@@ -70,9 +70,9 @@ public class SearchComponent implements ProjectRegistryParticipant {
      * @return
      */
     public RestRequestService getRestRequestService() {
-        // TODO we might have to initialize this properly, such that the URLS from the persistence can be used 
-        //      instead of he hard coded ones.
-        return new RestRequestService();
+        RestRequestService restRequestService = new RestRequestService();
+        restRequestService.setPersistenceModule( persistenceModule );
+        return restRequestService;
     }
 
 }
