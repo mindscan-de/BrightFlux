@@ -70,15 +70,10 @@ public class RestRequestService {
 
     public SearchResultModel requestFuriousIronQueryResults( String query ) {
         try {
-            // System.out.println( "Query is = '" + query + "'" );
-
             Map<String, String> parameters = new LinkedHashMap<>();
             parameters.put( "q", query );
-            String queryURL = persistenceModule.getFuriousIronQueryURL();
 
-            HttpURLConnection connection = openConnection( queryURL, parameters, "GET" );
-
-            connection.setRequestProperty( "Content-Type", "application/json" );
+            HttpURLConnection connection = openConnection( persistenceModule.getFuriousIronQueryURL(), parameters, "GET", "application/json" );
 
             StringBuffer searchResultContentJsonString = retrieveHTTPResponse( connection );
 
@@ -101,15 +96,10 @@ public class RestRequestService {
 
     public String requestFuriousIronQueryContentByPath( String pathInformation ) {
         try {
-            System.out.println( "Requested Path is = '" + pathInformation + "'" );
-
             Map<String, String> parameters = new LinkedHashMap<>();
             parameters.put( "p", pathInformation );
-            String queryURL = persistenceModule.getFuriousIronContentURL();
 
-            HttpURLConnection connection = openConnection( queryURL, parameters, "GET" );
-
-            connection.setRequestProperty( "Content-Type", "text/plain" );
+            HttpURLConnection connection = openConnection( persistenceModule.getFuriousIronContentURL(), parameters, "GET", "text/plain" );
 
             StringBuffer searchResultContentJsonString = retrieveHTTPResponse( connection );
 
@@ -122,12 +112,13 @@ public class RestRequestService {
 
     }
 
-    private HttpURLConnection openConnection( String queryURL, Map<String, String> parameters, String requestMethod )
+    private HttpURLConnection openConnection( String queryURL, Map<String, String> parameters, String requestMethod, String contentType )
                     throws MalformedURLException, IOException {
         String parameterString = buildGetParameterString( parameters );
         URL url = new URL( queryURL + parameterString );
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod( requestMethod );
+        connection.setRequestProperty( "Content-Type", contentType );
 
         return connection;
     }
