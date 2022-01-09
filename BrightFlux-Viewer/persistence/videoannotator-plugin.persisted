@@ -1,6 +1,6 @@
 videoannotator.snippets.array.length=4
 videoannotator.snippets.array.type=string
-videoannotator.snippets.0Tester clicks on home button
+videoannotator.snippets.0=Tester clicks on home button
 videoannotator.snippets.1=HomeScreen opens (*SYNC*)
 videoannotator.snippets.2=View XYZ opens
 videoannotator.snippets.3=Time changes from X to Y
