@@ -36,6 +36,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
+import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.videoannotator.utils.VideoAnnotatorUtils;
 import de.mindscan.brightflux.videoannotation.VideoAnnotationColumns;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
@@ -50,6 +51,8 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
     private ProjectRegistry projectRegistry;
 
     private Path ffprobePath;
+
+    private VideoAnnotatorPersistenceModule persistenceModule;
 
     // TODO how do we want to address the different videoAnnotationDataframes 
 
@@ -164,4 +167,11 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         return ffprobePath;
     }
 
+    public void setPersistenceModule( VideoAnnotatorPersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
+    }
+
+    public VideoAnnotatorPersistenceModule getPersistenceModule() {
+        return persistenceModule;
+    }
 }
