@@ -78,7 +78,10 @@ public class EarlyPersistenceComponent {
     }
 
     public Path getPropertyAsPath( String key ) {
-        String value = earlyProperties.getProperty( key ).trim();
+        return evaluateAsPath( earlyProperties.getProperty( key ).trim() );
+    }
+
+    public Path evaluateAsPath( String value ) {
         if (value.startsWith( "{{user.dir}}/" )) {
             return this.currentDirectory.resolve( value.substring( "{{user.dir}}/".length() ) );
         }
