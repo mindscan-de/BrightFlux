@@ -1,3 +1,15 @@
+# ######################################################
+#
+# path for the ffprobe executable binary.
+#
+# ######################################################
+ffprobe.path={{user.dir}}/ffprobe.exe
+
+# ######################################################
+#
+# the snippets which are provided in the video annotator
+#
+# ###################################################### 
 videoannotator.snippets.array.length=4
 videoannotator.snippets.array.type=string
 videoannotator.snippets.0=Tester clicks on home button
