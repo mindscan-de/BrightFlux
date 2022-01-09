@@ -114,6 +114,8 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Select a message for search with FuriousIron; search using FuriousIron-Backend
   * open search tools, show list of files (no file details yet)
   * retrieve content of file from code search backend
+* Early Persistence / Startup
+  * Basic functionality to read a early persistence file and from there provide basic access to namespace based persistence
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -159,10 +161,11 @@ DataFrame-Core
 * [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
 
 
-Startup and EarlyPersistence
-* Implement an Early Persistence module, which can then be used to start/configure other components (used for initial configurations)
+DFQL
+* Support tokenizing via DFQL
+* Support recipes which contain tokenized data frames, such that recipes can be replayed and are creating a tokenized data frame
 
-  
+
 ### Later
 
 Log-Analysis-Case-File / introduce evidence collector
@@ -198,11 +201,6 @@ Search Engine Support
 * show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
 
 
-DFQL
-* Support tokenizing via DFQL
-* Support recipes which contain tokenized data frames, such that recipes can be replayed and are creating a tokenized data frame
-
-
 ### Even Later
 
 Swim lanes
@@ -211,18 +209,6 @@ Swim lanes
   * save swim lane configuration into an analysis project file
   
   
-Generic text File Readers
-* The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
-  * Ingest text files into table oriented data frames
-    * use .json file based (configured) - format and parser description 
-
-
-Generic Binary File Readers
-* The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
-  * ingest binary files into table oriented data frames
-    * use json file based - format and parser description 
-
-
 UML Image Generator
 * Create Sequence-Diagrams from Log messages / log data frames
 * Create Activity-Diagrams from Log messages / log data frames
@@ -291,6 +277,17 @@ Decision Tree Analysis
 
 
 ### Never?
+
+Generic text File Readers
+* The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
+  * Ingest text files into table oriented data frames
+    * use .json file based (configured) - format and parser description 
+
+
+Generic Binary File Readers
+* The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
+  * ingest binary files into table oriented data frames
+    * use json file based - format and parser description 
 
 
 Exporters
