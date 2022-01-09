@@ -35,11 +35,6 @@ public class SearchPersistenceModuleImpl implements SearchPersistenceModule {
     private static final String FURIOUS_IRON_REST_CONTENT_URL_KEY = "furious.iron.rest.content.url";
     private static final String FURIOUS_IRON_REST_QUERY_URL_KEY = "furious.iron.rest.query.url";
 
-    // TODO remove hardcoded values from here - when underlying persistence works.
-    public static final String SERVER = "http://localhost:8000/";
-    public static final String REST_SEARCH_RESULT = SERVER + "SearchBackend/rest/search/result?";
-    public static final String REST_RETRIEVE_CONTENT = SERVER + "SearchBackend/rest/cached/content?";
-
     private BasePersistenceModule basePersistenceModule;
 
     /**
@@ -55,8 +50,7 @@ public class SearchPersistenceModuleImpl implements SearchPersistenceModule {
     @Override
     public String getFuriousIronQueryURL() {
         String stringValue = basePersistenceModule.getStringValue( FURIOUS_IRON_REST_QUERY_URL_KEY );
-
-        return REST_SEARCH_RESULT;
+        return stringValue;
     }
 
     /** 
@@ -65,8 +59,7 @@ public class SearchPersistenceModuleImpl implements SearchPersistenceModule {
     @Override
     public String getFuriousIronContentURL() {
         String stringValue = basePersistenceModule.getStringValue( FURIOUS_IRON_REST_CONTENT_URL_KEY );
-
-        return REST_RETRIEVE_CONTENT;
+        return stringValue;
     }
 
 }
