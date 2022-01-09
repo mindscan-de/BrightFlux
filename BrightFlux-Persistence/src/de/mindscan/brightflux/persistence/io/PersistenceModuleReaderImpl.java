@@ -41,6 +41,10 @@ import de.mindscan.brightflux.persistence.PersistenceModule;
  */
 public class PersistenceModuleReaderImpl {
 
+    private static final String ARRAY_TYPE_INDICATOR = "array.type";
+    private static final String ARRAY_LENGTH_INDICATOR = "array.length";
+    private static final String PRIMITIVE_TYPE_INDICATOR = "type";
+
     /**
      * 
      */
@@ -79,23 +83,23 @@ public class PersistenceModuleReaderImpl {
 
         List<String> allArrays = allPropertyNames.stream() //
                         .map( keyname -> keyname.trim() )//
-                        .filter( keyname -> keyname.endsWith( "." + "array.type" ) ) //
+                        .filter( keyname -> keyname.endsWith( "." + ARRAY_TYPE_INDICATOR ) ) //
                         .collect( Collectors.toList() );
 
         // we want to extract the array and its key...
         for (String arrayKeyTypeName : allArrays) {
-            String keyBaseName = arrayKeyTypeName.substring( 0, arrayKeyTypeName.indexOf( "array.type" ) ).trim();
+            String keyBaseNameWithDot = arrayKeyTypeName.substring( 0, arrayKeyTypeName.indexOf( ARRAY_TYPE_INDICATOR ) ).trim();
 
             String arrayType = properties.getProperty( arrayKeyTypeName ).trim().toLowerCase();
-            String arrayLengthAsString = properties.getProperty( keyBaseName + "array.length" ).trim();
+            String arrayLengthAsString = properties.getProperty( keyBaseNameWithDot + ARRAY_LENGTH_INDICATOR ).trim();
             int arrayLength = Integer.valueOf( arrayLengthAsString ).intValue();
 
             switch (arrayType) {
                 case "string":
-                    persistenceModule.setIntValue( keyBaseName + "array.length", arrayLength );
+                    persistenceModule.setIntValue( keyBaseNameWithDot + ARRAY_LENGTH_INDICATOR, arrayLength );
 
                     for (int i = 0; i < arrayLength; i++) {
-                        String ithKey = keyBaseName + Integer.toString( i );
+                        String ithKey = keyBaseNameWithDot + Integer.toString( i );
                         String ithValue = properties.getProperty( ithKey, "" );
                         persistenceModule.setStringValue( ithKey, ithValue );
                     }
@@ -114,27 +118,27 @@ public class PersistenceModuleReaderImpl {
 
         List<String> allTypedPrimitives = allPropertyNames.stream() //
                         .map( keyname -> keyname.trim() )//
-                        .filter( keyname -> keyname.endsWith( "." + "type" ) ) //
+                        .filter( keyname -> keyname.endsWith( "." + PRIMITIVE_TYPE_INDICATOR ) ) //
                         .collect( Collectors.toList() );
 
         for (String primitiveKeyTypeName : allTypedPrimitives) {
-            String keyBaseName = primitiveKeyTypeName.substring( 0, primitiveKeyTypeName.indexOf( "type" ) ).trim();
+            String keyBaseNameWithoutDot = primitiveKeyTypeName.substring( 0, primitiveKeyTypeName.indexOf( "." + PRIMITIVE_TYPE_INDICATOR ) ).trim();
             String primitiveType = properties.getProperty( primitiveKeyTypeName ).trim().toLowerCase();
 
             switch (primitiveType) {
                 case "string": {
-                    String primitiveValue = properties.getProperty( keyBaseName, "" );
+                    String primitiveValue = properties.getProperty( keyBaseNameWithoutDot, "" );
                     persistenceModule.setStringValue( primitiveKeyTypeName, primitiveValue );
                     break;
                 }
                 case "int": {
-                    String primitiveValue = properties.getProperty( keyBaseName, "0" );
+                    String primitiveValue = properties.getProperty( keyBaseNameWithoutDot, "0" );
                     int primitiveIntValue = Integer.parseInt( primitiveValue );
                     persistenceModule.setIntValue( primitiveKeyTypeName, primitiveIntValue );
                     break;
                 }
                 case "long": {
-                    String primitiveValue = properties.getProperty( keyBaseName, "0" );
+                    String primitiveValue = properties.getProperty( keyBaseNameWithoutDot, "0" );
                     long primitiveLongValue = Long.parseLong( primitiveValue );
                     persistenceModule.setLongValue( primitiveKeyTypeName, primitiveLongValue );
                     break;
