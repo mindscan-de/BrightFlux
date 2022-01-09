@@ -53,15 +53,17 @@ public class PersistenceModuleReaderImpl {
         try (FileInputStream fis = new FileInputStream( fullpath.toFile() )) {
             properties.load( fis );
 
-            // preprocess the data?...
+            PropertiesAccesorSpy allProperties = new PropertiesAccesorSpy( properties );
 
-            Set<String> allPropertyNames = properties.stringPropertyNames();
-
+            Set<String> allPropertyNames = allProperties.stringPropertyNames();
             for (String entry : allPropertyNames) {
                 System.out.println( String.valueOf( entry ) );
             }
 
-            handleArrays( allPropertyNames, properties, persistenceModule );
+            allProperties.resetReadProperiesRead();
+            handleArrays( allProperties, persistenceModule );
+            handleTypedPrimitives( allProperties, persistenceModule );
+            handleNonTypedPrimitives( allProperties, persistenceModule );
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -72,7 +74,9 @@ public class PersistenceModuleReaderImpl {
 
     }
 
-    private void handleArrays( Set<String> allPropertyNames, Properties properties, PersistenceModule persistenceModule ) {
+    private void handleArrays( PropertiesAccesorSpy properties, PersistenceModule persistenceModule ) {
+        Set<String> allPropertyNames = properties.remainingPropertyNames();
+
         List<String> allArrays = allPropertyNames.stream() //
                         .map( keyname -> keyname.trim() )//
                         .filter( keyname -> keyname.endsWith( "." + "array.type" ) ) //
@@ -104,4 +108,52 @@ public class PersistenceModuleReaderImpl {
             }
         }
     }
+
+    private void handleTypedPrimitives( PropertiesAccesorSpy properties, PersistenceModule persistenceModule ) {
+        Set<String> allPropertyNames = properties.remainingPropertyNames();
+
+        List<String> allTypedPrimitives = allPropertyNames.stream() //
+                        .map( keyname -> keyname.trim() )//
+                        .filter( keyname -> keyname.endsWith( "." + "type" ) ) //
+                        .collect( Collectors.toList() );
+
+        for (String primitiveKeyTypeName : allTypedPrimitives) {
+            String keyBaseName = primitiveKeyTypeName.substring( 0, primitiveKeyTypeName.indexOf( "type" ) ).trim();
+            String primitiveType = properties.getProperty( primitiveKeyTypeName ).trim().toLowerCase();
+
+            switch (primitiveType) {
+                case "string": {
+                    String primitiveValue = properties.getProperty( keyBaseName, "" );
+                    persistenceModule.setStringValue( primitiveKeyTypeName, primitiveValue );
+                    break;
+                }
+                case "int": {
+                    String primitiveValue = properties.getProperty( keyBaseName, "0" );
+                    int primitiveIntValue = Integer.parseInt( primitiveValue );
+                    persistenceModule.setIntValue( primitiveKeyTypeName, primitiveIntValue );
+                    break;
+                }
+                case "long": {
+                    String primitiveValue = properties.getProperty( keyBaseName, "0" );
+                    long primitiveLongValue = Long.parseLong( primitiveValue );
+                    persistenceModule.setLongValue( primitiveKeyTypeName, primitiveLongValue );
+                    break;
+                }
+                default:
+                    // unknown Type...
+                    // just ignore
+                    break;
+            }
+        }
+    }
+
+    private void handleNonTypedPrimitives( PropertiesAccesorSpy properties, PersistenceModule persistenceModule ) {
+        Set<String> allPropertyNames = properties.remainingPropertyNames();
+
+        for (String keyBaseName : allPropertyNames) {
+            String primitiveValue = properties.getProperty( keyBaseName, "" );
+            persistenceModule.setStringValue( keyBaseName, primitiveValue );
+        }
+    }
+
 }
