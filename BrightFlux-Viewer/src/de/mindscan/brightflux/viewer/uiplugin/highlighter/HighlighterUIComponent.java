@@ -26,30 +26,19 @@
 package de.mindscan.brightflux.viewer.uiplugin.highlighter;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
-import de.mindscan.brightflux.system.services.StartupParticipant;
-import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 
 /**
  * 
  */
-public class HighlighterUIActivator implements StartupParticipant {
+public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    public void start( SystemServices systemservices ) {
-
-        HighlighterUIComponent highligterUIComponent = new HighlighterUIComponent();
-        systemservices.registerService( highligterUIComponent, HighlighterUIComponent.class );
-
-        ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
-        if (projectRegistry != null) {
-            highligterUIComponent.setProjectRegistry( projectRegistry );
-        }
-        else {
-
-        }
+    public void setProjectRegistry( ProjectRegistry projectRegistry ) {
+        // TODO Auto-generated method stub
 
     }
 
