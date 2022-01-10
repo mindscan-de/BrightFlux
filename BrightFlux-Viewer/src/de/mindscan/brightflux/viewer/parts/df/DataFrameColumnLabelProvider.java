@@ -31,6 +31,7 @@ import org.eclipse.swt.graphics.Color;
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.plugin.highlighter.HighlighterComponent;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIComponent;
 
 /**
  * TODO: the Label provider should be dependent of either configuration
@@ -51,6 +52,7 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
     private final String columname;
     private HighlighterComponent highlighterComponent;
+    private HighlighterUIComponent hilighterUIComponent;
 
     /**
      * @param columname The column name of the column determines, what column is shown from the data frame rows.
@@ -124,11 +126,12 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
     }
 
-    /**
-     * @param highlighterComponent
-     */
     public void setHighLightherComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
+    }
+
+    public void setHighlighterUIComponent( HighlighterUIComponent highlighterUIComponent ) {
+        this.hilighterUIComponent = highlighterUIComponent;
     }
 
 }
