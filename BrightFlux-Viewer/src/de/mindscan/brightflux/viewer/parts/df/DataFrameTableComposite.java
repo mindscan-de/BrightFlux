@@ -428,6 +428,42 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         } );
         mntmLoadHighlights.setText( "Load Highlights ..." );
 
+        MenuItem mntmSearch = new MenuItem( menu, SWT.CASCADE );
+        mntmSearch.setText( "Search" );
+
+        Menu menu_4 = new Menu( mntmSearch );
+        mntmSearch.setMenu( menu_4 );
+
+        MenuItem mntmFuriousironCodeSearch = new MenuItem( menu_4, SWT.NONE );
+        mntmFuriousironCodeSearch.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                // current selection
+                // create uicommand for search
+                // dispatch the ui command for search
+                if (currentSelectedRow != null) {
+                    dispatchCommand( SearchUICommandsFactory.searchDataFrameRow( currentSelectedRow, "default" ) );
+                }
+
+                // That will hopefully locate the search window
+                // the search window is already subscribed to the kind of events...
+                // and if not open the search window
+                // and then create the event to request the search window to prepare the search based on the current selection
+
+            }
+        } );
+        mntmFuriousironCodeSearch.setText( "FuriousIron Search" );
+
+        new MenuItem( menu_4, SWT.SEPARATOR );
+
+        MenuItem mntmSearchProfiles = new MenuItem( menu_4, SWT.CASCADE );
+        mntmSearchProfiles.setText( "Search Profiles" );
+
+        Menu menu_5 = new Menu( mntmSearchProfiles );
+        mntmSearchProfiles.setMenu( menu_5 );
+
+        new MenuItem( menu, SWT.SEPARATOR );
+
         MenuItem mntmRecipe = new MenuItem( menu, SWT.CASCADE );
         mntmRecipe.setText( "Recipe" );
 
@@ -465,40 +501,6 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
         // start Favorites Menu ... Append to the Recipe Menu...
         appendFavoriteRecipeShortcutMenus( SystemServices.getInstance(), menu_3 );
         appendFavoriteRecipeShortcutItems( SystemServices.getInstance() );
-
-        MenuItem mntmSearch = new MenuItem( menu, SWT.CASCADE );
-        mntmSearch.setText( "Search" );
-
-        Menu menu_4 = new Menu( mntmSearch );
-        mntmSearch.setMenu( menu_4 );
-
-        MenuItem mntmFuriousironCodeSearch = new MenuItem( menu_4, SWT.NONE );
-        mntmFuriousironCodeSearch.addSelectionListener( new SelectionAdapter() {
-            @Override
-            public void widgetSelected( SelectionEvent e ) {
-                // current selection
-                // create uicommand for search
-                // dispatch the ui command for search
-                if (currentSelectedRow != null) {
-                    dispatchCommand( SearchUICommandsFactory.searchDataFrameRow( currentSelectedRow, "default" ) );
-                }
-
-                // That will hopefully locate the search window
-                // the search window is already subscribed to the kind of events...
-                // and if not open the search window
-                // and then create the event to request the search window to prepare the search based on the current selection
-
-            }
-        } );
-        mntmFuriousironCodeSearch.setText( "FuriousIron Search" );
-
-        new MenuItem( menu_4, SWT.SEPARATOR );
-
-        MenuItem mntmSearchProfiles = new MenuItem( menu_4, SWT.CASCADE );
-        mntmSearchProfiles.setText( "Search Profiles" );
-
-        Menu menu_5 = new Menu( mntmSearchProfiles );
-        mntmSearchProfiles.setMenu( menu_5 );
 
         new MenuItem( menu, SWT.SEPARATOR );
 
