@@ -198,7 +198,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             public void widgetSelected( SelectionEvent e ) {
                 // TODO: shortcut here.  hardcoded values...
                 // Actually we should locate a column containing time stamps
-                // then ask the user which to take if many
+                // then ask the user which to take if many, or just register them all...
                 long timestamp = ((Long) currentSelectedRow.get( HARDCODED_H1_TS )).longValue();
                 dispatchLocateAll( HARDCODED_H1_TS, timestamp );
             }
