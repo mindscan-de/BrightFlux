@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.highlighter;
 
+import org.eclipse.swt.graphics.Color;
+
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 
@@ -39,7 +41,10 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         // TODO Auto-generated method stub
+    }
 
+    public Color getColor( String colorName ) {
+        return null;
     }
 
 }
