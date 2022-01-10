@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.highlighter;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swt.graphics.Color;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
@@ -35,15 +38,43 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
  */
 public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
+    private final Map<String, Color> colorMap;
+
+    public HighlighterUIComponent() {
+        this.colorMap = new HashMap<>();
+
+        initColors();
+    }
+
+    private void initColors() {
+        this.colorMap.put( "yellow", new Color( 255, 255, 224 ) );
+        this.colorMap.put( "pink", new Color( 255, 224, 255 ) );
+        this.colorMap.put( "red", new Color( 255, 224, 224 ) );
+        this.colorMap.put( "green", new Color( 224, 255, 224 ) );
+        this.colorMap.put( "blue", new Color( 224, 224, 255 ) );
+    }
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
+        // intentionally left blank for now.
     }
 
     public Color getColor( String colorName ) {
+        return colorMap.computeIfAbsent( colorName, this::calculateColor );
+    }
+
+    private Color calculateColor( String colorName ) {
+        if (colorName.startsWith( "#" )) {
+            String reH = colorName.substring( 1, 3 );
+            String grH = colorName.substring( 3, 5 );
+            String blH = colorName.substring( 5, 7 );
+
+            return new Color( Integer.parseInt( reH, 16 ), Integer.parseInt( grH, 16 ), Integer.parseInt( blH, 16 ) );
+        }
+
         return null;
     }
 
