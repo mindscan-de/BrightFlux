@@ -587,6 +587,8 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
             DataFrameColumnLabelProvider labelProvider = new DataFrameColumnLabelProvider( columname );
             labelProvider.setHighLightherComponent( highlighterComponent );
+            // TODO: implement setting the ui highlighter component
+            // labelProvider.setHighlighterUIComponent( highlighterUIComponent );
             tableViewerColumn.setLabelProvider( labelProvider );
         }
     }
