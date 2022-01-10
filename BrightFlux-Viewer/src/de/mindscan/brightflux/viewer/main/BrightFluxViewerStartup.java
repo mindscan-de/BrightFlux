@@ -39,6 +39,7 @@ import de.mindscan.brightflux.system.projectregistry.ProjectRegistryActivator;
 import de.mindscan.brightflux.system.reportgenerator.ReportGeneratorActivator;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIActivator;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchUIActivator;
 
 /**
@@ -99,6 +100,9 @@ public class BrightFluxViewerStartup {
 
         // Register Search UI Component
         startActivator( SearchUIActivator.class, systemServices );
+
+        // Register Highlighter UI Component
+        startActivator( HighlighterUIActivator.class, systemServices );
 
         // -------------------------------
         // Phase X : finish registtrations
