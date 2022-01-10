@@ -44,6 +44,7 @@ import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIComponent
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
     // some predefined colors
+    // TODO: get rid of these hard coded colors in the label provider.
     private static final Color YELLOW = new Color( 255, 255, 224 );
     private static final Color PINK = new Color( 255, 224, 255 );
     private static final Color RED = new Color( 255, 224, 224 );
@@ -106,6 +107,9 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
         // check in the highlight frame, whether this rowindex contains a color
         if (logHighlightFrame.isPresent( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex )) {
             String color = (String) logHighlightFrame.getAt( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex );
+
+            // TODO: ask the HighlighterUI to provide a Color for this colorname
+
             switch (color) {
                 case "yellow":
                     return YELLOW;

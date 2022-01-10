@@ -47,6 +47,8 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
     }
 
     private void initColors() {
+        // TODO: externalize this information into persistence.
+        // Hard coded color map, which we may want to put into a persistence configuration file as well
         this.colorMap.put( "yellow", new Color( 255, 255, 224 ) );
         this.colorMap.put( "pink", new Color( 255, 224, 255 ) );
         this.colorMap.put( "red", new Color( 255, 224, 224 ) );
