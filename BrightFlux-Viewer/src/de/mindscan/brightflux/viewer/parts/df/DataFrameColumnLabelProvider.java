@@ -27,7 +27,6 @@ package de.mindscan.brightflux.viewer.parts.df;
 
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.widgets.Display;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
@@ -44,11 +43,11 @@ import de.mindscan.brightflux.plugin.highlighter.HighlighterComponent;
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
     // some predefined colors
-    private static final Color YELLOW = new Color( Display.getDefault(), 255, 255, 224 );
-    private static final Color PINK = new Color( Display.getDefault(), 255, 224, 255 );
-    private static final Color RED = new Color( Display.getDefault(), 255, 224, 224 );
-    private static final Color GREEN = new Color( Display.getDefault(), 224, 255, 224 );
-    private static final Color BLUE = new Color( Display.getDefault(), 224, 224, 255 );
+    private static final Color YELLOW = new Color( 255, 255, 224 );
+    private static final Color PINK = new Color( 255, 224, 255 );
+    private static final Color RED = new Color( 255, 224, 224 );
+    private static final Color GREEN = new Color( 224, 255, 224 );
+    private static final Color BLUE = new Color( 224, 224, 255 );
 
     private final String columname;
     private HighlighterComponent highlighterComponent;
