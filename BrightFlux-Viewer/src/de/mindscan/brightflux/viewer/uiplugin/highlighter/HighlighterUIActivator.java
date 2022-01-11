@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.uiplugin.highlighter;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -34,11 +35,15 @@ import de.mindscan.brightflux.system.services.SystemServices;
  */
 public class HighlighterUIActivator implements StartupParticipant {
 
+    private static final String HIGHLIGHTER_UI_PLUGIN = "highlighter-ui-plugin";
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public void start( SystemServices systemservices ) {
+        // TODO: prepare calculation of named and persisted colors 
+        BasePersistenceModule highlighterUIBasePersistenceModule = systemservices.getBasePersistenceModule( HIGHLIGHTER_UI_PLUGIN );
 
         HighlighterUIComponent highligterUIComponent = new HighlighterUIComponent();
         systemservices.registerService( highligterUIComponent, HighlighterUIComponent.class );
