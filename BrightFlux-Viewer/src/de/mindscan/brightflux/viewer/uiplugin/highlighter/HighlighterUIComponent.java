@@ -53,7 +53,7 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
         this.colorMap.put( "pink", new Color( 255, 224, 255 ) );
         this.colorMap.put( "red", new Color( 255, 224, 224 ) );
         this.colorMap.put( "green", new Color( 224, 255, 224 ) );
-        this.colorMap.put( "blue", new Color( 224, 224, 255 ) );
+        this.colorMap.put( "blue", new Color( 224, 240, 255 ) );
     }
 
     /** 
@@ -70,14 +70,18 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
     private Color calculateColor( String colorName ) {
         if (colorName.startsWith( "#" )) {
-            String reH = colorName.substring( 1, 3 );
-            String grH = colorName.substring( 3, 5 );
-            String blH = colorName.substring( 5, 7 );
-
-            return new Color( Integer.parseInt( reH, 16 ), Integer.parseInt( grH, 16 ), Integer.parseInt( blH, 16 ) );
+            return convertHexCodeColor( colorName );
         }
 
         return null;
+    }
+
+    public static Color convertHexCodeColor( String colorName ) {
+        String reH = colorName.substring( 1, 3 );
+        String grH = colorName.substring( 3, 5 );
+        String blH = colorName.substring( 5, 7 );
+
+        return new Color( Integer.parseInt( reH, 16 ), Integer.parseInt( grH, 16 ), Integer.parseInt( blH, 16 ) );
     }
 
 }
