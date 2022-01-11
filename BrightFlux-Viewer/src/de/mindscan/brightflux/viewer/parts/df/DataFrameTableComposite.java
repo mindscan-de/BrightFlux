@@ -73,6 +73,7 @@ import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedHandler;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIComponent;
 import de.mindscan.brightflux.viewer.uiplugin.search.command.SearchUICommandsFactory;
 
 /**
@@ -113,6 +114,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
     private Shell parentShell;
 
     private HighlighterComponent highlighterComponent;
+    private HighlighterUIComponent highlighterUIComponent;
 
     protected DataFrameRow currentSelectedRow;
 
@@ -587,8 +589,7 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
             DataFrameColumnLabelProvider labelProvider = new DataFrameColumnLabelProvider( columname );
             labelProvider.setHighLightherComponent( highlighterComponent );
-            // TODO: implement setting the ui highlighter component
-            // labelProvider.setHighlighterUIComponent( highlighterUIComponent );
+            labelProvider.setHighlighterUIComponent( highlighterUIComponent );
             tableViewerColumn.setLabelProvider( labelProvider );
         }
     }
@@ -674,6 +675,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
 
     public void setHighlighterComponent( HighlighterComponent highlighterComponent ) {
         this.highlighterComponent = highlighterComponent;
+    }
+
+    public void setHighlighterUIComponent( HighlighterUIComponent highlighterUIComponent ) {
+        this.highlighterUIComponent = highlighterUIComponent;
     }
 
     private void appendFavoriteRecipeShortcutMenus( SystemServices systemServices, Menu menu ) {

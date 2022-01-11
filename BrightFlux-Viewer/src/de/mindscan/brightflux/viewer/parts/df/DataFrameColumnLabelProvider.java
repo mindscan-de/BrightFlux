@@ -43,17 +43,9 @@ import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIComponent
  */
 public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
-    // some predefined colors
-    // TODO: get rid of these hard coded colors in the label provider.
-    private static final Color YELLOW = new Color( 255, 255, 224 );
-    private static final Color PINK = new Color( 255, 224, 255 );
-    private static final Color RED = new Color( 255, 224, 224 );
-    private static final Color GREEN = new Color( 224, 255, 224 );
-    private static final Color BLUE = new Color( 224, 224, 255 );
-
     private final String columname;
     private HighlighterComponent highlighterComponent;
-    private HighlighterUIComponent hilighterUIComponent;
+    private HighlighterUIComponent highlighterUIComponent;
 
     /**
      * @param columname The column name of the column determines, what column is shown from the data frame rows.
@@ -106,24 +98,9 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
         // check in the highlight frame, whether this rowindex contains a color
         if (logHighlightFrame.isPresent( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex )) {
-            String color = (String) logHighlightFrame.getAt( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex );
-
-            // TODO: ask the HighlighterUI to provide a Color for this colorname
-
-            switch (color) {
-                case "yellow":
-                    return YELLOW;
-                case "pink":
-                    return PINK;
-                case "red":
-                    return RED;
-                case "green":
-                    return GREEN;
-                case "blue":
-                    return BLUE;
-                default:
-                    break;
-            }
+            String colorIdentifier = (String) logHighlightFrame.getAt( HighlighterComponent.HIGHLIGHT_COLOR_VALUE_COLUMN_NAME, originalRowIndex );
+            Color color = highlighterUIComponent.getColor( colorIdentifier );
+            return color != null ? color : super.getBackground( element );
         }
 
         return super.getBackground( element );
@@ -135,7 +112,7 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
     }
 
     public void setHighlighterUIComponent( HighlighterUIComponent highlighterUIComponent ) {
-        this.hilighterUIComponent = highlighterUIComponent;
+        this.highlighterUIComponent = highlighterUIComponent;
     }
 
 }

@@ -49,6 +49,7 @@ import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedH
 import de.mindscan.brightflux.viewer.uievents.LocatePredictedTimestampRequestedListenerAdapter;
 import de.mindscan.brightflux.viewer.uievents.UIEventFactory;
 import de.mindscan.brightflux.viewer.uievents.UUIDRequestEventListenerAdapter;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIComponent;
 
 /**
  * 
@@ -209,6 +210,7 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
 
         DataFrameTableComposite composite = new DataFrameTableComposite( tabFolder, SWT.NONE );
         composite.setHighlighterComponent( SystemServices.getInstance().getService( HighlighterComponent.class ) );
+        composite.setHighlighterUIComponent( SystemServices.getInstance().getService( HighlighterUIComponent.class ) );
         // TODO: autowire?
         composite.setProjectRegistry( projectRegistry );
         composite.setDataFrame( ingestedDF );
