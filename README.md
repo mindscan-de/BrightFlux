@@ -201,6 +201,9 @@ Search Engine Support
 * show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
 
 
+DFQL
+* Support parameterized callbacks ('CALLBACK highlight("red") FROM df WHERE (df.'h2.ts'>1000000000)' instead of 'CALLBACK highlight_red FROM df WHERE (df.'h2.ts'>1000000000)')
+
 ### Even Later
 
 Swim lanes
