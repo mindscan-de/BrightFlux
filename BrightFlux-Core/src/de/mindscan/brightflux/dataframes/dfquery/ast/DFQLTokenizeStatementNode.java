@@ -30,20 +30,20 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
  */
 public class DFQLTokenizeStatementNode implements DFQLNode {
 
-    private DFQLNode parsedColumnList;
+    private DFQLNode directTransferColumnsList;
 
     /**
-     * @param parsedColumnList
+     * @param directTransferColumnsList
      */
-    public void setDataFrameColumns( DFQLNode parsedColumnList ) {
-        this.parsedColumnList = parsedColumnList;
+    public void setDataFrameDirectTransferColumns( DFQLNode directTransferColumnsList ) {
+        this.directTransferColumnsList = directTransferColumnsList;
     }
 
     /**
-     * @return the parsedColumnList
+     * @return the directTransferColumnsList
      */
-    public DFQLNode getParsedColumnList() {
-        return parsedColumnList;
+    public DFQLNode getDataFrameDirectTransferColumns() {
+        return directTransferColumnsList;
     }
 
     /** 

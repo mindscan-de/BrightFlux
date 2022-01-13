@@ -168,7 +168,7 @@ public class DataFrameQueryLanguageParser {
 
     protected DFQLNode parseDFQLSelectTokenizeStatement( DFQLNode parsedColumnList ) {
         DFQLTokenizeStatementNode tokenizerStatement = new DFQLTokenizeStatementNode();
-        tokenizerStatement.setDataFrameColumns( parsedColumnList );
+        tokenizerStatement.setDataFrameDirectTransferColumns( parsedColumnList );
 
         throw new NotYetImplemetedException( "the tokenize command is not yet fully implemented" );
     }
