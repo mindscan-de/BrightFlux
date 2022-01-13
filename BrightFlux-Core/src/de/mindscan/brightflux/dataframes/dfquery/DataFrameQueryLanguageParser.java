@@ -135,11 +135,12 @@ public class DataFrameQueryLanguageParser {
         // parseSelectStatementColumnList
         DFQLNode parsedColumnList = parseSelectStatementColumnList();
 
-        if (!tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
+        if (tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
+            return parseDFQLSelectFromStatement( parsedColumnList );
+        }
+        else {
             throw new NotYetImplemetedException( "" );
         }
-
-        return parseDFQLSelectFromStatement( parsedColumnList );
     }
 
     public DFQLNode parseDFQLSelectFromStatement( DFQLNode parsedColumnList ) {
