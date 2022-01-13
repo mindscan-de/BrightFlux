@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public final class DFQLTokenizerTerminals {
 
     // Keywords
-    public final static String[] TERMINAL_KEYWORDS = new String[] { "SELECT", "ROWCALLBACK", "FROM", "WHERE", "ALL", "NOT" /*, "AS"*/ };
+    public final static String[] TERMINAL_KEYWORDS = new String[] { "SELECT", "ROWCALLBACK", "FROM", "WHERE", "ALL", "NOT", "TOKENIZE" /*, "AS"*/ };
     public final static Set<String> TERMINAL_KEYWORD_SET = convertToUppercaseSet( TERMINAL_KEYWORDS );
 
     // Operators
