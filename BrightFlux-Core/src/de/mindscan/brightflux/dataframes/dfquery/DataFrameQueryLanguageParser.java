@@ -132,17 +132,19 @@ public class DataFrameQueryLanguageParser {
             throw new NotYetImplemetedException( "" );
         }
 
-        DFQLSelectStatementNode statement = new DFQLSelectStatementNode();
-
         // parseSelectStatementColumnList
         DFQLNode parsedColumnList = parseSelectStatementColumnList();
-        statement.setDataframeColumns( parsedColumnList );
-
-        // FROM
 
         if (!tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
             throw new NotYetImplemetedException( "" );
         }
+
+        return parseDFQLSelectFromStatement( parsedColumnList );
+    }
+
+    public DFQLNode parseDFQLSelectFromStatement( DFQLNode parsedColumnList ) {
+        DFQLSelectStatementNode statement = new DFQLSelectStatementNode();
+        statement.setDataframeColumns( parsedColumnList );
 
         // parseDataframe
         DFQLNode parsedDataFrames = parseSelectStatementDataframeList();
