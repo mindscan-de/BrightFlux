@@ -138,6 +138,9 @@ public class DataFrameQueryLanguageParser {
         if (tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
             return parseDFQLSelectFromStatement( parsedColumnList );
         }
+        else if (tryAndAcceptToken( DFQLTokens.KEYWORD_TOKENIZE )) {
+            return parseDFQLSelectTokenizeStatement( parsedColumnList );
+        }
         else {
             throw new NotYetImplemetedException( "" );
         }
@@ -160,6 +163,10 @@ public class DataFrameQueryLanguageParser {
         }
 
         return statement;
+    }
+
+    protected DFQLNode parseDFQLSelectTokenizeStatement( DFQLNode parsedColumnList ) {
+        throw new NotYetImplemetedException( "the tokenize command is not yet fully implemented" );
     }
 
     public DFQLNode parseSelectStatementColumnList() {
