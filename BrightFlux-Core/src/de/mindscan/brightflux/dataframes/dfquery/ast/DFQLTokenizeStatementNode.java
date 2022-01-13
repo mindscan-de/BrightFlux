@@ -30,6 +30,22 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
  */
 public class DFQLTokenizeStatementNode implements DFQLNode {
 
+    private DFQLNode parsedColumnList;
+
+    /**
+     * @param parsedColumnList
+     */
+    public void setDataFrameColumns( DFQLNode parsedColumnList ) {
+        this.parsedColumnList = parsedColumnList;
+    }
+
+    /**
+     * @return the parsedColumnList
+     */
+    public DFQLNode getParsedColumnList() {
+        return parsedColumnList;
+    }
+
     /** 
      * {@inheritDoc}
      */

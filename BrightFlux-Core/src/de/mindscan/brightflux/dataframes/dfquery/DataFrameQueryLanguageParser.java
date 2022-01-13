@@ -39,6 +39,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLTokenizeStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorType;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
@@ -166,6 +167,9 @@ public class DataFrameQueryLanguageParser {
     }
 
     protected DFQLNode parseDFQLSelectTokenizeStatement( DFQLNode parsedColumnList ) {
+        DFQLTokenizeStatementNode tokenizerStatement = new DFQLTokenizeStatementNode();
+        tokenizerStatement.setDataFrameColumns( parsedColumnList );
+
         throw new NotYetImplemetedException( "the tokenize command is not yet fully implemented" );
     }
 
