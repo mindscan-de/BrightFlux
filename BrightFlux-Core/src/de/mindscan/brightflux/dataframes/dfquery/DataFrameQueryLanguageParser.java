@@ -170,6 +170,20 @@ public class DataFrameQueryLanguageParser {
         DFQLTokenizeStatementNode tokenizerStatement = new DFQLTokenizeStatementNode();
         tokenizerStatement.setDataFrameDirectTransferColumns( parsedColumnList );
 
+        // collect the dataframe columnname which we want to access...
+
+        if (!tryAndAcceptToken( DFQLTokens.KEYWORDS_USING )) {
+
+        }
+
+        // collect class name which impements the dataframe tokenizer 
+
+        if (!tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
+
+        }
+
+        // collect dataframe name
+
         throw new NotYetImplemetedException( "the tokenize command is not yet fully implemented" );
     }
 
