@@ -36,6 +36,7 @@ public class DFQLTokens {
     public final static DFQLToken KEYWORD_WHERE = new DFQLToken( DFQLTokenType.KEYWORD, "WHERE" );
     public final static DFQLToken KEYWORD_NOT = new DFQLToken( DFQLTokenType.KEYWORD, "NOT" );
     public final static DFQLToken KEYWORD_TOKENIZE = new DFQLToken( DFQLTokenType.KEYWORD, "TOKENIZE" );
+    public static final DFQLToken KEYWORDS_USING = new DFQLToken( DFQLTokenType.KEYWORD, "USING" );
 
     public final static DFQLToken OPERATOR_STAR = new DFQLToken( DFQLTokenType.OPERATOR, "*" );
     public final static DFQLToken OPERATOR_COMMA = new DFQLToken( DFQLTokenType.OPERATOR, "," );
