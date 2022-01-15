@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.compiler;
 
+import de.mindscan.brightflux.dataframes.dfquery.DataFrameTokenizerJob;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLTokenizerStatementNode;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -34,18 +35,18 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class DataFrameTokenizerJobCompileStrategy {
 
-    public void compile( DFQLNode node ) {
+    public DataFrameTokenizerJob compile( DFQLNode node ) {
         if (node instanceof TypedDFQLTokenizerStatementNode) {
             // TODO : have a return type and return this.
-            compile_TypedDFQLTokenizerStatementNode( (TypedDFQLTokenizerStatementNode) node );
+            return compile_TypedDFQLTokenizerStatementNode( (TypedDFQLTokenizerStatementNode) node );
         }
 
         throw new NotYetImplemetedException( "Node type (" + node.getClass().getSimpleName() + ") is not supported." );
     }
 
-    private void compile_TypedDFQLTokenizerStatementNode( TypedDFQLTokenizerStatementNode node ) {
+    private DataFrameTokenizerJob compile_TypedDFQLTokenizerStatementNode( TypedDFQLTokenizerStatementNode node ) {
         // TODO Auto-generated method stub
-
+        return null;
     }
 
 }
