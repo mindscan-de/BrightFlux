@@ -53,6 +53,12 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class RowFilterPredicateCompileStrategy {
 
+    // TODO: ColumnColumn Predicate
+    // TODO: PredicatePredicate Predicate
+    // TODO: BiBi Predicate
+
+    // TODO: boolean predicate functions like contains, startsWith, endsWith, and "not"
+
     public BiFunction<String, Object, DataFrameRowFilterPredicate> eqFunctionColImm = DataFrameRowFilterPredicateFactory::eq;
     public BiFunction<String, Object, DataFrameRowFilterPredicate> neqFunctionColImm = DataFrameRowFilterPredicateFactory::neq;
     public BiFunction<String, Object, DataFrameRowFilterPredicate> geFunctionColImm = DataFrameRowFilterPredicateFactory::ge;
