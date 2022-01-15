@@ -23,19 +23,51 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes.dfquery;
+package de.mindscan.brightflux.dataframes.dfquery.compiler;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.dfquery.DataFrameTokenizerJob;
 
 /**
  * 
  */
-public interface DataFrameTokenizerJob {
+public class DataFrameTokenizerJobImpl implements DataFrameTokenizerJob {
 
-    DataFrame getDataFrame();
+    private DataFrame dataFrame;
+    private String[] columnsToTransfer;
+    private String columnToTokenize;
 
-    String[] getColumnNamesToTransfer();
+    /**
+     * 
+     */
+    public DataFrameTokenizerJobImpl( DataFrame dataFrame, String[] columnsToTransfer, String columnToTokenize ) {
+        this.dataFrame = dataFrame;
+        this.columnsToTransfer = columnsToTransfer;
+        this.columnToTokenize = columnToTokenize;
+    }
 
-    String getInputColumnNameToTokenize();
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public DataFrame getDataFrame() {
+        return dataFrame;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getColumnNamesToTransfer() {
+        return columnsToTransfer;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String getInputColumnNameToTokenize() {
+        return columnToTokenize;
+    }
 
 }
