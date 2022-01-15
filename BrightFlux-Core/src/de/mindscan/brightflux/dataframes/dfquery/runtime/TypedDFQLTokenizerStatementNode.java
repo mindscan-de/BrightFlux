@@ -25,10 +25,50 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.runtime;
 
+import java.util.List;
+
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
+
 /**
  * 
  */
 public class TypedDFQLTokenizerStatementNode implements TypedDFQLNode {
+
+    // SELECT
+    private DFQLNode transferColumns;
+    // TOKENIZE
+    private DFQLNode tokenizeInputColumn;
+    // USING
+    private DFQLNode ingestProcessor;
+    // FROM
+    private List<TypedDFQLDataFrameNode> dataFrames;
+
+    /**
+     * 
+     */
+    public TypedDFQLTokenizerStatementNode( DFQLNode transferColumns, DFQLNode tokenizeInputColumn, DFQLNode ingestProcessor,
+                    List<TypedDFQLDataFrameNode> dataFrames ) {
+        this.transferColumns = transferColumns;
+        this.tokenizeInputColumn = tokenizeInputColumn;
+        this.ingestProcessor = ingestProcessor;
+        this.dataFrames = dataFrames;
+    }
+
+    public DFQLNode getTransferColumns() {
+        return transferColumns;
+    }
+
+    public DFQLNode getTokenizeInputColumn() {
+        return tokenizeInputColumn;
+    }
+
+    public DFQLNode getIngestProcessor() {
+        return ingestProcessor;
+    }
+
+    public List<TypedDFQLDataFrameNode> getDataFrames() {
+        return dataFrames;
+    }
 
     /** 
      * {@inheritDoc}

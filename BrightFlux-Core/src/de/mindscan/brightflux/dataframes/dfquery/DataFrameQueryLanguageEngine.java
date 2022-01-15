@@ -168,7 +168,7 @@ public class DataFrameQueryLanguageEngine {
 //            DFQLNode transferColumns = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrameDirectTransferColumns(), df );
 //            DFQLNode 
 
-            return new TypedDFQLTokenizerStatementNode();
+            return new TypedDFQLTokenizerStatementNode( null, null, null, null );
         }
         else if (node instanceof DFQLCallbackStatementNode) {
 
