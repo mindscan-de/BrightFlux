@@ -54,6 +54,8 @@ public class DataFrameTokenizerJobCompileStrategy {
         // TODO: extract the name of the column 
         String columnToTokenize = null;
 
+        // TODO: XXX: add missing the ingestProcessorName
+
         return new DataFrameTokenizerJobImpl( dataFrame, columnsToTransfer, columnToTokenize );
     }
 
