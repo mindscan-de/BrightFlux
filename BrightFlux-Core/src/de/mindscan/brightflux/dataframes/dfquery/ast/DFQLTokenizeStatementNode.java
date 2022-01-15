@@ -96,8 +96,18 @@ public class DFQLTokenizeStatementNode implements DFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        // TODO Auto-generated method stub
-        return null;
+        StringBuilder sb = new StringBuilder();
+
+        sb.append( "SELECT " );
+        sb.append( directTransferColumnsList.describeNodeOperation() );
+        sb.append( " TOKENIZE " );
+        sb.append( tokenizedColumn.describeNodeOperation() );
+        sb.append( " USING " );
+        sb.append( tokenizerName.describeNodeOperation() );
+        sb.append( " FROM " );
+        sb.append( dataFrames.describeNodeOperation() );
+
+        return sb.toString();
     }
 
     /** 
