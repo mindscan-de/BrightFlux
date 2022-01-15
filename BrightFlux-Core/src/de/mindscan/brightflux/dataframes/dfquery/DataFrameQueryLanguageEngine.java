@@ -129,7 +129,7 @@ public class DataFrameQueryLanguageEngine {
         return df;
     }
 
-    public DataFrame executeDFTokenize( DataFrame df, String query, Function<Void, DataFrame> jobToDataFrameExecutor ) {
+    public DataFrame executeDFTokenize( DataFrame df, String query, Function<DataFrameTokenizerJob, DataFrame> jobToDataFrameExecutor ) {
         DataFrameQueryLanguageParser parser = createParser( query );
 
         DFQLTokenizeStatementNode statement = (DFQLTokenizeStatementNode) parser.parseDFQLStatement();
@@ -137,9 +137,8 @@ public class DataFrameQueryLanguageEngine {
 
         // Now use the compiler to compile that to a job
         DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
-        // job = compiler.compileToTokenizerJob
+        DataFrameTokenizerJob job = compiler.compileToTokenizerJob( transformed );
 
-        Void job = null;
         return jobToDataFrameExecutor.apply( job );
     }
 
