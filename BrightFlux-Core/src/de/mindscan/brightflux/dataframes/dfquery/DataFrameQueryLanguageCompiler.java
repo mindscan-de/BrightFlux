@@ -33,6 +33,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.compiler.DataFrameTokenizerJobCompileStrategy;
 import de.mindscan.brightflux.dataframes.dfquery.compiler.RowFilterPredicateCompileStrategy;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
@@ -47,15 +48,14 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 public class DataFrameQueryLanguageCompiler {
 
     private RowFilterPredicateCompileStrategy rowFilterStrategy = new RowFilterPredicateCompileStrategy();
-
-    // TODO: ColumnColumn Predicate
-    // TODO: PredicatePredicate Predicate
-    // TODO: BiBi Predicate
-
-    // TODO: boolean predicate functions like contains, startsWith, endsWith, and "not"
+    private DataFrameTokenizerJobCompileStrategy dfTokenizerJobStrategy = new DataFrameTokenizerJobCompileStrategy();
 
     public DataFrameRowFilterPredicate compileToRowFilterPredicate( DFQLNode node ) {
         return rowFilterStrategy.compile( node );
+    }
+
+    public DataFrameTokenizerJob compileToTokenizerJob( DFQLNode node ) {
+        return dfTokenizerJobStrategy.compile( node );
     }
 
     public List<String> getColumNamesAsStrings( DFQLNode node ) {
