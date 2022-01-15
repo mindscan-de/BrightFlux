@@ -171,7 +171,8 @@ public class DataFrameQueryLanguageParser {
         tokenizerStatement.setDataFrameDirectTransferColumns( parsedColumnList );
 
         // collect the dataframe columnname which we want to tokenize...
-        // TODO: 
+        DFQLNode tokenizedColumn = parseMemberSelection();
+        tokenizerStatement.setTokenizedColumn( tokenizedColumn );
 
         if (!tryAndAcceptToken( DFQLTokens.KEYWORDS_USING )) {
             throw new NotYetImplemetedException( "FROM token expected in SELECT ... TOKENIZE ... <USING>" );

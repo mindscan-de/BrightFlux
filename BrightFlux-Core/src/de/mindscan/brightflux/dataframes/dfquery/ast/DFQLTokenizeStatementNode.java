@@ -32,7 +32,7 @@ public class DFQLTokenizeStatementNode implements DFQLNode {
 
     private DFQLNode directTransferColumnsList;
     private DFQLNode tokenizerName;
-    // TODO: the columname 
+    private DFQLNode tokenizedColumn;
     private DFQLNode dataFrames;
 
     /**
@@ -75,6 +75,20 @@ public class DFQLTokenizeStatementNode implements DFQLNode {
      */
     public DFQLNode getTokenizerName() {
         return tokenizerName;
+    }
+
+    /**
+     * @param tokenizedColumn
+     */
+    public void setTokenizedColumn( DFQLNode tokenizedColumn ) {
+        this.tokenizedColumn = tokenizedColumn;
+    }
+
+    /**
+     * @return the tokenizedColumn
+     */
+    public DFQLNode getTokenizedColumn() {
+        return tokenizedColumn;
     }
 
     /** 
