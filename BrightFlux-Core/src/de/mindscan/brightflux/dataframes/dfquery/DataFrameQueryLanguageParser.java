@@ -170,16 +170,19 @@ public class DataFrameQueryLanguageParser {
         DFQLTokenizeStatementNode tokenizerStatement = new DFQLTokenizeStatementNode();
         tokenizerStatement.setDataFrameDirectTransferColumns( parsedColumnList );
 
-        // collect the dataframe columnname which we want to access...
+        // collect the dataframe columnname which we want to tokenize...
+        // TODO: 
 
         if (!tryAndAcceptToken( DFQLTokens.KEYWORDS_USING )) {
-
+            throw new NotYetImplemetedException( "FROM token expected in SELECT ... TOKENIZE ... <USING>" );
         }
 
-        // collect class name which impements the dataframe tokenizer 
+        // collect class name which impements the dataframe tokenizer / literal can be more than a string....
+        DFQLNode tokenizername = parseLiteral();
+        tokenizerStatement.setTokenizerName( tokenizername );
 
         if (!tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
-
+            throw new NotYetImplemetedException( "FROM token expected in SELECT ... TOKENIZE ... USING .... <FROM>" );
         }
 
         // collect data frame names
