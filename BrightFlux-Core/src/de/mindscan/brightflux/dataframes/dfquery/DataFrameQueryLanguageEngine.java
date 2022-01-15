@@ -30,6 +30,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -45,11 +46,13 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
+import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLTokenizeStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLTokenizerStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
 import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 
@@ -124,6 +127,20 @@ public class DataFrameQueryLanguageEngine {
         }
 
         return df;
+    }
+
+    public DataFrame executeDFTokenize( DataFrame df, String query, Function<Void, DataFrame> jobToDataFrameExecutor ) {
+        DataFrameQueryLanguageParser parser = createParser( query );
+
+        DFQLTokenizeStatementNode statement = (DFQLTokenizeStatementNode) parser.parseDFQLStatement();
+        TypedDFQLTokenizerStatementNode transformed = (TypedDFQLTokenizerStatementNode) transformAST( statement, df );
+
+        // Now use the compiler to compile that to a job
+        DataFrameQueryLanguageCompiler compiler = new DataFrameQueryLanguageCompiler();
+        // job = compiler.compileToTokenizerJob
+
+        Void job = null;
+        return jobToDataFrameExecutor.apply( job );
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
