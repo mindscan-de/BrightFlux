@@ -163,6 +163,14 @@ public class DataFrameQueryLanguageEngine {
             // TODO transform AST of the table selection
             return new TypedDFQLSelectStatementNode( selectedColumns, new ArrayList<>(), transformedWhere );
         }
+        else if (node instanceof DFQLTokenizeStatementNode) {
+
+            // TODO: continue here...
+//            DFQLNode transferColumns = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrameDirectTransferColumns(), df );
+//            DFQLNode 
+
+            return new TypedDFQLTokenizerStatementNode();
+        }
         else if (node instanceof DFQLCallbackStatementNode) {
 
             DFQLNode callbackIdentifier = transformAST( ((DFQLCallbackStatementNode) node).getCallBackIdentifier(), df );
