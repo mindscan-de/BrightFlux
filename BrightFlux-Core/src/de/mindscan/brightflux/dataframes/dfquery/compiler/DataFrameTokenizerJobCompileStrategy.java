@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.compiler;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.dfquery.DataFrameTokenizerJob;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLTokenizerStatementNode;
@@ -45,8 +46,15 @@ public class DataFrameTokenizerJobCompileStrategy {
     }
 
     private DataFrameTokenizerJob compile_TypedDFQLTokenizerStatementNode( TypedDFQLTokenizerStatementNode node ) {
-        // TODO Auto-generated method stub
-        return null;
+
+        // TODO: extract the node
+        DataFrame dataFrame = null;
+        // TODO: extract the column names 
+        String[] columnsToTransfer = null;
+        // TODO: extract the name of the column 
+        String columnToTokenize = null;
+
+        return new DataFrameTokenizerJobImpl( dataFrame, columnsToTransfer, columnToTokenize );
     }
 
 }
