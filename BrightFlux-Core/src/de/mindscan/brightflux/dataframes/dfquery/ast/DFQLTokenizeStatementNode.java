@@ -31,6 +31,9 @@ package de.mindscan.brightflux.dataframes.dfquery.ast;
 public class DFQLTokenizeStatementNode implements DFQLNode {
 
     private DFQLNode directTransferColumnsList;
+    // TODO: the tokenizername
+    // TODO: the columname 
+    private DFQLNode dataFrames;
 
     /**
      * @param directTransferColumnsList
@@ -44,6 +47,20 @@ public class DFQLTokenizeStatementNode implements DFQLNode {
      */
     public DFQLNode getDataFrameDirectTransferColumns() {
         return directTransferColumnsList;
+    }
+
+    /**
+     * @param dataFrames
+     */
+    public void setDataFrames( DFQLNode dataFrames ) {
+        this.dataFrames = dataFrames;
+    }
+
+    /**
+     * @return the dataFrames
+     */
+    public DFQLNode getDataFrames() {
+        return dataFrames;
     }
 
     /** 

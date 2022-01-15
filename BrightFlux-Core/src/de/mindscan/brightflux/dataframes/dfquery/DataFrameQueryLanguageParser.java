@@ -182,7 +182,9 @@ public class DataFrameQueryLanguageParser {
 
         }
 
-        // collect dataframe name
+        // collect data frame names
+        DFQLNode parsedDataFrames = parseSelectStatementDataframeList();
+        tokenizerStatement.setDataFrames( parsedDataFrames );
 
         throw new NotYetImplemetedException( "the tokenize command is not yet fully implemented" );
     }
