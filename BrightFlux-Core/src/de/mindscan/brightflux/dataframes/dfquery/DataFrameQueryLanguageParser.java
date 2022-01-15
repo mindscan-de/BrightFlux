@@ -136,11 +136,11 @@ public class DataFrameQueryLanguageParser {
         // parseSelectStatementColumnList
         DFQLNode parsedColumnList = parseSelectStatementColumnList();
 
-        if (tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
-            return parseDFQLSelectFromStatement( parsedColumnList );
-        }
-        else if (tryAndAcceptToken( DFQLTokens.KEYWORD_TOKENIZE )) {
+        if (tryAndAcceptToken( DFQLTokens.KEYWORD_TOKENIZE )) {
             return parseDFQLSelectTokenizeStatement( parsedColumnList );
+        }
+        else if (tryAndAcceptToken( DFQLTokens.KEYWORD_FROM )) {
+            return parseDFQLSelectFromStatement( parsedColumnList );
         }
         else {
             throw new NotYetImplemetedException( "" );
@@ -190,13 +190,14 @@ public class DataFrameQueryLanguageParser {
         DFQLNode parsedDataFrames = parseSelectStatementDataframeList();
         tokenizerStatement.setDataFrames( parsedDataFrames );
 
-        throw new NotYetImplemetedException( "the tokenize command is not yet fully implemented" );
+        return tokenizerStatement;
     }
 
     public DFQLNode parseSelectStatementColumnList() {
         DFQLListNode columnList = new DFQLListNode();
 
-        while (!tryToken( DFQLTokens.KEYWORD_FROM )) {
+        // TODO: actually improve the Token-STOP collection here for everything which can follow a SelectStatementColumnList
+        while (!(tryToken( DFQLTokens.KEYWORD_FROM ) || (tryToken( DFQLTokens.KEYWORD_TOKENIZE )))) {
             if (tryAndAcceptToken( DFQLTokens.OPERATOR_STAR )) {
                 columnList.append( new DFQLIdentifierNode( "*" ) );
             }

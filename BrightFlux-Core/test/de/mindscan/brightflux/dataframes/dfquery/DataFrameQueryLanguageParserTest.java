@@ -722,4 +722,17 @@ public class DataFrameQueryLanguageParserTest {
         return parser;
     }
 
+    @Test
+    public void testParseDFQLSelectStatement_Tokenizerelection_expectSameQuery() throws Exception {
+        String dfqlQuery = "SELECT '__idx','__orgidx' TOKENIZE df.'abc' USING 'XYZ' FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT '__idx','__orgidx' TOKENIZE df.'abc' USING 'XYZ' FROM df" );
+
+    }
+
 }
