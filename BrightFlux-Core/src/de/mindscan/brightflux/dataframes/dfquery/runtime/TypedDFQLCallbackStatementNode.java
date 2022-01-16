@@ -79,4 +79,11 @@ public class TypedDFQLCallbackStatementNode implements TypedDFQLNode {
         return callbackIdentifier;
     }
 
+    /**
+     * @return the dataFrames
+     */
+    public List<TypedDFQLDataFrameNode> getDataFrames() {
+        return dataFrames;
+    }
+
 }
