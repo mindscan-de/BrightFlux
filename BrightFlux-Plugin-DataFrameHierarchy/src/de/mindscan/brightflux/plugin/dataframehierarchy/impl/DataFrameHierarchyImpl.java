@@ -46,9 +46,8 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     private Map<UUID, DataFrameHierarchyNode> nodes = new LinkedHashMap<>();
 
     /** 
-     * {@inheritDoc}
+     *
      */
-    @Override
     public void addLeafNode( DataFrame dataFrame, UUID parentDataFrameUUID ) {
         //
         DataFrameHierarchyNode parentNode = nodes.get( parentDataFrameUUID );
@@ -58,9 +57,8 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     }
 
     /** 
-     * {@inheritDoc}
+     *
      */
-    @Override
     public void addRootNode( DataFrame dataFrame ) {
         DataFrameHierarchNodeImpl newRootNode = new DataFrameHierarchNodeImpl( dataFrame.getName(), dataFrame.getUuid(), null );
         nodes.put( dataFrame.getUuid(), newRootNode );
@@ -68,9 +66,8 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
     }
 
     /** 
-     * {@inheritDoc}
+     *
      */
-    @Override
     public void removeNode( DataFrame dataFrame ) {
         UUID uuid = dataFrame.getUuid();
 

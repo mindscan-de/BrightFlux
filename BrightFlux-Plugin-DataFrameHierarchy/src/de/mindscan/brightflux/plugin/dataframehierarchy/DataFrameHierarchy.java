@@ -28,8 +28,6 @@ package de.mindscan.brightflux.plugin.dataframehierarchy;
 import java.util.List;
 import java.util.UUID;
 
-import de.mindscan.brightflux.dataframes.DataFrame;
-
 /**
  * 
  */
@@ -61,28 +59,5 @@ public interface DataFrameHierarchy {
      * @param currentSelectedID
      */
     DataFrameHierarchyNode getNodeByUUID( UUID currentSelectedID );
-
-    // --------
-    // OBSOLETE
-    // --------    
-
-    // TODO: remove this from the Interface - Interface after refactoring exposes too much
-    /**
-     * @param dataFrame
-     * @param parentUUID 
-     */
-    void addLeafNode( DataFrame dataFrame, UUID parentUUID );
-
-    // TODO: remove this from the Interface - Interface after refactoring exposes too much
-    /**
-     * @param dataFrame
-     */
-    void addRootNode( DataFrame dataFrame );
-
-    // TODO: remove this from the Interface - Interface after refactoring exposes too much
-    /**
-     * @param dataFrame
-     */
-    void removeNode( DataFrame dataFrame );
 
 }
