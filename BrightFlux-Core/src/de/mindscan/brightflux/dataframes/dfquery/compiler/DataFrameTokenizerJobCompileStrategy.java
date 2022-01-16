@@ -53,8 +53,12 @@ public class DataFrameTokenizerJobCompileStrategy {
 
     private DataFrameTokenizerJob compile_TypedDFQLTokenizerStatementNode( TypedDFQLTokenizerStatementNode node ) {
 
-        // TODO: extract the node
-        DataFrame dataFrame = null;
+        List<DataFrame> extractedDataframes = CompilerUtils.extractDataframesAsList( node.getDataFrames() );
+        if (extractedDataframes.size() == 0) {
+            throw new NotYetImplemetedException( "No dataframes found in given node." );
+        }
+        // extract the first node
+        DataFrame dataFrame = extractedDataframes.get( 0 );
 
         // extract the column names
         List<String> columns = CompilerUtils.extractColumnNamesAsStringList( node.getTransferColumns() );
