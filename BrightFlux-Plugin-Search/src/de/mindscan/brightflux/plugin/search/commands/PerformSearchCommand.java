@@ -28,6 +28,7 @@ package de.mindscan.brightflux.plugin.search.commands;
 import java.util.function.Consumer;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.framework.command.BFBackgroundCommand;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.plugin.search.SearchComponent;
@@ -40,7 +41,7 @@ import de.mindscan.brightflux.system.services.SystemServices;
 /**
  * 
  */
-public class PerformSearchCommand implements BFCommand {
+public class PerformSearchCommand implements BFCommand, BFBackgroundCommand {
 
     private String userQuery;
     @SuppressWarnings( "unused" )
