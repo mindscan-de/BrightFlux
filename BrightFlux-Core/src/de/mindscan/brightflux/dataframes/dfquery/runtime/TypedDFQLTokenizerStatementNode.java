@@ -75,7 +75,6 @@ public class TypedDFQLTokenizerStatementNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperation() {
-        // TODO Auto-generated method stub
         return null;
     }
 
@@ -84,7 +83,6 @@ public class TypedDFQLTokenizerStatementNode implements TypedDFQLNode {
      */
     @Override
     public String describeNodeOperationDebug() {
-        // TODO Auto-generated method stub
         return null;
     }
 
