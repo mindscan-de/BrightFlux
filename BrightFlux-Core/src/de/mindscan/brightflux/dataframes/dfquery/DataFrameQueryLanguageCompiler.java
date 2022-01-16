@@ -58,9 +58,9 @@ public class DataFrameQueryLanguageCompiler {
         return dfTokenizerJobStrategy.compile( node );
     }
 
-    public List<String> getColumNamesAsStrings( DFQLNode node ) {
+    public static List<String> getColumNamesAsStrings( DFQLNode node ) {
         if (node instanceof DFQLListNode) {
-            return ((DFQLListNode) node).getNodes().stream().map( this::columnNameExtractor ).collect( Collectors.toList() );
+            return ((DFQLListNode) node).getNodes().stream().map( DataFrameQueryLanguageCompiler::columnNameExtractor ).collect( Collectors.toList() );
         }
         else if (node instanceof TypedDFQLSelectStatementNode) {
             return getColumNamesAsStrings( ((TypedDFQLSelectStatementNode) node).getSelectedColumns() );
@@ -69,7 +69,7 @@ public class DataFrameQueryLanguageCompiler {
         throw new NotYetImplemetedException();
     }
 
-    private String columnNameExtractor( DFQLNode node ) {
+    private static String columnNameExtractor( DFQLNode node ) {
         if (node instanceof DFQLIdentifierNode) {
             // Actually this should not happen...
             return (String) ((DFQLIdentifierNode) node).getRawValue();
