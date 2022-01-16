@@ -28,11 +28,13 @@ package de.mindscan.brightflux.dataframes.dfquery.compiler;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLIdentifierNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLListNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
+import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
@@ -65,6 +67,12 @@ public class CompilerUtils {
         }
 
         throw new NotYetImplemetedException();
+    }
+
+    public static List<DataFrame> extractDataframesAsList( List<TypedDFQLDataFrameNode> list ) {
+        List<DataFrame> collected = list.stream().map( node -> node.getDataFrame() ).collect( Collectors.toList() );
+
+        return collected;
     }
 
 }
