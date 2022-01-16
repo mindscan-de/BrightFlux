@@ -38,4 +38,5 @@ public interface DataFrameTokenizerJob {
 
     String getInputColumnNameToTokenize();
 
+    String getIngestProcessorName();
 }

@@ -36,14 +36,16 @@ public class DataFrameTokenizerJobImpl implements DataFrameTokenizerJob {
     private DataFrame dataFrame;
     private String[] columnsToTransfer;
     private String columnToTokenize;
+    private String ingestProcessorName;
 
     /**
      * 
      */
-    public DataFrameTokenizerJobImpl( DataFrame dataFrame, String[] columnsToTransfer, String columnToTokenize ) {
+    public DataFrameTokenizerJobImpl( DataFrame dataFrame, String[] columnsToTransfer, String columnToTokenize, String ingestProcessorName ) {
         this.dataFrame = dataFrame;
         this.columnsToTransfer = columnsToTransfer;
         this.columnToTokenize = columnToTokenize;
+        this.ingestProcessorName = ingestProcessorName;
     }
 
     /** 
@@ -68,6 +70,14 @@ public class DataFrameTokenizerJobImpl implements DataFrameTokenizerJob {
     @Override
     public String getInputColumnNameToTokenize() {
         return columnToTokenize;
+    }
+
+    /**
+     * @return the ingestionProvider
+     */
+    @Override
+    public String getIngestProcessorName() {
+        return ingestProcessorName;
     }
 
 }
