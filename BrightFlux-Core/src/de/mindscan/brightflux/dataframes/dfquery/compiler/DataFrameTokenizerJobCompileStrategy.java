@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery.compiler;
 
+import java.util.List;
+
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.dfquery.DataFrameTokenizerJob;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
@@ -32,7 +34,11 @@ import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLTokenizerState
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
- * We want to compile a tokenizer command, wich can be executed by the ingest
+ * 
+ * This class implements a compiler from a TypedDFQLTokenizerStatementNode into a DataFrameTokenizerJob,
+ * represented by an instance of DataFrameTokenizerJobImpl. This Job is meant to be executed by an ingest
+ * engine to create a new data frame from a given data frame using a specialized tokenizer.
+ *  
  */
 public class DataFrameTokenizerJobCompileStrategy {
 
@@ -49,12 +55,16 @@ public class DataFrameTokenizerJobCompileStrategy {
 
         // TODO: extract the node
         DataFrame dataFrame = null;
-        // TODO: extract the column names 
-        String[] columnsToTransfer = null;
-        // TODO: extract the name of the column 
-        String columnToTokenize = null;
-        // TODO: missing the ingestProcessorName
-        String ingestionProcessorName = null;
+
+        // extract the column names
+        List<String> columns = CompilerUtils.extractColumnNamesAsStringList( node.getTransferColumns() );
+        String[] columnsToTransfer = columns.toArray( new String[0] );
+
+        // extract the name of the column 
+        String columnToTokenize = CompilerUtils.extractColumnName( node.getTokenizeInputColumn() );
+
+        // extract the ingestProcessorName
+        String ingestionProcessorName = CompilerUtils.extractColumnName( node.getIngestProcessor() );
 
         return new DataFrameTokenizerJobImpl( dataFrame, columnsToTransfer, columnToTokenize, ingestionProcessorName );
     }
