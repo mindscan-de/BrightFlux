@@ -170,11 +170,12 @@ public class JobConfiguration {
             case MODE_PATH:
                 return "LOAD '" + getIngestInputPath() + "' as df";
             case MODE_DATAFRAME:
-                // SELECT df.'', df.'' TOKENIZE df.'columnname' USING '' FROM df;
                 String allTransferColumns = Arrays.stream( transferColumns ).map( this::columnConverter ).collect( Collectors.joining( ", " ) );
+                String tokenizer = tokenizerConfiguration;
+
                 return "SELECT " + allTransferColumns + // 
                                 " TOKENIZE " + columnConverter( ingestDataFrameInputColumnName ) + //
-                                " USING 'XXX' from df";
+                                " USING '" + tokenizer + "' from df";
 
             default:
                 throw new NotYetImplemetedException( "Could not retrieve the DFQLStatement for this ingest job configuration" );
