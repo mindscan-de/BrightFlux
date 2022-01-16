@@ -160,15 +160,20 @@ public class DataFrameQueryLanguageEngine {
             DFQLNode transformedWhere = transformAST( ((DFQLSelectStatementNode) node).getWhereClause(), df );
 
             // TODO transform AST of the table selection
+            // DFQLNode dataFrames = transformAST( node., df )
+
             return new TypedDFQLSelectStatementNode( selectedColumns, new ArrayList<>(), transformedWhere );
         }
         else if (node instanceof DFQLTokenizeStatementNode) {
 
             // TODO: continue here...
-//            DFQLNode transferColumns = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrameDirectTransferColumns(), df );
-//            DFQLNode 
+            DFQLNode transferColumns = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrameDirectTransferColumns(), df );
+            DFQLNode tokenizeInputColumn = transformAST( ((DFQLTokenizeStatementNode) node).getTokenizedColumn(), df );
+            DFQLNode ingestProcessor = transformAST( ((DFQLTokenizeStatementNode) node).getTokenizerName(), df );
+            // TODO: extract the Dataframes to a list 
+            DFQLNode dataFrames = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrames(), df );
 
-            return new TypedDFQLTokenizerStatementNode( null, null, null, null );
+            return new TypedDFQLTokenizerStatementNode( transferColumns, tokenizeInputColumn, ingestProcessor, null );
         }
         else if (node instanceof DFQLCallbackStatementNode) {
 
