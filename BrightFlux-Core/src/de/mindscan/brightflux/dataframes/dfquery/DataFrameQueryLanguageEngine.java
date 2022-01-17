@@ -166,14 +166,12 @@ public class DataFrameQueryLanguageEngine {
         }
         else if (node instanceof DFQLTokenizeStatementNode) {
 
-            // TODO: continue here...
             DFQLNode transferColumns = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrameDirectTransferColumns(), df );
             DFQLNode tokenizeInputColumn = transformAST( ((DFQLTokenizeStatementNode) node).getTokenizedColumn(), df );
             DFQLNode ingestProcessor = transformAST( ((DFQLTokenizeStatementNode) node).getTokenizerName(), df );
-            // TODO: extract the Dataframes to a list 
-            DFQLNode dataFrames = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrames(), df );
+            DFQLNode dataFramesListNode = transformAST( ((DFQLTokenizeStatementNode) node).getDataFrames(), df );
 
-            return new TypedDFQLTokenizerStatementNode( transferColumns, tokenizeInputColumn, ingestProcessor, null );
+            return new TypedDFQLTokenizerStatementNode( transferColumns, tokenizeInputColumn, ingestProcessor, extractExtract( dataFramesListNode ) );
         }
         else if (node instanceof DFQLCallbackStatementNode) {
 
@@ -237,6 +235,20 @@ public class DataFrameQueryLanguageEngine {
         }
 
         return node;
+    }
+
+    public List<TypedDFQLDataFrameNode> extractExtract( DFQLNode dataFramesListNode ) {
+        return convertFilter( ((DFQLListNode) dataFramesListNode).getNodes() );
+    }
+
+    private List<TypedDFQLDataFrameNode> convertFilter( List<DFQLNode> nodesX ) {
+        List<TypedDFQLDataFrameNode> result = new ArrayList<>();
+        for (DFQLNode dfqlNode : nodesX) {
+            if (dfqlNode instanceof TypedDFQLDataFrameNode) {
+                result.add( (TypedDFQLDataFrameNode) dfqlNode );
+            }
+        }
+        return result;
     }
 
 }
