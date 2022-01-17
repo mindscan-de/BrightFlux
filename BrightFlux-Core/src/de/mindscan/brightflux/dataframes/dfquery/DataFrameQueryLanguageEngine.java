@@ -238,6 +238,12 @@ public class DataFrameQueryLanguageEngine {
     }
 
     public List<TypedDFQLDataFrameNode> extractExtract( DFQLNode dataFramesListNode ) {
+        if (dataFramesListNode instanceof TypedDFQLDataFrameNode) {
+            List<TypedDFQLDataFrameNode> xxx = new ArrayList<>();
+            xxx.add( (TypedDFQLDataFrameNode) dataFramesListNode );
+            return xxx;
+        }
+
         return convertFilter( ((DFQLListNode) dataFramesListNode).getNodes() );
     }
 
