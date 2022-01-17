@@ -13,6 +13,20 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 public class DataFrameQueryLanguageEngineTest {
 
     @Test
+    public void testExecuteDFTokenize_TokenizeStatement_expectInvokesJobRecorder() throws Exception {
+        // arrange
+        DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
+        JobRecorder recorder = Mockito.spy( new JobRecorder() );
+
+        // act
+        DataFrame df = null;
+        engine.executeDFTokenize( df, "SELECT df.'__org_idx', df.'h1.ts' TOKENIZE df.'h1.msg' USING 'myTokenizer' FROM df", recorder::jobRecorder );
+
+        // assert
+        Mockito.verify( recorder, Mockito.times( 1 ) ).jobRecorder( Mockito.any() );
+    }
+
+    @Test
     public void testExecuteDFTokenize_TokenizeStatementExtractColumnNames_expectOrgIdxAndTimestamoAsColumnnamesToTransfer() throws Exception {
         // arrange
         DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
