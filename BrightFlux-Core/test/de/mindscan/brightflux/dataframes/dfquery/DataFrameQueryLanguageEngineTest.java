@@ -2,8 +2,11 @@ package de.mindscan.brightflux.dataframes.dfquery;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.sameInstance;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 
@@ -52,6 +55,21 @@ public class DataFrameQueryLanguageEngineTest {
         // assert
         String result = recorder.getRecordedjob().getIngestProcessorName();
         assertThat( result, equalTo( "myTokenizer" ) );
+    }
+
+    @Test
+    public void testExecuteDFTokenize_TokenizeStatementExtractDataframe_expectSameDataFrame() throws Exception {
+        // arrange
+        DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
+        JobRecorder recorder = new JobRecorder();
+        DataFrame df = Mockito.mock( DataFrame.class, "df" );
+
+        // act
+        engine.executeDFTokenize( df, "SELECT df.'__org_idx', df.'h1.ts' TOKENIZE df.'h1.msg' USING 'myTokenizer' FROM df", recorder::jobRecorder );
+
+        // assert
+        DataFrame result = recorder.getRecordedjob().getDataFrame();
+        assertThat( result, is( sameInstance( df ) ) );
     }
 
 }
