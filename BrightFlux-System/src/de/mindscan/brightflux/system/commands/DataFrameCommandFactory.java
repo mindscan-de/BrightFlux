@@ -35,6 +35,7 @@ import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameFilterCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCBCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryCommand;
+import de.mindscan.brightflux.system.commands.dataframe.DataFrameQueryTokenizeCommand;
 import de.mindscan.brightflux.system.commands.dataframe.DataFrameSelectAndFilterCommand;
 import de.mindscan.brightflux.system.commands.ingest.IngestCommand;
 import de.mindscan.brightflux.system.commands.ingest.IngestSpecialHXX;
@@ -80,6 +81,10 @@ public class DataFrameCommandFactory {
 
     public static BFCommand queryCBDataFrame( DataFrame inputDataFrame, String queryString, Map<String, DataFrameRowQueryCallback> callbacks ) {
         return new DataFrameQueryCBCommand( inputDataFrame, queryString, callbacks );
+    }
+
+    public static BFCommand queryTokenize( DataFrame inputDataFrame, String queryString ) {
+        return new DataFrameQueryTokenizeCommand( inputDataFrame, queryString );
     }
 
     public static BFCommand applyRecipe( DataFrame inputDataFrame, Path recipe ) {
