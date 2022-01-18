@@ -28,7 +28,7 @@ package de.mindscan.brightflux.dataframes.dfquery.compiler;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.dfquery.DataFrameTokenizerJob;
+import de.mindscan.brightflux.dataframes.DataFrameTokenizerJob;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLTokenizerStatementNode;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;

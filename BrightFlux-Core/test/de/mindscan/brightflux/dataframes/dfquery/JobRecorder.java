@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.dataframes.dfquery;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameTokenizerJob;
 
 public class JobRecorder {
     private DataFrameTokenizerJob recordedjob;

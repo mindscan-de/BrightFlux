@@ -26,7 +26,7 @@
 package de.mindscan.brightflux.dataframes.dfquery.compiler;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.dfquery.DataFrameTokenizerJob;
+import de.mindscan.brightflux.dataframes.DataFrameTokenizerJob;
 
 /**
  * 

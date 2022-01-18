@@ -23,9 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.dataframes.dfquery;
-
-import de.mindscan.brightflux.dataframes.DataFrame;
+package de.mindscan.brightflux.dataframes;
 
 /**
  * 
