@@ -213,12 +213,20 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     public void executeQuery( String theQuery ) {
         if (currentSelectedDataFrame != null) {
 
+            String trimmedQuery = theQuery.trim();
+
             // TODO: this is a very ugly workaround, to support rowcallbacks and select statements, we can't do such things forever...
-            if (theQuery.trim().toLowerCase().startsWith( "select" )) {
-                BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
-                this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+            if (trimmedQuery.toLowerCase().startsWith( "select" )) {
+                if (trimmedQuery.toLowerCase().contains( "tokenize " )) {
+                    BFCommand command = DataFrameCommandFactory.queryTokenize( currentSelectedDataFrame, theQuery );
+                    this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                }
+                else {
+                    BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
+                    this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                }
             }
-            else if (theQuery.trim().toLowerCase().startsWith( "rowcallback" )) {
+            else if (trimmedQuery.toLowerCase().startsWith( "rowcallback" )) {
                 BFCommand command = DataFrameCommandFactory.queryCBDataFrame( currentSelectedDataFrame, theQuery,
                                 HighlighterCallbacks.getInstance().getCallbacks() );
                 this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
