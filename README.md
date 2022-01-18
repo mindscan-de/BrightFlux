@@ -72,6 +72,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Support recipes
   * save recipes - A data frame tracks the applied transformations, the applied transformations can be saved
   * apply recipes - data frame can be modified by selecting and applying a recipe
+  * Support recipes with tokenizer instructions
 * A limited DataFrame Query Language is implemented
   * contains, startswith, endswith
   * eq, neq, gt, ge. lt, le
@@ -81,6 +82,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * NOT 
     - very simple mode only the top node can contain a single NOT statement yet
 	- will be extended if i require it.
+  * SELECT ... TOKENIZE
 * A limited GUI is implemented
 * Export the data frame as a CSV file
 * Support for the original row index (in a derived frame)
@@ -161,11 +163,6 @@ DataFrame-Core
 * [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
 
 
-DFQL
-* Support tokenizing via DFQL
-* Support recipes which contain tokenized data frames, such that recipes can be replayed and are creating a tokenized data frame
-
-
 ### Later
 
 Log-Analysis-Case-File / introduce evidence collector
@@ -203,6 +200,7 @@ Search Engine Support
 
 DFQL
 * Support parameterized callbacks ('CALLBACK highlight("red") FROM df WHERE (df.'h2.ts'>1000000000)' instead of 'CALLBACK highlight_red FROM df WHERE (df.'h2.ts'>1000000000)')
+
 
 ### Even Later
 
