@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
 
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
@@ -100,6 +101,8 @@ public interface DataFrame {
     DataFrame query( String query );
 
     DataFrame queryCB( String query, Map<String, DataFrameRowQueryCallback> callbacks );
+
+    DataFrame queryTKN( String query, Function<DataFrameTokenizerJob, DataFrame> jobToDataFrameExecutor );
 
     void appendJournal( DataFrameJournalEntryType entryType, String message );
 

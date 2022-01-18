@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.dataframes.columns.SparseColumn;
@@ -490,6 +491,21 @@ public class DataFrameImpl implements DataFrame {
         }
 
         return this;
+    }
+
+    @Override
+    public DataFrame queryTKN( String query, Function<DataFrameTokenizerJob, DataFrame> jobToDataFrameExecutor ) {
+        try {
+            DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
+
+            DataFrame newDataFrame = engine.executeDFTokenize( this, query, jobToDataFrameExecutor );
+            newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, query );
+            return newDataFrame;
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+            throw new NotYetImplemetedException();
+        }
     }
 
     /** 
