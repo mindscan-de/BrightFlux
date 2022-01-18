@@ -60,6 +60,7 @@ public class JobConfiguration {
     private String ingestMode;
     private String[] transferColumns;
     private String ingestDataFrameInputColumnName;
+    private boolean suppressAppendLog;
 
     /**
      * 
@@ -69,6 +70,7 @@ public class JobConfiguration {
         this.tokenizerFactoryInstance = tokenizerFactoryInstance;
         this.parserFactoryInstance = parserFactoryInstance;
         this.compilerFactoryInstance = compilerFactoryInstance;
+        this.suppressAppendLog = false;
     }
 
     /**
@@ -182,6 +184,14 @@ public class JobConfiguration {
 
     private String columnConverter( String columnName ) {
         return "df.'" + columnName + "'";
+    }
+
+    public void suppressLogAppend( boolean suppressLog ) {
+        this.suppressAppendLog = suppressLog;
+    }
+
+    public boolean isLogAppendSuppressed() {
+        return suppressAppendLog;
     }
 
 }

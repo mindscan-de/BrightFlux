@@ -77,6 +77,7 @@ public class IngestEngine {
         config2.setTokenizerConfiguration( tokenizerJob.getIngestProcessorName() );
         config2.setDataFrameName( "HXX: " + tokenizerJob.getDataFrame().getTitle() );
         config2.setIngestInputDataFrame( tokenizerJob.getDataFrame(), tokenizerJob.getColumnNamesToTransfer(), tokenizerJob.getInputColumnNameToTokenize() );
+        config2.suppressLogAppend( true );
 
         return execute( config2 );
     }
@@ -88,7 +89,9 @@ public class IngestEngine {
         switch (config.getIngestMode()) {
             case JobConfiguration.MODE_DATAFRAME:
                 newDataFrame.appendJournal( config.getIngestDataFrame().getJournal() );
-                newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, config.getOperationAsDFQLStatement() );
+                if (!config.isLogAppendSuppressed()) {
+                    newDataFrame.appendJournal( DataFrameJournalEntryType.TOKENIZE, config.getOperationAsDFQLStatement() );
+                }
                 break;
             case JobConfiguration.MODE_PATH:
                 newDataFrame.appendJournal( DataFrameJournalEntryType.LOAD, config.getOperationAsDFQLStatement() );
