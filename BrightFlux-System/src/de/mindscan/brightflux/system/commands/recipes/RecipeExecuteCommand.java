@@ -39,6 +39,7 @@ import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.ingest.IngestEngine;
 import de.mindscan.brightflux.recipe.BFRecipe;
 import de.mindscan.brightflux.recipe.BFRecipeIO;
 import de.mindscan.brightflux.system.events.BFEventFactory;
@@ -103,13 +104,7 @@ public class RecipeExecuteCommand implements BFCommand {
                         }
                         case TOKENIZE: {
                             String query = msg;
-                            //currentDataFrame =
-
-                            NotYetImplemetedException nyi = new NotYetImplemetedException( "The general tokenizer is not implemented yet." );
-                            // only print the message instead of throwing it, because we want the recipes to contain this tokenizing info, 
-                            // even though we can't execute it right now. 
-                            nyi.printStackTrace();
-
+                            currentDataFrame = currentDataFrame.queryTKN( query, IngestEngine::execute );
                             break;
                         }
                         default:
