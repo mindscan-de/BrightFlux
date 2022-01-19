@@ -163,16 +163,21 @@ DataFrame-Core
 * [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
 
 
+Search Engine
+* show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
+
+
+Report Generator
+* improve report generator with
+  * templates
+  * variables
+  * conversion functions
+  * blocks
+* executive reports / executive summaries
+* technical reports
+
+
 ### Later
-
-Log-Analysis-Case-File / introduce evidence collector
-* Introduce Project Files / "Case"
-* Treat logs like data frames and use transformations on columns
-  * [LACF] save the transformations and data frame configuration to an analysis case file
-* [LACF] log message Annotations
-  * [LACF] save annotations to an analysis case file
-  * [LACF] load annotations from analysis case file for a file
-
 
 Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
@@ -195,14 +200,36 @@ Search Engine Support
 * implement search configurable profiles such as "project a", "project b", "only source", "only json", "lnguage java", "language python","only tests", "no tests"
 * combine profiles to new profiles / have orthogonal profiles
 * better filter options for search in backend - improve to distill metadata search from file search, and use caching for both of them.
-* show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
 
 
 DFQL
 * Support parameterized callbacks ('CALLBACK highlight("red") FROM df WHERE (df.'h2.ts'>1000000000)' instead of 'CALLBACK highlight_red FROM df WHERE (df.'h2.ts'>1000000000)')
 
 
+Machine Learning and Pattern recognition and anomaly Detection on Log-Data 
+* We need Column-Ingest processing to clean up the data / separate the data from meta information e.g. Filename, method name, line of implementation
+* "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found an anomaly
+* Extract / Train / Predict / Classification / Model Update / ML Model Server
+  * using labeling techniques to mark suspicious occurrences and make them available for machine learning training
+  * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threshold
+* NER for log messages
+
+
+Video time stamp Annotations
+* Provide multiple timestamps and time warp between them, in case of edited videos or speed up videos.
+* Maybe provide multiple sync partitions.
+
+
 ### Even Later
+
+Log-Analysis-Case-File / introduce evidence collector
+* Introduce Project Files / "Case"
+* Treat logs like data frames and use transformations on columns
+  * [LACF] save the transformations and data frame configuration to an analysis case file
+* [LACF] log message Annotations
+  * [LACF] save annotations to an analysis case file
+  * [LACF] load annotations from analysis case file for a file
+
 
 Swim lanes
 * swim lanes simply are actually a select statement
@@ -214,15 +241,6 @@ UML Image Generator
 * Create Sequence-Diagrams from Log messages / log data frames
 * Create Activity-Diagrams from Log messages / log data frames
 * have multiple views / diagram options for the same logs to understand particular system behavior
-
-
-Machine Learning and Pattern recognition and anomaly Detection on Log-Data 
-* We need Column-Ingest processing to clean up the data / separate the data from meta information e.g. Filename, method name, line of implementation
-* "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found an anomaly
-* Extract / Train / Predict / Classification / Model Update / ML Model Server
-  * using labeling techniques to mark suspicious occurrences and make them available for machine learning training
-  * like this is "ok", this is "suspicious", this indicates a "problem" in case we see a particular message when some value in the message is bigger than a threshold
-* NER for log messages
 
 
 Support Calculations between Rows or Columns
@@ -243,16 +261,6 @@ UI/UX (est. 8-10 kLOC)
   (overview ruler which is showing the color bars and click-able fullscale positions)
  
   
-Report Generator
-* improve report generator with
-  * templates
-  * variables
-  * conversion functions
-  * blocks
-* executive reports / executive summaries
-* technical reports
-
-
 Rebuild the Event-Pattern and Command-Pattern
 * I think o be able to decouple all the code from each other (compile-wise) i want this system to transition to an Intent-based-System (such that menu entries are provided by visualization intents, requests, broadcast-requests, broadcast events, 1:1 communication using intents and futures, subscriptions and promises). And each plugin can state which intents it subscribes to. So that you can have the command factory and the intent to create a command in the plugin which provides the functionality. And the Buttons and such only fire intents and show menu items providing intents.
 * Worker threads / introduce background tasks. Background command with a marker interface?
