@@ -28,10 +28,8 @@ package de.mindscan.brightflux.ingest;
 import java.nio.file.Path;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
-import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
-import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
+import de.mindscan.brightflux.ingest.engine.JobConfigurationFactory;
 
 /**
  * Use one of these datasets, your column names may vary...
@@ -42,13 +40,7 @@ import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 public class IngestCsv {
 
     public DataFrame loadAsDataFrame( Path path ) {
-        // building the configuration for the data to ingest
-        JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
-                        DataFrameCompilerFactory.getIntance() );
-        config.setTokenizerConfiguration( "CSVTokenizer" );
-        config.setDataFrameName( path.getFileName().toString() );
-        config.setIngestInputFilePath( path );
-
+        JobConfiguration config = JobConfigurationFactory.createJobConfiguration( path, "CSVTokenizer" );
         return IngestEngine.execute( config );
     }
 

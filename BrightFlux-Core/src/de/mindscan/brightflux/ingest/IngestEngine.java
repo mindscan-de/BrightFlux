@@ -35,12 +35,10 @@ import de.mindscan.brightflux.dataframes.DataFrameTokenizerJob;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.compiler.DataFrameCompiler;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
+import de.mindscan.brightflux.ingest.engine.JobConfigurationFactory;
 import de.mindscan.brightflux.ingest.parser.DataFrameParser;
-import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
 import de.mindscan.brightflux.ingest.tokenizers.DataTokenizer;
-import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
 
 /**
  * The first step for the ingest engine is, that it executes one ingest job at a time. Later it can be extended 
@@ -71,15 +69,7 @@ public class IngestEngine {
     }
 
     public static DataFrame execute( DataFrameTokenizerJob tokenizerJob ) {
-        JobConfiguration config2 = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
-                        DataFrameCompilerFactory.getIntance() );
-
-        config2.setTokenizerConfiguration( tokenizerJob.getIngestProcessorName() );
-        config2.setDataFrameName( "HXX: " + tokenizerJob.getDataFrame().getTitle() );
-        config2.setIngestInputDataFrame( tokenizerJob.getDataFrame(), tokenizerJob.getColumnNamesToTransfer(), tokenizerJob.getInputColumnNameToTokenize() );
-        config2.suppressLogAppend( true );
-
-        return execute( config2 );
+        return execute( JobConfigurationFactory.createJobConfiguration( tokenizerJob ) );
     }
 
     public static DataFrame updateDataFrameJournal( JobConfiguration config, DataFrame newDataFrame ) {
