@@ -32,10 +32,8 @@ import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.ingest.IngestEngine;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
-import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
-import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
+import de.mindscan.brightflux.ingest.engine.JobConfigurationFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
@@ -73,8 +71,7 @@ public class IngestSpecialHXX implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
 
-        JobConfiguration config2 = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
-                        DataFrameCompilerFactory.getIntance() );
+        JobConfiguration config2 = JobConfigurationFactory.createJobConfiguration();
 
         config2.setTokenizerConfiguration( "de.mindscan.brightflux.ingest.tokenizers.SpecialHXXTokenizerImpl" );
         config2.setDataFrameName( "HXX: " + contentDataFrame.getTitle() );

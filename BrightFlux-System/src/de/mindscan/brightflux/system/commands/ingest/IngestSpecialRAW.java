@@ -32,10 +32,8 @@ import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.ingest.IngestEngine;
-import de.mindscan.brightflux.ingest.compiler.DataFrameCompilerFactory;
 import de.mindscan.brightflux.ingest.engine.JobConfiguration;
-import de.mindscan.brightflux.ingest.parser.DataFrameParserFactory;
-import de.mindscan.brightflux.ingest.tokenizers.DataTokenizerFactory;
+import de.mindscan.brightflux.ingest.engine.JobConfigurationFactory;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
@@ -62,12 +60,7 @@ public class IngestSpecialRAW implements BFCommand {
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
 
-        JobConfiguration config = new JobConfiguration( DataTokenizerFactory.getInstance(), DataFrameParserFactory.getInstance(),
-                        DataFrameCompilerFactory.getIntance() );
-
-        config.setTokenizerConfiguration( "de.mindscan.brightflux.ingest.tokenizers.SpecialRAWTokenizerImpl" );
-        config.setDataFrameName( path.getFileName().toString() );
-        config.setIngestInputFilePath( path );
+        JobConfiguration config = JobConfigurationFactory.createJobConfiguration( path, "de.mindscan.brightflux.ingest.tokenizers.SpecialRAWTokenizerImpl" );
 
         DataFrame resultDataFrame = IngestEngine.execute( config );
         eventConsumer.accept( BFEventFactory.dataframeLoaded( resultDataFrame ) );
