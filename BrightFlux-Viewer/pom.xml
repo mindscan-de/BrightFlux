@@ -66,6 +66,13 @@
 			<artifactId>BrightFlux-Plugin-DataFrameHierarchy</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency> 
+		<!-- BrightFlux-Plugins-Report -->	
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-Reports</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
+
 
 		
 	
