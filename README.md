@@ -177,16 +177,16 @@ Report Generator
 * technical reports
 
 
-### Later
-
-Annotation and Highlights Improvements
-* Have different annotation frames / highlight frames for each base document and combine via strategy...
-
-
 Reporting
 * Help with writing up the analysis, e.g. using special report templates (e.g. different formats JIRA, or else))
   * use of templates for creating a report
   * also detect different DataFrame types and use different report templates for different DataFrame types
+
+
+### Later
+
+Annotation and Highlights Improvements
+* Have different annotation frames / highlight frames for each base document and combine via strategy...
 
 
 UI/UX
