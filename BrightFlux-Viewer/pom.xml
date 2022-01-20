@@ -89,7 +89,16 @@
 		    <artifactId>org.eclipse.jface</artifactId>
 		    <version>3.20.0</version>
 		</dependency>
-
+		<!-- https://mvnrepository.com/artifact/org.eclipse.wb.rcp/swing2swt -->
+		<dependency>
+		    <groupId>org.eclipse.wb.rcp</groupId>
+		    <artifactId>swing2swt</artifactId>
+		    <version>1.6.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/swing2swt.jar</systemPath>
+		</dependency>
+		
+		
 		
 		<!-- Dependencies for the Unit Tests -->
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
