@@ -23,10 +23,11 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.reportgenerator;
+package de.mindscan.brightflux.plugin.reports;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.reportgenerator.ReportGenerator;
 import de.mindscan.brightflux.system.reportgenerator.impl.ReportGeneratorImpl;
 
 /**
