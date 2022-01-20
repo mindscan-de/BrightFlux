@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.system.reportgenerator.impl;
+package de.mindscan.brightflux.plugin.reports.impl;
 
 import de.mindscan.brightflux.system.reportgenerator.ReportGenerator;
 
