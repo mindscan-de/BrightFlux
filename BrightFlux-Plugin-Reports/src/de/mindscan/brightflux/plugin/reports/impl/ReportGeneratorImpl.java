@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.plugin.reports.impl;
 
-import de.mindscan.brightflux.system.reportgenerator.ReportGenerator;
+import de.mindscan.brightflux.plugin.reports.ReportGenerator;
 
 /**
  * 
