@@ -38,6 +38,13 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
     private ReportGenerator reportGenerator = new ReportGeneratorImpl();
     private ReportGeneratorPersistenceModule persistenceModule;
 
+    /**
+     * 
+     */
+    public ReportGeneratorComponent() {
+        // intentionally left blank for now
+    }
+
     /** 
      * {@inheritDoc}
      */
@@ -51,14 +58,16 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
      * @return the reportGenerator
      */
     public ReportGenerator getReportGenerator() {
+        // TODO: maybe we want a different report generator every time we request one?
         return reportGenerator;
     }
 
-    /**
-     * @param persistenceModule
-     */
     public void setPersistenceModule( ReportGeneratorPersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
+    }
+
+    public ReportGeneratorPersistenceModule getPersistenceModule() {
+        return persistenceModule;
     }
 
 }
