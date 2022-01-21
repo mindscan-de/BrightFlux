@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.plugin.reports;
 
+import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersistenceModule;
+import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersistenceModuleImpl;
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -33,11 +36,19 @@ import de.mindscan.brightflux.system.services.SystemServices;
  */
 public class ReportGeneratorActivator implements StartupParticipant {
 
+    private static final String REPORTGENERATOR_PLUGIN_PERSISTENCE_NAMESPACE = "reportgenerator-plugin";
+
     /**
      * @param systemServices
      */
     public void start( SystemServices systemServices ) {
         ReportGeneratorComponent reportGeneratorService = new ReportGeneratorComponent();
+
+        BasePersistenceModule reportGeneratorPersistenceModule = systemServices.getBasePersistenceModule( REPORTGENERATOR_PLUGIN_PERSISTENCE_NAMESPACE );
+
+        ReportGeneratorPersistenceModule persistenceModule = new ReportGeneratorPersistenceModuleImpl( reportGeneratorPersistenceModule );
+        reportGeneratorService.setPersistenceModule( persistenceModule );
+
         systemServices.registerService( reportGeneratorService, ReportGeneratorComponent.class );
     }
 
