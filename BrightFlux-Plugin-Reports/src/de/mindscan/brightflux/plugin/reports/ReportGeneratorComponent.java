@@ -28,6 +28,7 @@ package de.mindscan.brightflux.plugin.reports;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.reports.impl.ReportGeneratorImpl;
+import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersistenceModule;
 
 /**
  * 
@@ -35,6 +36,7 @@ import de.mindscan.brightflux.plugin.reports.impl.ReportGeneratorImpl;
 public class ReportGeneratorComponent implements ProjectRegistryParticipant {
 
     private ReportGenerator reportGenerator = new ReportGeneratorImpl();
+    private ReportGeneratorPersistenceModule persistenceModule;
 
     /** 
      * {@inheritDoc}
@@ -50,6 +52,13 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
      */
     public ReportGenerator getReportGenerator() {
         return reportGenerator;
+    }
+
+    /**
+     * @param persistenceModule
+     */
+    public void setPersistenceModule( ReportGeneratorPersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
     }
 
 }
