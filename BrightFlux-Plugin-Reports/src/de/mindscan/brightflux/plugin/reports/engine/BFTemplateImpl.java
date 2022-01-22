@@ -78,9 +78,7 @@ public class BFTemplateImpl {
     }
 
     public String renderTemplate( String template, Map<String, String> data ) {
-        List<String> collectedBlockNames = calculateNamedBlocks( template );
-
-        Collections.reverse( collectedBlockNames );
+        List<String> collectedBlockNames = collectBlockNamesReversed( template );
 
         String preProcessedTemplate = template;
         for (String blockName : collectedBlockNames) {
@@ -102,7 +100,7 @@ public class BFTemplateImpl {
         return renderTemplateInternal( preProcessedTemplate, data );
     }
 
-    private List<String> calculateNamedBlocks( String template ) {
+    private List<String> collectBlockNamesReversed( String template ) {
         List<String> collectedBlockNames = new ArrayList<>();
         replace_callback( template, detectBlockStart, new Function<Matcher, String>() {
             /** 
@@ -111,10 +109,10 @@ public class BFTemplateImpl {
             @Override
             public String apply( Matcher m ) {
                 collectedBlockNames.add( m.group( 1 ) );
-                return m.group( 1 );
+                return "";
             }
         } );
-
+        Collections.reverse( collectedBlockNames );
         return collectedBlockNames;
     }
 
