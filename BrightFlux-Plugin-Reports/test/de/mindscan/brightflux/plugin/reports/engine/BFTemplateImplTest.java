@@ -21,4 +21,16 @@ public class BFTemplateImplTest {
         assertThat( result, equalTo( "" ) );
     }
 
+    @Test
+    public void testRenderTemplate_HelloWorldString_returnsHelloWorldString() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( "Hello World!", Collections.emptyMap() );
+
+        // assert
+        assertThat( result, equalTo( "Hello World!" ) );
+    }
+
 }

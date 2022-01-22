@@ -58,6 +58,9 @@ public class BFTemplateImpl {
     }
 
     public String renderTemplate( String template, Object data ) {
-        return "";
+
+        String rendered = template;
+
+        return rendered;
     }
 }
