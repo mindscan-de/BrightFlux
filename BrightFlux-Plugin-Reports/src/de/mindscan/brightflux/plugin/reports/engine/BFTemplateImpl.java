@@ -63,8 +63,11 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class BFTemplateImpl {
 
+    private static final String BEGIN_BLOCK_DETECTOR_STRING = "\\{\\{block:begin:(.+?)\\}\\}";
+    private static final String NAMED_BLOCK_DETECTOR_STRING = "\\{\\{block:begin:%s\\}\\}(.*)\\{\\{block:end:%s\\}\\}";
+
     private static final Pattern pattern = Pattern.compile( "\\{\\{(data|placeBlock):(.+?)\\}\\}" );
-    private static final Pattern detectBlockStart = Pattern.compile( "\\{\\{block:begin:(.+?)\\}\\}" );
+    private static final Pattern detectBlockStart = Pattern.compile( BEGIN_BLOCK_DETECTOR_STRING );
 
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
@@ -82,12 +85,9 @@ public class BFTemplateImpl {
 
         String preProcessedTemplate = template;
         for (String blockName : collectedBlockNames) {
-            Pattern namedBlockReplacer = Pattern.compile( "\\{\\{block:begin:" + blockName + "\\}\\}" + "(.*)" + "\\{\\{block:end:" + blockName + "\\}\\}",
-                            Pattern.DOTALL );
+            String namedBlockDetector = String.format( NAMED_BLOCK_DETECTOR_STRING, blockName, blockName );
+            Pattern namedBlockReplacer = Pattern.compile( namedBlockDetector, Pattern.DOTALL );
             preProcessedTemplate = replace_callback( preProcessedTemplate, namedBlockReplacer, new Function<Matcher, String>() {
-                /** 
-                 * {@inheritDoc}
-                 */
                 @Override
                 public String apply( Matcher m ) {
                     // TODO register this block as a replaceable block
@@ -103,9 +103,6 @@ public class BFTemplateImpl {
     private List<String> collectBlockNamesReversed( String template ) {
         List<String> collectedBlockNames = new ArrayList<>();
         replace_callback( template, detectBlockStart, new Function<Matcher, String>() {
-            /** 
-             * {@inheritDoc}
-             */
             @Override
             public String apply( Matcher m ) {
                 collectedBlockNames.add( m.group( 1 ) );
@@ -119,15 +116,13 @@ public class BFTemplateImpl {
     private String renderTemplateInternal( String template, Map<String, String> data ) {
         String rendered = template;
         rendered = replace_callback( template, pattern, new Function<Matcher, String>() {
-            /** 
-             * {@inheritDoc}
-             */
             @Override
             public String apply( Matcher m ) {
                 switch (m.group( 1 )) {
                     case "data":
                         return data.getOrDefault( m.group( 2 ), "" );
                     case "placeBlock":
+                        // actually we want to render this particular block
                         return "";
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
