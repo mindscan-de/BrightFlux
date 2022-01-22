@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.plugin.reports.engine;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Matcher;
@@ -60,7 +63,8 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class BFTemplateImpl {
 
-    private static final Pattern pattern = Pattern.compile( "\\{\\{(data):(.+?)\\}\\}" );
+    private static final Pattern pattern = Pattern.compile( "\\{\\{(data|placeBlock):(.+?)\\}\\}" );
+    private static final Pattern detectBlockStart = Pattern.compile( "\\{\\{block:begin:(.+?)\\}\\}" );
 
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
@@ -74,9 +78,48 @@ public class BFTemplateImpl {
     }
 
     public String renderTemplate( String template, Map<String, String> data ) {
+        List<String> collectedBlockNames = calculateNamedBlocks( template );
 
+        Collections.reverse( collectedBlockNames );
+
+        String preProcessedTemplate = template;
+        for (String blockName : collectedBlockNames) {
+            Pattern namedBlockReplacer = Pattern.compile( "\\{\\{block:begin:" + blockName + "\\}\\}" + "(.*)" + "\\{\\{block:end:" + blockName + "\\}\\}",
+                            Pattern.DOTALL );
+            preProcessedTemplate = replace_callback( preProcessedTemplate, namedBlockReplacer, new Function<Matcher, String>() {
+                /** 
+                 * {@inheritDoc}
+                 */
+                @Override
+                public String apply( Matcher m ) {
+                    // TODO register this block as a replaceable block
+                    // because we work in reverse order, we are able to replace the inner blocks first.
+                    return "{{placeBlock:" + blockName + ":0}}";
+                }
+            } );
+        }
+
+        return renderTemplateInternal( preProcessedTemplate, data );
+    }
+
+    private List<String> calculateNamedBlocks( String template ) {
+        List<String> collectedBlockNames = new ArrayList<>();
+        replace_callback( template, detectBlockStart, new Function<Matcher, String>() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public String apply( Matcher m ) {
+                collectedBlockNames.add( m.group( 1 ) );
+                return m.group( 1 );
+            }
+        } );
+
+        return collectedBlockNames;
+    }
+
+    private String renderTemplateInternal( String template, Map<String, String> data ) {
         String rendered = template;
-
         rendered = replace_callback( template, pattern, new Function<Matcher, String>() {
             /** 
              * {@inheritDoc}
@@ -86,6 +129,8 @@ public class BFTemplateImpl {
                 switch (m.group( 1 )) {
                     case "data":
                         return data.getOrDefault( m.group( 2 ), "" );
+                    case "placeBlock":
+                        return "";
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
                 }

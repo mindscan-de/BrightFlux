@@ -97,4 +97,20 @@ public class BFTemplateImplTest {
         assertThat( result, equalTo( "Hello BrightFlux User! This is '' serving you." ) );
     }
 
+    @Test
+    public void testRenderTemplate_NoXBlock_returnsPreliminaryAnalysisHeaderAndTwoSomeNewlines() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( "h4. Preliminary Analysis\r\n" + "\r\n" + "{{block:begin:X}}{{data:evidence_description}}\r\n" + "\r\n"
+                        + "{code}\r\n" + "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" + "{{block:end:Y}}\r\n"
+                        + "{code}\r\n" + "\r\n" + "{{block:end:X}}\r\n" + "", templateData );
+
+        // assert
+        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" ) );
+    }
+
 }

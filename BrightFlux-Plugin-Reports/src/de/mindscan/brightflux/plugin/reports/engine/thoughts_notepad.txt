@@ -2,6 +2,8 @@ The basic idea is to provide a template
 
 JiraReportTemplate:
 '''
+h4. Preliminary Analysis
+
 {{block:begin:X}}{{data:evidence_description}}
 
 {code}
