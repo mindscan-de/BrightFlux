@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  */
 public class BFTemplateImpl {
 
-    Pattern pattern = Pattern.compile( "\\{\\{data:(.+)\\}\\}" );
+    Pattern pattern = Pattern.compile( "\\{\\{data:(.+?)\\}\\}" );
 
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
