@@ -85,7 +85,7 @@ public class BFTemplateImpl {
             public String apply( Matcher m ) {
                 switch (m.group( 1 )) {
                     case "data":
-                        return data.get( m.group( 2 ) );
+                        return data.getOrDefault( m.group( 2 ), "" );
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
                 }
