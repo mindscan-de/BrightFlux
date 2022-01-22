@@ -1,0 +1,59 @@
+The basic idea is to provide a template
+
+JiraReportTemplate:
+'''
+{{block:begin:X}}{{data:evidence_description}}
+
+{code}
+{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}
+{{block:end:Y}}
+{code}
+
+{{block:end:X}}
+'''
+
+----
+
+block:X
+  * evidence_description: the text
+
+Block:Y
+  * datarow
+  
+last both together for a non prolonged comment
+
+---
+  
+Block:Y
+  * datarow
+
+
+for a prolonged comment
+
+---
+  
+Block:Y with 
+  * datarow
+  * extracontent: "[..]\n"
+
+for an skip comment.
+  
+---
+  
+  
+VideoReportTemplate:
+'''
+{{block:begin:X}}h5. Analysis of [^{{data:videofilename}}]
+
+The length of the video is {{data:videolength}}:
+{{block:begin:Y}}* {{data:evidence_description}}
+{{block:end:Y}}
+{{block:begin:X}}
+'''
+
+block:X
+  * videofilename
+  * videolength
+
+block:Y
+  * evidence_description
