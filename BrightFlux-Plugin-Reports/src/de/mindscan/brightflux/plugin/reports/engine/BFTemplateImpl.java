@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.plugin.reports.engine;
 
+import static de.mindscan.brightflux.plugin.reports.engine.BFTemplateUtils.replace_callback;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,10 +65,13 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class BFTemplateImpl {
 
+    private static final String DATA_KEYWORD = "data";
+    private static final String PLACE_BLOCK_KEYWORD = "placeBlock";
+
     private static final String BEGIN_BLOCK_DETECTOR_STRING = "\\{\\{block:begin:(.+?)\\}\\}";
     private static final String NAMED_BLOCK_DETECTOR_STRING = "\\{\\{block:begin:%s\\}\\}(.*)\\{\\{block:end:%s\\}\\}";
 
-    private static final Pattern pattern = Pattern.compile( "\\{\\{(data|placeBlock):(.+?)\\}\\}" );
+    private static final Pattern pattern = Pattern.compile( "\\{\\{(" + DATA_KEYWORD + "|" + PLACE_BLOCK_KEYWORD + "):(.+?)\\}\\}" );
     private static final Pattern detectBlockStart = Pattern.compile( BEGIN_BLOCK_DETECTOR_STRING );
 
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
@@ -92,7 +97,7 @@ public class BFTemplateImpl {
                 public String apply( Matcher m ) {
                     // TODO register this block as a replaceable block
                     // because we work in reverse order, we are able to replace the inner blocks first.
-                    return "{{placeBlock:" + blockName + ":0}}";
+                    return "{{" + PLACE_BLOCK_KEYWORD + ":" + blockName + ":-}}";
                 }
             } );
         }
@@ -123,9 +128,9 @@ public class BFTemplateImpl {
             @Override
             public String apply( Matcher m ) {
                 switch (m.group( 1 )) {
-                    case "data":
+                    case DATA_KEYWORD:
                         return data.getOrDefault( m.group( 2 ), "" );
-                    case "placeBlock":
+                    case PLACE_BLOCK_KEYWORD:
                         // actually we want to render this particular block
                         return "";
                     default:
@@ -135,17 +140,6 @@ public class BFTemplateImpl {
         } );
 
         return rendered;
-    }
-
-    private String replace_callback( String template, Pattern pattern, Function<Matcher, String> callback ) {
-        StringBuffer resultString = new StringBuffer();
-        Matcher regexMatcher = pattern.matcher( template );
-        while (regexMatcher.find()) {
-            regexMatcher.appendReplacement( resultString, callback.apply( regexMatcher ) );
-        }
-        regexMatcher.appendTail( resultString );
-
-        return resultString.toString();
     }
 
 }
