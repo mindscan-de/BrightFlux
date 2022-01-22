@@ -30,6 +30,8 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+
 /**
  *
  * 
@@ -81,7 +83,12 @@ public class BFTemplateImpl {
              */
             @Override
             public String apply( Matcher m ) {
-                return data.get( m.group( 2 ) );
+                switch (m.group( 1 )) {
+                    case "data":
+                        return data.get( m.group( 2 ) );
+                    default:
+                        throw new NotYetImplemetedException( "this seems not to be cool right now." );
+                }
             }
         } );
 
