@@ -98,7 +98,38 @@ public class BFTemplateImplTest {
     }
 
     @Test
-    public void testRenderTemplate_NoXBlock_returnsPreliminaryAnalysisHeaderAndTwoSomeNewlines() throws Exception {
+    public void testRenderTemplate_NoBlockGivenDepthOne_returnsPreliminaryAnalysisHeaderAndTwoSomeNewlines() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( "h4. Preliminary Analysis\r\n" + "\r\n" + "{{block:begin:X}}{{data:evidence_description}}\r\n" + "\r\n"
+                        + "{code}\r\n" + "{code}\r\n" + "\r\n" + "{{block:end:X}}\r\n" + "", templateData );
+
+        // assert
+        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" ) );
+    }
+
+    @Test
+    public void testRenderTemplate_OneBlockGivenDepthOne_returnsPreliminaryAndBlockContent() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        // act
+        bfTemplateImpl.block( "X", templateData );
+        String result = bfTemplateImpl.renderTemplate( "h4. Preliminary Analysis\r\n" + "\r\n" + "{{block:begin:X}}{{data:evidence_description}}\r\n" + "\r\n"
+                        + "{code}\r\n" + "{code}\r\n" + "\r\n" + "{{block:end:X}}\r\n" + "", templateData );
+
+        // assert
+        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" ) );
+    }
+
+    @Test
+    public void testRenderTemplate_NoBlockGivenDepthTwo_returnsPreliminaryAnalysisHeaderAndSomeNewlines() throws Exception {
         // arrange
         BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
 

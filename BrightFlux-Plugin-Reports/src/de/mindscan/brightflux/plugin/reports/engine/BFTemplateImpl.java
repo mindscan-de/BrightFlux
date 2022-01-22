@@ -100,6 +100,10 @@ public class BFTemplateImpl {
         return renderTemplateInternal( preProcessedTemplate, data );
     }
 
+    public void block( String blockName, Map<String, String> templateData ) {
+
+    }
+
     private List<String> collectBlockNamesReversed( String template ) {
         List<String> collectedBlockNames = new ArrayList<>();
         replace_callback( template, detectBlockStart, new Function<Matcher, String>() {
