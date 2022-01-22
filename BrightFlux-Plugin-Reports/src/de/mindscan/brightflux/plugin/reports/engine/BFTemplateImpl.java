@@ -60,7 +60,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class BFTemplateImpl {
 
-    Pattern pattern = Pattern.compile( "\\{\\{(data):(.+?)\\}\\}" );
+    private static final Pattern pattern = Pattern.compile( "\\{\\{(data):(.+?)\\}\\}" );
 
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
