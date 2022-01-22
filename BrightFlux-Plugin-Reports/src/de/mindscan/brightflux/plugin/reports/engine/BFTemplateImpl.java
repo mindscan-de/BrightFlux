@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.plugin.reports.engine;
 
+import java.util.Map;
+
 /**
  *
  * 
@@ -53,11 +55,18 @@ package de.mindscan.brightflux.plugin.reports.engine;
  */
 public class BFTemplateImpl {
 
-    public String renderFileTemplate( String templateName, Object data ) {
+    public String renderFileTemplate( String templateName, Map<String, String> data ) {
+        // Read template from file "templateName" and then use renderTemplate
+        String template = readFromFile( templateName );
+
+        return renderTemplate( template, data );
+    }
+
+    private String readFromFile( String templateName ) {
         return "";
     }
 
-    public String renderTemplate( String template, Object data ) {
+    public String renderTemplate( String template, Map<String, String> data ) {
 
         String rendered = template;
 

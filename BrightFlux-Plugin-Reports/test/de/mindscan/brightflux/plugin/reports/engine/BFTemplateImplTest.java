@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,6 +33,21 @@ public class BFTemplateImplTest {
 
         // assert
         assertThat( result, equalTo( "Hello World!" ) );
+    }
+
+    @Test
+    public void testRenderTemplate_NamesHelloString_returnsFilledNamedHelloString() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+        templateData.put( "userName", "BrightFlux User" );
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( "Hello {{data:userName}}!", templateData );
+
+        // assert
+        assertThat( result, equalTo( "Hello BrightFlux User!" ) );
     }
 
 }
