@@ -36,7 +36,7 @@ public class BFTemplateImplTest {
     }
 
     @Test
-    public void testRenderTemplate_NamesHelloString_returnsFilledNamedHelloString() throws Exception {
+    public void testRenderTemplate_NamedHelloString_returnsFilledNamedHelloString() throws Exception {
         // arrange
         BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
 
@@ -48,6 +48,21 @@ public class BFTemplateImplTest {
 
         // assert
         assertThat( result, equalTo( "Hello BrightFlux User!" ) );
+    }
+
+    @Test
+    public void testRenderTemplate_HelloBrightfluxString_returnsFilledHelloBrightfluxString() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+        templateData.put( "userName", "BrightFlux" );
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( "Hello {{data:userName}}!", templateData );
+
+        // assert
+        assertThat( result, equalTo( "Hello BrightFlux!" ) );
     }
 
 }
