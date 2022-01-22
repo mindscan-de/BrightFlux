@@ -81,4 +81,20 @@ public class BFTemplateImplTest {
         assertThat( result, equalTo( "Hello BrightFlux User! This is 'BrightFlux Engine' serving you." ) );
     }
 
+    @Test
+    public void testRenderTemplate_TwoDataFieldsButOnlyUserNameFilled_returnsFilledUserNameAndEmptyEngineNameString() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+        templateData.put( "userName", "BrightFlux User" );
+        // templateData.put( "engineName", "BrightFlux Engine" );
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( "Hello {{data:userName}}! This is '{{data:engineName}}' serving you.", templateData );
+
+        // assert
+        assertThat( result, equalTo( "Hello BrightFlux User! This is '' serving you." ) );
+    }
+
 }
