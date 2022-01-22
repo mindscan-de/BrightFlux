@@ -26,6 +26,9 @@
 package de.mindscan.brightflux.plugin.reports.engine;
 
 import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -55,6 +58,8 @@ import java.util.Map;
  */
 public class BFTemplateImpl {
 
+    Pattern pattern = Pattern.compile( "\\{\\{data:(.+)\\}\\}" );
+
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
         String template = readFromFile( templateName );
@@ -70,6 +75,20 @@ public class BFTemplateImpl {
 
         String rendered = template;
 
+        rendered = replace_callback( template, pattern, m -> data.get( m.group( 1 ) ) );
+
         return rendered;
     }
+
+    private String replace_callback( String template, Pattern pattern, Function<Matcher, String> callback ) {
+        StringBuffer resultString = new StringBuffer();
+        Matcher regexMatcher = pattern.matcher( template );
+        while (regexMatcher.find()) {
+            regexMatcher.appendReplacement( resultString, callback.apply( regexMatcher ) );
+        }
+        regexMatcher.appendTail( resultString );
+
+        return resultString.toString();
+    }
+
 }
