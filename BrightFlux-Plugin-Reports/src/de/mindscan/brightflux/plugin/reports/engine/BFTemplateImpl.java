@@ -58,7 +58,7 @@ import java.util.regex.Pattern;
  */
 public class BFTemplateImpl {
 
-    Pattern pattern = Pattern.compile( "\\{\\{data:(.+?)\\}\\}" );
+    Pattern pattern = Pattern.compile( "\\{\\{(data):(.+?)\\}\\}" );
 
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
@@ -75,7 +75,15 @@ public class BFTemplateImpl {
 
         String rendered = template;
 
-        rendered = replace_callback( template, pattern, m -> data.get( m.group( 1 ) ) );
+        rendered = replace_callback( template, pattern, new Function<Matcher, String>() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public String apply( Matcher m ) {
+                return data.get( m.group( 2 ) );
+            }
+        } );
 
         return rendered;
     }
