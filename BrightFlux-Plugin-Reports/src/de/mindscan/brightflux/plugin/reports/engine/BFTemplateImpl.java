@@ -145,8 +145,30 @@ public class BFTemplateImpl {
                         return data.getOrDefault( m.group( 2 ), "" );
                     }
                     case PLACE_BLOCK_KEYWORD: {
+                        String nameAndGeneration = m.group( 2 );
+                        String[] split = nameAndGeneration.split( ":" );
+
+                        if (templateBlockData.isEmpty()) {
+                            return "";
+                        }
+
+                        DFTemplateBlockDataImpl peeked = templateBlockData.peekFirst();
+
+                        if (peeked.isBlockName( split[0] )) {
+                            peeked = templateBlockData.getFirst();
+                            return renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() );
+                        }
+                        else {
+                            return "";
+                        }
+//                          // figure out the name of the block, and check, whether the first element in the list is of correct name
+//                          // if yes, we calculate the replacement, otherwise we render the result empty...
+//                          DFTemplateBlockDataImpl peeked = templateBlockData.peekFirst();
+//                          return renderTemplateInternal( template, data );
+//                      }
+
                         // actually we want to render this particular block
-                        return "";
+                        // return "";
                     }
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );

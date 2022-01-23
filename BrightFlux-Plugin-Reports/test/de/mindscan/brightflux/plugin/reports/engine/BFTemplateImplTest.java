@@ -125,7 +125,7 @@ public class BFTemplateImplTest {
                         + "{code}\r\n" + "{code}\r\n" + "\r\n" + "{{block:end:X}}\r\n" + "", templateData );
 
         // assert
-        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" ) );
+        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" + "\r\n" + "{code}\r\n" + "{code}\r\n" + "\r\n" + "\r\n" ) );
     }
 
     @Test
