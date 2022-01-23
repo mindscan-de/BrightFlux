@@ -148,21 +148,22 @@ public class BFTemplateImpl {
                         String nameAndGeneration = m.group( 2 );
                         String[] split = nameAndGeneration.split( ":" );
 
+                        StringBuilder renderedBlocks = new StringBuilder();
+
                         if (templateBlockData.isEmpty()) {
                             return "";
                         }
+                        else {
+                            BFTemplateBlockData peeked = templateBlockData.peekFirst();
 
-                        BFTemplateBlockData peeked = templateBlockData.peekFirst();
+                            if (peeked.isBlockName( split[0] )) {
+                                // remove the peeked block from list.
+                                peeked = templateBlockData.getFirst();
+                                renderedBlocks.append( renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() ) );
+                            }
 
-                        StringBuilder renderedBlocks = new StringBuilder();
-
-                        if (peeked.isBlockName( split[0] )) {
-                            // remove the peeked block from list.
-                            peeked = templateBlockData.getFirst();
-                            renderedBlocks.append( renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() ) );
+                            return renderedBlocks.toString();
                         }
-
-                        return renderedBlocks.toString();
                     }
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
