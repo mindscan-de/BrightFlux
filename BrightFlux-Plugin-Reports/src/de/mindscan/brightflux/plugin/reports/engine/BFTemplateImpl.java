@@ -150,10 +150,7 @@ public class BFTemplateImpl {
 
                         StringBuilder renderedBlocks = new StringBuilder();
 
-                        if (templateBlockData.isEmpty()) {
-                            return "";
-                        }
-                        else {
+                        if (!templateBlockData.isEmpty()) {
                             BFTemplateBlockData peeked = templateBlockData.peekFirst();
 
                             if (peeked.isBlockName( split[0] )) {
@@ -161,9 +158,9 @@ public class BFTemplateImpl {
                                 peeked = templateBlockData.getFirst();
                                 renderedBlocks.append( renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() ) );
                             }
-
-                            return renderedBlocks.toString();
                         }
+
+                        return renderedBlocks.toString();
                     }
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
