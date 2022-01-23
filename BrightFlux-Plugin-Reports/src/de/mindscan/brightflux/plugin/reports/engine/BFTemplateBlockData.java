@@ -30,31 +30,12 @@ import java.util.Map;
 /**
  * 
  */
-public class BFTemplateBlockDataImpl implements BFTemplateBlockData {
+public interface BFTemplateBlockData {
 
-    private String blockName;
-    private Map<String, String> templateData;
+    Map<String, String> getTemplateData();
 
-    /**
-     * 
-     */
-    public BFTemplateBlockDataImpl( String blockName, Map<String, String> templateData ) {
-        this.blockName = blockName;
-        this.templateData = templateData;
-    }
+    boolean isBlockName( String blockName );
 
-    @Override
-    public String getBlockName() {
-        return blockName;
-    }
+    String getBlockName();
 
-    @Override
-    public boolean isBlockName( String blockName ) {
-        return this.blockName.equals( blockName );
-    }
-
-    @Override
-    public Map<String, String> getTemplateData() {
-        return templateData;
-    }
 }
