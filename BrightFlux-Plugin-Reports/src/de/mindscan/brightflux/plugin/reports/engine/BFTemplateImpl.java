@@ -74,6 +74,10 @@ public class BFTemplateImpl {
     private static final Pattern pattern = Pattern.compile( "\\{\\{(" + DATA_KEYWORD + "|" + PLACE_BLOCK_KEYWORD + "):(.+?)\\}\\}" );
     private static final Pattern detectBlockStart = Pattern.compile( BEGIN_BLOCK_DETECTOR_STRING );
 
+    public BFTemplateImpl() {
+        // intentionally left blank
+    }
+
     public String renderFileTemplate( String templateName, Map<String, String> data ) {
         // Read template from file "templateName" and then use renderTemplate
         String template = readFromFile( templateName );
@@ -86,8 +90,31 @@ public class BFTemplateImpl {
     }
 
     public String renderTemplate( String template, Map<String, String> data ) {
-        List<String> collectedBlockNames = collectBlockNamesReversed( template );
+        List<String> collectedBlockNames = collectBlockNamesReversedOrder( template );
 
+        String preProcessedTemplate = compileTemplateBlockNames( template, collectedBlockNames );
+
+        return renderTemplateInternal( preProcessedTemplate, data );
+    }
+
+    public void block( String blockName, Map<String, String> templateData ) {
+        // TODO: implement the block data registration
+    }
+
+    private List<String> collectBlockNamesReversedOrder( String template ) {
+        List<String> collectedBlockNames = new ArrayList<>();
+        replace_callback( template, detectBlockStart, new Function<Matcher, String>() {
+            @Override
+            public String apply( Matcher m ) {
+                collectedBlockNames.add( m.group( 1 ) );
+                return "";
+            }
+        } );
+        Collections.reverse( collectedBlockNames );
+        return collectedBlockNames;
+    }
+
+    private String compileTemplateBlockNames( String template, List<String> collectedBlockNames ) {
         String preProcessedTemplate = template;
         for (String blockName : collectedBlockNames) {
             String namedBlockDetector = String.format( NAMED_BLOCK_DETECTOR_STRING, blockName, blockName );
@@ -101,25 +128,7 @@ public class BFTemplateImpl {
                 }
             } );
         }
-
-        return renderTemplateInternal( preProcessedTemplate, data );
-    }
-
-    public void block( String blockName, Map<String, String> templateData ) {
-
-    }
-
-    private List<String> collectBlockNamesReversed( String template ) {
-        List<String> collectedBlockNames = new ArrayList<>();
-        replace_callback( template, detectBlockStart, new Function<Matcher, String>() {
-            @Override
-            public String apply( Matcher m ) {
-                collectedBlockNames.add( m.group( 1 ) );
-                return "";
-            }
-        } );
-        Collections.reverse( collectedBlockNames );
-        return collectedBlockNames;
+        return preProcessedTemplate;
     }
 
     private String renderTemplateInternal( String template, Map<String, String> data ) {
