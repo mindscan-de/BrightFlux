@@ -76,7 +76,7 @@ public class BFTemplateImpl {
     private static final Pattern pattern = Pattern.compile( "\\{\\{(" + DATA_KEYWORD + "|" + PLACE_BLOCK_KEYWORD + "):(.+?)\\}\\}" );
     private static final Pattern detectBlockStart = Pattern.compile( BEGIN_BLOCK_DETECTOR_STRING );
 
-    private LinkedList<DFTemplateBlockDataImpl> templateBlockData = new LinkedList<>();
+    private LinkedList<BFTemplateBlockDataImpl> templateBlockData = new LinkedList<>();
     private Map<String, String> templateReplacements = new HashMap<>();
 
     public BFTemplateImpl() {
@@ -103,7 +103,7 @@ public class BFTemplateImpl {
     }
 
     public void block( String blockName, Map<String, String> templateData ) {
-        templateBlockData.add( new DFTemplateBlockDataImpl( blockName, templateData ) );
+        templateBlockData.add( new BFTemplateBlockDataImpl( blockName, templateData ) );
     }
 
     private List<String> collectBlockNamesReversedOrder( String template ) {
@@ -152,7 +152,7 @@ public class BFTemplateImpl {
                             return "";
                         }
 
-                        DFTemplateBlockDataImpl peeked = templateBlockData.peekFirst();
+                        BFTemplateBlockDataImpl peeked = templateBlockData.peekFirst();
 
                         if (peeked.isBlockName( split[0] )) {
                             // remove the peeked block from list.

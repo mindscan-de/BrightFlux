@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * 
  */
-public class DFTemplateBlockDataImpl {
+public class BFTemplateBlockDataImpl {
 
     private String blockName;
     private Map<String, String> templateData;
@@ -38,7 +38,7 @@ public class DFTemplateBlockDataImpl {
     /**
      * 
      */
-    public DFTemplateBlockDataImpl( String blockName, Map<String, String> templateData ) {
+    public BFTemplateBlockDataImpl( String blockName, Map<String, String> templateData ) {
         this.blockName = blockName;
         this.templateData = templateData;
     }
