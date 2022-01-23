@@ -1,6 +1,6 @@
-{{block:begin:X}}h5. Analysis of [^{{data:videofilename}}]
+{{block:begin:VideoFile}}h5. Analysis of [^{{data:videofilename}}]
 
 The length of the video is {{data:videolength}}:
-{{block:begin:Y}}* {{data:videotimestamp}} (video time): {{data:evidence_description}}
-{{block:end:Y}}
-{{block:begin:X}}
+{{block:begin:VideoFilePosition}}* {{data:videotimestamp}} (video time): {{data:evidence_description}}
+{{block:end:VideoFilePosition}}
+{{block:begin:VideoFilde}}
