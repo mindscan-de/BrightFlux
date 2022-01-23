@@ -121,11 +121,29 @@ public class BFTemplateImplTest {
 
         // act
         bfTemplateImpl.block( "X", templateData );
-        String result = bfTemplateImpl.renderTemplate( "h4. Preliminary Analysis\r\n" + "\r\n" + "{{block:begin:X}}{{data:evidence_description}}\r\n" + "\r\n"
-                        + "{code}\r\n" + "{code}\r\n" + "\r\n" + "{{block:end:X}}\r\n" + "", templateData );
+        String result = bfTemplateImpl.renderTemplate( // 
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
 
         // assert
-        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" + "\r\n" + "{code}\r\n" + "{code}\r\n" + "\r\n" + "\r\n" ) );
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" // 
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "" ) );
     }
 
     @Test
