@@ -118,9 +118,10 @@ public class BFTemplateImplTest {
         BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
 
         Map<String, String> templateData = new HashMap<>();
+        Map<String, String> emptyBlockData = new HashMap<>();
 
         // act
-        bfTemplateImpl.block( "X", templateData );
+        bfTemplateImpl.block( "X", emptyBlockData );
         String result = bfTemplateImpl.renderTemplate( // 
                         "h4. Preliminary Analysis\r\n" //
                                         + "\r\n" //
@@ -138,6 +139,43 @@ public class BFTemplateImplTest {
                         "h4. Preliminary Analysis\r\n" // 
                                         + "\r\n" //
                                         + "\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "" ) );
+    }
+
+    @Test
+    public void testRenderTemplate_OneBlockGivenAndBlockDataDepthOne_returnsPreliminaryAndBlockContentWithBlockData() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        Map<String, String> blockData = new HashMap<>();
+        blockData.put( "evidence_description", "XContent One" );
+
+        // act
+        bfTemplateImpl.block( "X", blockData );
+        String result = bfTemplateImpl.renderTemplate( // 
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
+
+        // assert
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" // 
+                                        + "\r\n" //
+                                        + "XContent One\r\n" //
                                         + "\r\n" //
                                         + "{code}\r\n" //
                                         + "{code}\r\n" //
