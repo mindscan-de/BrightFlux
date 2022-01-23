@@ -29,6 +29,8 @@ import static de.mindscan.brightflux.plugin.reports.engine.BFTemplateUtils.repla
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -74,6 +76,9 @@ public class BFTemplateImpl {
     private static final Pattern pattern = Pattern.compile( "\\{\\{(" + DATA_KEYWORD + "|" + PLACE_BLOCK_KEYWORD + "):(.+?)\\}\\}" );
     private static final Pattern detectBlockStart = Pattern.compile( BEGIN_BLOCK_DETECTOR_STRING );
 
+    private LinkedList<DFTemplateBlockDataImpl> templateBlockData = new LinkedList<>();
+    private Map<String, String> templateReplacements = new HashMap<>();
+
     public BFTemplateImpl() {
         // intentionally left blank
     }
@@ -98,7 +103,7 @@ public class BFTemplateImpl {
     }
 
     public void block( String blockName, Map<String, String> templateData ) {
-        // TODO: implement the block data registration
+        templateBlockData.add( new DFTemplateBlockDataImpl( blockName, templateData ) );
     }
 
     private List<String> collectBlockNamesReversedOrder( String template ) {
@@ -122,8 +127,7 @@ public class BFTemplateImpl {
             preProcessedTemplate = replace_callback( preProcessedTemplate, namedBlockReplacer, new Function<Matcher, String>() {
                 @Override
                 public String apply( Matcher m ) {
-                    // TODO register this block as a replaceable block
-                    // because we work in reverse order, we are able to replace the inner blocks first.
+                    templateReplacements.put( blockName, m.group( 1 ) );
                     return "{{" + PLACE_BLOCK_KEYWORD + ":" + blockName + ":-}}";
                 }
             } );
@@ -137,11 +141,13 @@ public class BFTemplateImpl {
             @Override
             public String apply( Matcher m ) {
                 switch (m.group( 1 )) {
-                    case DATA_KEYWORD:
+                    case DATA_KEYWORD: {
                         return data.getOrDefault( m.group( 2 ), "" );
-                    case PLACE_BLOCK_KEYWORD:
+                    }
+                    case PLACE_BLOCK_KEYWORD: {
                         // actually we want to render this particular block
                         return "";
+                    }
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
                 }
