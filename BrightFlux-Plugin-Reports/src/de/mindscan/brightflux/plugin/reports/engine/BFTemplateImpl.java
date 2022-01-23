@@ -154,14 +154,15 @@ public class BFTemplateImpl {
 
                         BFTemplateBlockData peeked = templateBlockData.peekFirst();
 
+                        StringBuilder renderedBlocks = new StringBuilder();
+
                         if (peeked.isBlockName( split[0] )) {
                             // remove the peeked block from list.
                             peeked = templateBlockData.getFirst();
-                            return renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() );
+                            renderedBlocks.append( renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() ) );
                         }
-                        else {
-                            return "";
-                        }
+
+                        return renderedBlocks.toString();
                     }
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
