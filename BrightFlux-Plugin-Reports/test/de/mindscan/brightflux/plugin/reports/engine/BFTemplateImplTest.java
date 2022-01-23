@@ -185,6 +185,54 @@ public class BFTemplateImplTest {
     }
 
     @Test
+    public void testRenderTemplate_TwoBlocksGivenAndBlockDataDepthOne_returnsPreliminaryAndTwoBlocksContentWithBlockData() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        Map<String, String> blockDataOne = new HashMap<>();
+        blockDataOne.put( "evidence_description", "XContent One" );
+        Map<String, String> blockDataTwo = new HashMap<>();
+        blockDataTwo.put( "evidence_description", "XContent Two" );
+
+        // act
+        bfTemplateImpl.block( "X", blockDataOne );
+        bfTemplateImpl.block( "X", blockDataTwo );
+
+        String result = bfTemplateImpl.renderTemplate( // 
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
+
+        // assert
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" // 
+                                        + "\r\n" //
+                                        // Block One
+                                        + "XContent One\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        // Block Two
+                                        + "XContent Two\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "" ) );
+    }
+
+    @Test
     public void testRenderTemplate_NoBlockGivenDepthTwo_returnsPreliminaryAnalysisHeaderAndSomeNewlines() throws Exception {
         // arrange
         BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();

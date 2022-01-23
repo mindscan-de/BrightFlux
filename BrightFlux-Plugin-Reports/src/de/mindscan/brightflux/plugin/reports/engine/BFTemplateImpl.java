@@ -150,13 +150,19 @@ public class BFTemplateImpl {
 
                         StringBuilder renderedBlocks = new StringBuilder();
 
-                        if (!templateBlockData.isEmpty()) {
+                        while (!templateBlockData.isEmpty()) {
                             BFTemplateBlockData peeked = templateBlockData.peekFirst();
 
                             if (peeked.isBlockName( split[0] )) {
                                 // remove the peeked block from list.
-                                peeked = templateBlockData.getFirst();
+                                peeked = templateBlockData.pollFirst();
                                 renderedBlocks.append( renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() ) );
+                            }
+                            else {
+                                break;
+                                // skip this right now...
+//                                peeked = templateBlockData.pollFirst();
+//                                peeked = templateBlockData.peekFirst();
                             }
                         }
 
