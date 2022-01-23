@@ -155,20 +155,13 @@ public class BFTemplateImpl {
                         DFTemplateBlockDataImpl peeked = templateBlockData.peekFirst();
 
                         if (peeked.isBlockName( split[0] )) {
+                            // remove the peeked block from list.
                             peeked = templateBlockData.getFirst();
                             return renderTemplateInternal( templateReplacements.get( split[0] ), peeked.getTemplateData() );
                         }
                         else {
                             return "";
                         }
-//                          // figure out the name of the block, and check, whether the first element in the list is of correct name
-//                          // if yes, we calculate the replacement, otherwise we render the result empty...
-//                          DFTemplateBlockDataImpl peeked = templateBlockData.peekFirst();
-//                          return renderTemplateInternal( template, data );
-//                      }
-
-                        // actually we want to render this particular block
-                        // return "";
                     }
                     default:
                         throw new NotYetImplemetedException( "this seems not to be cool right now." );
