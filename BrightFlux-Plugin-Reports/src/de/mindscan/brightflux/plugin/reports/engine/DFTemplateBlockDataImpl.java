@@ -32,12 +32,26 @@ import java.util.Map;
  */
 public class DFTemplateBlockDataImpl {
 
+    private String blockName;
+    private Map<String, String> templateData;
+
     /**
-     * @param blockName
-     * @param templateData
+     * 
      */
     public DFTemplateBlockDataImpl( String blockName, Map<String, String> templateData ) {
-        // TODO Auto-generated constructor stub
+        this.blockName = blockName;
+        this.templateData = templateData;
     }
 
+    public String getBlockName() {
+        return blockName;
+    }
+
+    public boolean isBlockName( String blockName ) {
+        return this.blockName.equals( blockName );
+    }
+
+    public Map<String, String> getTemplateData() {
+        return templateData;
+    }
 }
