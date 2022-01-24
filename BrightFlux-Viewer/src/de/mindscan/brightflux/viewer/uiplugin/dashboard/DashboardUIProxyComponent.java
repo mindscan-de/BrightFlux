@@ -33,6 +33,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
  */
 public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
 
+    private DashboardWindow dashboard;
+
     /** 
      * {@inheritDoc}
      */
@@ -40,6 +42,25 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         // TODO Auto-generated method stub
 
+    }
+
+    public void registerCurrentActiveDashboardWindow( DashboardWindow dashboard ) {
+        this.dashboard = dashboard;
+    }
+
+    public void unregisterCurrentActiveDashboardWindow() {
+        this.dashboard = null;
+    }
+
+    public boolean hasCurrentActiveDashboardWindow() {
+        return this.dashboard != null;
+    }
+
+    public void focusCurrentActiveDashboardWindow() {
+        if (hasCurrentActiveDashboardWindow()) {
+            // TODO: implement the bring to top operation 
+            // this.dashboard.bringToTop();
+        }
     }
 
 }
