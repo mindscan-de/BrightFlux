@@ -240,12 +240,70 @@ public class BFTemplateImplTest {
         Map<String, String> templateData = new HashMap<>();
 
         // act
-        String result = bfTemplateImpl.renderTemplate( "h4. Preliminary Analysis\r\n" + "\r\n" + "{{block:begin:X}}{{data:evidence_description}}\r\n" + "\r\n"
-                        + "{code}\r\n" + "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" + "{{block:end:Y}}\r\n"
-                        + "{code}\r\n" + "\r\n" + "{{block:end:X}}\r\n" + "", templateData );
+        String result = bfTemplateImpl.renderTemplate( //
+
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" //
+                                        + "{{block:end:Y}}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
 
         // assert
-        assertThat( result, equalTo( "h4. Preliminary Analysis\r\n" + "\r\n" + "\r\n" ) );
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "" ) );
+    }
+
+    @Test
+    public void testRenderTemplate_OneBlockGivenDepthTwo_returnsPreliminaryAnalysisHeaderAndFirstBlock() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        Map<String, String> blockDataOne = new HashMap<>();
+        blockDataOne.put( "evidence_description", "XContent One" );
+
+        // act
+        bfTemplateImpl.block( "X", blockDataOne );
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( //
+
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" //
+                                        + "{{block:end:Y}}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
+
+        // assert
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "XContent One\r\n" //
+                                        + "\r\n"//
+                                        + "{code}\r\n"//
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "" ) );
     }
 
 }
