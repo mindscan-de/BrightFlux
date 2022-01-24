@@ -72,7 +72,10 @@ public class OpenSearchWindowDialogCommand implements UIBFCommand, UIBFBackgroun
             SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
             // register the project registry. 
             // TODO: Actually the SearchWindow should do this?
+
             searchWindow.setProjectRegistry( projectRegistry );
+
+            // this is blocking operation until searchwindow is closed
             searchWindow.open();
         }
     }
