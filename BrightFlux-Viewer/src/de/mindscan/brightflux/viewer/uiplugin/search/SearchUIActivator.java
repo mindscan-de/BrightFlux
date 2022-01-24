@@ -45,7 +45,7 @@ public class SearchUIActivator implements StartupParticipant {
 
         ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
         if (projectRegistry != null) {
-            searchUIComponent.setProjectRegistry( projectRegistry );
+            projectRegistry.registerParticipant( searchUIComponent );
         }
         else {
 
