@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard;
 
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 
@@ -38,8 +39,14 @@ public class DashboardUIActivator implements StartupParticipant {
      */
     @Override
     public void start( SystemServices systemservices ) {
-        // TODO Auto-generated method stub
 
+        DashboardUIProxyComponent dashboardUIComponent = new DashboardUIProxyComponent();
+        systemservices.registerService( dashboardUIComponent, DashboardUIProxyComponent.class );
+
+        ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
+        if (projectRegistry != null) {
+            projectRegistry.registerParticipant( dashboardUIComponent );
+        }
     }
 
 }
