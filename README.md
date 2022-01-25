@@ -243,6 +243,15 @@ UML Image Generator
 * have multiple views / diagram options for the same logs to understand particular system behavior
 
 
+UI-Dashboard
+* a dashboard is an interactive information board, which should be configurable
+  * think of a view containing HXX messages in time, but we want to know what the last type of events (select statement) on a previous timestamp was
+    * e.g. i want to know what the last cpu and memory usage was, while being in a different selection at this timestamp. 
+    * e.g. i want to know what view is currently active, while analyzing a certain widget problem
+  * a dashboard is provided by recipes and calculators (find the last entry (row) before this timestamp, in case you want to see the last active state) and visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
+  * the problem is, that we need different DQFL capabilities where we can do selections, where we can select a particular row, extract a particular value, and visualize a paricular value
+
+
 Support Calculations between Rows or Columns
 * provide measuring tools (e.g. time difference between two or more messages) e.g. performance measurements
 
@@ -283,15 +292,6 @@ Code/Textfile Annotator
 
 Decision Tree Analysis
 * combine that system with the CheapLithium system (decision gag/decision tree) for automated decisions based on the content of log files for automated log file analysis
-
-
-UI-Dashboard
-* a dashboard is an interactive information board, which should be configurable
-  * think of a view containing HXX messages in time, but we want to know what the last type of events (select statement) on a previous timestamp was
-    * e.g. i want to know what the last cpu and memory usage was, while being in a different selection at this timestamp. 
-    * e.g. i want to know what view is currently active, while analyzing a certain widget problem
-  * a dashboard is provided by recipes and calculators (find the last entry (row) before this timestamp, in case you want to see the last active state) and visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
-
 
 ### Never?
 
