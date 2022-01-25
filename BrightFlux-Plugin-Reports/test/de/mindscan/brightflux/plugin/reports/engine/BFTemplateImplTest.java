@@ -306,4 +306,51 @@ public class BFTemplateImplTest {
                                         + "" ) );
     }
 
+    @Test
+    public void testRenderTemplate_OneXOnyYBlockGivenDepthTwo_returnsPreliminaryAnalysisHeaderAndBothBlocks() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        Map<String, String> blockDataOne = new HashMap<>();
+        blockDataOne.put( "evidence_description", "XContent One" );
+        Map<String, String> blockDataTwo = new HashMap<>();
+        blockDataTwo.put( "extracontent", "XtraContent One" );
+
+        // act
+        bfTemplateImpl.block( "X", blockDataOne );
+        bfTemplateImpl.block( "Y", blockDataTwo );
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( //
+
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" //
+                                        + "{{block:end:Y}}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
+
+        // assert
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "XContent One\r\n" //
+                                        + "\r\n"//
+                                        + "{code}\r\n"//
+                                        + "XtraContent One{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n"//
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "\r\n" //
+                                        + "" ) );
+    }
+
 }
