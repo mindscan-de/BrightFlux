@@ -42,4 +42,18 @@ public class XorUIProxyComponent implements ProjectRegistryParticipant {
 
     }
 
+    /**
+     * @return
+     */
+    public boolean hasCurrentActiveXorWindow() {
+        return false;
+    }
+
+    /**
+     * 
+     */
+    public void focusCurrentActiveXorWindow() {
+        // TODO: implement the focus code
+    }
+
 }
