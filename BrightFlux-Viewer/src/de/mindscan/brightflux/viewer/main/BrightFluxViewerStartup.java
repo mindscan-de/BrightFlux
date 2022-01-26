@@ -41,6 +41,7 @@ import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIActivator;
 import de.mindscan.brightflux.viewer.uiplugin.highlighter.HighlighterUIActivator;
+import de.mindscan.brightflux.viewer.uiplugin.minixortool.XorUIAcivator;
 import de.mindscan.brightflux.viewer.uiplugin.search.SearchUIActivator;
 
 /**
@@ -104,6 +105,9 @@ public class BrightFluxViewerStartup {
 
         // Register Highlighter UI Component
         startActivator( HighlighterUIActivator.class, systemServices );
+
+        // Register XOR.exe UI Component
+        startActivator( XorUIAcivator.class, systemServices );
 
         // Register Dashboard UI Component
         startActivator( DashboardUIActivator.class, systemServices );
