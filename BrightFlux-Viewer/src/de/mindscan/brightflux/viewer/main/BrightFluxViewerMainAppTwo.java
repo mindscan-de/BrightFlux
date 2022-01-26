@@ -47,6 +47,7 @@ import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
 import de.mindscan.brightflux.viewer.parts.ProjectViewComposite;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uiplugin.minixortool.commands.XorUICommandFactory;
 import de.mindscan.brightflux.viewer.uiplugin.search.command.SearchUICommandsFactory;
 
 /**
@@ -238,6 +239,15 @@ public class BrightFluxViewerMainAppTwo {
             }
         } );
         mntmExtract.setText( "Extract..." );
+
+        MenuItem mntmXorexe = new MenuItem( menu_tools, SWT.NONE );
+        mntmXorexe.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                dispatchCommand( XorUICommandFactory.openXorWindow( shellBFViewerMainApp ) );
+            }
+        } );
+        mntmXorexe.setText( "xor.exe" );
 
         MenuItem mntmHelp = new MenuItem( menu, SWT.NONE );
         mntmHelp.setText( "Help" );
