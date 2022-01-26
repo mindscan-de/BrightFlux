@@ -33,6 +33,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
  */
 public class XorUIProxyComponent implements ProjectRegistryParticipant {
 
+    private XorWindow currentActiveXorWindow;
+
     /** 
      * {@inheritDoc}
      */
@@ -42,18 +44,22 @@ public class XorUIProxyComponent implements ProjectRegistryParticipant {
 
     }
 
-    /**
-     * @return
-     */
-    public boolean hasCurrentActiveXorWindow() {
-        return false;
+    public void registerCurrentActiveXorWindow( XorWindow activeXorWindow ) {
+        this.currentActiveXorWindow = activeXorWindow;
     }
 
-    /**
-     * 
-     */
+    public void unregisterCurrentActiveXorWindow() {
+        this.currentActiveXorWindow = null;
+    }
+
+    public boolean hasCurrentActiveXorWindow() {
+        return currentActiveXorWindow != null;
+    }
+
     public void focusCurrentActiveXorWindow() {
-        // TODO: implement the focus code
+        if (hasCurrentActiveXorWindow()) {
+            currentActiveXorWindow.bringToTop();
+        }
     }
 
 }

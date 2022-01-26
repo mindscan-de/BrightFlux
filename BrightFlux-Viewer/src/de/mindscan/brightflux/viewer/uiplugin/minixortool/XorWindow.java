@@ -30,4 +30,6 @@ package de.mindscan.brightflux.viewer.uiplugin.minixortool;
  */
 public interface XorWindow {
 
+    void bringToTop();
+
 }
