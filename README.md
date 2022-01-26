@@ -183,6 +183,10 @@ Reporting
   * also detect different DataFrame types and use different report templates for different DataFrame types
 
 
+Mini-XOR-Tool
+* xor.exe (light edition)
+
+
 ### Later
 
 Annotation and Highlights Improvements
