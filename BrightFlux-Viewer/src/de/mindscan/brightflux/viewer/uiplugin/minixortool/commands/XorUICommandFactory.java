@@ -38,9 +38,8 @@ public class XorUICommandFactory {
      * @param shellBFViewerMainApp
      * @return
      */
-    public static BFCommand openXorWindow( Shell shellBFViewerMainApp ) {
-        // TODO Auto-generated method stub
-        return null;
+    public static BFCommand openXorWindow( Shell parentShell ) {
+        return new OpenXorWindowDialogCommand( parentShell );
     }
 
 }
