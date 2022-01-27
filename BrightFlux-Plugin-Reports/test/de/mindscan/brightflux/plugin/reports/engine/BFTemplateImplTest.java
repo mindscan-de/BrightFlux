@@ -404,4 +404,76 @@ public class BFTemplateImplTest {
                                         + "" ) );
     }
 
+    @Test
+    public void testRenderTemplate_TwoXThreeYBlockGivenDepthTwo_returnsPreliminaryAnalysisHeaderAndBothBlocks() throws Exception {
+        // arrange
+        BFTemplateImpl bfTemplateImpl = new BFTemplateImpl();
+
+        Map<String, String> templateData = new HashMap<>();
+
+        Map<String, String> blockDataOne = new HashMap<>();
+        blockDataOne.put( "evidence_description", "XContent One" );
+        Map<String, String> blockDataTwo = new HashMap<>();
+        blockDataTwo.put( "extracontent", "XtraContent One" );
+        Map<String, String> blockDataThree = new HashMap<>();
+        blockDataThree.put( "extracontent", "XtraContent Two" );
+
+        Map<String, String> blockDataFour = new HashMap<>();
+        blockDataFour.put( "evidence_description", "XContent Two" );
+        Map<String, String> blockDataFive = new HashMap<>();
+        blockDataFive.put( "extracontent", "XtraContent Three" );
+
+        // act
+        bfTemplateImpl.block( "X", blockDataOne );
+        bfTemplateImpl.block( "Y", blockDataTwo );
+        bfTemplateImpl.block( "Y", blockDataThree );
+
+        bfTemplateImpl.block( "X", blockDataFour );
+        bfTemplateImpl.block( "Y", blockDataFive );
+
+        // act
+        String result = bfTemplateImpl.renderTemplate( //
+
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:begin:X}}{{data:evidence_description}}\r\n" //
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" //
+                                        + "{{block:end:Y}}\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        + "{{block:end:X}}\r\n" //
+                                        + "",
+                        templateData );
+
+        // assert
+        assertThat( result, equalTo( //
+                        "h4. Preliminary Analysis\r\n" //
+                                        + "\r\n" //
+
+                                        // Block X
+                                        + "XContent One\r\n" //
+                                        + "\r\n"//
+                                        + "{code}\r\n"//
+                                        + "XtraContent One{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n"//
+                                        + "XtraContent Two{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n"//
+                                        + "\r\n" //
+                                        + "{code}\r\n" //
+                                        + "\r\n" //
+                                        // /Block X
+
+                                        // Block X
+                                        + "XContent Two\r\n" //
+                                        + "\r\n"//
+                                        + "{code}\r\n"//
+                                        + "XtraContent Three{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n"//
+                                        + "\r\n" //
+                                        + "{code}\r\n"//
+                                        + "\r\n"//
+                                        // /Block X
+                                        + "\r\n"//                                        
+                                        + "" ) );
+    }
+
 }
