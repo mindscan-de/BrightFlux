@@ -105,11 +105,11 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         videoAnnotationVideoObjects.remove( videoObject );
     }
 
-    public String createFullReport() {
-        return buildFullVideoAnnoationReport( getVideoAnnotationVideoObjects() );
+    public String createFullReport( String reportname ) {
+        return buildFullVideoAnnoationReport( reportname, getVideoAnnotationVideoObjects() );
     }
 
-    private String buildFullVideoAnnoationReport( List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
+    private String buildFullVideoAnnoationReport( String reportname, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
             return "";
         }

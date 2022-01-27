@@ -28,6 +28,8 @@ package de.mindscan.brightflux.viewer.parts.mv;
 import java.nio.file.Path;
 import java.util.UUID;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolder2Adapter;
@@ -38,6 +40,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -74,6 +77,8 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     private CTabFolder videoObjectTabFolder;
     private VideoAnnotatorComponent videoAnnotatorService;
 
+    String[] templateNames = new String[] { "default", "Jira" };
+
     /**
      * Create the composite.
      * @param parent
@@ -88,7 +93,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
         Composite composite = new Composite( this, SWT.NONE );
         composite.setLayoutData( BorderLayout.NORTH );
-        composite.setLayout( new GridLayout( 5, false ) );
+        composite.setLayout( new GridLayout( 6, false ) );
 
         Button addVideoButton = new Button( composite, SWT.NONE );
         addVideoButton.addSelectionListener( new SelectionAdapter() {
@@ -108,6 +113,13 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
             }
         } );
         btnGenerateAndCopy.setText( "Generate Report" );
+
+        ComboViewer comboViewer = new ComboViewer( composite, SWT.READ_ONLY );
+        Combo combo = comboViewer.getCombo();
+
+        comboViewer.setContentProvider( ArrayContentProvider.getInstance() );
+
+        comboViewer.setInput( templateNames );
 
         Label label = new Label( composite, SWT.NONE );
         label.setText( "...." );
@@ -291,7 +303,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     public void executeIntentCopyToClipboardVideoAnnotationReport( Shell shell ) {
-        String report = videoAnnotatorService.createFullReport();
+        String report = videoAnnotatorService.createFullReport( "Jira" );
 
         dispatchCommand( UICommandFactory.copyToClipboard( shell, report ) );
     }
