@@ -46,4 +46,11 @@ public class ReportGeneratorPersistenceModuleImpl implements ReportGeneratorPers
         this.reportTemplateBasePath = reportTemplateBasePath;
     }
 
+    /**
+     * @return the reportTemplateBasePath
+     */
+    public Path getReportTemplateBasePath() {
+        return reportTemplateBasePath;
+    }
+
 }
