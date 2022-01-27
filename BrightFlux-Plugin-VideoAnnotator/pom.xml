@@ -35,6 +35,14 @@
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
 		
+		<!-- Plugin Dependencies -->
+		<!-- BrightFlux-Plugins-Report -->	
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-Reports</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
+		
 		
 		<!-- Dependencies for the Unit Tests -->
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
