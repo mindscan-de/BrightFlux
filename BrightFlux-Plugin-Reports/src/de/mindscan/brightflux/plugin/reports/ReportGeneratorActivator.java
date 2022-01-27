@@ -37,6 +37,7 @@ import de.mindscan.brightflux.system.services.SystemServices;
  */
 public class ReportGeneratorActivator implements StartupParticipant {
 
+    private static final String REPORTGENERATOR_PLUGIN_REPORT_TEMPLATES_DIR = "reporttemplates.dir";
     private static final String REPORTGENERATOR_PLUGIN_PERSISTENCE_NAMESPACE = "reportgenerator-plugin";
 
     /**
@@ -48,7 +49,8 @@ public class ReportGeneratorActivator implements StartupParticipant {
 
         BasePersistenceModule reportGeneratorPersistenceModule = systemServices.getBasePersistenceModule( REPORTGENERATOR_PLUGIN_PERSISTENCE_NAMESPACE );
 
-        ReportGeneratorPersistenceModule persistenceModule = new ReportGeneratorPersistenceModuleImpl( reportGeneratorPersistenceModule );
+        ReportGeneratorPersistenceModule persistenceModule = new ReportGeneratorPersistenceModuleImpl( reportGeneratorPersistenceModule,
+                        systemServices.getEarlyPersistence().getPropertyAsPath( REPORTGENERATOR_PLUGIN_REPORT_TEMPLATES_DIR ) );
         reportGeneratorService.setPersistenceModule( persistenceModule );
 
         systemServices.registerService( reportGeneratorService, ReportGeneratorComponent.class );

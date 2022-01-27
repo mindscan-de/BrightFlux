@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.plugin.reports.persistence;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 
 /**
@@ -32,11 +34,16 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
  */
 public class ReportGeneratorPersistenceModuleImpl implements ReportGeneratorPersistenceModule {
 
+    private BasePersistenceModule reportGeneratorPersistenceModule;
+    private Path reportTemplateBasePath;
+
     /**
      * @param reportGeneratorPersistenceModule
+     * @param path 
      */
-    public ReportGeneratorPersistenceModuleImpl( BasePersistenceModule reportGeneratorPersistenceModule ) {
-        // TODO Auto-generated constructor stub
+    public ReportGeneratorPersistenceModuleImpl( BasePersistenceModule reportGeneratorPersistenceModule, Path reportTemplateBasePath ) {
+        this.reportGeneratorPersistenceModule = reportGeneratorPersistenceModule;
+        this.reportTemplateBasePath = reportTemplateBasePath;
     }
 
 }
