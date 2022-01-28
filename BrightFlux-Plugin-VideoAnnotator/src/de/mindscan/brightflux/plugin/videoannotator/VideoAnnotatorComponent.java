@@ -62,10 +62,9 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     public static final String TODO_TEMPLATE = "{{block:begin:VideoFile}}h5. Analysis of [^{{data:videofilename}}]\r\n" + // 
                     "\r\n" + //
-                    "The length of the video is {{data:videolength}}:\r\n" + // 
+                    "The length of the video is {{data:videolength}} :\r\n" + // 
                     "{{block:begin:VideoFilePosition}}* {{data:videotimestamp}} (video time): {{data:evidence_description}}\r\n" + // 
-                    "{{block:end:VideoFilePosition}}" + // 
-                    "{{block:end:VideoFile}}\r\n" + //
+                    "{{block:end:VideoFilePosition}}{{block:end:VideoFile}}\r\n" + //
                     "";
 
     /**
