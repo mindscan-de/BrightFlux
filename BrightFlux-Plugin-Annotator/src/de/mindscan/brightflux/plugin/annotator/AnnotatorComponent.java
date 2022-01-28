@@ -151,6 +151,12 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         }
     }
 
+    public String createFullReport( String reportName, DataFrame forThisDataFrame ) {
+        // TODO: move the generator code to the annotator component.
+        // see hard coded implementation in BFAnnotationConsoleViewComposite#buildReport
+        return "This should be the createFullReport output.";
+    }
+
     public AnnotatorPersistenceModule getPersistenceModule() {
         return persistenceModule;
     }
