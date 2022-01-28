@@ -66,6 +66,10 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     public static final String ANNOTATION_COLUMN_NAME = "annotation";
     public static final String ANNOTATION_DATAFRAME_NAME = "logAnalysisFrame";
 
+    // Block names for the Annotator Template
+    private static final String BLOCKNAME_ANNOTATION_DETAILS = "X";
+    private static final String BLOCKNAME_ANNOTATION_DETAILS_LOG = "Y";
+
     private DataFrame logAnalysisFrame = null;
     private AnnotatorPersistenceModule persistenceModule;
     private ReportGeneratorComponent reportGeneratorComponent;
