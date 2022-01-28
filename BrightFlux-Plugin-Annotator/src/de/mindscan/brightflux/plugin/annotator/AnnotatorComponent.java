@@ -70,6 +70,17 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     private AnnotatorPersistenceModule persistenceModule;
     private ReportGeneratorComponent reportGeneratorComponent;
 
+    public static final String TODO_TEMPLATE = "{{block:begin:X}}{{data:evidence_description}}\r\n" + //
+                    "\r\n" + //
+                    "{code}\r\n" + //
+                    "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" + //
+                    "{{block:end:Y}}\r\n" + // 
+                    "{code}\r\n" + //
+                    "\r\n" + //
+                    "{{block:end:X}}\r\n" + // 
+                    "\r\n" + // 
+                    "";
+
     /**
      * 
      */
@@ -172,13 +183,12 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 generator.appendMessageAndRow( annotation, renderedDataRow );
             }
         }
-        generator.build();
+        return generator.build();
 
         // TODO: move the generator code to the annotator component.
         // see hard coded implementation in BFAnnotationConsoleViewComposite#buildReport
 
-        return "This should be the createFullReport output.";
-
+        // return "This should be the createFullReport output.";
     }
 
     public AnnotatorPersistenceModule getPersistenceModule() {
