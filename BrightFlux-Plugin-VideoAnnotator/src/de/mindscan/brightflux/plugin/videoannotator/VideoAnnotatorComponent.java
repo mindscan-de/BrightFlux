@@ -50,6 +50,10 @@ import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
  */
 public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
+    // Block names for the VideoAnnotator-Template(s) 
+    private static final String BLOCKNAME_VIDEO_FILE = "VideoFile";
+    private static final String BLOCKNAME_VIDEO_FILE_POSITION = "VideoFilePosition";
+
     private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
 
     private ProjectRegistry projectRegistry;
@@ -134,7 +138,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
             videoData.put( "videofilename", videoAnnotatorVideoObject.getSimpleName() );
             videoData.put( "videolength", VideoAnnotatorUtils.convertSecondsToTimeString( videoAnnotatorVideoObject.getVideoDurationInSeconds() ) );
 
-            reportBuilder.block( "VideoFile", videoData );
+            reportBuilder.block( BLOCKNAME_VIDEO_FILE, videoData );
 
             buildSingleVideoAnnotationReport( reportBuilder, videoAnnotatorVideoObject );
         }
@@ -155,7 +159,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
             templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
             templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
 
-            reportBuilder.block( "VideoFilePosition", templateData );
+            reportBuilder.block( BLOCKNAME_VIDEO_FILE_POSITION, templateData );
         }
     }
 
