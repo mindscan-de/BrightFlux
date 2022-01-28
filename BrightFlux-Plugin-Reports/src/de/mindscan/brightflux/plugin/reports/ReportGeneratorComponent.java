@@ -25,8 +25,11 @@
  */
 package de.mindscan.brightflux.plugin.reports;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.reports.impl.ReportBuilderImpl;
 import de.mindscan.brightflux.plugin.reports.impl.ReportGeneratorImpl;
 import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersistenceModule;
 
@@ -62,12 +65,19 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
         return reportGenerator;
     }
 
-    public void setPersistenceModule( ReportGeneratorPersistenceModule persistenceModule ) {
+    void setPersistenceModule( ReportGeneratorPersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
     }
 
     public ReportGeneratorPersistenceModule getPersistenceModule() {
         return persistenceModule;
+    }
+
+    /**
+     * @param path
+     */
+    public ReportBuilder getReportBuilder( Path path ) {
+        return new ReportBuilderImpl( path );
     }
 
 }
