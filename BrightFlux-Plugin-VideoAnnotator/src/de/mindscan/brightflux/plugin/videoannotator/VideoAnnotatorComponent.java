@@ -26,14 +26,17 @@
 package de.mindscan.brightflux.plugin.videoannotator;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.reports.ReportBuilder;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
@@ -57,7 +60,13 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     private ReportGeneratorComponent reportGeneratorComponent;
 
-    // TODO how do we want to address the different videoAnnotationDataframes 
+    public static final String TODO_TEMPLATE = "{{block:begin:VideoFile}}h5. Analysis of [^{{data:videofilename}}]\r\n" + // 
+                    "\r\n" + //
+                    "The length of the video is {{data:videolength}}:\r\n" + // 
+                    "{{block:begin:VideoFilePosition}}* {{data:videotimestamp}} (video time): {{data:evidence_description}}\r\n" + // 
+                    "{{block:end:VideoFilePosition}}" + // 
+                    "{{block:end:VideoFile}}\r\n" + //
+                    "";
 
     /**
      * 
@@ -114,52 +123,40 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     private String buildFullVideoAnnoationReport( String reportname, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
-            return "";
+            return "buildFullVideoAnnoationReport was somehow empty....";
         }
 
-        // TODO: use the generator and a template.
-        // ReportGeneratorImpl generator = new ReportGeneratorImpl();
-
-        StringBuilder sb = new StringBuilder();
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( TODO_TEMPLATE );
 
         // build another report from smaller reports.
         for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
-            String partialReport = buildSingleVideoAnnotationReport( videoAnnotatorVideoObject );
+            HashMap<String, String> videoData = new HashMap<String, String>();
+            videoData.put( "videofilename", videoAnnotatorVideoObject.getSimpleName() );
+            videoData.put( "videolength", VideoAnnotatorUtils.convertSecondsToTimeString( videoAnnotatorVideoObject.getVideoDurationInSeconds() ) );
 
-            // Use a different template for this...
-            // TODO: use the generator
-            if (!partialReport.isBlank()) {
-                sb.append( "h5. Analysis of [^" ).append( videoAnnotatorVideoObject.getSimpleName() ).append( "]\n\n" );
-                sb.append( "The video length is:\n" );
-                sb.append( partialReport );
-                sb.append( "\n" );
-            }
+            reportBuilder.block( "VideoFile", videoData );
+
+            buildSingleVideoAnnotationReport( reportBuilder, videoAnnotatorVideoObject );
         }
 
-        return sb.toString();
+        return reportBuilder.render( new HashMap<String, String>() );
     }
 
-    private String buildSingleVideoAnnotationReport( VideoAnnotatorVideoObject videoObject ) {
-        // TODO: use the generator and a template / template block to build the real report...
-        // ReportGeneratorImpl generator = new ReportGeneratorImpl();
+    private void buildSingleVideoAnnotationReport( ReportBuilder reportBuilder, VideoAnnotatorVideoObject videoObject ) {
         DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
-
-        StringBuilder sb = new StringBuilder();
 
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
         while (currentDFRowsIterator.hasNext()) {
+            Map<String, String> templateData = new HashMap<>();
+
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-
             int timestampInSeconds = (Integer) dataFrameRow.get( VideoAnnotationColumns.TIMESTAMP_COLUMN_NAME );
-            String timstamp = VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds );
-            String annotationContent = String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) );
-            // TODO: we need also the referenced data-rows, so we can align the timestamps to a dataframe, containing different timstamps 
 
-            // TODO: use a named template here instead, also use the report generator
-            sb.append( "* " ).append( timstamp ).append( " (video time): " ).append( annotationContent ).append( "\n" );
+            templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
+            templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
+
+            reportBuilder.block( "VideoFilePosition", templateData );
         }
-
-        return sb.toString();
     }
 
     public void setFFProbePath( Path ffprobePath ) {
