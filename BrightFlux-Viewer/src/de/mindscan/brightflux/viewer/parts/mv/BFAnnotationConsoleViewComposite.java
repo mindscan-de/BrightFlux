@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.viewer.parts.mv;
 
-import java.util.Iterator;
-
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
@@ -56,8 +54,6 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.annotator.AnnotatorComponent;
 import de.mindscan.brightflux.plugin.annotator.commands.AnnotatorCommandFactory;
-import de.mindscan.brightflux.plugin.reports.ReportGenerator;
-import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.system.filedescription.FileDescriptions;
 import de.mindscan.brightflux.system.services.SystemServices;
@@ -182,7 +178,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             @Override
             public void widgetSelected( SelectionEvent e ) {
 
-                buildReport( currentSelectedDataFrame, annotatorService.getLogAnalysisFrame() );
+                buildReport( currentSelectedDataFrame );
                 // Someone pressed the button.
                 // We know the analysis frame and the currentFrame, so we can actually generate a report from it...
                 // well building the report should be done elsewhere?
@@ -325,24 +321,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         return currentSelectedDataFrameRow != null;
     }
 
-    private void buildReport( DataFrame currentSelectedDF, DataFrame logAnalysisDF ) {
-        ReportGeneratorComponent generatorService = SystemServices.getInstance().getService( ReportGeneratorComponent.class );
-        ReportGenerator generator = generatorService.getReportGenerator();
-
-        generator.startReport();
-
-        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
-        while (currentDFRowsIterator.hasNext()) {
-            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-            int originalRowIndex = dataFrameRow.getOriginalRowIndex();
-            if (logAnalysisDF.isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
-                String annotation = (String) logAnalysisDF.getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
-                String renderedDataRow = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
-
-                generator.appendMessageAndRow( annotation, renderedDataRow );
-            }
-        }
-        String report = generator.build();
+    private void buildReport( DataFrame currentSelectedDF ) {
+        String report = annotatorService.createFullReport( "Jira", currentSelectedDF );
 
         projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
     }

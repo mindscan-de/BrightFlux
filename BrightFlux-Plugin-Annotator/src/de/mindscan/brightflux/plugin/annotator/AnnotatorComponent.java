@@ -26,8 +26,10 @@
 package de.mindscan.brightflux.plugin.annotator;
 
 import java.nio.file.Path;
+import java.util.Iterator;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
@@ -38,9 +40,11 @@ import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
+import de.mindscan.brightflux.plugin.reports.ReportGenerator;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
+import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -152,9 +156,29 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public String createFullReport( String reportName, DataFrame forThisDataFrame ) {
+        ReportGeneratorComponent generatorService = SystemServices.getInstance().getService( ReportGeneratorComponent.class );
+        ReportGenerator generator = generatorService.getReportGenerator();
+
+        generator.startReport();
+
+        Iterator<DataFrameRow> currentDFRowsIterator = forThisDataFrame.rowIterator();
+        while (currentDFRowsIterator.hasNext()) {
+            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
+            int originalRowIndex = dataFrameRow.getOriginalRowIndex();
+            if (getLogAnalysisFrame().isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
+                String annotation = (String) getLogAnalysisFrame().getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
+                String renderedDataRow = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
+
+                generator.appendMessageAndRow( annotation, renderedDataRow );
+            }
+        }
+        generator.build();
+
         // TODO: move the generator code to the annotator component.
         // see hard coded implementation in BFAnnotationConsoleViewComposite#buildReport
+
         return "This should be the createFullReport output.";
+
     }
 
     public AnnotatorPersistenceModule getPersistenceModule() {
