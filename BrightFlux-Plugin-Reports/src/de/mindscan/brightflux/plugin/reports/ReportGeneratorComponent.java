@@ -73,9 +73,10 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
         return persistenceModule;
     }
 
-    /**
-     * @param path
-     */
+    public ReportBuilder getReportBuilder( String todoTemplate ) {
+        return new ReportBuilderImpl( todoTemplate );
+    }
+
     public ReportBuilder getReportBuilder( Path path ) {
         return new ReportBuilderImpl( path );
     }
