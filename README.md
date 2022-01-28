@@ -118,6 +118,8 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * retrieve content of file from code search backend
 * Early Persistence / Startup
   * Basic functionality to read a early persistence file and from there provide basic access to namespace based persistence
+* ReportGenerator + BrightFlux TemplateEngine Implementation 
+  * Support of  Templates, Variables, TemplateBlocks
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -160,7 +162,7 @@ DataFrame-Core
 * [DFCORE] Support original Index
   * [DFCORE] copy the original index in a derived data frame 
 * [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
-* [DFCORE] reindex "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
+* [DFCORE] re-index "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
 
 
 Search Engine
@@ -169,10 +171,7 @@ Search Engine
 
 Report Generator
 * improve report generator with
-  * templates
-  * variables
   * conversion functions
-  * blocks
 * executive reports / executive summaries
 * technical reports
 
