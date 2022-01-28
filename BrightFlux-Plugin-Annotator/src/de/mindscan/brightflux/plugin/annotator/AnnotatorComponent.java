@@ -38,6 +38,7 @@ import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
+import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 
@@ -63,6 +64,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
     private DataFrame logAnalysisFrame = null;
     private AnnotatorPersistenceModule persistenceModule;
+    private ReportGeneratorComponent reportGeneratorComponent;
 
     /**
      * 
@@ -155,6 +157,10 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
     public void setPersistenceModule( AnnotatorPersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
+    }
+
+    public void setReportGeneratorComponent( ReportGeneratorComponent reportGeneratorComponent ) {
+        this.reportGeneratorComponent = reportGeneratorComponent;
     }
 
 }
