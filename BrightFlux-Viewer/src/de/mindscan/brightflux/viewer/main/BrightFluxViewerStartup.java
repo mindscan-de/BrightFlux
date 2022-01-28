@@ -85,6 +85,9 @@ public class BrightFluxViewerStartup {
         // Register Favorite Recipes Service + Collect Favorite Recipes
         startActivator( FavRecipesActivator.class, systemServices );
 
+        // Register Report Generator Service
+        startActivator( ReportGeneratorActivator.class, systemServices );
+
         // Register Annotator Service
         startActivator( AnnotatorActivator.class, systemServices );
 
@@ -93,9 +96,6 @@ public class BrightFluxViewerStartup {
 
         // Register Highlighter Annototor
         startActivator( HighlighterActivator.class, systemServices );
-
-        // Register Report Generator Service
-        startActivator( ReportGeneratorActivator.class, systemServices );
 
         // Register Search Services
         startActivator( SearchActivator.class, systemServices );
