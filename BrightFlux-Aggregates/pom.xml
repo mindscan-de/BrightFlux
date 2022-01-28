@@ -17,10 +17,10 @@
 		
 		<module>../BrightFlux-Plugin-FavRecipes</module>
 		<module>../BrightFlux-Plugin-DataFrameHierarchy</module>
+		<module>../BrightFlux-Plugin-Reports</module>
 		<module>../BrightFlux-Plugin-Annotator</module>
 		<module>../BrightFlux-Plugin-Highlighter</module>
 		<module>../BrightFlux-Plugin-Search</module>
-		<module>../BrightFlux-Plugin-Reports</module>
 		<module>../BrightFlux-Plugin-VideoAnnotator</module>
 		
 		<module>../BrightFlux-Viewer</module>
