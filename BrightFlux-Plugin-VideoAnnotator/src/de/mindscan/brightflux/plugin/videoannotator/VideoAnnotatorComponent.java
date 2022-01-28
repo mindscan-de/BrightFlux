@@ -123,9 +123,10 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     private String buildFullVideoAnnoationReport( String reportname, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
-            return "buildFullVideoAnnoationReport was somehow empty....";
+            return "Error: VideoAnnotatorComponent::buildFullVideoAnnoationReport - got an empty list";
         }
 
+        // TODO: load from template Name -> calculate file name and then use file content.
         ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( TODO_TEMPLATE );
 
         // build another report from smaller reports.
@@ -147,11 +148,11 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
         Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
         while (currentDFRowsIterator.hasNext()) {
-            Map<String, String> templateData = new HashMap<>();
-
             DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
             int timestampInSeconds = (Integer) dataFrameRow.get( VideoAnnotationColumns.TIMESTAMP_COLUMN_NAME );
 
+            // TODO: we need something generic here to fill the data from the dataFrameRow
+            Map<String, String> templateData = new HashMap<>();
             templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
             templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
 
