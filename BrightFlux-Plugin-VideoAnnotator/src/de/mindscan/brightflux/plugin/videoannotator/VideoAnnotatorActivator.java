@@ -27,6 +27,7 @@ package de.mindscan.brightflux.plugin.videoannotator;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModuleImpl;
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
@@ -53,6 +54,10 @@ public class VideoAnnotatorActivator implements StartupParticipant {
 
         VideoAnnotatorComponent videoAnnotatorComponent = new VideoAnnotatorComponent();
         videoAnnotatorComponent.setPersistenceModule( persistenceModule );
+
+        ReportGeneratorComponent reportGeneratorComponent = systemServices.getService( ReportGeneratorComponent.class );
+        videoAnnotatorComponent.setReportGeneratorComponent( reportGeneratorComponent );
+
         // TODO 
         // - set a fully configured persistence module instead, where the component can do everything in its own
         // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
