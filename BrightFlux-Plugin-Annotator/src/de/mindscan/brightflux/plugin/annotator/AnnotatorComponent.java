@@ -26,12 +26,8 @@
 package de.mindscan.brightflux.plugin.annotator;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
@@ -40,6 +36,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.annotator.events.AnnotationDataFrameCreatedEvent;
 import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
+import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorReportBuilder;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
 import de.mindscan.brightflux.plugin.reports.ReportBuilder;
@@ -64,16 +61,8 @@ import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
  */
 public class AnnotatorComponent implements ProjectRegistryParticipant {
 
-    // Special report markers, to change mode
-    private static final String EXTEND_LOG_DATA_LINE = ".";
-    private static final String EXTEND_LOG_DATA_LINES_WITH_SKIP = "..";
-
     public static final String ANNOTATION_COLUMN_NAME = "annotation";
     public static final String ANNOTATION_DATAFRAME_NAME = "logAnalysisFrame";
-
-    // Block names for the Annotator Template
-    private static final String BLOCKNAME_ANNOTATION_DETAILS = "X";
-    private static final String BLOCKNAME_ANNOTATION_DETAILS_LOG = "Y";
 
     private DataFrame logAnalysisFrame = null;
     private AnnotatorPersistenceModule persistenceModule;
@@ -175,43 +164,11 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
+
+        // TODO: translate the reportName / reportNameIndex to a full file path.
         ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( TODO_TEMPLATE );
 
-        Iterator<DataFrameRow> currentDFRowsIterator2 = forThisDataFrame.rowIterator();
-        while (currentDFRowsIterator2.hasNext()) {
-            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator2.next();
-            int originalRowIndex = dataFrameRow.getOriginalRowIndex();
-            if (getLogAnalysisFrame().isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
-                // we found annotation details for a line in the dataframe we create the report for
-
-                String evidence_description = ((String) getLogAnalysisFrame().getAt( ANNOTATION_COLUMN_NAME, originalRowIndex )).trim();
-                // TODO this kind of data row transfer, should be something a datarow provides, 
-                // TODO e.g. extract row data as a map with some selectable prefix...
-                // TODO because we want to have more flexible templates, and the template should select what they render
-                Map<String, String> templateData = new HashMap<>();
-                templateData.put( "row.h1.ts", String.valueOf( dataFrameRow.get( "h1.ts" ) ) );
-                templateData.put( "row.h2.msg", String.valueOf( dataFrameRow.get( "h2.msg" ) ) );
-
-                if (evidence_description.isBlank()) {
-                    // intentionally left blank.
-                }
-                else if (EXTEND_LOG_DATA_LINE.equals( evidence_description )) {
-                    templateData.put( "extracontent", "" );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
-                }
-                else if (EXTEND_LOG_DATA_LINES_WITH_SKIP.equals( evidence_description )) {
-                    templateData.put( "extracontent", "[..]\r\n" );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
-                }
-                else {
-                    templateData.put( "extracontent", "" );
-                    templateData.put( "evidence_description", evidence_description );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS, templateData );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
-                }
-            }
-        }
-        return reportBuilder.render( new HashMap<>() );
+        return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame(), reportBuilder );
     }
 
     public AnnotatorPersistenceModule getPersistenceModule() {
