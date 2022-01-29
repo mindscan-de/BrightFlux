@@ -131,8 +131,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     private void registerAnnotationSaveEvent( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
-
+        // intentionally left blank for now.
     }
 
     /**
@@ -157,7 +156,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
 
         // TODO: translate the reportName / reportNameIndex to a full file path.
-        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( Paths.get( ".\\templates\\JR.MxxReport.bftl" ) );
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( Paths.get( "JR.MxxReport.bftl" ) );
 
         return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame(), reportBuilder );
     }
