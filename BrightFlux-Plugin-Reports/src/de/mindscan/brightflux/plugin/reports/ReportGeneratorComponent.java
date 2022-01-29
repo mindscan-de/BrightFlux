@@ -30,7 +30,6 @@ import java.nio.file.Path;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.reports.impl.ReportBuilderImpl;
-import de.mindscan.brightflux.plugin.reports.impl.ReportGeneratorImpl;
 import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersistenceModule;
 
 /**
@@ -38,7 +37,6 @@ import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersiste
  */
 public class ReportGeneratorComponent implements ProjectRegistryParticipant {
 
-    private ReportGenerator reportGenerator = new ReportGeneratorImpl();
     private ReportGeneratorPersistenceModule persistenceModule;
 
     /**
@@ -55,14 +53,6 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         // TODO Auto-generated method stub
 
-    }
-
-    /**
-     * @return the reportGenerator
-     */
-    public ReportGenerator getReportGenerator() {
-        // TODO: maybe we want a different report generator every time we request one?
-        return reportGenerator;
     }
 
     void setPersistenceModule( ReportGeneratorPersistenceModule persistenceModule ) {
