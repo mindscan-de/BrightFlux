@@ -25,10 +25,11 @@
  */
 package de.mindscan.brightflux.plugin.reports.impl;
 
-import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import de.mindscan.brightflux.plugin.reports.ReportBuilder;
+import de.mindscan.brightflux.plugin.reports.engine.BFTemplateContentFileProviderImpl;
 import de.mindscan.brightflux.plugin.reports.engine.BFTemplateImpl;
 
 /**
@@ -36,26 +37,22 @@ import de.mindscan.brightflux.plugin.reports.engine.BFTemplateImpl;
  */
 public class ReportBuilderImpl implements ReportBuilder {
 
-    private final Path templatePath;
+    private final String templateInfo;
     private final BFTemplateImpl currentTemplateInstance;
     private final boolean pathMode;
-    private final String template;
 
     /**
      * 
      */
-    public ReportBuilderImpl( Path templatePath ) {
-        this.templatePath = templatePath;
-        this.template = "template is empty";
-        this.currentTemplateInstance = new BFTemplateImpl();
-        this.pathMode = true;
-    }
-
-    public ReportBuilderImpl( String template ) {
-        this.templatePath = null;
-        this.template = template;
-        this.currentTemplateInstance = new BFTemplateImpl();
-        this.pathMode = false;
+    public ReportBuilderImpl( String templateInfo, boolean pathMode ) {
+        this.templateInfo = templateInfo;
+        this.pathMode = pathMode;
+        if (pathMode) {
+            this.currentTemplateInstance = new BFTemplateImpl( new BFTemplateContentFileProviderImpl( Paths.get( "./templates/" ) ) );
+        }
+        else {
+            this.currentTemplateInstance = new BFTemplateImpl();
+        }
     }
 
     /** 
@@ -72,10 +69,10 @@ public class ReportBuilderImpl implements ReportBuilder {
     @Override
     public String render( Map<String, String> templateData ) {
         if (pathMode) {
-            return currentTemplateInstance.renderFileTemplate( templatePath, templateData );
+            return currentTemplateInstance.renderFileTemplate( templateInfo, templateData );
         }
 
-        return currentTemplateInstance.renderTemplate( template, templateData );
+        return currentTemplateInstance.renderTemplate( templateInfo, templateData );
     }
 
 }

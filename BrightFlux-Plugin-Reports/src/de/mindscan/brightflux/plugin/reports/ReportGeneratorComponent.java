@@ -63,12 +63,12 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
         return persistenceModule;
     }
 
-    public ReportBuilder getReportBuilder( String todoTemplate ) {
-        return new ReportBuilderImpl( todoTemplate );
+    public ReportBuilder getReportBuilder( String template ) {
+        return new ReportBuilderImpl( template, false );
     }
 
     public ReportBuilder getReportBuilder( Path path ) {
-        return new ReportBuilderImpl( path );
+        return new ReportBuilderImpl( path.getFileName().toString(), true );
     }
 
 }

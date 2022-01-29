@@ -27,9 +27,6 @@ package de.mindscan.brightflux.plugin.reports.engine;
 
 import static de.mindscan.brightflux.plugin.reports.engine.BFTemplateUtils.replace_callback;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -81,26 +78,20 @@ public class BFTemplateImpl {
 
     private LinkedList<BFTemplateBlockData> templateBlockData = new LinkedList<>();
     private Map<String, String> templateReplacements = new HashMap<>();
+    private BFTemplateContentProvider contentProvider;
+
+    public BFTemplateImpl( BFTemplateContentProvider contentProvider ) {
+        this.contentProvider = contentProvider;
+    }
 
     public BFTemplateImpl() {
-        // intentionally left blank
+        // TODO: intentionally left blank ?? provide an empty ContentProvider.
     }
 
-    public String renderFileTemplate( Path templatePath, Map<String, String> data ) {
-        // Read template from file "templateName" and then use renderTemplate
-        String template = readFromFile( templatePath );
+    public String renderFileTemplate( String templateName, Map<String, String> data ) {
+        String template = contentProvider.getContent( templateName );
 
         return renderTemplate( template, data );
-    }
-
-    private String readFromFile( Path templatePath ) {
-        try {
-            return Files.readString( templatePath );
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            return "The Template file '" + templatePath.toString() + "' could not be loaded. Please check the stacktrace.";
-        }
     }
 
     public String renderTemplate( String template, Map<String, String> data ) {
