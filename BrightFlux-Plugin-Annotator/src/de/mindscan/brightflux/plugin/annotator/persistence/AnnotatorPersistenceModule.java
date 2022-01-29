@@ -35,4 +35,7 @@ public interface AnnotatorPersistenceModule {
      */
     String[] getFrameAnnotationSnippets();
 
+    String[] getAvailableReportNames();
+
+    String[] getAvailableReportTemplateNames();
 }

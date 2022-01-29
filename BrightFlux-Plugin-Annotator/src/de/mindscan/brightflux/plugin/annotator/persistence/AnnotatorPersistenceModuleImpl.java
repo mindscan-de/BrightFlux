@@ -33,6 +33,8 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModule {
 
     public static final String ANNOTATOR_PLUGIN_SNIPPETS_KEY = "annotator.snippets";
+    public static final String ANNOTATOR_PLUGIN_REPORTNAMES_KEY = "annotator.report.names";
+    public static final String ANNOTATOR_PLUGIN_REPORTTEMPLATES_KEY = "annotator.report.templates";
 
     private BasePersistenceModule persistenceModule;
 
@@ -53,5 +55,23 @@ public class AnnotatorPersistenceModuleImpl implements AnnotatorPersistenceModul
         return result;
     }
 
-    // TODO: uses a base Persisence to retrieve data, so it gets some kind of base functions and then build on this base function the higher order persistence.
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getAvailableReportNames() {
+        String[] result = persistenceModule.getStringArrayValue( ANNOTATOR_PLUGIN_REPORTNAMES_KEY );
+
+        return result;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getAvailableReportTemplateNames() {
+        String[] result = persistenceModule.getStringArrayValue( ANNOTATOR_PLUGIN_REPORTTEMPLATES_KEY );
+        return result;
+    }
+
 }
