@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.parts.mv;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
@@ -38,8 +39,10 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
@@ -162,7 +165,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         SashForm sashForm_1 = new SashForm( sashForm, SWT.NONE );
 
         Composite composite = new Composite( sashForm_1, SWT.NONE );
-        composite.setLayout( new GridLayout( 2, false ) );
+        composite.setLayout( new GridLayout( 3, false ) );
 
         btnClearAnnotations = new Button( composite, SWT.NONE );
         btnClearAnnotations.addSelectionListener( new SelectionAdapter() {
@@ -190,6 +193,15 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         } );
         btnGenerateReport.setText( "Generate and Copy Report..." );
 
+        ComboViewer comboViewer = new ComboViewer( composite, SWT.READ_ONLY );
+        comboViewer.setContentProvider( new ArrayContentProvider() );
+        comboViewer.setInput( annotatorService.getPersistenceModule().getAvailableReportNames() );
+        Combo combo = comboViewer.getCombo();
+        GridData gd_combo = new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 );
+        gd_combo.widthHint = 132;
+        combo.setLayoutData( gd_combo );
+        combo.select( 0 );
+
         Button btnLoadAnnotations = new Button( composite, SWT.NONE );
         btnLoadAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
@@ -203,6 +215,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             }
         } );
         btnLoadAnnotations.setText( "Load Annotations ..." );
+        new Label( composite, SWT.NONE );
         new Label( composite, SWT.NONE );
 
         Button btnSaveAnnotations = new Button( composite, SWT.NONE );
@@ -218,6 +231,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             }
         } );
         btnSaveAnnotations.setText( "Save Annotations ..." );
+        new Label( composite, SWT.NONE );
         new Label( composite, SWT.NONE );
 
         Composite composite_1 = new Composite( sashForm_1, SWT.NONE );
