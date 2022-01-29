@@ -26,7 +26,9 @@
 package de.mindscan.brightflux.plugin.annotator;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
@@ -40,11 +42,10 @@ import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
-import de.mindscan.brightflux.plugin.reports.ReportGenerator;
+import de.mindscan.brightflux.plugin.reports.ReportBuilder;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
-import de.mindscan.brightflux.system.services.SystemServices;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -63,6 +64,10 @@ import de.mindscan.brightflux.system.services.SystemServices;
  */
 public class AnnotatorComponent implements ProjectRegistryParticipant {
 
+    // Special report markers, to change mode
+    private static final String EXTEND_LOG_DATA_LINE = ".";
+    private static final String EXTEND_LOG_DATA_LINES_WITH_SKIP = "..";
+
     public static final String ANNOTATION_COLUMN_NAME = "annotation";
     public static final String ANNOTATION_DATAFRAME_NAME = "logAnalysisFrame";
 
@@ -77,9 +82,8 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     public static final String TODO_TEMPLATE = "{{block:begin:X}}{{data:evidence_description}}\r\n" + //
                     "\r\n" + //
                     "{code}\r\n" + //
-                    "{{block:begin:Y}}{{data:extracontent}}{{columnData:h1.ts}}:{{columnData:h2.msg}}\r\n" + //
-                    "{{block:end:Y}}\r\n" + // 
-                    "{code}\r\n" + //
+                    "{{block:begin:Y}}{{data:extracontent}}{{data:row.h1.ts}}:{{data:row.h2.msg}}\r\n" + //
+                    "{{block:end:Y}}{code}\r\n" + //
                     "\r\n" + //
                     "{{block:end:X}}\r\n" + // 
                     "\r\n" + // 
@@ -171,28 +175,48 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public String createFullReport( String reportName, DataFrame forThisDataFrame ) {
-        ReportGeneratorComponent generatorService = SystemServices.getInstance().getService( ReportGeneratorComponent.class );
-        ReportGenerator generator = generatorService.getReportGenerator();
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( TODO_TEMPLATE );
 
-        generator.startReport();
-
-        Iterator<DataFrameRow> currentDFRowsIterator = forThisDataFrame.rowIterator();
-        while (currentDFRowsIterator.hasNext()) {
-            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
+        Iterator<DataFrameRow> currentDFRowsIterator2 = forThisDataFrame.rowIterator();
+        while (currentDFRowsIterator2.hasNext()) {
+            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator2.next();
             int originalRowIndex = dataFrameRow.getOriginalRowIndex();
             if (getLogAnalysisFrame().isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
-                String annotation = (String) getLogAnalysisFrame().getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
-                String renderedDataRow = dataFrameRow.get( "h1.ts" ) + ": " + dataFrameRow.get( "h2.msg" );
+                // we found annotation details for a line in the dataframe we create the report for
 
-                generator.appendMessageAndRow( annotation, renderedDataRow );
+                String evidence_description = ((String) getLogAnalysisFrame().getAt( ANNOTATION_COLUMN_NAME, originalRowIndex )).trim();
+                String h1_ts_value = String.valueOf( dataFrameRow.get( "h1.ts" ) );
+                String h2_msg_value = String.valueOf( dataFrameRow.get( "h2.msg" ) );
+
+                if (evidence_description.isBlank()) {
+                    // intentionally left blank.
+                }
+                else if (EXTEND_LOG_DATA_LINE.equals( evidence_description )) {
+                    Map<String, String> templateData = new HashMap<>();
+                    templateData.put( "extracontent", "" );
+                    templateData.put( "row.h1.ts", h1_ts_value );
+                    templateData.put( "row.h2.msg", h2_msg_value );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
+                }
+                else if (EXTEND_LOG_DATA_LINES_WITH_SKIP.equals( evidence_description )) {
+                    Map<String, String> templateData2 = new HashMap<>();
+                    templateData2.put( "extracontent", "[..]\r\n" );
+                    templateData2.put( "row.h1.ts", h1_ts_value );
+                    templateData2.put( "row.h2.msg", h2_msg_value );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData2 );
+                }
+                else {
+                    Map<String, String> templateData3 = new HashMap<>();
+                    templateData3.put( "extracontent", "" );
+                    templateData3.put( "row.h1.ts", h1_ts_value );
+                    templateData3.put( "row.h2.msg", h2_msg_value );
+                    templateData3.put( "evidence_description", evidence_description );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS, templateData3 );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData3 );
+                }
             }
         }
-        return generator.build();
-
-        // TODO: move the generator code to the annotator component.
-        // see hard coded implementation in BFAnnotationConsoleViewComposite#buildReport
-
-        // return "This should be the createFullReport output.";
+        return reportBuilder.render( new HashMap<>() );
     }
 
     public AnnotatorPersistenceModule getPersistenceModule() {
