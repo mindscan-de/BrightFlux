@@ -25,9 +25,16 @@
  */
 package de.mindscan.brightflux.plugin.reports.persistence;
 
+import java.nio.file.Path;
+
 /**
  * 
  */
 public interface ReportGeneratorPersistenceModule {
+
+    /**
+     * @return the reportTemplateBasePath
+     */
+    Path getReportTemplateBasePath();
 
 }

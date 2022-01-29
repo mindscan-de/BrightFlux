@@ -49,6 +49,7 @@ public class ReportGeneratorPersistenceModuleImpl implements ReportGeneratorPers
     /**
      * @return the reportTemplateBasePath
      */
+    @Override
     public Path getReportTemplateBasePath() {
         return reportTemplateBasePath;
     }
