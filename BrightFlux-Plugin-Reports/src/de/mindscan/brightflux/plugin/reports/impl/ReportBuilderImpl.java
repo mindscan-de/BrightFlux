@@ -72,7 +72,7 @@ public class ReportBuilderImpl implements ReportBuilder {
     @Override
     public String render( Map<String, String> templateData ) {
         if (pathMode) {
-            return currentTemplateInstance.renderFileTemplate( templatePath.toString(), templateData );
+            return currentTemplateInstance.renderFileTemplate( templatePath, templateData );
         }
 
         return currentTemplateInstance.renderTemplate( template, templateData );
