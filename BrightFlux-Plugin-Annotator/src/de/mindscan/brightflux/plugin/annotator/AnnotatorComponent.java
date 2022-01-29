@@ -191,31 +191,26 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 String h1_ts_value = String.valueOf( dataFrameRow.get( "h1.ts" ) );
                 String h2_msg_value = String.valueOf( dataFrameRow.get( "h2.msg" ) );
 
+                Map<String, String> templateData = new HashMap<>();
+                templateData.put( "row.h1.ts", h1_ts_value );
+                templateData.put( "row.h2.msg", h2_msg_value );
+
                 if (evidence_description.isBlank()) {
                     // intentionally left blank.
                 }
                 else if (EXTEND_LOG_DATA_LINE.equals( evidence_description )) {
-                    Map<String, String> templateData = new HashMap<>();
                     templateData.put( "extracontent", "" );
-                    templateData.put( "row.h1.ts", h1_ts_value );
-                    templateData.put( "row.h2.msg", h2_msg_value );
                     reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
                 }
                 else if (EXTEND_LOG_DATA_LINES_WITH_SKIP.equals( evidence_description )) {
-                    Map<String, String> templateData2 = new HashMap<>();
-                    templateData2.put( "extracontent", "[..]\r\n" );
-                    templateData2.put( "row.h1.ts", h1_ts_value );
-                    templateData2.put( "row.h2.msg", h2_msg_value );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData2 );
+                    templateData.put( "extracontent", "[..]\r\n" );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
                 }
                 else {
-                    Map<String, String> templateData3 = new HashMap<>();
-                    templateData3.put( "extracontent", "" );
-                    templateData3.put( "row.h1.ts", h1_ts_value );
-                    templateData3.put( "row.h2.msg", h2_msg_value );
-                    templateData3.put( "evidence_description", evidence_description );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS, templateData3 );
-                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData3 );
+                    templateData.put( "extracontent", "" );
+                    templateData.put( "evidence_description", evidence_description );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS, templateData );
+                    reportBuilder.block( BLOCKNAME_ANNOTATION_DETAILS_LOG, templateData );
                 }
             }
         }
