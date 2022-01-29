@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.Map;
+
 /**
  * 
  */
@@ -73,4 +75,5 @@ public interface DataFrameRow {
 
     DataFrame getDataFrameInternal();
 
+    Map<String, String> getAsMap( String prefix );
 }

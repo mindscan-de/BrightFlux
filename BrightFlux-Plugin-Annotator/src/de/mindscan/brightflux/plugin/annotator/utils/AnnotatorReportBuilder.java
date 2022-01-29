@@ -56,12 +56,8 @@ public class AnnotatorReportBuilder {
                 // we found annotation details for a line in the dataframe we create the report for
 
                 String evidence_description = ((String) logAnalysisFrame.getAt( AnnotatorComponent.ANNOTATION_COLUMN_NAME, originalRowIndex )).trim();
-                // TODO this kind of data row transfer, should be something a datarow provides, 
-                // TODO e.g. extract row data as a map with some selectable prefix...
-                // TODO because we want to have more flexible templates, and the template should select what they render
-                Map<String, String> templateData = new HashMap<>();
-                templateData.put( "row.h1.ts", String.valueOf( dataFrameRow.get( "h1.ts" ) ) );
-                templateData.put( "row.h2.msg", String.valueOf( dataFrameRow.get( "h2.msg" ) ) );
+
+                Map<String, String> templateData = dataFrameRow.getAsMap( "row." );
 
                 if (evidence_description.isBlank()) {
                     // intentionally left blank.

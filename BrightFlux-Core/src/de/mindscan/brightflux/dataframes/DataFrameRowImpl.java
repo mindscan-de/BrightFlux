@@ -25,6 +25,10 @@
  */
 package de.mindscan.brightflux.dataframes;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 
  */
@@ -130,5 +134,20 @@ public class DataFrameRowImpl implements DataFrameRow {
 
         // TODO: all the other comparisons and conversions / casts
         return 0;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Map<String, String> getAsMap( String prefix ) {
+        HashMap<String, String> result = new HashMap<>();
+
+        Collection<String> columnNames = df.getColumnNames();
+        for (String columnName : columnNames) {
+            result.put( prefix + columnName, String.valueOf( get( columnName ) ) );
+        }
+
+        return result;
     }
 }
