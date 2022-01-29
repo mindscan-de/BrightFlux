@@ -88,6 +88,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private AnnotatorComponent annotatorService = SystemServices.getInstance().getService( AnnotatorComponent.class );
 
+    private Combo reportSelectionCombo;
+
     /**
      * Create the composite.
      * @param parent
@@ -196,11 +198,11 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         ComboViewer comboViewer = new ComboViewer( composite, SWT.READ_ONLY );
         comboViewer.setContentProvider( new ArrayContentProvider() );
         comboViewer.setInput( annotatorService.getPersistenceModule().getAvailableReportNames() );
-        Combo combo = comboViewer.getCombo();
+        reportSelectionCombo = comboViewer.getCombo();
         GridData gd_combo = new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 );
         gd_combo.widthHint = 132;
-        combo.setLayoutData( gd_combo );
-        combo.select( 0 );
+        reportSelectionCombo.setLayoutData( gd_combo );
+        reportSelectionCombo.select( 0 );
 
         Button btnLoadAnnotations = new Button( composite, SWT.NONE );
         btnLoadAnnotations.addSelectionListener( new SelectionAdapter() {
@@ -336,7 +338,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void buildReport( DataFrame currentSelectedDF ) {
-        String report = annotatorService.createFullReport( "Jira", currentSelectedDF );
+        String report = annotatorService.createFullReport( reportSelectionCombo.getText(), reportSelectionCombo.getSelectionIndex(), currentSelectedDF );
 
         projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
     }

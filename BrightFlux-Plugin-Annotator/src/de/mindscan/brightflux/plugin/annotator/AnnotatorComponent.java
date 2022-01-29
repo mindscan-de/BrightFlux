@@ -174,7 +174,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         }
     }
 
-    public String createFullReport( String reportName, DataFrame forThisDataFrame ) {
+    public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
         ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( TODO_TEMPLATE );
 
         Iterator<DataFrameRow> currentDFRowsIterator2 = forThisDataFrame.rowIterator();
