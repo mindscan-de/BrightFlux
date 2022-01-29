@@ -69,16 +69,6 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     private AnnotatorPersistenceModule persistenceModule;
     private ReportGeneratorComponent reportGeneratorComponent;
 
-    public static final String TODO_TEMPLATE = "{{block:begin:X}}{{data:evidence_description}}\r\n" + //
-                    "\r\n" + //
-                    "{code}\r\n" + //
-                    "{{block:begin:Y}}{{data:extracontent}}{{data:row.h1.ts}}:{{data:row.h2.msg}}\r\n" + //
-                    "{{block:end:Y}}{code}\r\n" + //
-                    "\r\n" + //
-                    "{{block:end:X}}\r\n" + // 
-                    "\r\n" + // 
-                    "";
-
     /**
      * 
      */
