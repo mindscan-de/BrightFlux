@@ -29,6 +29,7 @@ import java.nio.file.Path;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.reports.engine.BFTemplateContentFileProviderImpl;
 import de.mindscan.brightflux.plugin.reports.impl.ReportBuilderImpl;
 import de.mindscan.brightflux.plugin.reports.persistence.ReportGeneratorPersistenceModule;
 
@@ -64,11 +65,12 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
     }
 
     public ReportBuilder getReportBuilder( String template ) {
-        return new ReportBuilderImpl( template, false );
+        return new ReportBuilderImpl( template );
     }
 
     public ReportBuilder getReportBuilder( Path path ) {
-        return new ReportBuilderImpl( path.getFileName().toString(), true );
+        Path basePath = persistenceModule.getReportTemplateBasePath();
+        return new ReportBuilderImpl( path.getFileName().toString(), new BFTemplateContentFileProviderImpl( basePath ) );
     }
 
 }

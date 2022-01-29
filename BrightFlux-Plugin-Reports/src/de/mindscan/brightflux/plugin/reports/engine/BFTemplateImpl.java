@@ -88,7 +88,7 @@ public class BFTemplateImpl {
         // TODO: intentionally left blank ?? provide an empty ContentProvider.
     }
 
-    public String renderFileTemplate( String templateName, Map<String, String> data ) {
+    public String renderTemplateFromContentProvider( String templateName, Map<String, String> data ) {
         String template = contentProvider.getContent( templateName );
 
         return renderTemplate( template, data );
