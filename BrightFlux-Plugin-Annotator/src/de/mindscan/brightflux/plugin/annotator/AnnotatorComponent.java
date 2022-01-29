@@ -188,12 +188,9 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 // TODO this kind of data row transfer, should be something a datarow provides, 
                 // TODO e.g. extract row data as a map with some selectable prefix...
                 // TODO because we want to have more flexible templates, and the template should select what they render
-                String h1_ts_value = String.valueOf( dataFrameRow.get( "h1.ts" ) );
-                String h2_msg_value = String.valueOf( dataFrameRow.get( "h2.msg" ) );
-
                 Map<String, String> templateData = new HashMap<>();
-                templateData.put( "row.h1.ts", h1_ts_value );
-                templateData.put( "row.h2.msg", h2_msg_value );
+                templateData.put( "row.h1.ts", String.valueOf( dataFrameRow.get( "h1.ts" ) ) );
+                templateData.put( "row.h2.msg", String.valueOf( dataFrameRow.get( "h2.msg" ) ) );
 
                 if (evidence_description.isBlank()) {
                     // intentionally left blank.
