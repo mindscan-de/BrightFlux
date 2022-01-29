@@ -185,6 +185,9 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 // we found annotation details for a line in the dataframe we create the report for
 
                 String evidence_description = ((String) getLogAnalysisFrame().getAt( ANNOTATION_COLUMN_NAME, originalRowIndex )).trim();
+                // TODO this kind of data row transfer, should be something a datarow provides, 
+                // TODO e.g. extract row data as a map with some selectable prefix...
+                // TODO because we want to have more flexible templates, and the template should select what they render
                 String h1_ts_value = String.valueOf( dataFrameRow.get( "h1.ts" ) );
                 String h2_msg_value = String.valueOf( dataFrameRow.get( "h2.msg" ) );
 
