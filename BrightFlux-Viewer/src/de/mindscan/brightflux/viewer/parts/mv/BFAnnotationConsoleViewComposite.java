@@ -307,7 +307,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             */
 
             BFCommand command = AnnotatorCommandFactory.annotateRow( currentSelectedDataFrame, currentSelectedDataFrameRow.getOriginalRowIndex(), newText );
-            projectRegistry.getCommandDispatcher().dispatchCommand( command );
+            dispatchCommand( command );
         }
     }
 
@@ -340,7 +340,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private void buildReport( DataFrame currentSelectedDF ) {
         String report = annotatorService.createFullReport( reportSelectionCombo.getText(), reportSelectionCombo.getSelectionIndex(), currentSelectedDF );
 
-        projectRegistry.getCommandDispatcher().dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
+        dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
     }
 
     private void createAnnotationDataFrame() {
