@@ -154,7 +154,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
     public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
         String[] templateNames = this.persistenceModule.getAvailableReportTemplateNames();
-        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemlate( templateNames[reportNameIndex] );
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemplate( templateNames[reportNameIndex] );
 
         return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame(), reportBuilder );
     }
