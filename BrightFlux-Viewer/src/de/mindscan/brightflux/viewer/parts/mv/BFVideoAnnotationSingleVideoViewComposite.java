@@ -53,11 +53,11 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorComponent;
 import de.mindscan.brightflux.plugin.videoannotator.commands.VideoAnnotatorCommandFactory;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotatorEventsFactory;
-import de.mindscan.brightflux.plugin.videoannotator.preferences.VideoAnnotatorPreferenceData;
-import de.mindscan.brightflux.plugin.videoannotator.preferences.VideoAnnotatorPreferenceKeys;
 import de.mindscan.brightflux.plugin.videoannotator.utils.VideoAnnotatorUtils;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 import de.mindscan.brightflux.viewer.uicommands.UICommandFactory;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedHandler;
@@ -74,10 +74,10 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     private StyledText currentVideoTimestampAnnotation;
     private ProjectRegistry projectRegistry;
 
-    private VideoAnnotatorPreferenceData preferences = new VideoAnnotatorPreferenceData();
     private Button btnSyncToFrame;
     // TODO: have a boolean flag, whether we are currently in a link listener Mode / if yes, we want to disable the link listener mode after the job of linking is finished.
     private Button btnLinkDataframe;
+    private VideoAnnotatorComponent videoAnnotatorService;
 
     /**
      * Create the composite.
@@ -86,6 +86,13 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
      */
     public BFVideoAnnotationSingleVideoViewComposite( Composite parent, int style ) {
         super( parent, style );
+
+        this.videoAnnotatorService = SystemServices.getInstance().getService( VideoAnnotatorComponent.class );
+
+        buildLayout();
+    }
+
+    public void buildLayout() {
         setLayout( new BorderLayout( 0, 0 ) );
 
         Composite leftComposite = new Composite( this, SWT.NONE );
@@ -197,12 +204,11 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
                 }
             }
         } );
-        listViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        list.setItems( (String[]) preferences.getArray( VideoAnnotatorPreferenceKeys.VIDEO_OBJECT_SNIPPETS_KEY ) );
+        listViewer.setContentProvider( new ArrayContentProvider() );
+        list.setItems( this.videoAnnotatorService.getPersistenceModule().getVideoAnnotationSnippets() );
 
         sashForm_1.setWeights( new int[] { 1, 1 } );
         sashForm.setWeights( new int[] { 105, 176 } );
-
     }
 
     private void appendCurrentVideoAnnotatedTextField( String stringToAppend ) {
@@ -335,4 +341,5 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         }
         btnSyncToFrame.setEnabled( enabled );
     }
+
 }
