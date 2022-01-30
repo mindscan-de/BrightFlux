@@ -77,7 +77,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     private CTabFolder videoObjectTabFolder;
     private VideoAnnotatorComponent videoAnnotatorService;
 
-    String[] templateNames = new String[] { "default", "Jira" };
+    private Combo reportSelectionCombo;
 
     /**
      * Create the composite.
@@ -115,11 +115,10 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         btnGenerateAndCopy.setText( "Generate Report" );
 
         ComboViewer comboViewer = new ComboViewer( composite, SWT.READ_ONLY );
-        Combo combo = comboViewer.getCombo();
-
-        comboViewer.setContentProvider( ArrayContentProvider.getInstance() );
-
-        comboViewer.setInput( templateNames );
+        comboViewer.setContentProvider( new ArrayContentProvider() );
+        comboViewer.setInput( videoAnnotatorService.getPersistenceModule().getAvailableReportNames() );
+        reportSelectionCombo = comboViewer.getCombo();
+        reportSelectionCombo.select( 0 );
 
         Label label = new Label( composite, SWT.NONE );
         label.setText( "...." );
