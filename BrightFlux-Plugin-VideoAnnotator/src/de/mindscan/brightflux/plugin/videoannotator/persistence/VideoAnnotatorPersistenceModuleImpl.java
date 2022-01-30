@@ -32,11 +32,44 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
  */
 public class VideoAnnotatorPersistenceModuleImpl implements VideoAnnotatorPersistenceModule {
 
+    public static final String VIDEO_ANNOTATOR_PLUGIN_SNIPPETS_KEY = "videoannotator.snippets";
+    public static final String VIDEO_ANNOTATOR_PLUGIN_REPORT_NAMES_KEY = "videoannotator.report.names";
+    public static final String VIDEO_ANNOTATOR_PLUGIN_REPORT_TEMPLATES_KEY = "videoannotator.report.templates";
+
+    private BasePersistenceModule persistenceModule;
+
     /**
      * @param videoannotatorBsaePersistenceModule
      */
-    public VideoAnnotatorPersistenceModuleImpl( BasePersistenceModule basePersistenceModule ) {
-        // TODO Auto-generated constructor stub
+    public VideoAnnotatorPersistenceModuleImpl( BasePersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getVideoAnnotationSnippets() {
+        String[] result = persistenceModule.getStringArrayValue( VIDEO_ANNOTATOR_PLUGIN_SNIPPETS_KEY );
+        return result;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getAvailableReportNames() {
+        String[] result = persistenceModule.getStringArrayValue( VIDEO_ANNOTATOR_PLUGIN_REPORT_NAMES_KEY );
+        return result;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getAvailableReportTemplateNames() {
+        String[] result = persistenceModule.getStringArrayValue( VIDEO_ANNOTATOR_PLUGIN_REPORT_TEMPLATES_KEY );
+        return result;
     }
 
 }

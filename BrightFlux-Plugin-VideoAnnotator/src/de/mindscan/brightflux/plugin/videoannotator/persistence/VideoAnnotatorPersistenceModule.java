@@ -30,4 +30,19 @@ package de.mindscan.brightflux.plugin.videoannotator.persistence;
  */
 public interface VideoAnnotatorPersistenceModule {
 
+    /**
+     * @return
+     */
+    String[] getVideoAnnotationSnippets();
+
+    /**
+     * @return
+     */
+    String[] getAvailableReportNames();
+
+    /**
+     * @return
+     */
+    String[] getAvailableReportTemplateNames();
+
 }
