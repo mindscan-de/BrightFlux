@@ -119,7 +119,8 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Early Persistence / Startup
   * Basic functionality to read a early persistence file and from there provide basic access to namespace based persistence
 * ReportGenerator + BrightFlux TemplateEngine Implementation 
-  * Support of  Templates, Variables, TemplateBlocks
+  * support of templates, variables, template blocks
+  * support of template files and template base directory
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -170,16 +171,7 @@ Search Engine
 
 
 Report Generator
-* improve report generator with
-  * conversion functions
-* executive reports / executive summaries
-* technical reports
-
-
-Reporting
-* Help with writing up the analysis, e.g. using special report templates (e.g. different formats JIRA, or else))
-  * use of templates for creating a report
-  * also detect different DataFrame types and use different report templates for different DataFrame types
+  * implement conversion functions
 
 
 Mini-XOR-Tool
@@ -196,7 +188,6 @@ UI/UX
 * Configuration System - Preferences (uses persistence - persistence is good enough for now)
   * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
   * provide PreferenceStore
-  * provide at least all the load operations for the preferences (Load is much more important than UI based editing / editing can still done by hand if important)
   
 
 Search Engine Support
