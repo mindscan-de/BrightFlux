@@ -31,8 +31,10 @@ package de.mindscan.brightflux.plugin.reports.transformations;
 public class TimeConversions {
 
     public static String convertSecondsToTime( String valueInSeconds ) {
-        int videoDurationInSeconds = Integer.valueOf( valueInSeconds ).intValue();
+        return convertSecondsToTime( Integer.valueOf( valueInSeconds ).intValue() );
+    }
 
+    private static String convertSecondsToTime( int videoDurationInSeconds ) {
         int seconds = videoDurationInSeconds % 60;
         int minutes = (videoDurationInSeconds / 60) % 60;
 
@@ -45,7 +47,24 @@ public class TimeConversions {
         }
     }
 
-    public static String convertNanoToPreciseDate( String valueInNano ) {
+    private static String convertSecondsToTime( long videoDurationInSeconds, boolean limit24h ) {
+        long seconds = videoDurationInSeconds % 60L;
+        long minutes = (videoDurationInSeconds / 60L) % 60L;
+
+        if (videoDurationInSeconds < 3600) {
+            return String.format( "%02d:%02d", minutes, seconds );
+        }
+        else {
+            long hours = (videoDurationInSeconds / 3600L);
+            if (limit24h) {
+                hours = hours % 24L;
+            }
+
+            return String.format( "%02d:%02d:%02d", hours, minutes, seconds );
+        }
+    }
+
+    public static String convertNanoToNanoDate( String valueInNano ) {
         long timestampInNano = Long.valueOf( valueInNano ).longValue();
 
         long fraction = timestampInNano % 1000000000L;
@@ -55,7 +74,16 @@ public class TimeConversions {
 
         long totalSeconds = (timestampInNano / 1000000000L);
 
-        return String.format( "%d.%03d.%03d.%03d", totalSeconds, fractionMS, fractionMY, fractionNS );
+        return String.format( "%s.%03d.%03d.%03d", convertSecondsToTime( totalSeconds, true ), fractionMS, fractionMY, fractionNS );
     }
 
+    public static String convertNanoToMsDate( String valueInNano ) {
+        long timestampInNano = Long.valueOf( valueInNano ).longValue();
+
+        long fraction = timestampInNano % 1000000000L;
+        long fractionMS = (fraction / 1000000L) % 1000L;
+
+        long totalSeconds = (timestampInNano / 1000000000L);
+        return String.format( "%s.%03d", convertSecondsToTime( totalSeconds, true ), fractionMS );
+    }
 }

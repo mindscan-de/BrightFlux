@@ -1,7 +1,7 @@
 {{block:begin:X}}{{data:evidence_description}}
 
 {code}
-{{block:begin:Y}}{{data:extracontent}}{{transform:nanoToDate:{{data:row.h1.ts}}}}: {{data:row.h2.msg}}
+{{block:begin:Y}}{{data:extracontent}}{{transform:nanoToMsDate:{{data:row.h1.ts}}}}: {{data:row.h2.msg}}
 {{block:end:Y}}{code}
 
 {{block:end:X}}
