@@ -45,23 +45,6 @@ public class VideoAnnotatorReportBuilder {
     public static final String BLOCKNAME_VIDEO_FILE = "VideoFile";
     public static final String BLOCKNAME_VIDEO_FILE_POSITION = "VideoFilePosition";
 
-    public static void buildSingleVideoAnnotationReport( ReportBuilder reportBuilder, VideoAnnotatorVideoObject videoObject ) {
-        DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
-
-        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
-        while (currentDFRowsIterator.hasNext()) {
-            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-            int timestampInSeconds = (Integer) dataFrameRow.get( VideoAnnotationColumns.TIMESTAMP_COLUMN_NAME );
-
-            // TODO: we need something generic here to fill the data from the dataFrameRow
-            Map<String, String> templateData = new HashMap<>();
-            templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
-            templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
-
-            reportBuilder.block( BLOCKNAME_VIDEO_FILE_POSITION, templateData );
-        }
-    }
-
     public static String buildFullVideoAnnoationReport( String reportname, int reportNameIndex, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects,
                     ReportBuilder reportBuilder ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
@@ -80,6 +63,23 @@ public class VideoAnnotatorReportBuilder {
         }
 
         return reportBuilder.render( new HashMap<String, String>() );
+    }
+
+    private static void buildSingleVideoAnnotationReport( ReportBuilder reportBuilder, VideoAnnotatorVideoObject videoObject ) {
+        DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
+
+        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
+        while (currentDFRowsIterator.hasNext()) {
+            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
+            int timestampInSeconds = (Integer) dataFrameRow.get( VideoAnnotationColumns.TIMESTAMP_COLUMN_NAME );
+
+            // TODO: we need something generic here to fill the data from the dataFrameRow
+            Map<String, String> templateData = new HashMap<>();
+            templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
+            templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
+
+            reportBuilder.block( BLOCKNAME_VIDEO_FILE_POSITION, templateData );
+        }
     }
 
 }
