@@ -121,6 +121,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * ReportGenerator + BrightFlux TemplateEngine Implementation 
   * support of templates, variables, template blocks
   * support of template files and template base directory
+  * support of output transformation / conversion
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -168,10 +169,6 @@ DataFrame-Core
 
 Search Engine
 * show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
-
-
-Report Generator
-  * implement conversion functions
 
 
 Mini-XOR-Tool

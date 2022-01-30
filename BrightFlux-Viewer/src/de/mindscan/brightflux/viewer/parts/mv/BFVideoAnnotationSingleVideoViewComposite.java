@@ -246,9 +246,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         setVideoDuration( this.videoObject.getVideoDurationInSeconds() );
         setVideoPosition( 0 );
 
-        // TODO: if videoObject is able to be synced enable the syncbutton
         enableSyncButton( videoObject.isColumnPredictable( HARD_CODED_CONSTANT_H1_TS ) || videoObject.isColumnPredictable( HARD_CODED_CONSTANT_HXX_TS ) );
-
     }
 
     private void setVideoDuration( int videoDurationInSeconds ) {
