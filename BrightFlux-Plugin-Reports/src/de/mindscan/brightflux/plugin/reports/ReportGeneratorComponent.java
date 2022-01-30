@@ -64,7 +64,7 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
         return persistenceModule;
     }
 
-    public ReportBuilder getReportBuilder( String template ) {
+    public ReportBuilder getReportBuilderStringTemplate( String template ) {
         return new ReportBuilderImpl( template );
     }
 

@@ -130,7 +130,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         }
 
         // TODO: load from template Name -> calculate file name and then use file content.
-        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( TODO_TEMPLATE );
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderStringTemplate( TODO_TEMPLATE );
 
         // build another report from smaller reports.
         for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
