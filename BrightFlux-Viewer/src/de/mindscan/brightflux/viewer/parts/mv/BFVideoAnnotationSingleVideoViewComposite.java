@@ -67,6 +67,12 @@ import swing2swt.layout.BorderLayout;
  * 
  */
 public class BFVideoAnnotationSingleVideoViewComposite extends Composite implements ProjectRegistryParticipant, DataFrameRowSelectedHandler {
+
+    // TODO: develop idea, on how to get rid of these Hard coded values / video annotation currently only works for 
+    //       a certain types of frames. 
+    private static final String HARD_CODED_CONSTANT_HXX_TS = "hxx.ts";
+    private static final String HARD_CODED_CONSTANT_H1_TS = "h1.ts";
+
     private Text currentVideoDuration;
     private Text currentVideoPosition;
     private VideoAnnotatorVideoObject videoObject;
@@ -144,7 +150,8 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
                 dispatchCommand( VideoAnnotatorCommandFactory.unlinkVideoAnnotationFromDataFrame( videoObject ) );
 
                 // disable the ui part sync button
-                enableSyncButton( videoObject.isColumnPredictable( "h1.ts" ) || videoObject.isColumnPredictable( "hxx.ts" ) );
+                enableSyncButton(
+                                videoObject.isColumnPredictable( HARD_CODED_CONSTANT_H1_TS ) || videoObject.isColumnPredictable( HARD_CODED_CONSTANT_HXX_TS ) );
             }
         } );
         btnClearReferences.setText( "Clear References" );
@@ -240,7 +247,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         setVideoPosition( 0 );
 
         // TODO: if videoObject is able to be synced enable the syncbutton
-        enableSyncButton( videoObject.isColumnPredictable( "h1.ts" ) || videoObject.isColumnPredictable( "hxx.ts" ) );
+        enableSyncButton( videoObject.isColumnPredictable( HARD_CODED_CONSTANT_H1_TS ) || videoObject.isColumnPredictable( HARD_CODED_CONSTANT_HXX_TS ) );
 
     }
 
@@ -259,9 +266,10 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (videoObject != null) {
             currentVideoTimestampAnnotation.setText( videoObject.getAnnotationForTimestamp( videoPositionInSeconds ) );
 
-            if ((videoObject.isColumnPredictable( "h1.ts" ) || videoObject.isColumnPredictable( "hxx.ts" )) && btnSyncToFrame.getSelection()) {
-                long predictedTimestamp = videoObject.predictTimestampForColumn( videoPositionInSeconds, "h1.ts" );
-                dispatchCommand( UICommandFactory.locatePredictedTimestampForColumn( "h1.ts", predictedTimestamp ) );
+            if ((videoObject.isColumnPredictable( HARD_CODED_CONSTANT_H1_TS ) || videoObject.isColumnPredictable( HARD_CODED_CONSTANT_HXX_TS ))
+                            && btnSyncToFrame.getSelection()) {
+                long predictedTimestamp = videoObject.predictTimestampForColumn( videoPositionInSeconds, HARD_CODED_CONSTANT_H1_TS );
+                dispatchCommand( UICommandFactory.locatePredictedTimestampForColumn( HARD_CODED_CONSTANT_H1_TS, predictedTimestamp ) );
             }
         }
         else {
@@ -308,7 +316,7 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
     @Override
     public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
         if (btnLinkDataframe.getSelection()) {
-            System.out.println( "handle the data frame row ts: " + selectedRow.get( "h1.ts" ) );
+            System.out.println( "handle the data frame row ts: " + selectedRow.get( HARD_CODED_CONSTANT_H1_TS ) );
 
             // we need the current position from the slider
             // we need the current videoObject
@@ -319,13 +327,13 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
                             VideoAnnotatorCommandFactory.linkVideoAnnotationToDataFrame( // 
                                             this.getVideoSelectionPositionFromSlider(), videoObject,
                                             // TODO: The hard coded value should be asked from user or from previous selections, for this data frame type...
-                                            new String[] { "h1.ts", "hxx.ts" }, selectedRow ) );
+                                            new String[] { HARD_CODED_CONSTANT_H1_TS, HARD_CODED_CONSTANT_HXX_TS }, selectedRow ) );
 
             // disable the Linking mode after receiving a selection event
             btnLinkDataframe.setSelection( false );
 
             // enable the sync button, after we have it linked with a videoObject
-            enableSyncButton( videoObject.isColumnPredictable( "h1.ts" ) || videoObject.isColumnPredictable( "hxx.ts" ) );
+            enableSyncButton( videoObject.isColumnPredictable( HARD_CODED_CONSTANT_H1_TS ) || videoObject.isColumnPredictable( HARD_CODED_CONSTANT_HXX_TS ) );
         }
     }
 
