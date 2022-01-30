@@ -26,14 +26,9 @@
 package de.mindscan.brightflux.plugin.videoannotator;
 
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import de.mindscan.brightflux.dataframes.DataFrame;
-import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.reports.ReportBuilder;
@@ -41,18 +36,13 @@ import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
 import de.mindscan.brightflux.plugin.videoannotator.persistence.VideoAnnotatorPersistenceModule;
-import de.mindscan.brightflux.plugin.videoannotator.utils.VideoAnnotatorUtils;
-import de.mindscan.brightflux.videoannotation.VideoAnnotationColumns;
+import de.mindscan.brightflux.plugin.videoannotator.utils.VideoAnnotatorReportBuilder;
 import de.mindscan.brightflux.videoannotation.VideoAnnotatorVideoObject;
 
 /**
  * 
  */
 public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
-
-    // Block names for the VideoAnnotator-Template(s) 
-    private static final String BLOCKNAME_VIDEO_FILE = "VideoFile";
-    private static final String BLOCKNAME_VIDEO_FILE_POSITION = "VideoFilePosition";
 
     private List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects;
 
@@ -117,44 +107,7 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         String[] templateNames = persistenceModule.getAvailableReportTemplateNames();
         ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemplate( templateNames[reportNameIndex] );
 
-        return buildFullVideoAnnoationReport( reportname, reportNameIndex, getVideoAnnotationVideoObjects(), reportBuilder );
-    }
-
-    private String buildFullVideoAnnoationReport( String reportname, int reportNameIndex, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects,
-                    ReportBuilder reportBuilder ) {
-        if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
-            return "Error: VideoAnnotatorComponent::buildFullVideoAnnoationReport - got an empty list";
-        }
-
-        // build another report from smaller reports.
-        for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
-            HashMap<String, String> videoData = new HashMap<String, String>();
-            videoData.put( "videofilename", videoAnnotatorVideoObject.getSimpleName() );
-            videoData.put( "videolength", VideoAnnotatorUtils.convertSecondsToTimeString( videoAnnotatorVideoObject.getVideoDurationInSeconds() ) );
-
-            reportBuilder.block( BLOCKNAME_VIDEO_FILE, videoData );
-
-            buildSingleVideoAnnotationReport( reportBuilder, videoAnnotatorVideoObject );
-        }
-
-        return reportBuilder.render( new HashMap<String, String>() );
-    }
-
-    private void buildSingleVideoAnnotationReport( ReportBuilder reportBuilder, VideoAnnotatorVideoObject videoObject ) {
-        DataFrame currentSelectedDF = videoObject.getVideoAnnotationDataFrame();
-
-        Iterator<DataFrameRow> currentDFRowsIterator = currentSelectedDF.rowIterator();
-        while (currentDFRowsIterator.hasNext()) {
-            DataFrameRow dataFrameRow = (DataFrameRow) currentDFRowsIterator.next();
-            int timestampInSeconds = (Integer) dataFrameRow.get( VideoAnnotationColumns.TIMESTAMP_COLUMN_NAME );
-
-            // TODO: we need something generic here to fill the data from the dataFrameRow
-            Map<String, String> templateData = new HashMap<>();
-            templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
-            templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
-
-            reportBuilder.block( BLOCKNAME_VIDEO_FILE_POSITION, templateData );
-        }
+        return VideoAnnotatorReportBuilder.buildFullVideoAnnoationReport( reportname, reportNameIndex, getVideoAnnotationVideoObjects(), reportBuilder );
     }
 
     public void setFFProbePath( Path ffprobePath ) {
