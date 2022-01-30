@@ -38,6 +38,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
+import de.mindscan.brightflux.plugin.reports.transformations.TimeConversions;
 
 /**
  *
@@ -69,11 +70,14 @@ public class BFTemplateImpl {
 
     private static final String DATA_KEYWORD = "data";
     private static final String PLACE_BLOCK_KEYWORD = "placeBlock";
+    private static final String TRANSFORM_KEYWORD = "transform";
 
     private static final String BEGIN_BLOCK_DETECTOR_STRING = "\\{\\{block:begin:(.+?)\\}\\}";
     private static final String NAMED_BLOCK_DETECTOR_STRING = "\\{\\{block:begin:%s\\}\\}(.*)\\{\\{block:end:%s\\}\\}";
+    private static final String TRANSFORM_DETECTOR_STRING = "\\{\\{" + TRANSFORM_KEYWORD + ":(.+?):(.+?)\\}\\}";
 
     private static final Pattern pattern = Pattern.compile( "\\{\\{(" + DATA_KEYWORD + "|" + PLACE_BLOCK_KEYWORD + "):(.+?)\\}\\}" );
+    private static final Pattern transform = Pattern.compile( TRANSFORM_DETECTOR_STRING );
     private static final Pattern detectBlockStart = Pattern.compile( BEGIN_BLOCK_DETECTOR_STRING );
 
     private LinkedList<BFTemplateBlockData> templateBlockData = new LinkedList<>();
@@ -174,7 +178,32 @@ public class BFTemplateImpl {
             }
         } );
 
-        return rendered;
+        String transformed = replace_callback( rendered, transform, new Function<Matcher, String>() {
+            @Override
+            public String apply( Matcher m ) {
+                String transformFunction = m.group( 1 );
+                String argument = m.group( 2 );
+                try {
+                    switch (transformFunction) {
+                        case "secToTime": {
+                            return TimeConversions.convertSecondsToTime( argument );
+                        }
+                        case "nanoToDate": {
+                            return TimeConversions.convertNanoToPreciseDate( argument );
+                        }
+                        default:
+                            // some unknown function - just return the original argument. 
+                            return argument;
+                    }
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return argument;
+            }
+        } );
+
+        return transformed;
     }
 
 }

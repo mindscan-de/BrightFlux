@@ -55,7 +55,7 @@ public class VideoAnnotatorReportBuilder {
         for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
             HashMap<String, String> videoData = new HashMap<String, String>();
             videoData.put( "videofilename", videoAnnotatorVideoObject.getSimpleName() );
-            videoData.put( "videolength", VideoAnnotatorUtils.convertSecondsToTimeString( videoAnnotatorVideoObject.getVideoDurationInSeconds() ) );
+            videoData.put( "videolength", Integer.toString( videoAnnotatorVideoObject.getVideoDurationInSeconds() ) );
 
             reportBuilder.block( BLOCKNAME_VIDEO_FILE, videoData );
 
@@ -75,7 +75,7 @@ public class VideoAnnotatorReportBuilder {
 
             // TODO: we need something generic here to fill the data from the dataFrameRow
             Map<String, String> templateData = new HashMap<>();
-            templateData.put( "videotimestamp", VideoAnnotatorUtils.convertSecondsToTimeString( timestampInSeconds ) );
+            templateData.put( "videotimestamp", Integer.toString( timestampInSeconds ) );
             templateData.put( "evidence_description", String.valueOf( dataFrameRow.get( VideoAnnotationColumns.ANNOTATION_COLUMN_NAME ) ) );
 
             reportBuilder.block( BLOCKNAME_VIDEO_FILE_POSITION, templateData );
