@@ -86,4 +86,27 @@ public class TimeConversions {
         long totalSeconds = (timestampInNano / 1000000000L);
         return String.format( "%s.%03d", convertSecondsToTime( totalSeconds, true ), fractionMS );
     }
+
+    public static String convertNanoToNanoTime( String valueInNano, boolean limit24h ) {
+        long timestampInNano = Long.valueOf( valueInNano ).longValue();
+
+        long fraction = timestampInNano % 1000000000L;
+        long fractionMS = (fraction / 1000000L) % 1000L;
+        long fractionMY = (fraction / 1000L) % 1000L;
+        long fractionNS = (fraction) % 1000L;
+
+        long totalSeconds = (timestampInNano / 1000000000L);
+
+        return String.format( "%s.%03d.%03d.%03d", convertSecondsToTime( totalSeconds, limit24h ), fractionMS, fractionMY, fractionNS );
+    }
+
+    public static String convertNanoToMsTime( String valueInNano, boolean limit24h ) {
+        long timestampInNano = Long.valueOf( valueInNano ).longValue();
+
+        long fraction = timestampInNano % 1000000000L;
+        long fractionMS = (fraction / 1000000L) % 1000L;
+
+        long totalSeconds = (timestampInNano / 1000000000L);
+        return String.format( "%s.%03d", convertSecondsToTime( totalSeconds, limit24h ), fractionMS );
+    }
 }

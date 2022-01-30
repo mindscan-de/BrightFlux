@@ -188,6 +188,19 @@ public class BFTemplateImpl {
                         case "secToTime": {
                             return TimeConversions.convertSecondsToTime( argument );
                         }
+                        case "nanoToNanoTime": {
+                            return TimeConversions.convertNanoToNanoTime( argument, false );
+                        }
+                        case "nanoToNanoTime24": {
+                            return TimeConversions.convertNanoToNanoTime( argument, true );
+                        }
+                        case "nanoToMsTime": {
+                            return TimeConversions.convertNanoToMsTime( argument, false );
+                        }
+                        case "nanoTomsTime24": {
+                            return TimeConversions.convertNanoToMsTime( argument, true );
+                        }
+
                         case "nanoToNanoDate": {
                             return TimeConversions.convertNanoToNanoDate( argument );
                         }
