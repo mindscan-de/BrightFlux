@@ -303,7 +303,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
     }
 
     public void executeIntentCopyToClipboardVideoAnnotationReport( Shell shell ) {
-        String report = videoAnnotatorService.createFullReport( "Jira" );
+        String report = videoAnnotatorService.createFullReport( "Jira", 0 );
 
         dispatchCommand( UICommandFactory.copyToClipboard( shell, report ) );
     }

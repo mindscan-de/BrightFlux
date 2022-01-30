@@ -64,13 +64,6 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     private ReportGeneratorComponent reportGeneratorComponent;
 
-    public static final String TODO_TEMPLATE = "{{block:begin:VideoFile}}h5. Analysis of [^{{data:videofilename}}]\r\n" + // 
-                    "\r\n" + //
-                    "The length of the video is {{data:videolength}} :\r\n" + // 
-                    "{{block:begin:VideoFilePosition}}* {{data:videotimestamp}} (video time): {{data:evidence_description}}\r\n" + // 
-                    "{{block:end:VideoFilePosition}}{{block:end:VideoFile}}\r\n" + //
-                    "";
-
     /**
      * 
      */
@@ -120,17 +113,18 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         videoAnnotationVideoObjects.remove( videoObject );
     }
 
-    public String createFullReport( String reportname ) {
-        return buildFullVideoAnnoationReport( reportname, getVideoAnnotationVideoObjects() );
+    public String createFullReport( String reportname, int reportNameIndex ) {
+        String[] templateNames = persistenceModule.getAvailableReportTemplateNames();
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemplate( templateNames[reportNameIndex] );
+
+        return buildFullVideoAnnoationReport( reportname, reportNameIndex, getVideoAnnotationVideoObjects(), reportBuilder );
     }
 
-    private String buildFullVideoAnnoationReport( String reportname, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects ) {
+    private String buildFullVideoAnnoationReport( String reportname, int reportNameIndex, List<VideoAnnotatorVideoObject> videoAnnotationVideoObjects,
+                    ReportBuilder reportBuilder ) {
         if (videoAnnotationVideoObjects == null || videoAnnotationVideoObjects.isEmpty()) {
             return "Error: VideoAnnotatorComponent::buildFullVideoAnnoationReport - got an empty list";
         }
-
-        // TODO: load from template Name -> calculate file name and then use file content.
-        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderStringTemplate( TODO_TEMPLATE );
 
         // build another report from smaller reports.
         for (VideoAnnotatorVideoObject videoAnnotatorVideoObject : videoAnnotationVideoObjects) {
