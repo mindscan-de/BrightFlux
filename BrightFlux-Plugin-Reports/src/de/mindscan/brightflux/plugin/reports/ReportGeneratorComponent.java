@@ -68,9 +68,9 @@ public class ReportGeneratorComponent implements ProjectRegistryParticipant {
         return new ReportBuilderImpl( template );
     }
 
-    public ReportBuilder getReportBuilder( Path path ) {
+    public ReportBuilder getReportBuilderFileTemlate( String templateName ) {
         Path basePath = persistenceModule.getReportTemplateBasePath();
-        return new ReportBuilderImpl( path.getFileName().toString(), new BFTemplateContentFileProviderImpl( basePath ) );
+        return new ReportBuilderImpl( templateName, new BFTemplateContentFileProviderImpl( basePath ) );
     }
 
 }

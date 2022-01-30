@@ -26,7 +26,6 @@
 package de.mindscan.brightflux.plugin.annotator;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
@@ -154,11 +153,8 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
-
-        // translate the reportName / reportNameIndex to a full file path.
         String[] templateNames = this.persistenceModule.getAvailableReportTemplateNames();
-        String templateName = templateNames[reportNameIndex];
-        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilder( Paths.get( templateName ) );
+        ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemlate( templateNames[reportNameIndex] );
 
         return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame(), reportBuilder );
     }
