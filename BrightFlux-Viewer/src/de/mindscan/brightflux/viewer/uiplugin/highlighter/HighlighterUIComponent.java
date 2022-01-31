@@ -44,16 +44,6 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
     public HighlighterUIComponent() {
         this.colorMap = new HashMap<>();
-
-    }
-
-    private void initColors() {
-        String[] colorNames = this.persistenceModule.getColorNames();
-
-        for (String colorName : colorNames) {
-            String colorCode = this.persistenceModule.getColorHexCoding( colorName );
-            this.colorMap.put( colorName, convertHexCodeColor( colorCode ) );
-        }
     }
 
     /** 
@@ -86,7 +76,17 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
     public void setPersistenceModule( HighlighterUIPersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
-        initColors();
+
+        initNamedColorsFromPersistence();
+    }
+
+    private void initNamedColorsFromPersistence() {
+        String[] colorNames = this.persistenceModule.getColorNames();
+
+        for (String colorName : colorNames) {
+            String colorCode = this.persistenceModule.getColorHexCoding( colorName );
+            this.colorMap.put( colorName, convertHexCodeColor( colorCode ) );
+        }
     }
 
 }
