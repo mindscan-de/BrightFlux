@@ -41,9 +41,6 @@ public class VideoAnnotatorActivator implements StartupParticipant {
 
     private static final String VIDEO_ANNOTATOR_PLUGIN_PERSISTENCE_NAMESPACE = "videoannotator-plugin";
 
-    // TODO refactor constant this to the right place
-    public static final String FFPROBE_PATH_KEY = "ffprobe.path";
-
     /**
      * @param systemServices
      */
@@ -61,7 +58,7 @@ public class VideoAnnotatorActivator implements StartupParticipant {
         // TODO 
         // - set a fully configured persistence module instead, where the component can do everything in its own
         // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
-        videoAnnotatorComponent.setFFProbePath( systemServices.getEarlyPersistence().getPropertyAsPath( FFPROBE_PATH_KEY ) );
+        videoAnnotatorComponent.setFFProbePath( videoAnnotatorComponent.getPersistenceModule().getFFProbePath() );
         systemServices.registerService( videoAnnotatorComponent, VideoAnnotatorComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();

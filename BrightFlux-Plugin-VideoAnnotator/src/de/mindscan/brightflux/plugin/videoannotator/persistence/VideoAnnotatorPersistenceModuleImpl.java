@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.plugin.videoannotator.persistence;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 
 /**
@@ -35,6 +37,8 @@ public class VideoAnnotatorPersistenceModuleImpl implements VideoAnnotatorPersis
     public static final String VIDEO_ANNOTATOR_PLUGIN_SNIPPETS_KEY = "videoannotator.snippets";
     public static final String VIDEO_ANNOTATOR_PLUGIN_REPORT_NAMES_KEY = "videoannotator.report.names";
     public static final String VIDEO_ANNOTATOR_PLUGIN_REPORT_TEMPLATES_KEY = "videoannotator.report.templates";
+
+    public static final String FFPROBE_PATH_KEY = "ffprobe.path";
 
     private BasePersistenceModule persistenceModule;
 
@@ -69,7 +73,14 @@ public class VideoAnnotatorPersistenceModuleImpl implements VideoAnnotatorPersis
     @Override
     public String[] getAvailableReportTemplateNames() {
         String[] result = persistenceModule.getStringArrayValue( VIDEO_ANNOTATOR_PLUGIN_REPORT_TEMPLATES_KEY );
+
         return result;
     }
 
+    @Override
+    public Path getFFProbePath() {
+        String stringValue = persistenceModule.getStringValue( FFPROBE_PATH_KEY );
+        Path x = persistenceModule.evaluateAsPath( stringValue );
+        return x;
+    }
 }

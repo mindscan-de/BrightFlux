@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.plugin.videoannotator.persistence;
 
+import java.nio.file.Path;
+
 /**
  * 
  */
@@ -44,5 +46,11 @@ public interface VideoAnnotatorPersistenceModule {
      * @return
      */
     String[] getAvailableReportTemplateNames();
+
+    /**
+     * 
+     * @return
+     */
+    Path getFFProbePath();
 
 }
