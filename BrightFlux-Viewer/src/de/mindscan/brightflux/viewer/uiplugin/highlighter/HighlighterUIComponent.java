@@ -32,6 +32,7 @@ import org.eclipse.swt.graphics.Color;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.persistence.HighlighterUIPersistenceModule;
 
 /**
  * 
@@ -39,6 +40,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
     private final Map<String, Color> colorMap;
+    private HighlighterUIPersistenceModule persistenceModule;
 
     public HighlighterUIComponent() {
         this.colorMap = new HashMap<>();
@@ -82,6 +84,10 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
         String blH = colorName.substring( 5, 7 );
 
         return new Color( Integer.parseInt( reH, 16 ), Integer.parseInt( grH, 16 ), Integer.parseInt( blH, 16 ) );
+    }
+
+    public void setPersistenceModule( HighlighterUIPersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
     }
 
 }

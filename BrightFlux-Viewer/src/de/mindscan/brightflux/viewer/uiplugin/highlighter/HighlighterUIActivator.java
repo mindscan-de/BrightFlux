@@ -29,6 +29,8 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.persistence.HighlighterUIPersistenceModule;
+import de.mindscan.brightflux.viewer.uiplugin.highlighter.persistence.HighlighterUIPersistenceModuleImpl;
 
 /**
  * 
@@ -42,10 +44,12 @@ public class HighlighterUIActivator implements StartupParticipant {
      */
     @Override
     public void start( SystemServices systemservices ) {
-        // TODO: prepare calculation of named and persisted colors 
         BasePersistenceModule highlighterUIBasePersistenceModule = systemservices.getBasePersistenceModule( HIGHLIGHTER_UI_PLUGIN );
+        HighlighterUIPersistenceModule persistenceModule = new HighlighterUIPersistenceModuleImpl( highlighterUIBasePersistenceModule );
 
         HighlighterUIComponent highligterUIComponent = new HighlighterUIComponent();
+        highligterUIComponent.setPersistenceModule( persistenceModule );
+
         systemservices.registerService( highligterUIComponent, HighlighterUIComponent.class );
 
         ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
