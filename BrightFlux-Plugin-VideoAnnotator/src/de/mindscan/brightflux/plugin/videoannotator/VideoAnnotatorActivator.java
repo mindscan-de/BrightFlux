@@ -55,10 +55,6 @@ public class VideoAnnotatorActivator implements StartupParticipant {
         ReportGeneratorComponent reportGeneratorComponent = systemServices.getService( ReportGeneratorComponent.class );
         videoAnnotatorComponent.setReportGeneratorComponent( reportGeneratorComponent );
 
-        // TODO 
-        // - set a fully configured persistence module instead, where the component can do everything in its own
-        // - The component can also register listeners if it wants to be informed about changes (e.g. config pages)   
-        videoAnnotatorComponent.setFFProbePath( videoAnnotatorComponent.getPersistenceModule().getFFProbePath() );
         systemServices.registerService( videoAnnotatorComponent, VideoAnnotatorComponent.class );
 
         ProjectRegistry projectRegistry = systemServices.getProjectRegistry();

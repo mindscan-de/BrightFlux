@@ -48,8 +48,6 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
 
     private ProjectRegistry projectRegistry;
 
-    private Path ffprobePath;
-
     private VideoAnnotatorPersistenceModule persistenceModule;
 
     private ReportGeneratorComponent reportGeneratorComponent;
@@ -110,12 +108,8 @@ public class VideoAnnotatorComponent implements ProjectRegistryParticipant {
         return VideoAnnotatorReportBuilder.buildFullVideoAnnoationReport( reportname, reportNameIndex, getVideoAnnotationVideoObjects(), reportBuilder );
     }
 
-    public void setFFProbePath( Path ffprobePath ) {
-        this.ffprobePath = ffprobePath;
-    }
-
     public Path getFFProbePath() {
-        return ffprobePath;
+        return this.persistenceModule.getFFProbePath();
     }
 
     public void setPersistenceModule( VideoAnnotatorPersistenceModule persistenceModule ) {
