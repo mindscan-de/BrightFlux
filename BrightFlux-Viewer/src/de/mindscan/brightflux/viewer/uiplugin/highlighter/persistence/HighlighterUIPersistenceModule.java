@@ -30,4 +30,8 @@ package de.mindscan.brightflux.viewer.uiplugin.highlighter.persistence;
  */
 public interface HighlighterUIPersistenceModule {
 
+    String getColorHexCoding( String colorName );
+
+    String[] getColorNames();
+
 }

@@ -45,17 +45,15 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
     public HighlighterUIComponent() {
         this.colorMap = new HashMap<>();
 
-        initColors();
     }
 
     private void initColors() {
-        // TODO: externalize this information into persistence.
-        // Hard coded color map, which we may want to put into a persistence configuration file as well
-        this.colorMap.put( "yellow", new Color( 255, 255, 224 ) );
-        this.colorMap.put( "pink", new Color( 255, 224, 255 ) );
-        this.colorMap.put( "red", new Color( 255, 224, 224 ) );
-        this.colorMap.put( "green", new Color( 224, 255, 224 ) );
-        this.colorMap.put( "blue", new Color( 224, 240, 255 ) );
+        String[] colorNames = this.persistenceModule.getColorNames();
+
+        for (String colorName : colorNames) {
+            String colorCode = this.persistenceModule.getColorHexCoding( colorName );
+            this.colorMap.put( colorName, convertHexCodeColor( colorCode ) );
+        }
     }
 
     /** 
@@ -88,6 +86,7 @@ public class HighlighterUIComponent implements ProjectRegistryParticipant {
 
     public void setPersistenceModule( HighlighterUIPersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
+        initColors();
     }
 
 }

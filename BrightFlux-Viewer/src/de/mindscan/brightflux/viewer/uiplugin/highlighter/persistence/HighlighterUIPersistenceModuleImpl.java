@@ -40,4 +40,15 @@ public class HighlighterUIPersistenceModuleImpl implements HighlighterUIPersiste
     public HighlighterUIPersistenceModuleImpl( BasePersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
     }
+
+    @Override
+    public String[] getColorNames() {
+        // TODO: okay lets hardcode the names but use the color from the file?
+        return new String[] { "yellow", "pink", "red", "green", "blue" };
+    }
+
+    @Override
+    public String getColorHexCoding( String colorName ) {
+        return persistenceModule.getStringValue( colorName + ".color" ).trim();
+    }
 }
