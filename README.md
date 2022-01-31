@@ -160,19 +160,17 @@ I want to address rather sooner than later.
 
 ### Next
 
-DataFrame-Core
-* [DFCORE] Support original Index
-  * [DFCORE] copy the original index in a derived data frame 
-* [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
-* [DFCORE] re-index "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
+
+UI-Dashboard
+* Well we have to see...
 
 
-Search Engine
-* show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
+Machine Learning
+* Well we have to see...
 
 
-Mini-XOR-Tool
-* xor.exe (light edition)
+Search Engine Support
+* Well we have to see...
 
 
 ### Later
@@ -181,16 +179,11 @@ Annotation and Highlights Improvements
 * Have different annotation frames / highlight frames for each base document and combine via strategy...
 
 
-UI/UX
-* Configuration System - Preferences (uses persistence - persistence is good enough for now)
-  * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
-  * provide PreferenceStore
-  
-
 Search Engine Support
-* implement search configurable profiles such as "project a", "project b", "only source", "only json", "lnguage java", "language python","only tests", "no tests"
+* implement search configurable profiles such as "project a", "project b", "only source", "only json", "language java", "language python","only tests", "no tests"
 * combine profiles to new profiles / have orthogonal profiles
 * better filter options for search in backend - improve to distill metadata search from file search, and use caching for both of them.
+* show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
 
 
 DFQL
@@ -252,6 +245,10 @@ Export the analysis result in short form
 * Project file
 
 
+Mini-XOR-Tool (found a replacement for thisparticular need for now / but this is not forgotten)
+* xor.exe (light edition)
+
+
 UI/UX (est. 1.5 kLOC)
 * save width information by (column name list)-hash such that the width is preserved for future uses or derived frames.
 
@@ -261,6 +258,19 @@ UI/UX (est. 8-10 kLOC)
   (overview ruler which is showing the color bars and click-able fullscale positions)
  
   
+UI/UX
+* Configuration System - Preferences (uses persistence - persistence is good enough for now)
+  * provide PreferencePages and Editors for different components (e.g. DFQL default queries, Report templates, Last Sizes, Last Files, Last Directories)  (later)
+  * provide PreferenceStore
+  
+
+DataFrame-Core (didn't needed it for a long time - therefore maybe not that important)
+* [DFCORE] Support original Index
+  * [DFCORE] copy the original index in a derived data frame 
+* [DFCORE] Improve support of "__org_idx" and "__idx", when doing select statements (added to the default copied columns)
+* [DFCORE] re-index "__idx" row on data frame filtering and data frame column selection (happens automatically when frame is selected without this "__idx" row)
+
+
 Rebuild the Event-Pattern and Command-Pattern
 * I think o be able to decouple all the code from each other (compile-wise) i want this system to transition to an Intent-based-System (such that menu entries are provided by visualization intents, requests, broadcast-requests, broadcast events, 1:1 communication using intents and futures, subscriptions and promises). And each plugin can state which intents it subscribes to. So that you can have the command factory and the intent to create a command in the plugin which provides the functionality. And the Buttons and such only fire intents and show menu items providing intents.
 * Worker threads / introduce background tasks. Background command with a marker interface?
