@@ -22,7 +22,7 @@ public class BasePersistenceModuleImplTest {
         String namespace = "annotator-plugin";
 
         PersistenceModule persistenceModule = PersistenceModuleFactory.createModuleInstance( path, namespace );
-        BasePersistenceModuleImpl basePersistence = new BasePersistenceModuleImpl( persistenceModule );
+        BasePersistenceModuleImpl basePersistence = new BasePersistenceModuleImpl( persistenceModule, null );
 
         // act
         List<String> result = Arrays.asList( basePersistence.getStringArrayValue( "annotator.snippets" ) );

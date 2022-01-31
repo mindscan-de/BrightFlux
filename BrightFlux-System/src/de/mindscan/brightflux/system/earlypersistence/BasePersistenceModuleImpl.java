@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.system.earlypersistence;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
 /**
@@ -33,9 +35,11 @@ import de.mindscan.brightflux.persistence.PersistenceModule;
 public class BasePersistenceModuleImpl implements BasePersistenceModule {
 
     private PersistenceModule persistenceModule;
+    private EarlyPersistenceComponent earlyPersistenceComponent;
 
-    public BasePersistenceModuleImpl( PersistenceModule persistenceModule ) {
+    public BasePersistenceModuleImpl( PersistenceModule persistenceModule, EarlyPersistenceComponent earlyPersistenceComponent ) {
         this.persistenceModule = persistenceModule;
+        this.earlyPersistenceComponent = earlyPersistenceComponent;
     }
 
     @Override
@@ -108,4 +112,11 @@ public class BasePersistenceModuleImpl implements BasePersistenceModule {
         return persistenceModule.getStringArrayValue( key );
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Path evaluateAsPath( String stringValue ) {
+        return earlyPersistenceComponent.evaluateAsPath( stringValue );
+    }
 }

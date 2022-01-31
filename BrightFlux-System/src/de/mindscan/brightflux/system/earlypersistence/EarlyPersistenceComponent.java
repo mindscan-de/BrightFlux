@@ -99,7 +99,7 @@ public class EarlyPersistenceComponent {
         // TODO such that a BasePersistence module is able to do replacements based on the content of the early persistence
         // TODO also only one instance of base persistence modules should exist for each persistenceNamespace 
 
-        return new BasePersistenceModuleImpl( persistenceModuleRegistry.getPersistenceModule( persistenceNamespace ) );
+        return new BasePersistenceModuleImpl( persistenceModuleRegistry.getPersistenceModule( persistenceNamespace ), this );
     }
 
 }

@@ -25,11 +25,19 @@
  */
 package de.mindscan.brightflux.system.earlypersistence;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
 /**
  * 
  */
 public interface BasePersistenceModule extends PersistenceModule {
+
+    /**
+     * @param stringValue
+     * @return
+     */
+    Path evaluateAsPath( String stringValue );
 
 }
