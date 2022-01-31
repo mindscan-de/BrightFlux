@@ -316,11 +316,6 @@ public class BFVideoAnnotationSingleVideoViewComposite extends Composite impleme
         if (btnLinkDataframe.getSelection()) {
             System.out.println( "handle the data frame row ts: " + selectedRow.get( HARD_CODED_CONSTANT_H1_TS ) );
 
-            // we need the current position from the slider
-            // we need the current videoObject
-            // we need the columns we want to focus on (ask the user via GUI?)
-            // we need the selected Row to do this.
-
             dispatchCommand( //
                             VideoAnnotatorCommandFactory.linkVideoAnnotationToDataFrame( // 
                                             this.getVideoSelectionPositionFromSlider(), videoObject,
