@@ -57,8 +57,6 @@ public class SaveHighlightDataFrameCommand implements BFCommand {
         HighlighterJsonLWriterImpl highlighterJSONLWriterImpl = new HighlighterJsonLWriterImpl();
 
         highlighterJSONLWriterImpl.writeFile( highlightDataFrame, targetFilePath );
-
-        // TODO: dispatch event, that file was saved.
     }
 
 }

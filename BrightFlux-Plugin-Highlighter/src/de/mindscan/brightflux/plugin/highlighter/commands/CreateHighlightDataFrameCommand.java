@@ -43,12 +43,9 @@ public class CreateHighlightDataFrameCommand implements BFCommand {
      */
     @Override
     public void execute( Consumer<BFEvent> eventConsumer ) {
-        // TODO SparseXYZColumn for colorintensity...
-
         DataFrame newDataFrame = HighlighterUtils.createNewHighlightDataframe();
 
         eventConsumer.accept( HighlighterEventFactory.highlightDataframeCreated( newDataFrame ) );
-
     }
 
 }
