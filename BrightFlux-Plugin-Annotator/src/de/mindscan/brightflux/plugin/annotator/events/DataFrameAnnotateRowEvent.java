@@ -37,8 +37,7 @@ public class DataFrameAnnotateRowEvent extends BFAbstractDataFrameEvent {
     private int row;
 
     /**
-     * @param dataFrame
-     * @param row TODO
+     * 
      */
     public DataFrameAnnotateRowEvent( DataFrame dataFrame, int row, String annotation ) {
         super( dataFrame );

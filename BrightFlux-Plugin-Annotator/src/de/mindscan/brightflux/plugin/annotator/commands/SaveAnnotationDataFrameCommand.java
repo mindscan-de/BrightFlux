@@ -59,8 +59,6 @@ public class SaveAnnotationDataFrameCommand implements BFCommand {
             AnnotatorJsonLWriterImpl annotatorJsonLWriterImpl = new AnnotatorJsonLWriterImpl();
 
             annotatorJsonLWriterImpl.writeFile( annotationDataFrame, targetFilePath );
-
-            // TODO: fire event that AnnotationDataFrame was saved.
         }
     }
 
