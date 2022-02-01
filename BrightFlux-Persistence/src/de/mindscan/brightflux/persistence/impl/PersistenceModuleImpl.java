@@ -25,8 +25,12 @@
  */
 package de.mindscan.brightflux.persistence.impl;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
@@ -169,5 +173,16 @@ public class PersistenceModuleImpl implements PersistenceModule {
     @Override
     public void setDefaultLongValue( String key, long defaultValue ) {
         defaultPersistenceData.put( key, Long.valueOf( defaultValue ) );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> enumerateKeys( Predicate<String> keyPredicate ) {
+        TreeSet<String> allKeys = new TreeSet<>( defaultPersistenceData.keySet() );
+        allKeys.addAll( currentPersistenceData.keySet() );
+
+        return allKeys.stream().filter( keyPredicate ).collect( Collectors.toList() );
     }
 }

@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.persistence;
 
+import java.util.Collection;
+import java.util.function.Predicate;
+
 /**
  * 
  */
@@ -75,5 +78,7 @@ public interface PersistenceModule {
     // void addPersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
     // void removePersistenceValueUpdateListener( PersistenceValueUpdateListener listener );
     // void clearPersistenceValueUpdateListeners();
+
+    Collection<String> enumerateKeys( Predicate<String> keyPredicate );
 
 }

@@ -26,6 +26,8 @@
 package de.mindscan.brightflux.system.earlypersistence;
 
 import java.nio.file.Path;
+import java.util.Collection;
+import java.util.function.Predicate;
 
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
@@ -118,5 +120,13 @@ public class BasePersistenceModuleImpl implements BasePersistenceModule {
     @Override
     public Path evaluateAsPath( String stringValue ) {
         return earlyPersistenceComponent.evaluateAsPath( stringValue );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<String> enumerateKeys( Predicate<String> keyPredicate ) {
+        return persistenceModule.enumerateKeys( keyPredicate );
     }
 }
