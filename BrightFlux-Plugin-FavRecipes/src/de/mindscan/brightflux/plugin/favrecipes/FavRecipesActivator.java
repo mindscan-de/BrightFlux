@@ -54,12 +54,10 @@ public class FavRecipesActivator implements StartupParticipant {
                         systemServices.getEarlyPersistence().getPropertyAsPath( FAVORITE_RECIPES_DIRECTORY_KEY ) );
         systemServices.registerService( favRecipesComponent, FavRecipesComponent.class );
 
-        // TODO: remove this if not needed any more...
         printDebugIntermediateNodes( favRecipesComponent );
     }
 
     public void printDebugIntermediateNodes( FavRecipesComponent favRecipesComponent ) {
-        // some debug...
         List<String> intermediateNodes = favRecipesComponent.getAllIntermediateNodes();
         System.out.println( "Intermediate nodes for favorite recipes" );
         System.out.println( intermediateNodes );
