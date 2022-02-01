@@ -56,7 +56,7 @@ public class HighlighterUIPersistenceModuleImpl implements HighlighterUIPersiste
         return names.toArray( new String[colorKeys.size()] );
     }
 
-    public String stripColorSuffix( String fullColorName ) {
+    private String stripColorSuffix( String fullColorName ) {
         return fullColorName.substring( 0, fullColorName.indexOf( COLOR_KEY_SUFFIX ) );
     }
 
