@@ -48,16 +48,16 @@ public class HighlighterUIPersistenceModuleImpl implements HighlighterUIPersiste
 
     @Override
     public String[] getColorNames() {
-        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> colorNames = new ArrayList<>();
 
         Collection<String> colorKeys = persistenceModule.enumerateKeys( key -> key.endsWith( COLOR_KEY_SUFFIX ) );
-        colorKeys.stream().map( this::stripColorSuffix ).forEach( names::add );
+        colorKeys.stream().map( this::stripColorKeySuffix ).forEach( colorNames::add );
 
-        return names.toArray( new String[colorKeys.size()] );
+        return colorNames.toArray( new String[colorKeys.size()] );
     }
 
-    private String stripColorSuffix( String fullColorName ) {
-        return fullColorName.substring( 0, fullColorName.indexOf( COLOR_KEY_SUFFIX ) );
+    private String stripColorKeySuffix( String colorKeyName ) {
+        return colorKeyName.substring( 0, colorKeyName.indexOf( COLOR_KEY_SUFFIX ) );
     }
 
     @Override
