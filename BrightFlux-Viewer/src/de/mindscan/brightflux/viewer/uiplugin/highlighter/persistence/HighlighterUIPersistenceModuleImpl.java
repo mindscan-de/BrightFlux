@@ -25,12 +25,17 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.highlighter.persistence;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 
 /**
  * 
  */
 public class HighlighterUIPersistenceModuleImpl implements HighlighterUIPersistenceModule {
+
+    private static final String COLOR_KEY_SUFFIX = ".color";
 
     private BasePersistenceModule persistenceModule;
 
@@ -43,12 +48,20 @@ public class HighlighterUIPersistenceModuleImpl implements HighlighterUIPersiste
 
     @Override
     public String[] getColorNames() {
-        // TODO: okay lets hardcode the names but use the color from the file?
-        return new String[] { "yellow", "pink", "red", "green", "blue" };
+        ArrayList<String> names = new ArrayList<>();
+
+        Collection<String> colorKeys = persistenceModule.enumerateKeys( key -> key.endsWith( COLOR_KEY_SUFFIX ) );
+        colorKeys.stream().map( this::stripColorSuffix ).forEach( names::add );
+
+        return names.toArray( new String[colorKeys.size()] );
+    }
+
+    public String stripColorSuffix( String fullColorName ) {
+        return fullColorName.substring( 0, fullColorName.indexOf( COLOR_KEY_SUFFIX ) );
     }
 
     @Override
     public String getColorHexCoding( String colorName ) {
-        return persistenceModule.getStringValue( colorName + ".color" ).trim();
+        return persistenceModule.getStringValue( colorName + COLOR_KEY_SUFFIX ).trim();
     }
 }
