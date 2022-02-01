@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.persistence.io;
 
+import java.util.Collection;
+
 import de.mindscan.brightflux.persistence.PersistenceModule;
 
 /**
@@ -33,12 +35,16 @@ import de.mindscan.brightflux.persistence.PersistenceModule;
 public class PersistenceModuleWriterImpl {
 
     public void savePersistenceModuleData( PersistenceModule module ) {
-        // TODO: i want an iterator for each value
+        Collection<String> allKeys = module.enumerateKeys( this::selectAllKeys );
 
         // TODO: then we want to save default Values and their types
         // TODO: then we want to save current values
 
         // TODO: we want to know where we can create the files.
         // TODO: we also want to save the data as long as the data is unmodified
+    }
+
+    private boolean selectAllKeys( String keyName ) {
+        return true;
     }
 }
