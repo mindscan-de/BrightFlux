@@ -54,8 +54,7 @@ public class LoadVideoAnnotationFromFileCommand implements BFCommand {
         VideoAnnotationReaderImpl reader = new VideoAnnotationReaderImpl();
         VideoAnnotatorVideoObject videoObject = reader.loadAnnotationAsVideoObject( videoAnnotationPath );
 
-        // TODO: Should be a videoObjectLoadedEvent? - later
-        eventConsumer.accept( VideoAnnotatorEventsFactory.videoObjectCreatedEvent( videoObject ) );
+        eventConsumer.accept( VideoAnnotatorEventsFactory.videoObjectLoadedEvent( videoObject ) );
     }
 
 }

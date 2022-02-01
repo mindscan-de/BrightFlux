@@ -30,6 +30,7 @@ import java.util.TreeMap;
 /**
  * 
  */
+@SuppressWarnings( "unused" )
 public class FFProbeInfoFormat {
 
     private String filename;
@@ -51,5 +52,25 @@ public class FFProbeInfoFormat {
 
     public Integer getSize() {
         return size;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public int getNumberOfStreams() {
+        return nb_streams;
+    }
+
+    public int getNumberOfPrograms() {
+        return nb_programs;
+    }
+
+    public String getFormatName() {
+        return format_name;
+    }
+
+    public String getFormatLongName() {
+        return format_long_name;
     }
 }

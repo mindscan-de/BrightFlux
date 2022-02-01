@@ -41,4 +41,9 @@ public class VideoAnnotatorEventsFactory {
         return new VideoAnnotationVideoObjectCreatedEvent( videoObject );
     }
 
+    public static BFEvent videoObjectLoadedEvent( VideoAnnotatorVideoObject videoObject ) {
+        // TODO: implement the correct implemntation of a videoObjectEvent / needs to be registered.
+        return new VideoAnnotationVideoObjectCreatedEvent( videoObject );
+    }
+
 }
