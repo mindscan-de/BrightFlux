@@ -41,7 +41,7 @@ public class SearchComponent implements ProjectRegistryParticipant {
      * 
      */
     public SearchComponent() {
-        // TODO Auto-generated constructor stub
+        // intentionally left blank for now
     }
 
     /** 
@@ -49,7 +49,7 @@ public class SearchComponent implements ProjectRegistryParticipant {
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-
+        // intentionally left blank for now
     }
 
     /**
