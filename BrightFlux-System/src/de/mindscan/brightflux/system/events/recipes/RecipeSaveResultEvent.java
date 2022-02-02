@@ -38,8 +38,7 @@ public class RecipeSaveResultEvent extends BFAbstractEvent {
     private boolean success;
 
     /**
-     * @param targetFile 
-     * @param success
+     * 
      */
     public RecipeSaveResultEvent( Path targetFile, boolean success ) {
         this.targetFile = targetFile;

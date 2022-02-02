@@ -120,7 +120,6 @@ public class RecipeExecuteCommand implements BFCommand {
             // Nothing to do...
         }
         else {
-            // TODO: fire a event, that the recipe load operation failed
             throw new NotYetImplemetedException();
         }
     }

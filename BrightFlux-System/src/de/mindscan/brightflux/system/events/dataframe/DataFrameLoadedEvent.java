@@ -28,14 +28,13 @@ package de.mindscan.brightflux.system.events.dataframe;
 import de.mindscan.brightflux.dataframes.DataFrame;
 
 /**
+ * 
  * This event class represents the event that a data frame was loaded.
  * 
- * TODO: this could also be the implementation of a base class for BFDataFrameEvent, it looks quite generic to me now.
  */
 public class DataFrameLoadedEvent extends BFAbstractDataFrameEvent {
 
     /**
-     * @param dataFrame 
      * 
      */
     public DataFrameLoadedEvent( DataFrame dataFrame ) {
