@@ -35,7 +35,6 @@ import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
  */
 public class SearchUICommandsFactory {
 
-    // TODO We want to use a search profile information as well  
     public static UIBFCommand searchDataFrameRow( DataFrameRow rowToSearch, String searchProfile ) {
         return new SearchUIDataFrameRowCommand( rowToSearch, searchProfile );
     }

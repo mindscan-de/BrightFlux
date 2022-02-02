@@ -347,7 +347,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     }
 
     private CTabItem buildDocumentTabItem( CTabFolder tabFolder, String cachedDocumentContent ) {
-        // TODO: implement prooper information about the tab item, like name, path etc.
+        // TODO: implement proper information about the tab item, like name, path etc.
         String documentName = "(document name nyi)";
 
         CTabItem tbtmNewItem = new CTabItem( tabFolder, SWT.NONE );

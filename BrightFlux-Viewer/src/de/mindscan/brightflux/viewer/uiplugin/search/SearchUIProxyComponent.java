@@ -124,8 +124,6 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
         projectRegistry.getEventDispatcher().registerEventListener( SearchResultCachedDocumentLoadedEvent.class, cachedDocumentListener );
     }
 
-    // TODO: implement the delegates
-
     // register the current search window
     public void registerCurrentActiveSearchWindow( SearchWindow activeSearchWindow ) {
         this.currentActiveSearchWindow = activeSearchWindow;

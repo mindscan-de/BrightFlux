@@ -40,8 +40,7 @@ public class XorUIProxyComponent implements ProjectRegistryParticipant {
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
-
+        // intentionally left blank
     }
 
     public void registerCurrentActiveXorWindow( XorWindow activeXorWindow ) {
