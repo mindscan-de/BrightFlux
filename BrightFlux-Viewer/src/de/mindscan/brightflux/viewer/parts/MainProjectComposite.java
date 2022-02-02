@@ -105,7 +105,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                         new LocatePredictedTimestampRequestedListenerAdapter() {
                             @Override
                             public void handleLocatePredictedTimestamp( String columnName, long timestamp ) {
-                                // TODO: delegate request to the current selected DataFrameTable Composite...
                                 delegateLocatePredictedTimestampToCurrentDataFrameTab( columnName, timestamp );
                             };
                         } );
@@ -114,7 +113,6 @@ public class MainProjectComposite extends Composite implements ProjectRegistryPa
                         new LocatePredictedTimestampRequestedListenerAdapter() {
                             @Override
                             public void handleLocatePredictedTimestamp( String columnName, long timestamp ) {
-                                // TODO: delegate request to the current selected DataFrameTable Composite...
                                 delegateLocatePredictedTimestampToAllDataFrames( columnName, timestamp );
                             };
                         } );

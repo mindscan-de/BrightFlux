@@ -68,8 +68,7 @@ public class BFAppConsoleViewComposite extends Composite implements ProjectRegis
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
-
+        // intentionally left blank for now.
     }
 
 }
