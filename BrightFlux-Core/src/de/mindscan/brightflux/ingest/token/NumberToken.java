@@ -49,9 +49,6 @@ public class NumberToken implements DataToken {
             } );
         }
 
-        // TODO: Pool these tokens for values of stringlength 2 or smaller.
-        // Use conventional LRU Pool here for all unusual but repeatingvalues
-
         return new NumberToken( value );
     }
 
