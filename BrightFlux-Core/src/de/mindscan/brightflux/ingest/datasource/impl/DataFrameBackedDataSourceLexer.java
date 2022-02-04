@@ -151,7 +151,6 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
      */
     @Override
     public void resetTokenPositions() {
-        // TODO Auto-generated method stub
         // TODO maybe reinitialize the dataframe iterator.. here
     }
 
@@ -197,8 +196,6 @@ public class DataFrameBackedDataSourceLexer implements DataSourceLexerRowMode {
         prepareCurrentDataRow();
 
         // read the text for the current row 
-        // TODO Auto-generated method stub
-
     }
 
     /**
