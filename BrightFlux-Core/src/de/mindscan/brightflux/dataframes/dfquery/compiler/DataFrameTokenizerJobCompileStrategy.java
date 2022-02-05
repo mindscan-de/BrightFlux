@@ -44,7 +44,6 @@ public class DataFrameTokenizerJobCompileStrategy {
 
     public DataFrameTokenizerJob compile( DFQLNode node ) {
         if (node instanceof TypedDFQLTokenizerStatementNode) {
-            // TODO : have a return type and return this.
             return compile_TypedDFQLTokenizerStatementNode( (TypedDFQLTokenizerStatementNode) node );
         }
 
