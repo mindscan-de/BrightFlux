@@ -16,6 +16,7 @@
 		<module>../BrightFlux-System</module>
 		
 		<module>../BrightFlux-Plugin-FavRecipes</module>
+		<module>../BrightFlux-Plugin-QueryHistory</module>
 		<module>../BrightFlux-Plugin-DataFrameHierarchy</module>
 		<module>../BrightFlux-Plugin-Reports</module>
 		<module>../BrightFlux-Plugin-Annotator</module>
