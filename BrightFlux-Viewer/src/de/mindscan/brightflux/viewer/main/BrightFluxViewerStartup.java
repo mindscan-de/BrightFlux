@@ -32,6 +32,7 @@ import de.mindscan.brightflux.plugin.annotator.AnnotatorActivator;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyActivator;
 import de.mindscan.brightflux.plugin.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.plugin.highlighter.HighlighterActivator;
+import de.mindscan.brightflux.plugin.queryhistory.QueryHistoryActivator;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorActivator;
 import de.mindscan.brightflux.plugin.search.SearchActivator;
 import de.mindscan.brightflux.plugin.videoannotator.VideoAnnotatorActivator;
@@ -84,6 +85,9 @@ public class BrightFluxViewerStartup {
 
         // Register Favorite Recipes Service + Collect Favorite Recipes
         startActivator( FavRecipesActivator.class, systemServices );
+
+        // Register Query History
+        startActivator( QueryHistoryActivator.class, systemServices );
 
         // Register Report Generator Service
         startActivator( ReportGeneratorActivator.class, systemServices );
