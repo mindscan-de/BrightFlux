@@ -25,23 +25,9 @@
  */
 package de.mindscan.brightflux.plugin.queryhistory;
 
-import de.mindscan.brightflux.system.services.StartupParticipant;
-import de.mindscan.brightflux.system.services.SystemServices;
-
 /**
  * 
  */
-public class QueryHistoryActivator implements StartupParticipant {
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void start( SystemServices systemServices ) {
-        // TODO: persistence...
-        QueryHistoryComponent queryHistoryComponent = new QueryHistoryComponent();
-        systemServices.registerService( queryHistoryComponent, QueryHistoryComponent.class );
-
-    }
+public class QueryHistoryComponent {
 
 }
