@@ -200,7 +200,7 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     public void executeQuery( String theQuery ) {
         if (currentSelectedDataFrame != null) {
 
-            switch (DataFrameQueryClassifier.classifyDFQLQuery( theQuery.trim() )) {
+            switch (DataFrameQueryClassifier.classifyDFQLQuery( theQuery )) {
                 case DMS_TOKENIZE: {
                     BFCommand command = DataFrameCommandFactory.queryTokenize( currentSelectedDataFrame, theQuery );
                     this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
