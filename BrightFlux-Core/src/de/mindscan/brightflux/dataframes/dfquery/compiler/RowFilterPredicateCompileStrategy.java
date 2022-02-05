@@ -211,9 +211,15 @@ public class RowFilterPredicateCompileStrategy {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
                     if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compild = compile( right );
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
 
-                        return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compild );
+                        return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compiled );
+                    }
+
+                    if (right instanceof DFQLApplyNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compiled );
                     }
 
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
@@ -227,9 +233,15 @@ public class RowFilterPredicateCompileStrategy {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
                     if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compild = compile( right );
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
 
-                        return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compild );
+                        return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compiled );
+                    }
+
+                    if (right instanceof DFQLApplyNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compiled );
                     }
 
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
