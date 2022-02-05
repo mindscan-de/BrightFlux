@@ -225,6 +225,22 @@ public class RowFilterPredicateCompileStrategy {
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                 }
 
+                if (left instanceof DFQLApplyNode) {
+                    DataFrameRowFilterPredicate left_compiled = compile( left );
+
+                    if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compiled );
+                    }
+
+                    if (right instanceof DFQLApplyNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return DataFrameRowFilterPredicateFactory.and( left_compiled, right_compiled );
+                    }
+                }
+
                 throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
             case OR:
@@ -245,6 +261,22 @@ public class RowFilterPredicateCompileStrategy {
                     }
 
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
+                }
+
+                if (left instanceof DFQLApplyNode) {
+                    DataFrameRowFilterPredicate left_compiled = compile( left );
+
+                    if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compiled );
+                    }
+
+                    if (right instanceof DFQLApplyNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return DataFrameRowFilterPredicateFactory.or( left_compiled, right_compiled );
+                    }
                 }
 
                 throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
