@@ -28,8 +28,6 @@ package de.mindscan.brightflux.dataframes.dfquery.runtime;
 import de.mindscan.brightflux.dataframes.DataFrame;
 
 /**
- * TODO Refactor this and remove from here...
- * 
  * This is more of a compiled runtime node. I think i made a mistake introducing this at this stage. The abstract
  * syntaxtree should not know anything about dataframes or dataframecolumns. 
  */
