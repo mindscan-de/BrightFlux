@@ -46,6 +46,8 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryClassifier;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
@@ -198,23 +200,29 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     public void executeQuery( String theQuery ) {
         if (currentSelectedDataFrame != null) {
 
-            String trimmedQuery = theQuery.trim();
-
-            // TODO: this is a very ugly workaround, to support rowcallbacks and select statements, we can't do such things forever...
-            if (trimmedQuery.toLowerCase().startsWith( "select" )) {
-                if (trimmedQuery.toLowerCase().contains( "tokenize " )) {
+            switch (DataFrameQueryClassifier.classifyDFQLQuery( theQuery.trim() )) {
+                case DMS_TOKENIZE: {
                     BFCommand command = DataFrameCommandFactory.queryTokenize( currentSelectedDataFrame, theQuery );
                     this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                    break;
                 }
-                else {
+                case DMS_SELECT: {
                     BFCommand command = DataFrameCommandFactory.queryDataFrame( currentSelectedDataFrame, theQuery );
                     this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                    break;
                 }
-            }
-            else if (trimmedQuery.toLowerCase().startsWith( "rowcallback" )) {
-                BFCommand command = DataFrameCommandFactory.queryCBDataFrame( currentSelectedDataFrame, theQuery,
-                                HighlighterCallbacks.getInstance().getCallbacks() );
-                this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                case PS_CALLBACK: {
+                    BFCommand command = DataFrameCommandFactory.queryCBDataFrame( currentSelectedDataFrame, theQuery,
+                                    HighlighterCallbacks.getInstance().getCallbacks() );
+                    this.projectRegistry.getCommandDispatcher().dispatchCommand( command );
+                    break;
+                }
+                default: {
+                    // actually this is an unknown query type
+                    Exception ex = new NotYetImplemetedException( "Unkown query type" );
+                    ex.printStackTrace();
+                    break;
+                }
             }
         }
     }
