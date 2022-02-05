@@ -703,6 +703,45 @@ public class DataFrameQueryLanguageParserTest {
         assertNodeDescription( result, "ROWCALLBACK highlight_red FROM df WHERE (df.'x'==1)" );
     }
 
+    @Test
+    public void testParseDFQLSelectStatement_Tokenizerelection_expectSameQuery() throws Exception {
+        String dfqlQuery = "SELECT '__idx','__orgidx' TOKENIZE df.'abc' USING 'XYZ' FROM df";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT '__idx','__orgidx' TOKENIZE df.'abc' USING 'XYZ' FROM df" );
+
+    }
+
+    @Test
+    public void testParseDFQLSelectStatement_SelectStatementWithComplexWhereClauseBiAndApply_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT * FROM df WHERE ((df.'columnname'>=1) && (df.'othercolumnname'.contains('Debug')))";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT * FROM df WHERE ((df.'columnname'>=1)&&df.'othercolumnname'.contains('Debug'))" );
+    }
+
+    @Test
+    public void testParseDFQLSelectStatement_SelectStatementWithComplexWhereClauseBiOrApply_expectSameQuery() throws Exception {
+        // arrange
+        String dfqlQuery = "SELECT * FROM df WHERE ((df.'columnname'>=1) || (df.'othercolumnname'.contains('Debug')))";
+        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
+
+        // act
+        DFQLNode result = parser.parseDFQLSelectStatement();
+
+        // assert
+        assertNodeDescription( result, "SELECT * FROM df WHERE ((df.'columnname'>=1)||df.'othercolumnname'.contains('Debug'))" );
+    }
+
     private void assertNodeType( DFQLNode result, Class<? extends DFQLNode> type ) {
         assertThat( result, is( instanceOf( type ) ) );
     }
@@ -720,19 +759,6 @@ public class DataFrameQueryLanguageParserTest {
         DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
         parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
         return parser;
-    }
-
-    @Test
-    public void testParseDFQLSelectStatement_Tokenizerelection_expectSameQuery() throws Exception {
-        String dfqlQuery = "SELECT '__idx','__orgidx' TOKENIZE df.'abc' USING 'XYZ' FROM df";
-        DataFrameQueryLanguageParser parser = createParser( dfqlQuery );
-
-        // act
-        DFQLNode result = parser.parseDFQLSelectStatement();
-
-        // assert
-        assertNodeDescription( result, "SELECT '__idx','__orgidx' TOKENIZE df.'abc' USING 'XYZ' FROM df" );
-
     }
 
 }
