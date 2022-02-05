@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.viewer.parts.mv;
 
-import java.util.ArrayDeque;
-
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.swt.SWT;
@@ -52,8 +50,10 @@ import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.highlighter.HighlighterCallbacks;
+import de.mindscan.brightflux.plugin.queryhistory.QueryHistoryComponent;
 import de.mindscan.brightflux.system.commands.DataFrameCommandFactory;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
+import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 
 /**
@@ -65,8 +65,8 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     private ProjectRegistry projectRegistry;
     private ListViewer listViewer;
 
-    private ArrayDeque<String> queryHistoryStack = new ArrayDeque<>();
     private CCombo combo;
+    private QueryHistoryComponent queryHistoryComponent;
 
     /**
      * Create the composite.
@@ -79,24 +79,9 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
 
         buildLayout();
 
-        // TODO: Provide previous history through other means.
-        queryHistoryStack.add( "SELECT * FROM df WHERE (df.''==  )" );
-        queryHistoryStack.add( "SELECT * FROM df WHERE ((df.''==  ) && (df.''==  ))" );
-        queryHistoryStack.add( "SELECT * FROM df WHERE (df.''.contains(''))" );
+        queryHistoryComponent = SystemServices.getInstance().getService( QueryHistoryComponent.class );
 
-        queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df" );
-        queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df WHERE (df.''==  )" );
-        queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df WHERE ((df.''==  ) && (df.''==  ))" );
-
-        queryHistoryStack.add( "ROWCALLBACK highlight_red FROM df" );
-        queryHistoryStack.add( "ROWCALLBACK highlight_green FROM df" );
-        queryHistoryStack.add( "ROWCALLBACK highlight_blue FROM df" );
-        queryHistoryStack.add( "ROWCALLBACK highlight_yellow FROM df" );
-        queryHistoryStack.add( "ROWCALLBACK highlight_pink FROM df" );
-        queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''.contains(''))" );
-        queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''== " );
-
-        updateListViewer( queryHistoryStack.toArray() );
+        updateListViewer( queryHistoryComponent.getHistory() );
     }
 
     private void buildLayout() {
@@ -237,8 +222,9 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
     public void addToHistory( String theQuery ) {
         int previousSelectionIndex = listViewer.getList().getSelectionIndex();
 
-        queryHistoryStack.addFirst( theQuery );
-        updateListViewer( queryHistoryStack.toArray() );
+        queryHistoryComponent.addEntry( theQuery );
+
+        updateListViewer( queryHistoryComponent.getHistory() );
 
         if (previousSelectionIndex >= 0) {
             listViewer.getList().setSelection( previousSelectionIndex + 1 );

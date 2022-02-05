@@ -25,9 +25,51 @@
  */
 package de.mindscan.brightflux.plugin.queryhistory;
 
+import java.util.ArrayDeque;
+
 /**
  * 
  */
 public class QueryHistoryComponent {
 
+    private ArrayDeque<String> queryHistoryStack = new ArrayDeque<>();
+
+    /**
+     * 
+     */
+    public QueryHistoryComponent() {
+        queryHistoryStack = new ArrayDeque<>();
+
+        initQueryHistory();
+    }
+
+    /**
+     * 
+     */
+    private void initQueryHistory() {
+        // TODO: Provide previous history through other means.
+        queryHistoryStack.add( "SELECT * FROM df WHERE (df.''==  )" );
+        queryHistoryStack.add( "SELECT * FROM df WHERE ((df.''==  ) && (df.''==  ))" );
+        queryHistoryStack.add( "SELECT * FROM df WHERE (df.''.contains(''))" );
+
+        queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df" );
+        queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df WHERE (df.''==  )" );
+        queryHistoryStack.add( "SELECT 'h1.ts', 'h2.msg' FROM df WHERE ((df.''==  ) && (df.''==  ))" );
+
+        queryHistoryStack.add( "ROWCALLBACK highlight_red FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_green FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_blue FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_yellow FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_pink FROM df" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''.contains(''))" );
+        queryHistoryStack.add( "ROWCALLBACK highlight_  FROM df WHERE (df.''== " );
+    }
+
+    public String[] getHistory() {
+        return queryHistoryStack.toArray( new String[0] );
+    }
+
+    public void addEntry( String query ) {
+        queryHistoryStack.addFirst( query );
+    }
 }
