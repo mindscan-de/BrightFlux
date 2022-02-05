@@ -30,8 +30,6 @@ package de.mindscan.brightflux.dataframes.filterpredicate;
  * This class implements and collects different compare operations, these 
  * operations depend on the compateTo contract of {@link Comparable}.
  * 
- * TODO: [Ato de] Performance Evaluation 
- * 
  * Which approach is faster? 
  * - The static method 
  * - The abstract method with the operation implemented in the enum?  
