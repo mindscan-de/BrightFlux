@@ -57,8 +57,7 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
 
     public void focusCurrentActiveDashboardWindow() {
         if (hasCurrentActiveDashboardWindow()) {
-            // TODO: implement the bring to top operation 
-            // this.dashboard.bringToTop();
+            this.dashboard.bringToTop();
         }
     }
 

@@ -28,10 +28,14 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 
 /**
@@ -73,10 +77,71 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      * Create contents of the dialog.
      */
     private void createContents() {
+        registerAtDashboardUIProxyComponent();
+
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
         shellDashboadWindow.setSize( 450, 300 );
         shellDashboadWindow.setText( "Dashboard" );
 
+        shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void handleEvent( Event event ) {
+                // don't close on escape key.
+                if (event.character == SWT.ESC) {
+                    event.doit = false;
+                }
+            }
+        } );
+
+        shellDashboadWindow.addListener( SWT.Close, new Listener() {
+            /** 
+             * {@inheritDoc}
+             */
+            @Override
+            public void handleEvent( Event event ) {
+                unregisterAtdashboardUIProxyComponent();
+            }
+
+        } );
+
+    }
+
+    private void registerAtDashboardUIProxyComponent() {
+        SystemServices systemServices = SystemServices.getInstance();
+        if (systemServices == null) {
+            return;
+        }
+
+        if (systemServices.isServiceAvailable( DashboardUIProxyComponent.class )) {
+            DashboardUIProxyComponent service = systemServices.getService( DashboardUIProxyComponent.class );
+            service.registerCurrentActiveDashboardWindow( this );
+        }
+        else {
+
+        }
+    }
+
+    private void unregisterAtdashboardUIProxyComponent() {
+        SystemServices systemServices = SystemServices.getInstance();
+        if (systemServices == null) {
+            return;
+        }
+
+        if (systemServices.isServiceAvailable( DashboardUIProxyComponent.class )) {
+            DashboardUIProxyComponent service = systemServices.getService( DashboardUIProxyComponent.class );
+            service.unregisterCurrentActiveDashboardWindow();
+        }
+        else {
+
+        }
+    }
+
+    @Override
+    public void bringToTop() {
+        shellDashboadWindow.setFocus();
     }
 
     /** 

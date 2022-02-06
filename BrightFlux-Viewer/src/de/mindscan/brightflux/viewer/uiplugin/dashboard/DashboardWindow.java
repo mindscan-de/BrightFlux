@@ -30,4 +30,9 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard;
  */
 public interface DashboardWindow {
 
+    /**
+     * 
+     */
+    void bringToTop();
+
 }
