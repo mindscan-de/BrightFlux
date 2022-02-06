@@ -57,14 +57,16 @@ public class RowFilterPredicateCompileStrategy {
     // TODO: PredicatePredicate Predicate
     // TODO: BiBi Predicate
 
-    // TODO: boolean predicate functions like contains, startsWith, endsWith, and "not"
+    private BiFunction<String, String, DataFrameRowFilterPredicate> containsFunctionColImm = DataFrameRowFilterPredicateFactory::containsStr;
+    private BiFunction<String, String, DataFrameRowFilterPredicate> startsWithFunctionColImm = DataFrameRowFilterPredicateFactory::startsWithStr;
+    private BiFunction<String, String, DataFrameRowFilterPredicate> endsWithFunctionColImm = DataFrameRowFilterPredicateFactory::endsWithStr;
 
-    public BiFunction<String, Object, DataFrameRowFilterPredicate> eqFunctionColImm = DataFrameRowFilterPredicateFactory::eq;
-    public BiFunction<String, Object, DataFrameRowFilterPredicate> neqFunctionColImm = DataFrameRowFilterPredicateFactory::neq;
-    public BiFunction<String, Object, DataFrameRowFilterPredicate> geFunctionColImm = DataFrameRowFilterPredicateFactory::ge;
-    public BiFunction<String, Object, DataFrameRowFilterPredicate> gtFunctionColImm = DataFrameRowFilterPredicateFactory::gt;
-    public BiFunction<String, Object, DataFrameRowFilterPredicate> leFunctionColImm = DataFrameRowFilterPredicateFactory::le;
-    public BiFunction<String, Object, DataFrameRowFilterPredicate> ltFunctionColImm = DataFrameRowFilterPredicateFactory::lt;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> eqFunctionColImm = DataFrameRowFilterPredicateFactory::eq;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> neqFunctionColImm = DataFrameRowFilterPredicateFactory::neq;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> geFunctionColImm = DataFrameRowFilterPredicateFactory::ge;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> gtFunctionColImm = DataFrameRowFilterPredicateFactory::gt;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> leFunctionColImm = DataFrameRowFilterPredicateFactory::le;
+    private BiFunction<String, Object, DataFrameRowFilterPredicate> ltFunctionColImm = DataFrameRowFilterPredicateFactory::lt;
 
     // XXX: Actually we can not combine two predicates which consists of two  applyNodes.... will need to work on that. 
     //      ROWCALLBACK highlight_blue FROM df WHERE ((df.'h2.msg'.contains('at de.v')) || (df.'h2.msg'.contains('Exception')))
@@ -328,17 +330,24 @@ public class RowFilterPredicateCompileStrategy {
             if (ColumnValueTypes.COLUMN_TYPE_STRING.equals( typedDFQLDataFrameColumnNode.getColumn().getColumnValueType() )) {
                 String columnName = typedDFQLDataFrameColumnNode.getColumnName();
 
+                BiFunction<String, String, DataFrameRowFilterPredicate> factoryStringPredicate;
+
                 // For string columns we provide these functions 'contains', 'startsWith' and 'endsWith' 
                 switch (selectorName) {
                     case "contains":
-                        return DataFrameRowFilterPredicateFactory.containsStr( columnName, firstArgumentAsString );
+                        factoryStringPredicate = containsFunctionColImm;
+                        break;
                     case "startsWith":
-                        return DataFrameRowFilterPredicateFactory.startsWithStr( columnName, firstArgumentAsString );
+                        factoryStringPredicate = startsWithFunctionColImm;
+                        break;
                     case "endsWith":
-                        return DataFrameRowFilterPredicateFactory.endsWithStr( columnName, firstArgumentAsString );
+                        factoryStringPredicate = endsWithFunctionColImm;
+                        break;
                     default:
                         throw new NotYetImplemetedException( "the selector name '" + selectorName + "' is not properly mapped." );
                 }
+
+                return factoryStringPredicate.apply( columnName, firstArgumentAsString );
             }
 
             throw new NotYetImplemetedException(
