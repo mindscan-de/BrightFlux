@@ -47,6 +47,7 @@ import de.mindscan.brightflux.viewer.parts.MultiViewComposite;
 import de.mindscan.brightflux.viewer.parts.OutlineViewComposite;
 import de.mindscan.brightflux.viewer.parts.ProjectViewComposite;
 import de.mindscan.brightflux.viewer.parts.ui.BrightFluxFileDialogs;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.commands.DashboardUICommandFactory;
 import de.mindscan.brightflux.viewer.uiplugin.minixortool.commands.XorUICommandFactory;
 import de.mindscan.brightflux.viewer.uiplugin.search.command.SearchUICommandsFactory;
 
@@ -220,6 +221,15 @@ public class BrightFluxViewerMainAppTwo {
             }
         } );
         mntmSearchTools.setText( "Search Tools" );
+
+        MenuItem mntmDashboard = new MenuItem( menu_window, SWT.NONE );
+        mntmDashboard.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                dispatchCommand( DashboardUICommandFactory.openBashboardWindow( shellBFViewerMainApp ) );
+            }
+        } );
+        mntmDashboard.setText( "Dashboard" );
 
         MenuItem mntmTools = new MenuItem( menu, SWT.CASCADE );
         mntmTools.setText( "Tools" );
