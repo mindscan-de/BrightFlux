@@ -107,4 +107,29 @@ public class FloatColumn extends SimpleNumberColumn<Float> {
 
         return max;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Float min() {
+        int size = this.getSize();
+        int first = 0;
+
+        float min = Float.POSITIVE_INFINITY;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                min = get( first ).floatValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                min = Math.min( min, get( i ).floatValue() );
+            }
+        }
+
+        return min;
+    }
 }

@@ -107,4 +107,29 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
 
         return max;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer min() {
+        int size = this.getSize();
+        int first = 0;
+
+        int min = Integer.MAX_VALUE;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                min = get( first ).intValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                min = Math.min( min, get( i ).intValue() );
+            }
+        }
+
+        return min;
+    }
 }

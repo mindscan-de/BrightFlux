@@ -107,4 +107,29 @@ public class LongColumn extends SimpleNumberColumn<Long> {
 
         return max;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Long min() {
+        int size = this.getSize();
+        int first = 0;
+
+        long min = Long.MAX_VALUE;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                min = get( first ).longValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                min = Math.min( min, get( i ).longValue() );
+            }
+        }
+
+        return min;
+    }
 }

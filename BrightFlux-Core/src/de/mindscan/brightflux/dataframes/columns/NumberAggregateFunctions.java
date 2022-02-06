@@ -32,8 +32,8 @@ public interface NumberAggregateFunctions<T> {
 
     abstract T max();
 
-//  abstract T min();
-//
+    abstract T min();
+
 //  abstract T median();
 //
 //  abstract T average();

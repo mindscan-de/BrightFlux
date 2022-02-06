@@ -106,4 +106,29 @@ public class DoubleColumn extends SimpleNumberColumn<Double> {
 
         return max;
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Double min() {
+        int size = this.getSize();
+        int first = 0;
+
+        double min = Double.POSITIVE_INFINITY;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                min = get( first ).doubleValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                min = Math.min( min, get( i ).doubleValue() );
+            }
+        }
+
+        return min;
+    }
 }
