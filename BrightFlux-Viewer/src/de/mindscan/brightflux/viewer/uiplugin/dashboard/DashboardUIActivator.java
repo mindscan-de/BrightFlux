@@ -45,7 +45,10 @@ public class DashboardUIActivator implements StartupParticipant {
 
         ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
         if (projectRegistry != null) {
-            projectRegistry.registerParticipant( dashboardUIComponent );
+            // problem...
+            // projectRegistry.registerParticipant( dashboardUIComponent );
+
+            dashboardUIComponent.setProjectRegistry( projectRegistry );
         }
     }
 
