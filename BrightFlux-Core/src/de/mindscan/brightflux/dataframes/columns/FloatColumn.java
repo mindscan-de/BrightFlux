@@ -82,4 +82,29 @@ public class FloatColumn extends SimpleNumberColumn<Float> {
     protected Comparator<? super Float> getComparator() {
         return Comparator.naturalOrder();
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    Float max() {
+        int size = this.getSize();
+        int first = 0;
+
+        float max = Float.NEGATIVE_INFINITY;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                max = get( first ).floatValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                max = Math.max( max, get( i ).floatValue() );
+            }
+        }
+
+        return max;
+    }
 }

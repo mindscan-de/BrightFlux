@@ -82,4 +82,29 @@ public class LongColumn extends SimpleNumberColumn<Long> {
     protected Comparator<? super Long> getComparator() {
         return Comparator.naturalOrder();
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    Long max() {
+        int size = this.getSize();
+        int first = 0;
+
+        long max = Long.MIN_VALUE;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                max = get( first ).longValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                max = Math.max( max, get( i ).longValue() );
+            }
+        }
+
+        return max;
+    }
 }

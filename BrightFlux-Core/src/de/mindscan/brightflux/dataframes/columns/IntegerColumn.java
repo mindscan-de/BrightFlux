@@ -83,4 +83,28 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
         return Comparator.naturalOrder();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    Integer max() {
+        int size = this.getSize();
+        int first = 0;
+
+        int max = Integer.MIN_VALUE;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                max = get( first ).intValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                max = Math.max( max, get( i ).intValue() );
+            }
+        }
+
+        return max;
+    }
 }

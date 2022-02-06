@@ -81,4 +81,29 @@ public class DoubleColumn extends SimpleNumberColumn<Double> {
     protected Comparator<? super Double> getComparator() {
         return Comparator.naturalOrder();
     }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    Double max() {
+        int size = this.getSize();
+        int first = 0;
+
+        double max = Double.NEGATIVE_INFINITY;
+
+        for (first = 0; first < size; first++) {
+            if (isPresent( first )) {
+                max = get( first ).doubleValue();
+            }
+        }
+
+        for (int i = first + 1; i < size; i++) {
+            if (isPresent( i )) {
+                max = Math.max( max, get( i ).doubleValue() );
+            }
+        }
+
+        return max;
+    }
 }
