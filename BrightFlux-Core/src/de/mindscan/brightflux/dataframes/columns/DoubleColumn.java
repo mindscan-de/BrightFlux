@@ -95,6 +95,7 @@ public class DoubleColumn extends SimpleNumberColumn<Double> {
         for (first = 0; first < size; first++) {
             if (isPresent( first )) {
                 max = get( first ).doubleValue();
+                break;
             }
         }
 
@@ -120,6 +121,7 @@ public class DoubleColumn extends SimpleNumberColumn<Double> {
         for (first = 0; first < size; first++) {
             if (isPresent( first )) {
                 min = get( first ).doubleValue();
+                break;
             }
         }
 

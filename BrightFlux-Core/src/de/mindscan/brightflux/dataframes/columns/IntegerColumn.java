@@ -96,6 +96,7 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
         for (first = 0; first < size; first++) {
             if (isPresent( first )) {
                 max = get( first ).intValue();
+                break;
             }
         }
 
@@ -121,6 +122,7 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
         for (first = 0; first < size; first++) {
             if (isPresent( first )) {
                 min = get( first ).intValue();
+                break;
             }
         }
 

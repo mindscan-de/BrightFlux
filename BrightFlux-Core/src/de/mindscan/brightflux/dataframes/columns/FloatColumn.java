@@ -96,6 +96,7 @@ public class FloatColumn extends SimpleNumberColumn<Float> {
         for (first = 0; first < size; first++) {
             if (isPresent( first )) {
                 max = get( first ).floatValue();
+                break;
             }
         }
 
@@ -121,6 +122,7 @@ public class FloatColumn extends SimpleNumberColumn<Float> {
         for (first = 0; first < size; first++) {
             if (isPresent( first )) {
                 min = get( first ).floatValue();
+                break;
             }
         }
 
