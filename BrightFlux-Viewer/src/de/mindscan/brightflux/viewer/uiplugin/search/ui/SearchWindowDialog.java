@@ -290,11 +290,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         }
     }
 
-    /**
-     * 
-     */
     private void registerAtSearchUIProxyComponent() {
-        // TODO registration at SearchUIProxyComponent as the currentActive Search window
         SystemServices systemServices = SystemServices.getInstance();
         if (systemServices == null) {
             return;
@@ -310,7 +306,6 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     }
 
     private void unregisterAtSearchUIProxyComponent() {
-        // TODO registration at SearchUIProxyComponent as the currentActive Search window
         SystemServices systemServices = SystemServices.getInstance();
         if (systemServices == null) {
             return;
