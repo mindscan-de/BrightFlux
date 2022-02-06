@@ -30,14 +30,14 @@ package de.mindscan.brightflux.dataframes.columns;
  */
 public interface NumberAggregateFunctions<T> {
 
-    abstract T max();
+    T max();
 
-    abstract T min();
+    T min();
 
-//  abstract T median();
+//  T median();
 //
-//  abstract T average();
+//  T average();
 //
-//  abstract T sum();
+//  T sum();
 
 }
