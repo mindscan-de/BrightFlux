@@ -42,4 +42,14 @@ public abstract class SimpleNumberColumn<T extends Number> extends SimpleColumn<
         super( columnName, columnValues );
     }
 
+//    abstract T min();
+//
+//    abstract T max();
+//
+//    abstract T median();
+//
+//    abstract T average();
+//
+//    abstract T sum();
+
 }
