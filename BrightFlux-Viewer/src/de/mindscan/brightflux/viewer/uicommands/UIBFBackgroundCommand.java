@@ -28,7 +28,7 @@ package de.mindscan.brightflux.viewer.uicommands;
 import de.mindscan.brightflux.framework.command.BFBackgroundCommand;
 
 /**
- * 
+ * Marker interface for background commands.
  */
 public interface UIBFBackgroundCommand extends BFBackgroundCommand {
 
