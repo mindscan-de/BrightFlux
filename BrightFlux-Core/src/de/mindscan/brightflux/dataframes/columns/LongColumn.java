@@ -87,7 +87,7 @@ public class LongColumn extends SimpleNumberColumn<Long> {
      * {@inheritDoc}
      */
     @Override
-    Long max() {
+    public Long max() {
         int size = this.getSize();
         int first = 0;
 

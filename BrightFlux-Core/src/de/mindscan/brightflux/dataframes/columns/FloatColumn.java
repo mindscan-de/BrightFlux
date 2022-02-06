@@ -87,7 +87,7 @@ public class FloatColumn extends SimpleNumberColumn<Float> {
      * {@inheritDoc}
      */
     @Override
-    Float max() {
+    public Float max() {
         int size = this.getSize();
         int first = 0;
 

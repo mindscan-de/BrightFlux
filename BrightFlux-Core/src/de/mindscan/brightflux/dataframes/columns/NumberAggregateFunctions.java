@@ -2,7 +2,7 @@
  * 
  * MIT License
  *
- * Copyright (c) 2021 Maxim Gansert, Mindscan
+ * Copyright (c) 2022 Maxim Gansert, Mindscan
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,18 +28,16 @@ package de.mindscan.brightflux.dataframes.columns;
 /**
  * 
  */
-public abstract class SimpleNumberColumn<T extends Number> extends SimpleColumn<T> implements NumberAggregateFunctions<T> {
+public interface NumberAggregateFunctions<T> {
 
-    public SimpleNumberColumn( Class<T> clazz ) {
-        super( clazz );
-    }
+    abstract T max();
 
-    public SimpleNumberColumn( String columnName, Class<T> clazz ) {
-        super( columnName, clazz );
-    }
-
-    public SimpleNumberColumn( String columnName, T[] columnValues ) {
-        super( columnName, columnValues );
-    }
+//  abstract T min();
+//
+//  abstract T median();
+//
+//  abstract T average();
+//
+//  abstract T sum();
 
 }

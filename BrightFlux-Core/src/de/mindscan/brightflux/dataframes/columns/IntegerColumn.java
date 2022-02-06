@@ -87,7 +87,7 @@ public class IntegerColumn extends SimpleNumberColumn<Integer> {
      * {@inheritDoc}
      */
     @Override
-    Integer max() {
+    public Integer max() {
         int size = this.getSize();
         int first = 0;
 

@@ -86,7 +86,7 @@ public class DoubleColumn extends SimpleNumberColumn<Double> {
      * {@inheritDoc}
      */
     @Override
-    Double max() {
+    public Double max() {
         int size = this.getSize();
         int first = 0;
 
