@@ -34,7 +34,7 @@ import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
 /**
  * 
  */
-public class DoubleColumn extends SimpleColumn<Double> {
+public class DoubleColumn extends SimpleNumberColumn<Double> {
 
     public DoubleColumn() {
         super( Double.class );
