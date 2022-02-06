@@ -216,7 +216,7 @@ Log-Analysis-Case-File / introduce evidence collector
 
 
 Swim lanes
-* swim lanes simply are actually a select statement
+* swim lanes simply are actually a group of select statements
 * have swim lanes for different Components
   * save swim lane configuration into an analysis project file
   
@@ -234,6 +234,9 @@ UI-Dashboard
     * e.g. i want to know what view is currently active, while analyzing a certain widget problem
   * a dashboard is provided by recipes and calculators (find the last entry (row) before this timestamp, in case you want to see the last active state) and visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
   * the problem is, that we need different DQFL capabilities where we can do selections, where we can select a particular row, extract a particular value, and visualize a paricular value
+* Requires Dataframes supporting aggregate functions (MAX)
+  * that will deliver the rows, but then the data needs to be extracted and transformed
+* After Dataframes supporting the aggregate functions DFQL should be extended, also with some kind of prepared statements / parameterizeable statements
 
 
 Support Calculations between Rows or Columns
