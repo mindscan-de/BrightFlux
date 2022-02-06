@@ -25,9 +25,17 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.commands;
 
+import org.eclipse.swt.widgets.Shell;
+
+import de.mindscan.brightflux.framework.command.BFCommand;
+
 /**
  * 
  */
 public class DashboardUICommandFactory {
+
+    public static BFCommand openBashboardWindow( Shell shellBFViewerMainApp ) {
+        return new OpenDashboardWindowDialogCommand( shellBFViewerMainApp );
+    }
 
 }

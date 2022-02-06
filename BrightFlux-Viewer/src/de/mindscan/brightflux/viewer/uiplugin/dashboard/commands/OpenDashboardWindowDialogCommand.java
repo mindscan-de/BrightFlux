@@ -27,16 +27,30 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.commands;
 
 import java.util.function.Consumer;
 
+import org.eclipse.swt.widgets.Shell;
+
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.events.BFEvent;
+import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uicommands.UIBFBackgroundCommand;
 import de.mindscan.brightflux.viewer.uicommands.UIBFCommand;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.DashboardWindowDialog;
 
 /**
  * 
  */
 public class OpenDashboardWindowDialogCommand implements UIBFCommand, UIBFBackgroundCommand {
+
+    private Shell shellMainApp;
+
+    /**
+     * 
+     */
+    public OpenDashboardWindowDialogCommand( Shell shellMainApp ) {
+        this.shellMainApp = shellMainApp;
+    }
 
     /** 
      * {@inheritDoc}
@@ -45,15 +59,24 @@ public class OpenDashboardWindowDialogCommand implements UIBFCommand, UIBFBackgr
     public void execute( Consumer<BFEvent> eventConsumer ) {
         SystemServices systemServices = SystemServices.getInstance();
 
+        ProjectRegistry projectRegistry = systemServices.getProjectRegistry();
+        if (projectRegistry == null) {
+            throw new NotYetImplemetedException( "" );
+        }
+
         DashboardUIProxyComponent dashboardUIProxyComponent = systemServices.getService( DashboardUIProxyComponent.class );
         if (dashboardUIProxyComponent.hasCurrentActiveDashboardWindow()) {
             dashboardUIProxyComponent.focusCurrentActiveDashboardWindow();
         }
         else {
-            // create a new instance
-            // TODO: use the setter for the projectRegistry... just in case we need this?
-            // do not use project registry, since it is putting this into the queue.
+            DashboardWindowDialog dashboardWindow = new DashboardWindowDialog( shellMainApp, 0 );
+
+            // do not use project registry (ProjectRegistry.register()), since it is putting this into the queue.
             // i might have to fix it, to not add to the queue, as soon as the activate method was called.
+            dashboardWindow.setProjectRegistry( projectRegistry );
+
+            // this is a blocking operation.
+            dashboardWindow.open();
         }
 
     }
