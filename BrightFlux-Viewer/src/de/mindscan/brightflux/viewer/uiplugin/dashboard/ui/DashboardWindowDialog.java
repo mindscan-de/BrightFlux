@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
@@ -164,6 +165,15 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     @Override
     public void bringToTop() {
         shellDashboadWindow.setFocus();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void dataFrameRowSelected( DataFrameRow selectedRow ) {
+        // TODO Auto-generated method stub
+
     }
 
     /** 
