@@ -25,8 +25,11 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard;
 
+import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.viewer.parts.UIEvents;
+import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
 
 /**
  * 
@@ -34,13 +37,27 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
 
     private DashboardWindow dashboard;
+    private ProjectRegistry projectRegistry;
 
     /** 
      * {@inheritDoc}
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // intentionally left blank for now.
+        this.projectRegistry = projectRegistry;
+
+        registerDataFrameRowSelectionEvent( projectRegistry );
+    }
+
+    private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry2 ) {
+        DataFrameRowSelectedListenerAdapter listener = new DataFrameRowSelectedListenerAdapter() {
+            @Override
+            public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
+                delegateDataFrameRowSelectionToDashboard( selectedRow );
+            }
+        };
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, listener );
     }
 
     public void registerCurrentActiveDashboardWindow( DashboardWindow dashboard ) {
@@ -59,6 +76,13 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
         if (hasCurrentActiveDashboardWindow()) {
             this.dashboard.bringToTop();
         }
+    }
+
+    private void delegateDataFrameRowSelectionToDashboard( DataFrameRow selectedRow ) {
+        if (hasCurrentActiveDashboardWindow()) {
+            this.dashboard.dataFrameRowSelected( selectedRow );
+        }
+
     }
 
 }
