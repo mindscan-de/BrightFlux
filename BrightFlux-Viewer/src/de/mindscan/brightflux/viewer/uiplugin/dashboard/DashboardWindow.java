@@ -25,6 +25,7 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 
 /**
@@ -41,5 +42,10 @@ public interface DashboardWindow {
      * @param selectedRow
      */
     void dataFrameRowSelected( DataFrameRow selectedRow );
+
+    /**
+     * @param selectedDataFrame
+     */
+    void dataFrameSelected( DataFrame selectedDataFrame );
 
 }
