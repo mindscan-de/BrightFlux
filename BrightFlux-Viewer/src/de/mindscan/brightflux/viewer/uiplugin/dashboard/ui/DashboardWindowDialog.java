@@ -184,6 +184,18 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         // TODO Auto-generated method stub
     }
 
+    private void updateDashboadData() {
+        /**
+         * according to the dashboard configuration, we want to extract multiple latest events from the logs.
+         * We do that by either querying the current frame or the root frame, depending on the configuration
+         * 
+         * root : select * from df where
+         *  
+         * ---   ((df.'h2.msg'.contains('cpu usage')) && (df.'__org_idx' <= :selectedRow.'__org_idx')) -> max(__org_idx)
+         * ---   --> extract cpu_usage_data
+         */
+    }
+
     /** 
      * {@inheritDoc}
      */
