@@ -26,9 +26,12 @@
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
@@ -37,6 +40,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
+import swing2swt.layout.BorderLayout;
 
 /**
  * 
@@ -82,6 +86,24 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
         shellDashboadWindow.setSize( 450, 300 );
         shellDashboadWindow.setText( "Dashboard" );
+        shellDashboadWindow.setLayout( new BorderLayout( 0, 0 ) );
+
+        Composite upperComposite = new Composite( shellDashboadWindow, SWT.NONE );
+        upperComposite.setLayoutData( BorderLayout.NORTH );
+        upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Group grpTest = new Group( upperComposite, SWT.NONE );
+        grpTest.setText( "Test" );
+
+        Composite lowerComposite = new Composite( shellDashboadWindow, SWT.NONE );
+        lowerComposite.setLayoutData( BorderLayout.SOUTH );
+        lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Group grpTest_1 = new Group( lowerComposite, SWT.NONE );
+        grpTest_1.setText( "Test2" );
+
+        Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
+        middleComposite.setLayoutData( BorderLayout.CENTER );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
             /** 
@@ -152,5 +174,4 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         // TODO Auto-generated method stub
 
     }
-
 }
