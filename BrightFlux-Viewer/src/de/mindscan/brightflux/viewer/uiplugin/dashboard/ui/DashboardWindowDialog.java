@@ -190,9 +190,12 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
          * We do that by either querying the current frame or the root frame, depending on the configuration
          * 
          * root : select * from df where
-         *  
+         * 
          * ---   ((df.'h2.msg'.contains('cpu usage')) && (df.'__org_idx' <= :selectedRow.'__org_idx')) -> max(__org_idx)
-         * ---   --> extract cpu_usage_data
+         * ---   --> extract --> transform --> visualize : cpu_usage_data
+         * ---   ((df.'h2.msg'.contains('ram usage')) && (df.'__org_idx' <= :selectedRow.'__org_idx')) -> max(__org_idx)
+         * ---   --> extract --> transform --> visualize : ram_usage_data
+         * 
          */
     }
 
