@@ -25,9 +25,11 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard;
 
+import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
 
@@ -47,9 +49,10 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
         this.projectRegistry = projectRegistry;
 
         registerDataFrameRowSelectionEvent( projectRegistry );
+        registerDataFrameSelectedEvent( projectRegistry );
     }
 
-    private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry2 ) {
+    private void registerDataFrameRowSelectionEvent( ProjectRegistry projectRegistry ) {
         DataFrameRowSelectedListenerAdapter listener = new DataFrameRowSelectedListenerAdapter() {
             @Override
             public void handleDataFrameRowSelected( DataFrameRow selectedRow ) {
@@ -58,6 +61,17 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
         };
 
         projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameRowSelectedEvent, listener );
+    }
+
+    private void registerDataFrameSelectedEvent( ProjectRegistry projectRegistry ) {
+        DataFrameEventListenerAdapter listener = new DataFrameEventListenerAdapter() {
+            @Override
+            public void handleDataFrame( DataFrame selectedDataFrame ) {
+                delegateDataFrameSelectionToDashboard( selectedDataFrame );
+            }
+        };
+
+        projectRegistry.getEventDispatcher().registerEventListener( UIEvents.DataFrameSelectedEvent, listener );
     }
 
     public void registerCurrentActiveDashboardWindow( DashboardWindow dashboard ) {
@@ -81,6 +95,12 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
     private void delegateDataFrameRowSelectionToDashboard( DataFrameRow selectedRow ) {
         if (hasCurrentActiveDashboardWindow()) {
             this.dashboard.dataFrameRowSelected( selectedRow );
+        }
+    }
+
+    private void delegateDataFrameSelectionToDashboard( DataFrame selectedDataFrame ) {
+        if (hasCurrentActiveDashboardWindow()) {
+            this.dashboard.dataFrameSelected( selectedDataFrame );
         }
 
     }
