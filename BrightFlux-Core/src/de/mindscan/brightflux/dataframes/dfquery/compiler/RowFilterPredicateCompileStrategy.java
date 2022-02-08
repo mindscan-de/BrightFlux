@@ -150,10 +150,16 @@ public class RowFilterPredicateCompileStrategy {
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                 }
 
-                if (left instanceof DFQLBinaryOperatorNode) {
+                if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
                     if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return eqFunctionPredPred.apply( left_compiled, right_compiled );
+                    }
+
+                    if (right instanceof DFQLApplyNode) {
                         DataFrameRowFilterPredicate right_compiled = compile( right );
 
                         return eqFunctionPredPred.apply( left_compiled, right_compiled );
@@ -184,10 +190,16 @@ public class RowFilterPredicateCompileStrategy {
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                 }
 
-                if (left instanceof DFQLBinaryOperatorNode) {
+                if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
                     if (right instanceof DFQLBinaryOperatorNode) {
+                        DataFrameRowFilterPredicate right_compiled = compile( right );
+
+                        return neqFunctionPredPred.apply( left_compiled, right_compiled );
+                    }
+
+                    if (right instanceof DFQLApplyNode) {
                         DataFrameRowFilterPredicate right_compiled = compile( right );
 
                         return neqFunctionPredPred.apply( left_compiled, right_compiled );
@@ -213,7 +225,7 @@ public class RowFilterPredicateCompileStrategy {
 
             case AND:
 
-                if (left instanceof DFQLBinaryOperatorNode) {
+                if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
                     if (right instanceof DFQLBinaryOperatorNode) {
@@ -229,29 +241,13 @@ public class RowFilterPredicateCompileStrategy {
                     }
 
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                }
-
-                if (left instanceof DFQLApplyNode) {
-                    DataFrameRowFilterPredicate left_compiled = compile( left );
-
-                    if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return andFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
-
-                    if (right instanceof DFQLApplyNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return andFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
                 }
 
                 throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
             case OR:
 
-                if (left instanceof DFQLBinaryOperatorNode) {
+                if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
                     if (right instanceof DFQLBinaryOperatorNode) {
@@ -267,22 +263,6 @@ public class RowFilterPredicateCompileStrategy {
                     }
 
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
-                }
-
-                if (left instanceof DFQLApplyNode) {
-                    DataFrameRowFilterPredicate left_compiled = compile( left );
-
-                    if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return orFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
-
-                    if (right instanceof DFQLApplyNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return orFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
                 }
 
                 throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
