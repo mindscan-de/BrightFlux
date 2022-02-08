@@ -196,6 +196,15 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
          * ---   ((df.'h2.msg'.contains('ram usage')) && (df.'__org_idx' <= :selectedRow.'__org_idx')) -> max(__org_idx)
          * ---   --> extract --> transform --> visualize : ram_usage_data
          * 
+         * 
+         * * actually the second selection can be done after the first.
+         *    ---   (df.'__org_idx' <= :selectedRow.'__org_idx')
+         *    
+         * * if i don't keep the data, it will just become a cheap index for every kind of thing we look for.
+         *    ---  select id, __org_idx, h1.ts, 
+         *    
+         * * then we need to figure out, where to get the data from. (maybe this data was extra processed)
+         *  
          */
     }
 
