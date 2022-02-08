@@ -153,13 +153,7 @@ public class RowFilterPredicateCompileStrategy {
                 if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
-                    if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return eqFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
-
-                    if (right instanceof DFQLApplyNode) {
+                    if (right instanceof DFQLBinaryOperatorNode || right instanceof DFQLApplyNode) {
                         DataFrameRowFilterPredicate right_compiled = compile( right );
 
                         return eqFunctionPredPred.apply( left_compiled, right_compiled );
@@ -193,13 +187,7 @@ public class RowFilterPredicateCompileStrategy {
                 if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
-                    if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return neqFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
-
-                    if (right instanceof DFQLApplyNode) {
+                    if (right instanceof DFQLBinaryOperatorNode || right instanceof DFQLApplyNode) {
                         DataFrameRowFilterPredicate right_compiled = compile( right );
 
                         return neqFunctionPredPred.apply( left_compiled, right_compiled );
@@ -228,13 +216,7 @@ public class RowFilterPredicateCompileStrategy {
                 if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
-                    if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return andFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
-
-                    if (right instanceof DFQLApplyNode) {
+                    if (right instanceof DFQLBinaryOperatorNode || right instanceof DFQLApplyNode) {
                         DataFrameRowFilterPredicate right_compiled = compile( right );
 
                         return andFunctionPredPred.apply( left_compiled, right_compiled );
@@ -250,13 +232,7 @@ public class RowFilterPredicateCompileStrategy {
                 if (left instanceof DFQLBinaryOperatorNode || left instanceof DFQLApplyNode) {
                     DataFrameRowFilterPredicate left_compiled = compile( left );
 
-                    if (right instanceof DFQLBinaryOperatorNode) {
-                        DataFrameRowFilterPredicate right_compiled = compile( right );
-
-                        return orFunctionPredPred.apply( left_compiled, right_compiled );
-                    }
-
-                    if (right instanceof DFQLApplyNode) {
+                    if (right instanceof DFQLBinaryOperatorNode || right instanceof DFQLApplyNode) {
                         DataFrameRowFilterPredicate right_compiled = compile( right );
 
                         return orFunctionPredPred.apply( left_compiled, right_compiled );
