@@ -162,7 +162,8 @@ I want to address rather sooner than later.
 
 
 UI-Dashboard
-* Well we have to see...
+* implement a very basic ui for the dashboard, with three queries configured by three configurable recipes located in (favrecipes/dashboard)
+* implement a persistence to load the dashboard configuration, configurable queries and extract and transform pipelines or via json preferred
 
 
 Machine Learning
