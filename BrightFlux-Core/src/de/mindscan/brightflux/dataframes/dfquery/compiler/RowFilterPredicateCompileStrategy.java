@@ -54,7 +54,6 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 public class RowFilterPredicateCompileStrategy {
 
     // TODO: ColumnColumn Predicate
-    // TODO: BiBi Predicate
 
     private BiFunction<DataFrameRowFilterPredicate, DataFrameRowFilterPredicate, DataFrameRowFilterPredicate> andFunctionPredPred = DataFrameRowFilterPredicateFactory::and;
     private BiFunction<DataFrameRowFilterPredicate, DataFrameRowFilterPredicate, DataFrameRowFilterPredicate> orFunctionPredPred = DataFrameRowFilterPredicateFactory::or;
@@ -196,7 +195,6 @@ public class RowFilterPredicateCompileStrategy {
                     throw new NotYetImplemetedException( "Right argument type (" + right.getClass().getSimpleName() + ") is not supported." );
                 }
 
-                // TODO: DataFrameRowFilterPredicateFactory.neq( left, right );
                 throw new NotYetImplemetedException( "Left argument type (" + right.getClass().getSimpleName() + ") is not supported." );
 
             case GE:
