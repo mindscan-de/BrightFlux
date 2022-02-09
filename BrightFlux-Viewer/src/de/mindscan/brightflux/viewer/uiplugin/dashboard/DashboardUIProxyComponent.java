@@ -41,6 +41,7 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
 
     private DashboardWindow dashboard;
     private ProjectRegistry projectRegistry;
+    private DashboardUIPersistenceModule persistenceModule;
 
     /** 
      * {@inheritDoc}
@@ -107,7 +108,11 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
     }
 
     public void setPersistenceModule( DashboardUIPersistenceModule persistenceModule ) {
-        // TODO Auto-generated method stub
+        this.persistenceModule = persistenceModule;
+    }
+
+    public DashboardUIPersistenceModule getPersistenceModule() {
+        return persistenceModule;
     }
 
 }
