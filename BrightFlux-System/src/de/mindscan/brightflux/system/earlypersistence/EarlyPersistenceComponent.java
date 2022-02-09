@@ -85,6 +85,13 @@ public class EarlyPersistenceComponent {
         if (value.startsWith( "{{user.dir}}/" )) {
             return this.currentDirectory.resolve( value.substring( "{{user.dir}}/".length() ) );
         }
+        else if (value.startsWith( "{{" )) {
+            String pathPropertyName = value.substring( value.indexOf( "{{" ), value.indexOf( "}}/" ) );
+            Path prefixPath = getPropertyAsPath( pathPropertyName );
+
+            String pathSuffix = value.substring( ("{{" + pathPropertyName + "}}/").length() );
+            return prefixPath.resolve( pathSuffix );
+        }
         else {
             return Paths.get( value );
         }
