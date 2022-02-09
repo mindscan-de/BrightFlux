@@ -1,0 +1,8 @@
+dashboard.names.array.length=2
+dashboard.names.array.type=string
+dashboard.names.0=CpuUsage
+dashboard.names.1=RamUsage
+dashboard.recipes.array.length=2
+dashboard.recipes.array.type=string
+dashboard.recipes.0={{favorites.recipes.dir}}/dashboard/CpuUsage.bfrecipe
+dashboard.recipes.1={{favorites.recipes.dir}}/dashboard/RamUsage.bfrecipe
