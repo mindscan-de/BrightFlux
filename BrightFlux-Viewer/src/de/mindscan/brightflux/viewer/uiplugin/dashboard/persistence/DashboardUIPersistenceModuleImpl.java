@@ -25,12 +25,17 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.persistence;
 
+import java.nio.file.Path;
+
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 
 /**
  * 
  */
 public class DashboardUIPersistenceModuleImpl implements DashboardUIPersistenceModule {
+
+    private static final String DASHBOARD_RECIPE_NAMES_KEY = "dashboard.names";
+    private static final String DASHBOARD_RECIPES_KEY = "dashboard.recipes";
 
     private BasePersistenceModule persistenceModule;
 
@@ -39,5 +44,15 @@ public class DashboardUIPersistenceModuleImpl implements DashboardUIPersistenceM
      */
     public DashboardUIPersistenceModuleImpl( BasePersistenceModule persistenceModule ) {
         this.persistenceModule = persistenceModule;
+    }
+
+    public String[] getDashboardRecipesNames() {
+        return persistenceModule.getStringArrayValue( DASHBOARD_RECIPE_NAMES_KEY );
+    }
+
+    public Path getDashboardRecipe( int recipeIndex ) {
+        String[] recipes = persistenceModule.getStringArrayValue( DASHBOARD_RECIPES_KEY );
+        String recipePath = recipes[recipeIndex];
+        return persistenceModule.evaluateAsPath( recipePath );
     }
 }
