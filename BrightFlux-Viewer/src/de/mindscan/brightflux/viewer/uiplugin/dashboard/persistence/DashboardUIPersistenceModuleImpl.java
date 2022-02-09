@@ -46,10 +46,12 @@ public class DashboardUIPersistenceModuleImpl implements DashboardUIPersistenceM
         this.persistenceModule = persistenceModule;
     }
 
+    @Override
     public String[] getDashboardRecipesNames() {
         return persistenceModule.getStringArrayValue( DASHBOARD_RECIPE_NAMES_KEY );
     }
 
+    @Override
     public Path getDashboardRecipe( int recipeIndex ) {
         String[] recipes = persistenceModule.getStringArrayValue( DASHBOARD_RECIPES_KEY );
         String recipePath = recipes[recipeIndex];

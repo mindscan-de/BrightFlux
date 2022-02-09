@@ -25,9 +25,15 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.persistence;
 
+import java.nio.file.Path;
+
 /**
  * 
  */
 public interface DashboardUIPersistenceModule {
+
+    String[] getDashboardRecipesNames();
+
+    Path getDashboardRecipe( int recipeIndex );
 
 }
