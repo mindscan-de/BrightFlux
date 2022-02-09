@@ -32,6 +32,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 import de.mindscan.brightflux.viewer.parts.UIEvents;
 import de.mindscan.brightflux.viewer.uievents.DataFrameRowSelectedListenerAdapter;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.persistence.DashboardUIPersistenceModule;
 
 /**
  * 
@@ -103,6 +104,10 @@ public class DashboardUIProxyComponent implements ProjectRegistryParticipant {
             this.dashboard.dataFrameSelected( selectedDataFrame );
         }
 
+    }
+
+    public void setPersistenceModule( DashboardUIPersistenceModule persistenceModule ) {
+        // TODO Auto-generated method stub
     }
 
 }

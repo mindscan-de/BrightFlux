@@ -26,21 +26,30 @@
 package de.mindscan.brightflux.viewer.uiplugin.dashboard;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.persistence.DashboardUIPersistenceModule;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.persistence.DashboardUIPersistenceModuleImpl;
 
 /**
  * 
  */
 public class DashboardUIActivator implements StartupParticipant {
 
+    private static final String DASHBOARD_UI_PLUGIN = "dashboard-ui-plugin";
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public void start( SystemServices systemservices ) {
+        BasePersistenceModule dashboardUIBasePersistenceModule = systemservices.getBasePersistenceModule( DASHBOARD_UI_PLUGIN );
+        DashboardUIPersistenceModule persistenceModule = new DashboardUIPersistenceModuleImpl( dashboardUIBasePersistenceModule );
 
         DashboardUIProxyComponent dashboardUIComponent = new DashboardUIProxyComponent();
+        dashboardUIComponent.setPersistenceModule( persistenceModule );
+
         systemservices.registerService( dashboardUIComponent, DashboardUIProxyComponent.class );
 
         ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
