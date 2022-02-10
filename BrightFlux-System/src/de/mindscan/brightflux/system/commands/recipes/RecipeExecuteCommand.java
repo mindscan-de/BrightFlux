@@ -78,7 +78,7 @@ public class RecipeExecuteCommand implements BFCommand {
         BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
 
         if (recipe != null) {
-            DataFrame currentDataFrame = applyRecipeToDataFrame( recipe, inputDataFrame );
+            DataFrame currentDataFrame = applyRecipeToDataFrame( recipe, inputDataFrame, callbacks );
 
             if (currentDataFrame != inputDataFrame) {
                 eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame, inputDataFrame ) );
@@ -89,7 +89,7 @@ public class RecipeExecuteCommand implements BFCommand {
         }
     }
 
-    public DataFrame applyRecipeToDataFrame( BFRecipe recipe, DataFrame currentDataFrame ) {
+    public static DataFrame applyRecipeToDataFrame( BFRecipe recipe, DataFrame currentDataFrame, Map<String, DataFrameRowQueryCallback> callbacks ) {
         List<DataFrameJournalEntry> executableEntries = getExecutableRecipeEntries( recipe );
         if (executableEntries.size() > 0) {
             // apply the recipe onto the data frame in a serial manner
@@ -124,7 +124,7 @@ public class RecipeExecuteCommand implements BFCommand {
         return currentDataFrame;
     }
 
-    private List<DataFrameJournalEntry> getExecutableRecipeEntries( BFRecipe recipe ) {
+    private static List<DataFrameJournalEntry> getExecutableRecipeEntries( BFRecipe recipe ) {
         return recipe.getRecipeEntries().stream()//
                         .filter( entry -> entry.getEntryType() != DataFrameJournalEntryType.LOAD )//
                         .collect( Collectors.toList() );
