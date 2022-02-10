@@ -25,6 +25,9 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -37,8 +40,12 @@ import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
+import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.recipe.BFRecipe;
+import de.mindscan.brightflux.recipe.BFRecipeIO;
+import de.mindscan.brightflux.system.recipes.RecipeUtils;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
@@ -51,6 +58,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
     protected Object result;
     protected Shell shellDashboadWindow;
+    private DashboardUIProxyComponent dashboardProxyComponent;
 
     /**
      * Create the dialog.
@@ -140,8 +148,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         }
 
         if (systemServices.isServiceAvailable( DashboardUIProxyComponent.class )) {
-            DashboardUIProxyComponent service = systemServices.getService( DashboardUIProxyComponent.class );
-            service.registerCurrentActiveDashboardWindow( this );
+            dashboardProxyComponent = systemServices.getService( DashboardUIProxyComponent.class );
+            dashboardProxyComponent.registerCurrentActiveDashboardWindow( this );
         }
         else {
 
@@ -174,6 +182,11 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     @Override
     public void dataFrameRowSelected( DataFrameRow selectedRow ) {
         // TODO Auto-generated method stub
+
+        // Figure out the parent component
+        // if theparent component changed, we want to reindex
+        // TODO run a prepared statement according to the selected row and update these values
+        // TODO notify the UI, that these values changed...
     }
 
     /** 
@@ -181,10 +194,34 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      */
     @Override
     public void dataFrameSelected( DataFrame selectedDataFrame ) {
-        // TODO Auto-generated method stub
+        // TODO: Calculate the root dataframe
+        DataFrame rootDataFrame = selectedDataFrame;
+
+        updateDashboardIndex( rootDataFrame );
+    }
+
+    private void updateDashboardIndex( DataFrame rootDataFrame ) {
+        // TODO if root differs
+        String[] dashboardRecipesNames = dashboardProxyComponent.getPersistenceModule().getDashboardRecipesNames();
+
+        // build index dataframes
+        // clearCache();
+        HashMap<String, DataFrameRowQueryCallback> emptyCallbacks = new HashMap<String, DataFrameRowQueryCallback>();
+
+        BFRecipe extractIndexRecipe = BFRecipeIO.loadFromFile( dashboardProxyComponent.getPersistenceModule().getDashboardIndexExtractorRecipePath() );
+
+        Map<String, DataFrame> cache = new HashMap<>();
+        for (int i = 0; i < dashboardRecipesNames.length; i++) {
+            BFRecipe recipe = BFRecipeIO.loadFromFile( dashboardProxyComponent.getPersistenceModule().getDashboardRecipe( i ) );
+            DataFrame dataframe = RecipeUtils.applyRecipeToDataFrame( recipe, rootDataFrame, emptyCallbacks );
+            DataFrame indexDataframe = RecipeUtils.applyRecipeToDataFrame( extractIndexRecipe, dataframe, emptyCallbacks );
+            cache.put( dashboardRecipesNames[i], indexDataframe );
+        }
+
     }
 
     private void updateDashboadData() {
+
         /**
          * according to the dashboard configuration, we want to extract multiple latest events from the logs.
          * We do that by either querying the current frame or the root frame, depending on the configuration
