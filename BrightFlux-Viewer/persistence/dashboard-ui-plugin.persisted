@@ -1,3 +1,4 @@
+dashboard.index.extractor.recipe={{favorites.recipes.dir}}/dashboard/ExtractIndexesAndTimestamp.bfrecipe
 dashboard.names.array.length=2
 dashboard.names.array.type=string
 dashboard.names.0=CpuUsage
