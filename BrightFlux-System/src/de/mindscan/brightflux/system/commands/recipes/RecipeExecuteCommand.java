@@ -78,49 +78,50 @@ public class RecipeExecuteCommand implements BFCommand {
         BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
 
         if (recipe != null) {
-            DataFrame currentDataFrame = inputDataFrame;
-
-            List<DataFrameJournalEntry> executableEntries = getExecutableRecipeEntries( recipe );
-            if (executableEntries.size() > 0) {
-                // apply the recipe onto the data frame in a serial manner
-                for (DataFrameJournalEntry entry : executableEntries) {
-                    String msg = entry.getLogMessage();
-
-                    // according to the entry type we need to select the correct strategy to apply here... 
-                    switch (entry.getEntryType()) {
-                        case LOAD:
-                            // we already filtered them out before
-                            break;
-                        case SELECT_WHERE: {
-                            String query = msg;
-                            currentDataFrame = currentDataFrame.query( query );
-                            break;
-                        }
-                        case ROWCALLBACK: {
-                            String query = msg;
-                            currentDataFrame = currentDataFrame.queryCB( query, callbacks );
-                            break;
-                        }
-                        case TOKENIZE: {
-                            String query = msg;
-                            currentDataFrame = currentDataFrame.queryTKN( query, IngestEngine::execute );
-                            break;
-                        }
-                        default:
-                            throw new NotYetImplemetedException();
-                    }
-                }
-            }
+            DataFrame currentDataFrame = applyRecipeToDataFrame( recipe, inputDataFrame );
 
             if (currentDataFrame != inputDataFrame) {
                 eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame, inputDataFrame ) );
             }
-
-            // Nothing to do...
         }
         else {
             throw new NotYetImplemetedException();
         }
+    }
+
+    public DataFrame applyRecipeToDataFrame( BFRecipe recipe, DataFrame currentDataFrame ) {
+        List<DataFrameJournalEntry> executableEntries = getExecutableRecipeEntries( recipe );
+        if (executableEntries.size() > 0) {
+            // apply the recipe onto the data frame in a serial manner
+            for (DataFrameJournalEntry entry : executableEntries) {
+                String msg = entry.getLogMessage();
+
+                // according to the entry type we need to select the correct strategy to apply here... 
+                switch (entry.getEntryType()) {
+                    case LOAD:
+                        // we already filtered them out before
+                        break;
+                    case SELECT_WHERE: {
+                        String query = msg;
+                        currentDataFrame = currentDataFrame.query( query );
+                        break;
+                    }
+                    case ROWCALLBACK: {
+                        String query = msg;
+                        currentDataFrame = currentDataFrame.queryCB( query, callbacks );
+                        break;
+                    }
+                    case TOKENIZE: {
+                        String query = msg;
+                        currentDataFrame = currentDataFrame.queryTKN( query, IngestEngine::execute );
+                        break;
+                    }
+                    default:
+                        throw new NotYetImplemetedException();
+                }
+            }
+        }
+        return currentDataFrame;
     }
 
     private List<DataFrameJournalEntry> getExecutableRecipeEntries( BFRecipe recipe ) {
