@@ -36,4 +36,6 @@ public interface DashboardUIPersistenceModule {
 
     Path getDashboardRecipe( int recipeIndex );
 
+    Path getDashboardIndexExtractorRecipePath();
+
 }

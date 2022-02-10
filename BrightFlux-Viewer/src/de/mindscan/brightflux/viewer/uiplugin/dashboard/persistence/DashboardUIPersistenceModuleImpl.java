@@ -36,6 +36,7 @@ public class DashboardUIPersistenceModuleImpl implements DashboardUIPersistenceM
 
     private static final String DASHBOARD_RECIPE_NAMES_KEY = "dashboard.names";
     private static final String DASHBOARD_RECIPES_KEY = "dashboard.recipes";
+    private static final String DASHBOARD_INDEX_EXTRACTOR_RECIPE = "dashboard.index.extractor.recipe";
 
     private BasePersistenceModule persistenceModule;
 
@@ -56,5 +57,12 @@ public class DashboardUIPersistenceModuleImpl implements DashboardUIPersistenceM
         String[] recipes = persistenceModule.getStringArrayValue( DASHBOARD_RECIPES_KEY );
         String recipePath = recipes[recipeIndex];
         return persistenceModule.evaluateAsPath( recipePath );
+    }
+
+    @Override
+    public Path getDashboardIndexExtractorRecipePath() {
+        String recipeValue = persistenceModule.getStringValue( DASHBOARD_INDEX_EXTRACTOR_RECIPE );
+        return persistenceModule.evaluateAsPath( recipeValue );
+
     }
 }
