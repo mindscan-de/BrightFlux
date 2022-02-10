@@ -45,7 +45,7 @@ import de.mindscan.brightflux.recipe.BFRecipeIO;
 import de.mindscan.brightflux.system.events.BFEventFactory;
 
 /**
- * 
+ * TODO extract recipe execution to a util class.
  */
 public class RecipeExecuteCommand implements BFCommand {
 
@@ -78,11 +78,10 @@ public class RecipeExecuteCommand implements BFCommand {
         BFRecipe recipe = BFRecipeIO.loadFromFile( recipeFilePath );
 
         if (recipe != null) {
+            DataFrame currentDataFrame = inputDataFrame;
+
             List<DataFrameJournalEntry> executableEntries = getExecutableRecipeEntries( recipe );
-
             if (executableEntries.size() > 0) {
-                DataFrame currentDataFrame = inputDataFrame;
-
                 // apply the recipe onto the data frame in a serial manner
                 for (DataFrameJournalEntry entry : executableEntries) {
                     String msg = entry.getLogMessage();
@@ -111,10 +110,10 @@ public class RecipeExecuteCommand implements BFCommand {
                             throw new NotYetImplemetedException();
                     }
                 }
+            }
 
-                if (currentDataFrame != inputDataFrame) {
-                    eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame, inputDataFrame ) );
-                }
+            if (currentDataFrame != inputDataFrame) {
+                eventConsumer.accept( BFEventFactory.dataframeCreated( currentDataFrame, inputDataFrame ) );
             }
 
             // Nothing to do...
