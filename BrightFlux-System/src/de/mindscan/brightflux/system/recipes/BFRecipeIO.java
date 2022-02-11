@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.recipe;
+package de.mindscan.brightflux.system.recipes;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,6 +34,9 @@ import java.nio.file.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import de.mindscan.brightflux.recipe.BFRecipe;
+import de.mindscan.brightflux.recipe.BFRecipeImpl;
 
 /**
  * 

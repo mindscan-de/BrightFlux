@@ -46,7 +46,7 @@ import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.recipe.BFRecipe;
-import de.mindscan.brightflux.recipe.BFRecipeIO;
+import de.mindscan.brightflux.system.recipes.BFRecipeIO;
 import de.mindscan.brightflux.system.recipes.RecipeUtils;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
@@ -237,6 +237,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         // run a prepared statement according to the selected row and update these values
         String preparedStatement = "SELECT * FROM df WHERE (df.'__org_idx'<= :SelectedOrgIdx )";
         String preparedQuery = preparedStatement.replace( ":SelectedOrdIdx", org_idx.toString() );
+
+        // TODO: compile rowFilterPredicate
 
         // TODO: next steps 
         // - go through all acttiveIndexCachesByName
