@@ -45,7 +45,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
-import de.mindscan.brightflux.recipe.BFRecipe;
+import de.mindscan.brightflux.system.recipes.BFRecipe;
 import de.mindscan.brightflux.system.recipes.BFRecipeIO;
 import de.mindscan.brightflux.system.recipes.RecipeUtils;
 import de.mindscan.brightflux.system.services.SystemServices;

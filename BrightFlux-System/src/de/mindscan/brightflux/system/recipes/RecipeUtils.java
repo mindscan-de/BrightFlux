@@ -35,7 +35,6 @@ import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntryType;
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.ingest.IngestEngine;
-import de.mindscan.brightflux.recipe.BFRecipe;
 
 /**
  * 

@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.recipe;
+package de.mindscan.brightflux.system.recipes;
 
 import java.util.List;
 

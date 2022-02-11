@@ -27,7 +27,6 @@ package de.mindscan.brightflux.system.recipes;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameJournal;
-import de.mindscan.brightflux.recipe.BFRecipe;
 
 /**
  * 
