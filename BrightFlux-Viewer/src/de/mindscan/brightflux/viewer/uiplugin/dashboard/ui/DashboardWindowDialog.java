@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -61,6 +62,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     protected Shell shellDashboadWindow;
     private DashboardUIProxyComponent dashboardProxyComponent;
     private DataFrameHierarchyComponent dataFrameHierarchyComponent;
+    private UUID activeRootIndexUuid;
+    private Map<String, DataFrame> activeIndexCacheByName = new HashMap<>();
 
     /**
      * Create the dialog.
@@ -208,15 +211,15 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             return;
         }
 
-        // TODO: Calculate the root dataframe
-        DataFrame rootDataFrame = selectedDataFrame;
         //dataFrameHierarchyComponent.getDataframeHierarchy().getRoot( selectedDataFrame );
+        DataFrame rootForSelectedDataFrame = selectedDataFrame;
 
-        updateDashboardIndex( rootDataFrame );
+        if (!rootForSelectedDataFrame.getUuid().equals( activeRootIndexUuid )) {
+            updateDashboardIndex( rootForSelectedDataFrame );
+        }
     }
 
     private void updateDashboardIndex( DataFrame rootDataFrame ) {
-        // TODO if root differs
         String[] dashboardRecipesNames = dashboardProxyComponent.getPersistenceModule().getDashboardRecipesNames();
 
         // build index dataframes
@@ -233,6 +236,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             cache.put( dashboardRecipesNames[i], indexDataframe );
         }
 
+        activeIndexCacheByName = cache;
+        activeRootIndexUuid = rootDataFrame.getUuid();
     }
 
     private void updateDashboadData() {
@@ -265,7 +270,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
-
+        // intentionally left blank for now
     }
 }
