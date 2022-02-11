@@ -157,16 +157,17 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             dashboardProxyComponent.registerCurrentActiveDashboardWindow( this );
         }
         else {
-
+            System.out.println( "[DashboardWindowDialog] DashboardProxyComponent not initailized." );
+            //throw new NotYetImplemetedException( "[DashboardWindowDialog] DashboardProxyComponent not initailized." );
         }
 
         if (systemServices.isServiceAvailable( DataFrameHierarchyComponent.class )) {
             dataFrameHierarchyComponent = systemServices.getService( DataFrameHierarchyComponent.class );
         }
         else {
-
+            System.out.println( "[DashboardWindowDialog] DataFrameHierarchyComponent not initailized." );
+            // throw new NotYetImplemetedException( "[DashboardWindowDialog] DataFrameHierarchyComponent not initailized." );
         }
-
     }
 
     private void unregisterAtdashboardUIProxyComponent() {
@@ -193,19 +194,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      * {@inheritDoc}
      */
     @Override
-    public void dataFrameRowSelected( DataFrameRow selectedRow ) {
-        // TODO Auto-generated method stub
-
-        // Figure out the parent component
-        // if theparent component changed, we want to reindex
-        // TODO run a prepared statement according to the selected row and update these values
-        // TODO notify the UI, that these values changed...
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
     public void dataFrameSelected( DataFrame selectedDataFrame ) {
         if (dataFrameHierarchyComponent == null) {
             return;
@@ -223,8 +211,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private void updateDashboardIndex( DataFrame rootDataFrame ) {
         String[] dashboardRecipesNames = dashboardProxyComponent.getPersistenceModule().getDashboardRecipesNames();
 
-        // build index dataframes
-        // clearCache();
         HashMap<String, DataFrameRowQueryCallback> emptyCallbacks = new HashMap<String, DataFrameRowQueryCallback>();
 
         BFRecipe extractIndexRecipe = BFRecipeIO.loadFromFile( dashboardProxyComponent.getPersistenceModule().getDashboardIndexExtractorRecipePath() );
@@ -239,6 +225,19 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         activeIndexCacheByName = cache;
         activeRootIndexUuid = rootDataFrame.getUuid();
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public void dataFrameRowSelected( DataFrameRow selectedRow ) {
+        // TODO Auto-generated method stub
+
+        // Figure out the parent component
+        // if theparent component changed, we want to reindex
+        // TODO run a prepared statement according to the selected row and update these values
+        // TODO notify the UI, that these values changed...
     }
 
     private void updateDashboadData() {
