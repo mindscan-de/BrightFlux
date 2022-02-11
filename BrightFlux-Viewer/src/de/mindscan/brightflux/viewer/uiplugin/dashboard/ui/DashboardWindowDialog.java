@@ -232,12 +232,19 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      */
     @Override
     public void dataFrameRowSelected( DataFrameRow selectedRow ) {
-        // TODO Auto-generated method stub
+        Integer org_idx = (Integer) selectedRow.get( "__org_idx" );
 
-        // Figure out the parent component
-        // if theparent component changed, we want to reindex
-        // TODO run a prepared statement according to the selected row and update these values
-        // TODO notify the UI, that these values changed...
+        // run a prepared statement according to the selected row and update these values
+        String preparedStatement = "SELECT * FROM df WHERE (df.'__org_idx'<= :SelectedOrgIdx )";
+        String preparedQuery = preparedStatement.replace( ":SelectedOrdIdx", org_idx.toString() );
+
+        // TODO: next steps 
+        // - go through all acttiveIndexCachesByName
+        // - foreach cached dataframe, we apply the preparedQuery
+        // - after this on the datafreme.getColumn('__org_idx').max(); 
+        // - look up the __org_idx and ETL on the real root dataframe.
+        // - update the data
+        // TODO: notify the UI, that these values changed...
     }
 
     private void updateDashboadData() {
