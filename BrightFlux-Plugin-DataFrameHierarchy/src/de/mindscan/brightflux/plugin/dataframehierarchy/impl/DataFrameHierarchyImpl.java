@@ -92,6 +92,14 @@ public class DataFrameHierarchyImpl implements DataFrameHierarchy {
      * {@inheritDoc}
      */
     @Override
+    public DataFrameHierarchyNode getRoot( DataFrameHierarchyNode node ) {
+        return nodes.get( node.getRootParentDataFrameUUID() );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
     public List<DataFrameHierarchyNode> getChildren( DataFrameHierarchyNode parentElement ) {
         UUID parentUUID = parentElement.getDataFrameUUID();
         if (parentUUID != null) {

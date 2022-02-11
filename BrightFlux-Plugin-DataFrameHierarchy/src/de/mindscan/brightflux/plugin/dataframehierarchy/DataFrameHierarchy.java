@@ -39,6 +39,12 @@ public interface DataFrameHierarchy {
     List<DataFrameHierarchyNode> getRootNodes();
 
     /**
+     * @param node
+     * @return
+     */
+    DataFrameHierarchyNode getRoot( DataFrameHierarchyNode node );
+
+    /**
      * @param parentElement
      */
     List<DataFrameHierarchyNode> getChildren( DataFrameHierarchyNode parentElement );
