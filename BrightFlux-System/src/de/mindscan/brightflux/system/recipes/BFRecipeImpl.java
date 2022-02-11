@@ -23,13 +23,14 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.recipe;
+package de.mindscan.brightflux.system.recipes;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import de.mindscan.brightflux.dataframes.DataFrameJournal;
 import de.mindscan.brightflux.dataframes.journal.DataFrameJournalEntry;
+import de.mindscan.brightflux.recipe.BFRecipe;
 
 /**
  * 
