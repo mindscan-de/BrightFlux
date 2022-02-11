@@ -43,6 +43,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.recipe.BFRecipe;
 import de.mindscan.brightflux.recipe.BFRecipeIO;
 import de.mindscan.brightflux.system.recipes.RecipeUtils;
@@ -59,6 +60,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     protected Object result;
     protected Shell shellDashboadWindow;
     private DashboardUIProxyComponent dashboardProxyComponent;
+    private DataFrameHierarchyComponent dataFrameHierarchyComponent;
 
     /**
      * Create the dialog.
@@ -154,6 +156,14 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         else {
 
         }
+
+        if (systemServices.isServiceAvailable( DataFrameHierarchyComponent.class )) {
+            dataFrameHierarchyComponent = systemServices.getService( DataFrameHierarchyComponent.class );
+        }
+        else {
+
+        }
+
     }
 
     private void unregisterAtdashboardUIProxyComponent() {
@@ -194,8 +204,13 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      */
     @Override
     public void dataFrameSelected( DataFrame selectedDataFrame ) {
+        if (dataFrameHierarchyComponent == null) {
+            return;
+        }
+
         // TODO: Calculate the root dataframe
         DataFrame rootDataFrame = selectedDataFrame;
+        //dataFrameHierarchyComponent.getDataframeHierarchy().getRoot( selectedDataFrame );
 
         updateDashboardIndex( rootDataFrame );
     }
