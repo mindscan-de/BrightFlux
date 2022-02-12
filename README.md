@@ -190,10 +190,6 @@ Search Engine Support
 * show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
 
 
-DFQL
-* Support parameterized callbacks ('CALLBACK highlight("red") FROM df WHERE (df.'h2.ts'>1000000000)' instead of 'CALLBACK highlight_red FROM df WHERE (df.'h2.ts'>1000000000)')
-
-
 Machine Learning and Pattern recognition and anomaly Detection on Log-Data 
 * We need Column-Ingest processing to clean up the data / separate the data from meta information e.g. Filename, method name, line of implementation
 * "Fraud detection" - Predict next line and evaluate, score how much the next line was/is expected... If not expected -> Found an anomaly
@@ -238,6 +234,7 @@ UI-Dashboard
 
 
 DFQL
+* Support parameterized callbacks ('CALLBACK highlight("red") FROM df WHERE (df.'h2.ts'>1000000000)' instead of 'CALLBACK highlight_red FROM df WHERE (df.'h2.ts'>1000000000)')
 * the Query Language should support aggregate functions (more complex syntax)
 * the Query Language should support prepared statements / parameterizable statements
 
