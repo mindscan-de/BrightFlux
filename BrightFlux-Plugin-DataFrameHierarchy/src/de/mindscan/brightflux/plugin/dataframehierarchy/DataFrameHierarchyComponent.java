@@ -120,6 +120,11 @@ public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
 
     public DataFrame getRootDataFrame( DataFrame selectedDataFrame ) {
         DataFrameHierarchyNode selectedNode = dataframeHierarchy.getNodeByUUID( selectedDataFrame.getUuid() );
+
+        if (selectedNode == null || selectedNode.isRootNode()) {
+            return selectedDataFrame;
+        }
+
         UUID rootUUID = selectedNode.getRootParentDataFrameUUID();
         return uuidToDataFrameMap.get( rootUUID );
     }
