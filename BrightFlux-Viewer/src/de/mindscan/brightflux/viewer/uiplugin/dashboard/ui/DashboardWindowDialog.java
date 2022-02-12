@@ -204,8 +204,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             return;
         }
 
-        //dataFrameHierarchyComponent.getDataframeHierarchy().getRoot( selectedDataFrame );
-        DataFrame rootForSelectedDataFrame = selectedDataFrame;
+        DataFrame rootForSelectedDataFrame = dataFrameHierarchyComponent.getRootDataFrame( selectedDataFrame );
 
         // only update the dashboard index, if the root data frame is a different than the current active root index.
         if (!rootForSelectedDataFrame.getUuid().equals( activeRootIndexUuid )) {
