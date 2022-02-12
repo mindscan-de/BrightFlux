@@ -27,8 +27,8 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -248,8 +248,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         String preparedQuery = preparedStatement.replace( ":SelectedOrgIdx", org_idx.toString() );
 
         System.out.println( "preparedQuery: " + preparedQuery );
-
-        // TODO: getDataframeRootFrame
 
         // - go through all acttiveIndexCachesByName
         for (Entry<String, DataFrame> entry : activeIndexCacheByName.entrySet()) {
