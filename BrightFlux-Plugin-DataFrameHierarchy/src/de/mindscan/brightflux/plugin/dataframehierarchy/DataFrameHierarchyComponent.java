@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.plugin.dataframehierarchy;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
@@ -44,14 +46,15 @@ import de.mindscan.brightflux.system.events.dataframe.DataFrameLoadedEvent;
 public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
 
     private DataFrameHierarchyImpl dataframeHierarchy;
-
     private ProjectRegistry projectRegistry;
+    private Map<UUID, DataFrame> uuidToDataFrameMap;
 
     /**
      * 
      */
     public DataFrameHierarchyComponent() {
         dataframeHierarchy = new DataFrameHierarchyImpl();
+        uuidToDataFrameMap = new LinkedHashMap<>();
     }
 
     /** 
@@ -72,6 +75,7 @@ public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
             @Override
             public void handleDataFrameCreated( DataFrame dataFrame, String parentUUID ) {
                 dataframeHierarchy.addLeafNode( dataFrame, UUID.fromString( parentUUID ) );
+                uuidToDataFrameMap.put( dataFrame.getUuid(), dataFrame );
 
                 projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameHierarchyUpdatedEvent( dataframeHierarchy ) );
             }
@@ -85,6 +89,7 @@ public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
                 dataframeHierarchy.addRootNode( dataFrame );
+                uuidToDataFrameMap.put( dataFrame.getUuid(), dataFrame );
 
                 projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameHierarchyUpdatedEvent( dataframeHierarchy ) );
             }
@@ -98,6 +103,7 @@ public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
                 dataframeHierarchy.removeNode( dataFrame );
+                uuidToDataFrameMap.remove( dataFrame.getUuid() );
 
                 projectRegistry.getEventDispatcher().dispatchEvent( new DataFrameHierarchyUpdatedEvent( dataframeHierarchy ) );
             }
@@ -110,6 +116,12 @@ public class DataFrameHierarchyComponent implements ProjectRegistryParticipant {
      */
     public DataFrameHierarchy getDataframeHierarchy() {
         return dataframeHierarchy;
+    }
+
+    public DataFrame getRootDataFrame( DataFrame selectedDataFrame ) {
+        DataFrameHierarchyNode selectedNode = dataframeHierarchy.getNodeByUUID( selectedDataFrame.getUuid() );
+        UUID rootUUID = selectedNode.getRootParentDataFrameUUID();
+        return uuidToDataFrameMap.get( rootUUID );
     }
 
 }
