@@ -122,6 +122,9 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * support of templates, variables, template blocks
   * support of template files and template base directory
   * support of output transformation / conversion
+* Dashboard
+  * recipes for filtering located in 'favrecipes/dashboard' - filters implemented.
+  * output data to command line in the first iteration
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -162,8 +165,8 @@ I want to address rather sooner than later.
 
 
 UI-Dashboard
-* implement a very basic ui for the dashboard, with three queries configured by three configurable recipes located in (favrecipes/dashboard)
-* implement a persistence to load the dashboard configuration, configurable queries and extract and transform pipelines or via json preferred
+* implement a very basic ui and some simple widgets for the dashboard
+* configurable extract, transform, visualization pipeline via json preferred
 
 
 Machine Learning
@@ -230,14 +233,13 @@ UML Image Generator
 
 UI-Dashboard
 * a dashboard is an interactive information board, which should be configurable
-  * think of a view containing HXX messages in time, but we want to know what the last type of events (select statement) on a previous timestamp was
-    * e.g. i want to know what the last cpu and memory usage was, while being in a different selection at this timestamp. 
-    * e.g. i want to know what view is currently active, while analyzing a certain widget problem
-  * a dashboard is provided by recipes and calculators (find the last entry (row) before this timestamp, in case you want to see the last active state) and visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
-  * the problem is, that we need different DQFL capabilities where we can do selections, where we can select a particular row, extract a particular value, and visualize a paricular value
-* Requires Dataframes supporting aggregate functions (MAX)
-  * that will deliver the rows, but then the data needs to be extracted and transformed
-* After Dataframes supporting the aggregate functions DFQL should be extended, also with some kind of prepared statements / parameterizeable statements
+  * visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
+  * extract a particular value, then transform and then visualize a particular value
+
+
+DFQL
+* the Query Language should support aggregate functions (more complex syntax)
+* the Query Language should support prepared statements / parameterizable statements
 
 
 Support Calculations between Rows or Columns
