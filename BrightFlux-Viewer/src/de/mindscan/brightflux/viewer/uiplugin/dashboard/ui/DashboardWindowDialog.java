@@ -195,6 +195,13 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         shellDashboadWindow.setFocus();
     }
 
+    /**
+     * 
+     * TODO: some of the calculation should not be done in the UI, but rather in a different component.
+     * 
+     * Especially the next code should be refactored, to have a clear separation of model/data and view.
+     */
+
     /** 
      * {@inheritDoc}
      */
