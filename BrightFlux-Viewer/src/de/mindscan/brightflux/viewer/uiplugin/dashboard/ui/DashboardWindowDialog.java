@@ -27,8 +27,8 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -45,6 +45,7 @@ import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.dataframes.columns.NumberAggregateFunctions;
+import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageEngine;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
@@ -239,20 +240,24 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     public void dataFrameRowSelected( DataFrameRow selectedRow ) {
         Integer org_idx = (Integer) selectedRow.get( "__org_idx" );
 
+        DataFrameQueryLanguageEngine engine = new DataFrameQueryLanguageEngine();
+
         // run a prepared statement according to the selected row and update these values
         // i think the query should be compiled into a rowfilterpredicate, which can be reused.
         String preparedStatement = "SELECT * FROM df WHERE (df.'__org_idx'<= :SelectedOrgIdx )";
-        String preparedQuery = preparedStatement.replace( ":SelectedOrdIdx", org_idx.toString() );
+        String preparedQuery = preparedStatement.replace( ":SelectedOrgIdx", org_idx.toString() );
+
+        System.out.println( "preparedQuery: " + preparedQuery );
 
         // TODO: getDataframeRootFrame
 
         // - go through all acttiveIndexCachesByName
         for (Entry<String, DataFrame> entry : activeIndexCacheByName.entrySet()) {
             String name = entry.getKey();
-            DataFrame df = entry.getValue();
+            DataFrame cachedDataFrameForName = entry.getValue();
 
             // - foreach cached dataframe, we apply the preparedQuery
-            DataFrame prefiltered = df.select().where( preparedQuery );
+            DataFrame prefiltered = engine.executeDFQuery( cachedDataFrameForName, preparedQuery );
 
             // - after this on the datafreme.getColumn('__org_idx').max(); 
             DataFrameColumn<?> column = prefiltered.getColumn( "__org_idx" );
