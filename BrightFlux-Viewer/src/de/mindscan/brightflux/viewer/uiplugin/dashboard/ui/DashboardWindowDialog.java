@@ -26,6 +26,7 @@
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -226,7 +227,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         BFRecipe extractIndexRecipe = BFRecipeIO.loadFromFile( dashboardProxyComponent.getPersistenceModule().getDashboardIndexExtractorRecipePath() );
 
-        Map<String, DataFrame> cache = new HashMap<>();
+        Map<String, DataFrame> cache = new LinkedHashMap<>();
         for (int i = 0; i < dashboardRecipesNames.length; i++) {
             BFRecipe recipe = BFRecipeIO.loadFromFile( dashboardProxyComponent.getPersistenceModule().getDashboardRecipe( i ) );
             DataFrame dataframe = RecipeUtils.applyRecipeToDataFrame( recipe, rootDataFrame, emptyCallbacks );
