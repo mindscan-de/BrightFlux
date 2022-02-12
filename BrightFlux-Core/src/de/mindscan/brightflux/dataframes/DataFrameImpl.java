@@ -379,6 +379,14 @@ public class DataFrameImpl implements DataFrame {
     }
 
     /** 
+         * {@inheritDoc}
+         */
+    @Override
+    public DataFrameRow getRow( int rowIndex ) {
+        return new DataFrameRowImpl( DataFrameImpl.this, rowIndex );
+    }
+
+    /** 
      * {@inheritDoc}
      */
     @Override

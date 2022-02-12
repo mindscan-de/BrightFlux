@@ -84,6 +84,8 @@ public interface DataFrame {
 
     DataFrame selectRows( int from, int to );
 
+    DataFrameRow getRow( int rowIndex );
+
     Collection<DataFrameRow> getRows();
 
     Collection<DataFrameRow> getRows( int from, int to );
