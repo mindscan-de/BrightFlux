@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.eclipse.swt.SWT;
@@ -40,8 +41,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
+import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
+import de.mindscan.brightflux.dataframes.columns.NumberAggregateFunctions;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
@@ -64,6 +67,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private DataFrameHierarchyComponent dataFrameHierarchyComponent;
     private UUID activeRootIndexUuid;
     private Map<String, DataFrame> activeIndexCacheByName = new HashMap<>();
+    private DataFrame activeRootDataframe;
 
     /**
      * Create the dialog.
@@ -225,6 +229,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         activeIndexCacheByName = cache;
         activeRootIndexUuid = rootDataFrame.getUuid();
+        activeRootDataframe = rootDataFrame;
     }
 
     /** 
@@ -235,21 +240,49 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         Integer org_idx = (Integer) selectedRow.get( "__org_idx" );
 
         // run a prepared statement according to the selected row and update these values
+        // i think the query should be compiled into a rowfilterpredicate, which can be reused.
         String preparedStatement = "SELECT * FROM df WHERE (df.'__org_idx'<= :SelectedOrgIdx )";
         String preparedQuery = preparedStatement.replace( ":SelectedOrdIdx", org_idx.toString() );
 
-        // TODO: compile rowFilterPredicate
+        // TODO: getDataframeRootFrame
 
-        // TODO: next steps 
         // - go through all acttiveIndexCachesByName
-        // - foreach cached dataframe, we apply the preparedQuery
-        // - after this on the datafreme.getColumn('__org_idx').max(); 
-        // - look up the __org_idx and ETL on the real root dataframe.
-        // - update the data
-        // TODO: notify the UI, that these values changed...
+        for (Entry<String, DataFrame> entry : activeIndexCacheByName.entrySet()) {
+            String name = entry.getKey();
+            DataFrame df = entry.getValue();
+
+            // - foreach cached dataframe, we apply the preparedQuery
+            DataFrame prefiltered = df.select().where( preparedQuery );
+
+            // - after this on the datafreme.getColumn('__org_idx').max(); 
+            DataFrameColumn<?> column = prefiltered.getColumn( "__org_idx" );
+            if (column instanceof NumberAggregateFunctions) {
+                Number orgIndexInRootFrame = ((NumberAggregateFunctions<?>) column).max();
+                updateDashboardData( name, orgIndexInRootFrame.intValue() );
+            }
+        }
     }
 
-    private void updateDashboadData() {
+    /**
+     */
+    private void updateDashboardData( String name, int orgIndexInRootFrame ) {
+        if (orgIndexInRootFrame < 0) {
+            return;
+        }
+        if (activeRootDataframe == null) {
+            return;
+        }
+
+        // - look up the __org_idx and ETL on the root dataframe of the current root dataframe
+        DataFrameRow row = activeRootDataframe.getRow( orgIndexInRootFrame );
+
+        // - according to the configurated ETL for this name we want to extract data from the row.
+
+        System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
+
+        // - update the data
+
+        // - notify the UI, that these values changed...
 
         /**
          * according to the dashboard configuration, we want to extract multiple latest events from the logs.
