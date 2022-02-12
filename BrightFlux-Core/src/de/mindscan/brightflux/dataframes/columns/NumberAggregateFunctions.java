@@ -28,7 +28,7 @@ package de.mindscan.brightflux.dataframes.columns;
 /**
  * 
  */
-public interface NumberAggregateFunctions<T> {
+public interface NumberAggregateFunctions<T extends Number> {
 
     T max();
 
