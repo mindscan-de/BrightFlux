@@ -33,7 +33,6 @@ import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -127,10 +126,13 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
         middleComposite.setLayoutData( BorderLayout.CENTER );
-        middleComposite.setLayout( new GridLayout( 2, false ) );
+        middleComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        CpuUsageDashboardWidget cpuUsageWidget = new CpuUsageDashboardWidget( middleComposite, SWT.NONE );
-        CpuUsageDashboardWidget cpuUsageWidget1 = new CpuUsageDashboardWidget( middleComposite, SWT.NONE );
+        Group group = new Group( middleComposite, SWT.NONE );
+        group.setLayout( new FillLayout( SWT.VERTICAL ) );
+
+        CpuUsageDashboardWidget cpuUsageWidget = new CpuUsageDashboardWidget( group, SWT.NONE );
+        CpuUsageDashboardWidget cpuUsageWidget1 = new CpuUsageDashboardWidget( group, SWT.NONE );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
             /** 
