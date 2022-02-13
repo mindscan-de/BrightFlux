@@ -25,12 +25,21 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
+
+import swing2swt.layout.FlowLayout;
 
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
 public class CpuUsageDashboardWidget extends Composite {
+    private Text textTimestamp;
+    private Text textUsage;
 
     /**
      * Create the composite.
@@ -39,6 +48,18 @@ public class CpuUsageDashboardWidget extends Composite {
      */
     public CpuUsageDashboardWidget( Composite parent, int style ) {
         super( parent, style );
+        setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Group grpTabname = new Group( this, SWT.NONE );
+        grpTabname.setText( "TabName" );
+        grpTabname.setLayout( new FlowLayout( FlowLayout.CENTER, 5, 5 ) );
+
+        Label lblCpuNumber = new Label( grpTabname, SWT.NONE );
+        lblCpuNumber.setText( "CPU 1" );
+
+        textTimestamp = new Text( grpTabname, SWT.BORDER );
+
+        textUsage = new Text( grpTabname, SWT.BORDER );
 
     }
 
@@ -46,5 +67,4 @@ public class CpuUsageDashboardWidget extends Composite {
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
     }
-
 }

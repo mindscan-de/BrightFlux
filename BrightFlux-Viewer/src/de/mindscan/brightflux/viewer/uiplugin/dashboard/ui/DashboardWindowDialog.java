@@ -33,6 +33,7 @@ import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
@@ -56,6 +57,7 @@ import de.mindscan.brightflux.system.recipes.RecipeUtils;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -125,6 +127,10 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
         middleComposite.setLayoutData( BorderLayout.CENTER );
+        middleComposite.setLayout( new GridLayout( 2, false ) );
+
+        CpuUsageDashboardWidget cpuUsageWidget = new CpuUsageDashboardWidget( middleComposite, SWT.NONE );
+        CpuUsageDashboardWidget cpuUsageWidget1 = new CpuUsageDashboardWidget( middleComposite, SWT.NONE );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
             /** 
