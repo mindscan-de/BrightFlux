@@ -31,9 +31,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import swing2swt.layout.FlowLayout;
-import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
@@ -60,16 +60,19 @@ public class CpuUsageDashboardWidget extends Composite {
         lblCpuNumber.setText( "CPU 1" );
 
         textTimestamp = new Text( grpTabname, SWT.BORDER );
-        textTimestamp.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        textTimestamp.setEditable(false);
+        textTimestamp.setSize( 150, 25 );
+        textTimestamp.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
+
+        textTimestamp.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
+        textTimestamp.setEditable( false );
 
         textUsage = new Text( grpTabname, SWT.BORDER );
-        textUsage.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-        textUsage.setEditable(false);
+        textUsage.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
+        textUsage.setEditable( false );
     }
 
-    public void setLatestCpuTimestamp( String timstamp ) {
-        textTimestamp.setText( timstamp );
+    public void setLatestCpuTimestamp( String timestamp ) {
+        textTimestamp.setText( timestamp );
     }
 
     public void setLatestCpuUsageValue( String usageValue ) {
