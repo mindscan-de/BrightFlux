@@ -71,6 +71,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private UUID activeRootIndexUuid;
     private Map<String, DataFrame> activeIndexCacheByName = new HashMap<>();
     private DataFrame activeRootDataframe;
+    private CpuUsageDashboardWidget cpuUsageWidget;
 
     /**
      * Create the dialog.
@@ -131,7 +132,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         Group group = new Group( middleComposite, SWT.NONE );
         group.setLayout( new FillLayout( SWT.VERTICAL ) );
 
-        CpuUsageDashboardWidget cpuUsageWidget = new CpuUsageDashboardWidget( group, SWT.NONE );
+        cpuUsageWidget = new CpuUsageDashboardWidget( group, SWT.NONE );
         CpuUsageDashboardWidget cpuUsageWidget1 = new CpuUsageDashboardWidget( group, SWT.NONE );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
@@ -295,8 +296,31 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         DataFrameRow row = activeRootDataframe.getRow( orgIndexInRootFrame );
 
         // - according to the configurated ETL for this name we want to extract data from the row.
+        switch (name) {
+            case "CpuUsage": {
+                // extract from row:
+                String message = String.valueOf( row.get( "h2.msg" ) );
+                String timestamp = String.valueOf( row.get( "h1.ts" ) );
+
+                // extract from message
+                message = message.substring( message.indexOf( "CPU" ) );
+                message = message.substring( message.indexOf( "=" ) );
+                String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
+
+                // transform
+
+                // visualize
+                cpuUsageWidget.setLatestCpuTimestamp( timestamp );
+                cpuUsageWidget.setLatestCpuUsageValue( usageValue );
+            }
+
+            default:
+                break;
+        }
 
         System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
+
+        // depending on the name we want to extract, transform and visualize ....
 
         // - update the data
 
