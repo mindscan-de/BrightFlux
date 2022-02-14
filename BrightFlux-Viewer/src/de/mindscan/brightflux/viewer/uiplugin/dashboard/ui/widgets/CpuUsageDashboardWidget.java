@@ -59,12 +59,14 @@ public class CpuUsageDashboardWidget extends Composite {
         lblCpuNumber.setText( "CPU 1" );
 
         textTimestamp = new Label( grpTabname, SWT.BORDER );
+        textTimestamp.setAlignment( SWT.RIGHT );
         textTimestamp.setText( "000000000.000000000" );
         textTimestamp.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
         textTimestamp.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
 
         textUsage = new Label( grpTabname, SWT.BORDER );
-        textUsage.setText( "000.00" );
+        textUsage.setAlignment( SWT.RIGHT );
+        textUsage.setText( "000.00%" );
         textUsage.setFont( SWTResourceManager.getFont( "Courier New", 14, SWT.NORMAL ) );
         textUsage.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
     }
@@ -74,7 +76,7 @@ public class CpuUsageDashboardWidget extends Composite {
     }
 
     public void setLatestCpuUsageValue( String usageValue ) {
-        textUsage.setText( usageValue );
+        textUsage.setText( usageValue + "%" );
     }
 
     public void setCpuName( String cpuName ) {
