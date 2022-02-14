@@ -312,6 +312,20 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 // visualize
                 cpuUsageWidget.setLatestCpuTimestamp( timestamp );
                 cpuUsageWidget.setLatestCpuUsageValue( usageValue );
+                break;
+            }
+            case "RamUsage": {
+                // extract from row:
+                String message = String.valueOf( row.get( "h2.msg" ) );
+                String timestamp = String.valueOf( row.get( "h1.ts" ) );
+
+                // extract from message
+                message = message.substring( message.indexOf( "usage" ) );
+                String[] split = message.split( "," );
+
+                // visualization
+
+                break;
             }
 
             default:
