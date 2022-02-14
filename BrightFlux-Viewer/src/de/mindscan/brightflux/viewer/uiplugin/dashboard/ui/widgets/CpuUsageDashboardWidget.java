@@ -33,6 +33,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 import swing2swt.layout.FlowLayout;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
@@ -40,6 +41,7 @@ import swing2swt.layout.FlowLayout;
 public class CpuUsageDashboardWidget extends Composite {
     private Text textTimestamp;
     private Text textUsage;
+    private Label lblCpuNumber;
 
     /**
      * Create the composite.
@@ -51,16 +53,31 @@ public class CpuUsageDashboardWidget extends Composite {
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Group grpTabname = new Group( this, SWT.NONE );
-        grpTabname.setText( "TabName" );
+        grpTabname.setText( "Latest CPU Info" );
         grpTabname.setLayout( new FlowLayout( FlowLayout.CENTER, 5, 5 ) );
 
-        Label lblCpuNumber = new Label( grpTabname, SWT.NONE );
+        lblCpuNumber = new Label( grpTabname, SWT.NONE );
         lblCpuNumber.setText( "CPU 1" );
 
         textTimestamp = new Text( grpTabname, SWT.BORDER );
+        textTimestamp.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        textTimestamp.setEditable(false);
 
         textUsage = new Text( grpTabname, SWT.BORDER );
+        textUsage.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+        textUsage.setEditable(false);
+    }
 
+    public void setLatestCpuTimestamp( String timstamp ) {
+        textTimestamp.setText( timstamp );
+    }
+
+    public void setLatestCpuUsageValue( String usageValue ) {
+        textUsage.setText( usageValue );
+    }
+
+    public void setCpuName( String cpuName ) {
+        lblCpuNumber.setText( cpuName );
     }
 
     @Override
