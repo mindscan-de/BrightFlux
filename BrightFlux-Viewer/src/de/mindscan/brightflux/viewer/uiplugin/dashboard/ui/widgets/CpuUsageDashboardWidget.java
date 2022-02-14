@@ -30,7 +30,6 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import swing2swt.layout.FlowLayout;
@@ -39,8 +38,8 @@ import swing2swt.layout.FlowLayout;
  * Just start with something that works (specifically) and then abstract from here more generally
  */
 public class CpuUsageDashboardWidget extends Composite {
-    private Text textTimestamp;
-    private Text textUsage;
+    private Label textTimestamp;
+    private Label textUsage;
     private Label lblCpuNumber;
 
     /**
@@ -59,16 +58,15 @@ public class CpuUsageDashboardWidget extends Composite {
         lblCpuNumber = new Label( grpTabname, SWT.NONE );
         lblCpuNumber.setText( "CPU 1" );
 
-        textTimestamp = new Text( grpTabname, SWT.BORDER );
-        textTimestamp.setSize( 150, 25 );
+        textTimestamp = new Label( grpTabname, SWT.BORDER );
+        textTimestamp.setText( "000000000.000000000" );
         textTimestamp.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
-
         textTimestamp.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
-        textTimestamp.setEditable( false );
 
-        textUsage = new Text( grpTabname, SWT.BORDER );
+        textUsage = new Label( grpTabname, SWT.BORDER );
+        textUsage.setText( "000.00" );
+        textUsage.setFont( SWTResourceManager.getFont( "Courier New", 14, SWT.NORMAL ) );
         textUsage.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
-        textUsage.setEditable( false );
     }
 
     public void setLatestCpuTimestamp( String timestamp ) {
