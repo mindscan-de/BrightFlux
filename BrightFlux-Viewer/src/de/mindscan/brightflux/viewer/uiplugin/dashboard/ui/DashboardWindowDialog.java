@@ -117,8 +117,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         upperComposite.setLayoutData( BorderLayout.NORTH );
         upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Group grpTest = new Group( upperComposite, SWT.NONE );
-        grpTest.setText( "Test" );
+        cpuUsageWidget = new CpuUsageDashboardWidget( upperComposite, SWT.NONE );
+        cpuUsageWidget.setSize( 436, 47 );
 
         Composite lowerComposite = new Composite( shellDashboadWindow, SWT.NONE );
         lowerComposite.setLayoutData( BorderLayout.SOUTH );
@@ -133,8 +133,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         Group group = new Group( middleComposite, SWT.NONE );
         group.setLayout( new FillLayout( SWT.VERTICAL ) );
-
-        cpuUsageWidget = new CpuUsageDashboardWidget( group, SWT.NONE );
         ramUsageWidget = new RamUsageDashboardWidget( group, SWT.NONE );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
