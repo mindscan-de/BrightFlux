@@ -33,11 +33,13 @@ import java.util.UUID;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
@@ -58,7 +60,6 @@ import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponen
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
-import swing2swt.layout.BorderLayout;
 
 /**
  * 
@@ -74,6 +75,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private DataFrame activeRootDataframe;
     private CpuUsageDashboardWidget cpuUsageWidget;
     private RamUsageDashboardWidget ramUsageWidget;
+    private RamUsageDashboardWidget statsWidget;
 
     /**
      * Create the dialog.
@@ -109,31 +111,29 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         registerAtDashboardUIProxyComponent();
 
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
-        shellDashboadWindow.setSize( 450, 300 );
+        shellDashboadWindow.setSize( 690, 314 );
         shellDashboadWindow.setText( "Dashboard" );
-        shellDashboadWindow.setLayout( new BorderLayout( 0, 0 ) );
+        shellDashboadWindow.setLayout( new GridLayout( 2, false ) );
 
         Composite upperComposite = new Composite( shellDashboadWindow, SWT.NONE );
-        upperComposite.setLayoutData( BorderLayout.NORTH );
         upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         cpuUsageWidget = new CpuUsageDashboardWidget( upperComposite, SWT.NONE );
         cpuUsageWidget.setSize( 436, 47 );
-
-        Composite lowerComposite = new Composite( shellDashboadWindow, SWT.NONE );
-        lowerComposite.setLayoutData( BorderLayout.SOUTH );
-        lowerComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
-
-        Group grpTest_1 = new Group( lowerComposite, SWT.NONE );
-        grpTest_1.setText( "Test2" );
+        new Label( shellDashboadWindow, SWT.NONE );
 
         Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
-        middleComposite.setLayoutData( BorderLayout.CENTER );
         middleComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+        GridData gd_middleComposite = new GridData( SWT.LEFT, SWT.TOP, false, false, 1, 1 );
+        gd_middleComposite.heightHint = 160;
+        middleComposite.setLayoutData( gd_middleComposite );
+        ramUsageWidget = new RamUsageDashboardWidget( middleComposite, SWT.NONE );
 
-        Group group = new Group( middleComposite, SWT.NONE );
-        group.setLayout( new FillLayout( SWT.VERTICAL ) );
-        ramUsageWidget = new RamUsageDashboardWidget( group, SWT.NONE );
+        statsWidget = new RamUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
+        GridData gd_statsWidget = new GridData( SWT.LEFT, SWT.TOP, false, false, 1, 1 );
+        gd_statsWidget.widthHint = 343;
+        gd_statsWidget.heightHint = 188;
+        statsWidget.setLayoutData( gd_statsWidget );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
             /** 
@@ -330,6 +330,28 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                         String key = pair[0].trim();
                         String value = pair[1].trim();
                         ramUsageWidget.setRamUsage( key, value );
+                    }
+                }
+
+                break;
+            }
+
+            case "HXX Stats": {
+                // extract from row:
+                String message = String.valueOf( row.get( "h2.msg" ) );
+                String timestamp = String.valueOf( row.get( "h1.ts" ) );
+
+                // extract from message
+                message = message.substring( message.indexOf( "software" ) );
+                String[] split = message.split( ";;" );
+
+                // visualization
+                for (String keyValuePair : split) {
+                    String[] pair = keyValuePair.split( ":=" );
+                    if (pair != null && pair.length == 2) {
+                        String key = pair[0].trim();
+                        String value = pair[1].trim();
+                        statsWidget.setRamUsage( key, value );
                     }
                 }
 
