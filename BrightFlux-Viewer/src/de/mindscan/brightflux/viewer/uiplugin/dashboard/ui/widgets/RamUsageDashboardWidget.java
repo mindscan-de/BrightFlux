@@ -75,16 +75,16 @@ public class RamUsageDashboardWidget extends Composite {
         table.setLinesVisible( true );
 
         TableViewerColumn tableViewerColumn = new TableViewerColumn( tableViewer, SWT.NONE );
-        TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
-        tcl_composite.setColumnData( tblclmnNewColumn, new ColumnPixelData( 150, true, true ) );
-        tblclmnNewColumn.setText( "Key" );
+        TableColumn tblclmnKeyColumn = tableViewerColumn.getColumn();
+        tcl_composite.setColumnData( tblclmnKeyColumn, new ColumnPixelData( 150, true, true ) );
+        tblclmnKeyColumn.setText( "Key" );
         tableViewerColumn.setLabelProvider( new KeyValueColumnLabelProvider( "Key", map ) );
 
         TableViewerColumn tableViewerColumn_1 = new TableViewerColumn( tableViewer, SWT.NONE );
-        TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
-        tblclmnNewColumn_1.setAlignment( SWT.RIGHT );
-        tcl_composite.setColumnData( tblclmnNewColumn_1, new ColumnPixelData( 150, true, true ) );
-        tblclmnNewColumn_1.setText( "Value" );
+        TableColumn tblclmnValueColumn = tableViewerColumn_1.getColumn();
+        tblclmnValueColumn.setAlignment( SWT.RIGHT );
+        tcl_composite.setColumnData( tblclmnValueColumn, new ColumnPixelData( 150, true, true ) );
+        tblclmnValueColumn.setText( "Value" );
         tableViewerColumn_1.setLabelProvider( new KeyValueColumnLabelProvider( "Value", map ) );
 
         tableViewer.setContentProvider( new ArrayContentProvider() );
