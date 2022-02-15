@@ -23,7 +23,7 @@
  * SOFTWARE.
  * 
  */
-package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets;
+package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers;
 
 import java.util.Map;
 

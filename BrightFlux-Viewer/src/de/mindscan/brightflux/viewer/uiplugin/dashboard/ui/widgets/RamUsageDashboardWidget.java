@@ -40,6 +40,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.KeyValueColumnLabelProvider;
+
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
