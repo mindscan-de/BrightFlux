@@ -57,6 +57,7 @@ import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
 import swing2swt.layout.BorderLayout;
 
 /**
@@ -72,6 +73,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private Map<String, DataFrame> activeIndexCacheByName = new HashMap<>();
     private DataFrame activeRootDataframe;
     private CpuUsageDashboardWidget cpuUsageWidget;
+    private RamUsageDashboardWidget ramUsageWidget;
 
     /**
      * Create the dialog.
@@ -133,7 +135,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         group.setLayout( new FillLayout( SWT.VERTICAL ) );
 
         cpuUsageWidget = new CpuUsageDashboardWidget( group, SWT.NONE );
-        CpuUsageDashboardWidget cpuUsageWidget1 = new CpuUsageDashboardWidget( group, SWT.NONE );
+        ramUsageWidget = new RamUsageDashboardWidget( group, SWT.NONE );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
             /** 
@@ -324,6 +326,14 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 String[] split = message.split( "," );
 
                 // visualization
+                for (String keyValuePair : split) {
+                    String[] pair = keyValuePair.split( "=" );
+                    if (pair != null && pair.length == 2) {
+                        String key = pair[0].trim();
+                        String value = pair[1].trim();
+                        ramUsageWidget.setRamUsage( key, value );
+                    }
+                }
 
                 break;
             }
