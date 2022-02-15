@@ -25,12 +25,30 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.eclipse.jface.layout.TableColumnLayout;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
 public class RamUsageDashboardWidget extends Composite {
+    private Table table;
+
+    private final Map<String, String> map = new LinkedHashMap<>();
+
+    private TableViewer tableViewer;
 
     /**
      * Create the composite.
@@ -39,6 +57,35 @@ public class RamUsageDashboardWidget extends Composite {
      */
     public RamUsageDashboardWidget( Composite parent, int style ) {
         super( parent, style );
+        setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Group grpSomeheading = new Group( this, SWT.NONE );
+        grpSomeheading.setText( "Some Heading" );
+        grpSomeheading.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        Composite composite = new Composite( grpSomeheading, SWT.NONE );
+        TableColumnLayout tcl_composite = new TableColumnLayout();
+        composite.setLayout( tcl_composite );
+
+        tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
+        table = tableViewer.getTable();
+        table.setHeaderVisible( true );
+        table.setLinesVisible( true );
+
+        TableViewerColumn tableViewerColumn = new TableViewerColumn( tableViewer, SWT.NONE );
+        TableColumn tblclmnNewColumn = tableViewerColumn.getColumn();
+        tcl_composite.setColumnData( tblclmnNewColumn, new ColumnPixelData( 150, true, true ) );
+        tblclmnNewColumn.setText( "Key" );
+        tableViewerColumn.setLabelProvider( new KeyValueColumnLabelProvider( "Key", map ) );
+
+        TableViewerColumn tableViewerColumn_1 = new TableViewerColumn( tableViewer, SWT.NONE );
+        TableColumn tblclmnNewColumn_1 = tableViewerColumn_1.getColumn();
+        tblclmnNewColumn_1.setAlignment( SWT.RIGHT );
+        tcl_composite.setColumnData( tblclmnNewColumn_1, new ColumnPixelData( 150, true, true ) );
+        tblclmnNewColumn_1.setText( "Value" );
+        tableViewerColumn_1.setLabelProvider( new KeyValueColumnLabelProvider( "Value", map ) );
+
+        tableViewer.setContentProvider( new ArrayContentProvider() );
 
     }
 
@@ -52,14 +99,8 @@ public class RamUsageDashboardWidget extends Composite {
      * @param value
      */
     public void setRamUsage( String key, String value ) {
-        switch (key) {
-            case "usage":
-                break;
-            default:
-                System.out.println( "key: '" + key + "'" );
-                break;
-        }
-
+        map.put( key, value );
+        Object[] inputKeys = map.keySet().toArray();
+        tableViewer.setInput( inputKeys );
     }
-
 }
