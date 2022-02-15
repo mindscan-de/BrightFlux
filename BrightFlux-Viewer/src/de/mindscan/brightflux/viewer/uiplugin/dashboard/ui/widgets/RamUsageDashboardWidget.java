@@ -94,13 +94,8 @@ public class RamUsageDashboardWidget extends Composite {
         // Disable the check that prevents subclassing of SWT components
     }
 
-    /**
-     * @param key
-     * @param value
-     */
     public void setRamUsage( String key, String value ) {
         map.put( key, value );
-        Object[] inputKeys = map.keySet().toArray();
-        tableViewer.setInput( inputKeys );
+        tableViewer.setInput( map.keySet().toArray() );
     }
 }
