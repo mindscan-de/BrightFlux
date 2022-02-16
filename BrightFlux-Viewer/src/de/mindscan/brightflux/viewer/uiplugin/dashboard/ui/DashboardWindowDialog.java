@@ -39,7 +39,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
@@ -76,6 +75,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private CpuUsageDashboardWidget cpuUsageWidget;
     private RamUsageDashboardWidget ramUsageWidget;
     private RamUsageDashboardWidget statsWidget;
+    private DashboardWindowConfigurationComposite compositeTopRight;
 
     /**
      * Create the dialog.
@@ -111,17 +111,19 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         registerAtDashboardUIProxyComponent();
 
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
-        shellDashboadWindow.setSize( 898, 330 );
+        shellDashboadWindow.setSize( 886, 405 );
         shellDashboadWindow.setText( "Dashboard" );
         shellDashboadWindow.setLayout( new GridLayout( 2, false ) );
 
         Composite upperComposite = new Composite( shellDashboadWindow, SWT.NONE );
-        upperComposite.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
+        upperComposite.setLayoutData( new GridData( SWT.FILL, SWT.FILL, false, false, 1, 1 ) );
         upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         cpuUsageWidget = new CpuUsageDashboardWidget( upperComposite, SWT.NONE );
         cpuUsageWidget.setSize( 436, 47 );
-        new Label( shellDashboadWindow, SWT.NONE );
+
+        compositeTopRight = new DashboardWindowConfigurationComposite( shellDashboadWindow, SWT.NONE );
+        compositeTopRight.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
 
         Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
         middleComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
