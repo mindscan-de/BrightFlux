@@ -111,11 +111,12 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         registerAtDashboardUIProxyComponent();
 
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
-        shellDashboadWindow.setSize( 690, 314 );
+        shellDashboadWindow.setSize( 898, 330 );
         shellDashboadWindow.setText( "Dashboard" );
         shellDashboadWindow.setLayout( new GridLayout( 2, false ) );
 
         Composite upperComposite = new Composite( shellDashboadWindow, SWT.NONE );
+        upperComposite.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
         upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         cpuUsageWidget = new CpuUsageDashboardWidget( upperComposite, SWT.NONE );
@@ -124,15 +125,15 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
         middleComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
-        GridData gd_middleComposite = new GridData( SWT.LEFT, SWT.TOP, false, false, 1, 1 );
-        gd_middleComposite.heightHint = 160;
+        GridData gd_middleComposite = new GridData( SWT.FILL, SWT.TOP, false, false, 1, 1 );
+        gd_middleComposite.heightHint = 225;
         middleComposite.setLayoutData( gd_middleComposite );
         ramUsageWidget = new RamUsageDashboardWidget( middleComposite, SWT.NONE );
 
         statsWidget = new RamUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
         GridData gd_statsWidget = new GridData( SWT.LEFT, SWT.TOP, false, false, 1, 1 );
-        gd_statsWidget.widthHint = 343;
-        gd_statsWidget.heightHint = 188;
+        gd_statsWidget.widthHint = 414;
+        gd_statsWidget.heightHint = 225;
         statsWidget.setLayoutData( gd_statsWidget );
 
         shellDashboadWindow.addListener( SWT.Traverse, new Listener() {
@@ -324,6 +325,9 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 String[] split = message.split( "," );
 
                 // visualization
+                ramUsageWidget.setTimestamp( timestamp );
+                ramUsageWidget.setHeading( name );
+                // visualization
                 for (String keyValuePair : split) {
                     String[] pair = keyValuePair.split( "=" );
                     if (pair != null && pair.length == 2) {
@@ -345,6 +349,9 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 message = message.substring( message.indexOf( "software" ) );
                 String[] split = message.split( ";;" );
 
+                // visualization
+                statsWidget.setTimestamp( timestamp );
+                statsWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
                     String[] pair = keyValuePair.split( ":=" );
