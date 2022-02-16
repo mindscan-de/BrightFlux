@@ -37,6 +37,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -106,6 +108,15 @@ public class RamUsageDashboardWidget extends Composite {
         tblclmnValueColumn.setWidth( 180 );
         tblclmnValueColumn.setText( "Value" );
         tableViewerColumn_1.setLabelProvider( new KeyValueColumnLabelProvider( "Value", map ) );
+
+        Menu menu = new Menu( table );
+        table.setMenu( menu );
+
+        MenuItem mntmCopyRow = new MenuItem( menu, SWT.NONE );
+        mntmCopyRow.setText( "Copy this Row" );
+
+        MenuItem mntmCopyAllRows = new MenuItem( menu, SWT.NONE );
+        mntmCopyAllRows.setText( "Copy all Rows" );
 
         tableViewer.setContentProvider( new ArrayContentProvider() );
 
