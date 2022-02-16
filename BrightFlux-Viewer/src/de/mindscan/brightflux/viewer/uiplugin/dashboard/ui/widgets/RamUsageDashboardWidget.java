@@ -28,17 +28,19 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ArrayContentProvider;
-import org.eclipse.jface.viewers.ColumnPixelData;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.KeyValueColumnLabelProvider;
 
@@ -51,6 +53,9 @@ public class RamUsageDashboardWidget extends Composite {
     private final Map<String, String> map = new LinkedHashMap<>();
 
     private TableViewer tableViewer;
+    private Text textTimestamp;
+
+    private Group grpSomeheading;
 
     /**
      * Create the composite.
@@ -61,29 +66,44 @@ public class RamUsageDashboardWidget extends Composite {
         super( parent, style );
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Group grpSomeheading = new Group( this, SWT.NONE );
+        grpSomeheading = new Group( this, SWT.NONE );
         grpSomeheading.setText( "Some Heading" );
         grpSomeheading.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Composite composite = new Composite( grpSomeheading, SWT.NONE );
-        TableColumnLayout tcl_composite = new TableColumnLayout();
-        composite.setLayout( tcl_composite );
+        composite.setLayout( new GridLayout( 1, false ) );
 
-        tableViewer = new TableViewer( composite, SWT.BORDER | SWT.FULL_SELECTION );
+        textTimestamp = new Text( composite, SWT.BORDER );
+        textTimestamp.setFont( SWTResourceManager.getFont( "Courier New", 12, SWT.NORMAL ) );
+        textTimestamp.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
+        textTimestamp.setEditable( false );
+        textTimestamp.setToolTipText( "timestamp" );
+        GridData gd_text = new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 );
+        gd_text.widthHint = 412;
+        textTimestamp.setLayoutData( gd_text );
+
+        Composite composite_1 = new Composite( composite, SWT.NONE );
+        GridData gd_composite_1 = new GridData( SWT.FILL, SWT.FILL, false, false, 1, 1 );
+        gd_composite_1.widthHint = 392;
+        gd_composite_1.heightHint = 190;
+        composite_1.setLayoutData( gd_composite_1 );
+        composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        tableViewer = new TableViewer( composite_1, SWT.BORDER | SWT.FULL_SELECTION | SWT.V_SCROLL | SWT.H_SCROLL );
+        tableViewer.setUseHashlookup( true );
         table = tableViewer.getTable();
         table.setHeaderVisible( true );
         table.setLinesVisible( true );
 
         TableViewerColumn tableViewerColumn = new TableViewerColumn( tableViewer, SWT.NONE );
         TableColumn tblclmnKeyColumn = tableViewerColumn.getColumn();
-        tcl_composite.setColumnData( tblclmnKeyColumn, new ColumnPixelData( 150, true, true ) );
+        tblclmnKeyColumn.setWidth( 170 );
         tblclmnKeyColumn.setText( "Key" );
         tableViewerColumn.setLabelProvider( new KeyValueColumnLabelProvider( "Key", map ) );
 
         TableViewerColumn tableViewerColumn_1 = new TableViewerColumn( tableViewer, SWT.NONE );
         TableColumn tblclmnValueColumn = tableViewerColumn_1.getColumn();
-        tblclmnValueColumn.setAlignment( SWT.RIGHT );
-        tcl_composite.setColumnData( tblclmnValueColumn, new ColumnPixelData( 150, true, true ) );
+        tblclmnValueColumn.setWidth( 180 );
         tblclmnValueColumn.setText( "Value" );
         tableViewerColumn_1.setLabelProvider( new KeyValueColumnLabelProvider( "Value", map ) );
 
@@ -99,5 +119,13 @@ public class RamUsageDashboardWidget extends Composite {
     public void setRamUsage( String key, String value ) {
         map.put( key, value );
         tableViewer.setInput( map.keySet().toArray() );
+    }
+
+    public void setTimestamp( String timestamp ) {
+        textTimestamp.setText( timestamp );
+    }
+
+    public void setHeading( String heading ) {
+        grpSomeheading.setText( heading );
     }
 }
