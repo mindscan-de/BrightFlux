@@ -27,8 +27,13 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 
 /**
  * 
@@ -46,6 +51,17 @@ public class DashboardWindowConfigurationComposite extends Composite {
 
         Group grpDashboardConfiguration = new Group( this, SWT.NONE );
         grpDashboardConfiguration.setText( "Dashboard Configuration" );
+        grpDashboardConfiguration.setLayout( new GridLayout( 2, false ) );
+
+        Combo combo = new Combo( grpDashboardConfiguration, SWT.NONE );
+        combo.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
+
+        Combo combo_1 = new Combo( grpDashboardConfiguration, SWT.NONE );
+        combo_1.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
+        new Label( grpDashboardConfiguration, SWT.NONE );
+
+        Button btnFoooo = new Button( grpDashboardConfiguration, SWT.NONE );
+        btnFoooo.setText( "Foooo" );
 
     }
 
