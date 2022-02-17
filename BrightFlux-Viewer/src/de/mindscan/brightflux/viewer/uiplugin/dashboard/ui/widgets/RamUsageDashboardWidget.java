@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -138,5 +139,13 @@ public class RamUsageDashboardWidget extends Composite {
 
     public void setHeading( String heading ) {
         grpSomeheading.setText( heading );
+    }
+
+    public void setNA() {
+        textTimestamp.setText( "" );
+        for (String key : map.keySet()) {
+            map.put( key, "N/A" );
+        }
+        tableViewer.setInput( map.keySet().toArray() );
     }
 }
