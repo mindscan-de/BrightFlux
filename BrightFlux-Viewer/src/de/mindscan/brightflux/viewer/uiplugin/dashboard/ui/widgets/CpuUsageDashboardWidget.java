@@ -32,6 +32,8 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.StringWidgetVisualizer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.StringWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizerProvider;
 import swing2swt.layout.FlowLayout;
@@ -39,7 +41,7 @@ import swing2swt.layout.FlowLayout;
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
-public class CpuUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider {
+public class CpuUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider, StringWidgetVisualizerProvider {
     private Label textTimestamp;
     private Label textUsage;
     private Label lblCpuNumber;
@@ -53,6 +55,19 @@ public class CpuUsageDashboardWidget extends Composite implements TimestampWidge
         @Override
         public void setTimestamp( String timestamp ) {
             textTimestamp.setText( timestamp );
+        }
+    };
+
+    private StringWidgetVisualizer stringVisualizer = new StringWidgetVisualizer() {
+
+        @Override
+        public void setScalarNA() {
+            textUsage.setText( "N/A" );
+        }
+
+        @Override
+        public void setScalar( String scalarValue ) {
+            textUsage.setText( scalarValue + "%" );
         }
     };
 
@@ -90,13 +105,14 @@ public class CpuUsageDashboardWidget extends Composite implements TimestampWidge
         return timestampVisualizer;
     }
 
-    public void setNA() {
-        timestampVisualizer.setTimestampNA();
-        textUsage.setText( "N/A" );
+    @Override
+    public StringWidgetVisualizer getStringVisualizer() {
+        return stringVisualizer;
     }
 
-    public void setLatestCpuUsageValue( String usageValue ) {
-        textUsage.setText( usageValue + "%" );
+    public void setNA() {
+        timestampVisualizer.setTimestampNA();
+        stringVisualizer.setScalarNA();
     }
 
     public void setCpuName( String cpuName ) {

@@ -340,7 +340,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
 
                 // visualize 
-                cpuUsageWidget.setLatestCpuUsageValue( usageValue );
+                cpuUsageWidget.getStringVisualizer().setScalar( usageValue );
 
                 // -------------
                 // h1.ts -> Formatter::toString -> cpuUsageWidget::setTimestamp
