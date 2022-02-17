@@ -288,6 +288,23 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      */
     private void updateDashboardData( String name, int orgIndexInRootFrame ) {
         if (orgIndexInRootFrame < 0) {
+
+            switch (name) {
+                case "CpuUsage": {
+                    cpuUsageWidget.setNA();
+                    break;
+                }
+                case "RamUsage": {
+                    ramUsageWidget.setNA();
+                    break;
+                }
+                case "HXX Stats": {
+                    statsWidget.setNA();
+                    break;
+                }
+                default:
+                    break;
+            }
             return;
         }
         if (activeRootDataframe == null) {
