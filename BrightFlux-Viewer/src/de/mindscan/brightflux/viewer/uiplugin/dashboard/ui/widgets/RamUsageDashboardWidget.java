@@ -44,6 +44,8 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.KeyValueWidgetVisualizer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.KeyValueWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.KeyValueColumnLabelProvider;
@@ -51,7 +53,7 @@ import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.Key
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
-public class RamUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider {
+public class RamUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider, KeyValueWidgetVisualizerProvider {
     private Table table;
 
     private final Map<String, String> map = new LinkedHashMap<>();
@@ -71,6 +73,20 @@ public class RamUsageDashboardWidget extends Composite implements TimestampWidge
         @Override
         public void setTimestampNA() {
             textTimestamp.setText( "" );
+        }
+    };
+
+    private KeyValueWidgetVisualizer keyValueVisualizer = new KeyValueWidgetVisualizer() {
+
+        @Override
+        public void setPairNA( String key ) {
+            map.put( key, "N/A" );
+        }
+
+        @Override
+        public void setPair( String key, String value ) {
+            map.put( key, value );
+            tableViewer.setInput( map.keySet().toArray() );
         }
     };
 
@@ -146,13 +162,8 @@ public class RamUsageDashboardWidget extends Composite implements TimestampWidge
     }
 
     @Override
-    protected void checkSubclass() {
-        // Disable the check that prevents subclassing of SWT components
-    }
-
-    public void setRamUsage( String key, String value ) {
-        map.put( key, value );
-        tableViewer.setInput( map.keySet().toArray() );
+    public KeyValueWidgetVisualizer getKeyValueVisualizer() {
+        return keyValueVisualizer;
     }
 
     public void setHeading( String heading ) {
@@ -162,8 +173,13 @@ public class RamUsageDashboardWidget extends Composite implements TimestampWidge
     public void setNA() {
         timestampVisualizer.setTimestampNA();
         for (String key : map.keySet()) {
-            map.put( key, "N/A" );
+            keyValueVisualizer.setPairNA( key );
         }
         tableViewer.setInput( map.keySet().toArray() );
+    }
+
+    @Override
+    protected void checkSubclass() {
+        // Disable the check that prevents subclassing of SWT components
     }
 }

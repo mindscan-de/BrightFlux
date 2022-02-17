@@ -371,7 +371,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                     if (pair != null && pair.length == 2) {
                         String key = pair[0].trim();
                         String value = pair[1].trim();
-                        ramUsageWidget.setRamUsage( key, value );
+                        ramUsageWidget.getKeyValueVisualizer().setPair( key, value );
                     }
                 }
 
@@ -396,7 +396,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                     if (pair != null && pair.length == 2) {
                         String key = pair[0].trim();
                         String value = pair[1].trim();
-                        statsWidget.setRamUsage( key, value );
+                        statsWidget.getKeyValueVisualizer().setPair( key, value );
                     }
                 }
 
