@@ -87,4 +87,12 @@ public class CpuUsageDashboardWidget extends Composite {
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
     }
+
+    /**
+     * 
+     */
+    public void setNA() {
+        textTimestamp.setText( "" );
+        textUsage.setText( "N/A" );
+    }
 }
