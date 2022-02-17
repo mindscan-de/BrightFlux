@@ -125,12 +125,11 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         compositeTopRight = new DashboardWindowConfigurationComposite( shellDashboadWindow, SWT.NONE );
         compositeTopRight.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
 
-        Composite middleComposite = new Composite( shellDashboadWindow, SWT.NONE );
-        middleComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
         GridData gd_middleComposite = new GridData( SWT.FILL, SWT.TOP, false, false, 1, 1 );
         gd_middleComposite.heightHint = 225;
-        middleComposite.setLayoutData( gd_middleComposite );
-        ramUsageWidget = new RamUsageDashboardWidget( middleComposite, SWT.NONE );
+
+        ramUsageWidget = new RamUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
+        ramUsageWidget.setLayoutData( gd_middleComposite );
 
         statsWidget = new RamUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
         GridData gd_statsWidget = new GridData( SWT.LEFT, SWT.TOP, false, false, 1, 1 );
