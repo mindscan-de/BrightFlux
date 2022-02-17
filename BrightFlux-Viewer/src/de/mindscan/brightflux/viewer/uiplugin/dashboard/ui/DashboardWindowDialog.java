@@ -291,45 +291,17 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             clearDashboardWidgetData( name );
             return;
         }
+
         if (activeRootDataframe == null) {
             return;
         }
 
         // - look up the __org_idx and ETL on the root dataframe of the current root dataframe
-        DataFrameRow row = activeRootDataframe.getRow( orgIndexInRootFrame );
-
         // - according to the configurated ETL for this name we want to extract data from the row.
-        extractTransformVisualize( name, row );
-
-        System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
-
         // depending on the name we want to extract, transform and visualize ....
-
         // - update the data
-
         // - notify the UI, that these values changed...
-
-        /**
-         * according to the dashboard configuration, we want to extract multiple latest events from the logs.
-         * We do that by either querying the current frame or the root frame, depending on the configuration
-         * 
-         * root : select * from df where
-         * 
-         * ---   ((df.'h2.msg'.contains('cpu usage')) && (df.'__org_idx' <= :selectedRow.'__org_idx')) -> max(__org_idx)
-         * ---   --> extract --> transform --> visualize : cpu_usage_data
-         * ---   ((df.'h2.msg'.contains('ram usage')) && (df.'__org_idx' <= :selectedRow.'__org_idx')) -> max(__org_idx)
-         * ---   --> extract --> transform --> visualize : ram_usage_data
-         * 
-         * 
-         * * actually the second selection can be done after the first.
-         *    ---   (df.'__org_idx' <= :selectedRow.'__org_idx')
-         *    
-         * * if i don't keep the data, it will just become a cheap index for every kind of thing we look for.
-         *    ---  select id, __org_idx, h1.ts, 
-         *    
-         * * then we need to figure out, where to get the data from. (maybe this data was extra processed)
-         *  
-         */
+        extractTransformVisualize( name, activeRootDataframe.getRow( orgIndexInRootFrame ) );
     }
 
     public void clearDashboardWidgetData( String name ) {
@@ -352,22 +324,33 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     }
 
     public void extractTransformVisualize( String name, DataFrameRow row ) {
+        System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
+
         switch (name) {
             case "CpuUsage": {
-                // extract from row:
-                String message = String.valueOf( row.get( "h2.msg" ) );
-                String timestamp = String.valueOf( row.get( "h1.ts" ) );
+                // --------------
+                // h2.msg::string ->   -> cpuUsageWidget::setScalar 
 
-                // extract from message
+                // extract
+                String message = String.valueOf( row.get( "h2.msg" ) );
+
+                // transform
                 message = message.substring( message.indexOf( "CPU" ) );
                 message = message.substring( message.indexOf( "=" ) );
                 String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
 
-                // transform
+                // visualize 
+                cpuUsageWidget.setLatestCpuUsageValue( usageValue );
+
+                // -------------
+                // h1.ts -> Formatter::toString -> cpuUsageWidget::setTimestamp
+
+                // extract + transform
+                String timestamp = String.valueOf( row.get( "h1.ts" ) );
 
                 // visualize
-                cpuUsageWidget.setLatestCpuTimestamp( timestamp );
-                cpuUsageWidget.setLatestCpuUsageValue( usageValue );
+                cpuUsageWidget.getTimestampVisualizer().setTimestamp( timestamp );
+
                 break;
             }
             case "RamUsage": {
@@ -380,7 +363,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 String[] split = message.split( "," );
 
                 // visualization
-                ramUsageWidget.setTimestamp( timestamp );
+                ramUsageWidget.getTimestampVisualizer().setTimestamp( timestamp );
                 ramUsageWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
@@ -405,7 +388,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 String[] split = message.split( ";;" );
 
                 // visualization
-                statsWidget.setTimestamp( timestamp );
+                statsWidget.getTimestampVisualizer().setTimestamp( timestamp );
                 statsWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {

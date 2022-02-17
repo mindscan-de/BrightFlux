@@ -32,15 +32,29 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizerProvider;
 import swing2swt.layout.FlowLayout;
 
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
-public class CpuUsageDashboardWidget extends Composite {
+public class CpuUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider {
     private Label textTimestamp;
     private Label textUsage;
     private Label lblCpuNumber;
+
+    private TimestampWidgetVisualizer timestampVisualizer = new TimestampWidgetVisualizer() {
+        @Override
+        public void setTimestampNA() {
+            textTimestamp.setText( "" );
+        }
+
+        @Override
+        public void setTimestamp( String timestamp ) {
+            textTimestamp.setText( timestamp );
+        }
+    };
 
     /**
      * Create the composite.
@@ -71,8 +85,14 @@ public class CpuUsageDashboardWidget extends Composite {
         textUsage.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
     }
 
-    public void setLatestCpuTimestamp( String timestamp ) {
-        textTimestamp.setText( timestamp );
+    @Override
+    public TimestampWidgetVisualizer getTimestampVisualizer() {
+        return timestampVisualizer;
+    }
+
+    public void setNA() {
+        timestampVisualizer.setTimestampNA();
+        textUsage.setText( "N/A" );
     }
 
     public void setLatestCpuUsageValue( String usageValue ) {
@@ -88,11 +108,4 @@ public class CpuUsageDashboardWidget extends Composite {
         // Disable the check that prevents subclassing of SWT components
     }
 
-    /**
-     * 
-     */
-    public void setNA() {
-        textTimestamp.setText( "" );
-        textUsage.setText( "N/A" );
-    }
 }

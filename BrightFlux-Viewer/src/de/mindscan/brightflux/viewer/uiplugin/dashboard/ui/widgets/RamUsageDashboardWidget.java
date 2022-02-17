@@ -27,7 +27,6 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -45,12 +44,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.KeyValueColumnLabelProvider;
 
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
-public class RamUsageDashboardWidget extends Composite {
+public class RamUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider {
     private Table table;
 
     private final Map<String, String> map = new LinkedHashMap<>();
@@ -59,6 +60,19 @@ public class RamUsageDashboardWidget extends Composite {
     private Text textTimestamp;
 
     private Group grpSomeheading;
+
+    private TimestampWidgetVisualizer timestampVisualizer = new TimestampWidgetVisualizer() {
+
+        @Override
+        public void setTimestamp( String timestamp ) {
+            textTimestamp.setText( timestamp );
+        }
+
+        @Override
+        public void setTimestampNA() {
+            textTimestamp.setText( "" );
+        }
+    };
 
     /**
      * Create the composite.
@@ -123,6 +137,14 @@ public class RamUsageDashboardWidget extends Composite {
 
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public TimestampWidgetVisualizer getTimestampVisualizer() {
+        return timestampVisualizer;
+    }
+
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
@@ -133,16 +155,12 @@ public class RamUsageDashboardWidget extends Composite {
         tableViewer.setInput( map.keySet().toArray() );
     }
 
-    public void setTimestamp( String timestamp ) {
-        textTimestamp.setText( timestamp );
-    }
-
     public void setHeading( String heading ) {
         grpSomeheading.setText( heading );
     }
 
     public void setNA() {
-        textTimestamp.setText( "" );
+        timestampVisualizer.setTimestampNA();
         for (String key : map.keySet()) {
             map.put( key, "N/A" );
         }
