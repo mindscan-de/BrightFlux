@@ -28,10 +28,8 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer;
 /**
  * 
  */
-public interface TimestampWidgetVisualizer {
+public interface TimestampWidgetVisualizerProvider {
 
-    void setTimestamp( String timestamp );
-
-    void setTimestampNA();
+    TimestampWidgetVisualizer getTimestampVisualizer();
 
 }
