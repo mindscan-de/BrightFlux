@@ -32,6 +32,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.ClearContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.StringWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.StringWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
@@ -41,7 +42,8 @@ import swing2swt.layout.FlowLayout;
 /**
  * Just start with something that works (specifically) and then abstract from here more generally
  */
-public class CpuUsageDashboardWidget extends Composite implements TimestampWidgetVisualizerProvider, StringWidgetVisualizerProvider {
+public class CpuUsageDashboardWidget extends Composite
+                implements TimestampWidgetVisualizerProvider, StringWidgetVisualizerProvider, ClearContentWidgetVisualizer {
     private Label textTimestamp;
     private Label textUsage;
     private Label lblCpuNumber;
@@ -110,6 +112,7 @@ public class CpuUsageDashboardWidget extends Composite implements TimestampWidge
         return stringVisualizer;
     }
 
+    @Override
     public void setNA() {
         timestampVisualizer.setTimestampNA();
         stringVisualizer.setScalarNA();
