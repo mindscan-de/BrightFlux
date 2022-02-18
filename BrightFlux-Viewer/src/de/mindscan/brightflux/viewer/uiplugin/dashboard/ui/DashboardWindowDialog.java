@@ -392,7 +392,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         }
     }
 
-    public void initializeTransformations() {
+    // TODO: read/build these Transformer configurations from a special configuration file 
+    private void initializeTransformations() {
         registeredTransformations = new HashMap<>();
 
         ETVColumnTransformer[] cpuUsageTransformers = new ETVColumnTransformer[] { //
@@ -417,6 +418,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         registeredTransformations.put( "HXX Stats", statsTransormers );
     }
 
+    // provides binding between widgetName and widgetInstance
     public Object getWidgetByName( String name ) {
         switch (name) {
             case "statsWidget":
