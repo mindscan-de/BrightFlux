@@ -310,11 +310,15 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     }
 
     public void clearDashboardWidgetData( String name ) {
-        Object widgetByName = getWidgetByName( name );
+        Object widgetByName = getWidgetByConfigName( name );
 
         if (widgetByName instanceof ClearContentWidgetVisualizer) {
             ((ClearContentWidgetVisualizer) widgetByName).setNA();
         }
+        else {
+            System.out.println( "name: " + name + ", has no clear operation" );
+        }
+
     }
 
     public void extractTransformVisualize( String name, DataFrameRow row ) {
@@ -326,7 +330,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             ETVColumnTransformer[] etvColumnTransformers = registeredTransformations.get( name );
             for (ETVColumnTransformer etvColumnTransformer : etvColumnTransformers) {
                 // run every known extract, transform, visualizer 
-                etvColumnTransformer.execute( row, this::getWidgetByName );
+                etvColumnTransformer.execute( row, this::getWidgetByInstanceName );
             }
         }
 
@@ -400,7 +404,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     }
 
     // provides binding between widgetName and widgetInstance
-    public Object getWidgetByName( String name ) {
+    public Object getWidgetByInstanceName( String name ) {
         switch (name) {
             case "statsWidget":
                 return statsWidget;
@@ -410,6 +414,19 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 return cpuUsageWidget;
             default:
                 throw new NotYetImplemetedException( "Widget is not supported." );
+        }
+    }
+
+    public Object getWidgetByConfigName( String name ) {
+        switch (name) {
+            case "HXX Stats":
+                return statsWidget;
+            case "RamUsage":
+                return ramUsageWidget;
+            case "CpuUsage":
+                return cpuUsageWidget;
+            default:
+                return null;
         }
     }
 
