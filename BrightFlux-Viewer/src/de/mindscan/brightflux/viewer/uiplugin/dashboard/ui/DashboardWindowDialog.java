@@ -59,6 +59,7 @@ import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.ETVColumnTransformer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.ClearContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
 
@@ -309,21 +310,10 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     }
 
     public void clearDashboardWidgetData( String name ) {
-        switch (name) {
-            case "CpuUsage": {
-                cpuUsageWidget.setNA();
-                break;
-            }
-            case "RamUsage": {
-                ramUsageWidget.setNA();
-                break;
-            }
-            case "HXX Stats": {
-                statsWidget.setNA();
-                break;
-            }
-            default:
-                break;
+        Object widgetByName = getWidgetByName( name );
+
+        if (widgetByName instanceof ClearContentWidgetVisualizer) {
+            ((ClearContentWidgetVisualizer) widgetByName).setNA();
         }
     }
 
