@@ -344,12 +344,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 ramUsageWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
-                    String[] pair = keyValuePair.split( "=" );
-                    if (pair != null && pair.length == 2) {
-                        String key = pair[0].trim();
-                        String value = pair[1].trim();
-                        ramUsageWidget.getKeyValueVisualizer().setPair( key, value );
-                    }
+                    ramUsageWidget.getKeyValueVisualizer().setPair( keyValuePair.split( "=", 2 ) );
                 }
 
                 break;
@@ -367,12 +362,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 statsWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
-                    String[] pair = keyValuePair.split( ":=" );
-                    if (pair != null && pair.length == 2) {
-                        String key = pair[0].trim();
-                        String value = pair[1].trim();
-                        statsWidget.getKeyValueVisualizer().setPair( key, value );
-                    }
+                    statsWidget.getKeyValueVisualizer().setPair( keyValuePair.split( ":=", 2 ) );
                 }
 
                 break;
