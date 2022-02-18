@@ -90,6 +90,18 @@ public class RamUsageDashboardWidget extends Composite
             map.put( key, value );
             tableViewer.setInput( map.keySet().toArray() );
         }
+
+        @Override
+        public void setPair( String[] pair ) {
+            if (pair == null) {
+                return;
+            }
+
+            if (pair.length == 2) {
+                setPair( pair[0].trim(), pair[1].trim() );
+            }
+
+        }
     };
 
     /**

@@ -32,5 +32,7 @@ public interface KeyValueWidgetVisualizer {
 
     void setPair( String key, String value );
 
+    void setPair( String[] pair );
+
     void setPairNA( String key );
 }
