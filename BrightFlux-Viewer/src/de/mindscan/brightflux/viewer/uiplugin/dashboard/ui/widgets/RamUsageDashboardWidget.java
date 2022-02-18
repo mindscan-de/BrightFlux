@@ -44,9 +44,9 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.ClearContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.KeyValueWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.KeyValueWidgetVisualizerProvider;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.SimpleContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.KeyValueColumnLabelProvider;
@@ -55,7 +55,7 @@ import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.providers.Key
  * Just start with something that works (specifically) and then abstract from here more generally
  */
 public class RamUsageDashboardWidget extends Composite
-                implements TimestampWidgetVisualizerProvider, KeyValueWidgetVisualizerProvider, ClearContentWidgetVisualizer {
+                implements TimestampWidgetVisualizerProvider, KeyValueWidgetVisualizerProvider, SimpleContentWidgetVisualizer {
     private Table table;
 
     private final Map<String, String> map = new LinkedHashMap<>();
@@ -189,7 +189,8 @@ public class RamUsageDashboardWidget extends Composite
         tableViewer.setInput( map.keySet().toArray() );
     }
 
-    public void setHeading( String heading ) {
+    @Override
+    public void setName( String heading ) {
         grpSomeheading.setText( heading );
     }
 

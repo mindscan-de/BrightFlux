@@ -60,7 +60,7 @@ import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponen
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.ETVColumnTransformer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.TimeConversions;
-import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.ClearContentWidgetVisualizer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.SimpleContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
 
@@ -314,8 +314,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     public void clearDashboardWidgetData( String name ) {
         Object widgetByName = getWidgetByConfigName( name );
 
-        if (widgetByName instanceof ClearContentWidgetVisualizer) {
-            ((ClearContentWidgetVisualizer) widgetByName).setNA();
+        if (widgetByName instanceof SimpleContentWidgetVisualizer) {
+            ((SimpleContentWidgetVisualizer) widgetByName).setNA();
         }
         else {
             System.out.println( "name: " + name + ", has no clear operation" );
@@ -336,6 +336,11 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             }
         }
 
+        Object widgetByConfigName = getWidgetByConfigName( name );
+        if (widgetByConfigName instanceof SimpleContentWidgetVisualizer) {
+            ((SimpleContentWidgetVisualizer) widgetByConfigName).setName( name );
+        }
+
         // apply missing transformers, which are too complex right now
         switch (name) {
             case "RamUsage": {
@@ -346,8 +351,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 message = message.substring( message.indexOf( "usage" ) );
                 String[] split = message.split( "," );
 
-                // visualization
-                ramUsageWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
                     ramUsageWidget.getKeyValueVisualizer().setPair( keyValuePair.split( "=", 2 ) );
@@ -364,8 +367,6 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 message = message.substring( message.indexOf( "software" ) );
                 String[] split = message.split( ";;" );
 
-                // visualization
-                statsWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
                     statsWidget.getKeyValueVisualizer().setPair( keyValuePair.split( ":=", 2 ) );

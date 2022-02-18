@@ -32,7 +32,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.ClearContentWidgetVisualizer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.SimpleContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.StringWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.StringWidgetVisualizerProvider;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.TimestampWidgetVisualizer;
@@ -43,7 +43,7 @@ import swing2swt.layout.FlowLayout;
  * Just start with something that works (specifically) and then abstract from here more generally
  */
 public class CpuUsageDashboardWidget extends Composite
-                implements TimestampWidgetVisualizerProvider, StringWidgetVisualizerProvider, ClearContentWidgetVisualizer {
+                implements TimestampWidgetVisualizerProvider, StringWidgetVisualizerProvider, SimpleContentWidgetVisualizer {
     private Label textTimestamp;
     private Label textUsage;
     private Label lblCpuNumber;
@@ -72,6 +72,7 @@ public class CpuUsageDashboardWidget extends Composite
             textUsage.setText( scalarValue + "%" );
         }
     };
+    private Group grpTabname;
 
     /**
      * Create the composite.
@@ -82,7 +83,7 @@ public class CpuUsageDashboardWidget extends Composite
         super( parent, style );
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Group grpTabname = new Group( this, SWT.NONE );
+        grpTabname = new Group( this, SWT.NONE );
         grpTabname.setText( "Latest CPU Info" );
         grpTabname.setLayout( new FlowLayout( FlowLayout.CENTER, 5, 5 ) );
 
@@ -116,6 +117,11 @@ public class CpuUsageDashboardWidget extends Composite
     public void setNA() {
         timestampVisualizer.setTimestampNA();
         stringVisualizer.setScalarNA();
+    }
+
+    @Override
+    public void setName( String name ) {
+        grpTabname.setText( name );
     }
 
     public void setCpuName( String cpuName ) {

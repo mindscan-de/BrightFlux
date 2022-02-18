@@ -28,8 +28,10 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer;
 /**
  * 
  */
-public interface ClearContentWidgetVisualizer {
+public interface SimpleContentWidgetVisualizer {
 
     void setNA();
+
+    void setName( String name );
 
 }
