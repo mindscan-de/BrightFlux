@@ -59,6 +59,7 @@ import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.ETVColumnTransformer;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.TimeConversions;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.ClearContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
@@ -80,6 +81,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private RamUsageDashboardWidget statsWidget;
     private DashboardWindowConfigurationComposite compositeTopRight;
     private Map<String, ETVColumnTransformer[]> registeredTransformations;
+    private String currentTimestampFormat = "nanoToNanoDate";
 
     /**
      * Create the dialog.
@@ -392,14 +394,14 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
                             return usageValue;
                         } ), // 
-                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "cpuUsageWidget", this::sameString ) };
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "cpuUsageWidget", this::timestampTransformer ) };
 
         // 
         ETVColumnTransformer[] ramUsageTransformers = new ETVColumnTransformer[] { //
-                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "ramUsageWidget", this::sameString ) };
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "ramUsageWidget", this::timestampTransformer ) };
 
         ETVColumnTransformer[] statsTransformers = new ETVColumnTransformer[] { //
-                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "statsWidget", this::sameString ) };
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "statsWidget", this::timestampTransformer ) };
 
         // reister these transformations in a map
         registeredTransformations.put( "CpuUsage", cpuUsageTransformers );
@@ -436,6 +438,18 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
     public String sameString( String string ) {
         return string;
+    }
+
+    // this is actually a conversion strategy... for the time, this may be extended and configured.
+    public String timestampTransformer( String timestamp ) {
+        switch (currentTimestampFormat) {
+            case "id":
+                return timestamp;
+            case "nanoToNanoDate":
+                return TimeConversions.convertNanoToNanoDate( timestamp );
+            default:
+                return timestamp;
+        }
     }
 
     /** 
