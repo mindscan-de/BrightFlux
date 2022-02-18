@@ -57,6 +57,7 @@ import de.mindscan.brightflux.system.recipes.RecipeUtils;
 import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.ETVColumnTransformer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
 
@@ -76,6 +77,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private RamUsageDashboardWidget ramUsageWidget;
     private RamUsageDashboardWidget statsWidget;
     private DashboardWindowConfigurationComposite compositeTopRight;
+    private Map<String, ETVColumnTransformer[]> registeredTransformations;
 
     /**
      * Create the dialog.
@@ -109,6 +111,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
      */
     private void createContents() {
         registerAtDashboardUIProxyComponent();
+        initializeTransformations();
 
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
         shellDashboadWindow.setSize( 886, 405 );
@@ -406,6 +409,35 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             default:
                 break;
         }
+    }
+
+    public void initializeTransformations() {
+        registeredTransformations = new HashMap<>();
+
+        ETVColumnTransformer[] cpuUsageTransformers = new ETVColumnTransformer[] { //
+                        new ETVColumnTransformer( "m2.msg", "stringVisualizer", "cpuUsageWidget", message -> {
+                            message = message.substring( message.indexOf( "CPU" ) );
+                            message = message.substring( message.indexOf( "=" ) );
+                            String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
+
+                            return usageValue;
+                        } ), // 
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "cpuUsageWidget", this::sameString ) };
+
+        ETVColumnTransformer[] ramUsageTransformers = new ETVColumnTransformer[] { //
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "ramUsageWidget", this::sameString ) };
+
+        ETVColumnTransformer[] statsTransormers = new ETVColumnTransformer[] { //
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "statsWidget", this::sameString ) };
+
+        // reister these transformations in a map
+        registeredTransformations.put( "CpuUsage", cpuUsageTransformers );
+        registeredTransformations.put( "RamUsage", ramUsageTransformers );
+        registeredTransformations.put( "HXX Stats", statsTransormers );
+    }
+
+    public String sameString( String string ) {
+        return string;
     }
 
     /** 
