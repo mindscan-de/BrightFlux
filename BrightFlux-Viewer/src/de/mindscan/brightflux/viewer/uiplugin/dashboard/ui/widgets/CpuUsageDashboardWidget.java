@@ -47,6 +47,7 @@ public class CpuUsageDashboardWidget extends Composite
     private Label textTimestamp;
     private Label textUsage;
     private Label lblCpuNumber;
+    private Group grpTabname;
 
     private TimestampWidgetVisualizer timestampVisualizer = new TimestampWidgetVisualizer() {
         @Override
@@ -72,7 +73,6 @@ public class CpuUsageDashboardWidget extends Composite
             textUsage.setText( scalarValue + "%" );
         }
     };
-    private Group grpTabname;
 
     /**
      * Create the composite.
@@ -92,7 +92,7 @@ public class CpuUsageDashboardWidget extends Composite
 
         textTimestamp = new Label( grpTabname, SWT.BORDER );
         textTimestamp.setAlignment( SWT.RIGHT );
-        textTimestamp.setText( "000000000.000000000" );
+        textTimestamp.setText( "0000000000000.000000000" );
         textTimestamp.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
         textTimestamp.setBackground( SWTResourceManager.getColor( SWT.COLOR_WHITE ) );
 
