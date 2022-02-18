@@ -48,6 +48,7 @@ import de.mindscan.brightflux.dataframes.DataFrameRow;
 import de.mindscan.brightflux.dataframes.DataFrameRowQueryCallback;
 import de.mindscan.brightflux.dataframes.columns.NumberAggregateFunctions;
 import de.mindscan.brightflux.dataframes.dfquery.DataFrameQueryLanguageEngine;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
@@ -329,44 +330,26 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     public void extractTransformVisualize( String name, DataFrameRow row ) {
         System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
 
-        switch (name) {
-            case "CpuUsage": {
-                // --------------
-                // h2.msg::string ->   -> cpuUsageWidget::setScalar 
-
-                // extract
-                String message = String.valueOf( row.get( "h2.msg" ) );
-
-                // transform
-                message = message.substring( message.indexOf( "CPU" ) );
-                message = message.substring( message.indexOf( "=" ) );
-                String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
-
-                // visualize 
-                cpuUsageWidget.getStringVisualizer().setScalar( usageValue );
-
-                // -------------
-                // h1.ts -> Formatter::toString -> cpuUsageWidget::setTimestamp
-
-                // extract + transform
-                String timestamp = String.valueOf( row.get( "h1.ts" ) );
-
-                // visualize
-                cpuUsageWidget.getTimestampVisualizer().setTimestamp( timestamp );
-
-                break;
+        // generic transformations
+        if (registeredTransformations.containsKey( name )) {
+            // Okay we have some ETV transformations
+            ETVColumnTransformer[] etvColumnTransformers = registeredTransformations.get( name );
+            for (ETVColumnTransformer etvColumnTransformer : etvColumnTransformers) {
+                // run every known extract, transform, visualizer 
+                etvColumnTransformer.execute( row, this::getWidgetByName );
             }
+        }
+
+        switch (name) {
             case "RamUsage": {
                 // extract from row:
                 String message = String.valueOf( row.get( "h2.msg" ) );
-                String timestamp = String.valueOf( row.get( "h1.ts" ) );
 
                 // extract from message
                 message = message.substring( message.indexOf( "usage" ) );
                 String[] split = message.split( "," );
 
                 // visualization
-                ramUsageWidget.getTimestampVisualizer().setTimestamp( timestamp );
                 ramUsageWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
@@ -384,14 +367,12 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             case "HXX Stats": {
                 // extract from row:
                 String message = String.valueOf( row.get( "h2.msg" ) );
-                String timestamp = String.valueOf( row.get( "h1.ts" ) );
 
                 // extract from message
                 message = message.substring( message.indexOf( "software" ) );
                 String[] split = message.split( ";;" );
 
                 // visualization
-                statsWidget.getTimestampVisualizer().setTimestamp( timestamp );
                 statsWidget.setHeading( name );
                 // visualization
                 for (String keyValuePair : split) {
@@ -415,7 +396,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         registeredTransformations = new HashMap<>();
 
         ETVColumnTransformer[] cpuUsageTransformers = new ETVColumnTransformer[] { //
-                        new ETVColumnTransformer( "m2.msg", "stringVisualizer", "cpuUsageWidget", message -> {
+                        new ETVColumnTransformer( "h2.msg", "stringVisualizer", "cpuUsageWidget", message -> {
                             message = message.substring( message.indexOf( "CPU" ) );
                             message = message.substring( message.indexOf( "=" ) );
                             String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
@@ -434,6 +415,19 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         registeredTransformations.put( "CpuUsage", cpuUsageTransformers );
         registeredTransformations.put( "RamUsage", ramUsageTransformers );
         registeredTransformations.put( "HXX Stats", statsTransormers );
+    }
+
+    public Object getWidgetByName( String name ) {
+        switch (name) {
+            case "statsWidget":
+                return statsWidget;
+            case "ramUsageWidget":
+                return ramUsageWidget;
+            case "cpuUsageWidget":
+                return cpuUsageWidget;
+            default:
+                throw new NotYetImplemetedException( "Widget is not supported." );
+        }
     }
 
     public String sameString( String string ) {
