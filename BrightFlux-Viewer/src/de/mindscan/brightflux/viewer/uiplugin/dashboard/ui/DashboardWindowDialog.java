@@ -330,7 +330,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     public void extractTransformVisualize( String name, DataFrameRow row ) {
         System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
 
-        // generic transformations
+        // apply configured generic transformations
         if (registeredTransformations.containsKey( name )) {
             // Okay we have some ETV transformations
             ETVColumnTransformer[] etvColumnTransformers = registeredTransformations.get( name );
@@ -340,6 +340,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             }
         }
 
+        // apply missing transformers, which are too complex right now
         switch (name) {
             case "RamUsage": {
                 // extract from row:
