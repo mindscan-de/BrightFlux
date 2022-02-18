@@ -381,8 +381,11 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private void initializeTransformations() {
         registeredTransformations = new HashMap<>();
 
+        // actually the "unique" widgetname for he instance is local to the widget itself.
+        // so if we connect the widget with the column transformers, we actually mean "this" instead of "cpuUsageWidget"
         ETVColumnTransformer[] cpuUsageTransformers = new ETVColumnTransformer[] { //
                         new ETVColumnTransformer( "h2.msg", "stringVisualizer", "cpuUsageWidget", message -> {
+                            // TODO: implement these kind of transformations as some kind of configuration.
                             message = message.substring( message.indexOf( "CPU" ) );
                             message = message.substring( message.indexOf( "=" ) );
                             String usageValue = message.substring( 1, message.indexOf( "," ) ).trim();
@@ -391,16 +394,17 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                         } ), // 
                         new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "cpuUsageWidget", this::sameString ) };
 
+        // 
         ETVColumnTransformer[] ramUsageTransformers = new ETVColumnTransformer[] { //
                         new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "ramUsageWidget", this::sameString ) };
 
-        ETVColumnTransformer[] statsTransormers = new ETVColumnTransformer[] { //
+        ETVColumnTransformer[] statsTransformers = new ETVColumnTransformer[] { //
                         new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "statsWidget", this::sameString ) };
 
         // reister these transformations in a map
         registeredTransformations.put( "CpuUsage", cpuUsageTransformers );
         registeredTransformations.put( "RamUsage", ramUsageTransformers );
-        registeredTransformations.put( "HXX Stats", statsTransormers );
+        registeredTransformations.put( "HXX Stats", statsTransformers );
     }
 
     // provides binding between widgetName and widgetInstance
