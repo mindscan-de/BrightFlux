@@ -25,7 +25,13 @@
  */
 package de.mindscan.brightflux.viewer.uiplugin.dashboard.ui;
 
+import java.util.function.Consumer;
+
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -40,6 +46,9 @@ import org.eclipse.swt.widgets.Label;
  */
 public class DashboardWindowConfigurationComposite extends Composite {
 
+    private Consumer<TimeStampsConfigurationEnum> setter;
+    private Combo combo;
+
     /**
      * Create the composite.
      * @param parent
@@ -53,8 +62,22 @@ public class DashboardWindowConfigurationComposite extends Composite {
         grpDashboardConfiguration.setText( "Dashboard Configuration" );
         grpDashboardConfiguration.setLayout( new GridLayout( 2, false ) );
 
-        Combo combo = new Combo( grpDashboardConfiguration, SWT.NONE );
+        ComboViewer comboViewer = new ComboViewer( grpDashboardConfiguration, SWT.NONE );
+        combo = comboViewer.getCombo();
+        combo.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                if (setter != null) {
+                    TimeStampsConfigurationEnum[] values = TimeStampsConfigurationEnum.values();
+                    TimeStampsConfigurationEnum foo = values[combo.getSelectionIndex()];
+                    setter.accept( foo );
+                }
+            }
+        } );
         combo.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
+        comboViewer.setContentProvider( new ArrayContentProvider() );
+        comboViewer.setInput( TimeStampsConfigurationEnum.values() );
+        combo.select( 0 );
 
         Combo combo_1 = new Combo( grpDashboardConfiguration, SWT.NONE );
         combo_1.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, true, false, 1, 1 ) );
@@ -68,5 +91,12 @@ public class DashboardWindowConfigurationComposite extends Composite {
     @Override
     protected void checkSubclass() {
         // Disable the check that prevents subclassing of SWT components
+    }
+
+    /**
+     * @param object
+     */
+    public void setTimestampEnumCallback( Consumer<TimeStampsConfigurationEnum> setter ) {
+        this.setter = setter;
     }
 }

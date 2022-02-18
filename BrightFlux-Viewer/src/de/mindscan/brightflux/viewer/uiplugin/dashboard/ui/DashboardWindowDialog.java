@@ -59,7 +59,6 @@ import de.mindscan.brightflux.system.services.SystemServices;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardUIProxyComponent;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.DashboardWindow;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.ETVColumnTransformer;
-import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.TimeConversions;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.SimpleContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
@@ -81,7 +80,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private RamUsageDashboardWidget statsWidget;
     private DashboardWindowConfigurationComposite compositeTopRight;
     private Map<String, ETVColumnTransformer[]> registeredTransformations;
-    private String currentTimestampFormat = "nanoToNanoDate";
+
+    private TimeStampsConfigurationEnum currentTimestampEnum = TimeStampsConfigurationEnum.IDENTITY;
 
     /**
      * Create the dialog.
@@ -131,6 +131,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
         compositeTopRight = new DashboardWindowConfigurationComposite( shellDashboadWindow, SWT.NONE );
         compositeTopRight.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
+        compositeTopRight.setTimestampEnumCallback( this::setCurrentTimestampEnum );
 
         GridData gd_middleComposite = new GridData( SWT.FILL, SWT.TOP, false, false, 1, 1 );
         gd_middleComposite.heightHint = 225;
@@ -443,14 +444,11 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
     // this is actually a conversion strategy... for the time, this may be extended and configured.
     public String timestampTransformer( String timestamp ) {
-        switch (currentTimestampFormat) {
-            case "id":
-                return timestamp;
-            case "nanoToNanoDate":
-                return TimeConversions.convertNanoToNanoDate( timestamp );
-            default:
-                return timestamp;
-        }
+        return currentTimestampEnum.convertTimestamp( timestamp );
+    }
+
+    private void setCurrentTimestampEnum( TimeStampsConfigurationEnum currentTimestampEnum ) {
+        this.currentTimestampEnum = currentTimestampEnum;
     }
 
     /** 
