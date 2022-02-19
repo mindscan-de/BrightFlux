@@ -32,13 +32,12 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
@@ -62,6 +61,7 @@ import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.transform.ETVColumnTr
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.visualizer.SimpleContentWidgetVisualizer;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.CpuUsageDashboardWidget;
 import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.RamUsageDashboardWidget;
+import de.mindscan.brightflux.viewer.uiplugin.dashboard.ui.widgets.SelectedTimestampDashboardWidget;
 
 /**
  * 
@@ -82,6 +82,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
     private Map<String, ETVColumnTransformer[]> registeredTransformations;
 
     private TimeStampsConfigurationEnum currentTimestampEnum = TimeStampsConfigurationEnum.IDENTITY;
+    private SelectedTimestampDashboardWidget selectedTimeWidget;
 
     /**
      * Create the dialog.
@@ -118,20 +119,21 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         initializeTransformations();
 
         shellDashboadWindow = new Shell( getParent(), SWT.DIALOG_TRIM | SWT.MAX | SWT.RESIZE );
-        shellDashboadWindow.setSize( 886, 405 );
+        shellDashboadWindow.setSize( 886, 474 );
         shellDashboadWindow.setText( "Dashboard" );
         shellDashboadWindow.setLayout( new GridLayout( 2, false ) );
 
-        Composite upperComposite = new Composite( shellDashboadWindow, SWT.NONE );
-        upperComposite.setLayoutData( new GridData( SWT.FILL, SWT.FILL, false, false, 1, 1 ) );
-        upperComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
-
-        cpuUsageWidget = new CpuUsageDashboardWidget( upperComposite, SWT.NONE );
-        cpuUsageWidget.setSize( 436, 47 );
+        selectedTimeWidget = new SelectedTimestampDashboardWidget( shellDashboadWindow, SWT.NONE );
+        selectedTimeWidget.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
 
         compositeTopRight = new DashboardWindowConfigurationComposite( shellDashboadWindow, SWT.NONE );
-        compositeTopRight.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
+        compositeTopRight.setLayoutData( new GridData( SWT.FILL, SWT.FILL, false, false, 1, 1 ) );
         compositeTopRight.setTimestampEnumCallback( this::setCurrentTimestampEnum );
+
+        cpuUsageWidget = new CpuUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
+        cpuUsageWidget.setLayoutData( new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 ) );
+        cpuUsageWidget.setSize( 436, 47 );
+        new Label( shellDashboadWindow, SWT.NONE );
 
         GridData gd_middleComposite = new GridData( SWT.FILL, SWT.TOP, false, false, 1, 1 );
         gd_middleComposite.heightHint = 225;
@@ -406,10 +408,14 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         ETVColumnTransformer[] statsTransformers = new ETVColumnTransformer[] { //
                         new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "statsWidget", this::timestampTransformer ) };
 
+        ETVColumnTransformer[] currentTimeTransformers = new ETVColumnTransformer[] { //
+                        new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "timeWidget", this::sameString, true ) };
+
         // register these transformations in a map
         registeredTransformations.put( "CpuUsage", cpuUsageTransformers );
         registeredTransformations.put( "RamUsage", ramUsageTransformers );
         registeredTransformations.put( "HXX Stats", statsTransformers );
+        registeredTransformations.put( "Selected Timestamp", currentTimeTransformers );
     }
 
     // provides binding between widgetName and widgetInstance
@@ -421,6 +427,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 return ramUsageWidget;
             case "cpuUsageWidget":
                 return cpuUsageWidget;
+            case "timeWidget":
+                return selectedTimeWidget;
             default:
                 throw new NotYetImplemetedException( "Widget is not supported." );
         }
@@ -434,6 +442,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
                 return ramUsageWidget;
             case "CpuUsage":
                 return cpuUsageWidget;
+            case "Selected Timestamp":
+                return selectedTimeWidget;
             default:
                 return null;
         }
