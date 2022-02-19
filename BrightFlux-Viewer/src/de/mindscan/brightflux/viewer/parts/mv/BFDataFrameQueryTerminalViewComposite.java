@@ -83,7 +83,9 @@ public class BFDataFrameQueryTerminalViewComposite extends Composite implements 
 
         queryHistoryComponent = SystemServices.getInstance().getService( QueryHistoryComponent.class );
 
-        updateListViewer( queryHistoryComponent.getHistory() );
+        if (queryHistoryComponent != null) {
+            updateListViewer( queryHistoryComponent.getHistory() );
+        }
     }
 
     private void buildLayout() {
