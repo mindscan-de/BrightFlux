@@ -125,6 +125,8 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Dashboard
   * recipes for filtering located in 'favrecipes/dashboard' - filters implemented.
   * output data to command line in the first iteration
+  * simple UI and some very basic dashboard widgets
+  * basic configuration added
   
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
@@ -165,7 +167,6 @@ I want to address rather sooner than later.
 
 
 UI-Dashboard
-* implement a very basic ui and some simple widgets for the dashboard
 * configurable extract, transform, visualization pipeline via json preferred
 
 
@@ -230,7 +231,6 @@ UML Image Generator
 UI-Dashboard
 * a dashboard is an interactive information board, which should be configurable
   * visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
-  * extract a particular value, then transform and then visualize a particular value
 
 
 DFQL
@@ -248,7 +248,7 @@ Export the analysis result in short form
 * Project file
 
 
-Mini-XOR-Tool (found a replacement for thisparticular need for now / but this is not forgotten)
+Mini-XOR-Tool (found a replacement for this particular need for now / but this is not forgotten)
 * xor.exe (light edition)
 
 
