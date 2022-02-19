@@ -104,7 +104,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
 * Copy current selected row to clipboard
 * Annotate video Objects
   * "open a video" and annotate each second of a video using a slider to navigate in video time
-  * generate a simple (hard-coded) report for all available video objects
+  * generate a simple report for all available video objects
   * use default texts, which can be used to annotate timestamps
   * save video annotations to disk
   * load video annotations from disk
@@ -248,7 +248,7 @@ Export the analysis result in short form
 * Project file
 
 
-Mini-XOR-Tool (found a replacement for this particular need for now / but this is not forgotten)
+XOR-Light-Tool (found a replacement for this particular need for now / but this is not forgotten)
 * xor.exe (light edition)
 
 

@@ -257,7 +257,7 @@ public class BrightFluxViewerMainAppTwo {
                 dispatchCommand( XorUICommandFactory.openXorWindow( shellBFViewerMainApp ) );
             }
         } );
-        mntmXorexe.setText( "xor.exe" );
+        mntmXorexe.setText( "XOR (light)" );
 
         MenuItem mntmHelp = new MenuItem( menu, SWT.NONE );
         mntmHelp.setText( "Help" );
