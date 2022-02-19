@@ -166,10 +166,6 @@ I want to address rather sooner than later.
 ### Next
 
 
-UI-Dashboard
-* configurable extract, transform, visualization pipeline via json preferred
-
-
 Machine Learning
 * Well we have to see...
 
@@ -229,6 +225,7 @@ UML Image Generator
 
 
 UI-Dashboard
+* configurable extract, transform, visualization pipeline via json preferred
 * a dashboard is an interactive information board, which should be configurable
   * visualizers (last, all, average, between two, as value, as graph, as chart pie, as cockpit data, as hardcoded image from a string)
 
