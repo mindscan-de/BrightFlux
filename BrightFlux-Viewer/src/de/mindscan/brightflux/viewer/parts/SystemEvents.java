@@ -25,6 +25,8 @@
  */
 package de.mindscan.brightflux.viewer.parts;
 
+import de.mindscan.brightflux.framework.events.BackgroundExecutionFinishedEvent;
+import de.mindscan.brightflux.framework.events.BackgroundExecutionStartedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
@@ -57,6 +59,8 @@ public class SystemEvents {
     public final static Class<?> CommandExecutionException = CommandExecutionExceptionEvent.class;
     public final static Class<?> CommandExecutionFinished = CommandExecutionFinishedEvent.class;
     public final static Class<?> CommandExecutionStarted = CommandExecutionStartedEvent.class;
+    public final static Class<?> BackgroundExecutionFinished = BackgroundExecutionFinishedEvent.class;
+    public final static Class<?> BackgroundExecutionStarted = BackgroundExecutionStartedEvent.class;
 
     public final static Class<?> RecipeSaveResult = RecipeSaveResultEvent.class;
 
