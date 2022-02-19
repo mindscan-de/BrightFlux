@@ -196,7 +196,7 @@ public class BrightFluxViewerMainAppTwo {
 
             }
         } );
-        mntmLoadrxxFile.setText( "Load RXX File..." );
+        mntmLoadrxxFile.setText( "Load Raw2 File..." );
 
         new MenuItem( menu_file, SWT.SEPARATOR );
 
