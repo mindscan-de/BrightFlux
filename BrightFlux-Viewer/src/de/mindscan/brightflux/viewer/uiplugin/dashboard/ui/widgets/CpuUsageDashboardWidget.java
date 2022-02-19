@@ -84,7 +84,7 @@ public class CpuUsageDashboardWidget extends Composite
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         grpTabname = new Group( this, SWT.NONE );
-        grpTabname.setText( "Latest CPU Info" );
+        grpTabname.setText( "Title" );
         grpTabname.setLayout( new FlowLayout( FlowLayout.CENTER, 5, 5 ) );
 
         lblCpuNumber = new Label( grpTabname, SWT.NONE );

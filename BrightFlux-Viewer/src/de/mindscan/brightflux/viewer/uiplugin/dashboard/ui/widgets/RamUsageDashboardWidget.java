@@ -114,7 +114,7 @@ public class RamUsageDashboardWidget extends Composite
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         grpSomeheading = new Group( this, SWT.NONE );
-        grpSomeheading.setText( "Some Heading" );
+        grpSomeheading.setText( "Title" );
         grpSomeheading.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         Composite composite = new Composite( grpSomeheading, SWT.NONE );
