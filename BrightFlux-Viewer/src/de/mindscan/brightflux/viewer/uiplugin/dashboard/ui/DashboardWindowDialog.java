@@ -135,11 +135,10 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         cpuUsageWidget.setSize( 436, 47 );
         new Label( shellDashboadWindow, SWT.NONE );
 
-        GridData gd_middleComposite = new GridData( SWT.FILL, SWT.TOP, false, false, 1, 1 );
-        gd_middleComposite.heightHint = 225;
-
         ramUsageWidget = new RamUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
-        ramUsageWidget.setLayoutData( gd_middleComposite );
+        GridData gd_ramUsageWidget = new GridData( SWT.FILL, SWT.TOP, false, false, 1, 1 );
+        gd_ramUsageWidget.heightHint = 225;
+        ramUsageWidget.setLayoutData( gd_ramUsageWidget );
 
         statsWidget = new RamUsageDashboardWidget( shellDashboadWindow, SWT.NONE );
         GridData gd_statsWidget = new GridData( SWT.LEFT, SWT.TOP, false, false, 1, 1 );
