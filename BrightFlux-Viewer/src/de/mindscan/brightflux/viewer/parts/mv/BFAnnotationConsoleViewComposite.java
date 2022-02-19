@@ -160,6 +160,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void createContent() {
+        String[] availableReportNames = annotatorService != null ? annotatorService.getPersistenceModule().getAvailableReportNames() : new String[0];
+        String[] frameAnnotationSnippets = annotatorService != null ? annotatorService.getPersistenceModule().getFrameAnnotationSnippets() : new String[0];
+
         setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         SashForm sashForm = new SashForm( this, SWT.VERTICAL );
@@ -197,7 +200,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
         ComboViewer comboViewer = new ComboViewer( composite, SWT.READ_ONLY );
         comboViewer.setContentProvider( new ArrayContentProvider() );
-        comboViewer.setInput( annotatorService.getPersistenceModule().getAvailableReportNames() );
+        comboViewer.setInput( availableReportNames );
         reportSelectionCombo = comboViewer.getCombo();
         GridData gd_combo = new GridData( SWT.FILL, SWT.CENTER, false, false, 1, 1 );
         gd_combo.widthHint = 132;
@@ -253,7 +256,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         } );
 
         listViewer.setContentProvider( ArrayContentProvider.getInstance() );
-        list.setItems( annotatorService.getPersistenceModule().getFrameAnnotationSnippets() );
+        list.setItems( frameAnnotationSnippets );
         sashForm_1.setWeights( new int[] { 1, 1 } );
 
         SashForm sashForm_2 = new SashForm( sashForm, SWT.NONE );
