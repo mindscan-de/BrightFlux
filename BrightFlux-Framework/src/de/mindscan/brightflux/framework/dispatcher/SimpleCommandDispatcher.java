@@ -27,6 +27,7 @@ package de.mindscan.brightflux.framework.dispatcher;
 
 import java.util.function.Consumer;
 
+import de.mindscan.brightflux.framework.command.BFBackgroundCommand;
 import de.mindscan.brightflux.framework.command.BFCommand;
 import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
@@ -85,13 +86,31 @@ public class SimpleCommandDispatcher implements CommandDispatcher {
             // and this generates events
             // these events can then trigger a listener, 
             // which presents something to the user or invokes another command
-            command.execute( eventConsumer );
+            if (command instanceof BFBackgroundCommand) {
+
+//                Thread thread = new Thread( new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        eventConsumer.accept( new BackgroundExecutionStartedEvent( command ) );
+
+                command.execute( eventConsumer );
+
+//                        eventConsumer.accept( new BackgroundExecutionFinishedEvent( command ) );
+//                    }
+//                } );
+//                thread.start();
+            }
+            else {
+                command.execute( eventConsumer );
+            }
 
             // a logger or multiple loggers can consume these events
             // also other instances can subscribe to these events, like progress monitors and such
             eventConsumer.accept( new CommandExecutionFinishedEvent( command ) );
         }
-        catch (Exception ex) {
+        catch (
+
+        Exception ex) {
             ex.printStackTrace();
             // a logger or multiple loggers should consume these events
             eventConsumer.accept( new CommandExecutionExceptionEvent( command, ex ) );
