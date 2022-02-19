@@ -286,16 +286,16 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             // - after this on the datafreme.getColumn('__org_idx').max(); 
             DataFrameColumn<?> column = prefiltered.getColumn( "__org_idx" );
             if (column instanceof NumberAggregateFunctions) {
-                Number orgIndexInRootFrame = ((NumberAggregateFunctions<?>) column).max();
-                updateDashboardData( name, orgIndexInRootFrame.intValue() );
+                Number computedOrgIndexInRootFrame = ((NumberAggregateFunctions<?>) column).max();
+                updateDashboardData( name, computedOrgIndexInRootFrame.intValue(), selectedRow );
             }
         }
     }
 
     /**
      */
-    private void updateDashboardData( String name, int orgIndexInRootFrame ) {
-        if (orgIndexInRootFrame < 0) {
+    private void updateDashboardData( String name, int computedOrgIndex, DataFrameRow selectedRow ) {
+        if (computedOrgIndex < 0) {
             clearDashboardWidgetData( name );
             return;
         }
@@ -309,10 +309,10 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         // depending on the name we want to extract, transform and visualize ....
         // - update the data
         // - notify the UI, that these values changed...
-        extractTransformVisualize( name, activeRootDataframe.getRow( orgIndexInRootFrame ) );
+        extractTransformVisualize( name, activeRootDataframe.getRow( computedOrgIndex ), selectedRow );
     }
 
-    public void clearDashboardWidgetData( String name ) {
+    private void clearDashboardWidgetData( String name ) {
         Object widgetByName = getWidgetByConfigName( name );
 
         if (widgetByName instanceof SimpleContentWidgetVisualizer) {
@@ -324,8 +324,8 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
     }
 
-    public void extractTransformVisualize( String name, DataFrameRow row ) {
-        System.out.println( "[" + name + "]: " + row.get( "h2.msg" ) );
+    private void extractTransformVisualize( String name, DataFrameRow computedRow, DataFrameRow selectedRow ) {
+        System.out.println( "[" + name + "]: " + computedRow.get( "h2.msg" ) );
 
         // apply configured generic transformations
         if (registeredTransformations.containsKey( name )) {
@@ -333,10 +333,11 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
             ETVColumnTransformer[] etvColumnTransformers = registeredTransformations.get( name );
             for (ETVColumnTransformer etvColumnTransformer : etvColumnTransformers) {
                 // run every known extract, transform, visualizer 
-                etvColumnTransformer.execute( row, this::getWidgetByInstanceName );
+                etvColumnTransformer.execute( computedRow, selectedRow, this::getWidgetByInstanceName );
             }
         }
 
+        // TODO: this should only be done once at instantiating the widgets.
         Object widgetByConfigName = getWidgetByConfigName( name );
         if (widgetByConfigName instanceof SimpleContentWidgetVisualizer) {
             ((SimpleContentWidgetVisualizer) widgetByConfigName).setName( name );
@@ -346,7 +347,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         switch (name) {
             case "RamUsage": {
                 // extract from row:
-                String message = String.valueOf( row.get( "h2.msg" ) );
+                String message = String.valueOf( computedRow.get( "h2.msg" ) );
 
                 // extract from message
                 message = message.substring( message.indexOf( "usage" ) );
@@ -362,7 +363,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
 
             case "HXX Stats": {
                 // extract from row:
-                String message = String.valueOf( row.get( "h2.msg" ) );
+                String message = String.valueOf( computedRow.get( "h2.msg" ) );
 
                 // extract from message
                 message = message.substring( message.indexOf( "software" ) );
@@ -405,7 +406,7 @@ public class DashboardWindowDialog extends Dialog implements DashboardWindow, Pr
         ETVColumnTransformer[] statsTransformers = new ETVColumnTransformer[] { //
                         new ETVColumnTransformer( "h1.ts", "timestampVisualizer", "statsWidget", this::timestampTransformer ) };
 
-        // reister these transformations in a map
+        // register these transformations in a map
         registeredTransformations.put( "CpuUsage", cpuUsageTransformers );
         registeredTransformations.put( "RamUsage", ramUsageTransformers );
         registeredTransformations.put( "HXX Stats", statsTransformers );

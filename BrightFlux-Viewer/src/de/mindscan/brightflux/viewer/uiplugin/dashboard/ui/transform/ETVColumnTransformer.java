@@ -42,17 +42,24 @@ public class ETVColumnTransformer {
     private final String targetVisualizer;
     private final String widgetName;
     private final Function<String, String> stringTransformer;
+    private boolean useSelectedRow;
 
     public ETVColumnTransformer( String columnName, String targetVisualizer, String widgetName, Function<String, String> stringTransformer ) {
+        this( columnName, targetVisualizer, widgetName, stringTransformer, false );
+    }
+
+    public ETVColumnTransformer( String columnName, String targetVisualizer, String widgetName, Function<String, String> stringTransformer,
+                    boolean useSelectedRow ) {
         this.columnName = columnName;
         this.targetVisualizer = targetVisualizer;
         this.widgetName = widgetName;
         this.stringTransformer = stringTransformer;
+        this.useSelectedRow = useSelectedRow;
     }
 
-    public void execute( DataFrameRow row, Function<String, Object> getWidgetByName ) {
+    public void execute( DataFrameRow computedRow, DataFrameRow selectedRow, Function<String, Object> getWidgetByName ) {
         // extract
-        Object columnObject = row.get( this.columnName );
+        Object columnObject = useSelectedRow ? selectedRow.get( columnName ) : computedRow.get( this.columnName );
 
         // transform
         String transformedMessage = stringTransformer.apply( String.valueOf( columnObject ) );
