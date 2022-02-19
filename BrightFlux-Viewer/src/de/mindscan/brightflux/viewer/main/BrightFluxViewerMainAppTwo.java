@@ -184,6 +184,20 @@ public class BrightFluxViewerMainAppTwo {
         } );
         mntmSpecialRawOption.setText( "Load Raw File ..." );
 
+        MenuItem mntmLoadrxxFile = new MenuItem( menu_file, SWT.NONE );
+        mntmLoadrxxFile.addSelectionListener( new SelectionAdapter() {
+            @Override
+            public void widgetSelected( SelectionEvent e ) {
+                BrightFluxFileDialogs.openRegularFileAndConsumePath( shellBFViewerMainApp, "Select file", //
+                                FileDescriptions.RAW_ANY, //
+                                path -> {
+                                    dispatchCommand( DataFrameCommandFactory.ingestSpecialRaw2( path ) );
+                                } );
+
+            }
+        } );
+        mntmLoadrxxFile.setText( "Load RXX File..." );
+
         new MenuItem( menu_file, SWT.SEPARATOR );
 
         MenuItem mntmGarbageCollector = new MenuItem( menu_file, SWT.NONE );
