@@ -88,6 +88,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
         super( parent, style );
 
         this.videoAnnotatorService = SystemServices.getInstance().getService( VideoAnnotatorComponent.class );
+        String[] availableReportNames = videoAnnotatorService != null ? videoAnnotatorService.getPersistenceModule().getAvailableReportNames() : new String[0];
 
         setLayout( new BorderLayout( 0, 0 ) );
 
@@ -116,7 +117,7 @@ public class BFVideoAnnotationViewComposite extends Composite implements Project
 
         ComboViewer comboViewer = new ComboViewer( composite, SWT.READ_ONLY );
         comboViewer.setContentProvider( new ArrayContentProvider() );
-        comboViewer.setInput( videoAnnotatorService.getPersistenceModule().getAvailableReportNames() );
+        comboViewer.setInput( availableReportNames );
         reportSelectionCombo = comboViewer.getCombo();
         reportSelectionCombo.select( 0 );
 
