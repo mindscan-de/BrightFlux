@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.uiplugin.search.command;
 
 import java.util.function.Consumer;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -69,14 +70,18 @@ public class OpenSearchWindowDialogCommand implements UIBFCommand, UIBFBackgroun
             searchUIProxyComponent.focusCurrentActiveSearchWindow();
         }
         else {
-            SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
-            // register the project registry. 
-            // TODO: Actually the SearchWindow should do this?
+            Display.getDefault().asyncExec( new Runnable() {
+                public void run() {
+                    SearchWindowDialog searchWindow = new SearchWindowDialog( shellMainApp, 0 );
+                    // register the project registry. 
+                    // TODO: Actually the SearchWindow should do this?
 
-            searchWindow.setProjectRegistry( projectRegistry );
+                    searchWindow.setProjectRegistry( projectRegistry );
 
-            // this is blocking operation until searchwindow is closed
-            searchWindow.open();
+                    // this is blocking operation until searchwindow is closed
+                    searchWindow.open();
+                }
+            } );
         }
     }
 

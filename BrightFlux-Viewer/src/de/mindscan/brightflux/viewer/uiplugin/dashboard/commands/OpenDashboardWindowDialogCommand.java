@@ -27,6 +27,7 @@ package de.mindscan.brightflux.viewer.uiplugin.dashboard.commands;
 
 import java.util.function.Consumer;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
@@ -69,14 +70,18 @@ public class OpenDashboardWindowDialogCommand implements UIBFCommand, UIBFBackgr
             dashboardUIProxyComponent.focusCurrentActiveDashboardWindow();
         }
         else {
-            DashboardWindowDialog dashboardWindow = new DashboardWindowDialog( shellMainApp, 0 );
 
-            // do not use project registry (ProjectRegistry.register()), since it is putting this into the queue.
-            // i might have to fix it, to not add to the queue, as soon as the activate method was called.
-            dashboardWindow.setProjectRegistry( projectRegistry );
+            Display.getDefault().asyncExec( new Runnable() {
+                public void run() {
+                    DashboardWindowDialog dashboardWindow = new DashboardWindowDialog( shellMainApp, 0 );
 
-            // this is a blocking operation.
-            dashboardWindow.open();
+                    // do not use project registry (ProjectRegistry.register()), since it is putting this into the queue.
+                    // i might have to fix it, to not add to the queue, as soon as the activate method was called.
+                    dashboardWindow.setProjectRegistry( projectRegistry );
+
+                    dashboardWindow.open();
+                }
+            } );
         }
 
     }
