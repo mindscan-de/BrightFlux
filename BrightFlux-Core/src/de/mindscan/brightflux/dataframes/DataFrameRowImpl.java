@@ -95,9 +95,7 @@ public class DataFrameRowImpl implements DataFrameRow {
      */
     @Override
     public Object getValueType( String columnName ) {
-        // TODO: refactor this as well
         return df.getColumn( columnName ).getColumnValueType();
-        // return Integer.class;
     }
 
     @Override

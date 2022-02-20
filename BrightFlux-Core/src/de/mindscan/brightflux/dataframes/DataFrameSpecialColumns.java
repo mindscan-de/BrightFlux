@@ -72,6 +72,6 @@ public class DataFrameSpecialColumns {
         return index_column;
     }
 
-    // TODO: we might want to create anoriginalIndex column using an idexcolumn as well (like copyying the contents)
+    // TODO: we might want to create an originalIndex column using an idexcolumn as well (like copyying the contents)
 
 }
