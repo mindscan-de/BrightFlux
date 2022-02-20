@@ -41,7 +41,7 @@ import de.mindscan.brightflux.system.recipes.BFRecipeIO;
 import de.mindscan.brightflux.system.recipes.RecipeUtils;
 
 /**
- * TODO extract recipe execution to a util class.
+ * 
  */
 public class RecipeExecuteCommand implements BFCommand {
 
