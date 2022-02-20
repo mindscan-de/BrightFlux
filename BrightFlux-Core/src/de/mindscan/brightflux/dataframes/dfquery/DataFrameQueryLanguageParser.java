@@ -56,6 +56,13 @@ public class DataFrameQueryLanguageParser {
 
     private DFQLTokenProvider tokens;
 
+    public DataFrameQueryLanguageParser() {
+    }
+
+    public DataFrameQueryLanguageParser( DFQLTokenProvider newProvider ) {
+        this.tokens = newProvider;
+    }
+
     void setTokenProvider( DFQLTokenProvider newProvider ) {
         this.tokens = newProvider;
     }
