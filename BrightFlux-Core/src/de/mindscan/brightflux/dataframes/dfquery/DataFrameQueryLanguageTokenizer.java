@@ -149,7 +149,6 @@ public class DataFrameQueryLanguageTokenizer {
     }
 
     private DFQLTokenType consumeOperator( String dfqlQuery ) {
-
         // handle case that the string is possibly exceeded... (Exception found due to unit test) 
         if (tokenStart + 1 < dfqlQuery.length()) {
             String twoChars = dfqlQuery.substring( tokenStart, tokenStart + 2 );
@@ -165,8 +164,7 @@ public class DataFrameQueryLanguageTokenizer {
             return DFQLTokenType.OPERATOR;
         }
 
-        // TODO: we have some kind of issue here, that the operator is unknown, it matched the first char, but was incomplete...
-        throw new NotYetImplemetedException();
+        throw new NotYetImplemetedException( "This is not recognized operator either one char or two chars. First char is: '" + oneChar + "'" );
     }
 
     private DFQLTokenType consumeQuotedText( String dfqlQuery ) {
