@@ -29,10 +29,13 @@ package de.mindscan.brightflux.dataframes.dfquery;
  * 
  */
 public enum DataFrameQueryType {
+    // DMS data manipulation statement
     DMS_SELECT,
 
+    // DMS data manipulation statement
     DMS_TOKENIZE,
 
+    // PS Procedural statement
     PS_CALLBACK,
 
     UNKNOWN
