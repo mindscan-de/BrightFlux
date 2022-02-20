@@ -27,7 +27,6 @@ package de.mindscan.brightflux.dataframes.dfquery;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -49,13 +48,12 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLTokenizeStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLUnaryOperatorNode;
+import de.mindscan.brightflux.dataframes.dfquery.parser.DataFrameQueryLanguageParserFactory;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameColumnNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLDataFrameNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.runtime.TypedDFQLTokenizerStatementNode;
-import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
-import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 
 /**
  * 
@@ -63,7 +61,7 @@ import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 public class DataFrameQueryLanguageEngine {
 
     public DataFrame executeDFQuery( DataFrame df, String query ) {
-        DataFrameQueryLanguageParser parser = createParser( query );
+        DataFrameQueryLanguageParser parser = DataFrameQueryLanguageParserFactory.createParser( query );
 
         // this is currently only a fully abstract syntax tree, which doesn't know that "df" is a dataframe...
         // or df.'columnname' is a  dataframe column name... So at least we have to type that AST into a typed AST
@@ -106,7 +104,7 @@ public class DataFrameQueryLanguageEngine {
 
     public DataFrame executeDFCallbackQuery( DataFrame df, String query, Map<String, DataFrameRowQueryCallback> callbacks ) {
 
-        DataFrameQueryLanguageParser parser = createParser( query );
+        DataFrameQueryLanguageParser parser = DataFrameQueryLanguageParserFactory.createParser( query );
         DFQLCallbackStatementNode callbackStatement = (DFQLCallbackStatementNode) parser.parseDFQLStatement();
 
         TypedDFQLCallbackStatementNode transformed = (TypedDFQLCallbackStatementNode) transformAST( callbackStatement, df );
@@ -131,7 +129,7 @@ public class DataFrameQueryLanguageEngine {
     }
 
     public DataFrame executeDFTokenize( DataFrame df, String query, Function<DataFrameTokenizerJob, DataFrame> jobToDataFrameExecutor ) {
-        DataFrameQueryLanguageParser parser = createParser( query );
+        DataFrameQueryLanguageParser parser = DataFrameQueryLanguageParserFactory.createParser( query );
 
         DFQLTokenizeStatementNode statement = (DFQLTokenizeStatementNode) parser.parseDFQLStatement();
         TypedDFQLTokenizerStatementNode transformed = (TypedDFQLTokenizerStatementNode) transformAST( statement, df );
@@ -141,17 +139,6 @@ public class DataFrameQueryLanguageEngine {
         DataFrameTokenizerJob job = compiler.compileToTokenizerJob( transformed );
 
         return jobToDataFrameExecutor.apply( job );
-    }
-
-    private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
-        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
-        tokenizer.setIgnoreWhiteSpace( true );
-
-        Iterator<DFQLToken> tokenIterator = tokenizer.tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
-        return parser;
     }
 
     private DFQLNode transformAST( DFQLNode node, DataFrame df ) {

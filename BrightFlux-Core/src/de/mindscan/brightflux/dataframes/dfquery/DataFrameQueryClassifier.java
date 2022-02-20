@@ -25,14 +25,11 @@
  */
 package de.mindscan.brightflux.dataframes.dfquery;
 
-import java.util.Iterator;
-
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLCallbackStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLTokenizeStatementNode;
-import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
-import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
+import de.mindscan.brightflux.dataframes.dfquery.parser.DataFrameQueryLanguageParserFactory;
 
 /**
  * 
@@ -40,7 +37,7 @@ import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
 public class DataFrameQueryClassifier {
 
     public static DataFrameQueryType classifyDFQLQuery( String query ) {
-        DataFrameQueryLanguageParser parser = createParser( query );
+        DataFrameQueryLanguageParser parser = DataFrameQueryLanguageParserFactory.createParser( query );
         DFQLNode statement = parser.parseDFQLStatement();
 
         if (statement instanceof DFQLTokenizeStatementNode) {
@@ -54,17 +51,6 @@ public class DataFrameQueryClassifier {
         }
 
         return DataFrameQueryType.UNKNOWN;
-    }
-
-    private static DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
-        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
-        tokenizer.setIgnoreWhiteSpace( true );
-
-        Iterator<DFQLToken> tokenIterator = tokenizer.tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
-        return parser;
     }
 
 }

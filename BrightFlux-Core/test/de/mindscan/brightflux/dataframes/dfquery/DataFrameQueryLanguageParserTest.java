@@ -5,8 +5,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 
-import java.util.Iterator;
-
 import org.junit.jupiter.api.Test;
 
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLApplyNode;
@@ -18,8 +16,7 @@ import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLNumberNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLPrimarySelectionNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLSelectStatementNode;
 import de.mindscan.brightflux.dataframes.dfquery.ast.DFQLStringNode;
-import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLToken;
-import de.mindscan.brightflux.dataframes.dfquery.tokens.DFQLTokenProvider;
+import de.mindscan.brightflux.dataframes.dfquery.parser.DataFrameQueryLanguageParserFactory;
 
 public class DataFrameQueryLanguageParserTest {
 
@@ -751,14 +748,7 @@ public class DataFrameQueryLanguageParserTest {
     }
 
     private DataFrameQueryLanguageParser createParser( String dfqlQuery ) {
-        DataFrameQueryLanguageTokenizer tokenizer = new DataFrameQueryLanguageTokenizer();
-        tokenizer.setIgnoreWhiteSpace( true );
-
-        Iterator<DFQLToken> tokenIterator = tokenizer.tokenize( dfqlQuery );
-
-        DataFrameQueryLanguageParser parser = new DataFrameQueryLanguageParser();
-        parser.setTokenProvider( new DFQLTokenProvider( tokenIterator ) );
-        return parser;
+        return DataFrameQueryLanguageParserFactory.createParser( dfqlQuery );
     }
 
 }
