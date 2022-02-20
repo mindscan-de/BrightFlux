@@ -32,8 +32,6 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  * This class implements and collects different useful string evaluation operations,
  * these operations are 'contains', 'startsWith', 'endsWith', 'matchesWith'.
  * 
- * TODO: maybe extract matchesWith to a complete RegexImplementation 
- * 
  */
 public enum StringEvaluationOperation {
 
