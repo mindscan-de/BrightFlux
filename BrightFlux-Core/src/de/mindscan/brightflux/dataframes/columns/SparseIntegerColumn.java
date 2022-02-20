@@ -28,11 +28,12 @@ package de.mindscan.brightflux.dataframes.columns;
 import de.mindscan.brightflux.dataframes.DataFrameColumn;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnTypes;
 import de.mindscan.brightflux.dataframes.columntypes.ColumnValueTypes;
+import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 
 /**
  * 
  */
-public class SparseIntegerColumn extends SparseColumn<Integer> {
+public class SparseIntegerColumn extends SparseNumberColumn<Integer> {
 
     /**
      * 
@@ -82,5 +83,21 @@ public class SparseIntegerColumn extends SparseColumn<Integer> {
     @Override
     public String getColumnValueType() {
         return ColumnValueTypes.COLUMN_TYPE_INT;
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer max() {
+        throw new NotYetImplemetedException( "'max' not yet implemented for SparseIntegerColumn." );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer min() {
+        throw new NotYetImplemetedException( "'min' not yet implemented for SparseIntegerColumn." );
     }
 }
