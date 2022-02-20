@@ -25,7 +25,7 @@
  */
 package de.mindscan.brightflux.dataframes.columns;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -45,7 +45,7 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
 
     protected SparseColumn( String columnName, Class<T> clzz ) {
         setColumnName( columnName );
-        this.columnValues = new HashMap<>();
+        this.columnValues = new LinkedHashMap<>();
         this.size = 0;
     }
 
@@ -122,8 +122,6 @@ public abstract class SparseColumn<T> extends DataFrameColumnBase<T> {
     @SuppressWarnings( "unchecked" )
     @Override
     public T[] toArray() {
-        // TODO: is there a good ordering?
-        // TODO: is this even a good implmentation?
         return ((T[]) columnValues.values().toArray());
     }
 

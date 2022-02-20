@@ -74,20 +74,13 @@ public class SparseLongColumn extends SparseColumn<Long> {
         }
     }
 
-    /** 
-     * {@inheritDoc}
-     */
     @Override
     public String getColumnType() {
         return ColumnTypes.COLUMN_TYPE_SPARSE_LONG;
     }
 
-    /** 
-     * {@inheritDoc}
-     */
     @Override
     public String getColumnValueType() {
         return ColumnValueTypes.COLUMN_TYPE_LONG;
     }
-
 }

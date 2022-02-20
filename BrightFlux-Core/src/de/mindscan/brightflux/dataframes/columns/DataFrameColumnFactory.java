@@ -56,7 +56,7 @@ public class DataFrameColumnFactory {
             case ColumnTypes.COLUMN_TYPE_SPARSE_LONG:
                 return new SparseLongColumn();
             default:
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException( "Unknown columntype (" + type + ") for unnamed column." );
         }
     }
 
@@ -65,11 +65,9 @@ public class DataFrameColumnFactory {
             case ColumnTypes.COLUMN_TYPE_INT:
             case ColumnTypes.COLUMN_TYPE_INTEGER:
                 return new IntegerColumn( columnName );
-
             case ColumnTypes.COLUMN_TYPE_BOOL:
             case ColumnTypes.COLUMN_TYPE_BOOLEAN:
                 return new BooleanColumn( columnName );
-
             case ColumnTypes.COLUMN_TYPE_FLOAT:
                 return new FloatColumn( columnName );
             case ColumnTypes.COLUMN_TYPE_DOUBLE:
@@ -84,9 +82,8 @@ public class DataFrameColumnFactory {
                 return new SparseIntegerColumn( columnName );
             case ColumnTypes.COLUMN_TYPE_SPARSE_LONG:
                 return new SparseLongColumn( columnName );
-
             default:
-                throw new IllegalArgumentException( "Unknown columntype (" + columnType + ") for Column '" + columnName + "'" );
+                throw new IllegalArgumentException( "Unknown columntype (" + columnType + ") for column '" + columnName + "'" );
         }
 
     }

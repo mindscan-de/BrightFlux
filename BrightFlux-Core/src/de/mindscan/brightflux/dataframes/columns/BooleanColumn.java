@@ -78,15 +78,16 @@ public class BooleanColumn extends SimpleColumn<Boolean> {
      * {@inheritDoc}
      */
     @Override
-    public int findInsertRowIndexRaw( Object element ) {
-        return -1;
+    protected Comparator<? super Boolean> getComparator() {
+        return Comparator.naturalOrder();
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    protected Comparator<? super Boolean> getComparator() {
-        return Comparator.naturalOrder();
+    public int findInsertRowIndexRaw( Object element ) {
+        return -1;
     }
+
 }

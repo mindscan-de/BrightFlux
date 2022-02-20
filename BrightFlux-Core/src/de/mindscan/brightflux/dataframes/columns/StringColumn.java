@@ -83,15 +83,16 @@ public class StringColumn extends SimpleColumn<String> {
      * {@inheritDoc}
      */
     @Override
-    public int findInsertRowIndexRaw( Object element ) {
-        return -1;
+    protected Comparator<? super String> getComparator() {
+        return Comparator.naturalOrder();
     }
 
     /** 
      * {@inheritDoc}
      */
     @Override
-    protected Comparator<? super String> getComparator() {
-        return Comparator.naturalOrder();
+    public int findInsertRowIndexRaw( Object element ) {
+        return -1;
     }
+
 }
