@@ -667,7 +667,6 @@ public class DataFrameImpl implements DataFrame {
 
         return columnsMap.get( columnName ).findInsertRowIndexRaw( value );
 
-        // TODO Auto-generated method stub
         // throw new NotYetImplemetedException( "implement predict Row index feature" );
 
         // -1 if row can't be predicted. 
