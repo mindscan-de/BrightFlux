@@ -53,7 +53,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
  */
 public class RowFilterPredicateCompileStrategy {
 
-    // TODO: ColumnColumn Predicate
+    // TODO: ColumnColumn Predicate which could allow comparisons of column values row wise
 
     private BiFunction<DataFrameRowFilterPredicate, DataFrameRowFilterPredicate, DataFrameRowFilterPredicate> andFunctionPredPred = DataFrameRowFilterPredicateFactory::and;
     private BiFunction<DataFrameRowFilterPredicate, DataFrameRowFilterPredicate, DataFrameRowFilterPredicate> orFunctionPredPred = DataFrameRowFilterPredicateFactory::or;
@@ -70,14 +70,6 @@ public class RowFilterPredicateCompileStrategy {
     private BiFunction<String, Object, DataFrameRowFilterPredicate> gtFunctionColImm = DataFrameRowFilterPredicateFactory::gt;
     private BiFunction<String, Object, DataFrameRowFilterPredicate> leFunctionColImm = DataFrameRowFilterPredicateFactory::le;
     private BiFunction<String, Object, DataFrameRowFilterPredicate> ltFunctionColImm = DataFrameRowFilterPredicateFactory::lt;
-
-    // XXX: Actually we can not combine two predicates which consists of two  applyNodes.... will need to work on that. 
-    //      ROWCALLBACK highlight_blue FROM df WHERE ((df.'h2.msg'.contains('at de.v')) || (df.'h2.msg'.contains('Exception')))
-    //      For now we can just highlights in series...
-    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('Exception'))
-    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('at de.v'))
-    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('at java.'))
-    //  ROWCALLBACK highlight_pink FROM df WHERE (df.'h2.msg'.contains('at com.'))
 
     public DataFrameRowFilterPredicate compile( DFQLNode node ) {
         if (node instanceof DFQLEmptyNode) {
