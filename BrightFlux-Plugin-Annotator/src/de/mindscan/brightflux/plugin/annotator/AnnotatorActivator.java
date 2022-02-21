@@ -29,6 +29,7 @@ import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModuleImpl;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.services.StartupParticipant;
@@ -54,6 +55,9 @@ public class AnnotatorActivator implements StartupParticipant {
 
         ReportGeneratorComponent reportGeneratorComponent = systemServices.getService( ReportGeneratorComponent.class );
         annotator.setReportGeneratorComponent( reportGeneratorComponent );
+
+        DataFrameHierarchyComponent dataFrameHierarchyComponent = systemServices.getService( DataFrameHierarchyComponent.class );
+        annotator.setDataframeHierarchyComponent( dataFrameHierarchyComponent );
 
         systemServices.registerService( annotator, AnnotatorComponent.class );
 

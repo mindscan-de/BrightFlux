@@ -39,6 +39,7 @@ import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceM
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorReportBuilder;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.plugin.reports.ReportBuilder;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
@@ -67,6 +68,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     private DataFrame logAnalysisFrame = null;
     private AnnotatorPersistenceModule persistenceModule;
     private ReportGeneratorComponent reportGeneratorComponent;
+    private DataFrameHierarchyComponent dataFrameHierarchyComponent;
 
     /**
      * 
@@ -92,6 +94,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
                 DataFrameAnnotateRowEvent x = ((DataFrameAnnotateRowEvent) event);
 
                 // TODO: the dataframe should be used to figure out which logAnalysisFrame should be used...
+                // TODO: use the dataframe hierarchy calculateion.
 
                 // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
                 String newText = x.getAnnotation();
@@ -156,6 +159,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         String[] templateNames = this.persistenceModule.getAvailableReportTemplateNames();
         ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemplate( templateNames[reportNameIndex] );
 
+        // TODO: retrieve the correct analysis dataframe depending on "forThisDataFrame" s
         return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame(), reportBuilder );
     }
 
@@ -169,6 +173,10 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
 
     public void setReportGeneratorComponent( ReportGeneratorComponent reportGeneratorComponent ) {
         this.reportGeneratorComponent = reportGeneratorComponent;
+    }
+
+    public void setDataframeHierarchyComponent( DataFrameHierarchyComponent dataFrameHierarchyComponent ) {
+        this.dataFrameHierarchyComponent = dataFrameHierarchyComponent;
     }
 
 }
