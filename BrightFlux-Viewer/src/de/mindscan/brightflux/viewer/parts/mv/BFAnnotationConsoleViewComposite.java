@@ -229,7 +229,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void widgetSelected( SelectionEvent e ) {
                 String header = "Save Annotation File.";
                 BrightFluxFileDialogs.saveRegularFileAndConsumePath( shell, header, FileDescriptions.BF_ANNOTATION, p -> {
-                    BFCommand command = AnnotatorCommandFactory.saveAnnotationDataFrame( annotatorService.getLogAnalysisFrame(), p );
+                    BFCommand command = AnnotatorCommandFactory.saveAnnotationDataFrame( annotatorService.getLogAnalysisFrame( currentSelectedDataFrame ), p );
                     dispatchCommand( command );
                 } );
 
@@ -317,7 +317,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private void prepareCurrentAnnotation( Object rowItem ) {
         if (isDataFrameValid() && rowItem != null) {
             int originalRowIndex = ((DataFrameRow) rowItem).getOriginalRowIndex();
-            DataFrame logAnalysisFrame = annotatorService.getLogAnalysisFrame();
+            DataFrame logAnalysisFrame = annotatorService.getLogAnalysisFrame( currentSelectedDataFrame );
 
             if (logAnalysisFrame.isPresent( ANNOTATION_COLUMN_NAME, originalRowIndex )) {
                 String previousAnnotation = (String) logAnalysisFrame.getAt( ANNOTATION_COLUMN_NAME, originalRowIndex );
@@ -333,7 +333,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private boolean isDataFrameValid() {
-        return annotatorService.isLogAnalysisFramePresent();
+        return annotatorService.isLogAnalysisFramePresent( currentSelectedDataFrame );
     }
 
     private boolean isCurrentDataFrameRowValid() {

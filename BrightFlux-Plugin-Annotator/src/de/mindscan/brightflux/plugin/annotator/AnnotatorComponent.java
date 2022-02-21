@@ -136,14 +136,13 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         // intentionally left blank for now.
     }
 
-    /**
-     * @return the logAnalysisFrame
-     */
-    public DataFrame getLogAnalysisFrame() {
+    public DataFrame getLogAnalysisFrame( DataFrame selectedDataFrame ) {
+        // TODO: use the selectedDataFrame using the dataframehierarchy to find tghe proper loganalysis dataframe
         return logAnalysisFrame;
     }
 
-    public boolean isLogAnalysisFramePresent() {
+    public boolean isLogAnalysisFramePresent( DataFrame selectedDataFrame ) {
+        // TODO: use the selectedDataFrame using the dataframehierarchy to find tghe proper loganalysis dataframe
         return logAnalysisFrame != null;
     }
 
@@ -159,8 +158,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         String[] templateNames = this.persistenceModule.getAvailableReportTemplateNames();
         ReportBuilder reportBuilder = reportGeneratorComponent.getReportBuilderFileTemplate( templateNames[reportNameIndex] );
 
-        // TODO: retrieve the correct analysis dataframe depending on "forThisDataFrame" s
-        return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame(), reportBuilder );
+        return AnnotatorReportBuilder.buildReport( forThisDataFrame, getLogAnalysisFrame( forThisDataFrame ), reportBuilder );
     }
 
     public AnnotatorPersistenceModule getPersistenceModule() {
