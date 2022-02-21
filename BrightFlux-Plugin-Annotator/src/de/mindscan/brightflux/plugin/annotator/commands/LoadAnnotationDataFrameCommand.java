@@ -56,6 +56,9 @@ public class LoadAnnotationDataFrameCommand implements BFCommand {
         IngestBFDataFrameJsonLines ingest = new IngestBFDataFrameJsonLines();
         DataFrame annotationDataFrame = ingest.loadAsDataFrame( loadPathInfo );
 
+        // TODO: we want to load a analysis dataframe, for a selected dataframe / root frame of the selected dataframe
+        // TODO: for this command a dataframe as a reference must be provided.
+
         eventConsumer.accept( AnnotatorEventFactory.annotationDataframeCreated( annotationDataFrame ) );
     }
 
