@@ -34,7 +34,8 @@ import de.mindscan.brightflux.plugin.annotator.events.AnnotatorEventFactory;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
 
 /**
- * 
+ * TODO: rework whether we need this command. Currently we use it to clear the available data.
+ * TODO: we should probably provide a reference dataframe, if we want to clear a certain analysis.
  */
 public class CreateAnnoationDataFrameCommand implements BFCommand {
 
