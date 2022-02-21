@@ -176,8 +176,15 @@ Search Engine Support
 
 ### Later
 
-Annotation and Highlights Improvements
-* Have different annotation frames / highlight frames for each base document and combine via strategy...
+
+Improve Annotations (textual)
+* use the dataframe hierarchy plugin to track multiple base documents
+* have an annotation dataframe for each base document, 
+
+
+Improve Highlight-Annotations
+* use the dataframe hierarchy plugin to track multiple base documents
+* have an highlight dataframe file for each base document,
 
 
 Search Engine Support
