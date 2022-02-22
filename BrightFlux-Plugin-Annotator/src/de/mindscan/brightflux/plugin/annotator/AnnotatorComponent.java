@@ -121,6 +121,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     private void registerAnnotationDFCreateEvent( ProjectRegistry projectRegistry ) {
+        // TODO: how to process this?
         DataFrameEventListenerAdapter dfCreatedListener = new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
