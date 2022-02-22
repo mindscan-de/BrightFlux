@@ -93,8 +93,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
             public void handleEvent( BFEvent event ) {
                 DataFrameAnnotateRowEvent x = ((DataFrameAnnotateRowEvent) event);
 
-                // TODO: the dataframe should be used to figure out which logAnalysisFrame should be used...
-                // TODO: use the dataframe hierarchy calculateion.
+                DataFrame logAnalysisFrame = getLogAnalysisFrame( x.getDataFrame() );
 
                 // TODO use another aditional key (e.g. a timstamp / original index in the dataframe)
                 String newText = x.getAnnotation();
