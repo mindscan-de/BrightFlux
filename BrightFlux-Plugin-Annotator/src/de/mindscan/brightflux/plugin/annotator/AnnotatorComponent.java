@@ -147,6 +147,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public void writeAnnotationFile( Path annotationFilePath ) {
+        // TODO: use a derived logAnalysis Frame.
         if (logAnalysisFrame != null) {
             AnnotatorJsonLWriterImpl annotatorJsonLWriterImpl = new AnnotatorJsonLWriterImpl();
 
