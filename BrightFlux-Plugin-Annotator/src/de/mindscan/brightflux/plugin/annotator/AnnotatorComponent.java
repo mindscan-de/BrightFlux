@@ -25,8 +25,6 @@
  */
 package de.mindscan.brightflux.plugin.annotator;
 
-import java.nio.file.Path;
-
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -38,7 +36,6 @@ import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorReportBuilder;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorUtils;
-import de.mindscan.brightflux.plugin.annotator.writer.AnnotatorJsonLWriterImpl;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.plugin.reports.ReportBuilder;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
@@ -144,15 +141,6 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     public boolean isLogAnalysisFramePresent( DataFrame selectedDataFrame ) {
         // TODO: use the selectedDataFrame using the dataframehierarchy to find tghe proper loganalysis dataframe
         return logAnalysisFrame != null;
-    }
-
-    public void writeAnnotationFile( Path annotationFilePath ) {
-        // TODO: use a derived logAnalysis Frame.
-        if (logAnalysisFrame != null) {
-            AnnotatorJsonLWriterImpl annotatorJsonLWriterImpl = new AnnotatorJsonLWriterImpl();
-
-            annotatorJsonLWriterImpl.writeFile( logAnalysisFrame, annotationFilePath );
-        }
     }
 
     public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
