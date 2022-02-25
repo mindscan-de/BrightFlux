@@ -45,8 +45,7 @@ public class CodeAnnotatorComponent implements ProjectRegistryParticipant {
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        // TODO Auto-generated method stub
-
+        // intentionally left blank for now.
     }
 
 }
