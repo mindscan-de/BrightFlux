@@ -31,6 +31,6 @@ package de.mindscan.brightflux.system.services;
  */
 public interface StartupParticipant {
 
-    void start( SystemServices systemservices );
+    void start( SystemServices systemServices );
 
 }
