@@ -29,6 +29,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import de.mindscan.brightflux.exceptions.NotYetImplemetedException;
 import de.mindscan.brightflux.plugin.annotator.AnnotatorActivator;
+import de.mindscan.brightflux.plugin.codeannotator.CodeAnnotatorActivator;
 import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyActivator;
 import de.mindscan.brightflux.plugin.favrecipes.FavRecipesActivator;
 import de.mindscan.brightflux.plugin.highlighter.HighlighterActivator;
@@ -91,6 +92,9 @@ public class BrightFluxViewerStartup {
 
         // Register Report Generator Service
         startActivator( ReportGeneratorActivator.class, systemServices );
+
+        // Register Code Annotator service
+        startActivator( CodeAnnotatorActivator.class, systemServices );
 
         // Register Annotator Service
         startActivator( AnnotatorActivator.class, systemServices );
