@@ -78,6 +78,12 @@
 			<artifactId>BrightFlux-Plugin-Reports</artifactId>
 			<version>0.0.1-SNAPSHOT</version>			
 		</dependency>
+		<!-- BrightFlux-Plugin-CodeAnnotator -->	
+		<dependency>
+			<groupId>de.mindscan.brightflux</groupId>
+			<artifactId>BrightFlux-Plugin-CodeAnnotator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>			
+		</dependency>
 
 
 		
