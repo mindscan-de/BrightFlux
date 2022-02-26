@@ -166,6 +166,16 @@ I want to address rather sooner than later.
 ### Next
 
 
+Improve Annotations (textual)
+* use the dataframe hierarchy plugin to track multiple base documents
+* have an annotation dataframe for each base document, 
+
+
+Improve Highlight-Annotations
+* use the dataframe hierarchy plugin to track multiple base documents
+* have an highlight dataframe file for each base document,
+
+
 Machine Learning
 * Well we have to see...
 
@@ -175,16 +185,6 @@ Search Engine Support
 
 
 ### Later
-
-
-Improve Annotations (textual)
-* use the dataframe hierarchy plugin to track multiple base documents
-* have an annotation dataframe for each base document, 
-
-
-Improve Highlight-Annotations
-* use the dataframe hierarchy plugin to track multiple base documents
-* have an highlight dataframe file for each base document,
 
 
 Search Engine Support
@@ -294,7 +294,7 @@ Video time stamp Annotations
 
 Code/Textfile Annotator
 * annotate code with findings
-  * add and highlight code also.
+  * add and highlight/mark code also.
   * integrate and collate all findings to a report
 
 
