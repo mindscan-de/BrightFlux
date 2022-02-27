@@ -35,7 +35,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
-import de.mindscan.brightflux.plugin.annotator.events.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.plugin.annotator.events.AnnotationDataFrameLoadedEvent;
 import de.mindscan.brightflux.plugin.annotator.events.DataFrameAnnotateRowEvent;
 import de.mindscan.brightflux.plugin.annotator.persistence.AnnotatorPersistenceModule;
 import de.mindscan.brightflux.plugin.annotator.utils.AnnotatorReportBuilder;
@@ -44,7 +44,6 @@ import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyCompon
 import de.mindscan.brightflux.plugin.reports.ReportBuilder;
 import de.mindscan.brightflux.plugin.reports.ReportGeneratorComponent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
-import de.mindscan.brightflux.system.events.DataFrameEventListenerAdapter;
 
 /**
  * I want some kind of component which will take care of the Annotations... I don't want it to be a graphical component
@@ -83,7 +82,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
      */
     @Override
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
-        registerAnnotationDFCreateEvent( projectRegistry );
+        registerAnnotationDFLoadedEvent( projectRegistry );
         registerAnnotationSaveEvent( projectRegistry );
         registerAnnotateRowEvent( projectRegistry );
     }
@@ -120,18 +119,23 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         projectRegistry.getEventDispatcher().registerEventListener( DataFrameAnnotateRowEvent.class, dfAnnotateListener );
     }
 
-    // TODO: rewrite this... and split clear from load, which was both solved here.
-    private void registerAnnotationDFCreateEvent( ProjectRegistry projectRegistry ) {
-        // TODO: how to process this?
-        DataFrameEventListenerAdapter dfCreatedListener = new DataFrameEventListenerAdapter() {
+    private void registerAnnotationDFLoadedEvent( ProjectRegistry projectRegistry ) {
+        BFEventListenerAdapter dfCreatedListener = new BFEventListenerAdapter() {
+            /** 
+             * {@inheritDoc}
+             */
             @Override
-            public void handleDataFrame( DataFrame dataFrame ) {
-                if (ANNOTATION_DATAFRAME_NAME.equals( dataFrame.getName() )) {
-                    // AnnotatorComponent.this.logAnalysisFrame = dataFrame;
+            public void handleEvent( BFEvent event ) {
+                if (event instanceof AnnotationDataFrameLoadedEvent) {
+                    DataFrame loadedAnnotationDataFrame = ((AnnotationDataFrameLoadedEvent) event).getAnnotationDataFrame();
+                    DataFrame referenceDataFrame = ((AnnotationDataFrameLoadedEvent) event).getReferenceDataFrame();
+
+                    UUID rootUUID = getRootDataFrameUUID( referenceDataFrame );
+                    rootDfToAnnotationFrame.put( rootUUID, loadedAnnotationDataFrame );
                 }
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( AnnotationDataFrameCreatedEvent.class, dfCreatedListener );
+        projectRegistry.getEventDispatcher().registerEventListener( AnnotationDataFrameLoadedEvent.class, dfCreatedListener );
     }
 
     private void registerAnnotationSaveEvent( ProjectRegistry projectRegistry ) {
@@ -139,8 +143,11 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public DataFrame getLogAnalysisFrame( DataFrame selectedDataFrame ) {
-        UUID rootUUID = this.dataFrameHierarchyComponent.getRootUUID( selectedDataFrame );
-        return getAnnotatorDataframe( rootUUID );
+        return getAnnotatorDataframe( getRootDataFrameUUID( selectedDataFrame ) );
+    }
+
+    private UUID getRootDataFrameUUID( DataFrame selectedDataFrame ) {
+        return this.dataFrameHierarchyComponent.getRootUUID( selectedDataFrame );
     }
 
     private DataFrame getAnnotatorDataframe( UUID rootUUID ) {
