@@ -40,11 +40,13 @@ import de.mindscan.brightflux.plugin.annotator.events.AnnotatorEventFactory;
 public class LoadAnnotationDataFrameCommand implements BFCommand {
 
     private Path loadPathInfo;
+    private DataFrame referenceDataFrame;
 
     /**
      * 
      */
-    public LoadAnnotationDataFrameCommand( Path loadPathInfo ) {
+    public LoadAnnotationDataFrameCommand( DataFrame referenceDataFrame, Path loadPathInfo ) {
+        this.referenceDataFrame = referenceDataFrame;
         this.loadPathInfo = loadPathInfo;
     }
 
@@ -56,10 +58,10 @@ public class LoadAnnotationDataFrameCommand implements BFCommand {
         IngestBFDataFrameJsonLines ingest = new IngestBFDataFrameJsonLines();
         DataFrame annotationDataFrame = ingest.loadAsDataFrame( loadPathInfo );
 
-        // TODO: we want to load a analysis dataframe, for a selected dataframe / root frame of the selected dataframe
-        // TODO: for this command a dataframe as a reference must be provided.
+        if (referenceDataFrame != null) {
+            eventConsumer.accept( AnnotatorEventFactory.annotationDataframeLoaded( referenceDataFrame, annotationDataFrame ) );
+        }
 
-        eventConsumer.accept( AnnotatorEventFactory.annotationDataframeCreated( annotationDataFrame ) );
     }
 
 }

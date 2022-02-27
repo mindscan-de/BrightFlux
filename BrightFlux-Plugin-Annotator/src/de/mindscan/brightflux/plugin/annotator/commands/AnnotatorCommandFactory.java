@@ -43,8 +43,8 @@ public class AnnotatorCommandFactory {
         return new SaveAnnotationDataFrameCommand( annotationDataFrame, targetFilePath );
     }
 
-    public static BFCommand loadAnnotationDataFrame( Path annotationFilePath ) {
-        return new LoadAnnotationDataFrameCommand( annotationFilePath );
+    public static BFCommand loadAnnotationDataFrame( DataFrame referenceDataFrame, Path annotationFilePath ) {
+        return new LoadAnnotationDataFrameCommand( referenceDataFrame, annotationFilePath );
     }
 
     public static BFCommand annotateRow( DataFrame inputDataFrame, int rowIndex, String annotation ) {
