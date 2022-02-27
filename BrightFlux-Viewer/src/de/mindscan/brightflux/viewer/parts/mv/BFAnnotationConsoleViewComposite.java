@@ -83,6 +83,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     private ProjectRegistry projectRegistry;
 
     private Button btnClearAnnotations;
+    private Button btnLoadAnnotations;
 
     private Shell shell;
 
@@ -110,12 +111,12 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     public void setProjectRegistry( ProjectRegistry projectRegistry ) {
         this.projectRegistry = projectRegistry;
 
-        registerAnnotationDataFrameCreatedEvent( projectRegistry );
+        registerAnnotationDataFrameLoadedEvent( projectRegistry );
         registerDataFrameSelectedEvent( projectRegistry );
         registerDataFrameRowSelectionEvent( projectRegistry );
     }
 
-    private void registerAnnotationDataFrameCreatedEvent( ProjectRegistry projectRegistry ) {
+    private void registerAnnotationDataFrameLoadedEvent( ProjectRegistry projectRegistry ) {
         DataFrameEventListenerAdapter annotationDfCreatedListener = new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrame( DataFrame frameToAnnotate ) {
@@ -132,6 +133,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
             public void handleDataFrame( DataFrame dataFrame ) {
                 currentSelectedDataFrame = dataFrame;
                 currentSelectedDataFrameRow = null;
+
+                btnLoadAnnotations.setEnabled( true );
 
                 // TODO: calculcate row selection if any...
                 DataFrameRow calculatedSelectedRow = currentSelectedDataFrameRow;
@@ -207,7 +210,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         reportSelectionCombo.setLayoutData( gd_combo );
         reportSelectionCombo.select( 0 );
 
-        Button btnLoadAnnotations = new Button( composite, SWT.NONE );
+        btnLoadAnnotations = new Button( composite, SWT.NONE );
+        btnLoadAnnotations.setEnabled( false );
         btnLoadAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
