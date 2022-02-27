@@ -299,7 +299,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void updateModifiedAnnotationForDataFrame() {
-        if (isDataFrameValid() && isCurrentDataFrameRowValid()) {
+        if (isCurrentDataFrameRowValid()) {
             String newText = annotatedStyledText.getText();
 
             /**
@@ -315,7 +315,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private void prepareCurrentAnnotation( Object rowItem ) {
-        if (isDataFrameValid() && rowItem != null) {
+        if (rowItem != null) {
             int originalRowIndex = ((DataFrameRow) rowItem).getOriginalRowIndex();
             DataFrame logAnalysisFrame = annotatorService.getLogAnalysisFrame( currentSelectedDataFrame );
 
@@ -330,10 +330,6 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         else {
             annotatedStyledText.setText( "" );
         }
-    }
-
-    private boolean isDataFrameValid() {
-        return true;
     }
 
     private boolean isCurrentDataFrameRowValid() {
