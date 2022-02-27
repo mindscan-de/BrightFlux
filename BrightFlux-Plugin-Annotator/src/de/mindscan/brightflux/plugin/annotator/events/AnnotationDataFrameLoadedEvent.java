@@ -33,15 +33,15 @@ import de.mindscan.brightflux.system.events.dataframe.BFAbstractDataFrameEvent;
  */
 public class AnnotationDataFrameLoadedEvent extends BFAbstractDataFrameEvent {
 
-    private DataFrame selectedDataFrame;
+    private DataFrame referenceDataFrame;
 
     /**
-     * @param selectedDataFrame
+     * @param referenceDataFrame
      * @param annotationDataFrame
      */
-    public AnnotationDataFrameLoadedEvent( DataFrame selectedDataFrame, DataFrame annotationDataFrame ) {
+    public AnnotationDataFrameLoadedEvent( DataFrame referenceDataFrame, DataFrame annotationDataFrame ) {
         super( annotationDataFrame );
-        this.selectedDataFrame = selectedDataFrame;
+        this.referenceDataFrame = referenceDataFrame;
     }
 
     /** 
@@ -53,10 +53,10 @@ public class AnnotationDataFrameLoadedEvent extends BFAbstractDataFrameEvent {
     }
 
     /**
-     * @return the selectedDataFrame
+     * @return the referenceDataFrame
      */
-    public DataFrame getSelectedDataFrame() {
-        return selectedDataFrame;
+    public DataFrame getReferenceDataFrame() {
+        return referenceDataFrame;
     }
 
     /**

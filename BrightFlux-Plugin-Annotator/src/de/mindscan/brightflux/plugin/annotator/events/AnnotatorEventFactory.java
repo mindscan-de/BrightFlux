@@ -41,4 +41,8 @@ public class AnnotatorEventFactory {
         return new AnnotationDataFrameCreatedEvent( dataFrame );
     }
 
+    public static BFEvent annotationDataframeLoaded( DataFrame selectedDataFrame, DataFrame annotationDataFrame ) {
+        return new AnnotationDataFrameLoadedEvent( selectedDataFrame, annotationDataFrame );
+    }
+
 }
