@@ -25,6 +25,10 @@
  */
 package de.mindscan.brightflux.plugin.annotator;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
 import de.mindscan.brightflux.framework.events.BFEvent;
@@ -62,16 +66,16 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     public static final String ANNOTATION_COLUMN_NAME = "annotation";
     public static final String ANNOTATION_DATAFRAME_NAME = "logAnalysisFrame";
 
-    private DataFrame logAnalysisFrame = null;
     private AnnotatorPersistenceModule persistenceModule;
     private ReportGeneratorComponent reportGeneratorComponent;
     private DataFrameHierarchyComponent dataFrameHierarchyComponent;
+    private Map<UUID, DataFrame> rootDfToAnnotationFrame;
 
     /**
      * 
      */
     public AnnotatorComponent() {
-        this.logAnalysisFrame = AnnotatorUtils.createAnnotationDataFrame();
+        this.rootDfToAnnotationFrame = new HashMap<>();
     }
 
     /** 
@@ -116,13 +120,14 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         projectRegistry.getEventDispatcher().registerEventListener( DataFrameAnnotateRowEvent.class, dfAnnotateListener );
     }
 
+    // TODO: rewrite this... and split clear from load, which was both solved here.
     private void registerAnnotationDFCreateEvent( ProjectRegistry projectRegistry ) {
         // TODO: how to process this?
         DataFrameEventListenerAdapter dfCreatedListener = new DataFrameEventListenerAdapter() {
             @Override
             public void handleDataFrame( DataFrame dataFrame ) {
                 if (ANNOTATION_DATAFRAME_NAME.equals( dataFrame.getName() )) {
-                    AnnotatorComponent.this.logAnalysisFrame = dataFrame;
+                    // AnnotatorComponent.this.logAnalysisFrame = dataFrame;
                 }
             }
         };
@@ -134,13 +139,22 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public DataFrame getLogAnalysisFrame( DataFrame selectedDataFrame ) {
-        // TODO: use the selectedDataFrame using the dataframehierarchy to find tghe proper loganalysis dataframe
-        return logAnalysisFrame;
+        UUID rootUUID = this.dataFrameHierarchyComponent.getRootUUID( selectedDataFrame );
+        return getAnnotatorDataframe( rootUUID );
     }
 
     public boolean isLogAnalysisFramePresent( DataFrame selectedDataFrame ) {
-        // TODO: use the selectedDataFrame using the dataframehierarchy to find tghe proper loganalysis dataframe
-        return logAnalysisFrame != null;
+        UUID rootUUID = this.dataFrameHierarchyComponent.getRootUUID( selectedDataFrame );
+        // TODO: actually this  will always return true in the new implementation...
+        return getAnnotatorDataframe( rootUUID ) != null;
+    }
+
+    private DataFrame getAnnotatorDataframe( UUID rootUUID ) {
+        return rootDfToAnnotationFrame.computeIfAbsent( rootUUID, this::createNewAnnotatorDataFrame );
+    }
+
+    private DataFrame createNewAnnotatorDataFrame( UUID ignoreMe ) {
+        return AnnotatorUtils.createAnnotationDataFrame();
     }
 
     public String createFullReport( String reportName, int reportNameIndex, DataFrame forThisDataFrame ) {
