@@ -144,9 +144,7 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
     }
 
     public boolean isLogAnalysisFramePresent( DataFrame selectedDataFrame ) {
-        UUID rootUUID = this.dataFrameHierarchyComponent.getRootUUID( selectedDataFrame );
-        // TODO: actually this  will always return true in the new implementation...
-        return getAnnotatorDataframe( rootUUID ) != null;
+        return true;
     }
 
     private DataFrame getAnnotatorDataframe( UUID rootUUID ) {
