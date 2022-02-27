@@ -30,7 +30,7 @@ import de.mindscan.brightflux.framework.events.BackgroundExecutionStartedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionExceptionEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionFinishedEvent;
 import de.mindscan.brightflux.framework.events.CommandExecutionStartedEvent;
-import de.mindscan.brightflux.plugin.annotator.events.AnnotationDataFrameCreatedEvent;
+import de.mindscan.brightflux.plugin.annotator.events.AnnotationDataFrameLoadedEvent;
 import de.mindscan.brightflux.plugin.dataframehierarchy.events.DataFrameHierarchyUpdatedEvent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectClosedEvent;
 import de.mindscan.brightflux.plugin.videoannotator.events.VideoAnnotationVideoObjectCreatedEvent;
@@ -52,7 +52,7 @@ public class SystemEvents {
     public final static Class<?> DataFrameLoaded = DataFrameLoadedEvent.class;
     public final static Class<?> DataFrameCreated = DataFrameCreatedEvent.class;
     public final static Class<?> DataFrameClosed = DataFrameClosedEvent.class;
-    public final static Class<?> AnnotationDataFrameCreated = AnnotationDataFrameCreatedEvent.class;
+    public final static Class<?> AnnotationDataFrameLoaded = AnnotationDataFrameLoadedEvent.class;
 
     public final static Class<?> DataFrameHierarchyUpdated = DataFrameHierarchyUpdatedEvent.class;
 

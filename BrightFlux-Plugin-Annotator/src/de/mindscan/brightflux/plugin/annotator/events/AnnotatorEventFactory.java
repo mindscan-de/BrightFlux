@@ -37,10 +37,6 @@ public class AnnotatorEventFactory {
         return new DataFrameAnnotateRowEvent( inputDataFrame, row, annotation );
     }
 
-    public static BFEvent annotationDataframeCreated( DataFrame dataFrame ) {
-        return new AnnotationDataFrameCreatedEvent( dataFrame );
-    }
-
     public static BFEvent annotationDataframeLoaded( DataFrame selectedDataFrame, DataFrame annotationDataFrame ) {
         return new AnnotationDataFrameLoadedEvent( selectedDataFrame, annotationDataFrame );
     }

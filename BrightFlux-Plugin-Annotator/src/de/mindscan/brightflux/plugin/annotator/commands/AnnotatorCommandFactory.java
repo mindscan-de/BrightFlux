@@ -35,10 +35,6 @@ import de.mindscan.brightflux.framework.command.BFCommand;
  */
 public class AnnotatorCommandFactory {
 
-    public static BFCommand createSparseDataFrame() {
-        return new CreateAnnoationDataFrameCommand();
-    }
-
     public static BFCommand saveAnnotationDataFrame( DataFrame annotationDataFrame, Path targetFilePath ) {
         return new SaveAnnotationDataFrameCommand( annotationDataFrame, targetFilePath );
     }

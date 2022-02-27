@@ -122,7 +122,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
                 BFAnnotationConsoleViewComposite.this.currentSelectedDataFrameRow = null;
             }
         };
-        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameCreated, annotationDfCreatedListener );
+        projectRegistry.getEventDispatcher().registerEventListener( SystemEvents.AnnotationDataFrameLoaded, annotationDfCreatedListener );
     }
 
     private void registerDataFrameSelectedEvent( ProjectRegistry projectRegistry ) {
@@ -176,7 +176,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         btnClearAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                createAnnotationDataFrame();
+                clearAnnotationDataFrame();
             }
         } );
         btnClearAnnotations.setText( "Clear Annotations" );
@@ -342,8 +342,9 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
     }
 
-    private void createAnnotationDataFrame() {
-        dispatchCommand( AnnotatorCommandFactory.createSparseDataFrame() );
+    private void clearAnnotationDataFrame() {
+        // TODO: we actually want to clear the dataframe for the selected Dataframe
+        // dispatchCommand( AnnotatorCommandFactory.createSparseDataFrame() );
     }
 
     private void dispatchCommand( BFCommand command ) {
