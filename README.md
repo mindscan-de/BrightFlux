@@ -89,7 +89,7 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * "select *" will copy the original index
 * Annotate log messages
   * annotate line of a data frame or one of its child data frames
-  * annotations are global over different (related) data frames
+  * annotations are different for different (related) data frames
   * create a simple report from the annotations
   * use report snippets for annotations
   * save current annotations to annotation file - this feature is just temporary
@@ -164,11 +164,6 @@ I want to address rather sooner than later.
 
 
 ### Next
-
-
-Improve Annotations (textual)
-* use the dataframe hierarchy plugin to track multiple base documents
-* have an annotation dataframe for each base document, 
 
 
 Improve Highlight-Annotations
