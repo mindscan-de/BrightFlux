@@ -333,7 +333,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
     }
 
     private boolean isDataFrameValid() {
-        return annotatorService.isLogAnalysisFramePresent( currentSelectedDataFrame );
+        return true;
     }
 
     private boolean isCurrentDataFrameRowValid() {

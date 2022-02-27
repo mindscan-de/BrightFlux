@@ -143,10 +143,6 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         return getAnnotatorDataframe( rootUUID );
     }
 
-    public boolean isLogAnalysisFramePresent( DataFrame selectedDataFrame ) {
-        return true;
-    }
-
     private DataFrame getAnnotatorDataframe( UUID rootUUID ) {
         return rootDfToAnnotationFrame.computeIfAbsent( rootUUID, this::createNewAnnotatorDataFrame );
     }
