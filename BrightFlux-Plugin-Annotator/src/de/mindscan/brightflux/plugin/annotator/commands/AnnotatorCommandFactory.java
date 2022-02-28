@@ -47,4 +47,8 @@ public class AnnotatorCommandFactory {
         return new DataFrameAnnotateRowCommand( inputDataFrame, rowIndex, annotation );
     }
 
+    public static BFCommand clearAllAnnotations() {
+        return new ClearAllAnnotationsDataFrameCommand();
+    }
+
 }
