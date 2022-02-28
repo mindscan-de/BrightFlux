@@ -181,4 +181,8 @@ public class AnnotatorComponent implements ProjectRegistryParticipant {
         this.dataFrameHierarchyComponent = dataFrameHierarchyComponent;
     }
 
+    public void clearAllAnnotations() {
+        this.rootDfToAnnotationFrame = new HashMap<>();
+    }
+
 }
