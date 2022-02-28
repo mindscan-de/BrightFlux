@@ -82,7 +82,7 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
 
     private ProjectRegistry projectRegistry;
 
-    private Button btnClearAnnotations;
+    private Button btnClearAllAnnotations;
     private Button btnLoadAnnotations;
 
     private Shell shell;
@@ -175,14 +175,14 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         Composite composite = new Composite( sashForm_1, SWT.NONE );
         composite.setLayout( new GridLayout( 3, false ) );
 
-        btnClearAnnotations = new Button( composite, SWT.NONE );
-        btnClearAnnotations.addSelectionListener( new SelectionAdapter() {
+        btnClearAllAnnotations = new Button( composite, SWT.NONE );
+        btnClearAllAnnotations.addSelectionListener( new SelectionAdapter() {
             @Override
             public void widgetSelected( SelectionEvent e ) {
-                clearAnnotationDataFrame();
+                clearAllAnnotations();
             }
         } );
-        btnClearAnnotations.setText( "Clear Annotations" );
+        btnClearAllAnnotations.setText( "Clear All Annotations" );
 
         Button btnGenerateReport = new Button( composite, SWT.NONE );
         btnGenerateReport.addSelectionListener( new SelectionAdapter() {
@@ -346,9 +346,8 @@ public class BFAnnotationConsoleViewComposite extends Composite implements Proje
         dispatchCommand( UICommandFactory.copyToClipboard( this.getShell(), report ) );
     }
 
-    private void clearAnnotationDataFrame() {
-        // TODO: we actually want to clear the dataframe for the selected Dataframe
-        // dispatchCommand( AnnotatorCommandFactory.createSparseDataFrame() );
+    private void clearAllAnnotations() {
+        dispatchCommand( AnnotatorCommandFactory.clearAllAnnotations() );
     }
 
     private void dispatchCommand( BFCommand command ) {
