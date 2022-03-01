@@ -33,6 +33,7 @@ import de.mindscan.brightflux.framework.events.BFEvent;
 import de.mindscan.brightflux.framework.events.BFEventListener;
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
 import de.mindscan.brightflux.framework.registry.ProjectRegistryParticipant;
+import de.mindscan.brightflux.plugin.dataframehierarchy.DataFrameHierarchyComponent;
 import de.mindscan.brightflux.plugin.highlighter.events.DataFrameClearHighlightRowEvent;
 import de.mindscan.brightflux.plugin.highlighter.events.DataFrameHighlightRowEvent;
 import de.mindscan.brightflux.plugin.highlighter.events.HighlighterDataFrameCreatedEvent;
@@ -56,6 +57,7 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
     //       we need another highlighter dataframe. or use a single frame, and annotate the
     //       rows with the UUID of the dataframe.
     private DataFrame logHighlightFrame = null;
+    private DataFrameHierarchyComponent dataFrameHierarchyComponent;
 
     /**
      * 
@@ -146,6 +148,10 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
         HighlighterJsonLWriterImpl highlighterJSONLWriterImpl = new HighlighterJsonLWriterImpl();
 
         highlighterJSONLWriterImpl.writeFile( logHighlightFrame, highlightFilePath );
+    }
+
+    public void setDataframeHierarchyComponent( DataFrameHierarchyComponent dataFrameHierarchyComponent ) {
+        this.dataFrameHierarchyComponent = dataFrameHierarchyComponent;
     }
 
 }
