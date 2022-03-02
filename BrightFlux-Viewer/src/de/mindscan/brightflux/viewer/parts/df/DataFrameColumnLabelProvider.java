@@ -46,6 +46,7 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
     private final String columname;
     private HighlighterComponent highlighterComponent;
     private HighlighterUIComponent highlighterUIComponent;
+    private DataFrame logHighlightFrame;
 
     /**
      * @param columname The column name of the column determines, what column is shown from the data frame rows.
@@ -113,6 +114,11 @@ public class DataFrameColumnLabelProvider extends ColumnLabelProvider {
 
     public void setHighlighterUIComponent( HighlighterUIComponent highlighterUIComponent ) {
         this.highlighterUIComponent = highlighterUIComponent;
+    }
+
+    // TODO: update Loghighlighter dataframe, if the DataFrameTable is refreshed.
+    public void setHighlighterDataframe( DataFrame logHighlightFrame ) {
+        this.logHighlightFrame = logHighlightFrame;
     }
 
 }

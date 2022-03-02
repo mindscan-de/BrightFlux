@@ -26,6 +26,9 @@
 package de.mindscan.brightflux.plugin.highlighter;
 
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import de.mindscan.brightflux.dataframes.DataFrame;
 import de.mindscan.brightflux.dataframes.DataFrameSpecialColumns;
@@ -58,12 +61,14 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
     //       rows with the UUID of the dataframe.
     private DataFrame logHighlightFrame = null;
     private DataFrameHierarchyComponent dataFrameHierarchyComponent;
+    private Map<UUID, DataFrame> rootDfToHighlightFrame;
 
     /**
      * 
      */
     public HighlighterComponent() {
         this.logHighlightFrame = HighlighterUtils.createNewHighlightDataframe();
+        this.rootDfToHighlightFrame = new HashMap<>();
     }
 
     /** 
@@ -140,6 +145,24 @@ public class HighlighterComponent implements ProjectRegistryParticipant {
     public DataFrame getLogHighlightFrame() {
         // TODO: get loghighlightframe for given the UUID not assume there is only one.  
         return logHighlightFrame;
+    }
+
+    public DataFrame getLogHighlightFrame( DataFrame dataframe ) {
+        return this.getHighlighterDataframe( getRootDataFrameUUID( dataframe ) );
+    }
+
+    private UUID getRootDataFrameUUID( DataFrame selectedDataFrame ) {
+        return this.dataFrameHierarchyComponent.getRootUUID( selectedDataFrame );
+    }
+
+    private DataFrame getHighlighterDataframe( UUID rootUUID ) {
+        return rootDfToHighlightFrame.getOrDefault( rootUUID, logHighlightFrame );
+        // TODO: later
+        // return rootDfToHighlightFrame.computeIfAbsent( rootUUID, this::createNewAnnotatorDataFrame );
+    }
+
+    private DataFrame createNewAnnotatorDataFrame( UUID ignoreMe ) {
+        return HighlighterUtils.createNewHighlightDataframe();
     }
 
     // TODO: basic idea on how to save the highlighter dataframe... 

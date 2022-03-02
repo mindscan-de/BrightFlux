@@ -588,7 +588,10 @@ public class DataFrameTableComposite extends Composite implements ProjectRegistr
             //       e.g. present long-value as timstamp.
 
             DataFrameColumnLabelProvider labelProvider = new DataFrameColumnLabelProvider( columname );
+            // This is the old way...
             labelProvider.setHighLightherComponent( highlighterComponent );
+            // This currently doesn't work properly if the highlighter dataframe is loaded after the dataframe is shown...
+            labelProvider.setHighlighterDataframe( highlighterComponent.getLogHighlightFrame( ingestedDF ) );
             labelProvider.setHighlighterUIComponent( highlighterUIComponent );
             tableViewerColumn.setLabelProvider( labelProvider );
         }
