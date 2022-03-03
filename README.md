@@ -166,11 +166,6 @@ I want to address rather sooner than later.
 ### Next
 
 
-Improve Highlight-Annotations
-* use the dataframe hierarchy plugin to track multiple base documents
-* have an highlight dataframe file for each base document,
-
-
 Machine Learning
 * Well we have to see...
 
@@ -201,6 +196,11 @@ Machine Learning and Pattern recognition and anomaly Detection on Log-Data
 Video time stamp Annotations
 * Provide multiple timestamps and time warp between them, in case of edited videos or speed up videos.
 * Maybe provide multiple sync partitions.
+
+
+Improve Highlight-Annotations
+* use the dataframe hierarchy plugin to track multiple base documents
+* have an highlight dataframe file for each base document,
 
 
 ### Even Later
