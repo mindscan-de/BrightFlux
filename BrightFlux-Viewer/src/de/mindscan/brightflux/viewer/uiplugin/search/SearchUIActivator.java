@@ -26,19 +26,26 @@
 package de.mindscan.brightflux.viewer.uiplugin.search;
 
 import de.mindscan.brightflux.framework.registry.ProjectRegistry;
+import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
 import de.mindscan.brightflux.system.services.StartupParticipant;
 import de.mindscan.brightflux.system.services.SystemServices;
+import de.mindscan.brightflux.viewer.uiplugin.search.persistence.SearchUIPersistenceModule;
+import de.mindscan.brightflux.viewer.uiplugin.search.persistence.SearchUIPersistenceModuleImpl;
 
 /**
  * 
  */
 public class SearchUIActivator implements StartupParticipant {
 
+    private static final String SEARCH_ZU_PLUGIN = "search-ui-plugin";
+
     /** 
      * {@inheritDoc}
      */
     @Override
     public void start( SystemServices systemservices ) {
+        BasePersistenceModule searchUIBasePersistenceModule = systemservices.getBasePersistenceModule( SEARCH_ZU_PLUGIN );
+        SearchUIPersistenceModule persistenceModule = new SearchUIPersistenceModuleImpl( searchUIBasePersistenceModule );
 
         SearchUIProxyComponent searchUIComponent = new SearchUIProxyComponent();
         systemservices.registerService( searchUIComponent, SearchUIProxyComponent.class );
