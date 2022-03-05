@@ -48,7 +48,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -155,15 +154,26 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         Composite composite = new Composite( upperComposite, SWT.NONE );
         composite.setLayout( new BorderLayout( 0, 0 ) );
 
-        Composite composite_m = new Composite( composite, SWT.NONE );
-        composite_m.setLayoutData( BorderLayout.CENTER );
-        composite_m.setLayout( null );
+        Composite composite_center = new Composite( composite, SWT.NONE );
+        composite_center.setLayoutData( BorderLayout.CENTER );
+        composite_center.setLayout( new GridLayout( 1, false ) );
 
-        Composite composite_1 = new Composite( composite, SWT.NONE );
-        composite_1.setLayoutData( BorderLayout.NORTH );
-        composite_1.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+        searchProfileCombo = new ComboViewer( composite_center, SWT.READ_ONLY );
+        Combo combo = searchProfileCombo.getCombo();
+        combo.setToolTipText( "Project Profile Selection" );
+        combo.setBounds( 0, 0, 92, 21 );
 
-        queryTextComboBox = new Combo( composite_1, SWT.BORDER );
+        searchProfileCombo.setContentProvider( new ArrayContentProvider() );
+        if (service != null) {
+            searchProfileCombo.setInput( service.getPersistenceModule().getSearchProfileNames() );
+            combo.select( service.getPersistenceModule().getSearchProfileNameSelected() );
+        }
+
+        Composite northComposite = new Composite( composite, SWT.NONE );
+        northComposite.setLayoutData( BorderLayout.NORTH );
+        northComposite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+
+        queryTextComboBox = new Combo( northComposite, SWT.BORDER );
         queryTextComboBox.addTraverseListener( new TraverseListener() {
             public void keyTraversed( TraverseEvent e ) {
                 if (e.detail == SWT.TRAVERSE_RETURN) {
@@ -173,27 +183,13 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         } );
         queryTextComboBox.setFont( SWTResourceManager.getFont( "Courier New", 12, SWT.NORMAL ) );
 
-        Composite composite_2 = new Composite( composite, SWT.NONE );
-        composite_2.setLayoutData( BorderLayout.SOUTH );
-        composite_2.setLayout( new FillLayout( SWT.HORIZONTAL ) );
+        Composite composite_bottom = new Composite( composite, SWT.NONE );
+        composite_bottom.setLayoutData( BorderLayout.SOUTH );
+        composite_bottom.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
-        Composite composite_3 = new Composite( composite, SWT.NONE );
-        composite_3.setLayoutData( BorderLayout.EAST );
-        composite_3.setLayout( new GridLayout( 1, false ) );
-
-        Label lblNewLabel = new Label( composite_3, SWT.NONE );
-        lblNewLabel.setBounds( 0, 0, 49, 13 );
-        lblNewLabel.setText( "Search Profile" );
-
-        searchProfileCombo = new ComboViewer( composite_3, SWT.NONE );
-        Combo combo = searchProfileCombo.getCombo();
-        combo.setBounds( 0, 0, 92, 21 );
-
-        searchProfileCombo.setContentProvider( new ArrayContentProvider() );
-        if (service != null) {
-            searchProfileCombo.setInput( service.getPersistenceModule().getSearchProfileNames() );
-            combo.select( service.getPersistenceModule().getSearchProfileNameSelected() );
-        }
+        Composite composite_right = new Composite( composite, SWT.NONE );
+        composite_right.setLayoutData( BorderLayout.EAST );
+        composite_right.setLayout( new GridLayout( 1, false ) );
 
         Composite composite_left = new Composite( composite, SWT.NONE );
         composite_left.setLayoutData( BorderLayout.WEST );
