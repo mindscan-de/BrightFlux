@@ -32,6 +32,9 @@ import de.mindscan.brightflux.system.earlypersistence.BasePersistenceModule;
  */
 public class SearchUIPersistenceModuleImpl implements SearchUIPersistenceModule {
 
+    private static final String SEARCH_UI_PROFILE_NAMES_KEY = "search.ui.profile.names";
+    private static final String SEARCH_UI_PROFILE_NAME_SELECTED_KEY = "search.ui.profile.name.selected.id";
+
     private BasePersistenceModule persistenceModule;
 
     /**
@@ -41,4 +44,19 @@ public class SearchUIPersistenceModuleImpl implements SearchUIPersistenceModule 
         this.persistenceModule = searchUIBasePersistenceModule;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getSearchProfileNames() {
+        return persistenceModule.getStringArrayValue( SEARCH_UI_PROFILE_NAMES_KEY );
+    }
+
+    /** 
+     * {@inheritDoc}
+     */
+    @Override
+    public int getSearchProfileNameSelected() {
+        return persistenceModule.getIntValue( SEARCH_UI_PROFILE_NAME_SELECTED_KEY );
+    }
 }

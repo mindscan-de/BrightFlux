@@ -30,4 +30,8 @@ package de.mindscan.brightflux.viewer.uiplugin.search.persistence;
  */
 public interface SearchUIPersistenceModule {
 
+    String[] getSearchProfileNames();
+
+    int getSearchProfileNameSelected();
+
 }
