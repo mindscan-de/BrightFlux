@@ -1,1 +1,7 @@
-a=1
+search.ui.profile.name.selected.id=2
+search.ui.profile.names.array.type=string
+search.ui.profile.names.array.length=4
+search.ui.profile.names.0=MxxYY
+search.ui.profile.names.1=3xxYY
+search.ui.profile.names.2=IxxYY
+search.ui.profile.names.3=DxxYY
