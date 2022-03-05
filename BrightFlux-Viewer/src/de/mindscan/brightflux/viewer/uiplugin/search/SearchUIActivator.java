@@ -50,6 +50,8 @@ public class SearchUIActivator implements StartupParticipant {
         SearchUIProxyComponent searchUIComponent = new SearchUIProxyComponent();
         systemservices.registerService( searchUIComponent, SearchUIProxyComponent.class );
 
+        searchUIComponent.setPerstistenceModule( persistenceModule );
+
         ProjectRegistry projectRegistry = systemservices.getProjectRegistry();
         if (projectRegistry != null) {
             projectRegistry.registerParticipant( searchUIComponent );

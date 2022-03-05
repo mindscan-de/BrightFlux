@@ -33,6 +33,7 @@ import de.mindscan.brightflux.plugin.search.events.SearchResultCachedDocumentLoa
 import de.mindscan.brightflux.plugin.search.events.SearchResultDataframeCreatedEvent;
 import de.mindscan.brightflux.system.events.BFEventListenerAdapter;
 import de.mindscan.brightflux.viewer.uiplugin.search.events.SearchUIDataFrameRowRequestedEvent;
+import de.mindscan.brightflux.viewer.uiplugin.search.persistence.SearchUIPersistenceModule;
 
 /**
  * This is a class which will register to the search operations and will forward them if a search window is registered
@@ -42,6 +43,7 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
 
     private SearchWindow currentActiveSearchWindow = null;
     private ProjectRegistry projectRegistry;
+    private SearchUIPersistenceModule persistenceModule;
 
     /** 
      * {@inheritDoc}
@@ -143,4 +145,13 @@ public class SearchUIProxyComponent implements ProjectRegistryParticipant {
             currentActiveSearchWindow.bringToTop();
         }
     }
+
+    public void setPerstistenceModule( SearchUIPersistenceModule persistenceModule ) {
+        this.persistenceModule = persistenceModule;
+    }
+
+    public SearchUIPersistenceModule getPersistenceModule() {
+        return persistenceModule;
+    }
+
 }
