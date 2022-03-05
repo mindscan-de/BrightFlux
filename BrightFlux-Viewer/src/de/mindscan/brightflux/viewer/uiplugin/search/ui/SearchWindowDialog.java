@@ -27,6 +27,8 @@ package de.mindscan.brightflux.viewer.uiplugin.search.ui;
 
 import java.util.Collection;
 
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabFolder2Adapter;
@@ -76,6 +78,8 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     private Combo queryTextComboBox;
     private ProjectRegistry projectRegistry;
     private CTabFolder searchResultTabFolder;
+    private ComboViewer searchProfileCombo;
+    private SearchUIProxyComponent service;
 
     /**
      * Create the dialog.
@@ -181,8 +185,15 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         lblNewLabel.setBounds( 0, 0, 49, 13 );
         lblNewLabel.setText( "Search Profile" );
 
-        Combo combo = new Combo( composite_3, SWT.NONE );
+        searchProfileCombo = new ComboViewer( composite_3, SWT.NONE );
+        Combo combo = searchProfileCombo.getCombo();
         combo.setBounds( 0, 0, 92, 21 );
+
+        searchProfileCombo.setContentProvider( new ArrayContentProvider() );
+        if (service != null) {
+            searchProfileCombo.setInput( service.getPersistenceModule().getSearchProfileNames() );
+            combo.select( service.getPersistenceModule().getSearchProfileNameSelected() );
+        }
 
         Composite composite_left = new Composite( composite, SWT.NONE );
         composite_left.setLayoutData( BorderLayout.WEST );
@@ -297,7 +308,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         }
 
         if (systemServices.isServiceAvailable( SearchUIProxyComponent.class )) {
-            SearchUIProxyComponent service = systemServices.getService( SearchUIProxyComponent.class );
+            service = systemServices.getService( SearchUIProxyComponent.class );
             service.registerCurrentActiveSearchWindow( this );
         }
         else {
