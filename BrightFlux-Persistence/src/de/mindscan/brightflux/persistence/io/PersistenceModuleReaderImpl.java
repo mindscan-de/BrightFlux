@@ -128,19 +128,19 @@ public class PersistenceModuleReaderImpl {
             switch (primitiveType) {
                 case "string": {
                     String primitiveValue = properties.getProperty( keyBaseNameWithoutDot, "" );
-                    persistenceModule.setStringValue( primitiveKeyTypeName, primitiveValue );
+                    persistenceModule.setStringValue( keyBaseNameWithoutDot, primitiveValue );
                     break;
                 }
                 case "int": {
                     String primitiveValue = properties.getProperty( keyBaseNameWithoutDot, "0" );
                     int primitiveIntValue = Integer.parseInt( primitiveValue );
-                    persistenceModule.setIntValue( primitiveKeyTypeName, primitiveIntValue );
+                    persistenceModule.setIntValue( keyBaseNameWithoutDot, primitiveIntValue );
                     break;
                 }
                 case "long": {
                     String primitiveValue = properties.getProperty( keyBaseNameWithoutDot, "0" );
                     long primitiveLongValue = Long.parseLong( primitiveValue );
-                    persistenceModule.setLongValue( primitiveKeyTypeName, primitiveLongValue );
+                    persistenceModule.setLongValue( keyBaseNameWithoutDot, primitiveLongValue );
                     break;
                 }
                 default:
