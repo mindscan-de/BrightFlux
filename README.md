@@ -165,6 +165,10 @@ I want to address rather sooner than later.
 
 ### Next
 
+Search Engine Support (requires additional implementation in the search engine, query parsers, meta-data index, meta-data search ==> May take some time)
+* implement search configurable profiles such as "project a", "project b", "only source", "only json", "language java", "language python","only tests", "no tests"
+* better filter options for search in backend - improve to distill meta-data search from file search, and use caching for both of them.
+
 
 Machine Learning
 * Well we have to see...
@@ -176,11 +180,8 @@ Search Engine Support
 
 ### Later
 
-
 Search Engine Support
-* implement search configurable profiles such as "project a", "project b", "only source", "only json", "language java", "language python","only tests", "no tests"
 * combine profiles to new profiles / have orthogonal profiles
-* better filter options for search in backend - improve to distill metadata search from file search, and use caching for both of them.
 * show source code for 'evidence' - also solve utf-8 problem... non utf-8 will not be properly shown....
 
 
