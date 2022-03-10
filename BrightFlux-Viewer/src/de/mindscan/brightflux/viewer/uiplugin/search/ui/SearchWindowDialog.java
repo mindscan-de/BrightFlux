@@ -242,12 +242,12 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
         String fullQuery = calculateFullQuery( userquery, profileQuerySuffix );
 
         // we use the plugin search command, which will then do the heavy lifting.
-        dispatchCommand( SearchCommandFactory.performSearch( userquery, "" ) );
+        dispatchCommand( SearchCommandFactory.performSearch( fullQuery, "" ) );
     }
 
     public String calculateFullQuery( String userQuery, String profileQuerySuffix ) {
         if (profileQuerySuffix.isBlank()) {
-            return userQuery;
+            return userQuery.trim();
         }
 
         return " +( " + userQuery + " ) " + profileQuerySuffix;
