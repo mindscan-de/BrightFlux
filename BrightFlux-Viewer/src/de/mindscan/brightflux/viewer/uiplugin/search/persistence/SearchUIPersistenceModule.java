@@ -34,4 +34,6 @@ public interface SearchUIPersistenceModule {
 
     int getSearchProfileNameSelected();
 
+    String[] getSearchProfileQuery();
+
 }
