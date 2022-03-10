@@ -232,17 +232,31 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
     }
 
     private void executeSearch() {
-        String query = queryTextComboBox.getText().trim();
+        String userquery = queryTextComboBox.getText().trim();
         //"+SharedClusterSnapshotRestore";
 
-        // TODO this may provide context e.g. filetype, language, and additionals meta labels and will be completed by the actual userquery 
-        String profileQuerySuffix = "";
+        int profileID = searchProfileCombo.getCombo().getSelectionIndex();
+        String profileQuerySuffix = calculateProfileQuerySuffix( profileID );
 
         // we might have to compose a query like +(userquery) +(profileQuerySuffix)
-        String fullQuery = query + " " + profileQuerySuffix;
+        String fullQuery = calculateFullQuery( userquery, profileQuerySuffix );
 
         // we use the plugin search command, which will then do the heavy lifting.
-        dispatchCommand( SearchCommandFactory.performSearch( query, profileQuerySuffix ) );
+        dispatchCommand( SearchCommandFactory.performSearch( userquery, "" ) );
+    }
+
+    public String calculateFullQuery( String userQuery, String profileQuerySuffix ) {
+        if (profileQuerySuffix.isBlank()) {
+            return userQuery;
+        }
+
+        return " +( " + userQuery + " ) " + profileQuerySuffix;
+    }
+
+    public String calculateProfileQuerySuffix( int profileID ) {
+        // this may provide context e.g. filetype, language and additional 
+        // meta labels and will be appended to the actual user query 
+        return service.getPersistenceModule().getSearchProfileQuery()[profileID];
     }
 
     /** 
