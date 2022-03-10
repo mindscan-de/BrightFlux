@@ -213,6 +213,11 @@ Log-Analysis-Case-File / introduce evidence collector
 * [LACF] log message Annotations
   * [LACF] save annotations to an analysis case file
   * [LACF] load annotations from analysis case file for a file
+  
+  
+UI/UX - IconSet
+* I really want an icon set for different parts of this tool
+  * render in 64x64 / 128x128 and then shrink and then simplify the icon?
 
 
 Swim lanes
