@@ -237,8 +237,6 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
 
         int profileID = searchProfileCombo.getCombo().getSelectionIndex();
         String profileQuerySuffix = calculateProfileQuerySuffix( profileID );
-
-        // we might have to compose a query like +(userquery) +(profileQuerySuffix)
         String fullQuery = calculateFullQuery( userquery, profileQuerySuffix );
 
         // we use the plugin search command, which will then do the heavy lifting.
@@ -250,6 +248,7 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
             return userQuery.trim();
         }
 
+        // we might have to compose a query like +(userquery) +(profileQuerySuffix)
         return " +( " + userQuery + " ) " + profileQuerySuffix;
     }
 
