@@ -30,9 +30,9 @@ package de.mindscan.brightflux.dataframes.dfquery.tokens;
  */
 public class DFQLToken {
 
-    private DFQLTokenType type;
-    private String value;
-    private int position;
+    private final DFQLTokenType type;
+    private final String value;
+    private final int position;
 
     public DFQLToken( DFQLTokenType type, String value ) {
         this( type, value, 0 );
