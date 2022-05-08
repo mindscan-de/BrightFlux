@@ -248,8 +248,10 @@ public class SearchWindowDialog extends Dialog implements SearchWindow, ProjectR
             return userQuery.trim();
         }
 
-        // we might have to compose a query like +(userquery) +(profileQuerySuffix)
-        return " +( " + userQuery + " ) " + profileQuerySuffix;
+        // TODO: maybe work this way on a list.
+        userQuery = profileQuerySuffix.replace( "%userquery%", userQuery.trim() );
+
+        return userQuery.trim();
     }
 
     public String calculateProfileQuerySuffix( int profileID ) {
