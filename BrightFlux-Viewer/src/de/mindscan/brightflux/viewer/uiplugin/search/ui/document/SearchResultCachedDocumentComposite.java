@@ -69,6 +69,7 @@ public class SearchResultCachedDocumentComposite extends Composite implements Pr
         composite.setLayout( new FillLayout( SWT.HORIZONTAL ) );
 
         documentContentStyledText = new StyledText( composite, SWT.BORDER | SWT.V_SCROLL | SWT.H_SCROLL );
+        documentContentStyledText.setEditable( false );
         documentContentStyledText.setFont( SWTResourceManager.getFont( "Courier New", 11, SWT.NORMAL ) );
 
     }
