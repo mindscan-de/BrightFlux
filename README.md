@@ -113,9 +113,11 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * link video time stamps to data frame time stamps / create a sync with video, by selecting a log entry  
   * save sync positions to video annotation files as extra reference data
   * load sync positions from video annotation files with reference data (sync also works after load)
-* Select a message for search with FuriousIron; search using FuriousIron-Backend
+* Source Code Search engine support - Select a message for search with FuriousIron; search using FuriousIron-Backend
   * open search tools, show list of files (no file details yet)
   * retrieve content of file from code search backend
+  * multiple search profiles (select one of many search profiles, search using metadata, project m, project i, Project 3, java, json, text, unittests)
+  * implement phase based search
 * Early Persistence / Startup
   * Basic functionality to read a early persistence file and from there provide basic access to namespace based persistence
 * ReportGenerator + BrightFlux TemplateEngine Implementation 
@@ -127,7 +129,6 @@ layer of abstraction. Doing such things too early will cause more harm then good
   * output data to command line in the first iteration
   * simple UI and some very basic dashboard widgets
   * basic configuration added
-  
 
 Also one note, just because the features are implemented somehow, it doesn't mean, that they are easy to use 
 right now. Making things easy to use, comes at a cost, some parts must be reimplemented once or twice before
@@ -164,11 +165,6 @@ I want to address rather sooner than later.
 
 
 ### Next
-
-Search Engine Support (requires additional implementation in the search engine, query parsers, meta-data index, meta-data search ==> May take some time)
-* implement search configurable profiles such as "project a", "project b", "only source", "only json", "language java", "language python","only tests", "no tests"
-* better filter options for search in backend - improve to distill meta-data search from file search, and use caching for both of them.
-
 
 Machine Learning
 * Well we have to see...
