@@ -200,6 +200,7 @@ Improve Highlight-Annotations
 * have an highlight dataframe file for each base document,
 
 
+
 ### Even Later
 
 Log-Analysis-Case-File / introduce evidence collector
@@ -304,6 +305,12 @@ Generic text File Readers
 * The file format should be described in some configuration format and a generic file reader should tokenize/parse it according to the description in the file-description
   * Ingest text files into table oriented data frames
     * use .json file based (configured) - format and parser description 
+* I once more came across the idea of binary templates, to describe and understand file formats. I came across it some years ago, but now they show up in a different context. So instead of comming up with a new format, it would rather be interesting to adopt previous ideas and instead of writing (optimizing) the logparsers by hand, to have a generic reader capable of taking a binary input and use the binary template and build a table from it.
+  * Examples for a syntax can be found here in these binary templates: 
+    * https://www.sweetscape.com/010editor/repository/templates/
+	* https://github.com/jas502n/010-Editor-Template
+  * idea is to implement this for some proprietary or well documented log formats - like "DLT" for automotive usage.
+  * Actually this seems to be quite doable from the effort standpoint speaking - to read these binary formats and convert them to dataframes.
 
 
 Generic Binary File Readers
